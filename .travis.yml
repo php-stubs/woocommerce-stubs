@@ -1,0 +1,39 @@
+# https://docs.travis-ci.com/user/reference/overview/#linux
+dist: bionic
+
+language: php
+
+cache:
+  directories:
+    - "$HOME/.composer/cache"
+
+php:
+  # giacocorsiglia/stubs-generator does not support PHP 7.0
+  - "7.1"
+  - "7.2"
+  - "7.3"
+  - "7.4snapshot"
+
+before_install:
+  - |
+    if [ "$(phpenv version-name)" != "7.4snapshot" ]; then
+      phpenv config-rm xdebug.ini
+    fi
+  - |
+    composer validate --strict
+
+install:
+  - |
+    composer install --no-interaction --no-suggest
+
+before_script:
+  - |
+    cat ./woocommerce/woocommerce.php
+
+script:
+  - |
+    bash -x ./generate.sh
+  - |
+    php -l woocommerce-stubs.php
+  - |
+    git diff --exit-code
