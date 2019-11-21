@@ -8090,6 +8090,8 @@ namespace {
         }
         /**
          * Show a notice asking users to convert to shipping zones.
+         *
+         * @todo remove in 4.0.0
          */
         public static function legacy_shipping_notice()
         {
@@ -11513,7 +11515,7 @@ namespace {
         {
         }
         /**
-         * Pull suggestion data from remote endpoint & cache in a transient.
+         * Pull suggestion data from options. This is retrieved from a remote endpoint.
          *
          * @return array of json API data
          */
@@ -13172,15 +13174,6 @@ namespace {
         {
         }
         /**
-         * Show a notice showing where the store notice setting has moved.
-         *
-         * @since 3.3.1
-         * @todo remove in next major release.
-         */
-        private function store_notice_setting_moved_notice()
-        {
-        }
-        /**
          * Output the settings.
          */
         public function output()
@@ -13289,15 +13282,6 @@ namespace {
          * Output the settings.
          */
         public function output()
-        {
-        }
-        /**
-         * Show a notice showing where some options have moved.
-         *
-         * @since 3.3.0
-         * @todo remove in next major release.
-         */
-        private function product_display_settings_moved_notice()
         {
         }
         /**
@@ -20948,6 +20932,12 @@ namespace {
          * Constructor.
          */
         public function __construct()
+        {
+        }
+        /**
+         * Initialize block library features.
+         */
+        public static function init()
         {
         }
         /**
@@ -38963,7 +38953,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '3.6.1';
+        public $version = '3.6.2';
         /**
          * The single instance of the class.
          *
@@ -50140,6 +50130,9 @@ namespace {
         public function log_ignored_action($action_id)
         {
         }
+        public function log_failed_fetch_action($action_id)
+        {
+        }
     }
     /**
      * Class ActionScheduler_NullAction
@@ -56752,10 +56745,10 @@ namespace {
     function woocommerce_wp_radio($field)
     {
     }
-    function action_scheduler_register_2_dot_2_dot_4()
+    function action_scheduler_register_2_dot_2_dot_5()
     {
     }
-    function action_scheduler_initialize_2_dot_2_dot_4()
+    function action_scheduler_initialize_2_dot_2_dot_5()
     {
     }
     /**
@@ -61462,6 +61455,16 @@ namespace {
     {
     }
     /**
+     * Populate a batch of rating count lookup table data for products.
+     *
+     * @since 3.6.2
+     * @param array $offset Offset to query.
+     * @param array $limit  Limit to query.
+     */
+    function wc_update_product_lookup_tables_rating_count_batch($offset = 0, $limit = 0)
+    {
+    }
+    /**
      * Parses and formats a date for ISO8601/RFC3339.
      *
      * Required WP 4.4 or later.
@@ -61642,7 +61645,7 @@ namespace {
      *
      * @since 3.5.0
      * @param WC_Order $order order object.
-     * @param array $changes Array of changes.
+     * @param array    $changes Array of changes.
      */
     function wc_trigger_stock_change_notifications($order, $changes)
     {
@@ -61670,7 +61673,7 @@ namespace {
     /**
      * Return low stock amount to determine if notification needs to be sent
      *
-     * @param  WC_Product $product
+     * @param  WC_Product $product Product to get data from.
      * @since  3.5.0
      * @return int
      */
@@ -61862,7 +61865,9 @@ namespace {
     {
     }
     /**
-     * Adds extra post classes for products.
+     * Adds extra post classes for products via the WordPress post_class hook, if used.
+     *
+     * Note: For performance reasons we instead recommend using wc_product_class/wc_get_product_class instead.
      *
      * @since 2.1.0
      * @param array        $classes Current classes.
@@ -61888,17 +61893,14 @@ namespace {
      * Retrieves the classes for the post div as an array.
      *
      * This method was modified from WordPress's get_post_class() to allow the removal of taxonomies
-     * (for performance reasons).
-     *
-     * Previously wc_product_post_class was hooked into post_class. That still happens, but this function
-     * negates the need for it and thus unhooks it when running the post_class hook. @since 3.6.0
+     * (for performance reasons). Previously wc_product_post_class was hooked into post_class. @since 3.6.0
      *
      * @since 3.4.0
      * @param string|array           $class      One or more classes to add to the class list.
-     * @param int|WP_Post|WC_Product $product_id Product ID or product object.
+     * @param int|WP_Post|WC_Product $product Product ID or product object.
      * @return array
      */
-    function wc_get_product_class($class = '', $product_id = \null)
+    function wc_get_product_class($class = '', $product = \null)
     {
     }
     /**
