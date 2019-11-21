@@ -8016,7 +8016,8 @@ namespace {
         /**
          * See if a notice is being shown.
          *
-         * @param  string $name Notice name.
+         * @param string $name Notice name.
+         *
          * @return boolean
          */
         public static function has_notice($name)
@@ -8109,7 +8110,7 @@ namespace {
          * If Gutenberg is active, tell people about the Products block feature plugin.
          *
          * @since 3.4.3
-         * @todo Remove this notice and associated code once the feature plugin has been merged into core.
+         * @todo  Remove this notice and associated code once the feature plugin has been merged into core.
          */
         public static function add_wootenberg_feature_plugin_notice()
         {
@@ -8118,7 +8119,7 @@ namespace {
          * Tell people about the Products block feature plugin when they activate Gutenberg.
          *
          * @since 3.4.3
-         * @todo Remove this notice and associated code once the feature plugin has been merged into core.
+         * @todo  Remove this notice and associated code once the feature plugin has been merged into core.
          */
         public static function add_wootenberg_feature_plugin_notice_on_gutenberg_activate()
         {
@@ -8127,6 +8128,15 @@ namespace {
          * Notice about trying the Products block.
          */
         public static function wootenberg_feature_plugin_notice()
+        {
+        }
+        /**
+         * Determine if the store is running SSL.
+         *
+         * @return bool Flag SSL enabled.
+         * @since  3.5.1
+         */
+        protected static function is_ssl()
         {
         }
     }
@@ -28776,7 +28786,7 @@ namespace {
          *
          * @var array
          */
-        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'));
+        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'));
         /**
          * Background update class.
          *
@@ -28836,7 +28846,7 @@ namespace {
         /**
          * Is this a brand new WC install?
          *
-         * @since 3.2.0
+         * @since  3.2.0
          * @return boolean
          */
         private static function is_new_install()
@@ -28845,7 +28855,7 @@ namespace {
         /**
          * Is a DB update needed?
          *
-         * @since 3.2.0
+         * @since  3.2.0
          * @return boolean
          */
         private static function needs_db_update()
@@ -28899,7 +28909,8 @@ namespace {
         /**
          * Add more cron schedules.
          *
-         * @param  array $schedules List of WP scheduled cron jobs.
+         * @param array $schedules List of WP scheduled cron jobs.
+         *
          * @return array
          */
         public static function cron_schedules($schedules)
@@ -28986,7 +28997,8 @@ namespace {
         /**
          * Uninstall tables when MU blog is deleted.
          *
-         * @param  array $tables List of tables that will be deleted by WP.
+         * @param array $tables List of tables that will be deleted by WP.
+         *
          * @return string[]
          */
         public static function wpmu_drop_tables($tables)
@@ -29029,8 +29041,9 @@ namespace {
         /**
          * Show action links on the plugin screen.
          *
-         * @param   mixed $links Plugin Action links.
-         * @return  array
+         * @param mixed $links Plugin Action links.
+         *
+         * @return array
          */
         public static function plugin_action_links($links)
         {
@@ -29038,9 +29051,10 @@ namespace {
         /**
          * Show row meta on the plugin screen.
          *
-         * @param   mixed $links Plugin Row Meta.
-         * @param   mixed $file  Plugin Base file.
-         * @return  array
+         * @param mixed $links Plugin Row Meta.
+         * @param mixed $file  Plugin Base file.
+         *
+         * @return array
          */
         public static function plugin_row_meta($links, $file)
         {
@@ -29060,8 +29074,9 @@ namespace {
          *
          * @param string $plugin_to_install_id Plugin ID.
          * @param array  $plugin_to_install Plugin information.
+         *
          * @throws Exception If unable to proceed with plugin installation.
-         * @since 2.6.0
+         * @since  2.6.0
          */
         public static function background_installer($plugin_to_install_id, $plugin_to_install)
         {
@@ -29079,8 +29094,9 @@ namespace {
          * Install a theme from .org in the background via a cron job (used by installer - opt in).
          *
          * @param string $theme_slug Theme slug.
+         *
          * @throws Exception If unable to proceed with theme installation.
-         * @since 3.1.0
+         * @since  3.1.0
          */
         public static function theme_background_installer($theme_slug)
         {
@@ -37971,7 +37987,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '3.5.1';
+        public $version = '3.5.2';
         /**
          * The single instance of the class.
          *
@@ -48343,7 +48359,6 @@ namespace {
          * (default value: 0)
          *
          * @var int
-         * @access protected
          */
         protected $start_time = 0;
         /**
@@ -51961,13 +51976,13 @@ namespace {
             // type and attribute exact value
             '/(\\w)\\[(\\w+)\\=[\'"]?([\\w\\s]+)[\'"]?\\]/' => '\\1[@\\2="\\3"]',
             // type and attribute value with ~ (one word within a whitespace-separated list of words)
-            '/([\\w\\*]+)\\[(\\w+)[\\s]*\\~\\=[\\s]*[\'"]?([\\w-_\\/]+)[\'"]?\\]/' => '\\1[contains(concat(" ", @\\2, " "), concat(" ", "\\3", " "))]',
+            '/([\\w\\*]+)\\[(\\w+)[\\s]*\\~\\=[\\s]*[\'"]?([\\w\\-_\\/]+)[\'"]?\\]/' => '\\1[contains(concat(" ", @\\2, " "), concat(" ", "\\3", " "))]',
             // type and attribute value with | (either exact value match or prefix followed by a hyphen)
-            '/([\\w\\*]+)\\[(\\w+)[\\s]*\\|\\=[\\s]*[\'"]?([\\w-_\\s\\/]+)[\'"]?\\]/' => '\\1[@\\2="\\3" or starts-with(@\\2, concat("\\3", "-"))]',
+            '/([\\w\\*]+)\\[(\\w+)[\\s]*\\|\\=[\\s]*[\'"]?([\\w\\-_\\s\\/]+)[\'"]?\\]/' => '\\1[@\\2="\\3" or starts-with(@\\2, concat("\\3", "-"))]',
             // type and attribute value with ^ (prefix match)
-            '/([\\w\\*]+)\\[(\\w+)[\\s]*\\^\\=[\\s]*[\'"]?([\\w-_\\/]+)[\'"]?\\]/' => '\\1[starts-with(@\\2, "\\3")]',
+            '/([\\w\\*]+)\\[(\\w+)[\\s]*\\^\\=[\\s]*[\'"]?([\\w\\-_\\/]+)[\'"]?\\]/' => '\\1[starts-with(@\\2, "\\3")]',
             // type and attribute value with * (substring match)
-            '/([\\w\\*]+)\\[(\\w+)[\\s]*\\*\\=[\\s]*[\'"]?([\\w-_\\s\\/:;]+)[\'"]?\\]/' => '\\1[contains(@\\2, "\\3")]',
+            '/([\\w\\*]+)\\[(\\w+)[\\s]*\\*\\=[\\s]*[\'"]?([\\w\\-_\\s\\/:;]+)[\'"]?\\]/' => '\\1[contains(@\\2, "\\3")]',
             // adjacent sibling
             '/\\s+\\+\\s+/' => '/following-sibling::*[1]/self::',
             // child
@@ -51981,7 +51996,7 @@ namespace {
             // The following matcher will break things if it is placed before the adjacent matcher.
             // So one of the matchers matches either too much or not enough.
             // type and attribute value with $ (suffix match)
-            '/([\\w\\*]+)\\[(\\w+)[\\s]*\\$\\=[\\s]*[\'"]?([\\w-_\\s\\/]+)[\'"]?\\]/' => '\\1[substring(@\\2, string-length(@\\2) - string-length("\\3") + 1) = "\\3"]',
+            '/([\\w\\*]+)\\[(\\w+)[\\s]*\\$\\=[\\s]*[\'"]?([\\w\\-_\\s\\/]+)[\'"]?\\]/' => '\\1[substring(@\\2, string-length(@\\2) - string-length("\\3") + 1) = "\\3"]',
         ];
         /**
          * Determines whether CSS styles that have an equivalent HTML attribute
@@ -55079,6 +55094,55 @@ namespace {
          * Close wrappers.
          */
         public static function output_content_wrapper_end()
+        {
+        }
+    }
+    /**
+     * WC_Twenty_Nineteen class.
+     */
+    class WC_Twenty_Nineteen
+    {
+        /**
+         * Theme init.
+         */
+        public static function init()
+        {
+        }
+        /**
+         * Open the Twenty Nineteen wrapper.
+         */
+        public static function output_content_wrapper()
+        {
+        }
+        /**
+         * Close the Twenty Nineteen wrapper.
+         */
+        public static function output_content_wrapper_end()
+        {
+        }
+        /**
+         * Enqueue CSS for this theme.
+         *
+         * @param  array $styles Array of registered styles.
+         * @return array
+         */
+        public static function enqueue_styles($styles)
+        {
+        }
+        /**
+         * Tweak Twenty Nineteen features.
+         */
+        public static function tweak_theme_features()
+        {
+        }
+        /**
+         * Filters Twenty Nineteen custom colors CSS.
+         *
+         * @param string $css           Base theme colors CSS.
+         * @param int    $primary_color The user's selected color hue.
+         * @param string $saturation    Filtered theme color saturation level.
+         */
+        public static function custom_colors_css($css, $primary_color, $saturation)
         {
         }
     }
@@ -62653,6 +62717,14 @@ namespace {
      * Update DB Version.
      */
     function wc_update_350_db_version()
+    {
+    }
+    /**
+     * Drop the fk_wc_download_log_permission_id FK as we use a new one with the table and blog prefix for MS compatability.
+     *
+     * @return void
+     */
+    function wc_update_352_drop_download_log_fk()
     {
     }
     /**
