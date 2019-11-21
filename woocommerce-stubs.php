@@ -2117,10 +2117,11 @@ namespace {
         }
         /**
          * Apply all coupons in this order again to all line items.
+         * This method is public since WooCommerce 3.8.0.
          *
-         * @since  3.2.0
+         * @since 3.2.0
          */
-        protected function recalculate_coupons()
+        public function recalculate_coupons()
         {
         }
         /**
@@ -2623,7 +2624,7 @@ namespace {
         {
         }
         /**
-         * Get a link to the transaction on the 3rd party gateway size (if applicable).
+         * Get a link to the transaction on the 3rd party gateway site (if applicable).
          *
          * @param  WC_Order $order the order object.
          * @return string transaction URL, or empty string.
@@ -7228,7 +7229,7 @@ namespace {
          *
          * @var array
          */
-        private static $core_notices = array('install' => 'install_notice', 'update' => 'update_notice', 'template_files' => 'template_file_check_notice', 'legacy_shipping' => 'legacy_shipping_notice', 'no_shipping_methods' => 'no_shipping_methods_notice', 'regenerating_thumbnails' => 'regenerating_thumbnails_notice', 'regenerating_lookup_table' => 'regenerating_lookup_table_notice', 'no_secure_connection' => 'secure_connection_notice', 'wc_admin' => 'wc_admin_feature_plugin_notice', 'wp_php_min_requirements' => 'wp_php_min_requirements_notice');
+        private static $core_notices = array('install' => 'install_notice', 'update' => 'update_notice', 'template_files' => 'template_file_check_notice', 'legacy_shipping' => 'legacy_shipping_notice', 'no_shipping_methods' => 'no_shipping_methods_notice', 'regenerating_thumbnails' => 'regenerating_thumbnails_notice', 'regenerating_lookup_table' => 'regenerating_lookup_table_notice', 'no_secure_connection' => 'secure_connection_notice', 'wc_admin' => 'wc_admin_feature_plugin_notice', \WC_PHP_MIN_REQUIREMENTS_NOTICE => 'wp_php_min_requirements_notice');
         /**
          * Constructor.
          */
@@ -8082,6 +8083,12 @@ namespace {
          * Location, product type, page setup, and tracking opt-in.
          */
         public function wc_setup_store_setup()
+        {
+        }
+        /**
+         * Template for the usage tracking modal.
+         */
+        public function tracking_modal()
         {
         }
         /**
@@ -9519,7 +9526,7 @@ namespace {
         /**
          * Flush subscriptions cache.
          */
-        private static function _flush_subscriptions_cache()
+        public static function _flush_subscriptions_cache()
         {
         }
         /**
@@ -14492,8 +14499,8 @@ namespace {
         /**
          * Sort fees by amount.
          *
-         * @param WC_Coupon $a Coupon object.
-         * @param WC_Coupon $b Coupon object.
+         * @param stdClass $a Fee object.
+         * @param stdClass $b Fee object.
          * @return int
          */
         protected function sort_fees_callback($a, $b)
@@ -25363,6 +25370,16 @@ namespace {
         public static function get_token_type_by_id($token_id)
         {
         }
+        /**
+         * Get classname based on token type.
+         *
+         * @since 3.8.0
+         * @param string $type Token type.
+         * @return string
+         */
+        protected static function get_token_classname($type)
+        {
+        }
     }
     /**
      * Post data class.
@@ -30927,7 +30944,7 @@ namespace {
         {
         }
         /**
-         * Get webhopk created date.
+         * Get webhook created date.
          *
          * @since  3.2.0
          * @param  string $context  What the value is for.
@@ -30938,7 +30955,7 @@ namespace {
         {
         }
         /**
-         * Get webhopk modified date.
+         * Get webhook modified date.
          *
          * @since  3.2.0
          * @param  string $context  What the value is for.
@@ -31199,7 +31216,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '3.7.1';
+        public $version = '3.8.0';
         /**
          * The single instance of the class.
          *
@@ -33950,7 +33967,7 @@ namespace {
          *
          * @since 3.0.0
          * @param int $item_id Item ID.
-         * @return string
+         * @return string|null Order item type or null if no order item entry found.
          */
         public function get_order_item_type($item_id)
         {
@@ -41303,7 +41320,7 @@ namespace {
         }
         /**
          * Set the data for displaying. It will attempt to unserialize (There is a chance that some columns
-         * are serialized). This can be override in child classes for futher data transformation.
+         * are serialized). This can be override in child classes for further data transformation.
          */
         protected function set_items(array $items)
         {
@@ -41333,7 +41350,7 @@ namespace {
         {
         }
         /**
-         * Default column formatting, it will escape everythig for security.
+         * Default column formatting, it will escape everything for security.
          */
         public function column_default($item, $column_name)
         {
@@ -48555,6 +48572,40 @@ namespace {
         }
     }
     /**
+     * WC_WCCOM_Site_Installer_Requirements_Check Class
+     * Contains functionality to check the necessary requirements for the installer.
+     */
+    class WC_WCCOM_Site_Installer_Requirements_Check
+    {
+        /**
+         * Check if the site met the requirements
+         *
+         * @version 3.8.0
+         * @return bool|WP_Error Does the site met the requirements?
+         */
+        public static function met_requirements()
+        {
+        }
+        /**
+         * Validates if WP CRON is enabled.
+         *
+         * @since 3.8.0
+         * @return bool
+         */
+        private static function met_wp_cron_requirement()
+        {
+        }
+        /**
+         * Validates if `WP_CONTENT_DIR` is writable.
+         *
+         * @since 3.8.0
+         * @return bool
+         */
+        private static function met_filesystem_requirement()
+        {
+        }
+    }
+    /**
      * WC_WCCOM_Site_Installer Class
      *
      * Contains functionalities to install products via WooCommerce.com helper connection.
@@ -48669,7 +48720,7 @@ namespace {
          *
          * @since 3.7.0
          * @param int $product_id Product ID.
-         * @return bool|\WP_Error
+         * @return array|\WP_Error
          */
         private static function get_product_info($product_id)
         {
@@ -50764,6 +50815,8 @@ namespace {
     /**
      * Get full list of currency codes.
      *
+     * Currency Symbols and mames should follow the Unicode CLDR recommendation (http://cldr.unicode.org/translation/currency-names)
+     *
      * @return array
      */
     function get_woocommerce_currencies()
@@ -50771,6 +50824,8 @@ namespace {
     }
     /**
      * Get Currency symbol.
+     *
+     * Currency Symbols and mames should follow the Unicode CLDR recommendation (http://cldr.unicode.org/translation/currency-names)
      *
      * @param string $currency Currency. (default: '').
      * @return string
@@ -50786,6 +50841,7 @@ namespace {
      * @param mixed  $message     Message.
      * @param string $headers     Headers. (default: "Content-Type: text/html\r\n").
      * @param string $attachments Attachments. (default: "").
+     * @return bool
      */
     function wc_mail($to, $subject, $message, $headers = "Content-Type: text/html\r\n", $attachments = '')
     {
@@ -55016,7 +55072,7 @@ namespace {
     /**
      * Get HTML for a gallery image.
      *
-     * Woocommerce_gallery_thumbnail_size, woocommerce_gallery_image_size and woocommerce_gallery_full_size accept name based image sizes, or an array of width/height values.
+     * Hooks: woocommerce_gallery_thumbnail_size, woocommerce_gallery_image_size and woocommerce_gallery_full_size accept name based image sizes, or an array of width/height values.
      *
      * @since 3.3.2
      * @param int  $attachment_id Attachment ID.
