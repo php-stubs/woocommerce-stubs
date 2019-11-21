@@ -259,9 +259,9 @@ namespace {
          *
          * @since 2.6.0
          *
-         * @param string        $key Meta key.
-         * @param string|array  $value Meta value.
-         * @param bool          $unique Should this be a unique key?.
+         * @param string       $key Meta key.
+         * @param string|array $value Meta value.
+         * @param bool         $unique Should this be a unique key?.
          */
         public function add_meta_data($key, $value, $unique = \false)
         {
@@ -3541,8 +3541,8 @@ namespace {
      *
      * The WooCommerce product class handles individual product data.
      *
-     * @version  3.0.0
-     * @package  WooCommerce/Abstracts
+     * @version 3.0.0
+     * @package WooCommerce/Abstracts
      */
     class WC_Product extends \WC_Abstract_Legacy_Product
     {
@@ -3569,7 +3569,7 @@ namespace {
          *
          * @var array
          */
-        protected $data = array('name' => '', 'slug' => '', 'date_created' => \null, 'date_modified' => \null, 'status' => \false, 'featured' => \false, 'catalog_visibility' => 'visible', 'description' => '', 'short_description' => '', 'sku' => '', 'price' => '', 'regular_price' => '', 'sale_price' => '', 'date_on_sale_from' => \null, 'date_on_sale_to' => \null, 'total_sales' => '0', 'tax_status' => 'taxable', 'tax_class' => '', 'manage_stock' => \false, 'stock_quantity' => \null, 'stock_status' => 'instock', 'backorders' => 'no', 'low_stock_amount' => '', 'sold_individually' => \false, 'weight' => '', 'length' => '', 'width' => '', 'height' => '', 'upsell_ids' => array(), 'cross_sell_ids' => array(), 'parent_id' => 0, 'reviews_allowed' => \true, 'purchase_note' => '', 'attributes' => array(), 'default_attributes' => array(), 'menu_order' => 0, 'virtual' => \false, 'downloadable' => \false, 'category_ids' => array(), 'tag_ids' => array(), 'shipping_class_id' => 0, 'downloads' => array(), 'image_id' => '', 'gallery_image_ids' => array(), 'download_limit' => -1, 'download_expiry' => -1, 'rating_counts' => array(), 'average_rating' => 0, 'review_count' => 0);
+        protected $data = array('name' => '', 'slug' => '', 'date_created' => \null, 'date_modified' => \null, 'status' => \false, 'featured' => \false, 'catalog_visibility' => 'visible', 'description' => '', 'short_description' => '', 'sku' => '', 'price' => '', 'regular_price' => '', 'sale_price' => '', 'date_on_sale_from' => \null, 'date_on_sale_to' => \null, 'total_sales' => '0', 'tax_status' => 'taxable', 'tax_class' => '', 'manage_stock' => \false, 'stock_quantity' => \null, 'stock_status' => 'instock', 'backorders' => 'no', 'low_stock_amount' => '', 'sold_individually' => \false, 'weight' => '', 'length' => '', 'width' => '', 'height' => '', 'upsell_ids' => array(), 'cross_sell_ids' => array(), 'parent_id' => 0, 'reviews_allowed' => \true, 'purchase_note' => '', 'attributes' => array(), 'default_attributes' => array(), 'menu_order' => 0, 'post_password' => '', 'virtual' => \false, 'downloadable' => \false, 'category_ids' => array(), 'tag_ids' => array(), 'shipping_class_id' => 0, 'downloads' => array(), 'image_id' => '', 'gallery_image_ids' => array(), 'download_limit' => -1, 'download_expiry' => -1, 'rating_counts' => array(), 'average_rating' => 0, 'review_count' => 0);
         /**
          * Supported features such as 'ajax_add_to_cart'.
          *
@@ -3591,23 +3591,16 @@ namespace {
          *
          * The product_type property is deprecated but is used here for BW compatibility with child classes which may be defining product_type and not have a get_type method.
          *
-         * @since 3.0.0
+         * @since  3.0.0
          * @return string
          */
         public function get_type()
         {
         }
-        /*
-        |--------------------------------------------------------------------------
-        | Getters
-        |--------------------------------------------------------------------------
-        |
-        | Methods for getting data from the product object.
-        */
         /**
          * Get product name.
          *
-         * @since 3.0.0
+         * @since  3.0.0
          * @param  string $context What the value is for. Valid values are view and edit.
          * @return string
          */
@@ -3617,7 +3610,7 @@ namespace {
         /**
          * Get product slug.
          *
-         * @since 3.0.0
+         * @since  3.0.0
          * @param  string $context What the value is for. Valid values are view and edit.
          * @return string
          */
@@ -3627,7 +3620,7 @@ namespace {
         /**
          * Get product created date.
          *
-         * @since 3.0.0
+         * @since  3.0.0
          * @param  string $context What the value is for. Valid values are view and edit.
          * @return WC_DateTime|NULL object if the date is set or null if there is no date.
          */
@@ -3637,7 +3630,7 @@ namespace {
         /**
          * Get product modified date.
          *
-         * @since 3.0.0
+         * @since  3.0.0
          * @param  string $context What the value is for. Valid values are view and edit.
          * @return WC_DateTime|NULL object if the date is set or null if there is no date.
          */
@@ -3647,7 +3640,7 @@ namespace {
         /**
          * Get product status.
          *
-         * @since 3.0.0
+         * @since  3.0.0
          * @param  string $context What the value is for. Valid values are view and edit.
          * @return string
          */
@@ -3657,7 +3650,7 @@ namespace {
         /**
          * If the product is featured.
          *
-         * @since 3.0.0
+         * @since  3.0.0
          * @param  string $context What the value is for. Valid values are view and edit.
          * @return boolean
          */
@@ -3667,7 +3660,7 @@ namespace {
         /**
          * Get catalog visibility.
          *
-         * @since 3.0.0
+         * @since  3.0.0
          * @param  string $context What the value is for. Valid values are view and edit.
          * @return string
          */
@@ -3677,7 +3670,7 @@ namespace {
         /**
          * Get product description.
          *
-         * @since 3.0.0
+         * @since  3.0.0
          * @param  string $context What the value is for. Valid values are view and edit.
          * @return string
          */
@@ -3687,7 +3680,7 @@ namespace {
         /**
          * Get product short description.
          *
-         * @since 3.0.0
+         * @since  3.0.0
          * @param  string $context What the value is for. Valid values are view and edit.
          * @return string
          */
@@ -3733,7 +3726,7 @@ namespace {
         /**
          * Get date on sale from.
          *
-         * @since 3.0.0
+         * @since  3.0.0
          * @param  string $context What the value is for. Valid values are view and edit.
          * @return WC_DateTime|NULL object if the date is set or null if there is no date.
          */
@@ -3743,7 +3736,7 @@ namespace {
         /**
          * Get date on sale to.
          *
-         * @since 3.0.0
+         * @since  3.0.0
          * @param  string $context What the value is for. Valid values are view and edit.
          * @return WC_DateTime|NULL object if the date is set or null if there is no date.
          */
@@ -3753,7 +3746,7 @@ namespace {
         /**
          * Get number total of sales.
          *
-         * @since 3.0.0
+         * @since  3.0.0
          * @param  string $context What the value is for. Valid values are view and edit.
          * @return int
          */
@@ -3781,7 +3774,7 @@ namespace {
         /**
          * Return if product manage stock.
          *
-         * @since 3.0.0
+         * @since  3.0.0
          * @param  string $context What the value is for. Valid values are view and edit.
          * @return boolean
          */
@@ -3801,7 +3794,7 @@ namespace {
          * Return the stock status.
          *
          * @param  string $context What the value is for. Valid values are view and edit.
-         * @since 3.0.0
+         * @since  3.0.0
          * @return string
          */
         public function get_stock_status($context = 'view')
@@ -3811,7 +3804,7 @@ namespace {
          * Get backorders.
          *
          * @param  string $context What the value is for. Valid values are view and edit.
-         * @since 3.0.0
+         * @since  3.0.0
          * @return string yes no or notify
          */
         public function get_backorders($context = 'view')
@@ -3831,7 +3824,7 @@ namespace {
          * Return if should be sold individually.
          *
          * @param  string $context What the value is for. Valid values are view and edit.
-         * @since 3.0.0
+         * @since  3.0.0
          * @return boolean
          */
         public function get_sold_individually($context = 'view')
@@ -3885,7 +3878,7 @@ namespace {
         /**
          * Get upsell IDs.
          *
-         * @since 3.0.0
+         * @since  3.0.0
          * @param  string $context What the value is for. Valid values are view and edit.
          * @return array
          */
@@ -3895,7 +3888,7 @@ namespace {
         /**
          * Get cross sell IDs.
          *
-         * @since 3.0.0
+         * @since  3.0.0
          * @param  string $context What the value is for. Valid values are view and edit.
          * @return array
          */
@@ -3905,7 +3898,7 @@ namespace {
         /**
          * Get parent ID.
          *
-         * @since 3.0.0
+         * @since  3.0.0
          * @param  string $context What the value is for. Valid values are view and edit.
          * @return int
          */
@@ -3915,7 +3908,7 @@ namespace {
         /**
          * Return if reviews is allowed.
          *
-         * @since 3.0.0
+         * @since  3.0.0
          * @param  string $context What the value is for. Valid values are view and edit.
          * @return bool
          */
@@ -3925,7 +3918,7 @@ namespace {
         /**
          * Get purchase note.
          *
-         * @since 3.0.0
+         * @since  3.0.0
          * @param  string $context What the value is for. Valid values are view and edit.
          * @return string
          */
@@ -3944,7 +3937,7 @@ namespace {
         /**
          * Get default attributes.
          *
-         * @since 3.0.0
+         * @since  3.0.0
          * @param  string $context What the value is for. Valid values are view and edit.
          * @return array
          */
@@ -3954,7 +3947,7 @@ namespace {
         /**
          * Get menu order.
          *
-         * @since 3.0.0
+         * @since  3.0.0
          * @param  string $context What the value is for. Valid values are view and edit.
          * @return int
          */
@@ -3962,9 +3955,19 @@ namespace {
         {
         }
         /**
+         * Get post password.
+         *
+         * @since  3.6.0
+         * @param  string $context What the value is for. Valid values are view and edit.
+         * @return int
+         */
+        public function get_post_password($context = 'view')
+        {
+        }
+        /**
          * Get category ids.
          *
-         * @since 3.0.0
+         * @since  3.0.0
          * @param  string $context What the value is for. Valid values are view and edit.
          * @return array
          */
@@ -3974,7 +3977,7 @@ namespace {
         /**
          * Get tag ids.
          *
-         * @since 3.0.0
+         * @since  3.0.0
          * @param  string $context What the value is for. Valid values are view and edit.
          * @return array
          */
@@ -3984,7 +3987,7 @@ namespace {
         /**
          * Get virtual.
          *
-         * @since 3.0.0
+         * @since  3.0.0
          * @param  string $context What the value is for. Valid values are view and edit.
          * @return bool
          */
@@ -4003,7 +4006,7 @@ namespace {
         /**
          * Get shipping class ID.
          *
-         * @since 3.0.0
+         * @since  3.0.0
          * @param  string $context What the value is for. Valid values are view and edit.
          * @return int
          */
@@ -4013,7 +4016,7 @@ namespace {
         /**
          * Get downloads.
          *
-         * @since 3.0.0
+         * @since  3.0.0
          * @param  string $context What the value is for. Valid values are view and edit.
          * @return array
          */
@@ -4023,7 +4026,7 @@ namespace {
         /**
          * Get download expiry.
          *
-         * @since 3.0.0
+         * @since  3.0.0
          * @param  string $context What the value is for. Valid values are view and edit.
          * @return int
          */
@@ -4033,7 +4036,7 @@ namespace {
         /**
          * Get downloadable.
          *
-         * @since 3.0.0
+         * @since  3.0.0
          * @param  string $context What the value is for. Valid values are view and edit.
          * @return bool
          */
@@ -4043,7 +4046,7 @@ namespace {
         /**
          * Get download limit.
          *
-         * @since 3.0.0
+         * @since  3.0.0
          * @param  string $context What the value is for. Valid values are view and edit.
          * @return int
          */
@@ -4053,7 +4056,7 @@ namespace {
         /**
          * Get main image ID.
          *
-         * @since 3.0.0
+         * @since  3.0.0
          * @param  string $context What the value is for. Valid values are view and edit.
          * @return string
          */
@@ -4153,9 +4156,9 @@ namespace {
         /**
          * Set catalog visibility.
          *
-         * @since 3.0.0
+         * @since  3.0.0
          * @throws WC_Data_Exception Throws exception when invalid data is found.
-         * @param string $visibility Options: 'hidden', 'visible', 'search' and 'catalog'.
+         * @param  string $visibility Options: 'hidden', 'visible', 'search' and 'catalog'.
          */
         public function set_catalog_visibility($visibility)
         {
@@ -4181,9 +4184,9 @@ namespace {
         /**
          * Set SKU.
          *
-         * @since 3.0.0
+         * @since  3.0.0
          * @throws WC_Data_Exception Throws exception when invalid data is found.
-         * @param string $sku Product SKU.
+         * @param  string $sku Product SKU.
          */
         public function set_sku($sku)
         {
@@ -4244,9 +4247,9 @@ namespace {
         /**
          * Set the tax status.
          *
-         * @since 3.0.0
+         * @since  3.0.0
          * @throws WC_Data_Exception Throws exception when invalid data is found.
-         * @param string $status Tax status.
+         * @param  string $status Tax status.
          */
         public function set_tax_status($status)
         {
@@ -4439,6 +4442,15 @@ namespace {
         {
         }
         /**
+         * Set post password.
+         *
+         * @since 3.6.0
+         * @param int $post_password Post password.
+         */
+        public function set_post_password($post_password)
+        {
+        }
+        /**
          * Set the product categories.
          *
          * @since 3.0.0
@@ -4568,7 +4580,7 @@ namespace {
         /**
          * Save data (either create or update depending on if we are working on an existing product).
          *
-         * @since 3.0.0
+         * @since  3.0.0
          * @return int
          */
         public function save()
@@ -4584,9 +4596,9 @@ namespace {
          *
          * Product classes should override this to declare support (or lack of support) for a feature.
          *
-         * @param string $feature string The name of a feature to test support for.
+         * @param  string $feature string The name of a feature to test support for.
          * @return bool True if the product supports the feature, false otherwise.
-         * @since 2.5.0
+         * @since  2.5.0
          */
         public function supports($feature)
         {
@@ -4604,7 +4616,7 @@ namespace {
          *
          * Backwards compatibility with downloadable/virtual.
          *
-         * @param string|array $type Array or string of types.
+         * @param  string|array $type Array or string of types.
          * @return bool
          */
         public function is_type($type)
@@ -4743,7 +4755,7 @@ namespace {
         /**
          * Check if a product is on backorder.
          *
-         * @param int $qty_in_cart (default: 0).
+         * @param  int $qty_in_cart (default: 0).
          * @return bool
          */
         public function is_on_backorder($qty_in_cart = 0)
@@ -4752,7 +4764,7 @@ namespace {
         /**
          * Returns whether or not the product has enough stock for the order.
          *
-         * @param mixed $quantity Quantity of a product added to an order.
+         * @param  mixed $quantity Quantity of a product added to an order.
          * @return bool
          */
         public function has_enough_stock($quantity)
@@ -4777,7 +4789,7 @@ namespace {
         /**
          * Does a child have dimensions?
          *
-         * @since 3.0.0
+         * @since  3.0.0
          * @return bool
          */
         public function child_has_dimensions()
@@ -4786,7 +4798,7 @@ namespace {
         /**
          * Does a child have a weight?
          *
-         * @since 3.0.0
+         * @since  3.0.0
          * @return boolean
          */
         public function child_has_weight()
@@ -4797,7 +4809,7 @@ namespace {
          *
          * @since 1.6.2
          *
-         * @param string $download_id file identifier.
+         * @param  string $download_id file identifier.
          * @return bool Whether downloadable product has a file attached.
          */
         public function has_file($download_id = '')
@@ -4914,7 +4926,7 @@ namespace {
         /**
          * Get the add to cart button text description - used in aria tags.
          *
-         * @since 3.3.0
+         * @since  3.3.0
          * @return string
          */
         public function add_to_cart_description()
@@ -4923,9 +4935,9 @@ namespace {
         /**
          * Returns the main product image.
          *
-         * @param string $size (default: 'woocommerce_thumbnail').
-         * @param array  $attr Image attributes.
-         * @param bool   $placeholder True to return $placeholder if no image is found, or false to return an empty string.
+         * @param  string $size (default: 'woocommerce_thumbnail').
+         * @param  array  $attr Image attributes.
+         * @param  bool   $placeholder True to return $placeholder if no image is found, or false to return an empty string.
          * @return string
          */
         public function get_image($size = 'woocommerce_thumbnail', $attr = array(), $placeholder = \true)
@@ -4960,7 +4972,7 @@ namespace {
         /**
          * Get a file by $download_id.
          *
-         * @param string $download_id file identifier.
+         * @param  string $download_id file identifier.
          * @return array|false if not found
          */
         public function get_file($download_id = '')
@@ -4969,7 +4981,7 @@ namespace {
         /**
          * Get file download path identified by $download_id.
          *
-         * @param string $download_id file identifier.
+         * @param  string $download_id file identifier.
          * @return string
          */
         public function get_file_download_path($download_id)
@@ -6112,7 +6124,7 @@ namespace {
          * Return calculated rates for a package.
          *
          * @since 2.6.0
-         * @param object $package Package array.
+         * @param array $package Package array.
          * @return array
          */
         public function get_rates_for_package($package)
@@ -6141,7 +6153,6 @@ namespace {
          * Calc taxes per item being shipping in costs array.
          *
          * @since 2.6.0
-         * @access protected
          * @param  array $costs Costs.
          * @return array of taxes
          */
@@ -6318,6 +6329,15 @@ namespace {
          * Flush the cache.
          */
         public function flush_widget_cache()
+        {
+        }
+        /**
+         * Get this widgets title.
+         *
+         * @param array $instance Array of instance options.
+         * @return string
+         */
+        protected function get_instance_title($instance)
         {
         }
         /**
@@ -7964,7 +7984,7 @@ namespace {
          *
          * @var array
          */
-        private static $core_notices = array('install' => 'install_notice', 'update' => 'update_notice', 'template_files' => 'template_file_check_notice', 'legacy_shipping' => 'legacy_shipping_notice', 'no_shipping_methods' => 'no_shipping_methods_notice', 'simplify_commerce' => 'simplify_commerce_notice', 'regenerating_thumbnails' => 'regenerating_thumbnails_notice', 'no_secure_connection' => 'secure_connection_notice', 'wootenberg' => 'wootenberg_feature_plugin_notice');
+        private static $core_notices = array('install' => 'install_notice', 'update' => 'update_notice', 'template_files' => 'template_file_check_notice', 'legacy_shipping' => 'legacy_shipping_notice', 'no_shipping_methods' => 'no_shipping_methods_notice', 'regenerating_thumbnails' => 'regenerating_thumbnails_notice', 'regenerating_lookup_table' => 'regenerating_lookup_table_notice', 'no_secure_connection' => 'secure_connection_notice');
         /**
          * Constructor.
          */
@@ -8063,14 +8083,6 @@ namespace {
         {
         }
         /**
-         * Show the Theme Check notice.
-         *
-         * @todo Remove this next major release.
-         */
-        public static function theme_check_notice()
-        {
-        }
-        /**
          * Show a notice highlighting bad template files.
          */
         public static function template_file_check_notice()
@@ -8089,12 +8101,6 @@ namespace {
         {
         }
         /**
-         * Simplify Commerce is being removed from core.
-         */
-        public static function simplify_commerce_notice()
-        {
-        }
-        /**
          * Notice shown when regenerating thumbnails background process is running.
          */
         public static function regenerating_thumbnails_notice()
@@ -8107,27 +8113,11 @@ namespace {
         {
         }
         /**
-         * If Gutenberg is active, tell people about the Products block feature plugin.
+         * Notice shown when regenerating thumbnails background process is running.
          *
-         * @since 3.4.3
-         * @todo  Remove this notice and associated code once the feature plugin has been merged into core.
+         * @since 3.6.0
          */
-        public static function add_wootenberg_feature_plugin_notice()
-        {
-        }
-        /**
-         * Tell people about the Products block feature plugin when they activate Gutenberg.
-         *
-         * @since 3.4.3
-         * @todo  Remove this notice and associated code once the feature plugin has been merged into core.
-         */
-        public static function add_wootenberg_feature_plugin_notice_on_gutenberg_activate()
-        {
-        }
-        /**
-         * Notice about trying the Products block.
-         */
-        public static function wootenberg_feature_plugin_notice()
+        public static function regenerating_lookup_table_notice()
         {
         }
         /**
@@ -8137,6 +8127,31 @@ namespace {
          * @since  3.5.1
          */
         protected static function is_ssl()
+        {
+        }
+        /**
+         * Wrapper for is_plugin_active.
+         *
+         * @param string $plugin Plugin to check.
+         * @return boolean
+         */
+        protected static function is_plugin_active($plugin)
+        {
+        }
+        /**
+         * Simplify Commerce is no longer in core.
+         *
+         * @deprecated 3.6.0 No longer shown.
+         */
+        public static function simplify_commerce_notice()
+        {
+        }
+        /**
+         * Show the Theme Check notice.
+         *
+         * @deprecated 3.3.0 No longer shown.
+         */
+        public static function theme_check_notice()
         {
         }
     }
@@ -8685,12 +8700,22 @@ namespace {
         {
         }
         /**
-         * Should we show the Mailchimp install option?
+         * Should we show the MailChimp install option?
          * True only if the user can install plugins.
          *
          * @return boolean
          */
         protected function should_show_mailchimp()
+        {
+        }
+        /**
+         * Should we show the Facebook install option?
+         * True only if the user can install plugins,
+         * and up until the end date of the recommendation.
+         *
+         * @return boolean
+         */
+        protected function should_show_facebook()
         {
         }
         /**
@@ -8968,7 +8993,7 @@ namespace {
          *
          * @return array
          */
-        protected function get_wizard_manual_payment_gateways()
+        public function get_wizard_manual_payment_gateways()
         {
         }
         /**
@@ -9187,11 +9212,23 @@ namespace {
     class WC_Admin_Taxonomies
     {
         /**
+         * Class instance.
+         *
+         * @var WC_Admin_Taxonomies instance
+         */
+        protected static $instance = \false;
+        /**
          * Default category ID.
          *
          * @var int
          */
         private $default_cat_id = 0;
+        /**
+         * Get class instance
+         */
+        public static function get_instance()
+        {
+        }
         /**
          * Constructor.
          */
@@ -9201,9 +9238,9 @@ namespace {
         /**
          * Order term when created (put in position 0).
          *
-         * @param mixed  $term_id
-         * @param mixed  $tt_id
-         * @param string $taxonomy
+         * @param mixed  $term_id Term ID.
+         * @param mixed  $tt_id Term taxonomy ID.
+         * @param string $taxonomy Taxonomy slug.
          */
         public function create_term($term_id, $tt_id = '', $taxonomy = '')
         {
@@ -9211,7 +9248,8 @@ namespace {
         /**
          * When a term is deleted, delete its meta.
          *
-         * @param mixed $term_id
+         * @deprecated 3.6.0 No longer needed.
+         * @param mixed $term_id Term ID.
          */
         public function delete_term($term_id)
         {
@@ -9225,17 +9263,17 @@ namespace {
         /**
          * Edit category thumbnail field.
          *
-         * @param mixed $term Term (category) being edited
+         * @param mixed $term Term (category) being edited.
          */
         public function edit_category_fields($term)
         {
         }
         /**
-         * save_category_fields function.
+         * Save category fields
          *
-         * @param mixed  $term_id Term ID being saved
-         * @param mixed  $tt_id
-         * @param string $taxonomy
+         * @param mixed  $term_id Term ID being saved.
+         * @param mixed  $tt_id Term taxonomy ID.
+         * @param string $taxonomy Taxonomy slug.
          */
         public function save_category_fields($term_id, $tt_id = '', $taxonomy = '')
         {
@@ -9261,7 +9299,7 @@ namespace {
         /**
          * Thumbnail column added to category admin.
          *
-         * @param mixed $columns
+         * @param mixed $columns Columns array.
          * @return array
          */
         public function product_cat_columns($columns)
@@ -9286,9 +9324,9 @@ namespace {
         /**
          * Thumbnail column value added to category admin.
          *
-         * @param string $columns
-         * @param string $column
-         * @param int    $id
+         * @param string $columns Column HTML output.
+         * @param string $column Column name.
+         * @param int    $id Product ID.
          *
          * @return string
          */
@@ -9298,7 +9336,7 @@ namespace {
         /**
          * Maintain term hierarchy when editing a product.
          *
-         * @param  array $args
+         * @param  array $args Term checklist args.
          * @return array
          */
         public function disable_checked_ontop($args)
@@ -9573,12 +9611,6 @@ namespace {
         {
         }
         /**
-         * Preloads some functionality of the Helper to be loaded on the `plugins_loaded` hook
-         */
-        public function preload_helper()
-        {
-        }
-        /**
          * Include admin files conditionally.
          */
         public function conditional_includes()
@@ -9608,7 +9640,7 @@ namespace {
          * Change the admin footer text on WooCommerce admin pages.
          *
          * @since  2.3
-         * @param  string $footer_text
+         * @param  string $footer_text text to be rendered in the footer.
          * @return string
          */
         public function admin_footer_text($footer_text)
@@ -9748,30 +9780,6 @@ namespace {
          * Render the legacy helper compat view.
          */
         public static function render_compat_menu()
-        {
-        }
-    }
-    /**
-     * WC_Helper_File_Headers Class
-     *
-     * Adds some filters to be able to parse the `Woo` header from locally
-     * installed Woo plugins and themes
-     */
-    class WC_Helper_File_Headers
-    {
-        /**
-         * Load functions adds the `extra_headers` filter on the `extra_plugin_headers`
-         * and `extra_theme_headers` hooks.
-         */
-        public static function load()
-        {
-        }
-        /**
-         * Additional theme style.css and plugin file headers.
-         *
-         * Format: Woo: product_id:file_id
-         */
-        public static function extra_headers($headers)
         {
         }
     }
@@ -9954,6 +9962,8 @@ namespace {
     {
         /**
          * A log object returned by wc_get_logger().
+         *
+         * @var $log
          */
         public static $log;
         /**
@@ -9970,6 +9980,12 @@ namespace {
          * Loads the helper class, runs on init.
          */
         public static function load()
+        {
+        }
+        /**
+         * Include supporting helper classes.
+         */
+        protected static function includes()
         {
         }
         /**
@@ -9991,7 +10007,7 @@ namespace {
          *
          * @param array $subscriptions The array of all available subscriptions.
          *
-         * @return array Filter counts (filter => count)
+         * @return array Filter counts (filter => count).
          */
         public static function get_filters_counts($subscriptions = \null)
         {
@@ -10102,7 +10118,7 @@ namespace {
         {
         }
         /**
-         * Obtain a list of locally installed Woo extensions.
+         * Obtain a list of data about locally installed Woo extensions.
          */
         public static function get_local_woo_plugins()
         {
@@ -11279,15 +11295,6 @@ namespace {
         {
         }
         /**
-         * Handle any custom filters.
-         *
-         * @param array $query_vars Query vars.
-         * @return array
-         */
-        protected function query_filters($query_vars)
-        {
-        }
-        /**
          * Search by SKU or ID for products.
          *
          * @deprecated Logic moved to query_filters.
@@ -11316,6 +11323,106 @@ namespace {
         {
         }
         /**
+         * Handle any custom filters.
+         *
+         * @param array $query_vars Query vars.
+         * @return array
+         */
+        protected function query_filters($query_vars)
+        {
+        }
+        /**
+         * Undocumented function
+         *
+         * @param array    $args  Array of SELECT statement pieces (from, where, etc).
+         * @param WP_Query $query WP_Query instance.
+         * @return array
+         */
+        public function posts_clauses($args, $query)
+        {
+        }
+        /**
+         * Remove ordering queries.
+         *
+         * @param array $posts Posts from WP Query.
+         * @return array
+         */
+        public function remove_ordering_args($posts)
+        {
+        }
+        /**
+         * Handle numeric price sorting.
+         *
+         * @param array $args Query args.
+         * @return array
+         */
+        public function order_by_price_asc_post_clauses($args)
+        {
+        }
+        /**
+         * Handle numeric price sorting.
+         *
+         * @param array $args Query args.
+         * @return array
+         */
+        public function order_by_price_desc_post_clauses($args)
+        {
+        }
+        /**
+         * Handle sku sorting.
+         *
+         * @param array $args Query args.
+         * @return array
+         */
+        public function order_by_sku_asc_post_clauses($args)
+        {
+        }
+        /**
+         * Handle sku sorting.
+         *
+         * @param array $args Query args.
+         * @return array
+         */
+        public function order_by_sku_desc_post_clauses($args)
+        {
+        }
+        /**
+         * Filter by type.
+         *
+         * @param array $args Query args.
+         * @return array
+         */
+        public function filter_downloadable_post_clauses($args)
+        {
+        }
+        /**
+         * Filter by type.
+         *
+         * @param array $args Query args.
+         * @return array
+         */
+        public function filter_virtual_post_clauses($args)
+        {
+        }
+        /**
+         * Filter by stock status.
+         *
+         * @param array $args Query args.
+         * @return array
+         */
+        public function filter_stock_status_post_clauses($args)
+        {
+        }
+        /**
+         * Join wc_product_meta_lookup to posts if not already joined.
+         *
+         * @param string $sql SQL join.
+         * @return string
+         */
+        private function append_product_sorting_table_join($sql)
+        {
+        }
+        /**
          * Modifies post query so that it includes parent products whose variations have particular shipping class assigned.
          *
          * @param array    $pieces   Array of SELECT statement pieces (from, where, etc).
@@ -11323,6 +11430,125 @@ namespace {
          * @return array             Array of products, including parents of variations.
          */
         public function add_variation_parents_for_shipping_class($pieces, $wp_query)
+        {
+        }
+    }
+    /**
+     * Marketplace suggestions core behaviour.
+     */
+    class WC_Marketplace_Suggestions
+    {
+        /**
+         * Initialise.
+         */
+        public static function init()
+        {
+        }
+        /**
+         * Product data tabs filter
+         *
+         * Adds a new Extensions tab to the product data meta box.
+         *
+         * @param array $tabs Existing tabs.
+         *
+         * @return array
+         */
+        public static function product_data_tabs($tabs)
+        {
+        }
+        /**
+         * Render additional panels in the proudct data metabox.
+         */
+        public static function product_data_panels()
+        {
+        }
+        /**
+         * Return an array of suggestions the user has dismissed.
+         */
+        public static function get_dismissed_suggestions()
+        {
+        }
+        /**
+         * POST handler for adding a dismissed suggestion.
+         */
+        public static function post_add_dismissed_suggestion_handler()
+        {
+        }
+        /**
+         * Render suggestions containers in products list empty state.
+         */
+        public static function render_products_list_empty_state()
+        {
+        }
+        /**
+         * Render suggestions containers in orders list empty state.
+         */
+        public static function render_orders_list_empty_state()
+        {
+        }
+        /**
+         * Render a suggestions container element, with the specified context.
+         *
+         * @param string $context Suggestion context name (rendered as a css class).
+         */
+        public static function render_suggestions_container($context)
+        {
+        }
+        /**
+         * Should suggestions be displayed?
+         *
+         * @param string $screen_id The current admin screen.
+         *
+         * @return bool
+         */
+        public static function show_suggestions_for_screen($screen_id)
+        {
+        }
+        /**
+         * Should suggestions be displayed?
+         *
+         * @return bool
+         */
+        public static function allow_suggestions()
+        {
+        }
+        /**
+         * Pull suggestion data from remote endpoint & cache in a transient.
+         *
+         * @return array of json API data
+         */
+        public static function get_suggestions_api_data()
+        {
+        }
+    }
+    /**
+     * Marketplace Suggestions Updater
+     */
+    class WC_Marketplace_Updater
+    {
+        /**
+         * Setup.
+         */
+        public static function load()
+        {
+        }
+        /**
+         * Schedule events and hook appropriate actions.
+         */
+        public static function init()
+        {
+        }
+        /**
+         * Fetches new marketplace data, updates wc_marketplace_suggestions.
+         */
+        public static function update_marketplace_suggestions()
+        {
+        }
+        /**
+         * Used when an error has occured when fetching suggestions.
+         * Re-schedules the job earlier than the main weekly one.
+         */
+        public static function retry()
         {
         }
     }
@@ -11476,7 +11702,7 @@ namespace {
         /**
          * Output the metabox.
          *
-         * @param WP_Post $post
+         * @param WP_Post $post Post object.
          */
         public static function output($post)
         {
@@ -12069,8 +12295,6 @@ namespace {
     /**
      * WC_Report_Customer_List.
      *
-     * @author      WooThemes
-     * @category    Admin
      * @package     WooCommerce/Admin/Reports
      * @version     2.1.0
      */
@@ -12097,8 +12321,8 @@ namespace {
         /**
          * Get column value.
          *
-         * @param WP_User $user
-         * @param string  $column_name
+         * @param WP_User $user WP User object.
+         * @param string  $column_name Column name.
          * @return string
          */
         public function column_default($user, $column_name)
@@ -12115,8 +12339,7 @@ namespace {
         /**
          * Order users by name.
          *
-         * @param WP_User_Query $query
-         *
+         * @param WP_User_Query $query Query that gets passed through.
          * @return WP_User_Query
          */
         public function order_by_last_name($query)
@@ -12335,12 +12558,7 @@ namespace {
         }
     }
     /**
-     * WC_Report_Low_In_Stock.
-     *
-     * @author      WooThemes
-     * @category    Admin
-     * @package     WooCommerce/Admin/Reports
-     * @version     2.1.0
+     * Low stock report class.
      */
     class WC_Report_Low_In_Stock extends \WC_Report_Stock
     {
@@ -12353,8 +12571,8 @@ namespace {
         /**
          * Get Products matching stock criteria.
          *
-         * @param int $current_page
-         * @param int $per_page
+         * @param int $current_page Current page number.
+         * @param int $per_page How many results to show per page.
          */
         public function get_items($current_page, $per_page)
         {
@@ -12362,31 +12580,21 @@ namespace {
     }
     /**
      * WC_Report_Most_Stocked.
-     *
-     * @author      WooThemes
-     * @category    Admin
-     * @package     WooCommerce/Admin/Reports
-     * @version     2.1.0
      */
     class WC_Report_Most_Stocked extends \WC_Report_Stock
     {
         /**
          * Get Products matching stock criteria.
          *
-         * @param int $current_page
-         * @param int $per_page
+         * @param int $current_page Current page number.
+         * @param int $per_page How many results to show per page.
          */
         public function get_items($current_page, $per_page)
         {
         }
     }
     /**
-     * WC_Report_Out_Of_Stock.
-     *
-     * @author      WooThemes
-     * @category    Admin
-     * @package     WooCommerce/Admin/Reports
-     * @version     2.1.0
+     * WC_Report_Out_Of_Stock class.
      */
     class WC_Report_Out_Of_Stock extends \WC_Report_Stock
     {
@@ -12399,8 +12607,8 @@ namespace {
         /**
          * Get Products matching stock criteria.
          *
-         * @param int $current_page
-         * @param int $per_page
+         * @param int $current_page Current page number.
+         * @param int $per_page How many results to show per page.
          */
         public function get_items($current_page, $per_page)
         {
@@ -12498,11 +12706,6 @@ namespace {
     }
     /**
      * WC_Report_Sales_By_Date
-     *
-     * @author      WooThemes
-     * @category    Admin
-     * @package     WooCommerce/Admin/Reports
-     * @version     2.1.0
      */
     class WC_Report_Sales_By_Date extends \WC_Admin_Report
     {
@@ -12555,7 +12758,7 @@ namespace {
         /**
          * Round our totals correctly.
          *
-         * @param array|string $amount
+         * @param array|string $amount Chart total.
          *
          * @return array|string
          */
@@ -12651,8 +12854,6 @@ namespace {
     /**
      * WC_Report_Taxes_By_Code
      *
-     * @author      WooThemes
-     * @category    Admin
      * @package     WooCommerce/Admin/Reports
      * @version     2.1.0
      */
@@ -14030,8 +14231,9 @@ namespace {
         /**
          * Get formatted item data.
          *
+         * @param WC_Data $object WC_Data instance.
+         *
          * @since  3.0.0
-         * @param  WC_Data $object WC_Data instance.
          * @return array
          */
         protected function get_formatted_item_data($object)
@@ -16495,7 +16697,7 @@ namespace {
          *
          * @param WC_Product $product    Product instance.
          * @param array      $downloads  Downloads data.
-         * @param int        $deprecated Deprecated since 3.0
+         * @param int        $deprecated Deprecated since 3.0.
          *
          * @return WC_Product
          */
@@ -18336,6 +18538,34 @@ namespace {
          * @return array
          */
         public function get_active_plugins()
+        {
+        }
+        /**
+         * Get a list of inplugins active on the site.
+         *
+         * @return array
+         */
+        public function get_inactive_plugins()
+        {
+        }
+        /**
+         * Format plugin data, including data on updates, into a standard format.
+         *
+         * @since 3.6.0
+         * @param string $plugin Plugin directory/file.
+         * @param array  $data Plugin data from WP.
+         * @return array Formatted data.
+         */
+        protected function format_plugin_data($plugin, $data)
+        {
+        }
+        /**
+         * Get a list of Dropins and MU plugins.
+         *
+         * @since 3.6.0
+         * @return array
+         */
+        public function get_dropins_mu_plugins()
         {
         }
         /**
@@ -20372,6 +20602,430 @@ namespace {
         }
     }
     /**
+     * REST API Product Attribute Terms controller class.
+     *
+     * @package WooCommerce/API
+     */
+    class WC_REST_Blocks_Product_Attribute_Terms_Controller extends \WC_REST_Product_Attribute_Terms_Controller
+    {
+        /**
+         * Endpoint namespace.
+         *
+         * @var string
+         */
+        protected $namespace = 'wc-blocks/v1';
+        /**
+         * Register the routes for products.
+         */
+        public function register_routes()
+        {
+        }
+        /**
+         * Check permissions.
+         *
+         * @param WP_REST_Request $request Full details about the request.
+         * @param string          $context Request context.
+         * @return bool|WP_Error
+         */
+        protected function check_permissions($request, $context = 'read')
+        {
+        }
+        /**
+         * Prepare a single product category output for response.
+         *
+         * @param WP_Term         $item    Term object.
+         * @param WP_REST_Request $request Request instance.
+         * @return WP_REST_Response
+         */
+        public function prepare_item_for_response($item, $request)
+        {
+        }
+        /**
+         * Get the Product's schema, conforming to JSON Schema.
+         *
+         * @return array
+         */
+        public function get_item_schema()
+        {
+        }
+    }
+    /**
+     * REST API Product Attributes controller class.
+     *
+     * @package WooCommerce/API
+     */
+    class WC_REST_Blocks_Product_Attributes_Controller extends \WC_REST_Product_Attributes_Controller
+    {
+        /**
+         * Endpoint namespace.
+         *
+         * @var string
+         */
+        protected $namespace = 'wc-blocks/v1';
+        /**
+         * Register the routes for products.
+         */
+        public function register_routes()
+        {
+        }
+        /**
+         * Check if a given request has access to read the attributes.
+         *
+         * @param  WP_REST_Request $request Full details about the request.
+         * @return WP_Error|boolean
+         */
+        public function get_items_permissions_check($request)
+        {
+        }
+        /**
+         * Check if a given request has access to read a attribute.
+         *
+         * @param  WP_REST_Request $request Full details about the request.
+         * @return WP_Error|boolean
+         */
+        public function get_item_permissions_check($request)
+        {
+        }
+        /**
+         * Check permissions.
+         *
+         * @param WP_REST_Request $request Full details about the request.
+         * @param string          $context Request context.
+         * @return bool|WP_Error
+         */
+        protected function check_permissions($request, $context = 'read')
+        {
+        }
+        /**
+         * Prepare a single product category output for response.
+         *
+         * @param WP_Term         $item    Term object.
+         * @param WP_REST_Request $request Request instance.
+         * @return WP_REST_Response
+         */
+        public function prepare_item_for_response($item, $request)
+        {
+        }
+        /**
+         * Get the Product's schema, conforming to JSON Schema.
+         *
+         * @return array
+         */
+        public function get_item_schema()
+        {
+        }
+    }
+    /**
+     * REST API Product Categories controller class.
+     *
+     * @package WooCommerce/API
+     */
+    class WC_REST_Blocks_Product_Categories_Controller extends \WC_REST_Product_Categories_Controller
+    {
+        /**
+         * Endpoint namespace.
+         *
+         * @var string
+         */
+        protected $namespace = 'wc-blocks/v1';
+        /**
+         * Register the routes for products.
+         */
+        public function register_routes()
+        {
+        }
+        /**
+         * Check permissions.
+         *
+         * @param WP_REST_Request $request Full details about the request.
+         * @param string          $context Request context.
+         * @return bool|WP_Error
+         */
+        protected function check_permissions($request, $context = 'read')
+        {
+        }
+        /**
+         * Prepare a single product category output for response.
+         *
+         * @param WP_Term         $item    Term object.
+         * @param WP_REST_Request $request Request instance.
+         * @return WP_REST_Response
+         */
+        public function prepare_item_for_response($item, $request)
+        {
+        }
+        /**
+         * Get the Product's schema, conforming to JSON Schema.
+         *
+         * @return array
+         */
+        public function get_item_schema()
+        {
+        }
+    }
+    /**
+     * REST API Products controller class.
+     *
+     * @package WooCommerce/API
+     */
+    class WC_REST_Blocks_Products_Controller extends \WC_REST_Products_Controller
+    {
+        /**
+         * Endpoint namespace.
+         *
+         * @var string
+         */
+        protected $namespace = 'wc-blocks/v1';
+        /**
+         * Register the routes for products.
+         */
+        public function register_routes()
+        {
+        }
+        /**
+         * Check if a given request has access to read items.
+         *
+         * @param  WP_REST_Request $request Full details about the request.
+         * @return WP_Error|boolean
+         */
+        public function get_items_permissions_check($request)
+        {
+        }
+        /**
+         * Check if a given request has access to read an item.
+         *
+         * @param  WP_REST_Request $request Full details about the request.
+         * @return WP_Error|boolean
+         */
+        public function get_item_permissions_check($request)
+        {
+        }
+        /**
+         * Get a collection of posts.
+         *
+         * @param WP_REST_Request $request Full details about the request.
+         * @return WP_Error|WP_REST_Response
+         */
+        public function get_items($request)
+        {
+        }
+        /**
+         * Get the images for a product or product variation.
+         *
+         * @param WC_Product|WC_Product_Variation $product Product instance.
+         * @return array
+         */
+        protected function get_images($product)
+        {
+        }
+        /**
+         * Prepare a single product output for response.
+         *
+         * @deprecated 3.0.0
+         *
+         * @param WP_Post         $post    Post object.
+         * @param WP_REST_Request $request Request object.
+         * @return WP_REST_Response
+         */
+        public function prepare_item_for_response($post, $request)
+        {
+        }
+        /**
+         * Make extra product orderby features supported by WooCommerce available to the WC API.
+         * This includes 'price', 'popularity', and 'rating'.
+         *
+         * @param WP_REST_Request $request Request data.
+         * @return array
+         */
+        protected function prepare_objects_query($request)
+        {
+        }
+        /**
+         * Get product data.
+         *
+         * @param WC_Product $product Product instance.
+         * @param string     $context Request context.
+         *                            Options: 'view' and 'edit'.
+         * @return array
+         */
+        protected function get_product_data($product, $context = 'view')
+        {
+        }
+        /**
+         * Update the collection params.
+         *
+         * Adds new options for 'orderby', and new parameters 'category_operator', 'attribute_operator'.
+         *
+         * @return array
+         */
+        public function get_collection_params()
+        {
+        }
+        /**
+         * Get the Product's schema, conforming to JSON Schema.
+         *
+         * @return array
+         */
+        public function get_item_schema()
+        {
+        }
+    }
+    /**
+     * Wrapper class for Featured Product callback.
+     */
+    class WC_Block_Featured_Product
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected static $block_name = 'featured-product';
+        /**
+         * Default attribute values, should match what's set in JS `registerBlockType`.
+         *
+         * @var array
+         */
+        protected static $defaults = array('align' => 'none', 'contentAlign' => 'center', 'dimRatio' => 50, 'height' => \false, 'mediaId' => 0, 'mediaSrc' => '', 'showDesc' => \true, 'showPrice' => \true);
+        /**
+         * Render the Featured Product block.
+         *
+         * @param array  $attributes Block attributes. Default empty array.
+         * @param string $content    Block content. Default empty string.
+         * @return string Rendered block type output.
+         */
+        public static function render($attributes, $content)
+        {
+        }
+        /**
+         * Get the styles for the wrapper element (background image, color).
+         *
+         * @param array      $attributes Block attributes. Default empty array.
+         * @param WC_Product $product Product object.
+         * @return string
+         */
+        public static function get_styles($attributes, $product)
+        {
+        }
+        /**
+         * Get class names for the block container.
+         *
+         * @param array $attributes Block attributes. Default empty array.
+         * @return string
+         */
+        public static function get_classes($attributes)
+        {
+        }
+        /**
+         * Returns the main product image URL.
+         *
+         * @param WC_Product $product Product object.
+         * @param string     $size    Image size, defaults to 'full'.
+         * @return string
+         */
+        public static function get_image($product, $size = 'full')
+        {
+        }
+    }
+    /**
+     * WC_Block_Library Class.
+     */
+    class WC_Block_Library
+    {
+        /**
+         * Class instance.
+         *
+         * @var WC_Block_Library instance
+         */
+        protected static $instance = \null;
+        /**
+         * Get class instance
+         */
+        public static function get_instance()
+        {
+        }
+        /**
+         * Constructor.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Get the file modified time as a cache buster if we're in dev mode.
+         *
+         * @param string $file Local path to the file.
+         * @return string The cache buster value to use for the given file.
+         */
+        protected static function get_file_version($file)
+        {
+        }
+        /**
+         * Registers a script according to `wp_register_script`, additionally loading the translations for the file.
+         *
+         * @since 2.0.0
+         *
+         * @param string $handle    Name of the script. Should be unique.
+         * @param string $src       Full URL of the script, or path of the script relative to the WordPress root directory.
+         * @param array  $deps      Optional. An array of registered script handles this script depends on. Default empty array.
+         * @param bool   $has_i18n  Optional. Whether to add a script translation call to this file. Default 'true'.
+         */
+        protected static function register_script($handle, $src, $deps = array(), $has_i18n = \true)
+        {
+        }
+        /**
+         * Registers a style according to `wp_register_style`.
+         *
+         * @since 2.0.0
+         *
+         * @param string $handle Name of the stylesheet. Should be unique.
+         * @param string $src    Full URL of the stylesheet, or path of the stylesheet relative to the WordPress root directory.
+         * @param array  $deps   Optional. An array of registered stylesheet handles this stylesheet depends on. Default empty array.
+         * @param string $media  Optional. The media for which this stylesheet has been defined. Default 'all'. Accepts media types like
+         *                       'all', 'print' and 'screen', or media queries like '(orientation: portrait)' and '(max-width: 640px)'.
+         */
+        protected static function register_style($handle, $src, $deps = array(), $media = 'all')
+        {
+        }
+        /**
+         * Register block scripts & styles.
+         *
+         * @since 2.0.0
+         */
+        public static function register_assets()
+        {
+        }
+        /**
+         * Register blocks, hooking up assets and render functions as needed.
+         *
+         * @since 2.0.0
+         */
+        public static function register_blocks()
+        {
+        }
+        /**
+         * Adds a WooCommerce category to the block inserter.
+         *
+         * @since 2.0.0
+         *
+         * @param array $categories Array of categories.
+         * @return array Array of block categories.
+         */
+        public static function add_block_category($categories)
+        {
+        }
+        /**
+         * Output useful globals before printing any script tags.
+         *
+         * These are used by @woocommerce/components & the block library to set up defaults
+         * based on user-controlled settings from WordPress.
+         *
+         * @since 2.0.0
+         */
+        public static function print_script_settings()
+        {
+        }
+    }
+    /**
      * WC_Ajax class.
      */
     class WC_AJAX
@@ -20563,49 +21217,65 @@ namespace {
         {
         }
         /**
-         * Add order item via ajax.
+         * Add order item via ajax. Used on the edit order screen in WP Admin.
+         *
+         * @throws Exception If order is invalid.
          */
         public static function add_order_item()
         {
         }
         /**
          * Add order fee via ajax.
+         *
+         * @throws Exception If order is invalid.
          */
         public static function add_order_fee()
         {
         }
         /**
          * Add order shipping cost via ajax.
+         *
+         * @throws Exception If order is invalid.
          */
         public static function add_order_shipping()
         {
         }
         /**
          * Add order tax column via ajax.
+         *
+         * @throws Exception If order or tax rate is invalid.
          */
         public static function add_order_tax()
         {
         }
         /**
          * Add order discount via ajax.
+         *
+         * @throws Exception If order or coupon is invalid.
          */
         public static function add_coupon_discount()
         {
         }
         /**
          * Remove coupon from an order via ajax.
+         *
+         * @throws Exception If order or coupon is invalid.
          */
         public static function remove_order_coupon()
         {
         }
         /**
          * Remove an order item.
+         *
+         * @throws Exception If order is invalid.
          */
         public static function remove_order_item()
         {
         }
         /**
          * Remove an order tax.
+         *
+         * @throws Exception If there is an error whilst deleting the rate.
          */
         public static function remove_order_tax()
         {
@@ -20643,8 +21313,8 @@ namespace {
         /**
          * Search for products and echo json.
          *
-         * @param string $term (default: '')
-         * @param bool   $include_variations in search or not
+         * @param string $term (default: '') Term to search for.
+         * @param bool   $include_variations in search or not.
          */
         public static function json_search_products($term = '', $include_variations = \false)
         {
@@ -20713,6 +21383,8 @@ namespace {
         }
         /**
          * Create/Update API key.
+         *
+         * @throws Exception On invalid or empty description, user, or permissions.
          */
         public static function update_api_key()
         {
@@ -20732,8 +21404,8 @@ namespace {
         /**
          * Bulk action - Toggle Enabled.
          *
-         * @param array $variations
-         * @param array $data
+         * @param array $variations List of variations.
+         * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
          */
@@ -20743,8 +21415,8 @@ namespace {
         /**
          * Bulk action - Toggle Downloadable Checkbox.
          *
-         * @param array $variations
-         * @param array $data
+         * @param array $variations List of variations.
+         * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
          */
@@ -20754,8 +21426,8 @@ namespace {
         /**
          * Bulk action - Toggle Virtual Checkbox.
          *
-         * @param array $variations
-         * @param array $data
+         * @param array $variations List of variations.
+         * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
          */
@@ -20765,8 +21437,8 @@ namespace {
         /**
          * Bulk action - Toggle Manage Stock Checkbox.
          *
-         * @param array $variations
-         * @param array $data
+         * @param array $variations List of variations.
+         * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
          */
@@ -20776,8 +21448,8 @@ namespace {
         /**
          * Bulk action - Set Regular Prices.
          *
-         * @param array $variations
-         * @param array $data
+         * @param array $variations List of variations.
+         * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
          */
@@ -20787,8 +21459,8 @@ namespace {
         /**
          * Bulk action - Set Sale Prices.
          *
-         * @param array $variations
-         * @param array $data
+         * @param array $variations List of variations.
+         * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
          */
@@ -20798,8 +21470,8 @@ namespace {
         /**
          * Bulk action - Set Stock Status as In Stock.
          *
-         * @param array $variations
-         * @param array $data
+         * @param array $variations List of variations.
+         * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
          */
@@ -20809,8 +21481,8 @@ namespace {
         /**
          * Bulk action - Set Stock Status as Out of Stock.
          *
-         * @param array $variations
-         * @param array $data
+         * @param array $variations List of variations.
+         * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
          */
@@ -20820,8 +21492,8 @@ namespace {
         /**
          * Bulk action - Set Stock Status as On Backorder.
          *
-         * @param array $variations
-         * @param array $data
+         * @param array $variations List of variations.
+         * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
          */
@@ -20831,8 +21503,8 @@ namespace {
         /**
          * Bulk action - Set Stock.
          *
-         * @param array $variations
-         * @param array $data
+         * @param array $variations List of variations.
+         * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
          */
@@ -20842,8 +21514,8 @@ namespace {
         /**
          * Bulk action - Set Weight.
          *
-         * @param array $variations
-         * @param array $data
+         * @param array $variations List of variations.
+         * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
          */
@@ -20853,8 +21525,8 @@ namespace {
         /**
          * Bulk action - Set Length.
          *
-         * @param array $variations
-         * @param array $data
+         * @param array $variations List of variations.
+         * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
          */
@@ -20864,8 +21536,8 @@ namespace {
         /**
          * Bulk action - Set Width.
          *
-         * @param array $variations
-         * @param array $data
+         * @param array $variations List of variations.
+         * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
          */
@@ -20875,8 +21547,8 @@ namespace {
         /**
          * Bulk action - Set Height.
          *
-         * @param array $variations
-         * @param array $data
+         * @param array $variations List of variations.
+         * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
          */
@@ -20886,8 +21558,8 @@ namespace {
         /**
          * Bulk action - Set Download Limit.
          *
-         * @param array $variations
-         * @param array $data
+         * @param array $variations List of variations.
+         * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
          */
@@ -20897,8 +21569,8 @@ namespace {
         /**
          * Bulk action - Set Download Expiry.
          *
-         * @param array $variations
-         * @param array $data
+         * @param array $variations List of variations.
+         * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
          */
@@ -20908,8 +21580,8 @@ namespace {
         /**
          * Bulk action - Delete all.
          *
-         * @param array $variations
-         * @param array $data
+         * @param array $variations List of variations.
+         * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
          */
@@ -20919,8 +21591,8 @@ namespace {
         /**
          * Bulk action - Sale Schedule.
          *
-         * @param array $variations
-         * @param array $data
+         * @param array $variations List of variations.
+         * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
          */
@@ -20930,8 +21602,8 @@ namespace {
         /**
          * Bulk action - Increase Regular Prices.
          *
-         * @param array $variations
-         * @param array $data
+         * @param array $variations List of variations.
+         * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
          */
@@ -20941,8 +21613,8 @@ namespace {
         /**
          * Bulk action - Decrease Regular Prices.
          *
-         * @param array $variations
-         * @param array $data
+         * @param array $variations List of variations.
+         * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
          */
@@ -20952,8 +21624,8 @@ namespace {
         /**
          * Bulk action - Increase Sale Prices.
          *
-         * @param array $variations
-         * @param array $data
+         * @param array $variations List of variations.
+         * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
          */
@@ -20963,8 +21635,8 @@ namespace {
         /**
          * Bulk action - Decrease Sale Prices.
          *
-         * @param array $variations
-         * @param array $data
+         * @param array $variations List of variations.
+         * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
          */
@@ -20974,10 +21646,10 @@ namespace {
         /**
          * Bulk action - Set Price.
          *
-         * @param array  $variations
-         * @param string $operator + or -
-         * @param string $field price being adjusted _regular_price or _sale_price
-         * @param string $value Price or Percent
+         * @param array  $variations List of variations.
+         * @param string $field price being adjusted _regular_price or _sale_price.
+         * @param string $operator + or -.
+         * @param string $value Price or Percent.
          *
          * @used-by bulk_edit_variations
          */
@@ -20987,9 +21659,9 @@ namespace {
         /**
          * Bulk set convenience function.
          *
-         * @param array  $variations
-         * @param string $field
-         * @param string $value
+         * @param array  $variations List of variations.
+         * @param string $field Field to set.
+         * @param string $value to set.
          */
         private static function variation_bulk_set($variations, $field, $value)
         {
@@ -20997,8 +21669,8 @@ namespace {
         /**
          * Bulk toggle convenience function.
          *
-         * @param array  $variations
-         * @param string $field
+         * @param array  $variations List of variations.
+         * @param string $field Field to toggle.
          */
         private static function variation_bulk_toggle($variations, $field)
         {
@@ -21177,7 +21849,7 @@ namespace {
         }
     }
     /**
-     * API class.
+     * WC_API class.
      */
     class WC_API extends \WC_Legacy_API
     {
@@ -21187,6 +21859,20 @@ namespace {
          * @since 2.0
          */
         public function __construct()
+        {
+        }
+        /**
+         * Init the WC API by adding endpoints for those requests.
+         */
+        private function wc_api_init()
+        {
+        }
+        /**
+         * Init WP REST API by hooking into `rest_api_init`.
+         *
+         * @since 2.6.0
+         */
+        private function rest_api_init()
         {
         }
         /**
@@ -21217,19 +21903,11 @@ namespace {
         {
         }
         /**
-         * Init WP REST API.
-         *
-         * @since 2.6.0
-         */
-        private function rest_api_init()
-        {
-        }
-        /**
          * Include REST API classes.
          *
          * @since 2.6.0
          */
-        private function rest_api_includes()
+        public function rest_api_includes()
         {
         }
         /**
@@ -21583,7 +22261,7 @@ namespace {
          *
          * @var array
          */
-        private $crumbs = array();
+        protected $crumbs = array();
         /**
          * Add a crumb so we don't get lost.
          *
@@ -21618,25 +22296,25 @@ namespace {
         /**
          * Prepend the shop page to shop breadcrumbs.
          */
-        private function prepend_shop_page()
+        protected function prepend_shop_page()
         {
         }
         /**
          * Is home trail..
          */
-        private function add_crumbs_home()
+        protected function add_crumbs_home()
         {
         }
         /**
          * 404 trail.
          */
-        private function add_crumbs_404()
+        protected function add_crumbs_404()
         {
         }
         /**
          * Attachment trail.
          */
-        private function add_crumbs_attachment()
+        protected function add_crumbs_attachment()
         {
         }
         /**
@@ -21645,67 +22323,67 @@ namespace {
          * @param int    $post_id   Post ID.
          * @param string $permalink Post permalink.
          */
-        private function add_crumbs_single($post_id = 0, $permalink = '')
+        protected function add_crumbs_single($post_id = 0, $permalink = '')
         {
         }
         /**
          * Page trail.
          */
-        private function add_crumbs_page()
+        protected function add_crumbs_page()
         {
         }
         /**
          * Product category trail.
          */
-        private function add_crumbs_product_category()
+        protected function add_crumbs_product_category()
         {
         }
         /**
          * Product tag trail.
          */
-        private function add_crumbs_product_tag()
+        protected function add_crumbs_product_tag()
         {
         }
         /**
          * Shop breadcrumb.
          */
-        private function add_crumbs_shop()
+        protected function add_crumbs_shop()
         {
         }
         /**
          * Post type archive trail.
          */
-        private function add_crumbs_post_type_archive()
+        protected function add_crumbs_post_type_archive()
         {
         }
         /**
          * Category trail.
          */
-        private function add_crumbs_category()
+        protected function add_crumbs_category()
         {
         }
         /**
          * Tag trail.
          */
-        private function add_crumbs_tag()
+        protected function add_crumbs_tag()
         {
         }
         /**
          * Add crumbs for date based archives.
          */
-        private function add_crumbs_date()
+        protected function add_crumbs_date()
         {
         }
         /**
          * Add crumbs for taxonomies
          */
-        private function add_crumbs_tax()
+        protected function add_crumbs_tax()
         {
         }
         /**
          * Add a breadcrumb for author archives.
          */
-        private function add_crumbs_author()
+        protected function add_crumbs_author()
         {
         }
         /**
@@ -21714,25 +22392,25 @@ namespace {
          * @param int    $term_id  Term ID.
          * @param string $taxonomy Taxonomy.
          */
-        private function term_ancestors($term_id, $taxonomy)
+        protected function term_ancestors($term_id, $taxonomy)
         {
         }
         /**
          * Endpoints.
          */
-        private function endpoint_trail()
+        protected function endpoint_trail()
         {
         }
         /**
          * Add a breadcrumb for search results.
          */
-        private function search_trail()
+        protected function search_trail()
         {
         }
         /**
          * Add a breadcrumb for pagination.
          */
-        private function paged_trail()
+        protected function paged_trail()
         {
         }
     }
@@ -21742,9 +22420,50 @@ namespace {
     class WC_Cache_Helper
     {
         /**
+         * Transients to delete on shutdown.
+         *
+         * @var array Array of transient keys.
+         */
+        private static $delete_transients = array();
+        /**
          * Hook in methods.
          */
         public static function init()
+        {
+        }
+        /**
+         * Set additonal nocache headers.
+         *
+         * @param array $headers Header names and field values.
+         * @since 3.6.0
+         */
+        public static function additional_nocache_headers($headers)
+        {
+        }
+        /**
+         * Add a transient to delete on shutdown.
+         *
+         * @since 3.6.0
+         * @param string|array $keys Transient key or keys.
+         */
+        public static function queue_delete_transient($keys)
+        {
+        }
+        /**
+         * Transients that don't need to be cleaned right away can be deleted on shutdown to avoid repetition.
+         *
+         * @since 3.6.0
+         */
+        public static function delete_transients_on_shutdown()
+        {
+        }
+        /**
+         * Used to clear layered nav counts based on passed attribute names.
+         *
+         * @since 3.6.0
+         * @param array $attribute_keys Attribute keys.
+         */
+        public static function invalidate_attribute_count($attribute_keys)
         {
         }
         /**
@@ -21810,25 +22529,6 @@ namespace {
         {
         }
         /**
-         * Queues a cleanup event for version transients.
-         *
-         * @param string $version Version of the transient to remove.
-         */
-        protected static function queue_delete_version_transients($version = '')
-        {
-        }
-        /**
-         * When the transient version increases, this is used to remove all past transients to avoid filling the DB.
-         *
-         * Note; this only works on transients appended with the transient version, and when object caching is not being used.
-         *
-         * @since  2.3.10
-         * @param string $version Version of the transient to remove.
-         */
-        public static function delete_version_transients($version = '')
-        {
-        }
-        /**
          * Set constants to prevent caching by some plugins.
          *
          * @param  mixed $return Value to return. Previously hooked into a filter.
@@ -21851,6 +22551,18 @@ namespace {
          * @param string    $taxonomy Taxonomy name.
          */
         public static function clean_term_cache($ids, $taxonomy)
+        {
+        }
+        /**
+         * When the transient version increases, this is used to remove all past transients to avoid filling the DB.
+         *
+         * Note; this only works on transients appended with the transient version, and when object caching is not being used.
+         *
+         * @deprecated 3.6.0 Adjusted transient usage to include versions within the transient values, making this cleanup obsolete.
+         * @since  2.3.10
+         * @param string $version Version of the transient to remove.
+         */
+        public static function delete_version_transients($version = '')
         {
         }
     }
@@ -21969,6 +22681,7 @@ namespace {
          *
          * @since 3.2.0
          * @throws Exception If missing WC_Cart object.
+         *
          * @param WC_Cart $cart Cart object to calculate totals for.
          */
         public function __construct(&$cart)
@@ -22031,7 +22744,7 @@ namespace {
         {
         }
         /**
-         * Set cart hash cookie and items in cart.
+         * Set cart hash cookie and items in cart if not already set.
          *
          * @param bool $set Should cookies be set (true) or unset.
          */
@@ -22051,8 +22764,10 @@ namespace {
          * Get a cart from an order, if user has permission.
          *
          * @since  3.5.0
+         *
          * @param int   $order_id Order ID to try to load.
          * @param array $cart Current cart array.
+         *
          * @return array
          */
         private function populate_cart_from_order($order_id, $cart)
@@ -23715,6 +24430,15 @@ namespace {
         private function is_tax_displayed()
         {
         }
+        /**
+         * Returns the hash based on cart contents.
+         *
+         * @since 3.6.0
+         * @return string hash for cart content
+         */
+        public function get_cart_hash()
+        {
+        }
     }
     /**
      * Checkout class.
@@ -23739,6 +24463,12 @@ namespace {
          * @var array
          */
         protected $legacy_posted_data = array();
+        /**
+         * Caches customer object. @see get_value.
+         *
+         * @var WC_Customer
+         */
+        private $logged_in_customer = \null;
         /**
          * Gets the main WC_Checkout Instance.
          *
@@ -24010,10 +24740,10 @@ namespace {
         {
         }
         /**
-         * Gets the value either from the posted data, or from the users meta data.
+         * Gets the value either from POST, or from the customer object. Sets the default values in checkout fields.
          *
-         * @param string $input Input key.
-         * @return string
+         * @param string $input Name of the input we want to grab data for. e.g. billing_country.
+         * @return string The default value.
          */
         public function get_value($input)
         {
@@ -24288,14 +25018,35 @@ namespace {
          * Get continent code for a country code.
          *
          * @since 2.6.0
-         * @param string $cc Continent code.
+         * @param string $cc Country code.
          * @return string
          */
         public function get_continent_code_for_country($cc)
         {
         }
         /**
+         * Get calling code for a country code.
+         *
+         * @since 3.6.0
+         * @param string $cc Country code.
+         * @return string|array Some countries have multiple. The code will be stripped of - and spaces and always be prefixed with +.
+         */
+        public function get_country_calling_code($cc)
+        {
+        }
+        /**
+         * Get continents that the store ships to.
+         *
+         * @since 3.6.0
+         * @return array
+         */
+        public function get_shipping_continents()
+        {
+        }
+        /**
          * Load the states.
+         *
+         * @deprecated 3.6.0 This method was used to load state files, but is no longer needed. @see get_states().
          */
         public function load_country_states()
         {
@@ -24362,7 +25113,7 @@ namespace {
         {
         }
         /**
-         * Get the allowed countries for the store.
+         * Get countries that the store sells to.
          *
          * @return array
          */
@@ -24370,7 +25121,7 @@ namespace {
         {
         }
         /**
-         * Get the countries you ship to.
+         * Get countries that the store ships to.
          *
          * @return array
          */
@@ -24451,7 +25202,7 @@ namespace {
          *
          * @param string $selected_country Selected country.
          * @param string $selected_state   Selected state.
-         * @param bool   $escape           If should escape HTML.
+         * @param bool   $escape           If we should escape HTML.
          */
         public function country_dropdown_options($selected_country = '', $selected_state = '', $escape = \false)
         {
@@ -26934,7 +27685,7 @@ namespace {
          *
          * @var array
          */
-        protected $deprecated_hooks = array('woocommerce_structured_data_order' => 'woocommerce_email_order_schema_markup', 'woocommerce_add_to_cart_fragments' => 'add_to_cart_fragments', 'woocommerce_add_to_cart_redirect' => 'add_to_cart_redirect', 'woocommerce_product_get_width' => 'woocommerce_product_width', 'woocommerce_product_get_height' => 'woocommerce_product_height', 'woocommerce_product_get_length' => 'woocommerce_product_length', 'woocommerce_product_get_weight' => 'woocommerce_product_weight', 'woocommerce_product_get_sku' => 'woocommerce_get_sku', 'woocommerce_product_get_price' => 'woocommerce_get_price', 'woocommerce_product_get_regular_price' => 'woocommerce_get_regular_price', 'woocommerce_product_get_sale_price' => 'woocommerce_get_sale_price', 'woocommerce_product_get_tax_class' => 'woocommerce_product_tax_class', 'woocommerce_product_get_stock_quantity' => 'woocommerce_get_stock_quantity', 'woocommerce_product_get_attributes' => 'woocommerce_get_product_attributes', 'woocommerce_product_get_gallery_image_ids' => 'woocommerce_product_gallery_attachment_ids', 'woocommerce_product_get_review_count' => 'woocommerce_product_review_count', 'woocommerce_product_get_downloads' => 'woocommerce_product_files', 'woocommerce_order_get_currency' => 'woocommerce_get_currency', 'woocommerce_order_get_discount_total' => 'woocommerce_order_amount_discount_total', 'woocommerce_order_get_discount_tax' => 'woocommerce_order_amount_discount_tax', 'woocommerce_order_get_shipping_total' => 'woocommerce_order_amount_shipping_total', 'woocommerce_order_get_shipping_tax' => 'woocommerce_order_amount_shipping_tax', 'woocommerce_order_get_cart_tax' => 'woocommerce_order_amount_cart_tax', 'woocommerce_order_get_total' => 'woocommerce_order_amount_total', 'woocommerce_order_get_total_tax' => 'woocommerce_order_amount_total_tax', 'woocommerce_order_get_total_discount' => 'woocommerce_order_amount_total_discount', 'woocommerce_order_get_subtotal' => 'woocommerce_order_amount_subtotal', 'woocommerce_order_get_tax_totals' => 'woocommerce_order_tax_totals', 'woocommerce_get_order_refund_get_amount' => 'woocommerce_refund_amount', 'woocommerce_get_order_refund_get_reason' => 'woocommerce_refund_reason', 'default_checkout_billing_country' => 'default_checkout_country', 'default_checkout_billing_state' => 'default_checkout_state', 'default_checkout_billing_postcode' => 'default_checkout_postcode', 'woocommerce_system_status_environment_rows' => 'woocommerce_debug_posting', 'woocommerce_credit_card_type_labels' => 'wocommerce_credit_card_type_labels', 'woocommerce_get_script_data' => array('woocommerce_params', 'wc_geolocation_params', 'wc_single_product_params', 'wc_checkout_params', 'wc_address_i18n_params', 'wc_cart_params', 'wc_cart_fragments_params', 'wc_add_to_cart_params', 'wc_add_to_cart_variation_params', 'wc_country_select_params', 'wc_password_strength_meter_params'), 'woocommerce_settings_tabs_advanced' => 'woocommerce_settings_tabs_api', 'woocommerce_settings_advanced' => 'woocommerce_settings_api');
+        protected $deprecated_hooks = array('woocommerce_structured_data_order' => 'woocommerce_email_order_schema_markup', 'woocommerce_add_to_cart_fragments' => 'add_to_cart_fragments', 'woocommerce_add_to_cart_redirect' => 'add_to_cart_redirect', 'woocommerce_product_get_width' => 'woocommerce_product_width', 'woocommerce_product_get_height' => 'woocommerce_product_height', 'woocommerce_product_get_length' => 'woocommerce_product_length', 'woocommerce_product_get_weight' => 'woocommerce_product_weight', 'woocommerce_product_get_sku' => 'woocommerce_get_sku', 'woocommerce_product_get_price' => 'woocommerce_get_price', 'woocommerce_product_get_regular_price' => 'woocommerce_get_regular_price', 'woocommerce_product_get_sale_price' => 'woocommerce_get_sale_price', 'woocommerce_product_get_tax_class' => 'woocommerce_product_tax_class', 'woocommerce_product_get_stock_quantity' => 'woocommerce_get_stock_quantity', 'woocommerce_product_get_attributes' => 'woocommerce_get_product_attributes', 'woocommerce_product_get_gallery_image_ids' => 'woocommerce_product_gallery_attachment_ids', 'woocommerce_product_get_review_count' => 'woocommerce_product_review_count', 'woocommerce_product_get_downloads' => 'woocommerce_product_files', 'woocommerce_order_get_currency' => 'woocommerce_get_currency', 'woocommerce_order_get_discount_total' => 'woocommerce_order_amount_discount_total', 'woocommerce_order_get_discount_tax' => 'woocommerce_order_amount_discount_tax', 'woocommerce_order_get_shipping_total' => 'woocommerce_order_amount_shipping_total', 'woocommerce_order_get_shipping_tax' => 'woocommerce_order_amount_shipping_tax', 'woocommerce_order_get_cart_tax' => 'woocommerce_order_amount_cart_tax', 'woocommerce_order_get_total' => 'woocommerce_order_amount_total', 'woocommerce_order_get_total_tax' => 'woocommerce_order_amount_total_tax', 'woocommerce_order_get_total_discount' => 'woocommerce_order_amount_total_discount', 'woocommerce_order_get_subtotal' => 'woocommerce_order_amount_subtotal', 'woocommerce_order_get_tax_totals' => 'woocommerce_order_tax_totals', 'woocommerce_get_order_refund_get_amount' => 'woocommerce_refund_amount', 'woocommerce_get_order_refund_get_reason' => 'woocommerce_refund_reason', 'default_checkout_billing_country' => 'default_checkout_country', 'default_checkout_billing_state' => 'default_checkout_state', 'default_checkout_billing_postcode' => 'default_checkout_postcode', 'woocommerce_system_status_environment_rows' => 'woocommerce_debug_posting', 'woocommerce_credit_card_type_labels' => 'wocommerce_credit_card_type_labels', 'woocommerce_settings_tabs_advanced' => 'woocommerce_settings_tabs_api', 'woocommerce_settings_advanced' => 'woocommerce_settings_api');
         /**
          * Array of versions on each hook has been deprecated.
          *
@@ -27603,7 +28354,7 @@ namespace {
         /**
          * Array of email notification classes
          *
-         * @var array
+         * @var WC_Email[]
          */
         public $emails = array();
         /**
@@ -27695,7 +28446,7 @@ namespace {
         /**
          * Return the email classes - used in admin to load settings.
          *
-         * @return array
+         * @return WC_Email[]
          */
         public function get_emails()
         {
@@ -27996,6 +28747,8 @@ namespace {
         }
         /**
          * Process the pay form.
+         *
+         * @throws Exception On payment error.
          */
         public static function pay_action()
         {
@@ -28043,7 +28796,7 @@ namespace {
          *
          * Checks for a valid request, does validation (via hooks) and then redirects if valid.
          *
-         * @param bool $url (default: false)
+         * @param bool $url (default: false) URL to redirect to.
          */
         public static function add_to_cart_action($url = \false)
         {
@@ -28072,6 +28825,7 @@ namespace {
          * Handle adding variable products to the cart.
          *
          * @since 2.4.6 Split from add_to_cart_action.
+         * @throws Exception If add to cart fails.
          * @param int $product_id Product ID to add to the cart.
          * @return bool success or not
          */
@@ -28080,6 +28834,8 @@ namespace {
         }
         /**
          * Process the login form.
+         *
+         * @throws Exception On login error.
          */
         public static function process_login()
         {
@@ -28098,6 +28854,8 @@ namespace {
         }
         /**
          * Process the registration form.
+         *
+         * @throws Exception On registration error.
          */
         public static function process_registration()
         {
@@ -28710,7 +29468,7 @@ namespace {
         }
         /**
          * Get user IP Address using an external service.
-         * This is used mainly as a fallback for users on localhost where
+         * This can be used as a fallback for users on localhost where
          * get_ip_address() will be a local IP and non-geolocatable.
          *
          * @return string
@@ -28726,7 +29484,7 @@ namespace {
          * @param  bool   $api_fallback If true, uses geolocation APIs if the database file doesn't exist (can be slower).
          * @return array
          */
-        public static function geolocate_ip($ip_address = '', $fallback = \true, $api_fallback = \true)
+        public static function geolocate_ip($ip_address = '', $fallback = \false, $api_fallback = \true)
         {
         }
         /**
@@ -28740,6 +29498,8 @@ namespace {
         }
         /**
          * Update geoip database.
+         *
+         * Extract files with PharData. Tool built into PHP since 5.3.
          */
         public static function update_database()
         {
@@ -28843,23 +29603,11 @@ namespace {
          *
          * @var array
          */
-        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'));
-        /**
-         * Background update class.
-         *
-         * @var object
-         */
-        private static $background_updater;
+        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'));
         /**
          * Hook in tabs.
          */
         public static function init()
-        {
-        }
-        /**
-         * Init background updates
-         */
-        public static function init_background_updater()
         {
         }
         /**
@@ -28868,6 +29616,34 @@ namespace {
          * This check is done on all requests and runs if the versions do not match.
          */
         public static function check_version()
+        {
+        }
+        /**
+         * Run an update callback when triggered by ActionScheduler.
+         *
+         * @since 3.6.0
+         * @param string $callback Callback name.
+         */
+        public static function run_update_callback($callback)
+        {
+        }
+        /**
+         * Triggered when a callback will run.
+         *
+         * @since 3.6.0
+         * @param string $callback Callback name.
+         */
+        protected static function run_update_callback_start($callback)
+        {
+        }
+        /**
+         * Triggered when a callback has ran.
+         *
+         * @since 3.6.0
+         * @param string $callback Callback name.
+         * @param bool   $result Return value from callback. Non-false need to run again.
+         */
+        protected static function run_update_callback_end($callback, $result)
         {
         }
         /**
@@ -28903,6 +29679,8 @@ namespace {
         /**
          * Is this a brand new WC install?
          *
+         * A brand new install has no version yet. Also treat empty installs as 'new'.
+         *
          * @since  3.2.0
          * @return boolean
          */
@@ -28915,7 +29693,7 @@ namespace {
          * @since  3.2.0
          * @return boolean
          */
-        private static function needs_db_update()
+        public static function needs_db_update()
         {
         }
         /**
@@ -29004,7 +29782,6 @@ namespace {
          *
          * Tables:
          *      woocommerce_attribute_taxonomies - Table for storing attribute taxonomies - these are user defined
-         *      woocommerce_termmeta - Term meta table - sadly WordPress does not have termmeta so we need our own
          *      woocommerce_downloadable_product_permissions - Table for storing user and guest download permissions.
          *          KEY(order_id, product_id, download_id) used for organizing downloads on the My Account page
          *      woocommerce_order_items - Order line items are stored in a table to make them easily queryable for reports
@@ -29139,7 +29916,7 @@ namespace {
         {
         }
         /**
-         * Removes redirect added during Mailchimp plugin's activation.
+         * Removes redirect added during MailChimp plugin's activation.
          *
          * @param string $option Option name.
          * @param string $value  Option value.
@@ -29248,7 +30025,7 @@ namespace {
         /**
          * Translate severity integer to level string.
          *
-         * @param int $severity Serevity level.
+         * @param int $severity Severity level.
          * @return bool|string False if not recognized. Otherwise string representation of level.
          */
         public static function get_severity_level($severity)
@@ -32528,6 +33305,16 @@ namespace {
         {
         }
         /**
+         * Callback for array filter. Returns true if gateway is of correct type.
+         *
+         * @since 3.6.0
+         * @param object $gateway Gateway to check.
+         * @return bool
+         */
+        protected function filter_valid_gateway_class($gateway)
+        {
+        }
+        /**
          * Set the current, active gateway.
          *
          * @param array $gateways Available payment gateways.
@@ -32559,7 +33346,7 @@ namespace {
          *     @type string $gateway_id Gateway ID.
          *     @type string $type       Token type.
          * }
-         * @return array
+         * @return WC_Payment_Token[]
          */
         public static function get_tokens($args)
         {
@@ -32570,7 +33357,7 @@ namespace {
          * @since 2.6.0
          * @param  int    $customer_id Customer ID.
          * @param  string $gateway_id  Optional Gateway ID for getting tokens for a specific gateway.
-         * @return array               Array of token objects.
+         * @return WC_Payment_Token[]  Array of token objects.
          */
         public static function get_customer_tokens($customer_id, $gateway_id = '')
         {
@@ -32589,8 +33376,8 @@ namespace {
          * Returns an array of payment token objects associated with the passed order ID.
          *
          * @since 2.6.0
-         * @param int $order_id Order ID.
-         * @return array Array of token objects.
+         * @param int $order_id       Order ID.
+         * @return WC_Payment_Token[] Array of token objects.
          */
         public static function get_order_tokens($order_id)
         {
@@ -32611,7 +33398,7 @@ namespace {
          * Remove a payment token from the database by ID.
          *
          * @since 2.6.0
-         * @param WC_Payment_Token $token_id Token ID.
+         * @param int $token_id Token ID.
          */
         public static function delete($token_id)
         {
@@ -32677,19 +33464,6 @@ namespace {
          * @param int $product_id Product ID.
          */
         public static function deferred_product_sync($product_id)
-        {
-        }
-        /**
-         * Delete transients when terms are set.
-         *
-         * @param int    $object_id  Object ID.
-         * @param mixed  $terms      An array of object terms.
-         * @param array  $tt_ids     An array of term taxonomy IDs.
-         * @param string $taxonomy   Taxonomy slug.
-         * @param mixed  $append     Whether to append new terms to the old terms.
-         * @param array  $old_tt_ids Old array of term taxonomy IDs.
-         */
-        public static function set_object_terms($object_id, $terms, $tt_ids, $taxonomy, $append, $old_tt_ids)
         {
         }
         /**
@@ -32766,18 +33540,6 @@ namespace {
         {
         }
         /**
-         * When setting stock level, ensure the stock status is kept in sync.
-         *
-         * @param  int    $meta_id    Meta ID.
-         * @param  int    $object_id  Object ID.
-         * @param  string $meta_key   Meta key.
-         * @param  mixed  $meta_value Meta value.
-         * @deprecated
-         */
-        public static function sync_product_stock_status($meta_id, $object_id, $meta_key, $meta_value)
-        {
-        }
-        /**
          * Forces the order posts to have a title in a certain format (containing the date).
          * Forces certain product data based on the product's type, e.g. grouped products cannot have a parent.
          *
@@ -32848,17 +33610,6 @@ namespace {
         {
         }
         /**
-         * Update changed downloads.
-         *
-         * @deprecated 3.3.0 No action is necessary on changes to download paths since download_id is no longer based on file hash.
-         * @param int   $product_id   Product ID.
-         * @param int   $variation_id Variation ID. Optional product variation identifier.
-         * @param array $downloads    Newly set files.
-         */
-        public static function process_product_file_download_paths($product_id, $variation_id, $downloads)
-        {
-        }
-        /**
          * Flush meta cache for CRUD objects on direct update.
          *
          * @param  int    $meta_id    Meta ID.
@@ -32880,6 +33631,43 @@ namespace {
          * @param bool   $append    Are we appending or setting terms.
          */
         public static function force_default_term($object_id, $terms, $tt_ids, $taxonomy, $append)
+        {
+        }
+        /**
+         * When setting stock level, ensure the stock status is kept in sync.
+         *
+         * @param  int    $meta_id    Meta ID.
+         * @param  int    $object_id  Object ID.
+         * @param  string $meta_key   Meta key.
+         * @param  mixed  $meta_value Meta value.
+         * @deprecated    3.3
+         */
+        public static function sync_product_stock_status($meta_id, $object_id, $meta_key, $meta_value)
+        {
+        }
+        /**
+         * Update changed downloads.
+         *
+         * @deprecated  3.3.0 No action is necessary on changes to download paths since download_id is no longer based on file hash.
+         * @param int   $product_id   Product ID.
+         * @param int   $variation_id Variation ID. Optional product variation identifier.
+         * @param array $downloads    Newly set files.
+         */
+        public static function process_product_file_download_paths($product_id, $variation_id, $downloads)
+        {
+        }
+        /**
+         * Delete transients when terms are set.
+         *
+         * @deprecated   3.6
+         * @param int    $object_id  Object ID.
+         * @param mixed  $terms      An array of object terms.
+         * @param array  $tt_ids     An array of term taxonomy IDs.
+         * @param string $taxonomy   Taxonomy slug.
+         * @param mixed  $append     Whether to append new terms to the old terms.
+         * @param array  $old_tt_ids Old array of term taxonomy IDs.
+         */
+        public static function set_object_terms($object_id, $terms, $tt_ids, $taxonomy, $append, $old_tt_ids)
         {
         }
     }
@@ -33371,7 +34159,7 @@ namespace {
         /**
          * Get name.
          *
-         * @return int
+         * @return string
          */
         public function get_name()
         {
@@ -33795,7 +34583,7 @@ namespace {
          *
          * @param mixed $product_id WC_Product|WP_Post|int|bool $product Product instance, post instance, numeric or false to use global $post.
          * @param array $deprecated Previously used to pass arguments to the factory, e.g. to force a type.
-         * @return WC_Product|bool Product object or null if the product cannot be loaded.
+         * @return WC_Product|bool Product object or false if the product cannot be loaded.
          */
         public function get_product($product_id = \false, $deprecated = array())
         {
@@ -34609,6 +35397,30 @@ namespace {
         public function get_catalog_visibility($context = 'view')
         {
         }
+        /**
+         * Get attribute summary.
+         *
+         * By default, attribute summary contains comma-delimited 'attribute_name: attribute_value' pairs for all attributes.
+         *
+         * @param string $context What the value is for. Valid values are view and edit.
+         *
+         * @since 3.6.0
+         * @return string
+         */
+        public function get_attribute_summary($context = 'view')
+        {
+        }
+        /**
+         * Set attribute summary.
+         *
+         * By default, attribute summary contains comma-delimited 'attribute_name: attribute_value' pairs for all attributes.
+         *
+         * @since 3.6.0
+         * @param string $attribute_summary Summary of attribute names and values assigned to the variation.
+         */
+        public function set_attribute_summary($attribute_summary)
+        {
+        }
         /*
         |--------------------------------------------------------------------------
         | CRUD methods
@@ -34881,6 +35693,19 @@ namespace {
         {
         }
         /**
+         * Custom query used to filter products by price.
+         *
+         * @since 3.6.0
+         *
+         * @param array    $args Query args.
+         * @param WC_Query $wp_query WC_Query object.
+         *
+         * @return array
+         */
+        public function price_filter_post_clauses($args, $wp_query)
+        {
+        }
+        /**
          * Handle numeric price sorting.
          *
          * @param array $args Query args.
@@ -34899,7 +35724,7 @@ namespace {
         {
         }
         /**
-         * WP Core doens't let us change the sort direction for individual orderby params - https://core.trac.wordpress.org/ticket/17065.
+         * WP Core does not let us change the sort direction for individual orderby params - https://core.trac.wordpress.org/ticket/17065.
          *
          * This lets us sort by meta value desc, and have a second orderby param.
          *
@@ -34907,6 +35732,24 @@ namespace {
          * @return array
          */
         public function order_by_popularity_post_clauses($args)
+        {
+        }
+        /**
+         * Order by rating post clauses.
+         *
+         * @param array $args Query args.
+         * @return array
+         */
+        public function order_by_rating_post_clauses($args)
+        {
+        }
+        /**
+         * Join wc_product_meta_lookup to posts if not already joined.
+         *
+         * @param string $sql SQL join.
+         * @return string
+         */
+        private function append_product_sorting_table_join($sql)
         {
         }
         /**
@@ -34927,14 +35770,6 @@ namespace {
          * @return array
          */
         public function get_tax_query($tax_query = array(), $main_query = \false)
-        {
-        }
-        /**
-         * Return a meta query for filtering by price.
-         *
-         * @return array
-         */
-        private function price_filter_meta_query()
         {
         }
         /**
@@ -34985,16 +35820,6 @@ namespace {
         {
         }
         // @codingStandardsIgnoreStart
-        /**
-         * Order by rating post clauses.
-         *
-         * @deprecated 3.0.0
-         * @param array $args
-         * @return array
-         */
-        public function order_by_rating_post_clauses($args)
-        {
-        }
         /**
          * Return a meta query for filtering by rating.
          *
@@ -35196,7 +36021,7 @@ namespace {
          *
          * @param array  $image Image dimensions array.
          * @param string $size Named size.
-         * @return bool
+         * @return bool True if they match. False if they do not (may trigger regen).
          */
         protected static function image_size_matches_settings($image, $size)
         {
@@ -35234,9 +36059,18 @@ namespace {
         {
         }
         /**
+         * Get full size image dimensions.
+         *
+         * @param int $attachment_id Attachment ID of image.
+         * @return array Width and height. Empty array if the dimensions cannot be found.
+         */
+        private static function get_full_size_image_dimensions($attachment_id)
+        {
+        }
+        /**
          * Ensure we are dealing with the correct image attachment
          *
-         * @param WP_Post $attachment Attachment object.
+         * @param int|WP_Post $attachment Attachment object or ID.
          * @return boolean
          */
         public static function is_regeneratable($attachment)
@@ -35273,6 +36107,16 @@ namespace {
          * @return string
          */
         private static function resize_and_return_image($attachment_id, $image, $size, $icon)
+        {
+        }
+        /**
+         * Image downsize, without this classes filtering on the results.
+         *
+         * @param int    $attachment_id Attachment ID.
+         * @param string $size Size to downsize to.
+         * @return string New image URL.
+         */
+        private static function unfiltered_image_downsize($attachment_id, $size)
         {
         }
         /**
@@ -35408,6 +36252,14 @@ namespace {
         {
         }
         /**
+         * Setup cookie and customer ID.
+         *
+         * @since 3.6.0
+         */
+        public function init_session_cookie()
+        {
+        }
+        /**
          * Sets the session cookie on-demand (usually after adding an item to the cart).
          *
          * Since the cookie name (as of 2.1) is prepended with wp, cache systems like batcache will not cache pages when set.
@@ -35417,6 +36269,15 @@ namespace {
          * @param bool $set Should the session cookie be set.
          */
         public function set_customer_session_cookie($set)
+        {
+        }
+        /**
+         * Should the session cookie be secure?
+         *
+         * @since 3.6.0
+         * @return bool
+         */
+        protected function use_secure_cookie()
         {
         }
         /**
@@ -35479,6 +36340,12 @@ namespace {
          * Destroy all session data.
          */
         public function destroy_session()
+        {
+        }
+        /**
+         * Forget all session data without destroying it.
+         */
+        public function forget_session()
         {
         }
         /**
@@ -36151,7 +37018,7 @@ namespace {
          * If a $package is passed some methods may add themselves conditionally and zones will be used.
          *
          * @param array $package Package information.
-         * @return array
+         * @return WC_Shipping_Method[]
          */
         public function load_shipping_methods($package = array())
         {
@@ -36175,7 +37042,7 @@ namespace {
         /**
          * Returns all registered shipping methods for usage.
          *
-         * @return array
+         * @return WC_Shipping_Method[]
          */
         public function get_shipping_methods()
         {
@@ -36601,11 +37468,7 @@ namespace {
     /**
      * Performs tax calculations and loads tax rates
      *
-     * @class 		WC_Tax
-     * @version		2.2.0
-     * @package		WooCommerce/Classes
-     * @category	Class
-     * @author 		WooThemes
+     * @class WC_Tax
      */
     class WC_Tax
     {
@@ -36623,16 +37486,15 @@ namespace {
         public static $round_at_subtotal = \false;
         /**
          * Load options.
-         *
-         * @access public
          */
         public static function init()
         {
         }
         /**
          * When the woocommerce_tax_classes option is changed, remove any orphan rates.
-         * @param  string $old_value
-         * @param  string $value
+         *
+         * @param  string $old_value Old rates value.
+         * @param  string $value New rates value.
          */
         public static function maybe_remove_tax_class_rates($old_value, $value)
         {
@@ -36652,9 +37514,9 @@ namespace {
         /**
          * Calculate the shipping tax using a passed array of rates.
          *
-         * @param   float		Price
-         * @param	array		Taxation Rate
-         * @return  array
+         * @param float $price Shipping cost.
+         * @param array $rates Taxation Rate.
+         * @return array
          */
         public static function calc_shipping_tax($price, $rates)
         {
@@ -36669,8 +37531,7 @@ namespace {
          * }
          * add_filter( 'woocommerce_tax_round', 'euro_5cent_rounding' );
          *
-         * @param float|int $in
-         *
+         * @param float|int $in Value to round.
          * @return float
          */
         public static function round($in)
@@ -36699,7 +37560,7 @@ namespace {
         /**
          * Searches for all matching country/state/postcode tax rates.
          *
-         * @param array $args
+         * @param array $args Args that determine the rate to find.
          * @return array
          */
         public static function find_rates($args = array())
@@ -36708,7 +37569,7 @@ namespace {
         /**
          * Searches for all matching country/state/postcode tax rates.
          *
-         * @param array $args
+         * @param array $args Args that determine the rate to find.
          * @return array
          */
         public static function find_shipping_rates($args = array())
@@ -36716,12 +37577,12 @@ namespace {
         }
         /**
          * Does the sort comparison. Compares (in this order):
-         * 	- Priority
-         *  - Country
-         *  - State
-         *  - Number of postcodes
-         *  - Number of cities
-         *  - ID
+         * - Priority
+         * - Country
+         * - State
+         * - Number of postcodes
+         * - Number of cities
+         * - ID
          *
          * @param object $rate1 First rate to compare.
          * @param object $rate2 Second rate to compare.
@@ -36757,7 +37618,7 @@ namespace {
          *
          * Used by get_rates(), get_shipping_rates().
          *
-         * @param  $tax_class string Optional, passed to the filter for advanced tax setups.
+         * @param  string $tax_class string Optional, passed to the filter for advanced tax setups.
          * @param  object $customer Override the customer object to get their location.
          * @return array
          */
@@ -36777,8 +37638,8 @@ namespace {
         /**
          * Get's an array of matching rates for the shop's base country.
          *
-         * @param   string	Tax Class
-         * @return  array
+         * @param string $tax_class Tax Class.
+         * @return array
          */
         public static function get_base_tax_rates($tax_class = '')
         {
@@ -36787,8 +37648,8 @@ namespace {
          * Alias for get_base_tax_rates().
          *
          * @deprecated 2.3
-         * @param   string	Tax Class
-         * @return  array
+         * @param string $tax_class Tax Class.
+         * @return array
          */
         public static function get_shop_base_rate($tax_class = '')
         {
@@ -36806,7 +37667,7 @@ namespace {
         /**
          * Return true/false depending on if a rate is a compound rate.
          *
-         * @param mixed $key_or_rate Tax rate ID, or the db row itself in object format
+         * @param mixed $key_or_rate Tax rate ID, or the db row itself in object format.
          * @return  bool
          */
         public static function is_compound($key_or_rate)
@@ -36815,7 +37676,7 @@ namespace {
         /**
          * Return a given rates label.
          *
-         * @param mixed $key_or_rate Tax rate ID, or the db row itself in object format
+         * @param mixed $key_or_rate Tax rate ID, or the db row itself in object format.
          * @return  string
          */
         public static function get_rate_label($key_or_rate)
@@ -36824,7 +37685,7 @@ namespace {
         /**
          * Return a given rates percent.
          *
-         * @param mixed $key_or_rate Tax rate ID, or the db row itself in object format
+         * @param mixed $key_or_rate Tax rate ID, or the db row itself in object format.
          * @return  string
          */
         public static function get_rate_percent($key_or_rate)
@@ -36833,18 +37694,17 @@ namespace {
         /**
          * Get a rates code. Code is made up of COUNTRY-STATE-NAME-Priority. E.g GB-VAT-1, US-AL-TAX-1.
          *
-         * @access public
-         * @param mixed $key_or_rate Tax rate ID, or the db row itself in object format
+         * @param mixed $key_or_rate Tax rate ID, or the db row itself in object format.
          * @return string
          */
         public static function get_rate_code($key_or_rate)
         {
         }
         /**
-         * Round tax lines and return the sum.
+         * Sums a set of taxes to form a single total. Values are pre-rounded to precision from 3.6.0.
          *
-         * @param   array
-         * @return  float
+         * @param  array $taxes Array of taxes.
+         * @return float
          */
         public static function get_tax_total($taxes)
         {
@@ -36876,56 +37736,63 @@ namespace {
         {
         }
         /**
-         * format the city.
-         * @param  string $city
+         * Format the city.
+         *
+         * @param  string $city Value to format.
          * @return string
          */
         private static function format_tax_rate_city($city)
         {
         }
         /**
-         * format the state.
-         * @param  string $state
+         * Format the state.
+         *
+         * @param  string $state Value to format.
          * @return string
          */
         private static function format_tax_rate_state($state)
         {
         }
         /**
-         * format the country.
-         * @param  string $country
+         * Format the country.
+         *
+         * @param  string $country Value to format.
          * @return string
          */
         private static function format_tax_rate_country($country)
         {
         }
         /**
-         * format the tax rate name.
-         * @param  string $name
+         * Format the tax rate name.
+         *
+         * @param  string $name Value to format.
          * @return string
          */
         private static function format_tax_rate_name($name)
         {
         }
         /**
-         * format the rate.
-         * @param  double $rate
+         * Format the rate.
+         *
+         * @param  float $rate Value to format.
          * @return string
          */
         private static function format_tax_rate($rate)
         {
         }
         /**
-         * format the priority.
-         * @param  string $priority
+         * Format the priority.
+         *
+         * @param  string $priority Value to format.
          * @return int
          */
         private static function format_tax_rate_priority($priority)
         {
         }
         /**
-         * format the class.
-         * @param  string $class
+         * Format the class.
+         *
+         * @param  string $class Value to format.
          * @return string
          */
         public static function format_tax_rate_class($class)
@@ -36933,7 +37800,8 @@ namespace {
         }
         /**
          * Prepare and format tax rate for DB insertion.
-         * @param  array $tax_rate
+         *
+         * @param  array $tax_rate Tax rate to format.
          * @return array
          */
         private static function prepare_tax_rate($tax_rate)
@@ -36945,10 +37813,8 @@ namespace {
          * Internal use only.
          *
          * @since 2.3.0
-         * @access private
          *
-         * @param  array $tax_rate
-         *
+         * @param  array $tax_rate Tax rate to insert.
          * @return int tax rate id
          */
         public static function _insert_tax_rate($tax_rate)
@@ -36960,11 +37826,9 @@ namespace {
          * Internal use only.
          *
          * @since 2.5.0
-         * @access private
          *
-         * @param int $tax_rate_id
-         * @param string $output_type
-         *
+         * @param int    $tax_rate_id Tax rate ID.
+         * @param string $output_type Type of output.
          * @return array|object
          */
         public static function _get_tax_rate($tax_rate_id, $output_type = \ARRAY_A)
@@ -36976,10 +37840,9 @@ namespace {
          * Internal use only.
          *
          * @since 2.3.0
-         * @access private
          *
-         * @param int $tax_rate_id
-         * @param array $tax_rate
+         * @param int   $tax_rate_id Tax rate to update.
+         * @param array $tax_rate Tax rate values.
          */
         public static function _update_tax_rate($tax_rate_id, $tax_rate)
         {
@@ -36990,9 +37853,7 @@ namespace {
          * Internal use only.
          *
          * @since 2.3.0
-         * @access private
-         *
-         * @param  int $tax_rate_id
+         * @param  int $tax_rate_id Tax rate to delete.
          */
         public static function _delete_tax_rate($tax_rate_id)
         {
@@ -37003,10 +37864,9 @@ namespace {
          * Internal use only.
          *
          * @since 2.3.0
-         * @access private
          *
-         * @param  int $tax_rate_id
-         * @param  string $postcodes String of postcodes separated by ; characters
+         * @param int    $tax_rate_id Tax rate to update.
+         * @param string $postcodes String of postcodes separated by ; characters.
          */
         public static function _update_tax_rate_postcodes($tax_rate_id, $postcodes)
         {
@@ -37017,10 +37877,9 @@ namespace {
          * Internal use only.
          *
          * @since 2.3.0
-         * @access private
          *
-         * @param  int $tax_rate_id
-         * @param  string $cities
+         * @param int    $tax_rate_id Tax rate to update.
+         * @param string $cities Cities to set.
          */
         public static function _update_tax_rate_cities($tax_rate_id, $cities)
         {
@@ -37031,19 +37890,18 @@ namespace {
          * Internal use only.
          *
          * @since 2.3.0
-         * @access private
          *
-         * @param int $tax_rate_id
-         * @param array $values
-         * @param string $type
+         * @param int    $tax_rate_id Tax rate ID to update.
+         * @param array  $values Values to set.
+         * @param string $type Location type.
          */
-        private static function _update_tax_rate_locations($tax_rate_id, $values, $type)
+        private static function update_tax_rate_locations($tax_rate_id, $values, $type)
         {
         }
         /**
          * Used by admin settings page.
          *
-         * @param string $tax_class
+         * @param string $tax_class Tax class slug.
          *
          * @return array|null|object
          */
@@ -37083,14 +37941,14 @@ namespace {
         /**
          * Load a template.
          *
-         * Handles template usage so that we can use our own templates instead of the themes.
+         * Handles template usage so that we can use our own templates instead of the theme's.
          *
-         * Templates are in the 'templates' folder. woocommerce looks for theme.
+         * Templates are in the 'templates' folder. WooCommerce looks for theme
          * overrides in /theme/woocommerce/ by default.
          *
-         * For beginners, it also looks for a woocommerce.php template first. If the user adds.
-         * this to the theme (containing a woocommerce() inside) this will be used for all.
-         * woocommerce templates.
+         * For beginners, it also looks for a woocommerce.php template first. If the user adds
+         * this to the theme (containing a woocommerce() inside) this will be used for all
+         * WooCommerce templates.
          *
          * @param string $template Template to load.
          * @return string
@@ -37363,7 +38221,7 @@ namespace {
          *
          * @return array
          */
-        private static function get_product_counts()
+        public static function get_product_counts()
         {
         }
         /**
@@ -37443,7 +38301,7 @@ namespace {
          *
          * @return array
          */
-        private static function get_order_totals()
+        public static function get_order_totals()
         {
         }
         /**
@@ -37452,14 +38310,6 @@ namespace {
          * @return string
          */
         private static function get_order_dates()
-        {
-        }
-        /**
-         * Make a request when opting out of tracker usage.
-         *
-         * @return void
-         */
-        public static function opt_out_request()
         {
         }
     }
@@ -37617,6 +38467,74 @@ namespace {
          * @return bool       True if webhook should be delivered, false otherwise.
          */
         private function should_deliver($arg)
+        {
+        }
+        /**
+         * Returns if webhook is active.
+         *
+         * @since  3.6.0
+         * @return bool  True if validation passes.
+         */
+        private function is_active()
+        {
+        }
+        /**
+         * Returns if topic is valid.
+         *
+         * @since  3.6.0
+         * @return bool  True if validation passes.
+         */
+        private function is_valid_topic()
+        {
+        }
+        /**
+         * Validates the criteria for certain actions.
+         *
+         * @since  3.6.0
+         * @param  mixed $arg First hook argument.
+         * @return bool       True if validation passes.
+         */
+        private function is_valid_action($arg)
+        {
+        }
+        /**
+         * Validates post actions.
+         *
+         * @since  3.6.0
+         * @param  mixed $arg First hook argument.
+         * @return bool       True if validation passes.
+         */
+        private function is_valid_post_action($arg)
+        {
+        }
+        /**
+         * Validates user actions.
+         *
+         * @since  3.6.0
+         * @param  mixed $arg First hook argument.
+         * @return bool       True if validation passes.
+         */
+        private function is_valid_user_action($arg)
+        {
+        }
+        /**
+         * Validates WC processing actions.
+         *
+         * @since  3.6.0
+         * @param  mixed $arg First hook argument.
+         * @return bool       True if validation passes.
+         */
+        private function is_valid_processing_action($arg)
+        {
+        }
+        /**
+         * Checks the resource for this webhook is valid e.g. valid post status.
+         *
+         * @since  3.6.0
+         * @param  mixed $arg First hook argument.
+         * @return bool       True if validation passes.
+         */
+        private function is_valid_resource($arg)
         {
         }
         /**
@@ -38045,7 +38963,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '3.5.8';
+        public $version = '3.6.0';
         /**
          * The single instance of the class.
          *
@@ -38158,6 +39076,18 @@ namespace {
         {
         }
         /**
+         * When WP has loaded all plugins, trigger the `woocommerce_loaded` hook.
+         *
+         * This ensures `woocommerce_loaded` is called only after all other plugins
+         * are loaded, to avoid issues caused by plugin directory naming changing
+         * the load order. See #21524 for details.
+         *
+         * @since 3.6.0
+         */
+        public function on_plugins_loaded()
+        {
+        }
+        /**
          * Hook into actions and filters.
          *
          * @since 2.3
@@ -38186,6 +39116,18 @@ namespace {
          * @param string|bool $value Constant value.
          */
         private function define($name, $value)
+        {
+        }
+        /**
+         * Returns true if the request is a non-legacy REST API request.
+         *
+         * Legacy REST requests should still run some extra code for backwards compatibility.
+         *
+         * @todo: replace this function once core WP function is available: https://core.trac.wordpress.org/ticket/42061.
+         *
+         * @return bool
+         */
+        public function is_rest_api_request()
         {
         }
         /**
@@ -38321,9 +39263,27 @@ namespace {
         {
         }
         /**
-         * WooCommerce Payment Token Meta API and Term/Order item Meta - set table names.
+         * Set tablenames inside WPDB object.
          */
         public function wpdb_table_fix()
+        {
+        }
+        /**
+         * Ran when any plugin is activated.
+         *
+         * @since 3.6.0
+         * @param string $filename The filename of the activated plugin.
+         */
+        public function activated_plugin($filename)
+        {
+        }
+        /**
+         * Ran when any plugin is deactivated.
+         *
+         * @since 3.6.0
+         * @param string $filename The filename of the deactivated plugin.
+         */
+        public function deactivated_plugin($filename)
         {
         }
         /**
@@ -38893,9 +39853,18 @@ namespace {
          * Data stored in meta keys, but not considered "meta" for an object.
          *
          * @since 3.0.0
+         *
          * @var array
          */
         protected $internal_meta_keys = array();
+        /**
+         * Meta data which should exist in the DB, even if empty.
+         *
+         * @since 3.6.0
+         *
+         * @var array
+         */
+        protected $must_exist_meta_keys = array();
         /**
          * Get and store terms from a taxonomy.
          *
@@ -38991,6 +39960,26 @@ namespace {
         {
         }
         /**
+         * Update meta data in, or delete it from, the database.
+         *
+         * Avoids storing meta when it's either an empty string or empty array.
+         * Other empty values such as numeric 0 and null should still be stored.
+         * Data-stores can force meta to exist using `must_exist_meta_keys`.
+         *
+         * Note: WordPress `get_metadata` function returns an empty string when meta data does not exist.
+         *
+         * @param WC_Data $object The WP_Data object (WC_Coupon for coupons, etc).
+         * @param string  $meta_key Meta key to update.
+         * @param mixed   $meta_value Value to save.
+         *
+         * @since 3.6.0 Added to prevent empty meta being stored unless required.
+         *
+         * @return bool True if updated/deleted.
+         */
+        protected function update_or_delete_post_meta($object, $meta_key, $meta_value)
+        {
+        }
+        /**
          * Get valid WP_Query args from a WC_Object_Query's query variables.
          *
          * @since 3.1.0
@@ -39044,6 +40033,47 @@ namespace {
          * @return array Stopwords.
          */
         protected function get_search_stopwords()
+        {
+        }
+        /**
+         * Get data to save to a lookup table.
+         *
+         * @since 3.6.0
+         * @param int    $id ID of object to update.
+         * @param string $table Lookup table name.
+         * @return array
+         */
+        protected function get_data_for_lookup_table($id, $table)
+        {
+        }
+        /**
+         * Get primary key name for lookup table.
+         *
+         * @since 3.6.0
+         * @param string $table Lookup table name.
+         * @return string
+         */
+        protected function get_primary_key_for_lookup_table($table)
+        {
+        }
+        /**
+         * Update a lookup table for an object.
+         *
+         * @since 3.6.0
+         * @param int    $id ID of object to update.
+         * @param string $table Lookup table name.
+         */
+        protected function update_lookup_table($id, $table)
+        {
+        }
+        /**
+         * Delete lookup table data for an ID.
+         *
+         * @since 3.6.0
+         * @param int    $id ID of object to update.
+         * @param string $table Lookup table name.
+         */
+        public function delete_from_lookup_table($id, $table)
         {
         }
     }
@@ -39114,6 +40144,18 @@ namespace {
         | Additional Methods
         |--------------------------------------------------------------------------
         */
+        /**
+         * Get the status to save to the post object.
+         *
+         * Plugins extending the order classes can override this to change the stored status/add prefixes etc.
+         *
+         * @since 3.6.0
+         * @param  WC_order $order Order object.
+         * @return string
+         */
+        protected function get_post_status($order)
+        {
+        }
         /**
          * Excerpt for post.
          *
@@ -39603,7 +40645,7 @@ namespace {
          * @since 3.0.0
          * @var array
          */
-        protected $internal_meta_keys = array('locale', 'billing_postcode', 'billing_city', 'billing_address_1', 'billing_address_2', 'billing_state', 'billing_country', 'shipping_postcode', 'shipping_city', 'shipping_address_1', 'shipping_address_2', 'shipping_state', 'shipping_country', 'paying_customer', 'last_update', 'first_name', 'last_name', 'display_name', 'show_admin_bar_front', 'use_ssl', 'admin_color', 'rich_editing', 'comment_shortcuts', 'dismissed_wp_pointers', 'show_welcome_panel', 'session_tokens', 'nickname', 'description', 'billing_first_name', 'billing_last_name', 'billing_company', 'billing_phone', 'billing_email', 'shipping_first_name', 'shipping_last_name', 'shipping_company', 'wptests_capabilities', 'wptests_user_level', 'syntax_highlighting', '_order_count', '_money_spent');
+        protected $internal_meta_keys = array('locale', 'billing_postcode', 'billing_city', 'billing_address_1', 'billing_address_2', 'billing_state', 'billing_country', 'shipping_postcode', 'shipping_city', 'shipping_address_1', 'shipping_address_2', 'shipping_state', 'shipping_country', 'paying_customer', 'last_update', 'first_name', 'last_name', 'display_name', 'show_admin_bar_front', 'use_ssl', 'admin_color', 'rich_editing', 'comment_shortcuts', 'dismissed_wp_pointers', 'show_welcome_panel', 'session_tokens', 'nickname', 'description', 'billing_first_name', 'billing_last_name', 'billing_company', 'billing_phone', 'billing_email', 'shipping_first_name', 'shipping_last_name', 'shipping_company', 'wptests_capabilities', 'wptests_user_level', 'syntax_highlighting', '_order_count', '_money_spent', '_woocommerce_tracks_anon_id');
         /**
          * Internal meta type used to store user data.
          *
@@ -41012,7 +42054,7 @@ namespace {
          * Should contain the fields token_id, gateway_id, token, user_id, type, is_default.
          *
          * @since 3.0.0
-         * @param id $user_id User ID.
+         * @param int $user_id User ID.
          * @return object
          */
         public function get_users_default_token($user_id)
@@ -41197,6 +42239,14 @@ namespace {
          * @var array
          */
         protected $internal_meta_keys = array('_visibility', '_sku', '_price', '_regular_price', '_sale_price', '_sale_price_dates_from', '_sale_price_dates_to', 'total_sales', '_tax_status', '_tax_class', '_manage_stock', '_stock', '_stock_status', '_backorders', '_low_stock_amount', '_sold_individually', '_weight', '_length', '_width', '_height', '_upsell_ids', '_crosssell_ids', '_purchase_note', '_default_attributes', '_product_attributes', '_virtual', '_downloadable', '_download_limit', '_download_expiry', '_featured', '_downloadable_files', '_wc_rating_count', '_wc_average_rating', '_wc_review_count', '_variation_description', '_thumbnail_id', '_file_paths', '_product_image_gallery', '_product_version', '_wp_old_slug', '_edit_last', '_edit_lock');
+        /**
+         * Meta data which should exist in the DB, even if empty.
+         *
+         * @since 3.6.0
+         *
+         * @var array
+         */
+        protected $must_exist_meta_keys = array('_tax_class');
         /**
          * If we have already saved our extra data, don't do automatic / default handling.
          *
@@ -41454,6 +42504,18 @@ namespace {
         {
         }
         /**
+         * Creates all possible combinations of variations from the attributes, without creating duplicates.
+         *
+         * @since  3.6.0
+         * @todo   Add to interface in 4.0.
+         * @param  WC_Product $product Variable product.
+         * @param  int        $limit Limit the number of created variations.
+         * @return int        Number of created variations.
+         */
+        public function create_all_product_variations($product, $limit = -1)
+        {
+        }
+        /**
          * Make sure all variations have a sort order set so they can be reordered correctly.
          *
          * @param int $parent_id Product ID.
@@ -41520,6 +42582,7 @@ namespace {
          * Update a products average rating meta.
          *
          * @since 3.0.0
+         * @todo Deprecate unused function?
          * @param WC_Product $product Product object.
          */
         public function update_average_rating($product)
@@ -41529,6 +42592,7 @@ namespace {
          * Update a products review count meta.
          *
          * @since 3.0.0
+         * @todo Deprecate unused function?
          * @param WC_Product $product Product object.
          */
         public function update_review_count($product)
@@ -41538,6 +42602,7 @@ namespace {
          * Update a products rating counts.
          *
          * @since 3.0.0
+         * @todo Deprecate unused function?
          * @param WC_Product $product Product object.
          */
         public function update_rating_counts($product)
@@ -41566,14 +42631,16 @@ namespace {
         /**
          * Search product data for a term and return ids.
          *
-         * @param  string   $term Search term.
-         * @param  string   $type Type of product.
-         * @param  bool     $include_variations Include variations in search or not.
-         * @param  bool     $all_statuses Should we search all statuses or limit to published.
-         * @param  null|int $limit Limit returned results. @since 3.5.0.
+         * @param  string     $term Search term.
+         * @param  string     $type Type of product.
+         * @param  bool       $include_variations Include variations in search or not.
+         * @param  bool       $all_statuses Should we search all statuses or limit to published.
+         * @param  null|int   $limit Limit returned results. @since 3.5.0.
+         * @param  null|array $include Keep specific results. @since 3.6.0.
+         * @param  null|array $exclude Discard specific results. @since 3.6.0.
          * @return array of ids
          */
-        public function search_products($term, $type = '', $include_variations = \false, $all_statuses = \false, $limit = \null)
+        public function search_products($term, $type = '', $include_variations = \false, $all_statuses = \false, $limit = \null, $include = \null, $exclude = \null)
         {
         }
         /**
@@ -41617,6 +42684,27 @@ namespace {
          * @return array|object
          */
         public function query($query_vars)
+        {
+        }
+        /**
+         * Get data to save to a lookup table.
+         *
+         * @since 3.6.0
+         * @param int    $id ID of object to update.
+         * @param string $table Lookup table name.
+         * @return array
+         */
+        protected function get_data_for_lookup_table($id, $table)
+        {
+        }
+        /**
+         * Get primary key name for lookup table.
+         *
+         * @since 3.6.0
+         * @param string $table Lookup table name.
+         * @return string
+         */
+        protected function get_primary_key_for_lookup_table($table)
         {
         }
     }
@@ -41943,7 +43031,8 @@ namespace {
          * Reads a product from the database and sets its data to the class.
          *
          * @since 3.0.0
-         * @param WC_Product $product Product object. $product Product object.
+         * @param WC_Product_Variation $product Product object.
+         * @throws WC_Data_Exception If WC_Product::set_tax_status() is called with an invalid tax status (via read_product_data).
          */
         public function read(&$product)
         {
@@ -41952,7 +43041,7 @@ namespace {
          * Create a new product.
          *
          * @since 3.0.0
-         * @param WC_Product $product Product object.
+         * @param WC_Product_Variation $product Product object.
          */
         public function create(&$product)
         {
@@ -41961,7 +43050,7 @@ namespace {
          * Updates an existing product.
          *
          * @since 3.0.0
-         * @param WC_Product $product Product object.
+         * @param WC_Product_Variation $product Product object.
          */
         public function update(&$product)
         {
@@ -41983,6 +43072,19 @@ namespace {
         {
         }
         /**
+         * Generates attribute summary for the variation.
+         *
+         * Attribute summary contains comma-delimited 'attribute_name: attribute_value' pairs for all attributes.
+         *
+         * @since 3.6.0
+         * @param WC_Product_Variation $product Product variation to generate the attribute summary for.
+         *
+         * @return string
+         */
+        protected function generate_attribute_summary($product)
+        {
+        }
+        /**
          * Make sure we store the product version (to track data changes).
          *
          * @param WC_Product $product Product object.
@@ -41995,7 +43097,7 @@ namespace {
          * Read post data.
          *
          * @since 3.0.0
-         * @param WC_Product $product Product object.
+         * @param WC_Product_Variation $product Product object.
          * @throws WC_Data_Exception If WC_Product::set_tax_status() is called with an invalid tax status.
          */
         protected function read_product_data(&$product)
@@ -42040,6 +43142,16 @@ namespace {
          * @param bool       $force Force update. Used during create.
          */
         public function update_post_meta(&$product, $force = \false)
+        {
+        }
+        /**
+         * Update product variation guid.
+         *
+         * @param WC_Product_Variation $product Product variation object.
+         *
+         * @since 3.6.0
+         */
+        protected function update_guid($product)
         {
         }
     }
@@ -42276,9 +43388,11 @@ namespace {
          * Get all webhooks IDs.
          *
          * @since  3.2.0
+         * @throws InvalidArgumentException If a $status value is passed in that is not in the known wc_get_webhook_statuses() keys.
+         * @param  string $status Optional - status to filter results by. Must be a key in return value of @see wc_get_webhook_statuses(). @since 3.6.0.
          * @return int[]
          */
-        public function get_webhooks_ids();
+        public function get_webhooks_ids($status = '');
     }
     /**
      * Webhook data store class.
@@ -42318,9 +43432,8 @@ namespace {
          *
          * @since 3.3.0
          * @param WC_Webhook $webhook      Webhook instance.
-         * @param bool       $force_delete Skip trash bin forcing to delete.
          */
-        public function delete(&$webhook, $force_delete = \false)
+        public function delete(&$webhook)
         {
         }
         /**
@@ -42334,21 +43447,33 @@ namespace {
         {
         }
         /**
-         * Get all webhooks IDs.
+         * Get webhooks IDs from the database.
          *
          * @since  3.3.0
+         * @throws InvalidArgumentException If a $status value is passed in that is not in the known wc_get_webhook_statuses() keys.
+         * @param  string $status Optional - status to filter results by. Must be a key in return value of @see wc_get_webhook_statuses(). @since 3.6.0.
          * @return int[]
          */
-        public function get_webhooks_ids()
+        public function get_webhooks_ids($status = '')
         {
         }
         /**
          * Search webhooks.
          *
          * @param  array $args Search arguments.
-         * @return array
+         * @return array|object
          */
         public function search_webhooks($args)
+        {
+        }
+        /**
+         * Count webhooks.
+         *
+         * @since 3.6.0
+         * @param string $status Status to count.
+         * @return int
+         */
+        protected function get_webhook_count($status = 'active')
         {
         }
         /**
@@ -42357,6 +43482,35 @@ namespace {
          * @return array
          */
         public function get_count_webhooks_by_status()
+        {
+        }
+        /**
+         * Check if a given string is in known statuses, based on return value of @see wc_get_webhook_statuses().
+         *
+         * @since  3.6.0
+         * @throws InvalidArgumentException If $status is not empty and not in the known wc_get_webhook_statuses() keys.
+         * @param  string $status Status to check.
+         */
+        private function validate_status($status)
+        {
+        }
+        /**
+         * Get the transient key used to cache a set of webhook IDs, optionally filtered by status.
+         *
+         * @since  3.6.0
+         * @param  string $status Optional - status of cache key.
+         * @return string
+         */
+        private function get_transient_key($status = '')
+        {
+        }
+        /**
+         * Delete the transients used to cache a set of webhook IDs, optionally filtered by status.
+         *
+         * @since 3.6.0
+         * @param string $status Optional - status of cache to delete, or 'all' to delete all caches.
+         */
+        private function delete_transients($status = '')
         {
         }
     }
@@ -44188,8 +45342,9 @@ namespace {
         /**
          * Should meta be exported?
          *
-         * @since 3.1.0
          * @param bool $enable_meta_export Should meta be exported.
+         *
+         * @since 3.1.0
          */
         public function enable_meta_export($enable_meta_export)
         {
@@ -44197,8 +45352,9 @@ namespace {
         /**
          * Product types to export.
          *
-         * @since 3.1.0
          * @param array $product_types_to_export List of types to export.
+         *
+         * @since 3.1.0
          */
         public function set_product_types_to_export($product_types_to_export)
         {
@@ -44206,8 +45362,9 @@ namespace {
         /**
          * Product category to export
          *
-         * @since 3.5.0
          * @param string $product_category_to_export Product category slug to export, empty string exports all.
+         *
+         * @since  3.5.0
          * @return void
          */
         public function set_product_category_to_export($product_category_to_export)
@@ -44216,7 +45373,7 @@ namespace {
         /**
          * Return an array of columns to export.
          *
-         * @since 3.1.0
+         * @since  3.1.0
          * @return array
          */
         public function get_default_column_names()
@@ -44234,6 +45391,7 @@ namespace {
          * Take a product and generate row data from it for export.
          *
          * @param WC_Product $product WC_Product object.
+         *
          * @return array
          */
         protected function generate_row_data($product)
@@ -44242,8 +45400,9 @@ namespace {
         /**
          * Get published value.
          *
-         * @since 3.1.0
          * @param WC_Product $product Product being exported.
+         *
+         * @since  3.1.0
          * @return int
          */
         protected function get_column_value_published($product)
@@ -44253,6 +45412,7 @@ namespace {
          * Get formatted sale price.
          *
          * @param WC_Product $product Product being exported.
+         *
          * @return string
          */
         protected function get_column_value_sale_price($product)
@@ -44262,6 +45422,7 @@ namespace {
          * Get formatted regular price.
          *
          * @param WC_Product $product Product being exported.
+         *
          * @return string
          */
         protected function get_column_value_regular_price($product)
@@ -44270,8 +45431,9 @@ namespace {
         /**
          * Get product_cat value.
          *
-         * @since 3.1.0
          * @param WC_Product $product Product being exported.
+         *
+         * @since  3.1.0
          * @return string
          */
         protected function get_column_value_category_ids($product)
@@ -44280,8 +45442,9 @@ namespace {
         /**
          * Get product_tag value.
          *
-         * @since 3.1.0
          * @param WC_Product $product Product being exported.
+         *
+         * @since  3.1.0
          * @return string
          */
         protected function get_column_value_tag_ids($product)
@@ -44290,8 +45453,9 @@ namespace {
         /**
          * Get product_shipping_class value.
          *
-         * @since 3.1.0
          * @param WC_Product $product Product being exported.
+         *
+         * @since  3.1.0
          * @return string
          */
         protected function get_column_value_shipping_class_id($product)
@@ -44300,8 +45464,9 @@ namespace {
         /**
          * Get images value.
          *
-         * @since 3.1.0
          * @param WC_Product $product Product being exported.
+         *
+         * @since  3.1.0
          * @return string
          */
         protected function get_column_value_images($product)
@@ -44310,8 +45475,9 @@ namespace {
         /**
          * Prepare linked products for export.
          *
-         * @since 3.1.0
          * @param int[] $linked_products Array of linked product ids.
+         *
+         * @since  3.1.0
          * @return string
          */
         protected function prepare_linked_products_for_export($linked_products)
@@ -44320,8 +45486,9 @@ namespace {
         /**
          * Get cross_sell_ids value.
          *
-         * @since 3.1.0
          * @param WC_Product $product Product being exported.
+         *
+         * @since  3.1.0
          * @return string
          */
         protected function get_column_value_cross_sell_ids($product)
@@ -44330,8 +45497,9 @@ namespace {
         /**
          * Get upsell_ids value.
          *
-         * @since 3.1.0
          * @param WC_Product $product Product being exported.
+         *
+         * @since  3.1.0
          * @return string
          */
         protected function get_column_value_upsell_ids($product)
@@ -44340,8 +45508,9 @@ namespace {
         /**
          * Get parent_id value.
          *
-         * @since 3.1.0
          * @param WC_Product $product Product being exported.
+         *
+         * @since  3.1.0
          * @return string
          */
         protected function get_column_value_parent_id($product)
@@ -44350,8 +45519,9 @@ namespace {
         /**
          * Get grouped_products value.
          *
-         * @since 3.1.0
          * @param WC_Product $product Product being exported.
+         *
+         * @since  3.1.0
          * @return string
          */
         protected function get_column_value_grouped_products($product)
@@ -44360,8 +45530,9 @@ namespace {
         /**
          * Get download_limit value.
          *
-         * @since 3.1.0
          * @param WC_Product $product Product being exported.
+         *
+         * @since  3.1.0
          * @return string
          */
         protected function get_column_value_download_limit($product)
@@ -44370,8 +45541,9 @@ namespace {
         /**
          * Get download_expiry value.
          *
-         * @since 3.1.0
          * @param WC_Product $product Product being exported.
+         *
+         * @since  3.1.0
          * @return string
          */
         protected function get_column_value_download_expiry($product)
@@ -44380,8 +45552,9 @@ namespace {
         /**
          * Get stock value.
          *
-         * @since 3.1.0
          * @param WC_Product $product Product being exported.
+         *
+         * @since  3.1.0
          * @return string
          */
         protected function get_column_value_stock($product)
@@ -44390,8 +45563,9 @@ namespace {
         /**
          * Get stock status value.
          *
-         * @since 3.1.0
          * @param WC_Product $product Product being exported.
+         *
+         * @since  3.1.0
          * @return string
          */
         protected function get_column_value_stock_status($product)
@@ -44400,8 +45574,9 @@ namespace {
         /**
          * Get backorders.
          *
-         * @since 3.1.0
          * @param WC_Product $product Product being exported.
+         *
+         * @since  3.1.0
          * @return string
          */
         protected function get_column_value_backorders($product)
@@ -44411,7 +45586,8 @@ namespace {
          * Get low stock amount value.
          *
          * @param WC_Product $product Product being exported.
-         * @since 3.5.0
+         *
+         * @since  3.5.0
          * @return int|string Empty string if value not set
          */
         protected function get_column_value_low_stock_amount($product)
@@ -44420,8 +45596,9 @@ namespace {
         /**
          * Get type value.
          *
-         * @since 3.1.0
          * @param WC_Product $product Product being exported.
+         *
+         * @since  3.1.0
          * @return string
          */
         protected function get_column_value_type($product)
@@ -44442,9 +45619,10 @@ namespace {
         /**
          * Export downloads.
          *
-         * @since 3.1.0
          * @param WC_Product $product Product being exported.
          * @param array      $row     Row being exported.
+         *
+         * @since 3.1.0
          */
         protected function prepare_downloads_for_export($product, &$row)
         {
@@ -44452,9 +45630,10 @@ namespace {
         /**
          * Export attributes data.
          *
+         * @param WC_Product $product Product being exported.
+         * @param array      $row     Row being exported.
+         *
          * @since 3.1.0
-         * @param  WC_Product $product Product being exported.
-         * @param  array      $row     Row being exported.
          */
         protected function prepare_attributes_for_export($product, &$row)
         {
@@ -44462,9 +45641,10 @@ namespace {
         /**
          * Export meta data.
          *
-         * @since 3.1.0
          * @param WC_Product $product Product being exported.
          * @param array      $row Row data.
+         *
+         * @since 3.1.0
          */
         protected function prepare_meta_for_export($product, &$row)
         {
@@ -45554,2778 +46734,6 @@ namespace {
         }
     }
     /**
-     * Simplify Commerce Gateway.
-     *
-     * @class       WC_Gateway_Simplify_Commerce
-     * @extends     WC_Payment_Gateway_CC
-     * @since       2.2.0
-     * @version     1.0.0
-     * @package     WooCommerce/Classes/Payment
-     * @author      WooThemes
-     */
-    class WC_Gateway_Simplify_Commerce extends \WC_Payment_Gateway_CC
-    {
-        /**
-         * Constructor.
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Init Simplify SDK.
-         */
-        protected function init_simplify_sdk()
-        {
-        }
-        /**
-         * Admin Panel Options.
-         * - Options for bits like 'title' and availability on a country-by-country basis.
-         */
-        public function admin_options()
-        {
-        }
-        /**
-         * Check if SSL is enabled and notify the user.
-         */
-        public function checks()
-        {
-        }
-        /**
-         * Check if this gateway is enabled.
-         *
-         * @return bool
-         */
-        public function is_available()
-        {
-        }
-        /**
-         * Initialise Gateway Settings Form Fields.
-         */
-        public function init_form_fields()
-        {
-        }
-        /**
-         * Payment form on checkout page.
-         */
-        public function payment_fields()
-        {
-        }
-        /**
-         * Outputs scripts used for simplify payment.
-         */
-        public function payment_scripts()
-        {
-        }
-        public function add_payment_method()
-        {
-        }
-        /**
-         * Actually saves a customer token to the database.
-         *
-         * @param  WC_Payment_Token $customer_token Payment Token
-         * @param  string           $cart_token CC Token
-         * @param  array            $customer_info 'email', 'name'
-         *
-         * @return null|WC_Payment_Token|WC_Payment_Token_CC
-         */
-        public function save_token($customer_token, $cart_token, $customer_info)
-        {
-        }
-        /**
-         * Process customer: updating or creating a new customer/saved CC
-         *
-         * @param  WC_Order         $order          Order object
-         * @param  WC_Payment_Token $customer_token Payment Token
-         * @param  string           $cart_token     CC Token
-         */
-        protected function process_customer($order, $customer_token = \null, $cart_token = '')
-        {
-        }
-        /**
-         * Process standard payments.
-         *
-         * @param  WC_Order $order
-         * @param  string   $cart_token
-         * @param string   $customer_token
-         *
-         * @return array
-         * @uses   Simplify_ApiException
-         * @uses   Simplify_BadRequestException
-         */
-        protected function process_standard_payments($order, $cart_token = '', $customer_token = '')
-        {
-        }
-        /**
-         * do payment function.
-         *
-         * @param WC_order $order
-         * @param int      $amount (default: 0)
-         * @param array    $token
-         *
-         * @return bool|WP_Error
-         * @uses  Simplify_BadRequestException
-         */
-        public function do_payment($order, $amount = 0, $token = array())
-        {
-        }
-        /**
-         * Process standard payments.
-         *
-         * @param WC_Order $order
-         * @return array
-         */
-        protected function process_hosted_payments($order)
-        {
-        }
-        protected function get_users_token()
-        {
-        }
-        /**
-         * Process the payment.
-         *
-         * @param int $order_id
-         *
-         * @return array|void
-         */
-        public function process_payment($order_id)
-        {
-        }
-        /**
-         * Hosted payment args.
-         *
-         * @param  WC_Order $order
-         *
-         * @return array
-         */
-        protected function get_hosted_payments_args($order)
-        {
-        }
-        /**
-         * Receipt page.
-         *
-         * @param  int $order_id
-         */
-        public function receipt_page($order_id)
-        {
-        }
-        /**
-         * Return handler for Hosted Payments.
-         */
-        public function return_handler()
-        {
-        }
-        /**
-         * Process the order status.
-         *
-         * @param  WC_Order $order
-         * @param  string   $payment_id
-         * @param  string   $status
-         * @param  string   $auth_code
-         *
-         * @return bool
-         */
-        public function process_order_status($order, $payment_id, $status, $auth_code)
-        {
-        }
-        /**
-         * Process refunds.
-         * WooCommerce 2.2 or later.
-         *
-         * @param  int    $order_id
-         * @param  float  $amount
-         * @param  string $reason
-         * @uses   Simplify_ApiException
-         * @uses   Simplify_BadRequestException
-         * @return bool|WP_Error
-         */
-        public function process_refund($order_id, $amount = \null, $reason = '')
-        {
-        }
-        /**
-         * Get gateway icon.
-         *
-         * @access public
-         * @return string
-         */
-        public function get_icon()
-        {
-        }
-    }
-    /**
-     * Simplify Commerce Gateway for subscriptions.
-     *
-     * @class       WC_Addons_Gateway_Simplify_Commerce
-     * @extends     WC_Gateway_Simplify_Commerce
-     * @since       2.2.0
-     * @version     1.0.0
-     * @package     WooCommerce/Classes/Payment
-     * @author      WooThemes
-     */
-    class WC_Addons_Gateway_Simplify_Commerce extends \WC_Gateway_Simplify_Commerce
-    {
-        /**
-         * Constructor.
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Hosted payment args.
-         *
-         * @param  array $args
-         * @param  int   $order_id
-         * @return array
-         */
-        public function hosted_payment_args($args, $order_id)
-        {
-        }
-        /**
-         * Check if order contains subscriptions.
-         *
-         * @param  int $order_id
-         * @return bool
-         */
-        protected function order_contains_subscription($order_id)
-        {
-        }
-        /**
-         * Check if order contains pre-orders.
-         *
-         * @param  int $order_id
-         * @return bool
-         */
-        protected function order_contains_pre_order($order_id)
-        {
-        }
-        /**
-         * Process the subscription.
-         *
-         * @param  WC_Order $order
-         * @param  string   $cart_token
-         * @uses   Simplify_ApiException
-         * @uses   Simplify_BadRequestException
-         * @return array
-         * @throws Exception
-         */
-        protected function process_subscription($order, $cart_token = '')
-        {
-        }
-        /**
-         * Store the customer and card IDs on the order and subscriptions in the order.
-         *
-         * @param int    $order_id
-         * @param string $customer_id
-         */
-        protected function save_subscription_meta($order_id, $customer_id)
-        {
-        }
-        /**
-         * Process the pre-order.
-         *
-         * @param WC_Order $order
-         * @param string   $cart_token
-         * @uses  Simplify_ApiException
-         * @uses  Simplify_BadRequestException
-         * @return array
-         */
-        protected function process_pre_order($order, $cart_token = '')
-        {
-        }
-        /**
-         * Process the payment.
-         *
-         * @param  int $order_id
-         * @return array
-         */
-        public function process_payment($order_id)
-        {
-        }
-        /**
-         * process_subscription_payment function.
-         *
-         * @param WC_order $order
-         * @param int      $amount (default: 0)
-         * @uses  Simplify_BadRequestException
-         * @return bool|WP_Error
-         */
-        public function process_subscription_payment($order, $amount = 0)
-        {
-        }
-        /**
-         * scheduled_subscription_payment function.
-         *
-         * @param float    $amount_to_charge The amount to charge.
-         * @param WC_Order $renewal_order A WC_Order object created to record the renewal payment.
-         */
-        public function scheduled_subscription_payment($amount_to_charge, $renewal_order)
-        {
-        }
-        /**
-         * Update the customer_id for a subscription after using Simplify to complete a payment to make up for.
-         * an automatic renewal payment which previously failed.
-         *
-         * @param WC_Subscription $subscription The subscription for which the failing payment method relates.
-         * @param WC_Order        $renewal_order The order which recorded the successful payment (to make up for the failed automatic payment).
-         */
-        public function update_failing_payment_method($subscription, $renewal_order)
-        {
-        }
-        /**
-         * Include the payment meta data required to process automatic recurring payments so that store managers can.
-         * manually set up automatic recurring payments for a customer via the Edit Subscription screen in Subscriptions v2.0+.
-         *
-         * @since 2.4
-         * @param array           $payment_meta associative array of meta data required for automatic payments
-         * @param WC_Subscription $subscription An instance of a subscription object
-         * @return array
-         */
-        public function add_subscription_payment_meta($payment_meta, $subscription)
-        {
-        }
-        /**
-         * Validate the payment meta data required to process automatic recurring payments so that store managers can.
-         * manually set up automatic recurring payments for a customer via the Edit Subscription screen in Subscriptions 2.0+.
-         *
-         * @since  2.4
-         * @param  string $payment_method_id The ID of the payment method to validate
-         * @param  array  $payment_meta associative array of meta data required for automatic payments
-         * @throws Exception
-         */
-        public function validate_subscription_payment_meta($payment_method_id, $payment_meta)
-        {
-        }
-        /**
-         * Don't transfer customer meta to resubscribe orders.
-         *
-         * @access public
-         * @param int $resubscribe_order The order created for the customer to resubscribe to the old expired/cancelled subscription
-         * @return void
-         */
-        public function delete_resubscribe_meta($resubscribe_order)
-        {
-        }
-        /**
-         * Process a pre-order payment when the pre-order is released.
-         *
-         * @param WC_Order $order
-         * @return WP_Error|null
-         */
-        public function process_pre_order_release_payment($order)
-        {
-        }
-        /**
-         * Return handler for Hosted Payments.
-         */
-        public function return_handler()
-        {
-        }
-    }
-    class Simplify
-    {
-        /**
-         * @var string $publicKey public API key used to authenticate requests.
-         */
-        public static $publicKey;
-        /**
-         * @var string $privateKey private API key used to authenticate requests.
-         */
-        public static $privateKey;
-        /**
-         * @var string $apiBaseLiveUrl URL of the live API endpoint
-         */
-        public static $apiBaseLiveUrl = \Simplify_Constants::API_BASE_LIVE_URL;
-        /**
-         * @var string $apiBaseSandboxUrl URL of the sandbox API endpoint
-         */
-        public static $apiBaseSandboxUrl = \Simplify_Constants::API_BASE_SANDBOX_URL;
-        /**
-         * @var string $userAgent User-agent string send with requests.
-         */
-        public static $userAgent = \null;
-    }
-    /*
-     * Copyright (c) 2013 - 2015 MasterCard International Incorporated
-     * All rights reserved.
-     *
-     * Redistribution and use in source and binary forms, with or without modification, are
-     * permitted provided that the following conditions are met:
-     *
-     * Redistributions of source code must retain the above copyright notice, this list of
-     * conditions and the following disclaimer.
-     * Redistributions in binary form must reproduce the above copyright notice, this list of
-     * conditions and the following disclaimer in the documentation and/or other materials
-     * provided with the distribution.
-     * Neither the name of the MasterCard International Incorporated nor the names of its
-     * contributors may be used to endorse or promote products derived from this software
-     * without specific prior written permission.
-     * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
-     * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-     * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
-     * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-     * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
-     * TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-     * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
-     * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
-     * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     * SUCH DAMAGE.
-     */
-    /**
-     * Base class for all domain objects.
-     */
-    class Simplify_Object
-    {
-        private $properties = array();
-        /**
-         * @ignore
-         *
-         * @param string $key
-         *
-         * @return mixed
-         */
-        public function __get($key)
-        {
-        }
-        /**
-         * @ignore
-         *
-         * @param string $key
-         * @param mixed $value
-         */
-        public function __set($key, $value)
-        {
-        }
-        /**
-         * Updates the object's properties with the values in the specified map.
-         * @param $hash array Map of values to set.
-         */
-        public function setAll($hash)
-        {
-        }
-        /**
-         * @ignore
-         */
-        public function __toString()
-        {
-        }
-        /**
-         * Returns the object's properties as a map.
-         * @return array map of properties.
-         */
-        public function getProperties()
-        {
-        }
-    }
-    /*
-     * Copyright (c) 2013 - 2015 MasterCard International Incorporated
-     * All rights reserved.
-     *
-     * Redistribution and use in source and binary forms, with or without modification, are
-     * permitted provided that the following conditions are met:
-     *
-     * Redistributions of source code must retain the above copyright notice, this list of
-     * conditions and the following disclaimer.
-     * Redistributions in binary form must reproduce the above copyright notice, this list of
-     * conditions and the following disclaimer in the documentation and/or other materials
-     * provided with the distribution.
-     * Neither the name of the MasterCard International Incorporated nor the names of its
-     * contributors may be used to endorse or promote products derived from this software
-     * without specific prior written permission.
-     * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
-     * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-     * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
-     * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-     * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
-     * TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-     * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
-     * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
-     * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     * SUCH DAMAGE.
-     */
-    /**
-     * AccessToken - used to manage OAuth access tokens
-     */
-    class Simplify_AccessToken extends \Simplify_Object
-    {
-        public function __construct($hash)
-        {
-        }
-        /**
-         * Creates an OAuth access token
-         * @param $code - the authorisation code returned from the GET on /oauth/authorize
-         * @param $redirect_uri = this must be the redirect_uri set in the apps configuration
-         * @param $authentication - Authentication information to access the API.  If not value is passed the global key Simplify::$publicKey and Simplify::$privateKey are used
-         * @return Simplify_AccessToken
-         */
-        public static function create($code, $redirect_uri, $authentication = \null)
-        {
-        }
-        /**
-         * Refreshes the current token.  The access_token and refresh_token values will be updated.
-         * @param $authentication - Authentication information to access the API.  If not value is passed the global key Simplify::$publicKey and Simplify::$privateKey are used
-         * @return Simplify_AccessToken
-         * @throws InvalidArgumentException
-         */
-        public function refresh($authentication = \null)
-        {
-        }
-        /**
-         * <p>Revokes a token from further use.
-         * @param $authentication - Authentication information to access the API.  If not value is passed the global key Simplify::$publicKey and Simplify::$privateKey are used
-         * @return Simplify_AccessToken
-         * @throws InvalidArgumentException
-         */
-        public function revoke($authentication = \null)
-        {
-        }
-        private static function sendRequest($props, $context, $authentication)
-        {
-        }
-        /**
-         * @ignore
-         */
-        public static function getClazz()
-        {
-        }
-    }
-    /*
-     * Copyright (c) 2013 - 2015 MasterCard International Incorporated
-     * All rights reserved.
-     *
-     * Redistribution and use in source and binary forms, with or without modification, are
-     * permitted provided that the following conditions are met:
-     *
-     * Redistributions of source code must retain the above copyright notice, this list of
-     * conditions and the following disclaimer.
-     * Redistributions in binary form must reproduce the above copyright notice, this list of
-     * conditions and the following disclaimer in the documentation and/or other materials
-     * provided with the distribution.
-     * Neither the name of the MasterCard International Incorporated nor the names of its
-     * contributors may be used to endorse or promote products derived from this software
-     * without specific prior written permission.
-     * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
-     * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-     * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
-     * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-     * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
-     * TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-     * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
-     * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
-     * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     * SUCH DAMAGE.
-     */
-    /**
-     * Simplify_Authentication - encapsulates the credentials needed to make a request to the Simplify API.
-     *
-     * @var $publicKey - this is your API public key
-     * @var $privateKey - this is your API private key
-     * @var $accessToken - Oauth access token that is needed to make API requests on behalf of another user
-     */
-    class Simplify_Authentication
-    {
-        public $privateKey;
-        public $publicKey;
-        public $accessToken;
-        function __construct()
-        {
-        }
-        function __construct1($accessToken)
-        {
-        }
-        function __construct2($publicKey, $privateKey)
-        {
-        }
-        function __construct3($publicKey, $privateKey, $accessToken)
-        {
-        }
-    }
-    /*
-     * Copyright (c) 2013 - 2015 MasterCard International Incorporated
-     * All rights reserved.
-     *
-     * Redistribution and use in source and binary forms, with or without modification, are
-     * permitted provided that the following conditions are met:
-     *
-     * Redistributions of source code must retain the above copyright notice, this list of
-     * conditions and the following disclaimer.
-     * Redistributions in binary form must reproduce the above copyright notice, this list of
-     * conditions and the following disclaimer in the documentation and/or other materials
-     * provided with the distribution.
-     * Neither the name of the MasterCard International Incorporated nor the names of its
-     * contributors may be used to endorse or promote products derived from this software
-     * without specific prior written permission.
-     * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
-     * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-     * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
-     * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-     * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
-     * TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-     * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
-     * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
-     * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     * SUCH DAMAGE.
-     */
-    class Simplify_Authorization extends \Simplify_Object
-    {
-        /**
-         * Creates an Simplify_Authorization object
-         * @param     array $hash a map of parameters; valid keys are:<dl style="padding-left:10px;">
-         *     <dt><tt>amount</tt></dt>    <dd>Amount of the payment (in the smallest unit of your currency). Example: 100 = $1.00USD <strong>required </strong></dd>
-         *     <dt><tt>card.addressCity</tt></dt>    <dd>City of the cardholder. [max length: 50, min length: 2] </dd>
-         *     <dt><tt>card.addressCountry</tt></dt>    <dd>Country code (ISO-3166-1-alpha-2 code) of residence of the cardholder. [max length: 2, min length: 2] </dd>
-         *     <dt><tt>card.addressLine1</tt></dt>    <dd>Address of the cardholder. [max length: 255] </dd>
-         *     <dt><tt>card.addressLine2</tt></dt>    <dd>Address of the cardholder if needed. [max length: 255] </dd>
-         *     <dt><tt>card.addressState</tt></dt>    <dd>State of residence of the cardholder. For the US, this is a 2-digit USPS code. [max length: 255, min length: 2] </dd>
-         *     <dt><tt>card.addressZip</tt></dt>    <dd>Postal code of the cardholder. The postal code size is between 5 and 9 characters in length and only contains numbers or letters. [max length: 9, min length: 3] </dd>
-         *     <dt><tt>card.cvc</tt></dt>    <dd>CVC security code of the card. This is the code on the back of the card. Example: 123 </dd>
-         *     <dt><tt>card.expMonth</tt></dt>    <dd>Expiration month of the card. Format is MM. Example: January = 01 [min value: 1, max value: 12] <strong>required </strong></dd>
-         *     <dt><tt>card.expYear</tt></dt>    <dd>Expiration year of the card. Format is YY. Example: 2013 = 13 [min value: 0, max value: 99] <strong>required </strong></dd>
-         *     <dt><tt>card.name</tt></dt>    <dd>Name as it appears on the card. [max length: 50, min length: 2] </dd>
-         *     <dt><tt>card.number</tt></dt>    <dd>Card number as it appears on the card. [max length: 19, min length: 13] <strong>required </strong></dd>
-         *     <dt><tt>currency</tt></dt>    <dd>Currency code (ISO-4217) for the transaction. Must match the currency associated with your account. [default: USD] <strong>required </strong></dd>
-         *     <dt><tt>customer</tt></dt>    <dd>ID of customer. If specified, card on file of customer will be used. </dd>
-         *     <dt><tt>description</tt></dt>    <dd>Free form text field to be used as a description of the payment. This field is echoed back with the payment on any find or list operations. [max length: 1024] </dd>
-         *     <dt><tt>reference</tt></dt>    <dd>Custom reference field to be used with outside systems. </dd>
-         *     <dt><tt>replayId</tt></dt>    <dd>An identifier that can be sent to uniquely identify a payment request to facilitate retries due to I/O related issues. This identifier must be unique for your account (sandbox or live) across all of your payments. If supplied, we will check for a payment on your account that matches this identifier, and if one is found we will attempt to return an identical response of the original request. [max length: 50, min length: 1] </dd>
-         *     <dt><tt>statementDescription.name</tt></dt>    <dd>Merchant name <strong>required </strong></dd>
-         *     <dt><tt>statementDescription.phoneNumber</tt></dt>    <dd>Merchant contact phone number. </dd>
-         *     <dt><tt>token</tt></dt>    <dd>If specified, card associated with card token will be used. [max length: 255] </dd></dl>
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.<i/>
-         * @return    Authorization a Authorization object.
-         */
-        public static function createAuthorization($hash, $authentication = \null)
-        {
-        }
-        /**
-         * Deletes an Simplify_Authorization object.
-         *
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         *
-         * @return true
-         */
-        public function deleteAuthorization($authentication = \null)
-        {
-        }
-        /**
-         * Retrieve Simplify_Authorization objects.
-         * @param     array criteria a map of parameters; valid keys are:<dl style="padding-left:10px;">
-         *     <dt><tt>filter</tt></dt>    <dd>Filters to apply to the list.  </dd>
-         *     <dt><tt>max</tt></dt>    <dd>Allows up to a max of 50 list items to return. [min value: 0, max value: 50, default: 20]  </dd>
-         *     <dt><tt>offset</tt></dt>    <dd>Used in pagination of the list. This is the start offset of the page. [min value: 0, default: 0]  </dd>
-         *     <dt><tt>sorting</tt></dt>    <dd>Allows for ascending or descending sorting of the list.  The value maps properties to the sort direction (either <tt>asc</tt> for ascending or <tt>desc</tt> for descending).  Sortable properties are: <tt> dateCreated</tt><tt> amount</tt><tt> id</tt><tt> description</tt><tt> paymentDate</tt>.</dd></dl>
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    ResourceList a ResourceList object that holds the list of Authorization objects and the total
-         *            number of Authorization objects available for the given criteria.
-         * @see       ResourceList
-         */
-        public static function listAuthorization($criteria = \null, $authentication = \null)
-        {
-        }
-        /**
-         * Retrieve a Simplify_Authorization object from the API
-         *
-         * @param     string id  the id of the Authorization object to retrieve
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    Authorization a Authorization object
-         */
-        public static function findAuthorization($id, $authentication = \null)
-        {
-        }
-        /**
-         * @ignore
-         */
-        public function getClazz()
-        {
-        }
-    }
-    /*
-     * Copyright (c) 2013 - 2015 MasterCard International Incorporated
-     * All rights reserved.
-     *
-     * Redistribution and use in source and binary forms, with or without modification, are
-     * permitted provided that the following conditions are met:
-     *
-     * Redistributions of source code must retain the above copyright notice, this list of
-     * conditions and the following disclaimer.
-     * Redistributions in binary form must reproduce the above copyright notice, this list of
-     * conditions and the following disclaimer in the documentation and/or other materials
-     * provided with the distribution.
-     * Neither the name of the MasterCard International Incorporated nor the names of its
-     * contributors may be used to endorse or promote products derived from this software
-     * without specific prior written permission.
-     * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
-     * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-     * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
-     * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-     * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
-     * TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-     * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
-     * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
-     * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     * SUCH DAMAGE.
-     */
-    class Simplify_CardToken extends \Simplify_Object
-    {
-        /**
-         * Creates an Simplify_CardToken object
-         * @param     array $hash a map of parameters; valid keys are:<dl style="padding-left:10px;">
-         *     <dt><tt>callback</tt></dt>    <dd>The URL callback for the cardtoken </dd>
-         *     <dt><tt>card.addressCity</tt></dt>    <dd>City of the cardholder. [max length: 50, min length: 2] </dd>
-         *     <dt><tt>card.addressCountry</tt></dt>    <dd>Country code (ISO-3166-1-alpha-2 code) of residence of the cardholder. [max length: 2, min length: 2] </dd>
-         *     <dt><tt>card.addressLine1</tt></dt>    <dd>Address of the cardholder. [max length: 255] </dd>
-         *     <dt><tt>card.addressLine2</tt></dt>    <dd>Address of the cardholder if needed. [max length: 255] </dd>
-         *     <dt><tt>card.addressState</tt></dt>    <dd>State of residence of the cardholder. For the US, this is a 2-digit USPS code. [max length: 255, min length: 2] </dd>
-         *     <dt><tt>card.addressZip</tt></dt>    <dd>Postal code of the cardholder. The postal code size is between 5 and 9 in length and only contain numbers or letters. [max length: 9, min length: 3] </dd>
-         *     <dt><tt>card.cvc</tt></dt>    <dd>CVC security code of the card. This is the code on the back of the card. Example: 123 </dd>
-         *     <dt><tt>card.expMonth</tt></dt>    <dd>Expiration month of the card. Format is MM. Example: January = 01 [min value: 1, max value: 12] <strong>required </strong></dd>
-         *     <dt><tt>card.expYear</tt></dt>    <dd>Expiration year of the card. Format is YY. Example: 2013 = 13 [min value: 0, max value: 99] <strong>required </strong></dd>
-         *     <dt><tt>card.name</tt></dt>    <dd>Name as appears on the card. [max length: 50, min length: 2] </dd>
-         *     <dt><tt>card.number</tt></dt>    <dd>Card number as it appears on the card. [max length: 19, min length: 13] <strong>required </strong></dd>
-         *     <dt><tt>key</tt></dt>    <dd>Key used to create the card token. </dd></dl>
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.<i/>
-         * @return    CardToken a CardToken object.
-         */
-        public static function createCardToken($hash, $authentication = \null)
-        {
-        }
-        /**
-         * Retrieve a Simplify_CardToken object from the API
-         *
-         * @param     string id  the id of the CardToken object to retrieve
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    CardToken a CardToken object
-         */
-        public static function findCardToken($id, $authentication = \null)
-        {
-        }
-        /**
-         * @ignore
-         */
-        public function getClazz()
-        {
-        }
-    }
-    /*
-     * Copyright (c) 2013 - 2015 MasterCard International Incorporated
-     * All rights reserved.
-     *
-     * Redistribution and use in source and binary forms, with or without modification, are
-     * permitted provided that the following conditions are met:
-     *
-     * Redistributions of source code must retain the above copyright notice, this list of
-     * conditions and the following disclaimer.
-     * Redistributions in binary form must reproduce the above copyright notice, this list of
-     * conditions and the following disclaimer in the documentation and/or other materials
-     * provided with the distribution.
-     * Neither the name of the MasterCard International Incorporated nor the names of its
-     * contributors may be used to endorse or promote products derived from this software
-     * without specific prior written permission.
-     * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
-     * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-     * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
-     * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-     * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
-     * TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-     * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
-     * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
-     * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     * SUCH DAMAGE.
-     */
-    class Simplify_Chargeback extends \Simplify_Object
-    {
-        /**
-         * Retrieve Simplify_Chargeback objects.
-         * @param     array criteria a map of parameters; valid keys are:<dl style="padding-left:10px;">
-         *     <dt><tt>filter</tt></dt>    <dd>Filters to apply to the list.  </dd>
-         *     <dt><tt>max</tt></dt>    <dd>Allows up to a max of 50 list items to return. [min value: 0, max value: 50, default: 20]  </dd>
-         *     <dt><tt>offset</tt></dt>    <dd>Used in paging of the list.  This is the start offset of the page. [min value: 0, default: 0]  </dd>
-         *     <dt><tt>sorting</tt></dt>    <dd>Allows for ascending or descending sorting of the list.  The value maps properties to the sort direction (either <tt>asc</tt> for ascending or <tt>desc</tt> for descending).  Sortable properties are: <tt> id</tt><tt> amount</tt><tt> description</tt><tt> dateCreated</tt>.</dd></dl>
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    ResourceList a ResourceList object that holds the list of Chargeback objects and the total
-         *            number of Chargeback objects available for the given criteria.
-         * @see       ResourceList
-         */
-        public static function listChargeback($criteria = \null, $authentication = \null)
-        {
-        }
-        /**
-         * Retrieve a Simplify_Chargeback object from the API
-         *
-         * @param     string id  the id of the Chargeback object to retrieve
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    Chargeback a Chargeback object
-         */
-        public static function findChargeback($id, $authentication = \null)
-        {
-        }
-        /**
-         * @ignore
-         */
-        public function getClazz()
-        {
-        }
-    }
-    /*
-     * Copyright (c) 2013 - 2015 MasterCard International Incorporated
-     * All rights reserved.
-     *
-     * Redistribution and use in source and binary forms, with or without modification, are
-     * permitted provided that the following conditions are met:
-     *
-     * Redistributions of source code must retain the above copyright notice, this list of
-     * conditions and the following disclaimer.
-     * Redistributions in binary form must reproduce the above copyright notice, this list of
-     * conditions and the following disclaimer in the documentation and/or other materials
-     * provided with the distribution.
-     * Neither the name of the MasterCard International Incorporated nor the names of its
-     * contributors may be used to endorse or promote products derived from this software
-     * without specific prior written permission.
-     * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
-     * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-     * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
-     * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-     * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
-     * TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-     * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
-     * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
-     * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     * SUCH DAMAGE.
-     */
-    /**
-     * Constant values.
-     */
-    class Simplify_Constants
-    {
-        /**
-         * @var string VERSION SDK version information.
-         */
-        const VERSION = '1.2.0';
-        /**
-         * @var string API_BASE_LIVE_URL URL for the live API endpoint
-         */
-        const API_BASE_LIVE_URL = 'https://api.simplify.com/v1/api';
-        /**
-         * @var string API_BASE_SANDBOX_URL URL for the sandbox API endpoint
-         */
-        const API_BASE_SANDBOX_URL = 'https://sandbox.simplify.com/v1/api';
-        /**
-         * @var string OAUTH_BASE_URL URL for the oauth endpoint
-         */
-        const OAUTH_BASE_URL = 'https://www.simplify.com/commerce/oauth';
-    }
-    /*
-     * Copyright (c) 2013 - 2015 MasterCard International Incorporated
-     * All rights reserved.
-     *
-     * Redistribution and use in source and binary forms, with or without modification, are
-     * permitted provided that the following conditions are met:
-     *
-     * Redistributions of source code must retain the above copyright notice, this list of
-     * conditions and the following disclaimer.
-     * Redistributions in binary form must reproduce the above copyright notice, this list of
-     * conditions and the following disclaimer in the documentation and/or other materials
-     * provided with the distribution.
-     * Neither the name of the MasterCard International Incorporated nor the names of its
-     * contributors may be used to endorse or promote products derived from this software
-     * without specific prior written permission.
-     * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
-     * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-     * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
-     * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-     * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
-     * TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-     * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
-     * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
-     * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     * SUCH DAMAGE.
-     */
-    class Simplify_Coupon extends \Simplify_Object
-    {
-        /**
-         * Creates an Simplify_Coupon object
-         * @param     array $hash a map of parameters; valid keys are:<dl style="padding-left:10px;">
-         *     <dt><tt>amountOff</tt></dt>    <dd>Amount off of the price of the product in the smallest units of the currency of the merchant. While this field is optional, you must provide either amountOff or percentOff for a coupon. Example: 100 = $1.00USD [min value: 1] </dd>
-         *     <dt><tt>couponCode</tt></dt>    <dd>Code that identifies the coupon to be used. [min length: 2] <strong>required </strong></dd>
-         *     <dt><tt>description</tt></dt>    <dd>A brief section that describes the coupon. </dd>
-         *     <dt><tt>durationInMonths</tt></dt>    <dd>DEPRECATED - Duration in months that the coupon will be applied after it has first been selected. [min value: 1, max value: 9999] </dd>
-         *     <dt><tt>endDate</tt></dt>    <dd>Last date of the coupon in UTC millis that the coupon can be applied to a subscription. This ends at 23:59:59 of the merchant timezone. </dd>
-         *     <dt><tt>maxRedemptions</tt></dt>    <dd>Maximum number of redemptions allowed for the coupon. A redemption is defined as when the coupon is applied to the subscription for the first time. [min value: 1] </dd>
-         *     <dt><tt>numTimesApplied</tt></dt>    <dd>The number of times a coupon will be applied on a customer's subscription. [min value: 1, max value: 9999] </dd>
-         *     <dt><tt>percentOff</tt></dt>    <dd>Percentage off of the price of the product. While this field is optional, you must provide either amountOff or percentOff for a coupon. The percent off is a whole number. [min value: 1, max value: 100] </dd>
-         *     <dt><tt>startDate</tt></dt>    <dd>First date of the coupon in UTC millis that the coupon can be applied to a subscription. This starts at midnight of the merchant timezone. <strong>required </strong></dd></dl>
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.<i/>
-         * @return    Coupon a Coupon object.
-         */
-        public static function createCoupon($hash, $authentication = \null)
-        {
-        }
-        /**
-         * Deletes an Simplify_Coupon object.
-         *
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         *
-         * @return true
-         */
-        public function deleteCoupon($authentication = \null)
-        {
-        }
-        /**
-         * Retrieve Simplify_Coupon objects.
-         * @param     array criteria a map of parameters; valid keys are:<dl style="padding-left:10px;">
-         *     <dt><tt>filter</tt></dt>    <dd>Filters to apply to the list.  </dd>
-         *     <dt><tt>max</tt></dt>    <dd>Allows up to a max of 50 list items to return. [min value: 0, max value: 50, default: 20]  </dd>
-         *     <dt><tt>offset</tt></dt>    <dd>Used in paging of the list.  This is the start offset of the page. [min value: 0, default: 0]  </dd>
-         *     <dt><tt>sorting</tt></dt>    <dd>Allows for ascending or descending sorting of the list.  The value maps properties to the sort direction (either <tt>asc</tt> for ascending or <tt>desc</tt> for descending).  Sortable properties are: <tt> dateCreated</tt><tt> maxRedemptions</tt><tt> timesRedeemed</tt><tt> id</tt><tt> startDate</tt><tt> endDate</tt><tt> percentOff</tt><tt> couponCode</tt><tt> durationInMonths</tt><tt> numTimesApplied</tt><tt> amountOff</tt>.</dd></dl>
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    ResourceList a ResourceList object that holds the list of Coupon objects and the total
-         *            number of Coupon objects available for the given criteria.
-         * @see       ResourceList
-         */
-        public static function listCoupon($criteria = \null, $authentication = \null)
-        {
-        }
-        /**
-         * Retrieve a Simplify_Coupon object from the API
-         *
-         * @param     string id  the id of the Coupon object to retrieve
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    Coupon a Coupon object
-         */
-        public static function findCoupon($id, $authentication = \null)
-        {
-        }
-        /**
-         * Updates an Simplify_Coupon object.
-         *
-         * The properties that can be updated:
-         * <dl style="padding-left:10px;">
-         *     <dt><tt>endDate</tt></dt>    <dd>The ending date in UTC millis for the coupon. This must be after the starting date of the coupon. </dd>
-         *     <dt><tt>maxRedemptions</tt></dt>    <dd>Maximum number of redemptions allowed for the coupon. A redemption is defined as when the coupon is applied to the subscription for the first time. [min value: 1] </dd></dl>
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    Coupon a Coupon object.
-         */
-        public function updateCoupon($authentication = \null)
-        {
-        }
-        /**
-         * @ignore
-         */
-        public function getClazz()
-        {
-        }
-    }
-    /*
-     * Copyright (c) 2013 - 2015 MasterCard International Incorporated
-     * All rights reserved.
-     *
-     * Redistribution and use in source and binary forms, with or without modification, are
-     * permitted provided that the following conditions are met:
-     *
-     * Redistributions of source code must retain the above copyright notice, this list of
-     * conditions and the following disclaimer.
-     * Redistributions in binary form must reproduce the above copyright notice, this list of
-     * conditions and the following disclaimer in the documentation and/or other materials
-     * provided with the distribution.
-     * Neither the name of the MasterCard International Incorporated nor the names of its
-     * contributors may be used to endorse or promote products derived from this software
-     * without specific prior written permission.
-     * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
-     * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-     * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
-     * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-     * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
-     * TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-     * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
-     * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
-     * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     * SUCH DAMAGE.
-     */
-    class Simplify_Customer extends \Simplify_Object
-    {
-        /**
-         * Creates an Simplify_Customer object
-         * @param     array $hash a map of parameters; valid keys are:<dl style="padding-left:10px;">
-         *     <dt><tt>card.addressCity</tt></dt>    <dd>City of the cardholder. <strong>required </strong></dd>
-         *     <dt><tt>card.addressCountry</tt></dt>    <dd>Country code (ISO-3166-1-alpha-2 code) of residence of the cardholder. <strong>required </strong></dd>
-         *     <dt><tt>card.addressLine1</tt></dt>    <dd>Address of the cardholder <strong>required </strong></dd>
-         *     <dt><tt>card.addressLine2</tt></dt>    <dd>Address of the cardholder if needed. <strong>required </strong></dd>
-         *     <dt><tt>card.addressState</tt></dt>    <dd>State of residence of the cardholder. For the US, this is a 2-digit USPS code. <strong>required </strong></dd>
-         *     <dt><tt>card.addressZip</tt></dt>    <dd>Postal code of the cardholder. The postal code size is between 5 and 9 in length and only contain numbers or letters. <strong>required </strong></dd>
-         *     <dt><tt>card.cvc</tt></dt>    <dd>CVC security code of the card. This is the code on the back of the card. Example: 123 <strong>required </strong></dd>
-         *     <dt><tt>card.expMonth</tt></dt>    <dd>Expiration month of the card. Format is MM. Example: January = 01 <strong>required </strong></dd>
-         *     <dt><tt>card.expYear</tt></dt>    <dd>Expiration year of the card. Format is YY. Example: 2013 = 13 <strong>required </strong></dd>
-         *     <dt><tt>card.id</tt></dt>    <dd>ID of card. Unused during customer create. </dd>
-         *     <dt><tt>card.name</tt></dt>    <dd>Name as appears on the card. <strong>required </strong></dd>
-         *     <dt><tt>card.number</tt></dt>    <dd>Card number as it appears on the card. [max length: 19, min length: 13] </dd>
-         *     <dt><tt>email</tt></dt>    <dd>Email address of the customer <strong>required </strong></dd>
-         *     <dt><tt>name</tt></dt>    <dd>Customer name [min length: 2] <strong>required </strong></dd>
-         *     <dt><tt>reference</tt></dt>    <dd>Reference field for external applications use. </dd>
-         *     <dt><tt>subscriptions.amount</tt></dt>    <dd>Amount of payment in the smallest unit of your currency. Example: 100 = $1.00USD </dd>
-         *     <dt><tt>subscriptions.billingCycle</tt></dt>    <dd>How the plan is billed to the customer. Values must be AUTO (indefinitely until the customer cancels) or FIXED (a fixed number of billing cycles). [default: AUTO] </dd>
-         *     <dt><tt>subscriptions.billingCycleLimit</tt></dt>    <dd>The number of fixed billing cycles for a plan. Only used if the billingCycle parameter is set to FIXED. Example: 4 </dd>
-         *     <dt><tt>subscriptions.coupon</tt></dt>    <dd>Coupon associated with the subscription for the customer. </dd>
-         *     <dt><tt>subscriptions.currency</tt></dt>    <dd>Currency code (ISO-4217). Must match the currency associated with your account. [default: USD] </dd>
-         *     <dt><tt>subscriptions.customer</tt></dt>    <dd>The customer ID to create the subscription for. Do not supply this when creating a customer. </dd>
-         *     <dt><tt>subscriptions.frequency</tt></dt>    <dd>Frequency of payment for the plan. Used in conjunction with frequencyPeriod. Valid values are "DAILY", "WEEKLY", "MONTHLY" and "YEARLY". </dd>
-         *     <dt><tt>subscriptions.frequencyPeriod</tt></dt>    <dd>Period of frequency of payment for the plan. Example: if the frequency is weekly, and periodFrequency is 2, then the subscription is billed bi-weekly. </dd>
-         *     <dt><tt>subscriptions.name</tt></dt>    <dd>Name describing subscription </dd>
-         *     <dt><tt>subscriptions.plan</tt></dt>    <dd>The plan ID that the subscription should be created from. </dd>
-         *     <dt><tt>subscriptions.quantity</tt></dt>    <dd>Quantity of the plan for the subscription. [min value: 1] </dd>
-         *     <dt><tt>subscriptions.renewalReminderLeadDays</tt></dt>    <dd>If set, how many days before the next billing cycle that a renewal reminder is sent to the customer. If null, then no emails are sent. Minimum value is 7 if set. </dd>
-         *     <dt><tt>token</tt></dt>    <dd>If specified, card associated with card token will be used </dd></dl>
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.<i/>
-         * @return    Customer a Customer object.
-         */
-        public static function createCustomer($hash, $authentication = \null)
-        {
-        }
-        /**
-         * Deletes an Simplify_Customer object.
-         *
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         *
-         * @return true
-         */
-        public function deleteCustomer($authentication = \null)
-        {
-        }
-        /**
-         * Retrieve Simplify_Customer objects.
-         * @param     array criteria a map of parameters; valid keys are:<dl style="padding-left:10px;">
-         *     <dt><tt>filter</tt></dt>    <dd>Filters to apply to the list.  </dd>
-         *     <dt><tt>max</tt></dt>    <dd>Allows up to a max of 50 list items to return. [min value: 0, max value: 50, default: 20]  </dd>
-         *     <dt><tt>offset</tt></dt>    <dd>Used in paging of the list.  This is the start offset of the page. [min value: 0, default: 0]  </dd>
-         *     <dt><tt>sorting</tt></dt>    <dd>Allows for ascending or descending sorting of the list.  The value maps properties to the sort direction (either <tt>asc</tt> for ascending or <tt>desc</tt> for descending).  Sortable properties are: <tt> dateCreated</tt><tt> id</tt><tt> name</tt><tt> email</tt><tt> reference</tt>.</dd></dl>
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    ResourceList a ResourceList object that holds the list of Customer objects and the total
-         *            number of Customer objects available for the given criteria.
-         * @see       ResourceList
-         */
-        public static function listCustomer($criteria = \null, $authentication = \null)
-        {
-        }
-        /**
-         * Retrieve a Simplify_Customer object from the API
-         *
-         * @param     string id  the id of the Customer object to retrieve
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    Customer a Customer object
-         */
-        public static function findCustomer($id, $authentication = \null)
-        {
-        }
-        /**
-         * Updates an Simplify_Customer object.
-         *
-         * The properties that can be updated:
-         * <dl style="padding-left:10px;">
-         *     <dt><tt>card.addressCity</tt></dt>    <dd>City of the cardholder. <strong>required </strong></dd>
-         *     <dt><tt>card.addressCountry</tt></dt>    <dd>Country code (ISO-3166-1-alpha-2 code) of residence of the cardholder. <strong>required </strong></dd>
-         *     <dt><tt>card.addressLine1</tt></dt>    <dd>Address of the cardholder. <strong>required </strong></dd>
-         *     <dt><tt>card.addressLine2</tt></dt>    <dd>Address of the cardholder if needed. <strong>required </strong></dd>
-         *     <dt><tt>card.addressState</tt></dt>    <dd>State of residence of the cardholder. For the US, this is a 2-digit USPS code. <strong>required </strong></dd>
-         *     <dt><tt>card.addressZip</tt></dt>    <dd>Postal code of the cardholder. The postal code size is between 5 and 9 in length and only contain numbers or letters. <strong>required </strong></dd>
-         *     <dt><tt>card.cvc</tt></dt>    <dd>CVC security code of the card. This is the code on the back of the card. Example: 123 <strong>required </strong></dd>
-         *     <dt><tt>card.expMonth</tt></dt>    <dd>Expiration month of the card. Format is MM.  Example: January = 01 <strong>required </strong></dd>
-         *     <dt><tt>card.expYear</tt></dt>    <dd>Expiration year of the card. Format is YY. Example: 2013 = 13 <strong>required </strong></dd>
-         *     <dt><tt>card.id</tt></dt>    <dd>ID of card. If present, card details for the customer will not be updated. If not present, the customer will be updated with the supplied card details. </dd>
-         *     <dt><tt>card.name</tt></dt>    <dd>Name as appears on the card. <strong>required </strong></dd>
-         *     <dt><tt>card.number</tt></dt>    <dd>Card number as it appears on the card. [max length: 19, min length: 13] </dd>
-         *     <dt><tt>email</tt></dt>    <dd>Email address of the customer <strong>required </strong></dd>
-         *     <dt><tt>name</tt></dt>    <dd>Customer name [min length: 2] <strong>required </strong></dd>
-         *     <dt><tt>reference</tt></dt>    <dd>Reference field for external applications use. </dd>
-         *     <dt><tt>token</tt></dt>    <dd>If specified, card associated with card token will be added to the customer </dd></dl>
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    Customer a Customer object.
-         */
-        public function updateCustomer($authentication = \null)
-        {
-        }
-        /**
-         * @ignore
-         */
-        public function getClazz()
-        {
-        }
-    }
-    /*
-     * Copyright (c) 2013 - 2015 MasterCard International Incorporated
-     * All rights reserved.
-     *
-     * Redistribution and use in source and binary forms, with or without modification, are
-     * permitted provided that the following conditions are met:
-     *
-     * Redistributions of source code must retain the above copyright notice, this list of
-     * conditions and the following disclaimer.
-     * Redistributions in binary form must reproduce the above copyright notice, this list of
-     * conditions and the following disclaimer in the documentation and/or other materials
-     * provided with the distribution.
-     * Neither the name of the MasterCard International Incorporated nor the names of its
-     * contributors may be used to endorse or promote products derived from this software
-     * without specific prior written permission.
-     * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
-     * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-     * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
-     * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-     * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
-     * TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-     * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
-     * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
-     * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     * SUCH DAMAGE.
-     */
-    class Simplify_Deposit extends \Simplify_Object
-    {
-        /**
-         * Retrieve Simplify_Deposit objects.
-         * @param     array criteria a map of parameters; valid keys are:<dl style="padding-left:10px;">
-         *     <dt><tt>filter</tt></dt>    <dd>Filters to apply to the list.  </dd>
-         *     <dt><tt>max</tt></dt>    <dd>Allows up to a max of 50 list items to return. [min value: 0, max value: 50, default: 20]  </dd>
-         *     <dt><tt>offset</tt></dt>    <dd>Used in paging of the list.  This is the start offset of the page. [min value: 0, default: 0]  </dd>
-         *     <dt><tt>sorting</tt></dt>    <dd>Allows for ascending or descending sorting of the list.  The value maps properties to the sort direction (either <tt>asc</tt> for ascending or <tt>desc</tt> for descending).  Sortable properties are: <tt> amount</tt><tt> dateCreated</tt><tt> depositDate</tt>.</dd></dl>
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    ResourceList a ResourceList object that holds the list of Deposit objects and the total
-         *            number of Deposit objects available for the given criteria.
-         * @see       ResourceList
-         */
-        public static function listDeposit($criteria = \null, $authentication = \null)
-        {
-        }
-        /**
-         * Retrieve a Simplify_Deposit object from the API
-         *
-         * @param     string id  the id of the Deposit object to retrieve
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    Deposit a Deposit object
-         */
-        public static function findDeposit($id, $authentication = \null)
-        {
-        }
-        /**
-         * @ignore
-         */
-        public function getClazz()
-        {
-        }
-    }
-    /*
-     * Copyright (c) 2013 - 2015 MasterCard International Incorporated
-     * All rights reserved.
-     *
-     * Redistribution and use in source and binary forms, with or without modification, are
-     * permitted provided that the following conditions are met:
-     *
-     * Redistributions of source code must retain the above copyright notice, this list of
-     * conditions and the following disclaimer.
-     * Redistributions in binary form must reproduce the above copyright notice, this list of
-     * conditions and the following disclaimer in the documentation and/or other materials
-     * provided with the distribution.
-     * Neither the name of the MasterCard International Incorporated nor the names of its
-     * contributors may be used to endorse or promote products derived from this software
-     * without specific prior written permission.
-     * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
-     * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-     * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
-     * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-     * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
-     * TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-     * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
-     * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
-     * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     * SUCH DAMAGE.
-     */
-    class Simplify_Event extends \Simplify_Object
-    {
-        /**
-         * Creates an Event object
-         * @param     array $hash A map of parameters; valid keys are:
-         *     <dt><code>payload</code></dt>    <dd>The raw JWS payload. </dd> <strong>required</strong>
-         *     <dt><code>url</code></dt>    <dd>The URL for the webhook.  If present it must match the URL registered for the webhook.</dd>
-         * @param  $authentication Object that contains the API public and private keys.  If null the values of the static
-         *         Simplify::$publicKey and Simplify::$privateKey will be used.
-         * @return Payments_Event an Event object.
-         * @throws InvalidArgumentException
-         */
-        public static function createEvent($hash, $authentication = \null)
-        {
-        }
-        /**
-         * @ignore
-         */
-        public static function getClazz()
-        {
-        }
-    }
-    /*
-     * Copyright (c) 2013 - 2015 MasterCard International Incorporated
-     * All rights reserved.
-     *
-     * Redistribution and use in source and binary forms, with or without modification, are
-     * permitted provided that the following conditions are met:
-     *
-     * Redistributions of source code must retain the above copyright notice, this list of
-     * conditions and the following disclaimer.
-     * Redistributions in binary form must reproduce the above copyright notice, this list of
-     * conditions and the following disclaimer in the documentation and/or other materials
-     * provided with the distribution.
-     * Neither the name of the MasterCard International Incorporated nor the names of its
-     * contributors may be used to endorse or promote products derived from this software
-     * without specific prior written permission.
-     * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
-     * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-     * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
-     * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-     * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
-     * TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-     * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
-     * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
-     * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     * SUCH DAMAGE.
-     */
-    /**
-     *
-     * Base class for all API exceptions.
-     *
-     */
-    class Simplify_ApiException extends \Exception
-    {
-        protected $errorData;
-        protected $status;
-        protected $errorCode;
-        protected $reference;
-        /**
-         * @ignore
-         */
-        function __construct($message, $status = \null, $errorData = \null)
-        {
-        }
-        /**
-         * Returns a map of all error data returned by the API.
-         * @return array a map containing API error data.
-         */
-        function getErrorData()
-        {
-        }
-        /**
-         * Returns the HTTP status for the request.
-         * @return string HTTP status code (or null if there is no status).
-         */
-        function getStatus()
-        {
-        }
-        /**
-         * Returns unique reference for the API error.
-         * @return string a reference (or null if there is no reference).
-         */
-        function getReference()
-        {
-        }
-        /**
-         * Returns an code for the API error.
-         * @return string the error code.
-         */
-        function getErrorCode()
-        {
-        }
-        /**
-         * Returns a description of the error.
-         * @return string Description of the error.
-         */
-        function describe()
-        {
-        }
-    }
-    /**
-     * Exception raised when there are communication problems contacting the API.
-     */
-    class Simplify_ApiConnectionException extends \Simplify_ApiException
-    {
-        /**
-         * @ignore
-         */
-        function __construct($message, $status = \null, $errorData = \null)
-        {
-        }
-    }
-    /**
-     * Exception raised where there are problems authenticating a request.
-     */
-    class Simplify_AuthenticationException extends \Simplify_ApiException
-    {
-        /**
-         * @ignore
-         */
-        function __construct($message, $status = \null, $errorData = \null)
-        {
-        }
-    }
-    /**
-     * Exception raised when the API request contains errors.
-     */
-    class Simplify_BadRequestException extends \Simplify_ApiException
-    {
-        protected $fieldErrors;
-        /**
-         * @ignore
-         */
-        function __construct($message, $status = \null, $errorData = \null)
-        {
-        }
-        /**
-         * Returns a boolean indicating whether there are any field errors.
-         * @return boolean true if there are field errors; false otherwise.
-         */
-        function hasFieldErrors()
-        {
-        }
-        /**
-         * Returns a list containing all field errors.
-         * @return array list of field errors.
-         */
-        function getFieldErrors()
-        {
-        }
-        /**
-         * Returns a description of the error.
-         * @return string description of the error.
-         */
-        function describe()
-        {
-        }
-    }
-    /**
-     * Represents a single error in a field of a request sent to the API.
-     */
-    class Simplify_FieldError
-    {
-        protected $field;
-        protected $code;
-        protected $message;
-        /**
-         * @ignore
-         */
-        function __construct($errorData)
-        {
-        }
-        /**
-         * Returns the name of the field with the error.
-         * @return string the field name.
-         */
-        function getFieldName()
-        {
-        }
-        /**
-         * Returns the code for the error.
-         * @return string the error code.
-         */
-        function getErrorCode()
-        {
-        }
-        /**
-         * Returns a description of the error.
-         * @return string description of the error.
-         */
-        function getMessage()
-        {
-        }
-        function __toString()
-        {
-        }
-    }
-    /**
-     * Exception when a requested object cannot be found.
-     */
-    class Simplify_ObjectNotFoundException extends \Simplify_ApiException
-    {
-        /**
-         * @ignore
-         */
-        function __construct($message, $status = \null, $errorData = \null)
-        {
-        }
-    }
-    /**
-     * Exception when a request was not allowed.
-     */
-    class Simplify_NotAllowedException extends \Simplify_ApiException
-    {
-        /**
-         * @ignore
-         */
-        function __construct($message, $status = \null, $errorData = \null)
-        {
-        }
-    }
-    /**
-     * Exception when there was a system error processing a request.
-     */
-    class Simplify_SystemException extends \Simplify_ApiException
-    {
-        /**
-         * @ignore
-         */
-        function __construct($message, $status = \null, $errorData = \null)
-        {
-        }
-    }
-    /*
-     * Copyright (c) 2013 - 2015 MasterCard International Incorporated
-     * All rights reserved.
-     *
-     * Redistribution and use in source and binary forms, with or without modification, are
-     * permitted provided that the following conditions are met:
-     *
-     * Redistributions of source code must retain the above copyright notice, this list of
-     * conditions and the following disclaimer.
-     * Redistributions in binary form must reproduce the above copyright notice, this list of
-     * conditions and the following disclaimer in the documentation and/or other materials
-     * provided with the distribution.
-     * Neither the name of the MasterCard International Incorporated nor the names of its
-     * contributors may be used to endorse or promote products derived from this software
-     * without specific prior written permission.
-     * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
-     * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-     * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
-     * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-     * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
-     * TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-     * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
-     * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
-     * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     * SUCH DAMAGE.
-     */
-    class Simplify_FraudCheck extends \Simplify_Object
-    {
-        /**
-         * Creates an Simplify_FraudCheck object
-         * @param     array $hash a map of parameters; valid keys are:<dl style="padding-left:10px;">
-         *     <dt><tt>amount</tt></dt>    <dd>Amount of the transaction to be checked for fraud (in the smallest unit of your currency). Example: 100 = $1.00USD </dd>
-         *     <dt><tt>card.addressCity</tt></dt>    <dd>City of the cardholder. [max length: 50, min length: 2] </dd>
-         *     <dt><tt>card.addressCountry</tt></dt>    <dd>Country code (ISO-3166-1-alpha-2 code) of residence of the cardholder. [max length: 2, min length: 2] </dd>
-         *     <dt><tt>card.addressLine1</tt></dt>    <dd>Address of the cardholder. [max length: 255] </dd>
-         *     <dt><tt>card.addressLine2</tt></dt>    <dd>Address of the cardholder if needed. [max length: 255] </dd>
-         *     <dt><tt>card.addressState</tt></dt>    <dd>State of residence of the cardholder. For the US, this is a 2-digit USPS code. [max length: 255, min length: 2] </dd>
-         *     <dt><tt>card.addressZip</tt></dt>    <dd>Postal code of the cardholder. The postal code size is between 5 and 9 characters in length and only contains numbers or letters. [max length: 9, min length: 3] </dd>
-         *     <dt><tt>card.cvc</tt></dt>    <dd>CVC security code of the card. This is the code on the back of the card. Example: 123 </dd>
-         *     <dt><tt>card.expMonth</tt></dt>    <dd>Expiration month of the card. Format is MM. Example: January = 01 [min value: 1, max value: 12] <strong>required </strong></dd>
-         *     <dt><tt>card.expYear</tt></dt>    <dd>Expiration year of the card. Format is YY. Example: 2013 = 13 [min value: 0, max value: 99] <strong>required </strong></dd>
-         *     <dt><tt>card.name</tt></dt>    <dd>Name as it appears on the card. [max length: 50, min length: 2] </dd>
-         *     <dt><tt>card.number</tt></dt>    <dd>Card number as it appears on the card. [max length: 19, min length: 13] <strong>required </strong></dd>
-         *     <dt><tt>currency</tt></dt>    <dd>Currency code (ISO-4217) for the transaction to be checked for fraud. </dd>
-         *     <dt><tt>description</tt></dt>    <dd>- Description of the fraud check. </dd>
-         *     <dt><tt>mode</tt></dt>    <dd>Fraud check mode.  “simple” only does an AVS and CVC check; “advanced” does a complete fraud check, running the input against the set up rules. [valid values: simple, advanced, full] <strong>required </strong></dd>
-         *     <dt><tt>sessionId</tt></dt>    <dd>Session ID usd during data collection. [max length: 255] </dd>
-         *     <dt><tt>token</tt></dt>    <dd>Description </dd></dl>
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.<i/>
-         * @return    FraudCheck a FraudCheck object.
-         */
-        public static function createFraudCheck($hash, $authentication = \null)
-        {
-        }
-        /**
-         * Retrieve Simplify_FraudCheck objects.
-         * @param     array criteria a map of parameters; valid keys are:<dl style="padding-left:10px;">
-         *     <dt><tt>filter</tt></dt>    <dd>Allows for ascending or descending sorting of the list.  </dd>
-         *     <dt><tt>max</tt></dt>    <dd>Allows up to a max of 50 list items to return. [min value: 0, max value: 50, default: 20]  </dd>
-         *     <dt><tt>offset</tt></dt>    <dd>Used in paging of the list.  This is the start offset of the page. [min value: 0, default: 0]  </dd>
-         *     <dt><tt>sorting</tt></dt>    <dd>Used in paging of the list.  This is the start offset of the page.  The value maps properties to the sort direction (either <tt>asc</tt> for ascending or <tt>desc</tt> for descending).  Sortable properties are: .</dd></dl>
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    ResourceList a ResourceList object that holds the list of FraudCheck objects and the total
-         *            number of FraudCheck objects available for the given criteria.
-         * @see       ResourceList
-         */
-        public static function listFraudCheck($criteria = \null, $authentication = \null)
-        {
-        }
-        /**
-         * Retrieve a Simplify_FraudCheck object from the API
-         *
-         * @param     string id  the id of the FraudCheck object to retrieve
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    FraudCheck a FraudCheck object
-         */
-        public static function findFraudCheck($id, $authentication = \null)
-        {
-        }
-        /**
-         * @ignore
-         */
-        public function getClazz()
-        {
-        }
-    }
-    /*
-     * Copyright (c) 2013 - 2015 MasterCard International Incorporated
-     * All rights reserved.
-     *
-     * Redistribution and use in source and binary forms, with or without modification, are
-     * permitted provided that the following conditions are met:
-     *
-     * Redistributions of source code must retain the above copyright notice, this list of
-     * conditions and the following disclaimer.
-     * Redistributions in binary form must reproduce the above copyright notice, this list of
-     * conditions and the following disclaimer in the documentation and/or other materials
-     * provided with the distribution.
-     * Neither the name of the MasterCard International Incorporated nor the names of its
-     * contributors may be used to endorse or promote products derived from this software
-     * without specific prior written permission.
-     * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
-     * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-     * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
-     * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-     * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
-     * TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-     * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
-     * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
-     * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     * SUCH DAMAGE.
-     */
-    class Simplify_HTTP
-    {
-        const DELETE = "DELETE";
-        const GET = "GET";
-        const POST = "POST";
-        const PUT = "PUT";
-        const HTTP_SUCCESS = 200;
-        const HTTP_REDIRECTED = 302;
-        const HTTP_UNAUTHORIZED = 401;
-        const HTTP_NOT_FOUND = 404;
-        const HTTP_NOT_ALLOWED = 405;
-        const HTTP_BAD_REQUEST = 400;
-        const JWS_NUM_HEADERS = 7;
-        const JWS_ALGORITHM = 'HS256';
-        const JWS_TYPE = 'JWS';
-        const JWS_HDR_UNAME = 'uname';
-        const JWS_HDR_URI = 'api.simplifycommerce.com/uri';
-        const JWS_HDR_TIMESTAMP = 'api.simplifycommerce.com/timestamp';
-        const JWS_HDR_NONCE = 'api.simplifycommerce.com/nonce';
-        const JWS_HDR_TOKEN = 'api.simplifycommerce.com/token';
-        const JWS_MAX_TIMESTAMP_DIFF = 300;
-        // 5 minutes in seconds
-        private static $_validMethods = array("post" => self::POST, "put" => self::PUT, "get" => self::GET, "delete" => self::DELETE);
-        private function request($url, $method, $authentication, $payload = '')
-        {
-        }
-        /**
-         * Handles Simplify API requests
-         *
-         * @param $url
-         * @param $method
-         * @param $authentication
-         * @param string $payload
-         * @return mixed
-         * @throws Simplify_AuthenticationException
-         * @throws Simplify_ObjectNotFoundException
-         * @throws Simplify_BadRequestException
-         * @throws Simplify_NotAllowedException
-         * @throws Simplify_SystemException
-         */
-        public function apiRequest($url, $method, $authentication, $payload = '')
-        {
-        }
-        /**
-         * Handles Simplify OAuth requests
-         *
-         * @param $url
-         * @param $payload
-         * @param $authentication
-         * @return mixed
-         * @throws Simplify_AuthenticationException
-         * @throws Simplify_ObjectNotFoundException
-         * @throws Simplify_BadRequestException
-         * @throws Simplify_NotAllowedException
-         * @throws Simplify_SystemException
-         */
-        public function oauthRequest($url, $payload, $authentication)
-        {
-        }
-        public function jwsDecode($authentication, $hash)
-        {
-        }
-        private function jwsEncode($authentication, $url, $payload, $hasPayload)
-        {
-        }
-        private function jwsSign($privateKey, $msg)
-        {
-        }
-        private function jwsVerifyHeader($header, $url, $publicKey)
-        {
-        }
-        private function jwsVerifySignature($privateKey, $msg, $expectedSig)
-        {
-        }
-        private function jwsAuthError($reason)
-        {
-        }
-        private function jwsVerifyTimestamp($ts)
-        {
-        }
-        private function isLiveKey($k)
-        {
-        }
-        private function jwsUrlSafeEncode64($s)
-        {
-        }
-        private function jwsUrlSafeDecode64($s)
-        {
-        }
-        private function buildOauthError($msg, $error, $error_description)
-        {
-        }
-    }
-    /*
-     * Copyright (c) 2013 - 2015 MasterCard International Incorporated
-     * All rights reserved.
-     *
-     * Redistribution and use in source and binary forms, with or without modification, are
-     * permitted provided that the following conditions are met:
-     *
-     * Redistributions of source code must retain the above copyright notice, this list of
-     * conditions and the following disclaimer.
-     * Redistributions in binary form must reproduce the above copyright notice, this list of
-     * conditions and the following disclaimer in the documentation and/or other materials
-     * provided with the distribution.
-     * Neither the name of the MasterCard International Incorporated nor the names of its
-     * contributors may be used to endorse or promote products derived from this software
-     * without specific prior written permission.
-     * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
-     * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-     * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
-     * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-     * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
-     * TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-     * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
-     * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
-     * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     * SUCH DAMAGE.
-     */
-    class Simplify_Invoice extends \Simplify_Object
-    {
-        /**
-         * Creates an Simplify_Invoice object
-         * @param     array $hash a map of parameters; valid keys are:<dl style="padding-left:10px;">
-         *     <dt><tt>billingAddress.city</tt></dt>    <dd>Billing address city of the location where the goods or services were supplied. [max length: 255, min length: 2] </dd>
-         *     <dt><tt>billingAddress.country</tt></dt>    <dd>Billing address country of the location where the goods or services were supplied. [max length: 2, min length: 2] </dd>
-         *     <dt><tt>billingAddress.line1</tt></dt>    <dd>Billing address line 1 of the location where the goods or services were supplied. [max length: 255] </dd>
-         *     <dt><tt>billingAddress.line2</tt></dt>    <dd>Billing address line 2 of the location where the goods or services were supplied. [max length: 255] </dd>
-         *     <dt><tt>billingAddress.name</tt></dt>    <dd>Billing address name of the location where the goods or services were supplied. Will use the customer name if not provided. [max length: 255] </dd>
-         *     <dt><tt>billingAddress.state</tt></dt>    <dd>Billing address state of the location where the goods or services were supplied. [max length: 255] </dd>
-         *     <dt><tt>billingAddress.zip</tt></dt>    <dd>Billing address zip of the location where the goods or services were supplied. [max length: 32] </dd>
-         *     <dt><tt>businessAddress.city</tt></dt>    <dd>Address city of the business that is sending the invoice. [max length: 255, min length: 2] </dd>
-         *     <dt><tt>businessAddress.country</tt></dt>    <dd>Address country of the business that is sending the invoice. [max length: 2, min length: 2] </dd>
-         *     <dt><tt>businessAddress.line1</tt></dt>    <dd>Address line 1 of the business that is sending the invoice. [max length: 255] </dd>
-         *     <dt><tt>businessAddress.line2</tt></dt>    <dd>Address line 2 of the business that is sending the invoice. [max length: 255] </dd>
-         *     <dt><tt>businessAddress.name</tt></dt>    <dd>The name of the business that is sending the invoice. [max length: 255] </dd>
-         *     <dt><tt>businessAddress.state</tt></dt>    <dd>Address state of the business that is sending the invoice. [max length: 255] </dd>
-         *     <dt><tt>businessAddress.zip</tt></dt>    <dd>Address zip of the business that is sending the invoice. [max length: 32] </dd>
-         *     <dt><tt>currency</tt></dt>    <dd>Currency code (ISO-4217). Must match the currency associated with your account. [max length: 3, min length: 3, default: USD] </dd>
-         *     <dt><tt>customer</tt></dt>    <dd>The customer ID of the customer we are invoicing.  This is optional if invoiceToCopy or a name and email are provided </dd>
-         *     <dt><tt>customerTaxNo</tt></dt>    <dd>The tax number or VAT id of the person to whom the goods or services were supplied. [max length: 255] </dd>
-         *     <dt><tt>discountRate</tt></dt>    <dd>The discount percent as a decimal e.g. 12.5.  This is used to calculate the discount amount which is subtracted from the total amount due before any tax is applied. [max length: 6] </dd>
-         *     <dt><tt>dueDate</tt></dt>    <dd>The date invoice payment is due.  If a late fee is provided this will be added to the invoice total is the due date has past. </dd>
-         *     <dt><tt>email</tt></dt>    <dd>The email of the customer we are invoicing.  This is optional if customer or invoiceToCopy is provided.  A new customer will be created using the the name and email. </dd>
-         *     <dt><tt>invoiceId</tt></dt>    <dd>User defined invoice id. If not provided the system will generate a numeric id. [max length: 255] </dd>
-         *     <dt><tt>invoiceToCopy</tt></dt>    <dd>The id of an existing invoice to be copied.  This is optional if customer or a name and email are provided </dd>
-         *     <dt><tt>items.amount</tt></dt>    <dd>Amount of the invoice item (the smallest unit of your currency). Example: 100 = $1.00USD [min value: -9999900, max value: 9999900] <strong>required </strong></dd>
-         *     <dt><tt>items.description</tt></dt>    <dd>The description of the invoice item. [max length: 1024] </dd>
-         *     <dt><tt>items.invoice</tt></dt>    <dd>The ID of the invoice this item belongs to. </dd>
-         *     <dt><tt>items.product</tt></dt>    <dd>The product this invoice item refers to. </dd>
-         *     <dt><tt>items.quantity</tt></dt>    <dd>Quantity of the item.  This total amount of the invoice item is the amount * quantity. [min value: 1, max value: 999999, default: 1] </dd>
-         *     <dt><tt>items.reference</tt></dt>    <dd>User defined reference field. [max length: 255] </dd>
-         *     <dt><tt>items.tax</tt></dt>    <dd>The tax ID of the tax charge in the invoice item. </dd>
-         *     <dt><tt>lateFee</tt></dt>    <dd>The late fee amount that will be added to the invoice total is the due date is past due.  Value provided must be in the smallest unit of your currency. Example: 100 = $1.00USD [max value: 9999900] </dd>
-         *     <dt><tt>memo</tt></dt>    <dd>A memo that is displayed to the customer on the invoice payment screen. [max length: 4000] </dd>
-         *     <dt><tt>name</tt></dt>    <dd>The name of the customer we are invoicing.  This is optional if customer or invoiceToCopy is provided.  A new customer will be created using the the name and email. [max length: 50, min length: 2] </dd>
-         *     <dt><tt>note</tt></dt>    <dd>This field can be used to store a note that is not displayed to the customer. [max length: 4000] </dd>
-         *     <dt><tt>reference</tt></dt>    <dd>User defined reference field. [max length: 255] </dd>
-         *     <dt><tt>shippingAddress.city</tt></dt>    <dd>Address city of the location where the goods or services were supplied. [max length: 255, min length: 2] </dd>
-         *     <dt><tt>shippingAddress.country</tt></dt>    <dd>Address country of the location where the goods or services were supplied. [max length: 2, min length: 2] </dd>
-         *     <dt><tt>shippingAddress.line1</tt></dt>    <dd>Address line 1 of the location where the goods or services were supplied. [max length: 255] </dd>
-         *     <dt><tt>shippingAddress.line2</tt></dt>    <dd>Address line 2 of the location where the goods or services were supplied. [max length: 255] </dd>
-         *     <dt><tt>shippingAddress.name</tt></dt>    <dd>Address name of the location where the goods or services were supplied. [max length: 255] </dd>
-         *     <dt><tt>shippingAddress.state</tt></dt>    <dd>Address state of the location where the goods or services were supplied. [max length: 255] </dd>
-         *     <dt><tt>shippingAddress.zip</tt></dt>    <dd>Address zip of the location where the goods or services were supplied. [max length: 32] </dd>
-         *     <dt><tt>suppliedDate</tt></dt>    <dd>The date on which the goods or services were supplied. </dd>
-         *     <dt><tt>taxNo</tt></dt>    <dd>The tax number or VAT id of the person who supplied the goods or services. [max length: 255] </dd>
-         *     <dt><tt>type</tt></dt>    <dd>The type of invoice.  One of WEB or MOBILE. [valid values: WEB, MOBILE, default: WEB] </dd></dl>
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.<i/>
-         * @return    Invoice a Invoice object.
-         */
-        public static function createInvoice($hash, $authentication = \null)
-        {
-        }
-        /**
-         * Deletes an Simplify_Invoice object.
-         *
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         *
-         * @return true
-         */
-        public function deleteInvoice($authentication = \null)
-        {
-        }
-        /**
-         * Retrieve Simplify_Invoice objects.
-         * @param     array criteria a map of parameters; valid keys are:<dl style="padding-left:10px;">
-         *     <dt><tt>filter</tt></dt>    <dd>Filters to apply to the list.  </dd>
-         *     <dt><tt>max</tt></dt>    <dd>Allows up to a max of 50 list items to return. [min value: 0, max value: 50, default: 20]  </dd>
-         *     <dt><tt>offset</tt></dt>    <dd>Used in paging of the list.  This is the start offset of the page. [min value: 0, default: 0]  </dd>
-         *     <dt><tt>sorting</tt></dt>    <dd>Allows for ascending or descending sorting of the list.  The value maps properties to the sort direction (either <tt>asc</tt> for ascending or <tt>desc</tt> for descending).  Sortable properties are: <tt> id</tt><tt> invoiceDate</tt><tt> dueDate</tt><tt> datePaid</tt><tt> customer</tt><tt> status</tt><tt> dateCreated</tt>.</dd></dl>
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    ResourceList a ResourceList object that holds the list of Invoice objects and the total
-         *            number of Invoice objects available for the given criteria.
-         * @see       ResourceList
-         */
-        public static function listInvoice($criteria = \null, $authentication = \null)
-        {
-        }
-        /**
-         * Retrieve a Simplify_Invoice object from the API
-         *
-         * @param     string id  the id of the Invoice object to retrieve
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    Invoice a Invoice object
-         */
-        public static function findInvoice($id, $authentication = \null)
-        {
-        }
-        /**
-         * Updates an Simplify_Invoice object.
-         *
-         * The properties that can be updated:
-         * <dl style="padding-left:10px;">
-         *     <dt><tt>billingAddress.city</tt></dt>    <dd>Billing address city of the location where the goods or services were supplied. [max length: 255, min length: 2] </dd>
-         *     <dt><tt>billingAddress.country</tt></dt>    <dd>Billing address country of the location where the goods or services were supplied. [max length: 2, min length: 2] </dd>
-         *     <dt><tt>billingAddress.line1</tt></dt>    <dd>Billing address line 1 of the location where the goods or services were supplied. [max length: 255] </dd>
-         *     <dt><tt>billingAddress.line2</tt></dt>    <dd>Billing address line 2 of the location where the goods or services were supplied. [max length: 255] </dd>
-         *     <dt><tt>billingAddress.name</tt></dt>    <dd>Billing address name of the location where the goods or services were supplied. [max length: 255] </dd>
-         *     <dt><tt>billingAddress.state</tt></dt>    <dd>Billing address state of the location where the goods or services were supplied. [max length: 255] </dd>
-         *     <dt><tt>billingAddress.zip</tt></dt>    <dd>Billing address zip of the location where the goods or services were supplied. [max length: 32] </dd>
-         *     <dt><tt>businessAddress.city</tt></dt>    <dd>Business address city of the business that is sending the invoice. [max length: 255, min length: 2] </dd>
-         *     <dt><tt>businessAddress.country</tt></dt>    <dd>Business address country of the business that is sending the invoice. [max length: 2, min length: 2] </dd>
-         *     <dt><tt>businessAddress.line1</tt></dt>    <dd>Business address line 1 of the business that is sending the invoice. [max length: 255] </dd>
-         *     <dt><tt>businessAddress.line2</tt></dt>    <dd>Business address line 2 of the business that is sending the invoice. [max length: 255] </dd>
-         *     <dt><tt>businessAddress.name</tt></dt>    <dd>Business address name of the business that is sending the invoice. [max length: 255] </dd>
-         *     <dt><tt>businessAddress.state</tt></dt>    <dd>Business address state of the business that is sending the invoice. [max length: 255] </dd>
-         *     <dt><tt>businessAddress.zip</tt></dt>    <dd>Business address zip of the business that is sending the invoice. [max length: 32] </dd>
-         *     <dt><tt>currency</tt></dt>    <dd>Currency code (ISO-4217). Must match the currency associated with your account. [max length: 3, min length: 3] </dd>
-         *     <dt><tt>customerTaxNo</tt></dt>    <dd>The tax number or VAT id of the person to whom the goods or services were supplied. [max length: 255] </dd>
-         *     <dt><tt>datePaid</tt></dt>    <dd>This is the date the invoice was PAID in UTC millis. </dd>
-         *     <dt><tt>discountRate</tt></dt>    <dd>The discount percent as a decimal e.g. 12.5.  This is used to calculate the discount amount which is subtracted from the total amount due before any tax is applied. [max length: 6] </dd>
-         *     <dt><tt>dueDate</tt></dt>    <dd>The date invoice payment is due.  If a late fee is provided this will be added to the invoice total is the due date has past. </dd>
-         *     <dt><tt>email</tt></dt>    <dd>The email of the customer we are invoicing.  This is optional if customer or invoiceToCopy is provided.  A new customer will be created using the the name and email. </dd>
-         *     <dt><tt>invoiceId</tt></dt>    <dd>User defined invoice id. If not provided the system will generate a numeric id. [max length: 255] </dd>
-         *     <dt><tt>items.amount</tt></dt>    <dd>Amount of the invoice item in the smallest unit of your currency. Example: 100 = $1.00USD [min value: -9999900, max value: 9999900] <strong>required </strong></dd>
-         *     <dt><tt>items.description</tt></dt>    <dd>The description of the invoice item. [max length: 1024] </dd>
-         *     <dt><tt>items.invoice</tt></dt>    <dd>The ID of the invoice this item belongs to. </dd>
-         *     <dt><tt>items.product</tt></dt>    <dd>The Id of the product this item refers to. </dd>
-         *     <dt><tt>items.quantity</tt></dt>    <dd>Quantity of the item.  This total amount of the invoice item is the amount * quantity. [min value: 1, max value: 999999, default: 1] </dd>
-         *     <dt><tt>items.reference</tt></dt>    <dd>User defined reference field. [max length: 255] </dd>
-         *     <dt><tt>items.tax</tt></dt>    <dd>The tax ID of the tax charge in the invoice item. </dd>
-         *     <dt><tt>lateFee</tt></dt>    <dd>The late fee amount that will be added to the invoice total is the due date is past due.  Value provided must be in the smallest unit of your currency. Example: 100 = $1.00USD [max value: 9999900] </dd>
-         *     <dt><tt>memo</tt></dt>    <dd>A memo that is displayed to the customer on the invoice payment screen. [max length: 4000] </dd>
-         *     <dt><tt>name</tt></dt>    <dd>The name of the customer we are invoicing.  This is optional if customer or invoiceToCopy is provided.  A new customer will be created using the the name and email. [max length: 50, min length: 2] </dd>
-         *     <dt><tt>note</tt></dt>    <dd>This field can be used to store a note that is not displayed to the customer. [max length: 4000] </dd>
-         *     <dt><tt>payment</tt></dt>    <dd>The ID of the payment.  Use this ID to query the /payment API. [max length: 255] </dd>
-         *     <dt><tt>reference</tt></dt>    <dd>User defined reference field. [max length: 255] </dd>
-         *     <dt><tt>shippingAddress.city</tt></dt>    <dd>Address city of the location where the goods or services were supplied. [max length: 255, min length: 2] </dd>
-         *     <dt><tt>shippingAddress.country</tt></dt>    <dd>Address country of the location where the goods or services were supplied. [max length: 2, min length: 2] </dd>
-         *     <dt><tt>shippingAddress.line1</tt></dt>    <dd>Address line 1 of the location where the goods or services were supplied. [max length: 255] </dd>
-         *     <dt><tt>shippingAddress.line2</tt></dt>    <dd>Address line 2 of the location where the goods or services were supplied. [max length: 255] </dd>
-         *     <dt><tt>shippingAddress.name</tt></dt>    <dd>Address name of the location where the goods or services were supplied. [max length: 255] </dd>
-         *     <dt><tt>shippingAddress.state</tt></dt>    <dd>Address state of the location where the goods or services were supplied. [max length: 255] </dd>
-         *     <dt><tt>shippingAddress.zip</tt></dt>    <dd>Address zip of the location where the goods or services were supplied. [max length: 32] </dd>
-         *     <dt><tt>status</tt></dt>    <dd>New status of the invoice. </dd>
-         *     <dt><tt>suppliedDate</tt></dt>    <dd>The date on which the goods or services were supplied. </dd>
-         *     <dt><tt>taxNo</tt></dt>    <dd>The tax number or VAT id of the person who supplied the goods or services. [max length: 255] </dd></dl>
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    Invoice a Invoice object.
-         */
-        public function updateInvoice($authentication = \null)
-        {
-        }
-        /**
-         * @ignore
-         */
-        public function getClazz()
-        {
-        }
-    }
-    /*
-     * Copyright (c) 2013 - 2015 MasterCard International Incorporated
-     * All rights reserved.
-     *
-     * Redistribution and use in source and binary forms, with or without modification, are
-     * permitted provided that the following conditions are met:
-     *
-     * Redistributions of source code must retain the above copyright notice, this list of
-     * conditions and the following disclaimer.
-     * Redistributions in binary form must reproduce the above copyright notice, this list of
-     * conditions and the following disclaimer in the documentation and/or other materials
-     * provided with the distribution.
-     * Neither the name of the MasterCard International Incorporated nor the names of its
-     * contributors may be used to endorse or promote products derived from this software
-     * without specific prior written permission.
-     * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
-     * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-     * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
-     * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-     * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
-     * TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-     * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
-     * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
-     * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     * SUCH DAMAGE.
-     */
-    class Simplify_InvoiceItem extends \Simplify_Object
-    {
-        /**
-         * Creates an Simplify_InvoiceItem object
-         * @param     array $hash a map of parameters; valid keys are:<dl style="padding-left:10px;">
-         *     <dt><tt>amount</tt></dt>    <dd>Amount of the invoice item in the smallest unit of your currency. Example: 100 = $1.00USD [min value: -9999900, max value: 9999900] <strong>required </strong></dd>
-         *     <dt><tt>description</tt></dt>    <dd>Individual items of an invoice [max length: 1024] </dd>
-         *     <dt><tt>invoice</tt></dt>    <dd>The ID of the invoice this item belongs to. </dd>
-         *     <dt><tt>product</tt></dt>    <dd>Product ID this item relates to. </dd>
-         *     <dt><tt>quantity</tt></dt>    <dd>Quantity of the item.  This total amount of the invoice item is the amount * quantity. [min value: 1, max value: 999999, default: 1] </dd>
-         *     <dt><tt>reference</tt></dt>    <dd>User defined reference field. [max length: 255] </dd>
-         *     <dt><tt>tax</tt></dt>    <dd>The tax ID of the tax charge in the invoice item. </dd></dl>
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.<i/>
-         * @return    InvoiceItem a InvoiceItem object.
-         */
-        public static function createInvoiceItem($hash, $authentication = \null)
-        {
-        }
-        /**
-         * Deletes an Simplify_InvoiceItem object.
-         *
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         *
-         * @return true
-         */
-        public function deleteInvoiceItem($authentication = \null)
-        {
-        }
-        /**
-         * Retrieve a Simplify_InvoiceItem object from the API
-         *
-         * @param     string id  the id of the InvoiceItem object to retrieve
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    InvoiceItem a InvoiceItem object
-         */
-        public static function findInvoiceItem($id, $authentication = \null)
-        {
-        }
-        /**
-         * Updates an Simplify_InvoiceItem object.
-         *
-         * The properties that can be updated:
-         * <dl style="padding-left:10px;">
-         *     <dt><tt>amount</tt></dt>    <dd>Amount of the invoice item in the smallest unit of your currency. Example: 100 = $1.00USD [min value: 1] </dd>
-         *     <dt><tt>description</tt></dt>    <dd>Individual items of an invoice </dd>
-         *     <dt><tt>quantity</tt></dt>    <dd>Quantity of the item.  This total amount of the invoice item is the amount * quantity. [min value: 1, max value: 999999] </dd>
-         *     <dt><tt>reference</tt></dt>    <dd>User defined reference field. </dd>
-         *     <dt><tt>tax</tt></dt>    <dd>The tax ID of the tax charge in the invoice item. </dd></dl>
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    InvoiceItem a InvoiceItem object.
-         */
-        public function updateInvoiceItem($authentication = \null)
-        {
-        }
-        /**
-         * @ignore
-         */
-        public function getClazz()
-        {
-        }
-    }
-    /*
-     * Copyright (c) 2013 - 2015 MasterCard International Incorporated
-     * All rights reserved.
-     *
-     * Redistribution and use in source and binary forms, with or without modification, are
-     * permitted provided that the following conditions are met:
-     *
-     * Redistributions of source code must retain the above copyright notice, this list of
-     * conditions and the following disclaimer.
-     * Redistributions in binary form must reproduce the above copyright notice, this list of
-     * conditions and the following disclaimer in the documentation and/or other materials
-     * provided with the distribution.
-     * Neither the name of the MasterCard International Incorporated nor the names of its
-     * contributors may be used to endorse or promote products derived from this software
-     * without specific prior written permission.
-     * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
-     * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-     * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
-     * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-     * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
-     * TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-     * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
-     * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
-     * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     * SUCH DAMAGE.
-     */
-    class Simplify_Payment extends \Simplify_Object
-    {
-        /**
-         * Creates an Simplify_Payment object
-         * @param     array $hash a map of parameters; valid keys are:<dl style="padding-left:10px;">
-         *     <dt><tt>amount</tt></dt>    <dd>Amount of the payment (in the smallest unit of your currency). Example: 100 = $1.00USD </dd>
-         *     <dt><tt>authorization</tt></dt>    <dd>The ID of the authorization being used to capture the payment. </dd>
-         *     <dt><tt>card.addressCity</tt></dt>    <dd>City of the cardholder. [max length: 50, min length: 2] </dd>
-         *     <dt><tt>card.addressCountry</tt></dt>    <dd>Country code (ISO-3166-1-alpha-2 code) of residence of the cardholder. [max length: 2, min length: 2] </dd>
-         *     <dt><tt>card.addressLine1</tt></dt>    <dd>Address of the cardholder. [max length: 255] </dd>
-         *     <dt><tt>card.addressLine2</tt></dt>    <dd>Address of the cardholder if needed. [max length: 255] </dd>
-         *     <dt><tt>card.addressState</tt></dt>    <dd>State of residence of the cardholder. For the US, this is a 2-digit USPS code. [max length: 255, min length: 2] </dd>
-         *     <dt><tt>card.addressZip</tt></dt>    <dd>Postal code of the cardholder. The postal code size is between 5 and 9 in length and only contain numbers or letters. [max length: 9, min length: 3] </dd>
-         *     <dt><tt>card.cvc</tt></dt>    <dd>CVC security code of the card. This is the code on the back of the card. Example: 123 </dd>
-         *     <dt><tt>card.expMonth</tt></dt>    <dd>Expiration month of the card. Format is MM. Example: January = 01 [min value: 1, max value: 12] <strong>required </strong></dd>
-         *     <dt><tt>card.expYear</tt></dt>    <dd>Expiration year of the card. Format is YY. Example: 2013 = 13 [min value: 0, max value: 99] <strong>required </strong></dd>
-         *     <dt><tt>card.name</tt></dt>    <dd>Name as it appears on the card. [max length: 50, min length: 2] </dd>
-         *     <dt><tt>card.number</tt></dt>    <dd>Card number as it appears on the card. [max length: 19, min length: 13] <strong>required </strong></dd>
-         *     <dt><tt>currency</tt></dt>    <dd>Currency code (ISO-4217) for the transaction. Must match the currency associated with your account. [default: USD] <strong>required </strong></dd>
-         *     <dt><tt>customer</tt></dt>    <dd>ID of customer. If specified, card on file of customer will be used. </dd>
-         *     <dt><tt>description</tt></dt>    <dd>Free form text field to be used as a description of the payment. This field is echoed back with the payment on any find or list operations. [max length: 1024] </dd>
-         *     <dt><tt>invoice</tt></dt>    <dd>ID of invoice for which this payment is being made. </dd>
-         *     <dt><tt>reference</tt></dt>    <dd>Custom reference field to be used with outside systems. </dd>
-         *     <dt><tt>replayId</tt></dt>    <dd>An identifier that can be sent to uniquely identify a payment request to facilitate retries due to I/O related issues. This identifier must be unique for your account (sandbox or live) across all of your payments. If supplied, we will check for a payment on your account that matches this identifier. If found will attempt to return an identical response of the original request. [max length: 50, min length: 1] </dd>
-         *     <dt><tt>statementDescription.name</tt></dt>    <dd>Merchant name. <strong>required </strong></dd>
-         *     <dt><tt>statementDescription.phoneNumber</tt></dt>    <dd>Merchant contact phone number. </dd>
-         *     <dt><tt>token</tt></dt>    <dd>If specified, card associated with card token will be used. [max length: 255] </dd></dl>
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.<i/>
-         * @return    Payment a Payment object.
-         */
-        public static function createPayment($hash, $authentication = \null)
-        {
-        }
-        /**
-         * Retrieve Simplify_Payment objects.
-         * @param     array criteria a map of parameters; valid keys are:<dl style="padding-left:10px;">
-         *     <dt><tt>filter</tt></dt>    <dd>Filters to apply to the list.  </dd>
-         *     <dt><tt>max</tt></dt>    <dd>Allows up to a max of 50 list items to return. [min value: 0, max value: 50, default: 20]  </dd>
-         *     <dt><tt>offset</tt></dt>    <dd>Used in paging of the list.  This is the start offset of the page. [min value: 0, default: 0]  </dd>
-         *     <dt><tt>sorting</tt></dt>    <dd>Allows for ascending or descending sorting of the list.  The value maps properties to the sort direction (either <tt>asc</tt> for ascending or <tt>desc</tt> for descending).  Sortable properties are: <tt> dateCreated</tt><tt> createdBy</tt><tt> amount</tt><tt> id</tt><tt> description</tt><tt> paymentDate</tt>.</dd></dl>
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    ResourceList a ResourceList object that holds the list of Payment objects and the total
-         *            number of Payment objects available for the given criteria.
-         * @see       ResourceList
-         */
-        public static function listPayment($criteria = \null, $authentication = \null)
-        {
-        }
-        /**
-         * Retrieve a Simplify_Payment object from the API
-         *
-         * @param     string id  the id of the Payment object to retrieve
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    Payment a Payment object
-         */
-        public static function findPayment($id, $authentication = \null)
-        {
-        }
-        /**
-         * Updates an Simplify_Payment object.
-         *
-         * The properties that can be updated:
-         * <dl style="padding-left:10px;"></dl>
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    Payment a Payment object.
-         */
-        public function updatePayment($authentication = \null)
-        {
-        }
-        /**
-         * @ignore
-         */
-        public function getClazz()
-        {
-        }
-    }
-    /*
-     * Copyright (c) 2013 - 2015 MasterCard International Incorporated
-     * All rights reserved.
-     *
-     * Redistribution and use in source and binary forms, with or without modification, are
-     * permitted provided that the following conditions are met:
-     *
-     * Redistributions of source code must retain the above copyright notice, this list of
-     * conditions and the following disclaimer.
-     * Redistributions in binary form must reproduce the above copyright notice, this list of
-     * conditions and the following disclaimer in the documentation and/or other materials
-     * provided with the distribution.
-     * Neither the name of the MasterCard International Incorporated nor the names of its
-     * contributors may be used to endorse or promote products derived from this software
-     * without specific prior written permission.
-     * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
-     * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-     * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
-     * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-     * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
-     * TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-     * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
-     * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
-     * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     * SUCH DAMAGE.
-     */
-    class Simplify_PaymentsApi
-    {
-        /**
-         * @ignore
-         */
-        public static $methodMap = array('create' => 'POST', 'delete' => 'DELETE', 'list' => 'GET', 'show' => 'GET', 'update' => 'PUT');
-        /**
-         * @ignore
-         *
-         * @param object $object
-         * @param object $authentication
-         *
-         * @return mixed
-         */
-        public static function createObject($object, $authentication = \null)
-        {
-        }
-        /**
-         * @ignore
-         *
-         * @param object $object
-         * @param object $authentication
-         *
-         * @return mixed
-         */
-        public static function findObject($object, $authentication = \null)
-        {
-        }
-        /**
-         * @ignore
-         *
-         * @param object $object
-         * @param object $authentication
-         *
-         * @return mixed
-         */
-        public static function updateObject($object, $authentication = \null)
-        {
-        }
-        /**
-         * @ignore
-         *
-         * @param object $object
-         * @param object $authentication
-         *
-         * @return mixed
-         */
-        public static function deleteObject($object, $authentication = \null)
-        {
-        }
-        /**
-         * @ignore
-         *
-         * @param object $object
-         * @param array $criteria
-         * @param object $authentication
-         *
-         * @return Simplify_ResourceList
-         */
-        public static function listObject($object, $criteria = \null, $authentication = \null)
-        {
-        }
-        /**
-         * @ignore
-         *
-         * @param array $from
-         * @param string $toClazz
-         *
-         * @return mixed
-         */
-        public function convertFromHashToObject($from, $toClazz)
-        {
-        }
-        /**
-         * @ignore
-         *
-         * @param string $publicKey
-         * @param string $action
-         * @param object $object
-         *
-         * @return string
-         */
-        public function getUrl($publicKey, $action, $object)
-        {
-        }
-        /**
-         * @ignore
-         *
-         * @param string $action
-         *
-         * @return string
-         */
-        public function getMethod($action)
-        {
-        }
-        /**
-         * @ignore
-         *
-         * @param string $action
-         * @param object $object
-         * @param object $authentication
-         *
-         * @return mixed
-         */
-        private function execute($action, $object, $authentication)
-        {
-        }
-        /**
-         * @ignore
-         *
-         * @param string $hash
-         * @param object $authentication
-         *
-         * @return mixed
-         */
-        public function jwsDecode($hash, $authentication)
-        {
-        }
-        /**
-         * @ignore
-         *
-         * @param string $url
-         *
-         * @return string
-         */
-        private function fixUrl($url)
-        {
-        }
-        /**
-         * @ignore
-         *
-         * @param string $k
-         *
-         * @return bool
-         */
-        private function isLiveKey($k)
-        {
-        }
-        /**
-         * @ignore
-         *
-         * @param string $s
-         * @param string $c
-         *
-         * @return bool
-         */
-        private function endsWith($s, $c)
-        {
-        }
-        /**
-         * Helper function to build the Authentication object for backwards compatibility.
-         * An array of all the arguments passed to one of the API functions is checked against what
-         * we expect to received.  If it's greater, then we're assuming that the user is using the older way of
-         * passing the keys. i.e as two separate strings.  We take those two string and create the Authentication object
-         *
-         * @ignore
-         * @param $authentication
-         * @param $args
-         * @param $expectedArgCount
-         * @return Simplify_Authentication
-         */
-        static function buildAuthenticationObject($authentication = \null, $args, $expectedArgCount)
-        {
-        }
-    }
-    /*
-     * Copyright (c) 2013 - 2015 MasterCard International Incorporated
-     * All rights reserved.
-     *
-     * Redistribution and use in source and binary forms, with or without modification, are
-     * permitted provided that the following conditions are met:
-     *
-     * Redistributions of source code must retain the above copyright notice, this list of
-     * conditions and the following disclaimer.
-     * Redistributions in binary form must reproduce the above copyright notice, this list of
-     * conditions and the following disclaimer in the documentation and/or other materials
-     * provided with the distribution.
-     * Neither the name of the MasterCard International Incorporated nor the names of its
-     * contributors may be used to endorse or promote products derived from this software
-     * without specific prior written permission.
-     * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
-     * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-     * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
-     * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-     * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
-     * TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-     * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
-     * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
-     * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     * SUCH DAMAGE.
-     */
-    class Simplify_Plan extends \Simplify_Object
-    {
-        /**
-         * Creates an Simplify_Plan object
-         * @param     array $hash a map of parameters; valid keys are:<dl style="padding-left:10px;">
-         *     <dt><tt>amount</tt></dt>    <dd>Amount of payment for the plan in the smallest unit of your currency. Example: 100 = $1.00USD <strong>required </strong></dd>
-         *     <dt><tt>billingCycle</tt></dt>    <dd>How the plan is billed to the customer. Values must be AUTO (indefinitely until the customer cancels) or FIXED (a fixed number of billing cycles). [default: AUTO] </dd>
-         *     <dt><tt>billingCycleLimit</tt></dt>    <dd>The number of fixed billing cycles for a plan. Only used if the billingCycle parameter is set to FIXED. Example: 4 </dd>
-         *     <dt><tt>currency</tt></dt>    <dd>Currency code (ISO-4217) for the plan. Must match the currency associated with your account. [default: USD] <strong>required </strong></dd>
-         *     <dt><tt>frequency</tt></dt>    <dd>Frequency of payment for the plan. Used in conjunction with frequencyPeriod. Valid values are "DAILY", "WEEKLY", "MONTHLY" and "YEARLY". [default: MONTHLY] <strong>required </strong></dd>
-         *     <dt><tt>frequencyPeriod</tt></dt>    <dd>Period of frequency of payment for the plan. Example: if the frequency is weekly, and periodFrequency is 2, then the subscription is billed bi-weekly. [min value: 1, default: 1] <strong>required </strong></dd>
-         *     <dt><tt>name</tt></dt>    <dd>Name of the plan [max length: 50, min length: 2] <strong>required </strong></dd>
-         *     <dt><tt>renewalReminderLeadDays</tt></dt>    <dd>If set, how many days before the next billing cycle that a renewal reminder is sent to the customer. If null, then no emails are sent. Minimum value is 7 if set. </dd>
-         *     <dt><tt>trialPeriod</tt></dt>    <dd>Plan free trial period selection.  Must be Days, Weeks, or Month [default: NONE] <strong>required </strong></dd>
-         *     <dt><tt>trialPeriodQuantity</tt></dt>    <dd>Quantity of the trial period.  Must be greater than 0 and a whole number. [min value: 1] </dd></dl>
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.<i/>
-         * @return    Plan a Plan object.
-         */
-        public static function createPlan($hash, $authentication = \null)
-        {
-        }
-        /**
-         * Deletes an Simplify_Plan object.
-         *
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         *
-         * @return true
-         */
-        public function deletePlan($authentication = \null)
-        {
-        }
-        /**
-         * Retrieve Simplify_Plan objects.
-         * @param     array criteria a map of parameters; valid keys are:<dl style="padding-left:10px;">
-         *     <dt><tt>filter</tt></dt>    <dd>Filters to apply to the list.  </dd>
-         *     <dt><tt>max</tt></dt>    <dd>Allows up to a max of 50 list items to return. [min value: 0, max value: 50, default: 20]  </dd>
-         *     <dt><tt>offset</tt></dt>    <dd>Used in paging of the list.  This is the start offset of the page. [min value: 0, default: 0]  </dd>
-         *     <dt><tt>sorting</tt></dt>    <dd>Allows for ascending or descending sorting of the list.  The value maps properties to the sort direction (either <tt>asc</tt> for ascending or <tt>desc</tt> for descending).  Sortable properties are: <tt> dateCreated</tt><tt> amount</tt><tt> frequency</tt><tt> name</tt><tt> id</tt>.</dd></dl>
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    ResourceList a ResourceList object that holds the list of Plan objects and the total
-         *            number of Plan objects available for the given criteria.
-         * @see       ResourceList
-         */
-        public static function listPlan($criteria = \null, $authentication = \null)
-        {
-        }
-        /**
-         * Retrieve a Simplify_Plan object from the API
-         *
-         * @param     string id  the id of the Plan object to retrieve
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    Plan a Plan object
-         */
-        public static function findPlan($id, $authentication = \null)
-        {
-        }
-        /**
-         * Updates an Simplify_Plan object.
-         *
-         * The properties that can be updated:
-         * <dl style="padding-left:10px;">
-         *     <dt><tt>name</tt></dt>    <dd>Name of the plan. [min length: 2] <strong>required </strong></dd></dl>
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    Plan a Plan object.
-         */
-        public function updatePlan($authentication = \null)
-        {
-        }
-        /**
-         * @ignore
-         */
-        public function getClazz()
-        {
-        }
-    }
-    /*
-     * Copyright (c) 2013 - 2015 MasterCard International Incorporated
-     * All rights reserved.
-     *
-     * Redistribution and use in source and binary forms, with or without modification, are
-     * permitted provided that the following conditions are met:
-     *
-     * Redistributions of source code must retain the above copyright notice, this list of
-     * conditions and the following disclaimer.
-     * Redistributions in binary form must reproduce the above copyright notice, this list of
-     * conditions and the following disclaimer in the documentation and/or other materials
-     * provided with the distribution.
-     * Neither the name of the MasterCard International Incorporated nor the names of its
-     * contributors may be used to endorse or promote products derived from this software
-     * without specific prior written permission.
-     * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
-     * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-     * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
-     * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-     * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
-     * TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-     * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
-     * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
-     * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     * SUCH DAMAGE.
-     */
-    class Simplify_Refund extends \Simplify_Object
-    {
-        /**
-         * Creates an Simplify_Refund object
-         * @param     array $hash a map of parameters; valid keys are:<dl style="padding-left:10px;">
-         *     <dt><tt>amount</tt></dt>    <dd>Amount of the refund in the smallest unit of your currency. Example: 100 = $1.00USD [min value: 1] <strong>required </strong></dd>
-         *     <dt><tt>payment</tt></dt>    <dd>ID of the payment for the refund <strong>required </strong></dd>
-         *     <dt><tt>reason</tt></dt>    <dd>Reason for the refund </dd>
-         *     <dt><tt>reference</tt></dt>    <dd>Custom reference field to be used with outside systems. </dd>
-         *     <dt><tt>replayId</tt></dt>    <dd>An identifier that can be sent to uniquely identify a refund request to facilitate retries due to I/O related issues. This identifier must be unique for your account (sandbox or live) across all of your refunds. If supplied, we will check for a refund on your account that matches this identifier. If found we will return an identical response to that of the original request. [max length: 50, min length: 1] </dd>
-         *     <dt><tt>statementDescription.name</tt></dt>    <dd>Merchant name. <strong>required </strong></dd>
-         *     <dt><tt>statementDescription.phoneNumber</tt></dt>    <dd>Merchant contact phone number. </dd></dl>
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.<i/>
-         * @return    Refund a Refund object.
-         */
-        public static function createRefund($hash, $authentication = \null)
-        {
-        }
-        /**
-         * Retrieve Simplify_Refund objects.
-         * @param     array criteria a map of parameters; valid keys are:<dl style="padding-left:10px;">
-         *     <dt><tt>filter</tt></dt>    <dd>Filters to apply to the list.  </dd>
-         *     <dt><tt>max</tt></dt>    <dd>Allows up to a max of 50 list items to return. [min value: 0, max value: 50, default: 20]  </dd>
-         *     <dt><tt>offset</tt></dt>    <dd>Used in paging of the list.  This is the start offset of the page. [min value: 0, default: 0]  </dd>
-         *     <dt><tt>sorting</tt></dt>    <dd>Allows for ascending or descending sorting of the list.  The value maps properties to the sort direction (either <tt>asc</tt> for ascending or <tt>desc</tt> for descending).  Sortable properties are: <tt> id</tt><tt> amount</tt><tt> description</tt><tt> dateCreated</tt><tt> paymentDate</tt>.</dd></dl>
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    ResourceList a ResourceList object that holds the list of Refund objects and the total
-         *            number of Refund objects available for the given criteria.
-         * @see       ResourceList
-         */
-        public static function listRefund($criteria = \null, $authentication = \null)
-        {
-        }
-        /**
-         * Retrieve a Simplify_Refund object from the API
-         *
-         * @param     string id  the id of the Refund object to retrieve
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    Refund a Refund object
-         */
-        public static function findRefund($id, $authentication = \null)
-        {
-        }
-        /**
-         * @ignore
-         */
-        public function getClazz()
-        {
-        }
-    }
-    /*
-     * Copyright (c) 2013 - 2015 MasterCard International Incorporated
-     * All rights reserved.
-     *
-     * Redistribution and use in source and binary forms, with or without modification, are
-     * permitted provided that the following conditions are met:
-     *
-     * Redistributions of source code must retain the above copyright notice, this list of
-     * conditions and the following disclaimer.
-     * Redistributions in binary form must reproduce the above copyright notice, this list of
-     * conditions and the following disclaimer in the documentation and/or other materials
-     * provided with the distribution.
-     * Neither the name of the MasterCard International Incorporated nor the names of its
-     * contributors may be used to endorse or promote products derived from this software
-     * without specific prior written permission.
-     * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
-     * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-     * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
-     * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-     * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
-     * TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-     * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
-     * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
-     * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     * SUCH DAMAGE.
-     */
-    /**
-     * Class Simplify_ResourceList represents a collection of domain objects returned by one of the list<Domain>() methods.
-     */
-    class Simplify_ResourceList
-    {
-        /**
-         * @var array $list the list of domain objects.
-         */
-        public $list = array();
-        /**
-         * @var int $total the total number of object available.
-         */
-        public $total = 0;
-    }
-    /*
-     * Copyright (c) 2013 - 2015 MasterCard International Incorporated
-     * All rights reserved.
-     *
-     * Redistribution and use in source and binary forms, with or without modification, are
-     * permitted provided that the following conditions are met:
-     *
-     * Redistributions of source code must retain the above copyright notice, this list of
-     * conditions and the following disclaimer.
-     * Redistributions in binary form must reproduce the above copyright notice, this list of
-     * conditions and the following disclaimer in the documentation and/or other materials
-     * provided with the distribution.
-     * Neither the name of the MasterCard International Incorporated nor the names of its
-     * contributors may be used to endorse or promote products derived from this software
-     * without specific prior written permission.
-     * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
-     * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-     * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
-     * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-     * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
-     * TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-     * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
-     * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
-     * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     * SUCH DAMAGE.
-     */
-    class Simplify_Subscription extends \Simplify_Object
-    {
-        /**
-         * Creates an Simplify_Subscription object
-         * @param     array $hash a map of parameters; valid keys are:<dl style="padding-left:10px;">
-         *     <dt><tt>amount</tt></dt>    <dd>Amount of the payment in the smallest unit of your currency. Example: 100 = $1.00USD </dd>
-         *     <dt><tt>billingCycle</tt></dt>    <dd>How the plan is billed to the customer. Values must be AUTO (indefinitely until the customer cancels) or FIXED (a fixed number of billing cycles). [default: AUTO] </dd>
-         *     <dt><tt>billingCycleLimit</tt></dt>    <dd>The number of fixed billing cycles for a plan. Only used if the billingCycle parameter is set to FIXED. Example: 4 </dd>
-         *     <dt><tt>coupon</tt></dt>    <dd>Coupon ID associated with the subscription </dd>
-         *     <dt><tt>currency</tt></dt>    <dd>Currency code (ISO-4217). Must match the currency associated with your account. [default: USD] </dd>
-         *     <dt><tt>customer</tt></dt>    <dd>Customer that is enrolling in the subscription. </dd>
-         *     <dt><tt>frequency</tt></dt>    <dd>Frequency of payment for the plan. Used in conjunction with frequencyPeriod. Valid values are "DAILY", "WEEKLY", "MONTHLY" and "YEARLY". </dd>
-         *     <dt><tt>frequencyPeriod</tt></dt>    <dd>Period of frequency of payment for the plan. Example: if the frequency is weekly, and periodFrequency is 2, then the subscription is billed bi-weekly. </dd>
-         *     <dt><tt>name</tt></dt>    <dd>Name describing subscription </dd>
-         *     <dt><tt>plan</tt></dt>    <dd>The ID of the plan that should be used for the subscription. </dd>
-         *     <dt><tt>quantity</tt></dt>    <dd>Quantity of the plan for the subscription. [min value: 1] </dd>
-         *     <dt><tt>renewalReminderLeadDays</tt></dt>    <dd>If set, how many days before the next billing cycle that a renewal reminder is sent to the customer. If null, then no emails are sent. Minimum value is 7 if set. </dd></dl>
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.<i/>
-         * @return    Subscription a Subscription object.
-         */
-        public static function createSubscription($hash, $authentication = \null)
-        {
-        }
-        /**
-         * Deletes an Simplify_Subscription object.
-         *
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         *
-         * @return true
-         */
-        public function deleteSubscription($authentication = \null)
-        {
-        }
-        /**
-         * Retrieve Simplify_Subscription objects.
-         * @param     array criteria a map of parameters; valid keys are:<dl style="padding-left:10px;">
-         *     <dt><tt>filter</tt></dt>    <dd>Filters to apply to the list.  </dd>
-         *     <dt><tt>max</tt></dt>    <dd>Allows up to a max of 50 list items to return. [min value: 0, max value: 50, default: 20]  </dd>
-         *     <dt><tt>offset</tt></dt>    <dd>Used in paging of the list.  This is the start offset of the page. [min value: 0, default: 0]  </dd>
-         *     <dt><tt>sorting</tt></dt>    <dd>Allows for ascending or descending sorting of the list.  The value maps properties to the sort direction (either <tt>asc</tt> for ascending or <tt>desc</tt> for descending).  Sortable properties are: <tt> id</tt><tt> plan</tt>.</dd></dl>
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    ResourceList a ResourceList object that holds the list of Subscription objects and the total
-         *            number of Subscription objects available for the given criteria.
-         * @see       ResourceList
-         */
-        public static function listSubscription($criteria = \null, $authentication = \null)
-        {
-        }
-        /**
-         * Retrieve a Simplify_Subscription object from the API
-         *
-         * @param     string id  the id of the Subscription object to retrieve
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    Subscription a Subscription object
-         */
-        public static function findSubscription($id, $authentication = \null)
-        {
-        }
-        /**
-         * Updates an Simplify_Subscription object.
-         *
-         * The properties that can be updated:
-         * <dl style="padding-left:10px;">
-         *     <dt><tt>amount</tt></dt>    <dd>Amount of the payment in the smallest unit of your currency. Example: 100 = $1.00USD </dd>
-         *     <dt><tt>billingCycle</tt></dt>    <dd>How the plan is billed to the customer. Values must be AUTO (indefinitely until the customer cancels) or FIXED (a fixed number of billing cycles). [default: AUTO] </dd>
-         *     <dt><tt>billingCycleLimit</tt></dt>    <dd>The number of fixed billing cycles for a plan. Only used if the billingCycle parameter is set to FIXED. Example: 4 </dd>
-         *     <dt><tt>coupon</tt></dt>    <dd>Coupon being assigned to this subscription </dd>
-         *     <dt><tt>currency</tt></dt>    <dd>Currency code (ISO-4217). Must match the currency associated with your account. [default: USD] </dd>
-         *     <dt><tt>frequency</tt></dt>    <dd>Frequency of payment for the plan. Used in conjunction with frequencyPeriod. Valid values are "DAILY", "WEEKLY", "MONTHLY" and "YEARLY". </dd>
-         *     <dt><tt>frequencyPeriod</tt></dt>    <dd>Period of frequency of payment for the plan. Example: if the frequency is weekly, and periodFrequency is 2, then the subscription is billed bi-weekly. [min value: 1] </dd>
-         *     <dt><tt>name</tt></dt>    <dd>Name describing subscription </dd>
-         *     <dt><tt>plan</tt></dt>    <dd>Plan that should be used for the subscription. </dd>
-         *     <dt><tt>prorate</tt></dt>    <dd>Whether to prorate existing subscription. [default: true] <strong>required </strong></dd>
-         *     <dt><tt>quantity</tt></dt>    <dd>Quantity of the plan for the subscription. [min value: 1] </dd>
-         *     <dt><tt>renewalReminderLeadDays</tt></dt>    <dd>If set, how many days before the next billing cycle that a renewal reminder is sent to the customer. If null or 0, no emails are sent. Minimum value is 7 if set. </dd></dl>
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    Subscription a Subscription object.
-         */
-        public function updateSubscription($authentication = \null)
-        {
-        }
-        /**
-         * @ignore
-         */
-        public function getClazz()
-        {
-        }
-    }
-    /*
-     * Copyright (c) 2013 - 2015 MasterCard International Incorporated
-     * All rights reserved.
-     *
-     * Redistribution and use in source and binary forms, with or without modification, are
-     * permitted provided that the following conditions are met:
-     *
-     * Redistributions of source code must retain the above copyright notice, this list of
-     * conditions and the following disclaimer.
-     * Redistributions in binary form must reproduce the above copyright notice, this list of
-     * conditions and the following disclaimer in the documentation and/or other materials
-     * provided with the distribution.
-     * Neither the name of the MasterCard International Incorporated nor the names of its
-     * contributors may be used to endorse or promote products derived from this software
-     * without specific prior written permission.
-     * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
-     * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-     * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
-     * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-     * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
-     * TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-     * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
-     * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
-     * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     * SUCH DAMAGE.
-     */
-    class Simplify_Tax extends \Simplify_Object
-    {
-        /**
-         * Creates an Simplify_Tax object
-         * @param     array $hash a map of parameters; valid keys are:<dl style="padding-left:10px;">
-         *     <dt><tt>label</tt></dt>    <dd>The label of the tax object. [max length: 255] <strong>required </strong></dd>
-         *     <dt><tt>rate</tt></dt>    <dd>The tax rate.  Decimal value up three decimal places.  e.g 12.501. [max length: 6] <strong>required </strong></dd></dl>
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.<i/>
-         * @return    Tax a Tax object.
-         */
-        public static function createTax($hash, $authentication = \null)
-        {
-        }
-        /**
-         * Deletes an Simplify_Tax object.
-         *
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         *
-         * @return true
-         */
-        public function deleteTax($authentication = \null)
-        {
-        }
-        /**
-         * Retrieve Simplify_Tax objects.
-         * @param     array criteria a map of parameters; valid keys are:<dl style="padding-left:10px;">
-         *     <dt><tt>filter</tt></dt>    <dd>Filters to apply to the list.  </dd>
-         *     <dt><tt>max</tt></dt>    <dd>Allows up to a max of 50 list items to return. [min value: 0, max value: 50, default: 20]  </dd>
-         *     <dt><tt>offset</tt></dt>    <dd>Used in paging of the list.  This is the start offset of the page. [min value: 0, default: 0]  </dd>
-         *     <dt><tt>sorting</tt></dt>    <dd>Allows for ascending or descending sorting of the list.  The value maps properties to the sort direction (either <tt>asc</tt> for ascending or <tt>desc</tt> for descending).  Sortable properties are: <tt> id</tt><tt> label</tt>.</dd></dl>
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    ResourceList a ResourceList object that holds the list of Tax objects and the total
-         *            number of Tax objects available for the given criteria.
-         * @see       ResourceList
-         */
-        public static function listTax($criteria = \null, $authentication = \null)
-        {
-        }
-        /**
-         * Retrieve a Simplify_Tax object from the API
-         *
-         * @param     string id  the id of the Tax object to retrieve
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    Tax a Tax object
-         */
-        public static function findTax($id, $authentication = \null)
-        {
-        }
-        /**
-         * @ignore
-         */
-        public function getClazz()
-        {
-        }
-    }
-    /*
-     * Copyright (c) 2013 - 2015 MasterCard International Incorporated
-     * All rights reserved.
-     *
-     * Redistribution and use in source and binary forms, with or without modification, are
-     * permitted provided that the following conditions are met:
-     *
-     * Redistributions of source code must retain the above copyright notice, this list of
-     * conditions and the following disclaimer.
-     * Redistributions in binary form must reproduce the above copyright notice, this list of
-     * conditions and the following disclaimer in the documentation and/or other materials
-     * provided with the distribution.
-     * Neither the name of the MasterCard International Incorporated nor the names of its
-     * contributors may be used to endorse or promote products derived from this software
-     * without specific prior written permission.
-     * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
-     * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-     * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
-     * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-     * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
-     * TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-     * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
-     * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
-     * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     * SUCH DAMAGE.
-     */
-    class Simplify_TransactionReview extends \Simplify_Object
-    {
-        /**
-         * Creates an Simplify_TransactionReview object
-         * @param     array $hash a map of parameters; valid keys are:<dl style="padding-left:10px;"></dl>
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.<i/>
-         * @return    TransactionReview a TransactionReview object.
-         */
-        public static function createTransactionReview($hash, $authentication = \null)
-        {
-        }
-        /**
-         * Deletes an Simplify_TransactionReview object.
-         *
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         *
-         * @return true
-         */
-        public function deleteTransactionReview($authentication = \null)
-        {
-        }
-        /**
-         * Retrieve Simplify_TransactionReview objects.
-         * @param     array criteria a map of parameters; valid keys are:<dl style="padding-left:10px;">
-         *     <dt><tt>filter</tt></dt>    <dd>Allows for ascending or descending sorting of the list.  </dd>
-         *     <dt><tt>max</tt></dt>    <dd>Allows up to a max of 50 list items to return. [min value: 0, max value: 50, default: 20]  </dd>
-         *     <dt><tt>offset</tt></dt>    <dd>Filters to apply to the list. [min value: 0, default: 0]  </dd>
-         *     <dt><tt>sorting</tt></dt>    <dd>Used in paging of the list.  This is the start offset of the page.  The value maps properties to the sort direction (either <tt>asc</tt> for ascending or <tt>desc</tt> for descending).  Sortable properties are: <tt> dateCreated</tt><tt> status</tt>.</dd></dl>
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    ResourceList a ResourceList object that holds the list of TransactionReview objects and the total
-         *            number of TransactionReview objects available for the given criteria.
-         * @see       ResourceList
-         */
-        public static function listTransactionReview($criteria = \null, $authentication = \null)
-        {
-        }
-        /**
-         * Retrieve a Simplify_TransactionReview object from the API
-         *
-         * @param     string id  the id of the TransactionReview object to retrieve
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    TransactionReview a TransactionReview object
-         */
-        public static function findTransactionReview($id, $authentication = \null)
-        {
-        }
-        /**
-         * Updates an Simplify_TransactionReview object.
-         *
-         * The properties that can be updated:
-         * <dl style="padding-left:10px;">
-         *     <dt><tt>status</tt></dt>    <dd>Status of the transaction review. </dd></dl>
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    TransactionReview a TransactionReview object.
-         */
-        public function updateTransactionReview($authentication = \null)
-        {
-        }
-        /**
-         * @ignore
-         */
-        public function getClazz()
-        {
-        }
-    }
-    /*
-     * Copyright (c) 2013 - 2015 MasterCard International Incorporated
-     * All rights reserved.
-     *
-     * Redistribution and use in source and binary forms, with or without modification, are
-     * permitted provided that the following conditions are met:
-     *
-     * Redistributions of source code must retain the above copyright notice, this list of
-     * conditions and the following disclaimer.
-     * Redistributions in binary form must reproduce the above copyright notice, this list of
-     * conditions and the following disclaimer in the documentation and/or other materials
-     * provided with the distribution.
-     * Neither the name of the MasterCard International Incorporated nor the names of its
-     * contributors may be used to endorse or promote products derived from this software
-     * without specific prior written permission.
-     * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
-     * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-     * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
-     * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-     * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
-     * TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-     * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
-     * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
-     * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     * SUCH DAMAGE.
-     */
-    class Simplify_Webhook extends \Simplify_Object
-    {
-        /**
-         * Creates an Simplify_Webhook object
-         * @param     array $hash a map of parameters; valid keys are:<dl style="padding-left:10px;">
-         *     <dt><tt>url</tt></dt>    <dd>Endpoint URL <strong>required </strong></dd></dl>
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.<i/>
-         * @return    Webhook a Webhook object.
-         */
-        public static function createWebhook($hash, $authentication = \null)
-        {
-        }
-        /**
-         * Deletes an Simplify_Webhook object.
-         *
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         *
-         * @return true
-         */
-        public function deleteWebhook($authentication = \null)
-        {
-        }
-        /**
-         * Retrieve Simplify_Webhook objects.
-         * @param     array criteria a map of parameters; valid keys are:<dl style="padding-left:10px;">
-         *     <dt><tt>filter</tt></dt>    <dd>Filters to apply to the list.  </dd>
-         *     <dt><tt>max</tt></dt>    <dd>Allows up to a max of 50 list items to return. [min value: 0, max value: 50, default: 20]  </dd>
-         *     <dt><tt>offset</tt></dt>    <dd>Used in paging of the list.  This is the start offset of the page. [min value: 0, default: 0]  </dd>
-         *     <dt><tt>sorting</tt></dt>    <dd>Allows for ascending or descending sorting of the list.  The value maps properties to the sort direction (either <tt>asc</tt> for ascending or <tt>desc</tt> for descending).  Sortable properties are: <tt> dateCreated</tt>.</dd></dl>
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    ResourceList a ResourceList object that holds the list of Webhook objects and the total
-         *            number of Webhook objects available for the given criteria.
-         * @see       ResourceList
-         */
-        public static function listWebhook($criteria = \null, $authentication = \null)
-        {
-        }
-        /**
-         * Retrieve a Simplify_Webhook object from the API
-         *
-         * @param     string id  the id of the Webhook object to retrieve
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    Webhook a Webhook object
-         */
-        public static function findWebhook($id, $authentication = \null)
-        {
-        }
-        /**
-         * Updates an Simplify_Webhook object.
-         *
-         * The properties that can be updated:
-         * <dl style="padding-left:10px;">
-         *     <dt><tt>url</tt></dt>    <dd>Endpoint URL <strong>required </strong></dd></dl>
-         * @param     $authentication -  information used for the API call.  If no value is passed the global keys Simplify::public_key and Simplify::private_key are used.  <i>For backwards compatibility the public and private keys may be passed instead of the authentication object.</i>
-         * @return    Webhook a Webhook object.
-         */
-        public function updateWebhook($authentication = \null)
-        {
-        }
-        /**
-         * @ignore
-         */
-        public function getClazz()
-        {
-        }
-    }
-    /**
      * WC_Importer_Interface class.
      */
     interface WC_Importer_Interface
@@ -48682,7 +47090,8 @@ namespace {
         /**
          * Remove UTF-8 BOM signature.
          *
-         * @param  string $string String to handle.
+         * @param string $string String to handle.
+         *
          * @return string
          */
         protected function remove_utf8_bom($string)
@@ -48705,7 +47114,8 @@ namespace {
          * If mapping to a SKU and the product ID does not exist, a temporary object
          * will be created so it can be updated later.
          *
-         * @param  string $value Field value.
+         * @param string $value Field value.
+         *
          * @return int|string
          */
         public function parse_relative_field($value)
@@ -48717,7 +47127,8 @@ namespace {
          * If we're not doing an update, create a placeholder product so mapping works
          * for rows following this one.
          *
-         * @param  string $value Field value.
+         * @param string $value Field value.
+         *
          * @return int
          */
         public function parse_id_field($value)
@@ -48727,6 +47138,7 @@ namespace {
          * Parse relative comma-delineated field and return product ID.
          *
          * @param string $value Field value.
+         *
          * @return array
          */
         public function parse_relative_comma_field($value)
@@ -48736,6 +47148,7 @@ namespace {
          * Parse a comma-delineated field from a CSV.
          *
          * @param string $value Field value.
+         *
          * @return array
          */
         public function parse_comma_field($value)
@@ -48745,6 +47158,7 @@ namespace {
          * Parse a field that is generally '1' or '0' but can be something else.
          *
          * @param string $value Field value.
+         *
          * @return bool|string
          */
         public function parse_bool_field($value)
@@ -48754,6 +47168,7 @@ namespace {
          * Parse a float value field.
          *
          * @param string $value Field value.
+         *
          * @return float|string
          */
         public function parse_float_field($value)
@@ -48763,6 +47178,7 @@ namespace {
          * Parse the stock qty field.
          *
          * @param string $value Field value.
+         *
          * @return float|string
          */
         public function parse_stock_quantity_field($value)
@@ -48773,6 +47189,7 @@ namespace {
          * Categories are separated by commas and subcategories are "parent > subcategory".
          *
          * @param string $value Field value.
+         *
          * @return array of arrays with "parent" and "name" keys.
          */
         public function parse_categories_field($value)
@@ -48781,7 +47198,8 @@ namespace {
         /**
          * Parse a tag field from a CSV.
          *
-         * @param  string $value Field value.
+         * @param string $value Field value.
+         *
          * @return array
          */
         public function parse_tags_field($value)
@@ -48790,7 +47208,8 @@ namespace {
         /**
          * Parse a shipping class field from a CSV.
          *
-         * @param  string $value Field value.
+         * @param string $value Field value.
+         *
          * @return int
          */
         public function parse_shipping_class_field($value)
@@ -48799,7 +47218,8 @@ namespace {
         /**
          * Parse images list from a CSV. Images can be filenames or URLs.
          *
-         * @param  string $value Field value.
+         * @param string $value Field value.
+         *
          * @return array
          */
         public function parse_images_field($value)
@@ -48809,7 +47229,8 @@ namespace {
          * Parse dates from a CSV.
          * Dates requires the format YYYY-MM-DD and time is optional.
          *
-         * @param  string $value Field value.
+         * @param string $value Field value.
+         *
          * @return string|null
          */
         public function parse_date_field($value)
@@ -48818,7 +47239,8 @@ namespace {
         /**
          * Parse backorders from a CSV.
          *
-         * @param  string $value Field value.
+         * @param string $value Field value.
+         *
          * @return string
          */
         public function parse_backorders_field($value)
@@ -48830,7 +47252,8 @@ namespace {
          * By default is applied wc_clean() to all not listed fields
          * in self::get_formating_callback(), use this method to skip any formating.
          *
-         * @param  string $value Field value.
+         * @param string $value Field value.
+         *
          * @return string
          */
         public function parse_skip_field($value)
@@ -48842,6 +47265,7 @@ namespace {
          * Allow shortcodes if present, othersiwe esc_url the value.
          *
          * @param string $value Field value.
+         *
          * @return string
          */
         public function parse_download_file_field($value)
@@ -48851,6 +47275,7 @@ namespace {
          * Parse an int value field
          *
          * @param int $value field value.
+         *
          * @return int
          */
         public function parse_int_field($value)
@@ -48877,8 +47302,9 @@ namespace {
         /**
          * Check if strings starts with determined word.
          *
-         * @param  string $haystack Complete sentence.
-         * @param  string $needle   Excerpt.
+         * @param string $haystack Complete sentence.
+         * @param string $needle   Excerpt.
+         *
          * @return bool
          */
         protected function starts_with($haystack, $needle)
@@ -48887,7 +47313,8 @@ namespace {
         /**
          * Expand special and internal data into the correct formats for the product CRUD.
          *
-         * @param  array $data Data to import.
+         * @param array $data Data to import.
+         *
          * @return array
          */
         protected function expand_data($data)
@@ -48902,7 +47329,8 @@ namespace {
         /**
          * Get a string to identify the row from parsed data.
          *
-         * @param  array $parsed_data Parsed data.
+         * @param array $parsed_data Parsed data.
+         *
          * @return string
          */
         protected function get_row_id($parsed_data)
@@ -49031,6 +47459,1200 @@ namespace {
          */
         public function search($args = array(), $return_format = \OBJECT);
     }
+}
+namespace Pelago\Emogrifier {
+    /**
+     * Facilitates building a CSS string by appending rule blocks one at a time, checking whether the media query,
+     * selectors, or declarations block are the same as those from the preceding block and combining blocks in such cases.
+     *
+     * Example:
+     *  $concatenator = new CssConcatenator();
+     *  $concatenator->append(['body'], 'color: blue;');
+     *  $concatenator->append(['body'], 'font-size: 16px;');
+     *  $concatenator->append(['p'], 'margin: 1em 0;');
+     *  $concatenator->append(['ul', 'ol'], 'margin: 1em 0;');
+     *  $concatenator->append(['body'], 'font-size: 14px;', '@media screen and (max-width: 400px)');
+     *  $concatenator->append(['ul', 'ol'], 'margin: 0.75em 0;', '@media screen and (max-width: 400px)');
+     *  $css = $concatenator->getCss();
+     *
+     * `$css` (if unminified) would contain the following CSS:
+     * ` body {
+     * `   color: blue;
+     * `   font-size: 16px;
+     * ` }
+     * ` p, ul, ol {
+     * `   margin: 1em 0;
+     * ` }
+     * ` @media screen and (max-width: 400px) {
+     * `   body {
+     * `     font-size: 14px;
+     * `   }
+     * `   ul, ol {
+     * `     margin: 0.75em 0;
+     * `   }
+     * ` }
+     *
+     * @author Jake Hotson <jake.github@qzdesign.co.uk>
+     */
+    class CssConcatenator
+    {
+        /**
+         * Array of media rules in order.  Each element is an object with the following properties:
+         * - string `media` - The media query string, e.g. "@media screen and (max-width:639px)", or an empty string for
+         *   rules not within a media query block;
+         * - \stdClass[] `ruleBlocks` - Array of rule blocks in order, where each element is an object with the following
+         *   properties:
+         *   - mixed[] `selectorsAsKeys` - Array whose keys are selectors for the rule block (values are of no
+         *     significance);
+         *   - string `declarationsBlock` - The property declarations, e.g. "margin-top: 0.5em; padding: 0".
+         *
+         * @var \stdClass[]
+         */
+        private $mediaRules = [];
+        /**
+         * Appends a declaration block to the CSS.
+         *
+         * @param string[] $selectors Array of selectors for the rule, e.g. ["ul", "ol", "p:first-child"].
+         * @param string $declarationsBlock The property declarations, e.g. "margin-top: 0.5em; padding: 0".
+         * @param string $media The media query for the rule, e.g. "@media screen and (max-width:639px)",
+         *                      or an empty string if none.
+         */
+        public function append(array $selectors, $declarationsBlock, $media = '')
+        {
+        }
+        /**
+         * @return string
+         */
+        public function getCss()
+        {
+        }
+        /**
+         * @param string $media The media query for rules to be appended, e.g. "@media screen and (max-width:639px)",
+         *                      or an empty string if none.
+         *
+         * @return \stdClass Object with properties as described for elements of `$mediaRules`.
+         */
+        private function getOrCreateMediaRuleToAppendTo($media)
+        {
+        }
+        /**
+         * Tests if two sets of selectors are equivalent (i.e. the same selectors, possibly in a different order).
+         *
+         * @param mixed[] $selectorsAsKeys1 Array in which the selectors are the keys, and the values are of no
+         *                                  significance.
+         * @param mixed[] $selectorsAsKeys2 Another such array.
+         *
+         * @return bool
+         */
+        private static function hasEquivalentSelectors(array $selectorsAsKeys1, array $selectorsAsKeys2)
+        {
+        }
+        /**
+         * @param \stdClass $mediaRule Object with properties as described for elements of `$mediaRules`.
+         *
+         * @return string CSS for the media rule.
+         */
+        private static function getMediaRuleCss(\stdClass $mediaRule)
+        {
+        }
+        /**
+         * @param \stdClass $ruleBlock Object with properties as described for elements of the `ruleBlocks` property of
+         *                            elements of `$mediaRules`.
+         *
+         * @return string CSS for the rule block.
+         */
+        private static function getRuleBlockCss(\stdClass $ruleBlock)
+        {
+        }
+    }
+    /**
+     * This class provides functions for converting CSS styles into inline style attributes in your HTML code.
+     *
+     * For Emogrifier 3.0.0, this will be the successor to the \Pelago\Emogrifier class (which then will be deprecated).
+     *
+     * For more information, please see the README.md file.
+     *
+     * @internal This class currently is a new technology preview, and its API is still in flux. Don't use it in production.
+     *
+     * @author Cameron Brooks
+     * @author Jaime Prado
+     * @author Oliver Klee <github@oliverklee.de>
+     * @author Roman Ožana <ozana@omdesign.cz>
+     * @author Sander Kruger <s.kruger@invessel.com>
+     * @author Zoli Szabó <zoli.szabo+github@gmail.com>
+     */
+    class CssInliner
+    {
+        /**
+         * @var int
+         */
+        const CACHE_KEY_CSS = 0;
+        /**
+         * @var int
+         */
+        const CACHE_KEY_SELECTOR = 1;
+        /**
+         * @var int
+         */
+        const CACHE_KEY_CSS_DECLARATIONS_BLOCK = 2;
+        /**
+         * @var int
+         */
+        const CACHE_KEY_COMBINED_STYLES = 3;
+        /**
+         * Regular expression component matching a static pseudo class in a selector, without the preceding ":",
+         * for which the applicable elements can be determined (by converting the selector to an XPath expression).
+         * (Contains alternation without a group and is intended to be placed within a capturing, non-capturing or lookahead
+         * group, as appropriate for the usage context.)
+         *
+         * @var string
+         */
+        const PSEUDO_CLASS_MATCHER = '\\S+\\-(?:child|type\\()|not\\([[:ascii:]]*\\)';
+        /**
+         * @var string
+         */
+        const CONTENT_TYPE_META_TAG = '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">';
+        /**
+         * @var string
+         */
+        const DEFAULT_DOCUMENT_TYPE = '<!DOCTYPE html>';
+        /**
+         * @var \DOMDocument
+         */
+        protected $domDocument = null;
+        /**
+         * @var string
+         */
+        private $css = '';
+        /**
+         * @var bool[]
+         */
+        private $excludedSelectors = [];
+        /**
+         * @var string[]
+         */
+        private $unprocessableHtmlTags = ['wbr'];
+        /**
+         * @var bool[]
+         */
+        private $allowedMediaTypes = ['all' => true, 'screen' => true, 'print' => true];
+        /**
+         * @var mixed[]
+         */
+        private $caches = [self::CACHE_KEY_CSS => [], self::CACHE_KEY_SELECTOR => [], self::CACHE_KEY_CSS_DECLARATIONS_BLOCK => [], self::CACHE_KEY_COMBINED_STYLES => []];
+        /**
+         * @var CssSelectorConverter
+         */
+        private $cssSelectorConverter = null;
+        /**
+         * the visited nodes with the XPath paths as array keys
+         *
+         * @var \DOMElement[]
+         */
+        private $visitedNodes = [];
+        /**
+         * the styles to apply to the nodes with the XPath paths as array keys for the outer array
+         * and the attribute names/values as key/value pairs for the inner array
+         *
+         * @var string[][]
+         */
+        private $styleAttributesForNodes = [];
+        /**
+         * Determines whether the "style" attributes of tags in the the HTML passed to this class should be preserved.
+         * If set to false, the value of the style attributes will be discarded.
+         *
+         * @var bool
+         */
+        private $isInlineStyleAttributesParsingEnabled = true;
+        /**
+         * Determines whether the <style> blocks in the HTML passed to this class should be parsed.
+         *
+         * If set to true, the <style> blocks will be removed from the HTML and their contents will be applied to the HTML
+         * via inline styles.
+         *
+         * If set to false, the <style> blocks will be left as they are in the HTML.
+         *
+         * @var bool
+         */
+        private $isStyleBlocksParsingEnabled = true;
+        /**
+         * Determines whether elements with the `display: none` property are
+         * removed from the DOM.
+         *
+         * @var bool
+         */
+        private $shouldRemoveInvisibleNodes = true;
+        /**
+         * For calculating selector precedence order.
+         * Keys are a regular expression part to match before a CSS name.
+         * Values are a multiplier factor per match to weight specificity.
+         *
+         * @var int[]
+         */
+        private $selectorPrecedenceMatchers = [
+            // IDs: worth 10000
+            '\\#' => 10000,
+            // classes, attributes, pseudo-classes (not pseudo-elements) except `:not`: worth 100
+            '(?:\\.|\\[|(?<!:):(?!not\\())' => 100,
+            // elements (not attribute values or `:not`), pseudo-elements: worth 1
+            '(?:(?<![="\':\\w\\-])|::)' => 1,
+        ];
+        /**
+         * Emogrifier will throw Exceptions when it encounters an error instead of silently ignoring them.
+         *
+         * @var bool
+         */
+        private $debug = false;
+        /**
+         * @param string $unprocessedHtml raw HTML, must be UTF-encoded, must not be empty
+         *
+         * @throws \InvalidArgumentException if $unprocessedHtml is anything other than a non-empty string
+         */
+        public function __construct($unprocessedHtml)
+        {
+        }
+        /**
+         * Sets the HTML to process.
+         *
+         * @param string $html the HTML to process, must be UTF-8-encoded
+         *
+         * @return void
+         */
+        private function setHtml($html)
+        {
+        }
+        /**
+         * Provides access to the internal DOMDocument representation of the HTML in its current state.
+         *
+         * @return \DOMDocument
+         */
+        public function getDomDocument()
+        {
+        }
+        /**
+         * Sets the CSS to merge with the HTML.
+         *
+         * @param string $css the CSS to merge, must be UTF-8-encoded
+         *
+         * @return void
+         */
+        public function setCss($css)
+        {
+        }
+        /**
+         * Renders the normalized and processed HTML.
+         *
+         * @return string
+         */
+        public function render()
+        {
+        }
+        /**
+         * Renders the content of the BODY element of the normalized and processed HTML.
+         *
+         * @return string
+         */
+        public function renderBodyContent()
+        {
+        }
+        /**
+         * Returns the BODY element.
+         *
+         * This method assumes that there always is a BODY element.
+         *
+         * @return \DOMElement
+         */
+        private function getBodyElement()
+        {
+        }
+        /**
+         * Returns the HEAD element.
+         *
+         * This method assumes that there always is a HEAD element.
+         *
+         * @return \DOMElement
+         */
+        private function getHeadElement()
+        {
+        }
+        /**
+         * Applies $this->css to the given HTML and returns the HTML with the CSS
+         * applied.
+         *
+         * This method places the CSS inline.
+         *
+         * @return string
+         *
+         * @throws SyntaxErrorException
+         */
+        public function emogrify()
+        {
+        }
+        /**
+         * Applies $this->css to the given HTML and returns only the HTML content
+         * within the <body> tag.
+         *
+         * This method places the CSS inline.
+         *
+         * @return string
+         *
+         * @throws SyntaxErrorException
+         */
+        public function emogrifyBodyContent()
+        {
+        }
+        /**
+         * Creates a DOM document from the given HTML and stores it in $this->domDocument.
+         *
+         * The DOM document will always have a BODY element and a document type.
+         *
+         * @param string $html
+         *
+         * @return void
+         */
+        private function createUnifiedDomDocument($html)
+        {
+        }
+        /**
+         * Creates a DOMDocument instance from the given HTML and stores it in $this->domDocument.
+         *
+         * @param string $html
+         *
+         * @return void
+         */
+        private function createRawDomDocument($html)
+        {
+        }
+        /**
+         * Returns the HTML with added document type and Content-Type meta tag if needed,
+         * ensuring that the HTML will be good for creating a DOM document from it.
+         *
+         * @param string $html
+         *
+         * @return string the unified HTML
+         */
+        private function prepareHtmlForDomConversion($html)
+        {
+        }
+        /**
+         * Applies $this->css to $this->domDocument.
+         *
+         * This method places the CSS inline.
+         *
+         * @return void
+         *
+         * @throws SyntaxErrorException
+         */
+        protected function process()
+        {
+        }
+        /**
+         * Applies some optional post-processing to the HTML in the DOM document.
+         *
+         * @param \DOMXPath $xPath
+         *
+         * @return void
+         */
+        private function postProcess(\DOMXPath $xPath)
+        {
+        }
+        /**
+         * Searches for all nodes with a style attribute and removes the "!important" annotations out of
+         * the inline style declarations, eventually by rearranging declarations.
+         *
+         * @param \DOMXPath $xPath
+         *
+         * @return void
+         */
+        private function removeImportantAnnotationFromAllInlineStyles(\DOMXPath $xPath)
+        {
+        }
+        /**
+         * Removes the "!important" annotations out of the inline style declarations,
+         * eventually by rearranging declarations.
+         * Rearranging needed when !important shorthand properties are followed by some of their
+         * not !important expanded-version properties.
+         * For example "font: 12px serif !important; font-size: 13px;" must be reordered
+         * to "font-size: 13px; font: 12px serif;" in order to remain correct.
+         *
+         * @param \DOMElement $node
+         *
+         * @return void
+         */
+        private function removeImportantAnnotationFromNodeInlineStyle(\DOMElement $node)
+        {
+        }
+        /**
+         * Returns a list with all DOM nodes that have a style attribute.
+         *
+         * @param \DOMXPath $xPath
+         *
+         * @return \DOMNodeList
+         */
+        private function getAllNodesWithStyleAttribute(\DOMXPath $xPath)
+        {
+        }
+        /**
+         * Extracts and parses the individual rules from a CSS string.
+         *
+         * @param string $css a string of raw CSS code
+         *
+         * @return string[][][] A 2-entry array with the key "inlineable" containing rules which can be inlined as `style`
+         *         attributes and the key "uninlineable" containing rules which cannot.  Each value is an array of string
+         *         sub-arrays with the keys
+         *         "media" (the media query string, e.g. "@media screen and (max-width: 480px)",
+         *         or an empty string if not from a `@media` rule),
+         *         "selector" (the CSS selector, e.g., "*" or "header h1"),
+         *         "hasUnmatchablePseudo" (true if that selector contains psuedo-elements or dynamic pseudo-classes
+         *         such that the declarations cannot be applied inline),
+         *         "declarationsBlock" (the semicolon-separated CSS declarations for that selector,
+         *         e.g., "color: red; height: 4px;"),
+         *         and "line" (the line number e.g. 42)
+         */
+        private function parseCssRules($css)
+        {
+        }
+        /**
+         * Parses a string of CSS into the media query, selectors and declarations for each ruleset in order.
+         *
+         * @param string $css
+         *
+         * @return string[][] Array of string sub-arrays with the keys
+         *         "media" (the media query string, e.g. "@media screen and (max-width: 480px)",
+         *         or an empty string if not from an `@media` rule),
+         *         "selectors" (the CSS selector(s), e.g., "*" or "h1, h2"),
+         *         "declarations" (the semicolon-separated CSS declarations for that/those selector(s),
+         *         e.g., "color: red; height: 4px;"),
+         */
+        private function getCssRuleMatches($css)
+        {
+        }
+        /**
+         * Disables the parsing of inline styles.
+         *
+         * @return void
+         */
+        public function disableInlineStyleAttributesParsing()
+        {
+        }
+        /**
+         * Disables the parsing of <style> blocks.
+         *
+         * @return void
+         */
+        public function disableStyleBlocksParsing()
+        {
+        }
+        /**
+         * Disables the removal of elements with `display: none` properties.
+         *
+         * @deprecated will be removed in Emogrifier 3.0
+         *
+         * @return void
+         */
+        public function disableInvisibleNodeRemoval()
+        {
+        }
+        /**
+         * Clears all caches.
+         *
+         * @return void
+         */
+        private function clearAllCaches()
+        {
+        }
+        /**
+         * Purges the visited nodes.
+         *
+         * @return void
+         */
+        private function purgeVisitedNodes()
+        {
+        }
+        /**
+         * Marks a tag for removal.
+         *
+         * There are some HTML tags that DOMDocument cannot process, and it will throw an error if it encounters them.
+         * In particular, DOMDocument will complain if you try to use HTML5 tags in an XHTML document.
+         *
+         * Note: The tags will not be removed if they have any content.
+         *
+         * @param string $tagName the tag name, e.g., "p"
+         *
+         * @return void
+         */
+        public function addUnprocessableHtmlTag($tagName)
+        {
+        }
+        /**
+         * Drops a tag from the removal list.
+         *
+         * @param string $tagName the tag name, e.g., "p"
+         *
+         * @return void
+         */
+        public function removeUnprocessableHtmlTag($tagName)
+        {
+        }
+        /**
+         * Marks a media query type to keep.
+         *
+         * @param string $mediaName the media type name, e.g., "braille"
+         *
+         * @return void
+         */
+        public function addAllowedMediaType($mediaName)
+        {
+        }
+        /**
+         * Drops a media query type from the allowed list.
+         *
+         * @param string $mediaName the tag name, e.g., "braille"
+         *
+         * @return void
+         */
+        public function removeAllowedMediaType($mediaName)
+        {
+        }
+        /**
+         * Adds a selector to exclude nodes from emogrification.
+         *
+         * Any nodes that match the selector will not have their style altered.
+         *
+         * @param string $selector the selector to exclude, e.g., ".editor"
+         *
+         * @return void
+         */
+        public function addExcludedSelector($selector)
+        {
+        }
+        /**
+         * No longer excludes the nodes matching this selector from emogrification.
+         *
+         * @param string $selector the selector to no longer exclude, e.g., ".editor"
+         *
+         * @return void
+         */
+        public function removeExcludedSelector($selector)
+        {
+        }
+        /**
+         * This removes styles from your email that contain display:none.
+         * We need to look for display:none, but we need to do a case-insensitive search. Since DOMDocument only
+         * supports XPath 1.0, lower-case() isn't available to us. We've thus far only set attributes to lowercase,
+         * not attribute values. Consequently, we need to translate() the letters that would be in 'NONE' ("NOE")
+         * to lowercase.
+         *
+         * @param \DOMXPath $xPath
+         *
+         * @return void
+         */
+        private function removeInvisibleNodes(\DOMXPath $xPath)
+        {
+        }
+        /**
+         * Parses the document and normalizes all existing CSS attributes.
+         * This changes 'DISPLAY: none' to 'display: none'.
+         * We wouldn't have to do this if DOMXPath supported XPath 2.0.
+         * Also stores a reference of nodes with existing inline styles so we don't overwrite them.
+         *
+         * @param \DOMXPath $xPath
+         *
+         * @return void
+         */
+        private function normalizeStyleAttributesOfAllNodes(\DOMXPath $xPath)
+        {
+        }
+        /**
+         * Normalizes the value of the "style" attribute and saves it.
+         *
+         * @param \DOMElement $node
+         *
+         * @return void
+         */
+        private function normalizeStyleAttributes(\DOMElement $node)
+        {
+        }
+        /**
+         * Merges styles from styles attributes and style nodes and applies them to the attribute nodes
+         *
+         * @return void
+         */
+        private function fillStyleAttributesWithMergedStyles()
+        {
+        }
+        /**
+         * This method merges old or existing name/value array with new name/value array
+         * and then generates a string of the combined style suitable for placing inline.
+         * This becomes the single point for CSS string generation allowing for consistent
+         * CSS output no matter where the CSS originally came from.
+         *
+         * @param string[] $oldStyles
+         * @param string[] $newStyles
+         *
+         * @return string
+         */
+        private function generateStyleStringFromDeclarationsArrays(array $oldStyles, array $newStyles)
+        {
+        }
+        /**
+         * Generates a CSS style string suitable to be used inline from the $styleDeclarations property => value array.
+         *
+         * @param string[] $styleDeclarations
+         *
+         * @return string
+         */
+        private function generateStyleStringFromSingleDeclarationsArray(array $styleDeclarations)
+        {
+        }
+        /**
+         * Checks whether $attributeValue is marked as !important.
+         *
+         * @param string $attributeValue
+         *
+         * @return bool
+         */
+        private function attributeValueIsImportant($attributeValue)
+        {
+        }
+        /**
+         * Applies $cssRules to $this->domDocument, limited to the rules that actually apply to the document.
+         *
+         * @param \DOMXPath $xPath
+         * @param string[][] $cssRules The "uninlineable" array of CSS rules returned by `parseCssRules`
+         *
+         * @return void
+         */
+        private function copyUninlineableCssToStyleNode(\DOMXPath $xPath, array $cssRules)
+        {
+        }
+        /**
+         * Removes pseudo-elements and dynamic pseudo-classes from a CSS selector, replacing them with "*" if necessary.
+         *
+         * @param string $selector
+         *
+         * @return string Selector which will match the relevant DOM elements if the pseudo-classes are assumed to apply,
+         *                or in the case of pseudo-elements will match their originating element.
+         */
+        private function removeUnmatchablePseudoComponents($selector)
+        {
+        }
+        /**
+         * Copies $cssRule into the style attribute of $node.
+         *
+         * Note: This method does not check whether $cssRule matches $node.
+         *
+         * @param \DOMElement $node
+         * @param string[][] $cssRule
+         *
+         * @return void
+         */
+        private function copyInlineableCssToStyleAttribute(\DOMElement $node, array $cssRule)
+        {
+        }
+        /**
+         * Checks whether there is at least one matching element for $cssSelector.
+         * When not in debug mode, it returns true also for invalid selectors (because they may be valid,
+         * just not implemented/recognized yet by Emogrifier).
+         *
+         * @param \DOMXPath $xPath
+         * @param string $cssSelector
+         *
+         * @return bool
+         *
+         * @throws SyntaxErrorException
+         */
+        private function existsMatchForCssSelector(\DOMXPath $xPath, $cssSelector)
+        {
+        }
+        /**
+         * Returns CSS content.
+         *
+         * @param \DOMXPath $xPath
+         *
+         * @return string
+         */
+        private function getCssFromAllStyleNodes(\DOMXPath $xPath)
+        {
+        }
+        /**
+         * Adds a style element with $css to $this->domDocument.
+         *
+         * This method is protected to allow overriding.
+         *
+         * @see https://github.com/jjriv/emogrifier/issues/103
+         *
+         * @param string $css
+         *
+         * @return void
+         */
+        protected function addStyleElementToDocument($css)
+        {
+        }
+        /**
+         * Checks that $this->domDocument has a BODY element and adds it if it is missing.
+         *
+         * @return void
+         */
+        private function ensureExistenceOfBodyElement()
+        {
+        }
+        /**
+         * Splits input CSS code into an array of parts for different media querues, in order.
+         * Each part is an array where:
+         *
+         * - key "css" will contain clean CSS code (for @media rules this will be the group rule body within "{...}")
+         * - key "media" will contain "@media " followed by the media query list, for all allowed media queries,
+         *   or an empty string for CSS not within a media query
+         *
+         * Example:
+         *
+         * The CSS code
+         *
+         *   "@import "file.css"; h1 { color:red; } @media { h1 {}} @media tv { h1 {}}"
+         *
+         * will be parsed into the following array:
+         *
+         *   0 => [
+         *     "css" => "h1 { color:red; }",
+         *     "media" => ""
+         *   ],
+         *   1 => [
+         *     "css" => " h1 {}",
+         *     "media" => "@media "
+         *   ]
+         *
+         * @param string $css
+         *
+         * @return string[][]
+         */
+        private function splitCssAndMediaQuery($css)
+        {
+        }
+        /**
+         * Removes empty unprocessable tags from the DOM document.
+         *
+         * @return void
+         */
+        private function removeUnprocessableTags()
+        {
+        }
+        /**
+         * Makes sure that the passed HTML has a document type.
+         *
+         * @param string $html
+         *
+         * @return string HTML with document type
+         */
+        private function ensureDocumentType($html)
+        {
+        }
+        /**
+         * Adds a Content-Type meta tag for the charset.
+         *
+         * This method also ensures that there is a HEAD element.
+         *
+         * @param string $html
+         *
+         * @return string the HTML with the meta tag added
+         */
+        private function addContentTypeMetaTag($html)
+        {
+        }
+        /**
+         * @param string[] $a
+         * @param string[] $b
+         *
+         * @return int
+         */
+        private function sortBySelectorPrecedence(array $a, array $b)
+        {
+        }
+        /**
+         * @param string $selector
+         *
+         * @return int
+         */
+        private function getCssSelectorPrecedence($selector)
+        {
+        }
+        /**
+         * Parses a CSS declaration block into property name/value pairs.
+         *
+         * Example:
+         *
+         * The declaration block
+         *
+         *   "color: #000; font-weight: bold;"
+         *
+         * will be parsed into the following array:
+         *
+         *   "color" => "#000"
+         *   "font-weight" => "bold"
+         *
+         * @param string $cssDeclarationsBlock the CSS declarations block without the curly braces, may be empty
+         *
+         * @return string[]
+         *         the CSS declarations with the property names as array keys and the property values as array values
+         */
+        private function parseCssDeclarationsBlock($cssDeclarationsBlock)
+        {
+        }
+        /**
+         * Find the nodes that are not to be emogrified.
+         *
+         * @param \DOMXPath $xPath
+         *
+         * @return \DOMElement[]
+         *
+         * @throws SyntaxErrorException
+         */
+        private function getNodesToExclude(\DOMXPath $xPath)
+        {
+        }
+        /**
+         * Sets the debug mode.
+         *
+         * @param bool $debug set to true to enable debug mode
+         *
+         * @return void
+         */
+        public function setDebug($debug)
+        {
+        }
+    }
+}
+namespace Pelago\Emogrifier\HtmlProcessor {
+    /**
+     * Base class for HTML processor that e.g., can remove, add or modify nodes or attributes.
+     *
+     * The "vanilla" subclass is the HtmlNormalizer.
+     *
+     * @internal This class currently is a new technology preview, and its API is still in flux. Don't use it in production.
+     *
+     * @author Oliver Klee <github@oliverklee.de>
+     */
+    abstract class AbstractHtmlProcessor
+    {
+        /**
+         * @var string
+         */
+        const DEFAULT_DOCUMENT_TYPE = '<!DOCTYPE html>';
+        /**
+         * @var string
+         */
+        const CONTENT_TYPE_META_TAG = '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">';
+        /**
+         * @var \DOMDocument
+         */
+        protected $domDocument = null;
+        /**
+         * @param string $unprocessedHtml raw HTML, must be UTF-encoded, must not be empty
+         *
+         * @throws \InvalidArgumentException if $unprocessedHtml is anything other than a non-empty string
+         */
+        public function __construct($unprocessedHtml)
+        {
+        }
+        /**
+         * Sets the HTML to process.
+         *
+         * @param string $html the HTML to process, must be UTF-8-encoded
+         *
+         * @return void
+         */
+        private function setHtml($html)
+        {
+        }
+        /**
+         * Provides access to the internal DOMDocument representation of the HTML in its current state.
+         *
+         * @return \DOMDocument
+         */
+        public function getDomDocument()
+        {
+        }
+        /**
+         * Renders the normalized and processed HTML.
+         *
+         * @return string
+         */
+        public function render()
+        {
+        }
+        /**
+         * Renders the content of the BODY element of the normalized and processed HTML.
+         *
+         * @return string
+         */
+        public function renderBodyContent()
+        {
+        }
+        /**
+         * Returns the BODY element.
+         *
+         * This method assumes that there always is a BODY element.
+         *
+         * @return \DOMElement
+         */
+        private function getBodyElement()
+        {
+        }
+        /**
+         * Creates a DOM document from the given HTML and stores it in $this->domDocument.
+         *
+         * The DOM document will always have a BODY element and a document type.
+         *
+         * @param string $html
+         *
+         * @return void
+         */
+        private function createUnifiedDomDocument($html)
+        {
+        }
+        /**
+         * Creates a DOMDocument instance from the given HTML and stores it in $this->domDocument.
+         *
+         * @param string $html
+         *
+         * @return void
+         */
+        private function createRawDomDocument($html)
+        {
+        }
+        /**
+         * Returns the HTML with added document type and Content-Type meta tag if needed,
+         * ensuring that the HTML will be good for creating a DOM document from it.
+         *
+         * @param string $html
+         *
+         * @return string the unified HTML
+         */
+        private function prepareHtmlForDomConversion($html)
+        {
+        }
+        /**
+         * Makes sure that the passed HTML has a document type.
+         *
+         * @param string $html
+         *
+         * @return string HTML with document type
+         */
+        private function ensureDocumentType($html)
+        {
+        }
+        /**
+         * Adds a Content-Type meta tag for the charset.
+         *
+         * This method also ensures that there is a HEAD element.
+         * @param string $html
+         *
+         * @return string the HTML with the meta tag added
+         */
+        private function addContentTypeMetaTag($html)
+        {
+        }
+        /**
+         * Checks that $this->domDocument has a BODY element and adds it if it is missing.
+         *
+         * @return void
+         */
+        private function ensureExistenceOfBodyElement()
+        {
+        }
+    }
+    /**
+     * This HtmlProcessor can convert style HTML attributes to the corresponding other visual HTML attributes,
+     * e.g. it converts style="width: 100px" to width="100".
+     *
+     * It will only add attributes, but leaves the style attribute untouched.
+     *
+     * To trigger the conversion, call the convertCssToVisualAttributes method.
+     *
+     * @internal This class currently is a new technology preview, and its API is still in flux. Don't use it in production.
+     *
+     * @author Oliver Klee <github@oliverklee.de>
+     */
+    class CssToAttributeConverter extends \Pelago\Emogrifier\HtmlProcessor\AbstractHtmlProcessor
+    {
+        /**
+         * This multi-level array contains simple mappings of CSS properties to
+         * HTML attributes. If a mapping only applies to certain HTML nodes or
+         * only for certain values, the mapping is an object with a whitelist
+         * of nodes and values.
+         *
+         * @var mixed[][]
+         */
+        private $cssToHtmlMap = ['background-color' => ['attribute' => 'bgcolor'], 'text-align' => ['attribute' => 'align', 'nodes' => ['p', 'div', 'td'], 'values' => ['left', 'right', 'center', 'justify']], 'float' => ['attribute' => 'align', 'nodes' => ['table', 'img'], 'values' => ['left', 'right']], 'border-spacing' => ['attribute' => 'cellspacing', 'nodes' => ['table']]];
+        /**
+         * @var string[][]
+         */
+        private static $parsedCssCache = [];
+        /**
+         * Maps the CSS from the style nodes to visual HTML attributes.
+         *
+         * @return CssToAttributeConverter fluent interface
+         */
+        public function convertCssToVisualAttributes()
+        {
+        }
+        /**
+         * Returns a list with all DOM nodes that have a style attribute.
+         *
+         * @return \DOMNodeList
+         */
+        private function getAllNodesWithStyleAttribute()
+        {
+        }
+        /**
+         * Parses a CSS declaration block into property name/value pairs.
+         *
+         * Example:
+         *
+         * The declaration block
+         *
+         *   "color: #000; font-weight: bold;"
+         *
+         * will be parsed into the following array:
+         *
+         *   "color" => "#000"
+         *   "font-weight" => "bold"
+         *
+         * @param string $cssDeclarationsBlock the CSS declarations block without the curly braces, may be empty
+         *
+         * @return string[]
+         *         the CSS declarations with the property names as array keys and the property values as array values
+         */
+        private function parseCssDeclarationsBlock($cssDeclarationsBlock)
+        {
+        }
+        /**
+         * Applies $styles to $node.
+         *
+         * This method maps CSS styles to HTML attributes and adds those to the
+         * node.
+         *
+         * @param string[] $styles the new CSS styles taken from the global styles to be applied to this node
+         * @param \DOMElement $node node to apply styles to
+         *
+         * @return void
+         */
+        private function mapCssToHtmlAttributes(array $styles, \DOMElement $node)
+        {
+        }
+        /**
+         * Tries to apply the CSS style to $node as an attribute.
+         *
+         * This method maps a CSS rule to HTML attributes and adds those to the node.
+         *
+         * @param string $property the name of the CSS property to map
+         * @param string $value the value of the style rule to map
+         * @param \DOMElement $node node to apply styles to
+         *
+         * @return void
+         */
+        private function mapCssToHtmlAttribute($property, $value, \DOMElement $node)
+        {
+        }
+        /**
+         * Looks up the CSS property in the mapping table and maps it if it matches the conditions.
+         *
+         * @param string $property the name of the CSS property to map
+         * @param string $value the value of the style rule to map
+         * @param \DOMElement $node node to apply styles to
+         *
+         * @return bool true if the property can be mapped using the simple mapping table
+         */
+        private function mapSimpleCssProperty($property, $value, \DOMElement $node)
+        {
+        }
+        /**
+         * Maps CSS properties that need special transformation to an HTML attribute.
+         *
+         * @param string $property the name of the CSS property to map
+         * @param string $value the value of the style rule to map
+         * @param \DOMElement $node node to apply styles to
+         *
+         * @return void
+         */
+        private function mapComplexCssProperty($property, $value, \DOMElement $node)
+        {
+        }
+        /**
+         * @param \DOMElement $node node to apply styles to
+         * @param string $value the value of the style rule to map
+         *
+         * @return void
+         */
+        private function mapBackgroundProperty(\DOMElement $node, $value)
+        {
+        }
+        /**
+         * @param \DOMElement $node node to apply styles to
+         * @param string $value the value of the style rule to map
+         * @param string $property the name of the CSS property to map
+         *
+         * @return void
+         */
+        private function mapWidthOrHeightProperty(\DOMElement $node, $value, $property)
+        {
+        }
+        /**
+         * @param \DOMElement $node node to apply styles to
+         * @param string $value the value of the style rule to map
+         *
+         * @return void
+         */
+        private function mapMarginProperty(\DOMElement $node, $value)
+        {
+        }
+        /**
+         * @param \DOMElement $node node to apply styles to
+         * @param string $value the value of the style rule to map
+         *
+         * @return void
+         */
+        private function mapBorderProperty(\DOMElement $node, $value)
+        {
+        }
+        /**
+         * @param \DOMElement $node
+         *
+         * @return bool
+         */
+        private function isTableOrImageNode(\DOMElement $node)
+        {
+        }
+        /**
+         * Parses a shorthand CSS value and splits it into individual values
+         *
+         * @param string $value a string of CSS value with 1, 2, 3 or 4 sizes
+         *                      For example: padding: 0 auto;
+         *                      '0 auto' is split into top: 0, left: auto, bottom: 0,
+         *                      right: auto.
+         *
+         * @return string[] an array of values for top, right, bottom and left (using these as associative array keys)
+         */
+        private function parseCssShorthandValue($value)
+        {
+        }
+    }
+    /**
+     * Normalizes HTML:
+     * - add a document type (HTML5) if missing
+     * - disentangle incorrectly nested tags
+     * - add HEAD and BODY elements (if they are missing)
+     * - reformat the HTML
+     *
+     * @internal This class currently is a new technology preview, and its API is still in flux. Don't use it in production.
+     *
+     * @author Oliver Klee <github@oliverklee.de>
+     */
+    class HtmlNormalizer extends \Pelago\Emogrifier\HtmlProcessor\AbstractHtmlProcessor
+    {
+    }
+}
+namespace {
     /**
      * Class ActionScheduler
      * @codeCoverageIgnore
@@ -49428,7 +49050,22 @@ namespace {
     /**
      * Abstract class with common Queue Cleaner functionality.
      */
-    abstract class ActionScheduler_Abstract_QueueRunner
+    abstract class ActionScheduler_Abstract_QueueRunner_Deprecated
+    {
+        /**
+         * Get the maximum number of seconds a batch can run for.
+         *
+         * @deprecated 2.1.1
+         * @return int The number of seconds.
+         */
+        protected function get_maximum_execution_time()
+        {
+        }
+    }
+    /**
+     * Abstract class with common Queue Cleaner functionality.
+     */
+    abstract class ActionScheduler_Abstract_QueueRunner extends \ActionScheduler_Abstract_QueueRunner_Deprecated
     {
         /** @var ActionScheduler_QueueCleaner */
         protected $cleaner;
@@ -49492,11 +49129,11 @@ namespace {
          *
          * @return int The number of seconds.
          */
-        protected function get_maximum_execution_time()
+        protected function get_time_limit()
         {
         }
         /**
-         * Get the number of seconds a batch has run for.
+         * Get the number of seconds the process has been running.
          *
          * @return int The number of seconds.
          */
@@ -49838,6 +49475,9 @@ namespace {
         public function init()
         {
         }
+        public function system_status_report()
+        {
+        }
         /**
          * Registers action-scheduler into WooCommerce > System status.
          *
@@ -49925,6 +49565,16 @@ namespace {
         public static function raise_memory_limit()
         {
         }
+        /**
+         * Attempts to raise the PHP timeout for time intensive processes.
+         *
+         * Only allows raising the existing limit and prevents lowering it. Wrapper for wc_set_time_limit(), when available.
+         *
+         * @param int The time limit in seconds.
+         */
+        public static function raise_time_limit($limit = 0)
+        {
+        }
     }
     /**
      * Class ActionScheduler_Schedule
@@ -49965,6 +49615,12 @@ namespace {
          * @return bool
          */
         public function is_recurring()
+        {
+        }
+        /**
+         * @return string
+         */
+        public function get_recurrence()
         {
         }
         /**
@@ -50111,9 +49767,7 @@ namespace {
         {
         }
         /**
-         * @param DateTime $after
-         *
-         * @return DateTime|null
+         * @return int
          */
         public function interval_in_seconds()
         {
@@ -50539,12 +50193,6 @@ namespace {
          */
         private $month_in_seconds = 2678400;
         /**
-         * Five minutes in seconds
-         *
-         * @var int
-         */
-        private $five_minutes = 300;
-        /**
          * ActionScheduler_QueueCleaner constructor.
          *
          * @param ActionScheduler_Store $store      The store instance.
@@ -50556,18 +50204,36 @@ namespace {
         public function delete_old_actions()
         {
         }
-        public function reset_timeouts()
+        /**
+         * Unclaim pending actions that have not been run within a given time limit.
+         *
+         * When called by ActionScheduler_Abstract_QueueRunner::run_cleanup(), the time limit passed
+         * as a parameter is 10x the time limit used for queue processing.
+         *
+         * @param int $time_limit The number of seconds to allow a queue to run before unclaiming its pending actions. Default 300 (5 minutes).
+         */
+        public function reset_timeouts($time_limit = 300)
         {
         }
-        public function mark_failures()
+        /**
+         * Mark actions that have been running for more than a given time limit as failed, based on
+         * the assumption some uncatachable and unloggable fatal error occurred during processing.
+         *
+         * When called by ActionScheduler_Abstract_QueueRunner::run_cleanup(), the time limit passed
+         * as a parameter is 10x the time limit used for queue processing.
+         *
+         * @param int $time_limit The number of seconds to allow an action to run before it is considered to have failed. Default 300 (5 minutes).
+         */
+        public function mark_failures($time_limit = 300)
         {
         }
         /**
          * Do all of the cleaning actions.
          *
+         * @param int $time_limit The number of seconds to use as the timeout and failure period. Default 300 (5 minutes).
          * @author Jeremy Pry
          */
-        public function clean()
+        public function clean($time_limit = 300)
         {
         }
         /**
@@ -50995,9 +50661,10 @@ namespace {
          *
          * @author Jeremy Pry
          *
-         * @param $action_id
+         * @param int $action_id
+         * @param null|ActionScheduler_Action $action The instance of the action. Default to null for backward compatibility.
          */
-        public function after_execute($action_id)
+        public function after_execute($action_id, $action = \null)
         {
         }
         /**
@@ -51018,6 +50685,76 @@ namespace {
          * @param int $sleep_time Amount of seconds to sleep
          */
         protected function stop_the_insanity($sleep_time = 0)
+        {
+        }
+        /**
+         * Maybe trigger the stop_the_insanity() method to free up memory.
+         */
+        protected function maybe_stop_the_insanity()
+        {
+        }
+    }
+    /**
+     * Class ActionScheduler_wcSystemStatus
+     */
+    class ActionScheduler_wcSystemStatus
+    {
+        /**
+         * The active data stores
+         *
+         * @var ActionScheduler_Store
+         */
+        protected $store;
+        function __construct($store)
+        {
+        }
+        /**
+         * Display action data, including number of actions grouped by status and the oldest & newest action in each status.
+         *
+         * Helpful to identify issues, like a clogged queue.
+         */
+        public function render()
+        {
+        }
+        /**
+         * Get oldest and newest scheduled dates for a given set of statuses.
+         *
+         * @param array $status_keys Set of statuses to find oldest & newest action for.
+         * @return array
+         */
+        protected function get_oldest_and_newest($status_keys)
+        {
+        }
+        /**
+         * Get oldest or newest scheduled date for a given status.
+         *
+         * @param string $status Action status label/name string.
+         * @param string $date_type Oldest or Newest.
+         * @return DateTime
+         */
+        protected function get_action_status_date($status, $date_type = 'oldest')
+        {
+        }
+        /**
+         * Get oldest or newest scheduled date for a given status.
+         *
+         * @param array $status_labels Set of statuses to find oldest & newest action for.
+         * @param array $action_counts Number of actions grouped by status.
+         * @param array $oldest_and_newest Date of the oldest and newest action with each status.
+         */
+        protected function get_template($status_labels, $action_counts, $oldest_and_newest)
+        {
+        }
+        /**
+         * is triggered when invoking inaccessible methods in an object context.
+         *
+         * @param $name      string
+         * @param $arguments array
+         *
+         * @return mixed
+         * @link https://php.net/manual/en/language.oop5.overloading.php#language.oop5.overloading.methods
+         */
+        public function __call($name, $arguments)
         {
         }
     }
@@ -51156,6 +50893,37 @@ namespace {
         {
         }
         public function filter_insert_post_data($postdata)
+        {
+        }
+        /**
+         * Create a (probably unique) post name for scheduled actions in a more performant manner than wp_unique_post_slug().
+         *
+         * When an action's post status is transitioned to something other than 'draft', 'pending' or 'auto-draft, like 'publish'
+         * or 'failed' or 'trash', WordPress will find a unique slug (stored in post_name column) using the wp_unique_post_slug()
+         * function. This is done to ensure URL uniqueness. The approach taken by wp_unique_post_slug() is to iterate over existing
+         * post_name values that match, and append a number 1 greater than the largest. This makes sense when manually creating a
+         * post from the Edit Post screen. It becomes a bottleneck when automatically processing thousands of actions, with a
+         * database containing thousands of related post_name values.
+         *
+         * WordPress 5.1 introduces the 'pre_wp_unique_post_slug' filter for plugins to address this issue.
+         *
+         * We can short-circuit WordPress's wp_unique_post_slug() approach using the 'pre_wp_unique_post_slug' filter. This
+         * method is available to be used as a callback on that filter. It provides a more scalable approach to generating a
+         * post_name/slug that is probably unique. Because Action Scheduler never actually uses the post_name field, or an
+         * action's slug, being probably unique is good enough.
+         *
+         * For more backstory on this issue, see:
+         * - https://github.com/Prospress/action-scheduler/issues/44 and
+         * - https://core.trac.wordpress.org/ticket/21112
+         *
+         * @param string $override_slug Short-circuit return value.
+         * @param string $slug          The desired slug (post_name).
+         * @param int    $post_ID       Post ID.
+         * @param string $post_status   The post status.
+         * @param string $post_type     Post type.
+         * @return string
+         */
+        public function set_unique_post_slug($override_slug, $slug, $post_ID, $post_status, $post_type)
         {
         }
         protected function save_post_schedule($post_id, $schedule)
@@ -51373,6 +51141,17 @@ namespace {
          * @codeCoverageIgnore
          */
         public function init()
+        {
+        }
+        /**
+         * Validate that we could decode action arguments.
+         *
+         * @param mixed $args      The decoded arguments.
+         * @param int   $action_id The action ID.
+         *
+         * @throws ActionScheduler_InvalidActionException When the decoded arguments are invalid.
+         */
+        private function validate_args($args, $action_id)
         {
         }
     }
@@ -51933,12 +51712,12 @@ namespace {
         {
         }
     }
+}
+namespace Pelago {
     /**
      * This class provides functions for converting CSS styles into inline style attributes in your HTML code.
      *
      * For more information, please see the README.md file.
-     *
-     * @version 2.0.0
      *
      * @author Cameron Brooks
      * @author Jaime Prado
@@ -51990,6 +51769,15 @@ namespace {
          */
         const CLASS_ATTRIBUTE_MATCHER = '/(\\w+|[\\*\\]])?((\\.[\\w\\-]+)+)/';
         /**
+         * Regular expression component matching a static pseudo class in a selector, without the preceding ":",
+         * for which the applicable elements can be determined (by converting the selector to an XPath expression).
+         * (Contains alternation without a group and is intended to be placed within a capturing, non-capturing or lookahead
+         * group, as appropriate for the usage context.)
+         *
+         * @var string
+         */
+        const PSEUDO_CLASS_MATCHER = '\\S+\\-(?:child|type\\()|not\\([[:ascii:]]*\\)';
+        /**
          * @var string
          */
         const CONTENT_TYPE_META_TAG = '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">';
@@ -51998,9 +51786,9 @@ namespace {
          */
         const DEFAULT_DOCUMENT_TYPE = '<!DOCTYPE html>';
         /**
-         * @var string
+         * @var \DOMDocument
          */
-        private $html = '';
+        protected $domDocument = null;
         /**
          * @var string
          */
@@ -52016,7 +51804,7 @@ namespace {
         /**
          * @var bool[]
          */
-        private $allowedMediaTypes = ['all' => \true, 'screen' => \true, 'print' => \true];
+        private $allowedMediaTypes = ['all' => true, 'screen' => true, 'print' => true];
         /**
          * @var mixed[]
          */
@@ -52040,7 +51828,7 @@ namespace {
          *
          * @var bool
          */
-        private $isInlineStyleAttributesParsingEnabled = \true;
+        private $isInlineStyleAttributesParsingEnabled = true;
         /**
          * Determines whether the <style> blocks in the HTML passed to this class should be parsed.
          *
@@ -52051,14 +51839,29 @@ namespace {
          *
          * @var bool
          */
-        private $isStyleBlocksParsingEnabled = \true;
+        private $isStyleBlocksParsingEnabled = true;
         /**
          * Determines whether elements with the `display: none` property are
          * removed from the DOM.
          *
          * @var bool
          */
-        private $shouldKeepInvisibleNodes = \true;
+        private $shouldRemoveInvisibleNodes = true;
+        /**
+         * For calculating selector precedence order.
+         * Keys are a regular expression part to match before a CSS name.
+         * Values are a multiplier factor per match to weight specificity.
+         *
+         * @var int[]
+         */
+        private $selectorPrecedenceMatchers = [
+            // IDs: worth 10000
+            '\\#' => 10000,
+            // classes, attributes, pseudo-classes (not pseudo-elements) except `:not`: worth 100
+            '(?:\\.|\\[|(?<!:):(?!not\\())' => 100,
+            // elements (not attribute values or `:not`), pseudo-elements: worth 1
+            '(?:(?<![="\':\\w\\-])|::)' => 1,
+        ];
         /**
          * @var string[]
          */
@@ -52076,11 +51879,11 @@ namespace {
             // type and attribute value with * (substring match)
             '/([\\w\\*]+)\\[(\\w+)[\\s]*\\*\\=[\\s]*[\'"]?([\\w\\-_\\s\\/:;]+)[\'"]?\\]/' => '\\1[contains(@\\2, "\\3")]',
             // adjacent sibling
-            '/\\s+\\+\\s+/' => '/following-sibling::*[1]/self::',
+            '/\\s*\\+\\s*/' => '/following-sibling::*[1]/self::',
             // child
             '/\\s*>\\s*/' => '/',
-            // descendant
-            '/\\s+(?=.*[^\\]]{1}$)/' => '//',
+            // descendant (don't match spaces within already translated XPath predicates)
+            '/\\s+(?![^\\[\\]]*+\\])/' => '//',
             // type and :first-child
             '/([^\\/]+):first-child/i' => '*[1]/self::\\1',
             // type and :last-child
@@ -52096,7 +51899,7 @@ namespace {
          *
          * @var bool
          */
-        private $shouldMapCssToHtml = \false;
+        private $shouldMapCssToHtml = false;
         /**
          * This multi-level array contains simple mappings of CSS properties to
          * HTML attributes. If a mapping only applies to certain HTML nodes or
@@ -52111,30 +51914,32 @@ namespace {
          *
          * @var bool
          */
-        private $debug = \false;
+        private $debug = false;
         /**
-         * The constructor.
-         *
-         * @param string $html the HTML to emogrify, must be UTF-8-encoded
+         * @param string $unprocessedHtml the HTML to process, must be UTF-8-encoded
          * @param string $css the CSS to merge, must be UTF-8-encoded
          */
-        public function __construct($html = '', $css = '')
+        public function __construct($unprocessedHtml = '', $css = '')
         {
         }
         /**
-         * The destructor.
-         */
-        public function __destruct()
-        {
-        }
-        /**
-         * Sets the HTML to emogrify.
+         * Sets the HTML to process.
          *
-         * @param string $html the HTML to emogrify, must be UTF-8-encoded
+         * @param string $html the HTML to process, must be UTF-encoded, must not be empty
          *
          * @return void
+         *
+         * @throws \InvalidArgumentException if $unprocessedHtml is anything other than a non-empty string
          */
         public function setHtml($html)
+        {
+        }
+        /**
+         * Provides access to the internal DOMDocument representation of the HTML in its current state.
+         *
+         * @return \DOMDocument
+         */
+        public function getDomDocument()
         {
         }
         /**
@@ -52148,7 +51953,43 @@ namespace {
         {
         }
         /**
-         * Applies $this->css to $this->html and returns the HTML with the CSS
+         * Renders the normalized and processed HTML.
+         *
+         * @return string
+         */
+        protected function render()
+        {
+        }
+        /**
+         * Renders the content of the BODY element of the normalized and processed HTML.
+         *
+         * @return string
+         */
+        protected function renderBodyContent()
+        {
+        }
+        /**
+         * Returns the BODY element.
+         *
+         * This method assumes that there always is a BODY element.
+         *
+         * @return \DOMElement
+         */
+        private function getBodyElement()
+        {
+        }
+        /**
+         * Returns the HEAD element.
+         *
+         * This method assumes that there always is a HEAD element.
+         *
+         * @return \DOMElement
+         */
+        private function getHeadElement()
+        {
+        }
+        /**
+         * Applies $this->css to the given HTML and returns the HTML with the CSS
          * applied.
          *
          * This method places the CSS inline.
@@ -52161,7 +52002,7 @@ namespace {
         {
         }
         /**
-         * Applies $this->css to $this->html and returns only the HTML content
+         * Applies $this->css to the given HTML and returns only the HTML content
          * within the <body> tag.
          *
          * This method places the CSS inline.
@@ -52174,27 +52015,68 @@ namespace {
         {
         }
         /**
-         * Creates an XML document from $this->html and emogrifies ist.
+         * Checks that some HTML has been set, and throws an exception otherwise.
          *
-         * @return \DOMDocument
+         * @return void
          *
          * @throws \BadMethodCallException
          */
-        private function createAndProcessXmlDocument()
+        private function assertExistenceOfHtml()
         {
         }
         /**
-         * Applies $this->css to $xmlDocument.
+         * Creates a DOM document from the given HTML and stores it in $this->domDocument.
+         *
+         * The DOM document will always have a BODY element.
+         *
+         * @param string $html
+         *
+         * @return void
+         */
+        private function createUnifiedDomDocument($html)
+        {
+        }
+        /**
+         * Creates a DOMDocument instance from the given HTML and stores it in $this->domDocument.
+         *
+         * @param string $html
+         *
+         * @return void
+         */
+        private function createRawDomDocument($html)
+        {
+        }
+        /**
+         * Returns the HTML with added document type and Content-Type meta tag if needed,
+         * ensuring that the HTML will be good for creating a DOM document from it.
+         *
+         * @param string $html
+         *
+         * @return string the unified HTML
+         */
+        private function prepareHtmlForDomConversion($html)
+        {
+        }
+        /**
+         * Applies $this->css to $this->domDocument.
          *
          * This method places the CSS inline.
-         *
-         * @param \DOMDocument $xmlDocument
          *
          * @return void
          *
          * @throws \InvalidArgumentException
          */
-        protected function process(\DOMDocument $xmlDocument)
+        protected function process()
+        {
+        }
+        /**
+         * Applies some optional post-processing to the HTML in the DOM document.
+         *
+         * @param \DOMXPath $xPath
+         *
+         * @return void
+         */
+        private function postProcess(\DOMXPath $xPath)
         {
         }
         /**
@@ -52279,7 +52161,7 @@ namespace {
          * @param string $value the value of the style rule to map
          * @param \DOMElement $node node to apply styles to
          *
-         * @return bool true if the property cab be mapped using the simple mapping table
+         * @return bool true if the property can be mapped using the simple mapping table
          */
         private function mapSimpleCssProperty($property, $value, \DOMElement $node)
         {
@@ -52294,6 +52176,61 @@ namespace {
          * @return void
          */
         private function mapComplexCssProperty($property, $value, \DOMElement $node)
+        {
+        }
+        /**
+         * Maps the "background" CSS property to visual HTML attributes.
+         *
+         * @param \DOMElement $node node to apply styles to
+         * @param string $value the value of the style rule to map
+         *
+         * @return void
+         */
+        private function mapBackgroundProperty(\DOMElement $node, $value)
+        {
+        }
+        /**
+         * Maps the "width" or "height" CSS properties to visual HTML attributes.
+         *
+         * @param \DOMElement $node node to apply styles to
+         * @param string $value the value of the style rule to map
+         * @param string $property the name of the CSS property to map
+         *
+         * @return void
+         */
+        private function mapWidthOrHeightProperty(\DOMElement $node, $value, $property)
+        {
+        }
+        /**
+         * Maps the "margin" CSS property to visual HTML attributes.
+         *
+         * @param \DOMElement $node node to apply styles to
+         * @param string $value the value of the style rule to map
+         *
+         * @return void
+         */
+        private function mapMarginProperty(\DOMElement $node, $value)
+        {
+        }
+        /**
+         * Maps the "border" CSS property to visual HTML attributes.
+         *
+         * @param \DOMElement $node node to apply styles to
+         * @param string $value the value of the style rule to map
+         *
+         * @return void
+         */
+        private function mapBorderProperty(\DOMElement $node, $value)
+        {
+        }
+        /**
+         * Checks whether $node is a table or img element.
+         *
+         * @param \DOMElement $node
+         *
+         * @return bool
+         */
+        private function isTableOrImageNode(\DOMElement $node)
         {
         }
         /**
@@ -52314,13 +52251,34 @@ namespace {
          *
          * @param string $css a string of raw CSS code
          *
-         * @return string[][] an array of string sub-arrays with the keys
-         *         "selector" (the CSS selector(s), e.g., "*" or "h1"),
-         *         "declarationsBLock" (the semicolon-separated CSS declarations for that selector(s),
+         * @return string[][][] A 2-entry array with the key "inlineable" containing rules which can be inlined as `style`
+         *         attributes and the key "uninlineable" containing rules which cannot.  Each value is an array of string
+         *         sub-arrays with the keys
+         *         "media" (the media query string, e.g. "@media screen and (max-width: 480px)",
+         *         or an empty string if not from a `@media` rule),
+         *         "selector" (the CSS selector, e.g., "*" or "header h1"),
+         *         "hasUnmatchablePseudo" (true if that selector contains psuedo-elements or dynamic pseudo-classes
+         *         such that the declarations cannot be applied inline),
+         *         "declarationsBlock" (the semicolon-separated CSS declarations for that selector,
          *         e.g., "color: red; height: 4px;"),
          *         and "line" (the line number e.g. 42)
          */
         private function parseCssRules($css)
+        {
+        }
+        /**
+         * Parses a string of CSS into the media query, selectors and declarations for each ruleset in order.
+         *
+         * @param string $css
+         *
+         * @return string[][] Array of string sub-arrays with the keys
+         *         "media" (the media query string, e.g. "@media screen and (max-width: 480px)",
+         *         or an empty string if not from an `@media` rule),
+         *         "selectors" (the CSS selector(s), e.g., "*" or "h1, h2"),
+         *         "declarations" (the semicolon-separated CSS declarations for that/those selector(s),
+         *         e.g., "color: red; height: 4px;"),
+         */
+        private function getCssRuleMatches($css)
         {
         }
         /**
@@ -52342,6 +52300,8 @@ namespace {
         /**
          * Disables the removal of elements with `display: none` properties.
          *
+         * @deprecated will be removed in Emogrifier 3.0
+         *
          * @return void
          */
         public function disableInvisibleNodeRemoval()
@@ -52350,6 +52310,8 @@ namespace {
         /**
          * Enables the attachment/override of HTML attributes for which a
          * corresponding CSS property has been set.
+         *
+         * @deprecated will be removed in Emogrifier 3.0, use the CssToAttributeConverter instead
          *
          * @return void
          */
@@ -52362,19 +52324,6 @@ namespace {
          * @return void
          */
         private function clearAllCaches()
-        {
-        }
-        /**
-         * Clears a single cache by key.
-         *
-         * @param int $key the cache key, must be CACHE_KEY_CSS, CACHE_KEY_SELECTOR, CACHE_KEY_XPATH
-         *                 or CACHE_KEY_CSS_DECLARATION_BLOCK
-         *
-         * @return void
-         *
-         * @throws \InvalidArgumentException
-         */
-        private function clearCache($key)
         {
         }
         /**
@@ -52532,25 +52481,38 @@ namespace {
         {
         }
         /**
-         * Applies $css to $xmlDocument, limited to the media queries that actually apply to the document.
+         * Copies $cssRule into the style attribute of $node.
          *
-         * @param \DOMDocument $xmlDocument the document to match against
-         * @param \DOMXPath $xPath
-         * @param string $css a string of CSS
+         * Note: This method does not check whether $cssRule matches $node.
+         *
+         * @param \DOMElement $node
+         * @param string[][] $cssRule
          *
          * @return void
          */
-        private function copyCssWithMediaToStyleNode(\DOMDocument $xmlDocument, \DOMXPath $xPath, $css)
+        private function copyInlineableCssToStyleAttribute(\DOMElement $node, array $cssRule)
         {
         }
         /**
-         * Extracts the media queries from $css while skipping empty media queries.
+         * Applies $cssRules to $this->domDocument, limited to the rules that actually apply to the document.
          *
-         * @param string $css
+         * @param \DOMXPath $xPath
+         * @param string[][] $cssRules The "uninlineable" array of CSS rules returned by `parseCssRules`
          *
-         * @return string[][] numeric array with string sub-arrays with the keys "css" and "query"
+         * @return void
          */
-        private function extractMediaQueriesFromCss($css)
+        private function copyUninlineableCssToStyleNode(\DOMXPath $xPath, array $cssRules)
+        {
+        }
+        /**
+         * Removes pseudo-elements and dynamic pseudo-classes from a CSS selector, replacing them with "*" if necessary.
+         *
+         * @param string $selector
+         *
+         * @return string Selector which will match the relevant DOM elements if the pseudo-classes are assumed to apply,
+         *                or in the case of pseudo-elements will match their originating element.
+         */
+        private function removeUnmatchablePseudoComponents($selector)
         {
         }
         /**
@@ -52579,47 +52541,34 @@ namespace {
         {
         }
         /**
-         * Adds a style element with $css to $document.
+         * Adds a style element with $css to $this->domDocument.
          *
          * This method is protected to allow overriding.
          *
          * @see https://github.com/jjriv/emogrifier/issues/103
          *
-         * @param \DOMDocument $document
          * @param string $css
          *
          * @return void
          */
-        protected function addStyleElementToDocument(\DOMDocument $document, $css)
+        protected function addStyleElementToDocument($css)
         {
         }
         /**
-         * Checks that $document has a BODY element and adds it if it is missing.
+         * Checks that $this->domDocument has a BODY element and adds it if it is missing.
          *
-         * @param \DOMDocument $document
+         * @return void
          */
-        private function ensureExistenceOfBodyElement(\DOMDocument $document)
+        private function ensureExistenceOfBodyElement()
         {
         }
         /**
-         * Returns the BODY element.
+         * Splits input CSS code into an array of parts for different media querues, in order.
+         * Each part is an array where:
          *
-         * This method assumes that there always is a BODY element.
-         *
-         * @param \DOMDocument $document
-         *
-         * @return \DOMElement
-         *
-         * @throws \BadMethodCallException
-         */
-        private function getBodyElement(\DOMDocument $document)
-        {
-        }
-        /**
-         * Splits input CSS code to an array where:
-         *
-         * - key "css" will be contains clean CSS code
-         * - key "media" will be contains all valuable media queries
+         * - key "css" will contain clean CSS code (for @media rules this will be the group rule body within "{...}")
+         * - key "media" will contain "@media " followed by the media query list, for all allowed media queries,
+         *   or an empty string for CSS not within a media query
          *
          * Example:
          *
@@ -52629,43 +52578,28 @@ namespace {
          *
          * will be parsed into the following array:
          *
-         *   "css" => "h1 { color:red; }"
-         *   "media" => "@media { h1 {}}"
+         *   0 => [
+         *     "css" => "h1 { color:red; }",
+         *     "media" => ""
+         *   ],
+         *   1 => [
+         *     "css" => " h1 {}",
+         *     "media" => "@media "
+         *   ]
          *
          * @param string $css
          *
-         * @return string[]
+         * @return string[][]
          */
         private function splitCssAndMediaQuery($css)
         {
         }
         /**
-         * Creates a DOMDocument instance with the current HTML.
+         * Removes empty unprocessable tags from the DOM document.
          *
-         * @return \DOMDocument
+         * @return void
          */
-        private function createRawXmlDocument()
-        {
-        }
-        /**
-         * Returns the HTML with the unprocessable HTML tags removed and
-         * with added document type and Content-Type meta tag if needed.
-         *
-         * @return string the unified HTML
-         *
-         * @throws \BadMethodCallException
-         */
-        private function getUnifiedHtml()
-        {
-        }
-        /**
-         * Removes the unprocessable tags from $html (if this feature is enabled).
-         *
-         * @param string $html
-         *
-         * @return string the reworked HTML with the unprocessable tags removed
-         */
-        private function removeUnprocessableTags($html)
+        private function removeUnprocessableTags()
         {
         }
         /**
@@ -52680,6 +52614,8 @@ namespace {
         }
         /**
          * Adds a Content-Type meta tag for the charset.
+         *
+         * This method also ensures that there is a HEAD element.
          *
          * @param string $html
          *
@@ -52833,7 +52769,7 @@ namespace {
         }
         /**
          * Handles invalid xPath expression warnings, generated during the process() method,
-         * during querying \DOMDocument and trigger \InvalidArgumentException with invalid selector
+         * during querying \DOMDocument and trigger an \InvalidArgumentException with an invalid selector
          * or \RuntimeException, depending on the source of the warning.
          *
          * @param int $type
@@ -52861,6 +52797,8 @@ namespace {
         {
         }
     }
+}
+namespace {
     /**
      * Class WC_Eval_Math. Supports basic math only (removed eval function).
      *
@@ -55379,6 +55317,641 @@ namespace {
         }
     }
     /**
+     * This class adds actions to track usage of WooCommerce.
+     */
+    class WC_Site_Tracking
+    {
+        /**
+         * Check if tracking is enabled.
+         *
+         * @return bool
+         */
+        public static function is_tracking_enabled()
+        {
+        }
+        /**
+         * Add scripts required to record events from javascript.
+         */
+        public static function enqueue_scripts()
+        {
+        }
+        /**
+         * Adds the tracking function to the admin footer.
+         */
+        public static function add_tracking_function()
+        {
+        }
+        /**
+         * Add empty tracking function to admin footer when tracking is disabled in case
+         * it's called without checking if it's defined beforehand.
+         */
+        public static function add_empty_tracking_function()
+        {
+        }
+        /**
+         * Init tracking.
+         */
+        public static function init()
+        {
+        }
+    }
+    /**
+     * WC_Tracks_Client class.
+     */
+    class WC_Tracks_Client
+    {
+        /**
+         * Pixel URL.
+         */
+        const PIXEL = 'https://pixel.wp.com/t.gif';
+        /**
+         * Browser type.
+         */
+        const BROWSER_TYPE = 'php-agent';
+        /**
+         * User agent.
+         */
+        const USER_AGENT_SLUG = 'tracks-client';
+        /**
+         * Initialize tracks client class
+         *
+         * @return void
+         */
+        public static function init()
+        {
+        }
+        /**
+         * Check if identiy cookie is set, if not set it.
+         *
+         * @return void
+         */
+        public static function maybe_set_identity_cookie()
+        {
+        }
+        /**
+         * Record a Tracks event
+         *
+         * @param  array $event Array of event properties.
+         * @return bool|WP_Error         True on success, WP_Error on failure.
+         */
+        public static function record_event($event)
+        {
+        }
+        /**
+         * Synchronously request the pixel.
+         *
+         * @param string $pixel pixel url and query string.
+         * @return bool Always returns true.
+         */
+        public static function record_pixel($pixel)
+        {
+        }
+        /**
+         * Create a timestap representing milliseconds since 1970-01-01
+         *
+         * @return string A string representing a timestamp.
+         */
+        public static function build_timestamp()
+        {
+        }
+        /**
+         * Get a user's identity to send to Tracks. If Jetpack exists, default to its implementation.
+         *
+         * @param int $user_id User id.
+         * @return array Identity properties.
+         */
+        public static function get_identity($user_id)
+        {
+        }
+        /**
+         * Grabs the user's anon id from cookies, or generates and sets a new one
+         *
+         * @return string An anon id for the user
+         */
+        public static function get_anon_id()
+        {
+        }
+    }
+    /**
+     * WC_Tracks_Event class.
+     */
+    class WC_Tracks_Event
+    {
+        /**
+         * Event name regex.
+         */
+        const EVENT_NAME_REGEX = '/^(([a-z0-9]+)_){2}([a-z0-9_]+)$/';
+        /**
+         * Property name regex.
+         */
+        const PROP_NAME_REGEX = '/^[a-z_][a-z0-9_]*$/';
+        /**
+         * Error message as WP_Error.
+         *
+         * @var WP_Error
+         */
+        public $error;
+        /**
+         * WC_Tracks_Event constructor.
+         *
+         * @param array $event Event properties.
+         */
+        public function __construct($event)
+        {
+        }
+        /**
+         * Record Tracks event
+         *
+         * @return bool Always returns true.
+         */
+        public function record()
+        {
+        }
+        /**
+         * Annotate the event with all relevant info.
+         *
+         * @param  array $event Event arguments.
+         * @return bool|WP_Error True on success, WP_Error on failure.
+         */
+        public static function validate_and_sanitize($event)
+        {
+        }
+        /**
+         * Build a pixel URL that will send a Tracks event when fired.
+         * On error, returns an empty string ('').
+         *
+         * @return string A pixel URL or empty string ('') if there were invalid args.
+         */
+        public function build_pixel_url()
+        {
+        }
+        /**
+         * Check if event name is valid.
+         *
+         * @param string $name Event name.
+         * @return false|int
+         */
+        public static function event_name_is_valid($name)
+        {
+        }
+        /**
+         * Check if a property name is valid.
+         *
+         * @param string $name Event property.
+         * @return false|int
+         */
+        public static function prop_name_is_valid($name)
+        {
+        }
+        /**
+         * Check event names
+         *
+         * @param object $event An event object.
+         */
+        public static function scrutinize_event_names($event)
+        {
+        }
+    }
+    /**
+     * WC_Tracks_Footer_Pixel class.
+     */
+    class WC_Tracks_Footer_Pixel
+    {
+        /**
+         * Singleton instance.
+         *
+         * @var WC_Tracks_Footer_Pixel
+         */
+        protected static $instance = \null;
+        /**
+         * Events to send to Tracks.
+         *
+         * @var array
+         */
+        protected $events = array();
+        /**
+         * Instantiate the singleton.
+         *
+         * @return WC_Tracks_Footer_Pixel
+         */
+        public static function instance()
+        {
+        }
+        /**
+         * Constructor - attach hooks to the singleton instance.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Record a Tracks event
+         *
+         * @param  array $event Array of event properties.
+         * @return bool|WP_Error True on success, WP_Error on failure.
+         */
+        public static function record_event($event)
+        {
+        }
+        /**
+         * Add a Tracks event to the queue.
+         *
+         * @param WC_Tracks_Event $event Event to track.
+         */
+        public function add_event($event)
+        {
+        }
+        /**
+         * Add events as tracking pixels to page footer.
+         */
+        public function render_tracking_pixels()
+        {
+        }
+        /**
+         * Fire off API calls for events that weren't converted to pixels.
+         *
+         * This handles wp_redirect().
+         */
+        public function send_tracks_requests()
+        {
+        }
+    }
+    /**
+     * PHP Tracks Client
+     *
+     * @package WooCommerce\Tracks
+     */
+    /**
+     * WC_Tracks class.
+     */
+    class WC_Tracks
+    {
+        /**
+         * Tracks event name prefix.
+         */
+        const PREFIX = 'wcadmin_';
+        /**
+         * Get total product counts.
+         *
+         * @return int Number of products.
+         */
+        public static function get_products_count()
+        {
+        }
+        /**
+         * Gather blog related properties.
+         *
+         * @param int $user_id User id.
+         * @return array Blog details.
+         */
+        public static function get_blog_details($user_id)
+        {
+        }
+        /**
+         * Gather details from the request to the server.
+         *
+         * @return array Server details.
+         */
+        public static function get_server_details()
+        {
+        }
+        /**
+         * Record an event in Tracks - this is the preferred way to record events from PHP.
+         *
+         * @param string $event_name The name of the event.
+         * @param array  $properties Custom properties to send with the event.
+         * @return bool|WP_Error True for success or WP_Error if the event pixel could not be fired.
+         */
+        public static function record_event($event_name, $properties = array())
+        {
+        }
+    }
+    /**
+     * This class adds actions to track usage of the WooCommerce Onboarding Wizard.
+     */
+    class WC_Admin_Setup_Wizard_Tracking
+    {
+        /**
+         * Steps for the setup wizard
+         *
+         * @var array
+         */
+        private $steps = array();
+        /**
+         * Init tracking.
+         */
+        public function init()
+        {
+        }
+        /**
+         * Get the name of the current step.
+         *
+         * @return string
+         */
+        public function get_current_step()
+        {
+        }
+        /**
+         * Add footer scripts to OBW via woocommerce_setup_footer
+         */
+        public function add_footer_scripts()
+        {
+        }
+        /**
+         * Dequeue unwanted scripts from OBW footer.
+         */
+        public function dequeue_non_whitelisted_scripts()
+        {
+        }
+        /**
+         * Track when tracking is opted into and OBW has started.
+         *
+         * @param string $option Option name.
+         * @param string $value  Option value.
+         * @return void
+         */
+        public function track_start($option, $value)
+        {
+        }
+        /**
+         * Track the marketing form on submit.
+         */
+        public function track_ready_next_steps()
+        {
+        }
+        /**
+         * Track various events when a step is saved.
+         */
+        public function add_step_save_events()
+        {
+        }
+        /**
+         * Track store setup and store properties on save.
+         *
+         * @return void
+         */
+        public function track_store_setup()
+        {
+        }
+        /**
+         * Track payment gateways selected.
+         *
+         * @return void
+         */
+        public function track_payments()
+        {
+        }
+        /**
+         * Track shipping units and whether or not labels are set.
+         *
+         * @return void
+         */
+        public function track_shipping()
+        {
+        }
+        /**
+         * Track recommended plugins selected for install.
+         *
+         * @return void
+         */
+        public function track_recommended()
+        {
+        }
+        /**
+         * Tracks when Jetpack is activated through the OBW.
+         *
+         * @return void
+         */
+        public function track_jetpack_activate()
+        {
+        }
+        /**
+         * Track skipped steps.
+         *
+         * @return void
+         */
+        public function track_skip_step()
+        {
+        }
+        /**
+         * Set the OBW steps inside this class instance.
+         *
+         * @param array $steps Array of OBW steps.
+         */
+        public function set_obw_steps($steps)
+        {
+        }
+    }
+    /**
+     * This class adds actions to track usage of the WooCommerce Extensions page.
+     */
+    class WC_Extensions_Tracking
+    {
+        /**
+         * Init tracking.
+         */
+        public function init()
+        {
+        }
+        /**
+         * Send a Tracks event when an Extensions page is viewed.
+         */
+        public function track_extensions_page()
+        {
+        }
+        /**
+         * Send a Tracks even when a Helper connection process is initiated.
+         */
+        public function track_helper_connection_start()
+        {
+        }
+        /**
+         * Send a Tracks even when a Helper connection process is cancelled.
+         */
+        public function track_helper_connection_cancelled()
+        {
+        }
+        /**
+         * Send a Tracks even when a Helper connection process completed successfully.
+         */
+        public function track_helper_connection_complete()
+        {
+        }
+        /**
+         * Send a Tracks even when a Helper has been disconnected.
+         */
+        public function track_helper_disconnected()
+        {
+        }
+        /**
+         * Send a Tracks even when Helper subscriptions are refreshed.
+         */
+        public function track_helper_subscriptions_refresh()
+        {
+        }
+    }
+    /**
+     * This class adds actions to track usage of WooCommerce Imports.
+     */
+    class WC_Importer_Tracking
+    {
+        /**
+         * Init tracking.
+         */
+        public function init()
+        {
+        }
+        /**
+         * Route product importer action to the right callback.
+         *
+         * @return void
+         */
+        public function track_product_importer()
+        {
+        }
+        /**
+         * Send a Tracks event when the product importer is started.
+         *
+         * @return void
+         */
+        public function track_product_importer_start()
+        {
+        }
+        /**
+         * Send a Tracks event when the product importer has finished.
+         *
+         * @return void
+         */
+        public function track_product_importer_complete()
+        {
+        }
+    }
+    /**
+     * This class adds actions to track usage of WooCommerce Orders.
+     */
+    class WC_Orders_Tracking
+    {
+        /**
+         * Init tracking.
+         */
+        public function init()
+        {
+        }
+        /**
+         * Send a Tracks event when the Orders page is viewed.
+         */
+        public function track_orders_view()
+        {
+        }
+        /**
+         * Send a Tracks event when an order status is changed.
+         *
+         * @param int    $id Order id.
+         * @param string $previous_status the old WooCommerce order status.
+         * @param string $next_status the new WooCommerce order status.
+         */
+        public function track_order_status_change($id, $previous_status, $next_status)
+        {
+        }
+    }
+    /**
+     * This class adds actions to track usage of WooCommerce Products.
+     */
+    class WC_Products_Tracking
+    {
+        /**
+         * Init tracking.
+         */
+        public function init()
+        {
+        }
+        /**
+         * Send a Tracks event when a product is updated.
+         *
+         * @param int    $product_id Product id.
+         * @param object $post WordPress post.
+         */
+        public function track_product_updated($product_id, $post)
+        {
+        }
+        /**
+         * Send a Tracks event when a product is published.
+         *
+         * @param string $new_status New post_status.
+         * @param string $old_status Previous post_status.
+         * @param object $post WordPress post.
+         */
+        public function track_product_published($new_status, $old_status, $post)
+        {
+        }
+        /**
+         * Send a Tracks event when a product category is created.
+         *
+         * @param int $category_id Category ID.
+         */
+        public function track_product_category_created($category_id)
+        {
+        }
+    }
+    /**
+     * This class adds actions to track usage of WooCommerce Settings.
+     */
+    class WC_Settings_Tracking
+    {
+        /**
+         * Whitelisted WooCommerce settings to potentially track updates for.
+         *
+         * @var array
+         */
+        protected $whitelist = array();
+        /**
+         * WooCommerce settings that have been updated (and will be tracked).
+         *
+         * @var array
+         */
+        protected $updated_options = array();
+        /**
+         * Init tracking.
+         */
+        public function init()
+        {
+        }
+        /**
+         * Add a WooCommerce option name to our whitelist and attach
+         * the `update_option` hook. Rather than inspecting every updated
+         * option and pattern matching for "woocommerce", just build a dynamic
+         * whitelist for WooCommerce options that might get updated.
+         *
+         * See `woocommerce_update_option` hook.
+         *
+         * @param array $option WooCommerce option (config) that might get updated.
+         */
+        public function add_option_to_whitelist($option)
+        {
+        }
+        /**
+         * Add WooCommerce option to a list of updated options.
+         *
+         * @param string $option_name Option being updated.
+         * @param mixed  $old_value Old value of option.
+         * @param mixed  $new_value New value of option.
+         */
+        public function track_setting_change($option_name, $old_value, $new_value)
+        {
+        }
+        /**
+         * Send a Tracks event for WooCommerce options that changed values.
+         */
+        public function send_settings_change_event()
+        {
+        }
+        /**
+         * Send a Tracks event for WooCommerce settings page views.
+         */
+        public function track_settings_page_view()
+        {
+        }
+    }
+    /**
      * Product category dropdown walker class.
      */
     class WC_Product_Cat_Dropdown_Walker extends \Walker
@@ -55613,6 +56186,33 @@ namespace {
          * Init settings after post types are registered.
          */
         public function init_settings()
+        {
+        }
+        /**
+         * Get this widgets taxonomy.
+         *
+         * @param array $instance Array of instance options.
+         * @return string
+         */
+        protected function get_instance_taxonomy($instance)
+        {
+        }
+        /**
+         * Get this widgets query type.
+         *
+         * @param array $instance Array of instance options.
+         * @return string
+         */
+        protected function get_instance_query_type($instance)
+        {
+        }
+        /**
+         * Get this widgets display type.
+         *
+         * @param array $instance Array of instance options.
+         * @return string
+         */
+        protected function get_instance_display_type($instance)
         {
         }
         /**
@@ -56034,12 +56634,12 @@ namespace {
     /**
      * Create a page and store the ID in an option.
      *
-     * @param mixed  $slug Slug for the new page
-     * @param string $option Option name to store the page's ID
-     * @param string $page_title (default: '') Title for the new page
-     * @param string $page_content (default: '') Content for the new page
-     * @param int    $post_parent (default: 0) Parent for the new page
-     * @return int page ID
+     * @param mixed  $slug Slug for the new page.
+     * @param string $option Option name to store the page's ID.
+     * @param string $page_title (default: '') Title for the new page.
+     * @param string $page_content (default: '') Content for the new page.
+     * @param int    $post_parent (default: 0) Parent for the new page.
+     * @return int page ID.
      */
     function wc_create_page($slug, $option = '', $page_title = '', $page_content = '', $post_parent = 0)
     {
@@ -56049,7 +56649,7 @@ namespace {
      *
      * Loops though the woocommerce options array and outputs each field.
      *
-     * @param array $options Opens array to output
+     * @param array $options Opens array to output.
      */
     function woocommerce_admin_fields($options)
     {
@@ -56057,8 +56657,8 @@ namespace {
     /**
      * Update all settings which are passed.
      *
-     * @param array $options
-     * @param array $data
+     * @param array $options Option fields to save.
+     * @param array $data Passed data.
      */
     function woocommerce_update_options($options, $data = \null)
     {
@@ -56066,19 +56666,30 @@ namespace {
     /**
      * Get a setting from the settings API.
      *
-     * @param mixed $option_name
-     * @param mixed $default
+     * @param mixed $option_name Option name to save.
+     * @param mixed $default Default value to save.
      * @return string
      */
     function woocommerce_settings_get_option($option_name, $default = '')
     {
     }
     /**
+     * Sees if line item stock has already reduced stock, and whether those values need adjusting e.g. after changing item qty.
+     *
+     * @since 3.6.0
+     * @param WC_Order_Item $item Item object.
+     * @param integer       $item_quantity Optional quantity to check against. Read from object if not passed.
+     * @return boolean|array|WP_Error Array of changes or error object when stock is updated (@see wc_update_product_stock). False if nothing changes.
+     */
+    function wc_maybe_adjust_line_item_product_stock($item, $item_quantity = -1)
+    {
+    }
+    /**
      * Save order items. Uses the CRUD.
      *
      * @since 2.2
-     * @param int   $order_id Order ID
-     * @param array $items Order items to save
+     * @param int   $order_id Order ID.
+     * @param array $items Order items to save.
      */
     function wc_save_order_items($order_id, $items)
     {
@@ -56141,10 +56752,10 @@ namespace {
     function woocommerce_wp_radio($field)
     {
     }
-    function action_scheduler_register_2_dot_1_dot_0()
+    function action_scheduler_register_2_dot_2_dot_4()
     {
     }
-    function action_scheduler_initialize_2_dot_1_dot_0()
+    function action_scheduler_initialize_2_dot_2_dot_4()
     {
     }
     /**
@@ -56580,9 +57191,27 @@ namespace {
     /**
      * Get attribute taxonomies.
      *
-     * @return array of objects
+     * @return array of objects, @since 3.6.0 these are also indexed by ID.
      */
     function wc_get_attribute_taxonomies()
+    {
+    }
+    /**
+     * Get (cached) attribute taxonomy ID and name pairs.
+     *
+     * @since 3.6.0
+     * @return array
+     */
+    function wc_get_attribute_taxonomy_ids()
+    {
+    }
+    /**
+     * Get (cached) attribute taxonomy label and name pairs.
+     *
+     * @since 3.6.0
+     * @return array
+     */
+    function wc_get_attribute_taxonomy_labels()
     {
     }
     /**
@@ -56786,6 +57415,17 @@ namespace {
      * @return bool
      */
     function wc_delete_attribute($id)
+    {
+    }
+    /**
+     * Get an unprefixed product attribute name.
+     *
+     * @since 3.6.0
+     *
+     * @param  string $attribute_name Attribute name.
+     * @return string
+     */
+    function wc_attribute_taxonomy_slug($attribute_name)
     {
     }
     /**
@@ -57215,6 +57855,33 @@ namespace {
     function wc_post_content_has_shortcode($tag = '')
     {
     }
+    /**
+     * Check if reviews are enabled.
+     *
+     * @since 3.6.0
+     * @return bool
+     */
+    function wc_reviews_enabled()
+    {
+    }
+    /**
+     * Check if reviews ratings are enabled.
+     *
+     * @since 3.6.0
+     * @return bool
+     */
+    function wc_review_ratings_enabled()
+    {
+    }
+    /**
+     * Check if review ratings are required.
+     *
+     * @since 3.6.0
+     * @return bool
+     */
+    function wc_review_ratings_required()
+    {
+    }
     // Before wpautop().
     /**
      * Define a constant if it is not already defined.
@@ -57384,8 +58051,9 @@ namespace {
      * @param  string  $value  Value of the cookie.
      * @param  integer $expire Expiry of the cookie.
      * @param  bool    $secure Whether the cookie should be served only over https.
+     * @param  bool    $httponly Whether the cookie is only accessible over HTTP, not scripting languages like JavaScript. @since 3.6.0.
      */
-    function wc_setcookie($name, $value, $expire = 0, $secure = \false)
+    function wc_setcookie($name, $value, $expire = 0, $secure = \false, $httponly = \false)
     {
     }
     /**
@@ -57710,6 +58378,16 @@ namespace {
      * @return int
      */
     function wc_uasort_comparison($a, $b)
+    {
+    }
+    /**
+     * Sort values based on ascii, usefull for special chars in strings.
+     *
+     * @param string $a First value.
+     * @param string $b Second value.
+     * @return int
+     */
+    function wc_ascii_uasort_comparison($a, $b)
     {
     }
     /**
@@ -58772,6 +59450,92 @@ namespace {
     {
     }
     /**
+     * Get min/max price meta query args.
+     *
+     * @deprecated 3.6.0
+     * @since 3.0.0
+     * @param array $args Min price and max price arguments.
+     * @return array
+     */
+    function wc_get_min_max_price_meta_query($args)
+    {
+    }
+    /**
+     * When a term is split, ensure meta data maintained.
+     *
+     * @deprecated 3.6.0
+     * @param  int    $old_term_id      Old term ID.
+     * @param  int    $new_term_id      New term ID.
+     * @param  string $term_taxonomy_id Term taxonomy ID.
+     * @param  string $taxonomy         Taxonomy.
+     */
+    function wc_taxonomy_metadata_update_content_for_split_terms($old_term_id, $new_term_id, $term_taxonomy_id, $taxonomy)
+    {
+    }
+    /**
+     * WooCommerce Term Meta API.
+     *
+     * WC tables for storing term meta are deprecated from WordPress 4.4 since 4.4 has its own table.
+     * This function serves as a wrapper, using the new table if present, or falling back to the WC table.
+     *
+     * @deprecated 3.6.0
+     * @param int    $term_id    Term ID.
+     * @param string $meta_key   Meta key.
+     * @param mixed  $meta_value Meta value.
+     * @param string $prev_value Previous value. (default: '').
+     * @return bool
+     */
+    function update_woocommerce_term_meta($term_id, $meta_key, $meta_value, $prev_value = '')
+    {
+    }
+    /**
+     * WooCommerce Term Meta API.
+     *
+     * WC tables for storing term meta are deprecated from WordPress 4.4 since 4.4 has its own table.
+     * This function serves as a wrapper, using the new table if present, or falling back to the WC table.
+     *
+     * @deprecated 3.6.0
+     * @param int    $term_id    Term ID.
+     * @param string $meta_key   Meta key.
+     * @param mixed  $meta_value Meta value.
+     * @param bool   $unique     Make meta key unique. (default: false).
+     * @return bool
+     */
+    function add_woocommerce_term_meta($term_id, $meta_key, $meta_value, $unique = \false)
+    {
+    }
+    /**
+     * WooCommerce Term Meta API
+     *
+     * WC tables for storing term meta are deprecated from WordPress 4.4 since 4.4 has its own table.
+     * This function serves as a wrapper, using the new table if present, or falling back to the WC table.
+     *
+     * @deprecated 3.6.0
+     * @param int    $term_id    Term ID.
+     * @param string $meta_key   Meta key.
+     * @param string $meta_value Meta value (default: '').
+     * @param bool   $deprecated Deprecated param (default: false).
+     * @return bool
+     */
+    function delete_woocommerce_term_meta($term_id, $meta_key, $meta_value = '', $deprecated = \false)
+    {
+    }
+    /**
+     * WooCommerce Term Meta API
+     *
+     * WC tables for storing term meta are deprecated from WordPress 4.4 since 4.4 has its own table.
+     * This function serves as a wrapper, using the new table if present, or falling back to the WC table.
+     *
+     * @deprecated 3.6.0
+     * @param int    $term_id Term ID.
+     * @param string $key     Meta key.
+     * @param bool   $single  Whether to return a single value. (default: true).
+     * @return mixed
+     */
+    function get_woocommerce_term_meta($term_id, $key, $single = \true)
+    {
+    }
+    /**
      * Converts a string (e.g. 'yes' or 'no') to a bool.
      *
      * @since 3.0.0
@@ -58959,6 +59723,19 @@ namespace {
      * @return string
      */
     function wc_format_coupon_code($value)
+    {
+    }
+    /**
+     * Sanitize a coupon code.
+     *
+     * Uses sanitize_post_field since coupon codes are stored as
+     * post_titles - the sanitization and escaping must match.
+     *
+     * @since  3.6.0
+     * @param  string $value Coupon code to format.
+     * @return string
+     */
+    function wc_sanitize_coupon_code($value)
     {
     }
     /**
@@ -59253,6 +60030,17 @@ namespace {
      * @return string
      */
     function wc_format_phone_number($phone)
+    {
+    }
+    /**
+     * Sanitize phone number.
+     * Allows only numbers and "+" (plus sign).
+     *
+     * @since 3.6.0
+     * @param string $phone Phone number.
+     * @return string
+     */
+    function wc_sanitize_phone_number($phone)
     {
     }
     /**
@@ -59639,7 +60427,7 @@ namespace {
      *
      * @param  mixed $the_order Post object or post ID of the order.
      *
-     * @return bool|WC_Order|WC_Refund
+     * @return bool|WC_Order|WC_Order_Refund
      */
     function wc_get_order($the_order = \false)
     {
@@ -59670,6 +60458,15 @@ namespace {
      * @return array
      */
     function wc_get_is_paid_statuses()
+    {
+    }
+    /**
+     * Get list of statuses which are consider 'pending payment'.
+     *
+     * @since  3.6.0
+     * @return array
+     */
+    function wc_get_is_pending_statuses()
     {
     }
     /**
@@ -59749,7 +60546,6 @@ namespace {
     /**
      * Return the count of processing orders.
      *
-     * @access public
      * @return int
      */
     function wc_processing_order_count()
@@ -60203,9 +60999,9 @@ namespace {
     {
     }
     /**
-     * Clear all transients cache for product data.
+     * Clear transient cache for product data.
      *
-     * @param int $post_id (default: 0).
+     * @param int $post_id (default: 0) The product ID.
      */
     function wc_delete_product_transients($post_id = 0)
     {
@@ -60239,9 +61035,9 @@ namespace {
     {
     }
     /**
-     * Get the placeholder image URL for products etc.
+     * Get the placeholder image URL either from media, or use the fallback image.
      *
-     * @param string $size Image size.
+     * @param string $size Thumbnail size to use.
      * @return string
      */
     function wc_placeholder_img_src($size = 'woocommerce_thumbnail')
@@ -60249,6 +61045,8 @@ namespace {
     }
     /**
      * Get the placeholder image.
+     *
+     * Uses wp_get_attachment_image if using an attachment ID @since 3.6.0 to handle responsiveness.
      *
      * @param string $size Image size.
      * @return string
@@ -60391,16 +61189,6 @@ namespace {
      * @return array
      */
     function wc_get_product_visibility_options()
-    {
-    }
-    /**
-     * Get min/max price meta query args.
-     *
-     * @since 3.0.0
-     * @param array $args Min price and max price arguments.
-     * @return array
-     */
-    function wc_get_min_max_price_meta_query($args)
     {
     }
     /**
@@ -60636,6 +61424,41 @@ namespace {
      * @param int $product_id Product ID.
      */
     function wc_deferred_product_sync($product_id)
+    {
+    }
+    /**
+     * See if the lookup table is being generated already.
+     *
+     * @since 3.6.0
+     * @return bool
+     */
+    function wc_update_product_lookup_tables_is_running()
+    {
+    }
+    /**
+     * Populate lookup table data for products.
+     *
+     * @since 3.6.0
+     */
+    function wc_update_product_lookup_tables()
+    {
+    }
+    /**
+     * Populate lookup table column data.
+     *
+     * @since 3.6.0
+     * @param string $column Column name to set.
+     */
+    function wc_update_product_lookup_tables_column($column)
+    {
+    }
+    /**
+     * Populate rating count lookup table data for products.
+     *
+     * @since 3.6.0
+     * @param array $rows Rows of rating counts to update in lookup table.
+     */
+    function wc_update_product_lookup_tables_rating_count($rows)
     {
     }
     /**
@@ -61064,7 +61887,11 @@ namespace {
     /**
      * Retrieves the classes for the post div as an array.
      *
-     * This method is clone from WordPress's get_post_class(), allowing removing taxonomies.
+     * This method was modified from WordPress's get_post_class() to allow the removal of taxonomies
+     * (for performance reasons).
+     *
+     * Previously wc_product_post_class was hooked into post_class. That still happens, but this function
+     * negates the need for it and thus unhooks it when running the post_class hook. @since 3.6.0
      *
      * @since 3.4.0
      * @param string|array           $class      One or more classes to add to the class list.
@@ -62090,6 +62917,38 @@ namespace {
     {
     }
     /**
+     * Change get terms defaults for attributes to order by the sorting setting, or default to menu_order for sortable taxonomies.
+     *
+     * @since 3.6.0 Sorting options are now set as the default automatically, so you no longer have to request to orderby menu_order.
+     *
+     * @param array $defaults   An array of default get_terms() arguments.
+     * @param array $taxonomies An array of taxonomies.
+     * @return array
+     */
+    function wc_change_get_terms_defaults($defaults, $taxonomies)
+    {
+    }
+    /**
+     * Adds support to get_terms for menu_order argument.
+     *
+     * @since 3.6.0
+     * @param WP_Term_Query $terms_query Instance of WP_Term_Query.
+     */
+    function wc_change_pre_get_terms($terms_query)
+    {
+    }
+    /**
+     * Adjust term query to handle custom sorting parameters.
+     *
+     * @param array $clauses    Clauses.
+     * @param array $taxonomies Taxonomies.
+     * @param array $args       Arguments.
+     * @return array
+     */
+    function wc_terms_clauses($clauses, $taxonomies, $args)
+    {
+    }
+    /**
      * Helper to get cached object terms and filter by field using wp_list_pluck().
      * Works as a cached alternative for wp_get_post_terms() and wp_get_object_terms().
      *
@@ -62117,10 +62976,7 @@ namespace {
     {
     }
     /**
-     * Wrapper for wp_get_post_terms which supports ordering by parent.
-     *
-     * NOTE: At this point in time, ordering by menu_order for example isn't possible with this function. wp_get_post_terms has no.
-     *   filters which we can utilise to modify it's query. https://core.trac.wordpress.org/ticket/19094.
+     * Wrapper used to get terms for a product.
      *
      * @param  int    $product_id Product ID.
      * @param  string $taxonomy   Taxonomy slug.
@@ -62169,17 +63025,6 @@ namespace {
     {
     }
     /**
-     * When a term is split, ensure meta data maintained.
-     *
-     * @param  int    $old_term_id      Old term ID.
-     * @param  int    $new_term_id      New term ID.
-     * @param  string $term_taxonomy_id Term taxonomy ID.
-     * @param  string $taxonomy         Taxonomy.
-     */
-    function wc_taxonomy_metadata_update_content_for_split_terms($old_term_id, $new_term_id, $term_taxonomy_id, $taxonomy)
-    {
-    }
-    /**
      * Migrate data from WC term meta to WP term meta.
      *
      * When the database is updated to support term meta, migrate WC term meta data across.
@@ -62189,65 +63034,6 @@ namespace {
      * @param string $wp_current_db_version The old (current) $wp_db_version.
      */
     function wc_taxonomy_metadata_migrate_data($wp_db_version, $wp_current_db_version)
-    {
-    }
-    /**
-     * WooCommerce Term Meta API.
-     *
-     * WC tables for storing term meta are @deprecated from WordPress 4.4 since 4.4 has its own table.
-     * This function serves as a wrapper, using the new table if present, or falling back to the WC table.
-     *
-     * @param int    $term_id    Term ID.
-     * @param string $meta_key   Meta key.
-     * @param mixed  $meta_value Meta value.
-     * @param string $prev_value Previous value. (default: '').
-     * @return bool
-     */
-    function update_woocommerce_term_meta($term_id, $meta_key, $meta_value, $prev_value = '')
-    {
-    }
-    /**
-     * WooCommerce Term Meta API.
-     *
-     * WC tables for storing term meta are @deprecated from WordPress 4.4 since 4.4 has its own table.
-     * This function serves as a wrapper, using the new table if present, or falling back to the WC table.
-     *
-     * @param int    $term_id    Term ID.
-     * @param string $meta_key   Meta key.
-     * @param mixed  $meta_value Meta value.
-     * @param bool   $unique     Make meta key unique. (default: false).
-     * @return bool
-     */
-    function add_woocommerce_term_meta($term_id, $meta_key, $meta_value, $unique = \false)
-    {
-    }
-    /**
-     * WooCommerce Term Meta API
-     *
-     * WC tables for storing term meta are @deprecated from WordPress 4.4 since 4.4 has its own table.
-     * This function serves as a wrapper, using the new table if present, or falling back to the WC table.
-     *
-     * @param int    $term_id    Term ID.
-     * @param string $meta_key   Meta key.
-     * @param string $meta_value Meta value (default: '').
-     * @param bool   $deprecated Deprecated param (default: false).
-     * @return bool
-     */
-    function delete_woocommerce_term_meta($term_id, $meta_key, $meta_value = '', $deprecated = \false)
-    {
-    }
-    /**
-     * WooCommerce Term Meta API
-     *
-     * WC tables for storing term meta are @deprecated from WordPress 4.4 since 4.4 has its own table.
-     * This function serves as a wrapper, using the new table if present, or falling back to the WC table.
-     *
-     * @param int    $term_id Term ID.
-     * @param string $key     Meta key.
-     * @param bool   $single  Whether to return a single value. (default: true).
-     * @return mixed
-     */
-    function get_woocommerce_term_meta($term_id, $key, $single = \true)
     {
     }
     /**
@@ -62276,26 +63062,10 @@ namespace {
     {
     }
     /**
-     * Add term ordering to get_terms.
-     *
-     * It enables the support a 'menu_order' parameter to get_terms for the product_cat taxonomy.
-     * By default it is 'ASC'. It accepts 'DESC' too.
-     *
-     * To disable it, set it ot false (or 0).
-     *
-     * @param array $clauses    Clauses.
-     * @param array $taxonomies Taxonomies.
-     * @param array $args       Arguments.
-     * @return array
-     */
-    function wc_terms_clauses($clauses, $taxonomies, $args)
-    {
-    }
-    /**
      * Function for recounting product terms, ignoring hidden products.
      *
      * @param array  $terms                       List of terms.
-     * @param string $taxonomy                    Taxonomy.
+     * @param object $taxonomy                    Taxonomy.
      * @param bool   $callback                    Callback.
      * @param bool   $terms_are_term_taxonomy_ids If terms are from term_taxonomy_id column.
      */
@@ -62854,6 +63624,32 @@ namespace {
     {
     }
     /**
+     * Update product lookup tables in bulk.
+     */
+    function wc_update_360_product_lookup_tables()
+    {
+    }
+    /**
+     * Renames ordering meta to be consistent across taxonomies.
+     */
+    function wc_update_360_term_meta()
+    {
+    }
+    /**
+     * Add new user_order_remaining_expires to speed up user download permission fetching.
+     *
+     * @return void
+     */
+    function wc_update_360_downloadable_product_permissions_index()
+    {
+    }
+    /**
+     * Update DB Version.
+     */
+    function wc_update_360_db_version()
+    {
+    }
+    /**
      * Prevent any user who cannot 'edit_posts' (subscribers, customers etc) from seeing the admin bar.
      *
      * Note: get_option( 'woocommerce_lock_down_admin', true ) is a deprecated option here for backwards compatibility. Defaults to true.
@@ -62867,12 +63663,25 @@ namespace {
     /**
      * Create a new customer.
      *
-     * @param  string $email Customer email.
+     * @param  string $email    Customer email.
      * @param  string $username Customer username.
      * @param  string $password Customer password.
+     * @param  array  $args     List of arguments to pass to `wp_insert_user()`.
      * @return int|WP_Error Returns WP_Error on failure, Int (user ID) on success.
      */
-    function wc_create_new_customer($email, $username = '', $password = '')
+    function wc_create_new_customer($email, $username = '', $password = '', $args = array())
+    {
+    }
+    /**
+     * Create a unique username for a new customer.
+     *
+     * @since 3.6.0
+     * @param string $email New customer email address.
+     * @param array  $new_user_args Array of new user args, maybe including first and last names.
+     * @param string $suffix Append string to username to make it unique.
+     * @return string Generated username.
+     */
+    function wc_create_new_customer_username($email, $new_user_args, $suffix = '')
     {
     }
     /**
@@ -62936,7 +63745,8 @@ namespace {
      * @param array $allcaps All capabilities.
      * @param array $caps    Capabilities.
      * @param array $args    Arguments.
-     * @return bool
+     *
+     * @return array The filtered array of all capabilities.
      */
     function wc_customer_has_capability($allcaps, $caps, $args)
     {
@@ -63205,9 +64015,11 @@ namespace {
      *
      * @since  3.3.0
      * @throws Exception If webhook cannot be read/found and $data parameter of WC_Webhook class constructor is set.
+     * @param  string   $status Optional - status to filter results by. Must be a key in return value of @see wc_get_webhook_statuses(). @since 3.5.0.
+     * @param  null|int $limit Limit number of webhooks loaded. @since 3.6.0.
      * @return bool
      */
-    function wc_load_webhooks()
+    function wc_load_webhooks($status = '', $limit = \null)
     {
     }
     /**
@@ -63238,14 +64050,12 @@ namespace {
     {
     }
     /**
-     * Main instance of WooCommerce.
-     *
-     * Returns the main instance of WC to prevent the need to use globals.
+     * Returns the main instance of WC.
      *
      * @since  2.1
      * @return WooCommerce
      */
-    function wc()
+    function WC()
     {
     }
 }
