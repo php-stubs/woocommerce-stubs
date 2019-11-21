@@ -25,6 +25,13 @@ composer require --dev php-stubs/woocommerce-stubs
 
 Alternatively you may download `woocommerce-stubs.php` directly.
 
-### Versioning
+### Usage in PHPStan
 
-This package is versioned to match the WooCommerce version from which the stubs are generated.
+Include both stubs in PHPStan configuration file.
+
+```yaml
+parameters:
+    autoload_files:
+        - %rootDir%/../../php-stubs/wordpress-stubs/wordpress-stubs.php
+        - %rootDir%/../../php-stubs/woocommerce-stubs/woocommerce-stubs.php
+```
