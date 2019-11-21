@@ -9573,6 +9573,12 @@ namespace {
         {
         }
         /**
+         * Preloads some functionality of the Helper to be loaded on the `plugins_loaded` hook
+         */
+        public function preload_helper()
+        {
+        }
+        /**
          * Include admin files conditionally.
          */
         public function conditional_includes()
@@ -9742,6 +9748,30 @@ namespace {
          * Render the legacy helper compat view.
          */
         public static function render_compat_menu()
+        {
+        }
+    }
+    /**
+     * WC_Helper_File_Headers Class
+     *
+     * Adds some filters to be able to parse the `Woo` header from locally
+     * installed Woo plugins and themes
+     */
+    class WC_Helper_File_Headers
+    {
+        /**
+         * Load functions adds the `extra_headers` filter on the `extra_plugin_headers`
+         * and `extra_theme_headers` hooks.
+         */
+        public static function load()
+        {
+        }
+        /**
+         * Additional theme style.css and plugin file headers.
+         *
+         * Format: Woo: product_id:file_id
+         */
+        public static function extra_headers($headers)
         {
         }
     }
@@ -10069,14 +10099,6 @@ namespace {
          * @return array|bool The array containing sub data or false.
          */
         private static function _get_subscriptions_from_product_id($product_id, $single = \true)
-        {
-        }
-        /**
-         * Additional theme style.css and plugin file headers.
-         *
-         * Format: Woo: product_id:file_id
-         */
-        public static function extra_headers($headers)
         {
         }
         /**
@@ -14732,8 +14754,6 @@ namespace {
         /**
          * Retrieves the item's schema for display / public consumption purposes.
          *
-         * @access public
-         *
          * @return array Public item schema data.
          */
         public function get_public_item_schema()
@@ -16287,8 +16307,9 @@ namespace {
         /**
          * Get object.
          *
+         * @param int $id Object ID.
+         *
          * @since  3.0.0
-         * @param  int $id Object ID.
          * @return WC_Data
          */
         protected function get_object($id)
@@ -16297,9 +16318,10 @@ namespace {
         /**
          * Prepare a single product output for response.
          *
+         * @param WC_Data         $object  Object data.
+         * @param WP_REST_Request $request Request object.
+         *
          * @since  3.0.0
-         * @param  WC_Data         $object  Object data.
-         * @param  WP_REST_Request $request Request object.
          * @return WP_REST_Response
          */
         public function prepare_object_for_response($object, $request)
@@ -16308,8 +16330,9 @@ namespace {
         /**
          * Prepare objects query.
          *
+         * @param WP_REST_Request $request Full details about the request.
+         *
          * @since  3.0.0
-         * @param  WP_REST_Request $request Full details about the request.
          * @return array
          */
         protected function prepare_objects_query($request)
@@ -16319,6 +16342,7 @@ namespace {
          * Get the downloads for a product or product variation.
          *
          * @param WC_Product|WC_Product_Variation $product Product instance.
+         *
          * @return array
          */
         protected function get_downloads($product)
@@ -16329,6 +16353,7 @@ namespace {
          *
          * @param WC_Product $product  Product instance.
          * @param string     $taxonomy Taxonomy slug.
+         *
          * @return array
          */
         protected function get_taxonomy_terms($product, $taxonomy = 'cat')
@@ -16338,6 +16363,7 @@ namespace {
          * Get the images for a product or product variation.
          *
          * @param WC_Product|WC_Product_Variation $product Product instance.
+         *
          * @return array
          */
         protected function get_images($product)
@@ -16346,10 +16372,10 @@ namespace {
         /**
          * Get attribute taxonomy label.
          *
-         * @deprecated 3.0.0
+         * @param string $name Taxonomy name.
          *
-         * @param  string $name Taxonomy name.
-         * @return string
+         * @deprecated 3.0.0
+         * @return     string
          */
         protected function get_attribute_taxonomy_label($name)
         {
@@ -16357,9 +16383,10 @@ namespace {
         /**
          * Get product attribute taxonomy name.
          *
+         * @param string     $slug    Taxonomy name.
+         * @param WC_Product $product Product data.
+         *
          * @since  3.0.0
-         * @param  string     $slug    Taxonomy name.
-         * @param  WC_Product $product Product data.
          * @return string
          */
         protected function get_attribute_taxonomy_name($slug, $product)
@@ -16369,6 +16396,7 @@ namespace {
          * Get default attributes.
          *
          * @param WC_Product $product Product instance.
+         *
          * @return array
          */
         protected function get_default_attributes($product)
@@ -16379,6 +16407,7 @@ namespace {
          *
          * @param int   $product_id Product ID.
          * @param array $attribute  Attribute data.
+         *
          * @return array
          */
         protected function get_attribute_options($product_id, $attribute)
@@ -16388,6 +16417,7 @@ namespace {
          * Get the attributes for a product or product variation.
          *
          * @param WC_Product|WC_Product_Variation $product Product instance.
+         *
          * @return array
          */
         protected function get_attributes($product)
@@ -16399,6 +16429,7 @@ namespace {
          * @param WC_Product $product Product instance.
          * @param string     $context Request context.
          *                            Options: 'view' and 'edit'.
+         *
          * @return array
          */
         protected function get_product_data($product, $context = 'view')
@@ -16409,6 +16440,7 @@ namespace {
          *
          * @param WC_Data         $object  Object data.
          * @param WP_REST_Request $request Request object.
+         *
          * @return array                   Links for the given post.
          */
         protected function prepare_links($object, $request)
@@ -16417,8 +16449,9 @@ namespace {
         /**
          * Prepare a single product for create or update.
          *
-         * @param  WP_REST_Request $request Request object.
-         * @param  bool            $creating If is creating a new object.
+         * @param WP_REST_Request $request Request object.
+         * @param bool            $creating If is creating a new object.
+         *
          * @return WP_Error|WC_Data
          */
         protected function prepare_object_for_database($request, $creating = \false)
@@ -16427,9 +16460,10 @@ namespace {
         /**
          * Set product images.
          *
-         * @throws WC_REST_Exception REST API exceptions.
          * @param WC_Product $product Product instance.
          * @param array      $images  Images data.
+         *
+         * @throws WC_REST_Exception REST API exceptions.
          * @return WC_Product
          */
         protected function set_product_images($product, $images)
@@ -16440,6 +16474,7 @@ namespace {
          *
          * @param WC_Product $product Product instance.
          * @param array      $data    Shipping data.
+         *
          * @return WC_Product
          */
         protected function save_product_shipping_data($product, $data)
@@ -16450,7 +16485,8 @@ namespace {
          *
          * @param WC_Product $product    Product instance.
          * @param array      $downloads  Downloads data.
-         * @param int        $deprecated Deprecated since 3.0.
+         * @param int        $deprecated Deprecated since 3.0
+         *
          * @return WC_Product
          */
         protected function save_downloadable_files($product, $downloads, $deprecated = 0)
@@ -16462,6 +16498,7 @@ namespace {
          * @param WC_Product $product  Product instance.
          * @param array      $terms    Terms data.
          * @param string     $taxonomy Taxonomy name.
+         *
          * @return WC_Product
          */
         protected function save_taxonomy_terms($product, $terms, $taxonomy = 'cat')
@@ -16470,10 +16507,10 @@ namespace {
         /**
          * Save default attributes.
          *
-         * @since 3.0.0
-         *
          * @param WC_Product      $product Product instance.
          * @param WP_REST_Request $request Request data.
+         *
+         * @since  3.0.0
          * @return WC_Product
          */
         protected function save_default_attributes($product, $request)
@@ -16491,6 +16528,7 @@ namespace {
          * Delete a single item.
          *
          * @param WP_REST_Request $request Full details about the request.
+         *
          * @return WP_REST_Response|WP_Error
          */
         public function delete_item($request)
@@ -22301,6 +22339,16 @@ namespace {
          * @return array
          */
         protected function get_merged_taxes($in_cents = \false, $types = array('items', 'fees', 'shipping'))
+        {
+        }
+        /**
+         * Round merged taxes.
+         *
+         * @since 3.5.4
+         * @param array $taxes Taxes to round.
+         * @return array
+         */
+        protected function round_merged_taxes($taxes)
         {
         }
         /**
@@ -28786,7 +28834,7 @@ namespace {
          *
          * @var array
          */
-        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'));
+        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'));
         /**
          * Background update class.
          *
@@ -37544,8 +37592,9 @@ namespace {
          * Process the webhook for delivery by verifying that it should be delivered.
          * and scheduling the delivery (in the background by default, or immediately).
          *
-         * @since 2.2.0
-         * @param mixed $arg The first argument provided from the associated hooks.
+         * @since  2.2.0
+         * @param  mixed $arg The first argument provided from the associated hooks.
+         * @return mixed $arg Returns the argument in case the webhook was hooked into a filter.
          */
         public function process($arg)
         {
@@ -37987,7 +38036,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '3.5.3';
+        public $version = '3.5.4';
         /**
          * The single instance of the class.
          *
@@ -44357,6 +44406,18 @@ namespace {
         {
         }
         /**
+         * Filter description field for export.
+         * Convert newlines to '\n'.
+         *
+         * @param string $description Product description text to filter.
+         *
+         * @since  3.5.4
+         * @return string
+         */
+        protected function filter_description_field($description)
+        {
+        }
+        /**
          * Export downloads.
          *
          * @since 3.1.0
@@ -48559,15 +48620,14 @@ namespace {
         {
         }
         /**
-         * The exporter prepends a ' to fields that start with a - which causes
-         * issues with negative numbers. This removes the ' if the input is still a valid
-         * number after removal.
+         * The exporter prepends a ' to escape fields that start with =, +, - or @.
+         * Remove the prepended ' character preceding those characters.
          *
-         * @since 3.3.0
-         * @param string $value A numeric string that may or may not have ' prepended.
+         * @since 3.5.2
+         * @param  string $value A string that may or may not have been escaped with '.
          * @return string
          */
-        protected function unescape_negative_number($value)
+        protected function unescape_data($value)
         {
         }
     }
@@ -48772,6 +48832,16 @@ namespace {
          * @return int
          */
         public function parse_int_field($value)
+        {
+        }
+        /**
+         * Parse a description value field
+         *
+         * @param string $description field value.
+         *
+         * @return string
+         */
+        public function parse_description_field($description)
         {
         }
         /**
@@ -55763,8 +55833,9 @@ namespace {
         /**
          * Query the products and return them.
          *
-         * @param  array $args     Arguments.
-         * @param  array $instance Widget instance.
+         * @param array $args     Arguments.
+         * @param array $instance Widget instance.
+         *
          * @return WP_Query
          */
         public function get_products($args, $instance)
@@ -55773,10 +55844,10 @@ namespace {
         /**
          * Output widget.
          *
-         * @see WP_Widget
-         *
          * @param array $args     Arguments.
          * @param array $instance Widget instance.
+         *
+         * @see WP_Widget
          */
         public function widget($args, $instance)
         {
@@ -59579,6 +59650,15 @@ namespace {
     {
     }
     /**
+     * Generate an order key.
+     *
+     * @since 3.5.4
+     * @return string The order key.
+     */
+    function wc_generate_order_key()
+    {
+    }
+    /**
      * Finds an Order ID based on an order key.
      *
      * @param string $order_key An order key has generated by.
@@ -62728,6 +62808,19 @@ namespace {
     {
     }
     /**
+     * Remove edit_user capabilities from shop managers and use "translated" capabilities instead.
+     * See wc_shop_manager_has_capability function.
+     */
+    function wc_update_354_modify_shop_manager_caps()
+    {
+    }
+    /**
+     * Update DB Version.
+     */
+    function wc_update_354_db_version()
+    {
+    }
+    /**
      * Prevent any user who cannot 'edit_posts' (subscribers, customers etc) from seeing the admin bar.
      *
      * Note: get_option( 'woocommerce_lock_down_admin', true ) is a deprecated option here for backwards compatibility. Defaults to true.
@@ -62813,6 +62906,21 @@ namespace {
      * @return bool
      */
     function wc_customer_has_capability($allcaps, $caps, $args)
+    {
+    }
+    /**
+     * Safe way of allowing shop managers restricted capabilities that will remove
+     * access to the capabilities if WooCommerce is deactivated.
+     *
+     * @since 3.5.4
+     * @param bool[]   $allcaps Array of key/value pairs where keys represent a capability name and boolean values
+     *                          represent whether the user has that capability.
+     * @param string[] $caps    Required primitive capabilities for the requested capability.
+     * @param array    $args Arguments that accompany the requested capability check.
+     * @param WP_User  $user    The user object.
+     * @return bool[]
+     */
+    function wc_shop_manager_has_capability($allcaps, $caps, $args, $user)
     {
     }
     /**
@@ -63038,6 +63146,16 @@ namespace {
      * @return bool
      */
     function wc_is_webhook_valid_topic($topic)
+    {
+    }
+    /**
+     * Check if given status is a valid webhook status.
+     *
+     * @since 3.5.3
+     * @param string $status Status to check.
+     * @return bool
+     */
+    function wc_is_webhook_valid_status($status)
     {
     }
     /**
