@@ -7984,7 +7984,7 @@ namespace {
          *
          * @var array
          */
-        private static $core_notices = array('install' => 'install_notice', 'update' => 'update_notice', 'template_files' => 'template_file_check_notice', 'legacy_shipping' => 'legacy_shipping_notice', 'no_shipping_methods' => 'no_shipping_methods_notice', 'regenerating_thumbnails' => 'regenerating_thumbnails_notice', 'regenerating_lookup_table' => 'regenerating_lookup_table_notice', 'no_secure_connection' => 'secure_connection_notice');
+        private static $core_notices = array('install' => 'install_notice', 'update' => 'update_notice', 'template_files' => 'template_file_check_notice', 'legacy_shipping' => 'legacy_shipping_notice', 'no_shipping_methods' => 'no_shipping_methods_notice', 'regenerating_thumbnails' => 'regenerating_thumbnails_notice', 'regenerating_lookup_table' => 'regenerating_lookup_table_notice', 'no_secure_connection' => 'secure_connection_notice', 'wc_admin' => 'wc_admin_feature_plugin_notice');
         /**
          * Constructor.
          */
@@ -8120,6 +8120,24 @@ namespace {
          * @since 3.6.0
          */
         public static function regenerating_lookup_table_notice()
+        {
+        }
+        /**
+         * If on WordPress 5.0 or greater, inform users of WooCommerce Admin feature plugin.
+         *
+         * @since 3.6.4
+         * @todo  Remove this notice and associated code once the feature plugin has been merged into core.
+         */
+        public static function add_wc_admin_feature_plugin_notice()
+        {
+        }
+        /**
+         * Notice to try WooCommerce Admin
+         *
+         * @since 3.6.4
+         * @todo  Remove this notice and associated code once the feature plugin has been merged into core.
+         */
+        public static function wc_admin_feature_plugin_notice()
         {
         }
         /**
@@ -15445,6 +15463,16 @@ namespace {
          * @return WC_Data|WP_Error
          */
         protected function save_object($request, $creating = \false)
+        {
+        }
+        /**
+         * Purge object when creating.
+         *
+         * @param WC_Data $object  Object data.
+         * @param bool    $creating If is creating a new object.
+         * @return bool
+         */
+        protected function purge($object, $creating)
         {
         }
         /**
@@ -38965,7 +38993,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '3.6.3';
+        public $version = '3.6.4';
         /**
          * The single instance of the class.
          *
@@ -39268,6 +39296,24 @@ namespace {
          * @since 2.2
          */
         private function load_webhooks()
+        {
+        }
+        /**
+         * Initialize the customer and cart objects and setup customer saving on shutdown.
+         *
+         * @since 3.6.4
+         * @return void
+         */
+        public function initialize_cart()
+        {
+        }
+        /**
+         * Initialize the session class.
+         *
+         * @since 3.6.4
+         * @return void
+         */
+        public function initialize_session()
         {
         }
         /**
@@ -40491,6 +40537,17 @@ namespace {
          * @return int
          */
         public function get_usage_by_user_id(&$coupon, $user_id)
+        {
+        }
+        /**
+         * Get the number of uses for a coupon by email address
+         *
+         * @since 3.6.4
+         * @param WC_Coupon $coupon Coupon object.
+         * @param string    $email Email address.
+         * @return int
+         */
+        public function get_usage_by_email(&$coupon, $email)
         {
         }
         /**
@@ -58728,6 +58785,15 @@ namespace {
      * @return array Vesion information.
      */
     function wc_get_server_database_version()
+    {
+    }
+    /**
+     * Initialize and load the cart functionality.
+     *
+     * @since 3.6.4
+     * @return void
+     */
+    function wc_load_cart()
     {
     }
     /**
