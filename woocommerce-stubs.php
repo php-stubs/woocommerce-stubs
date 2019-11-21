@@ -19095,6 +19095,15 @@ namespace {
          * @var string
          */
         protected $namespace = 'wc/v3';
+        /**
+         * Get the default REST API version.
+         *
+         * @since  3.0.0
+         * @return string
+         */
+        protected function get_default_api_version()
+        {
+        }
     }
     /**
      * REST API Coupons controller class.
@@ -28767,7 +28776,7 @@ namespace {
          *
          * @var array
          */
-        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_order_customer_id', 'wc_update_350_reviews_comment_type', 'wc_update_350_db_version'));
+        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'));
         /**
          * Background update class.
          *
@@ -37962,7 +37971,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '3.5.0';
+        public $version = '3.5.1';
         /**
          * The single instance of the class.
          *
@@ -39013,14 +39022,6 @@ namespace {
          * @param WC_Order $order Order object.
          */
         public function update(&$order)
-        {
-        }
-        /**
-         * Update downloadable permissions for a given order.
-         *
-         * @param WC_Order $order Order object.
-         */
-        protected function update_downloadable_permissions($order)
         {
         }
         /**
@@ -57533,6 +57534,28 @@ namespace {
     {
     }
     /**
+     * User to sort checkout fields based on priority with uasort.
+     *
+     * @since 3.5.1
+     * @param array $a First field to compare.
+     * @param array $b Second field to compare.
+     * @return int
+     */
+    function wc_checkout_fields_uasort_comparison($a, $b)
+    {
+    }
+    /**
+     * User to sort two values with ausort.
+     *
+     * @since 3.5.1
+     * @param int $a First value to compare.
+     * @param int $b Second value to compare.
+     * @return int
+     */
+    function wc_uasort_comparison($a, $b)
+    {
+    }
+    /**
      * Get rounding mode for internal tax calculations.
      *
      * @since 3.2.4
@@ -58792,7 +58815,7 @@ namespace {
     {
     }
     /**
-     * wp_check_invalid_utf8 with recursive array support.
+     * Function wp_check_invalid_utf8 with recursive array support.
      *
      * @param string|array $var Data to sanitize.
      * @return string|array
@@ -62621,21 +62644,6 @@ namespace {
     {
     }
     /**
-     * Copy order customer_id from post meta to post_author and set post_author to 0 for refunds.
-     *
-     * Two different strategies are used to copy data depending if the update is being executed from
-     * the command line or not. If `wp wc update` is used to update the database, this function
-     * copies data in a single go that is faster but uses more resources. If the databse update was
-     * triggered from the wp-admin, this function copies data in batches which is slower but uses
-     * few resources and thus is less likely to fail on smaller servers.
-     *
-     * @param WC_Background_Updater|false $updater Background updater instance or false if function is called from `wp wc update` WP-CLI command.
-     * @return true|void Return true if near memory limit and needs to restart. Return void if update completed.
-     */
-    function wc_update_350_order_customer_id($updater = \false)
-    {
-    }
-    /**
      * Set the comment type to 'review' for product reviews that don't have a comment type.
      */
     function wc_update_350_reviews_comment_type()
@@ -62795,7 +62803,7 @@ namespace {
     {
     }
     /**
-     * Reset customer ID on orders when a user is deleted.
+     * Reset _customer_user on orders when a user is deleted.
      *
      * @param int $user_id User ID.
      */
@@ -62987,6 +62995,15 @@ namespace {
      * @return WC_Webhook|null
      */
     function wc_get_webhook($id)
+    {
+    }
+    /**
+     * Get webhoook REST API versions.
+     *
+     * @since 3.5.1
+     * @return array
+     */
+    function wc_get_webhook_rest_api_versions()
     {
     }
     /**
