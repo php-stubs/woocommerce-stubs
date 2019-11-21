@@ -7984,7 +7984,7 @@ namespace {
          *
          * @var array
          */
-        private static $core_notices = array('install' => 'install_notice', 'update' => 'update_notice', 'template_files' => 'template_file_check_notice', 'legacy_shipping' => 'legacy_shipping_notice', 'no_shipping_methods' => 'no_shipping_methods_notice', 'regenerating_thumbnails' => 'regenerating_thumbnails_notice', 'regenerating_lookup_table' => 'regenerating_lookup_table_notice', 'no_secure_connection' => 'secure_connection_notice', 'wc_admin' => 'wc_admin_feature_plugin_notice');
+        private static $core_notices = array('install' => 'install_notice', 'update' => 'update_notice', 'template_files' => 'template_file_check_notice', 'legacy_shipping' => 'legacy_shipping_notice', 'no_shipping_methods' => 'no_shipping_methods_notice', 'regenerating_thumbnails' => 'regenerating_thumbnails_notice', 'regenerating_lookup_table' => 'regenerating_lookup_table_notice', 'no_secure_connection' => 'secure_connection_notice', 'wc_admin' => 'wc_admin_feature_plugin_notice', 'wp_php_min_requirements' => 'wp_php_min_requirements_notice');
         /**
          * Constructor.
          */
@@ -8138,6 +8138,23 @@ namespace {
          * @todo  Remove this notice and associated code once the feature plugin has been merged into core.
          */
         public static function wc_admin_feature_plugin_notice()
+        {
+        }
+        /**
+         * Add notice about minimum PHP and WordPress requirement.
+         *
+         * @since 3.6.5
+         */
+        public static function add_min_version_notice()
+        {
+        }
+        /**
+         * Notice about WordPress and PHP minimum requirements.
+         *
+         * @since 3.6.5
+         * @return void
+         */
+        public static function wp_php_min_requirements_notice()
         {
         }
         /**
@@ -10338,6 +10355,7 @@ namespace {
         /**
          * Check whether a file is a valid CSV file.
          *
+         * @todo Replace this method with wc_is_file_valid_csv() function.
          * @param string $file File path.
          * @param bool   $check_path Whether to also check the file is located in a valid location (Default: true).
          * @return bool
@@ -29649,6 +29667,20 @@ namespace {
         {
         }
         /**
+         * Performan manual database update when triggered by WooCommerce System Tools.
+         *
+         * @since 3.6.5
+         */
+        public static function manual_database_update()
+        {
+        }
+        /**
+         * Run manual database update.
+         */
+        public static function run_manual_database_update()
+        {
+        }
+        /**
          * Run an update callback when triggered by ActionScheduler.
          *
          * @since 3.6.0
@@ -30518,7 +30550,7 @@ namespace {
         protected $cache_group = 'order-items';
         /**
          * Meta type. This should match up with
-         * the types available at https://codex.wordpress.org/Function_Reference/add_metadata.
+         * the types available at https://developer.wordpress.org/reference/functions/add_metadata/.
          * WP defines 'post', 'user', 'comment', and 'term'.
          *
          * @var string
@@ -38993,7 +39025,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '3.6.4';
+        public $version = '3.6.5';
         /**
          * The single instance of the class.
          *
@@ -39889,7 +39921,7 @@ namespace {
     {
         /**
          * Meta type. This should match up with
-         * the types available at https://codex.wordpress.org/Function_Reference/add_metadata.
+         * the types available at https://developer.wordpress.org/reference/functions/add_metadata/.
          * WP defines 'post', 'user', 'comment', and 'term'.
          *
          * @var string
@@ -40304,7 +40336,7 @@ namespace {
     {
         /**
          * Meta type. This should match up with
-         * the types available at https://codex.wordpress.org/Function_Reference/add_metadata.
+         * the types available at https://developer.wordpress.org/reference/functions/add_metadata/.
          * WP defines 'post', 'user', 'comment', and 'term'.
          *
          * @var string
@@ -47655,6 +47687,178 @@ namespace Pelago\Emogrifier {
         {
         }
     }
+}
+namespace Pelago\Emogrifier\HtmlProcessor {
+    /**
+     * Base class for HTML processor that e.g., can remove, add or modify nodes or attributes.
+     *
+     * The "vanilla" subclass is the HtmlNormalizer.
+     *
+     * @internal This class currently is a new technology preview, and its API is still in flux. Don't use it in production.
+     *
+     * @author Oliver Klee <github@oliverklee.de>
+     */
+    abstract class AbstractHtmlProcessor
+    {
+        /**
+         * @var string
+         */
+        const DEFAULT_DOCUMENT_TYPE = '<!DOCTYPE html>';
+        /**
+         * @var string
+         */
+        const CONTENT_TYPE_META_TAG = '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">';
+        /**
+         * @var string Regular expression part to match tag names that PHP's DOMDocument implementation is not aware are
+         *      self-closing. These are mostly HTML5 elements, but for completeness <command> (obsolete) and <keygen>
+         *      (deprecated) are also included.
+         *
+         * @see https://bugs.php.net/bug.php?id=73175
+         */
+        const PHP_UNRECOGNIZED_VOID_TAGNAME_MATCHER = '(?:command|embed|keygen|source|track|wbr)';
+        /**
+         * @var \DOMDocument
+         */
+        protected $domDocument = null;
+        /**
+         * @param string $unprocessedHtml raw HTML, must be UTF-encoded, must not be empty
+         *
+         * @throws \InvalidArgumentException if $unprocessedHtml is anything other than a non-empty string
+         */
+        public function __construct($unprocessedHtml)
+        {
+        }
+        /**
+         * Sets the HTML to process.
+         *
+         * @param string $html the HTML to process, must be UTF-8-encoded
+         *
+         * @return void
+         */
+        private function setHtml($html)
+        {
+        }
+        /**
+         * Provides access to the internal DOMDocument representation of the HTML in its current state.
+         *
+         * @return \DOMDocument
+         */
+        public function getDomDocument()
+        {
+        }
+        /**
+         * Renders the normalized and processed HTML.
+         *
+         * @return string
+         */
+        public function render()
+        {
+        }
+        /**
+         * Renders the content of the BODY element of the normalized and processed HTML.
+         *
+         * @return string
+         */
+        public function renderBodyContent()
+        {
+        }
+        /**
+         * Eliminates any invalid closing tags for void elements from the given HTML.
+         *
+         * @param string $html
+         *
+         * @return string
+         */
+        private function removeSelfClosingTagsClosingTags($html)
+        {
+        }
+        /**
+         * Returns the BODY element.
+         *
+         * This method assumes that there always is a BODY element.
+         *
+         * @return \DOMElement
+         */
+        private function getBodyElement()
+        {
+        }
+        /**
+         * Creates a DOM document from the given HTML and stores it in $this->domDocument.
+         *
+         * The DOM document will always have a BODY element and a document type.
+         *
+         * @param string $html
+         *
+         * @return void
+         */
+        private function createUnifiedDomDocument($html)
+        {
+        }
+        /**
+         * Creates a DOMDocument instance from the given HTML and stores it in $this->domDocument.
+         *
+         * @param string $html
+         *
+         * @return void
+         */
+        private function createRawDomDocument($html)
+        {
+        }
+        /**
+         * Returns the HTML with added document type, Content-Type meta tag, and self-closing slashes, if needed,
+         * ensuring that the HTML will be good for creating a DOM document from it.
+         *
+         * @param string $html
+         *
+         * @return string the unified HTML
+         */
+        private function prepareHtmlForDomConversion($html)
+        {
+        }
+        /**
+         * Makes sure that the passed HTML has a document type.
+         *
+         * @param string $html
+         *
+         * @return string HTML with document type
+         */
+        private function ensureDocumentType($html)
+        {
+        }
+        /**
+         * Adds a Content-Type meta tag for the charset.
+         *
+         * This method also ensures that there is a HEAD element.
+         *
+         * @param string $html
+         *
+         * @return string the HTML with the meta tag added
+         */
+        private function addContentTypeMetaTag($html)
+        {
+        }
+        /**
+         * Makes sure that any self-closing tags not recognized as such by PHP's DOMDocument implementation have a
+         * self-closing slash.
+         *
+         * @param string $html
+         *
+         * @return string HTML with problematic tags converted.
+         */
+        private function ensurePhpUnrecognizedSelfClosingTagsAreXml($html)
+        {
+        }
+        /**
+         * Checks that $this->domDocument has a BODY element and adds it if it is missing.
+         *
+         * @return void
+         */
+        private function ensureExistenceOfBodyElement()
+        {
+        }
+    }
+}
+namespace Pelago\Emogrifier {
     /**
      * This class provides functions for converting CSS styles into inline style attributes in your HTML code.
      *
@@ -47671,7 +47875,7 @@ namespace Pelago\Emogrifier {
      * @author Sander Kruger <s.kruger@invessel.com>
      * @author Zoli Szabó <zoli.szabo+github@gmail.com>
      */
-    class CssInliner
+    class CssInliner extends \Pelago\Emogrifier\HtmlProcessor\AbstractHtmlProcessor
     {
         /**
          * @var int
@@ -47699,29 +47903,13 @@ namespace Pelago\Emogrifier {
          */
         const PSEUDO_CLASS_MATCHER = '\\S+\\-(?:child|type\\()|not\\([[:ascii:]]*\\)';
         /**
-         * @var string
-         */
-        const CONTENT_TYPE_META_TAG = '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">';
-        /**
-         * @var string
-         */
-        const DEFAULT_DOCUMENT_TYPE = '<!DOCTYPE html>';
-        /**
-         * @var \DOMDocument
-         */
-        protected $domDocument = null;
-        /**
-         * @var string
-         */
-        private $css = '';
-        /**
          * @var bool[]
          */
         private $excludedSelectors = [];
         /**
          * @var string[]
          */
-        private $unprocessableHtmlTags = ['wbr'];
+        private $unprocessableHtmlTags = [];
         /**
          * @var bool[]
          */
@@ -47794,65 +47982,9 @@ namespace Pelago\Emogrifier {
          */
         private $debug = false;
         /**
-         * @param string $unprocessedHtml raw HTML, must be UTF-encoded, must not be empty
-         *
-         * @throws \InvalidArgumentException if $unprocessedHtml is anything other than a non-empty string
+         * @return CssSelectorConverter
          */
-        public function __construct($unprocessedHtml)
-        {
-        }
-        /**
-         * Sets the HTML to process.
-         *
-         * @param string $html the HTML to process, must be UTF-8-encoded
-         *
-         * @return void
-         */
-        private function setHtml($html)
-        {
-        }
-        /**
-         * Provides access to the internal DOMDocument representation of the HTML in its current state.
-         *
-         * @return \DOMDocument
-         */
-        public function getDomDocument()
-        {
-        }
-        /**
-         * Sets the CSS to merge with the HTML.
-         *
-         * @param string $css the CSS to merge, must be UTF-8-encoded
-         *
-         * @return void
-         */
-        public function setCss($css)
-        {
-        }
-        /**
-         * Renders the normalized and processed HTML.
-         *
-         * @return string
-         */
-        public function render()
-        {
-        }
-        /**
-         * Renders the content of the BODY element of the normalized and processed HTML.
-         *
-         * @return string
-         */
-        public function renderBodyContent()
-        {
-        }
-        /**
-         * Returns the BODY element.
-         *
-         * This method assumes that there always is a BODY element.
-         *
-         * @return \DOMElement
-         */
-        private function getBodyElement()
+        private function getCssSelectorConverter()
         {
         }
         /**
@@ -47866,74 +47998,15 @@ namespace Pelago\Emogrifier {
         {
         }
         /**
-         * Applies $this->css to the given HTML and returns the HTML with the CSS
-         * applied.
+         * Inlines the given CSS into the existing HTML.
          *
-         * This method places the CSS inline.
+         * @param string $css the CSS to inline, must be UTF-8-encoded
          *
-         * @return string
-         *
-         * @throws SyntaxErrorException
-         */
-        public function emogrify()
-        {
-        }
-        /**
-         * Applies $this->css to the given HTML and returns only the HTML content
-         * within the <body> tag.
-         *
-         * This method places the CSS inline.
-         *
-         * @return string
+         * @return CssInliner fluent interface
          *
          * @throws SyntaxErrorException
          */
-        public function emogrifyBodyContent()
-        {
-        }
-        /**
-         * Creates a DOM document from the given HTML and stores it in $this->domDocument.
-         *
-         * The DOM document will always have a BODY element and a document type.
-         *
-         * @param string $html
-         *
-         * @return void
-         */
-        private function createUnifiedDomDocument($html)
-        {
-        }
-        /**
-         * Creates a DOMDocument instance from the given HTML and stores it in $this->domDocument.
-         *
-         * @param string $html
-         *
-         * @return void
-         */
-        private function createRawDomDocument($html)
-        {
-        }
-        /**
-         * Returns the HTML with added document type and Content-Type meta tag if needed,
-         * ensuring that the HTML will be good for creating a DOM document from it.
-         *
-         * @param string $html
-         *
-         * @return string the unified HTML
-         */
-        private function prepareHtmlForDomConversion($html)
-        {
-        }
-        /**
-         * Applies $this->css to $this->domDocument.
-         *
-         * This method places the CSS inline.
-         *
-         * @return void
-         *
-         * @throws SyntaxErrorException
-         */
-        protected function process()
+        public function inlineCss($css)
         {
         }
         /**
@@ -48036,9 +48109,9 @@ namespace Pelago\Emogrifier {
         /**
          * Disables the removal of elements with `display: none` properties.
          *
-         * @deprecated will be removed in Emogrifier 3.0
-         *
          * @return void
+         *
+         * @deprecated will be removed in Emogrifier 3.0
          */
         public function disableInvisibleNodeRemoval()
         {
@@ -48270,21 +48343,13 @@ namespace Pelago\Emogrifier {
          *
          * This method is protected to allow overriding.
          *
-         * @see https://github.com/jjriv/emogrifier/issues/103
+         * @see https://github.com/MyIntervals/emogrifier/issues/103
          *
          * @param string $css
          *
          * @return void
          */
         protected function addStyleElementToDocument($css)
-        {
-        }
-        /**
-         * Checks that $this->domDocument has a BODY element and adds it if it is missing.
-         *
-         * @return void
-         */
-        private function ensureExistenceOfBodyElement()
         {
         }
         /**
@@ -48325,28 +48390,6 @@ namespace Pelago\Emogrifier {
          * @return void
          */
         private function removeUnprocessableTags()
-        {
-        }
-        /**
-         * Makes sure that the passed HTML has a document type.
-         *
-         * @param string $html
-         *
-         * @return string HTML with document type
-         */
-        private function ensureDocumentType($html)
-        {
-        }
-        /**
-         * Adds a Content-Type meta tag for the charset.
-         *
-         * This method also ensures that there is a HEAD element.
-         *
-         * @param string $html
-         *
-         * @return string the HTML with the meta tag added
-         */
-        private function addContentTypeMetaTag($html)
         {
         }
         /**
@@ -48413,144 +48456,6 @@ namespace Pelago\Emogrifier {
     }
 }
 namespace Pelago\Emogrifier\HtmlProcessor {
-    /**
-     * Base class for HTML processor that e.g., can remove, add or modify nodes or attributes.
-     *
-     * The "vanilla" subclass is the HtmlNormalizer.
-     *
-     * @internal This class currently is a new technology preview, and its API is still in flux. Don't use it in production.
-     *
-     * @author Oliver Klee <github@oliverklee.de>
-     */
-    abstract class AbstractHtmlProcessor
-    {
-        /**
-         * @var string
-         */
-        const DEFAULT_DOCUMENT_TYPE = '<!DOCTYPE html>';
-        /**
-         * @var string
-         */
-        const CONTENT_TYPE_META_TAG = '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">';
-        /**
-         * @var \DOMDocument
-         */
-        protected $domDocument = null;
-        /**
-         * @param string $unprocessedHtml raw HTML, must be UTF-encoded, must not be empty
-         *
-         * @throws \InvalidArgumentException if $unprocessedHtml is anything other than a non-empty string
-         */
-        public function __construct($unprocessedHtml)
-        {
-        }
-        /**
-         * Sets the HTML to process.
-         *
-         * @param string $html the HTML to process, must be UTF-8-encoded
-         *
-         * @return void
-         */
-        private function setHtml($html)
-        {
-        }
-        /**
-         * Provides access to the internal DOMDocument representation of the HTML in its current state.
-         *
-         * @return \DOMDocument
-         */
-        public function getDomDocument()
-        {
-        }
-        /**
-         * Renders the normalized and processed HTML.
-         *
-         * @return string
-         */
-        public function render()
-        {
-        }
-        /**
-         * Renders the content of the BODY element of the normalized and processed HTML.
-         *
-         * @return string
-         */
-        public function renderBodyContent()
-        {
-        }
-        /**
-         * Returns the BODY element.
-         *
-         * This method assumes that there always is a BODY element.
-         *
-         * @return \DOMElement
-         */
-        private function getBodyElement()
-        {
-        }
-        /**
-         * Creates a DOM document from the given HTML and stores it in $this->domDocument.
-         *
-         * The DOM document will always have a BODY element and a document type.
-         *
-         * @param string $html
-         *
-         * @return void
-         */
-        private function createUnifiedDomDocument($html)
-        {
-        }
-        /**
-         * Creates a DOMDocument instance from the given HTML and stores it in $this->domDocument.
-         *
-         * @param string $html
-         *
-         * @return void
-         */
-        private function createRawDomDocument($html)
-        {
-        }
-        /**
-         * Returns the HTML with added document type and Content-Type meta tag if needed,
-         * ensuring that the HTML will be good for creating a DOM document from it.
-         *
-         * @param string $html
-         *
-         * @return string the unified HTML
-         */
-        private function prepareHtmlForDomConversion($html)
-        {
-        }
-        /**
-         * Makes sure that the passed HTML has a document type.
-         *
-         * @param string $html
-         *
-         * @return string HTML with document type
-         */
-        private function ensureDocumentType($html)
-        {
-        }
-        /**
-         * Adds a Content-Type meta tag for the charset.
-         *
-         * This method also ensures that there is a HEAD element.
-         * @param string $html
-         *
-         * @return string the HTML with the meta tag added
-         */
-        private function addContentTypeMetaTag($html)
-        {
-        }
-        /**
-         * Checks that $this->domDocument has a BODY element and adds it if it is missing.
-         *
-         * @return void
-         */
-        private function ensureExistenceOfBodyElement()
-        {
-        }
-    }
     /**
      * This HtmlProcessor can convert style HTML attributes to the corresponding other visual HTML attributes,
      * e.g. it converts style="width: 100px" to width="100".
@@ -51879,6 +51784,14 @@ namespace Pelago {
          */
         const DEFAULT_DOCUMENT_TYPE = '<!DOCTYPE html>';
         /**
+         * @var string Regular expression part to match tag names that PHP's DOMDocument implementation is not aware are
+         *      self-closing. These are mostly HTML5 elements, but for completeness <command> (obsolete) and <keygen>
+         *      (deprecated) are also included.
+         *
+         * @see https://bugs.php.net/bug.php?id=73175
+         */
+        const PHP_UNRECOGNIZED_VOID_TAGNAME_MATCHER = '(?:command|embed|keygen|source|track|wbr)';
+        /**
          * @var \DOMDocument
          */
         protected $domDocument = null;
@@ -52062,6 +51975,16 @@ namespace Pelago {
         {
         }
         /**
+         * Eliminates any invalid closing tags for void elements from the given HTML.
+         *
+         * @param string $html
+         *
+         * @return string
+         */
+        private function removeSelfClosingTagsClosingTags($html)
+        {
+        }
+        /**
          * Returns the BODY element.
          *
          * This method assumes that there always is a BODY element.
@@ -52140,7 +52063,7 @@ namespace Pelago {
         {
         }
         /**
-         * Returns the HTML with added document type and Content-Type meta tag if needed,
+         * Returns the HTML with added document type, Content-Type meta tag, and self-closing slashes, if needed,
          * ensuring that the HTML will be good for creating a DOM document from it.
          *
          * @param string $html
@@ -52638,7 +52561,7 @@ namespace Pelago {
          *
          * This method is protected to allow overriding.
          *
-         * @see https://github.com/jjriv/emogrifier/issues/103
+         * @see https://github.com/MyIntervals/emogrifier/issues/103
          *
          * @param string $css
          *
@@ -52715,6 +52638,17 @@ namespace Pelago {
          * @return string the HTML with the meta tag added
          */
         private function addContentTypeMetaTag($html)
+        {
+        }
+        /**
+         * Makes sure that any self-closing tags not recognized as such by PHP's DOMDocument implementation have a
+         * self-closing slash.
+         *
+         * @param string $html
+         *
+         * @return string HTML with problematic tags converted.
+         */
+        private function ensurePhpUnrecognizedSelfClosingTagsAreXml($html)
         {
         }
         /**
@@ -55043,6 +54977,15 @@ namespace {
          * @param array $query_args Query args.
          */
         protected function set_best_selling_products_query_args(&$query_args)
+        {
+        }
+        /**
+         * Set top rated products query args.
+         *
+         * @since 3.6.5
+         * @param array $query_args Query args.
+         */
+        protected function set_top_rated_products_query_args(&$query_args)
         {
         }
         /**
@@ -57973,6 +57916,17 @@ namespace {
      * @return bool
      */
     function wc_review_ratings_required()
+    {
+    }
+    /**
+     * Check if a CSV file is valid.
+     *
+     * @since 3.6.5
+     * @param string $file       File name.
+     * @param bool   $check_path If should check for the path.
+     * @return bool
+     */
+    function wc_is_file_valid_csv($file, $check_path = \true)
     {
     }
     // Before wpautop().
