@@ -1403,6 +1403,15 @@ namespace {
         {
         }
         /**
+         * Get coupon codes only.
+         *
+         * @deprecated 3.7.0 - Replaced with better named method to reflect the actual data being returned.
+         * @return array
+         */
+        public function get_used_coupons()
+        {
+        }
+        /**
          * Expand item meta into the $item array.
          * @deprecated 3.0.0 Item meta no longer expanded due to new order item
          *		classes. This function now does nothing to avoid data breakage.
@@ -1598,6 +1607,16 @@ namespace {
          * @return int order ID
          */
         public function save()
+        {
+        }
+        /**
+         * Log an error about this order is exception is encountered.
+         *
+         * @param Exception $e Exception object.
+         * @param string    $message Message regarding exception thrown.
+         * @since 3.7.0
+         */
+        protected function handle_exception($e, $message = 'Error')
         {
         }
         /**
@@ -1970,6 +1989,15 @@ namespace {
         {
         }
         /**
+         * Return an array of coupons within this order.
+         *
+         * @since  3.7.0
+         * @return WC_Order_Item_Coupon[]
+         */
+        public function get_coupons()
+        {
+        }
+        /**
          * Return an array of fees within this order.
          *
          * @return WC_Order_item_Fee[]
@@ -2002,11 +2030,12 @@ namespace {
         {
         }
         /**
-         * Get coupon codes only.
+         * Get used coupon codes only.
          *
+         * @since 3.7.0
          * @return array
          */
-        public function get_used_coupons()
+        public function get_coupon_codes()
         {
         }
         /**
@@ -2283,7 +2312,7 @@ namespace {
         /**
          * Gets line subtotal - formatted for display.
          *
-         * @param array  $item Item to get total from.
+         * @param object $item Item to get total from.
          * @param string $tax_display Incl or excl tax display mode.
          * @return string
          */
@@ -5023,816 +5052,6 @@ namespace {
         }
     }
     /**
-     * Abstract Rest Controller Class
-     *
-     * @package  WooCommerce/Abstracts
-     * @extends  WP_REST_Controller
-     * @version  2.6.0
-     */
-    abstract class WC_REST_Controller extends \WP_REST_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v1';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = '';
-        /**
-         * Add the schema from additional fields to an schema array.
-         *
-         * The type of object is inferred from the passed schema.
-         *
-         * @param array $schema Schema array.
-         *
-         * @return array
-         */
-        protected function add_additional_fields_schema($schema)
-        {
-        }
-        /**
-         * Get normalized rest base.
-         *
-         * @return string
-         */
-        protected function get_normalized_rest_base()
-        {
-        }
-        /**
-         * Check batch limit.
-         *
-         * @param array $items Request items.
-         * @return bool|WP_Error
-         */
-        protected function check_batch_limit($items)
-        {
-        }
-        /**
-         * Bulk create, update and delete items.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return array Of WP_Error or WP_REST_Response.
-         */
-        public function batch_items($request)
-        {
-        }
-        /**
-         * Validate a text value for a text based setting.
-         *
-         * @since 3.0.0
-         * @param string $value Value.
-         * @param array  $setting Setting.
-         * @return string
-         */
-        public function validate_setting_text_field($value, $setting)
-        {
-        }
-        /**
-         * Validate select based settings.
-         *
-         * @since 3.0.0
-         * @param string $value Value.
-         * @param array  $setting Setting.
-         * @return string|WP_Error
-         */
-        public function validate_setting_select_field($value, $setting)
-        {
-        }
-        /**
-         * Validate multiselect based settings.
-         *
-         * @since 3.0.0
-         * @param array $values Values.
-         * @param array $setting Setting.
-         * @return array|WP_Error
-         */
-        public function validate_setting_multiselect_field($values, $setting)
-        {
-        }
-        /**
-         * Validate image_width based settings.
-         *
-         * @since 3.0.0
-         * @param array $values Values.
-         * @param array $setting Setting.
-         * @return string|WP_Error
-         */
-        public function validate_setting_image_width_field($values, $setting)
-        {
-        }
-        /**
-         * Validate radio based settings.
-         *
-         * @since 3.0.0
-         * @param string $value Value.
-         * @param array  $setting Setting.
-         * @return string|WP_Error
-         */
-        public function validate_setting_radio_field($value, $setting)
-        {
-        }
-        /**
-         * Validate checkbox based settings.
-         *
-         * @since 3.0.0
-         * @param string $value Value.
-         * @param array  $setting Setting.
-         * @return string|WP_Error
-         */
-        public function validate_setting_checkbox_field($value, $setting)
-        {
-        }
-        /**
-         * Validate textarea based settings.
-         *
-         * @since 3.0.0
-         * @param string $value Value.
-         * @param array  $setting Setting.
-         * @return string
-         */
-        public function validate_setting_textarea_field($value, $setting)
-        {
-        }
-        /**
-         * Add meta query.
-         *
-         * @since 3.0.0
-         * @param array $args       Query args.
-         * @param array $meta_query Meta query.
-         * @return array
-         */
-        protected function add_meta_query($args, $meta_query)
-        {
-        }
-        /**
-         * Get the batch schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_public_batch_schema()
-        {
-        }
-        /**
-         * Gets an array of fields to be included on the response.
-         * Included fields are based on item schema and `_fields=` request argument.
-         * Introduced to support WordPress 4.9.6 changes.
-         *
-         * @since 3.5.0
-         * @param WP_REST_Request $request Full details about the request.
-         * @return array Fields to be included in the response.
-         */
-        public function get_fields_for_response($request)
-        {
-        }
-    }
-    /**
-     * WC_REST_Posts_Controller
-     *
-     * @package  WooCommerce/Abstracts
-     * @version  2.6.0
-     */
-    abstract class WC_REST_Posts_Controller extends \WC_REST_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v1';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = '';
-        /**
-         * Post type.
-         *
-         * @var string
-         */
-        protected $post_type = '';
-        /**
-         * Controls visibility on frontend.
-         *
-         * @var string
-         */
-        protected $public = \false;
-        /**
-         * Check if a given request has access to read items.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_items_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access to create an item.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function create_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access to read an item.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access to update an item.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function update_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access to delete an item.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return bool|WP_Error
-         */
-        public function delete_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access batch create, update and delete items.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         *
-         * @return boolean|WP_Error
-         */
-        public function batch_items_permissions_check($request)
-        {
-        }
-        /**
-         * Get a single item.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function get_item($request)
-        {
-        }
-        /**
-         * Create a single item.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function create_item($request)
-        {
-        }
-        /**
-         * Add post meta fields.
-         *
-         * @param WP_Post         $post Post Object.
-         * @param WP_REST_Request $request WP_REST_Request Object.
-         * @return bool|WP_Error
-         */
-        protected function add_post_meta_fields($post, $request)
-        {
-        }
-        /**
-         * Delete post.
-         *
-         * @param WP_Post $post Post object.
-         */
-        protected function delete_post($post)
-        {
-        }
-        /**
-         * Update a single post.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function update_item($request)
-        {
-        }
-        /**
-         * Get a collection of posts.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function get_items($request)
-        {
-        }
-        /**
-         * Delete a single item.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_REST_Response|WP_Error
-         */
-        public function delete_item($request)
-        {
-        }
-        /**
-         * Prepare links for the request.
-         *
-         * @param WP_Post         $post Post object.
-         * @param WP_REST_Request $request Request object.
-         * @return array Links for the given post.
-         */
-        protected function prepare_links($post, $request)
-        {
-        }
-        /**
-         * Determine the allowed query_vars for a get_items() response and
-         * prepare for WP_Query.
-         *
-         * @param array           $prepared_args Prepared arguments.
-         * @param WP_REST_Request $request Request object.
-         * @return array          $query_args
-         */
-        protected function prepare_items_query($prepared_args = array(), $request = \null)
-        {
-        }
-        /**
-         * Get all the WP Query vars that are allowed for the API request.
-         *
-         * @return array
-         */
-        protected function get_allowed_query_vars()
-        {
-        }
-        /**
-         * Get the query params for collections of attachments.
-         *
-         * @return array
-         */
-        public function get_collection_params()
-        {
-        }
-        /**
-         * Update post meta fields.
-         *
-         * @param WP_Post         $post Post object.
-         * @param WP_REST_Request $request Request object.
-         * @return bool|WP_Error
-         */
-        protected function update_post_meta_fields($post, $request)
-        {
-        }
-    }
-    /**
-     * WC_REST_CRUD_Controller class.
-     *
-     * @extends WC_REST_Posts_Controller
-     */
-    abstract class WC_REST_CRUD_Controller extends \WC_REST_Posts_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v2';
-        /**
-         * If object is hierarchical.
-         *
-         * @var bool
-         */
-        protected $hierarchical = \false;
-        /**
-         * Get object.
-         *
-         * @param  int $id Object ID.
-         * @return object WC_Data object or WP_Error object.
-         */
-        protected function get_object($id)
-        {
-        }
-        /**
-         * Check if a given request has access to read an item.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access to update an item.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function update_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access to delete an item.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return bool|WP_Error
-         */
-        public function delete_item_permissions_check($request)
-        {
-        }
-        /**
-         * Get object permalink.
-         *
-         * @param  object $object Object.
-         * @return string
-         */
-        protected function get_permalink($object)
-        {
-        }
-        /**
-         * Prepares the object for the REST response.
-         *
-         * @since  3.0.0
-         * @param  WC_Data         $object  Object data.
-         * @param  WP_REST_Request $request Request object.
-         * @return WP_Error|WP_REST_Response Response object on success, or WP_Error object on failure.
-         */
-        protected function prepare_object_for_response($object, $request)
-        {
-        }
-        /**
-         * Prepares one object for create or update operation.
-         *
-         * @since  3.0.0
-         * @param  WP_REST_Request $request Request object.
-         * @param  bool            $creating If is creating a new object.
-         * @return WP_Error|WC_Data The prepared item, or WP_Error object on failure.
-         */
-        protected function prepare_object_for_database($request, $creating = \false)
-        {
-        }
-        /**
-         * Get a single item.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function get_item($request)
-        {
-        }
-        /**
-         * Save an object data.
-         *
-         * @since  3.0.0
-         * @param  WP_REST_Request $request  Full details about the request.
-         * @param  bool            $creating If is creating a new object.
-         * @return WC_Data|WP_Error
-         */
-        protected function save_object($request, $creating = \false)
-        {
-        }
-        /**
-         * Create a single item.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function create_item($request)
-        {
-        }
-        /**
-         * Update a single post.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function update_item($request)
-        {
-        }
-        /**
-         * Prepare objects query.
-         *
-         * @since  3.0.0
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return array
-         */
-        protected function prepare_objects_query($request)
-        {
-        }
-        /**
-         * Get objects.
-         *
-         * @since  3.0.0
-         * @param  array $query_args Query args.
-         * @return array
-         */
-        protected function get_objects($query_args)
-        {
-        }
-        /**
-         * Get a collection of posts.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function get_items($request)
-        {
-        }
-        /**
-         * Delete a single item.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_REST_Response|WP_Error
-         */
-        public function delete_item($request)
-        {
-        }
-        /**
-         * Prepare links for the request.
-         *
-         * @param WC_Data         $object  Object data.
-         * @param WP_REST_Request $request Request object.
-         * @return array                   Links for the given post.
-         */
-        protected function prepare_links($object, $request)
-        {
-        }
-        /**
-         * Get the query params for collections of attachments.
-         *
-         * @return array
-         */
-        public function get_collection_params()
-        {
-        }
-    }
-    /**
-     * REST API Shipping Zones base class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Controller
-     */
-    abstract class WC_REST_Shipping_Zones_Controller_Base extends \WC_REST_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v2';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'shipping/zones';
-        /**
-         * Retrieve a Shipping Zone by it's ID.
-         *
-         * @param int $zone_id Shipping Zone ID.
-         * @return WC_Shipping_Zone|WP_Error
-         */
-        protected function get_zone($zone_id)
-        {
-        }
-        /**
-         * Check whether a given request has permission to read Shipping Zones.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_items_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access to create Shipping Zones.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function create_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check whether a given request has permission to edit Shipping Zones.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function update_items_permissions_check($request)
-        {
-        }
-        /**
-         * Check whether a given request has permission to delete Shipping Zones.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function delete_items_permissions_check($request)
-        {
-        }
-    }
-    /**
-     * Terms controller class.
-     */
-    abstract class WC_REST_Terms_Controller extends \WC_REST_Controller
-    {
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = '';
-        /**
-         * Taxonomy.
-         *
-         * @var string
-         */
-        protected $taxonomy = '';
-        /**
-         * Register the routes for terms.
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Check if a given request has access to read the terms.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_items_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access to create a term.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function create_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access to read a term.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access to update a term.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function update_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access to delete a term.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function delete_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access batch create, update and delete items.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return boolean|WP_Error
-         */
-        public function batch_items_permissions_check($request)
-        {
-        }
-        /**
-         * Check permissions.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @param string          $context Request context.
-         * @return bool|WP_Error
-         */
-        protected function check_permissions($request, $context = 'read')
-        {
-        }
-        /**
-         * Get terms associated with a taxonomy.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_REST_Response|WP_Error
-         */
-        public function get_items($request)
-        {
-        }
-        /**
-         * Create a single term for a taxonomy.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_REST_Request|WP_Error
-         */
-        public function create_item($request)
-        {
-        }
-        /**
-         * Get a single term from a taxonomy.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_REST_Request|WP_Error
-         */
-        public function get_item($request)
-        {
-        }
-        /**
-         * Update a single term from a taxonomy.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_REST_Request|WP_Error
-         */
-        public function update_item($request)
-        {
-        }
-        /**
-         * Delete a single term from a taxonomy.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_REST_Response|WP_Error
-         */
-        public function delete_item($request)
-        {
-        }
-        /**
-         * Prepare links for the request.
-         *
-         * @param object          $term   Term object.
-         * @param WP_REST_Request $request Full details about the request.
-         * @return array Links for the given term.
-         */
-        protected function prepare_links($term, $request)
-        {
-        }
-        /**
-         * Update term meta fields.
-         *
-         * @param WP_Term         $term    Term object.
-         * @param WP_REST_Request $request Full details about the request.
-         * @return bool|WP_Error
-         */
-        protected function update_term_meta_fields($term, $request)
-        {
-        }
-        /**
-         * Get the terms attached to a product.
-         *
-         * This is an alternative to `get_terms()` that uses `get_the_terms()`
-         * instead, which hits the object cache. There are a few things not
-         * supported, notably `include`, `exclude`. In `self::get_items()` these
-         * are instead treated as a full query.
-         *
-         * @param array           $prepared_args Arguments for `get_terms()`.
-         * @param WP_REST_Request $request       Full details about the request.
-         * @return array List of term objects. (Total count in `$this->total_terms`).
-         */
-        protected function get_terms_for_product($prepared_args, $request)
-        {
-        }
-        /**
-         * Comparison function for sorting terms by a column.
-         *
-         * Uses `$this->sort_column` to determine field to sort by.
-         *
-         * @param stdClass $left Term object.
-         * @param stdClass $right Term object.
-         * @return int <0 if left is higher "priority" than right, 0 if equal, >0 if right is higher "priority" than left.
-         */
-        protected function compare_terms($left, $right)
-        {
-        }
-        /**
-         * Get the query params for collections
-         *
-         * @return array
-         */
-        public function get_collection_params()
-        {
-        }
-        /**
-         * Get taxonomy.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return int|WP_Error
-         */
-        protected function get_taxonomy($request)
-        {
-        }
-    }
-    /**
      * WC_Session
      */
     abstract class WC_Session
@@ -6850,9 +6069,9 @@ namespace {
         /**
          * Build url parameter string
          *
-         * @param  string $category
-         * @param  string $term
-         * @param  string $country
+         * @param  string $category Addon (sub) category.
+         * @param  string $term     Search terms.
+         * @param  string $country  Store country.
          *
          * @return string url parameter string
          */
@@ -6862,9 +6081,9 @@ namespace {
         /**
          * Call API to get extensions
          *
-         * @param  string $category
-         * @param  string $term
-         * @param  string $country
+         * @param  string $category Addon (sub) category.
+         * @param  string $term     Search terms.
+         * @param  string $country  Store country.
          *
          * @return array of extensions
          */
@@ -6882,7 +6101,7 @@ namespace {
         /**
          * Get section for the addons screen.
          *
-         * @param  string $section_id
+         * @param  string $section_id Required section ID.
          *
          * @return object|bool
          */
@@ -6892,7 +6111,7 @@ namespace {
         /**
          * Get section content for the addons screen.
          *
-         * @param  string $section_id
+         * @param  string $section_id Required section ID.
          *
          * @return array
          */
@@ -6908,7 +6127,7 @@ namespace {
         /**
          * Handles the outputting of a banner block.
          *
-         * @param object $block
+         * @param object $block Banner data.
          */
         public static function output_banner_block($block)
         {
@@ -6916,7 +6135,7 @@ namespace {
         /**
          * Handles the outputting of a column.
          *
-         * @param object $block
+         * @param object $block Column data.
          */
         public static function output_column($block)
         {
@@ -6924,7 +6143,7 @@ namespace {
         /**
          * Handles the outputting of a column block.
          *
-         * @param object $block
+         * @param object $block Column block data.
          */
         public static function output_column_block($block)
         {
@@ -6932,7 +6151,7 @@ namespace {
         /**
          * Handles the outputting of a small light block.
          *
-         * @param object $block
+         * @param object $block Block data.
          */
         public static function output_small_light_block($block)
         {
@@ -6940,7 +6159,7 @@ namespace {
         /**
          * Handles the outputting of a small dark block.
          *
-         * @param object $block
+         * @param object $block Block data.
          */
         public static function output_small_dark_block($block)
         {
@@ -6948,7 +6167,7 @@ namespace {
         /**
          * Handles the outputting of the WooCommerce Services banner block.
          *
-         * @param object $block
+         * @param object $block Block data.
          */
         public static function output_wcs_banner_block($block = array())
         {
@@ -6956,20 +6175,37 @@ namespace {
         /**
          * Handles the outputting of featured sections
          *
-         * @param array $sections
+         * @param array $sections Section data.
          */
         public static function output_featured_sections($sections)
         {
         }
         /**
+         * Returns in-app-purchase URL params.
+         */
+        public static function get_in_app_purchase_url_params()
+        {
+        }
+        /**
+         * Add in-app-purchase URL params to link.
+         *
+         * Adds various url parameters to a url to support a streamlined
+         * flow for obtaining and setting up WooCommerce extensons.
+         *
+         * @param string $url    Destination URL.
+         */
+        public static function add_in_app_purchase_url_params($url)
+        {
+        }
+        /**
          * Outputs a button.
          *
-         * @param string $url
-         * @param string $text
-         * @param string $theme
-         * @param string $plugin
+         * @param string $url    Destination URL.
+         * @param string $text   Button label text.
+         * @param string $style  Button style class.
+         * @param string $plugin The plugin the button is promoting.
          */
-        public static function output_button($url, $text, $theme, $plugin = '')
+        public static function output_button($url, $text, $style, $plugin = '')
         {
         }
         /**
@@ -6987,7 +6223,7 @@ namespace {
         /**
          * Should an extension be shown on the featured page.
          *
-         * @param object $item
+         * @param object $item Item data.
          * @return boolean
          */
         public static function show_extension($item)
@@ -7792,6 +7028,14 @@ namespace {
         {
         }
         /**
+         * Handle saving of settings.
+         *
+         * @return void
+         */
+        public function save_settings()
+        {
+        }
+        /**
          * Add menu item.
          */
         public function status_menu()
@@ -7923,7 +7167,7 @@ namespace {
         /**
          * Add an error message.
          *
-         * @param string $text
+         * @param string $text Error to add.
          */
         public static function add_error($text)
         {
@@ -7961,8 +7205,8 @@ namespace {
         /**
          * Check if we're saving, the trigger an action based on the post type.
          *
-         * @param  int    $post_id
-         * @param  object $post
+         * @param  int    $post_id Post ID.
+         * @param  object $post Post object.
          */
         public function save_meta_boxes($post_id, $post)
         {
@@ -8756,6 +8000,16 @@ namespace {
         {
         }
         /**
+         * Should we show the WooCommerce Admin install option?
+         * True only if the user can install plugins,
+         * and up until the end date of the recommendation.
+         *
+         * @return boolean
+         */
+        protected function should_show_wc_admin()
+        {
+        }
+        /**
          * Should we display the 'Recommended' step?
          * True if at least one of the recommendations will be displayed.
          *
@@ -8770,6 +8024,15 @@ namespace {
          * Hooked onto 'admin_enqueue_scripts'.
          */
         public function enqueue_scripts()
+        {
+        }
+        /**
+         * Helper method to get postcode configurations from `WC()->countries->get_country_locale()`.
+         * We don't use `wp_list_pluck` because it will throw notices when postcode configuration is not defined for a country.
+         *
+         * @return array
+         */
+        private function get_postcodes()
         {
         }
         /**
@@ -10096,6 +9359,8 @@ namespace {
         }
         /**
          * Various early-phase actions with possible redirects.
+         *
+         * @param object $screen WP screen object.
          */
         public static function current_screen($screen)
         {
@@ -10150,6 +9415,18 @@ namespace {
          * @return array|bool The array containing the local plugin/theme data or false.
          */
         private static function _get_local_from_product_id($product_id)
+        {
+        }
+        /**
+         * Checks whether current site has product subscription of a given ID.
+         *
+         * @since 3.7.0
+         *
+         * @param int $product_id The product id.
+         *
+         * @return bool Returns true if product subscription exists, false otherwise.
+         */
+        public static function has_product_subscription($product_id)
         {
         }
         /**
@@ -10247,8 +9524,6 @@ namespace {
         }
         /**
          * Flush auth cache.
-         *
-         * @access private
          */
         public static function _flush_authentication_cache()
         {
@@ -10262,8 +9537,8 @@ namespace {
         /**
          * Sort subscriptions by the product_name.
          *
-         * @param array $a Subscription array
-         * @param array $b Subscription array
+         * @param array $a Subscription array.
+         * @param array $b Subscription array.
          *
          * @return int
          */
@@ -10273,8 +9548,8 @@ namespace {
         /**
          * Sort subscriptions by the Name.
          *
-         * @param array $a Product array
-         * @param array $b Product array
+         * @param array $a Product array.
+         * @param array $b Product array.
          *
          * @return int
          */
@@ -10285,8 +9560,7 @@ namespace {
          * Log a helper event.
          *
          * @param string $message Log message.
-         * @param string $level Optional, defaults to info, valid levels:
-         *     emergency|alert|critical|error|warning|notice|info|debug
+         * @param string $level Optional, defaults to info, valid levels: emergency|alert|critical|error|warning|notice|info|debug.
          */
         public static function log($message, $level = 'info')
         {
@@ -12136,6 +11410,14 @@ namespace {
     class WC_Admin_Report
     {
         /**
+         * @var array List of transients name that have been updated and need persisting.
+         */
+        protected static $transients_to_update = array();
+        /**
+         * @var array The list of transients.
+         */
+        protected static $cached_results = array();
+        /**
          * The chart interval.
          *
          * @var int
@@ -12186,6 +11468,43 @@ namespace {
          * @return mixed depending on query_type
          */
         public function get_order_report_data($args = array())
+        {
+        }
+        /**
+         * Init the static hooks of the class.
+         */
+        protected static function add_update_transients_hook()
+        {
+        }
+        /**
+         * Enables big mysql selects for reports, just once for this session.
+         */
+        protected static function enable_big_selects()
+        {
+        }
+        /**
+         * Get the cached query result or null if it's not in the cache.
+         *
+         * @param string $query_hash The query hash.
+         *
+         * @return mixed
+         */
+        protected function get_cached_query($query_hash)
+        {
+        }
+        /**
+         * Set the cached query result.
+         *
+         * @param string $query_hash The query hash.
+         * @param mixed  $data The data to cache.
+         */
+        protected function set_cached_query($query_hash, $data)
+        {
+        }
+        /**
+         * Function to update the modified transients at the end of the request.
+         */
+        public static function maybe_update_transients()
         {
         }
         /**
@@ -13102,6 +12421,7 @@ namespace {
          * Get settings array.
          *
          * @param string $current_section Current section slug.
+         *
          * @return array
          */
         public function get_settings($current_section = '')
@@ -13111,7 +12431,9 @@ namespace {
          * Form method.
          *
          * @deprecated 3.4.4
+         *
          * @param  string $method Method name.
+         *
          * @return string
          */
         public function form_method($method)
@@ -13482,6 +12804,15 @@ namespace {
         {
         }
         /**
+         * Saves tax classes defined in the textarea to the tax class table instead of an option.
+         *
+         * @param string $raw_tax_classes Posted value.
+         * @return null
+         */
+        public function save_tax_classes($raw_tax_classes)
+        {
+        }
+        /**
          * Output tax rate tables.
          */
         public function output_tax_rates()
@@ -13510,7566 +12841,6 @@ namespace {
          * Save tax rates.
          */
         public function save_tax_rates()
-        {
-        }
-    }
-    /**
-     * REST API authentication class.
-     */
-    class WC_REST_Authentication
-    {
-        /**
-         * Authentication error.
-         *
-         * @var WP_Error
-         */
-        protected $error = \null;
-        /**
-         * Logged in user data.
-         *
-         * @var stdClass
-         */
-        protected $user = \null;
-        /**
-         * Current auth method.
-         *
-         * @var string
-         */
-        protected $auth_method = '';
-        /**
-         * Initialize authentication actions.
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Check if is request to our REST API.
-         *
-         * @return bool
-         */
-        protected function is_request_to_rest_api()
-        {
-        }
-        /**
-         * Authenticate user.
-         *
-         * @param int|false $user_id User ID if one has been determined, false otherwise.
-         * @return int|false
-         */
-        public function authenticate($user_id)
-        {
-        }
-        /**
-         * Check for authentication error.
-         *
-         * @param WP_Error|null|bool $error Error data.
-         * @return WP_Error|null|bool
-         */
-        public function check_authentication_error($error)
-        {
-        }
-        /**
-         * Set authentication error.
-         *
-         * @param WP_Error $error Authentication error data.
-         */
-        protected function set_error($error)
-        {
-        }
-        /**
-         * Get authentication error.
-         *
-         * @return WP_Error|null.
-         */
-        protected function get_error()
-        {
-        }
-        /**
-         * Basic Authentication.
-         *
-         * SSL-encrypted requests are not subject to sniffing or man-in-the-middle
-         * attacks, so the request can be authenticated by simply looking up the user
-         * associated with the given consumer key and confirming the consumer secret
-         * provided is valid.
-         *
-         * @return int|bool
-         */
-        private function perform_basic_authentication()
-        {
-        }
-        /**
-         * Parse the Authorization header into parameters.
-         *
-         * @since 3.0.0
-         *
-         * @param string $header Authorization header value (not including "Authorization: " prefix).
-         *
-         * @return array Map of parameter values.
-         */
-        public function parse_header($header)
-        {
-        }
-        /**
-         * Get the authorization header.
-         *
-         * On certain systems and configurations, the Authorization header will be
-         * stripped out by the server or PHP. Typically this is then used to
-         * generate `PHP_AUTH_USER`/`PHP_AUTH_PASS` but not passed on. We use
-         * `getallheaders` here to try and grab it out instead.
-         *
-         * @since 3.0.0
-         *
-         * @return string Authorization header if set.
-         */
-        public function get_authorization_header()
-        {
-        }
-        /**
-         * Get oAuth parameters from $_GET, $_POST or request header.
-         *
-         * @since 3.0.0
-         *
-         * @return array|WP_Error
-         */
-        public function get_oauth_parameters()
-        {
-        }
-        /**
-         * Perform OAuth 1.0a "one-legged" (http://oauthbible.com/#oauth-10a-one-legged) authentication for non-SSL requests.
-         *
-         * This is required so API credentials cannot be sniffed or intercepted when making API requests over plain HTTP.
-         *
-         * This follows the spec for simple OAuth 1.0a authentication (RFC 5849) as closely as possible, with two exceptions:
-         *
-         * 1) There is no token associated with request/responses, only consumer keys/secrets are used.
-         *
-         * 2) The OAuth parameters are included as part of the request query string instead of part of the Authorization header,
-         *    This is because there is no cross-OS function within PHP to get the raw Authorization header.
-         *
-         * @link http://tools.ietf.org/html/rfc5849 for the full spec.
-         *
-         * @return int|bool
-         */
-        private function perform_oauth_authentication()
-        {
-        }
-        /**
-         * Verify that the consumer-provided request signature matches our generated signature,
-         * this ensures the consumer has a valid key/secret.
-         *
-         * @param stdClass $user   User data.
-         * @param array    $params The request parameters.
-         * @return true|WP_Error
-         */
-        private function check_oauth_signature($user, $params)
-        {
-        }
-        /**
-         * Creates an array of urlencoded strings out of each array key/value pairs.
-         *
-         * @param  array  $params       Array of parameters to convert.
-         * @param  array  $query_params Array to extend.
-         * @param  string $key          Optional Array key to append.
-         * @return string               Array of urlencoded strings.
-         */
-        private function join_with_equals_sign($params, $query_params = array(), $key = '')
-        {
-        }
-        /**
-         * Normalize each parameter by assuming each parameter may have already been
-         * encoded, so attempt to decode, and then re-encode according to RFC 3986.
-         *
-         * Note both the key and value is normalized so a filter param like:
-         *
-         * 'filter[period]' => 'week'
-         *
-         * is encoded to:
-         *
-         * 'filter%255Bperiod%255D' => 'week'
-         *
-         * This conforms to the OAuth 1.0a spec which indicates the entire query string
-         * should be URL encoded.
-         *
-         * @see rawurlencode()
-         * @param array $parameters Un-normalized parameters.
-         * @return array Normalized parameters.
-         */
-        private function normalize_parameters($parameters)
-        {
-        }
-        /**
-         * Verify that the timestamp and nonce provided with the request are valid. This prevents replay attacks where
-         * an attacker could attempt to re-send an intercepted request at a later time.
-         *
-         * - A timestamp is valid if it is within 15 minutes of now.
-         * - A nonce is valid if it has not been used within the last 15 minutes.
-         *
-         * @param stdClass $user      User data.
-         * @param int      $timestamp The unix timestamp for when the request was made.
-         * @param string   $nonce     A unique (for the given user) 32 alphanumeric string, consumer-generated.
-         * @return bool|WP_Error
-         */
-        private function check_oauth_timestamp_and_nonce($user, $timestamp, $nonce)
-        {
-        }
-        /**
-         * Return the user data for the given consumer_key.
-         *
-         * @param string $consumer_key Consumer key.
-         * @return array
-         */
-        private function get_user_data_by_consumer_key($consumer_key)
-        {
-        }
-        /**
-         * Check that the API keys provided have the proper key-specific permissions to either read or write API resources.
-         *
-         * @param string $method Request method.
-         * @return bool|WP_Error
-         */
-        private function check_permissions($method)
-        {
-        }
-        /**
-         * Updated API Key last access datetime.
-         */
-        private function update_last_access()
-        {
-        }
-        /**
-         * If the consumer_key and consumer_secret $_GET parameters are NOT provided
-         * and the Basic auth headers are either not present or the consumer secret does not match the consumer
-         * key provided, then return the correct Basic headers and an error message.
-         *
-         * @param WP_REST_Response $response Current response being served.
-         * @return WP_REST_Response
-         */
-        public function send_unauthorized_headers($response)
-        {
-        }
-        /**
-         * Check for user permissions and register last access.
-         *
-         * @param mixed           $result  Response to replace the requested version with.
-         * @param WP_REST_Server  $server  Server instance.
-         * @param WP_REST_Request $request Request used to generate the response.
-         * @return mixed
-         */
-        public function check_user_permissions($result, $server, $request)
-        {
-        }
-    }
-    /**
-     * REST API Coupons controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_CRUD_Controller
-     */
-    class WC_REST_Coupons_V2_Controller extends \WC_REST_Legacy_Coupons_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v2';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'coupons';
-        /**
-         * Post type.
-         *
-         * @var string
-         */
-        protected $post_type = 'shop_coupon';
-        /**
-         * Register the routes for coupons.
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Get object.
-         *
-         * @since  3.0.0
-         * @param  int $id Object ID.
-         * @return WC_Data
-         */
-        protected function get_object($id)
-        {
-        }
-        /**
-         * Get formatted item data.
-         *
-         * @since  3.0.0
-         * @param  WC_Data $object WC_Data instance.
-         * @return array
-         */
-        protected function get_formatted_item_data($object)
-        {
-        }
-        /**
-         * Prepare a single coupon output for response.
-         *
-         * @since  3.0.0
-         * @param  WC_Data         $object  Object data.
-         * @param  WP_REST_Request $request Request object.
-         * @return WP_REST_Response
-         */
-        public function prepare_object_for_response($object, $request)
-        {
-        }
-        /**
-         * Prepare objects query.
-         *
-         * @since  3.0.0
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return array
-         */
-        protected function prepare_objects_query($request)
-        {
-        }
-        /**
-         * Only return writable props from schema.
-         *
-         * @param  array $schema Schema.
-         * @return bool
-         */
-        protected function filter_writable_props($schema)
-        {
-        }
-        /**
-         * Prepare a single coupon for create or update.
-         *
-         * @param  WP_REST_Request $request Request object.
-         * @param  bool            $creating If is creating a new object.
-         * @return WP_Error|WC_Data
-         */
-        protected function prepare_object_for_database($request, $creating = \false)
-        {
-        }
-        /**
-         * Get the Coupon's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-        /**
-         * Get the query params for collections of attachments.
-         *
-         * @return array
-         */
-        public function get_collection_params()
-        {
-        }
-    }
-    /**
-     * REST API Coupons controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Coupons_V2_Controller
-     */
-    class WC_REST_Coupons_Controller extends \WC_REST_Coupons_V2_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-    }
-    /**
-     * REST API Customers controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Controller
-     */
-    class WC_REST_Customer_Downloads_V1_Controller extends \WC_REST_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v1';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'customers/(?P<customer_id>[\\d]+)/downloads';
-        /**
-         * Register the routes for customers.
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Check whether a given request has permission to read customers.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_items_permissions_check($request)
-        {
-        }
-        /**
-         * Get all customer downloads.
-         *
-         * @param WP_REST_Request $request
-         * @return array
-         */
-        public function get_items($request)
-        {
-        }
-        /**
-         * Prepare a single download output for response.
-         *
-         * @param stdObject $download Download object.
-         * @param WP_REST_Request $request Request object.
-         * @return WP_REST_Response $response Response data.
-         */
-        public function prepare_item_for_response($download, $request)
-        {
-        }
-        /**
-         * Prepare links for the request.
-         *
-         * @param stdClass $download Download object.
-         * @param WP_REST_Request $request Request object.
-         * @return array Links for the given customer download.
-         */
-        protected function prepare_links($download, $request)
-        {
-        }
-        /**
-         * Get the Customer Download's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-        /**
-         * Get the query params for collections.
-         *
-         * @return array
-         */
-        public function get_collection_params()
-        {
-        }
-    }
-    /**
-     * REST API Customers controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Customer_Downloads_V1_Controller
-     */
-    class WC_REST_Customer_Downloads_V2_Controller extends \WC_REST_Customer_Downloads_V1_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v2';
-        /**
-         * Prepare a single download output for response.
-         *
-         * @param stdClass        $download Download object.
-         * @param WP_REST_Request $request Request object.
-         * @return WP_REST_Response $response Response data.
-         */
-        public function prepare_item_for_response($download, $request)
-        {
-        }
-        /**
-         * Get the Customer Download's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-    }
-    /**
-     * REST API Customers controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Customer_Downloads_V2_Controller
-     */
-    class WC_REST_Customer_Downloads_Controller extends \WC_REST_Customer_Downloads_V2_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-    }
-    /**
-     * REST API Customers controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Controller
-     */
-    class WC_REST_Customers_V1_Controller extends \WC_REST_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v1';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'customers';
-        /**
-         * Register the routes for customers.
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Check whether a given request has permission to read customers.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_items_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access create customers.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         *
-         * @return bool|WP_Error
-         */
-        public function create_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access to read a customer.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access update a customer.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         *
-         * @return bool|WP_Error
-         */
-        public function update_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access delete a customer.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         *
-         * @return bool|WP_Error
-         */
-        public function delete_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access batch create, update and delete items.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         *
-         * @return bool|WP_Error
-         */
-        public function batch_items_permissions_check($request)
-        {
-        }
-        /**
-         * Get all customers.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function get_items($request)
-        {
-        }
-        /**
-         * Create a single customer.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function create_item($request)
-        {
-        }
-        /**
-         * Get a single customer.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function get_item($request)
-        {
-        }
-        /**
-         * Update a single user.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function update_item($request)
-        {
-        }
-        /**
-         * Delete a single customer.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function delete_item($request)
-        {
-        }
-        /**
-         * Prepare a single customer output for response.
-         *
-         * @param  WP_User          $user_data User object.
-         * @param  WP_REST_Request  $request Request object.
-         * @return WP_REST_Response $response Response data.
-         */
-        public function prepare_item_for_response($user_data, $request)
-        {
-        }
-        /**
-         * Update customer meta fields.
-         *
-         * @param WC_Customer $customer
-         * @param WP_REST_Request $request
-         */
-        protected function update_customer_meta_fields($customer, $request)
-        {
-        }
-        /**
-         * Prepare links for the request.
-         *
-         * @param WP_User $customer Customer object.
-         * @return array Links for the given customer.
-         */
-        protected function prepare_links($customer)
-        {
-        }
-        /**
-         * Get the Customer's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-        /**
-         * Get role names.
-         *
-         * @return array
-         */
-        protected function get_role_names()
-        {
-        }
-        /**
-         * Get the query params for collections.
-         *
-         * @return array
-         */
-        public function get_collection_params()
-        {
-        }
-    }
-    /**
-     * REST API Customers controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Customers_V1_Controller
-     */
-    class WC_REST_Customers_V2_Controller extends \WC_REST_Customers_V1_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v2';
-        /**
-         * Get formatted item data.
-         *
-         * @since  3.0.0
-         * @param  WC_Data $object WC_Data instance.
-         * @return array
-         */
-        protected function get_formatted_item_data($object)
-        {
-        }
-        /**
-         * Prepare a single customer output for response.
-         *
-         * @param  WP_User         $user_data User object.
-         * @param  WP_REST_Request $request   Request object.
-         * @return WP_REST_Response $response  Response data.
-         */
-        public function prepare_item_for_response($user_data, $request)
-        {
-        }
-        /**
-         * Update customer meta fields.
-         *
-         * @param WC_Customer     $customer Customer data.
-         * @param WP_REST_Request $request  Request data.
-         */
-        protected function update_customer_meta_fields($customer, $request)
-        {
-        }
-        /**
-         * Get the Customer's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-    }
-    /**
-     * REST API Customers controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Customers_V2_Controller
-     */
-    class WC_REST_Customers_Controller extends \WC_REST_Customers_V2_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-        /**
-         * Get formatted item data.
-         *
-         * @param WC_Data $object WC_Data instance.
-         *
-         * @since  3.0.0
-         * @return array
-         */
-        protected function get_formatted_item_data($object)
-        {
-        }
-        /**
-         * Get the Customer's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-    }
-    /**
-     * REST API Data controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Controller
-     */
-    class WC_REST_Data_Controller extends \WC_REST_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'data';
-        /**
-         * Register routes.
-         *
-         * @since 3.5.0
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Check whether a given request has permission to read site data.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_items_permissions_check($request)
-        {
-        }
-        /**
-         * Check whether a given request has permission to read site settings.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_item_permissions_check($request)
-        {
-        }
-        /**
-         * Return the list of data resources.
-         *
-         * @since  3.5.0
-         * @param  WP_REST_Request $request Request data.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function get_items($request)
-        {
-        }
-        /**
-         * Prepare a data resource object for serialization.
-         *
-         * @param stdClass        $resource Resource data.
-         * @param WP_REST_Request $request  Request object.
-         * @return WP_REST_Response $response Response data.
-         */
-        public function prepare_item_for_response($resource, $request)
-        {
-        }
-        /**
-         * Prepare links for the request.
-         *
-         * @param object $item Data object.
-         * @return array Links for the given country.
-         */
-        protected function prepare_links($item)
-        {
-        }
-        /**
-         * Get the data index schema, conforming to JSON Schema.
-         *
-         * @since  3.5.0
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-    }
-    /**
-     * REST API Data continents controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Controller
-     */
-    class WC_REST_Data_Continents_Controller extends \WC_REST_Data_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'data/continents';
-        /**
-         * Register routes.
-         *
-         * @since 3.5.0
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Return the list of countries and states for a given continent.
-         *
-         * @since  3.5.0
-         * @param  string          $continent_code Continent code.
-         * @param  WP_REST_Request $request        Request data.
-         * @return array|mixed Response data, ready for insertion into collection data.
-         */
-        public function get_continent($continent_code = \false, $request)
-        {
-        }
-        /**
-         * Return the list of states for all continents.
-         *
-         * @since  3.5.0
-         * @param  WP_REST_Request $request Request data.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function get_items($request)
-        {
-        }
-        /**
-         * Return the list of locations for a given continent.
-         *
-         * @since  3.5.0
-         * @param  WP_REST_Request $request Request data.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function get_item($request)
-        {
-        }
-        /**
-         * Prepare the data object for response.
-         *
-         * @since  3.5.0
-         * @param object          $item Data object.
-         * @param WP_REST_Request $request Request object.
-         * @return WP_REST_Response $response Response data.
-         */
-        public function prepare_item_for_response($item, $request)
-        {
-        }
-        /**
-         * Prepare links for the request.
-         *
-         * @param object $item Data object.
-         * @return array Links for the given continent.
-         */
-        protected function prepare_links($item)
-        {
-        }
-        /**
-         * Get the location schema, conforming to JSON Schema.
-         *
-         * @since  3.5.0
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-    }
-    /**
-     * REST API Data countries controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Controller
-     */
-    class WC_REST_Data_Countries_Controller extends \WC_REST_Data_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'data/countries';
-        /**
-         * Register routes.
-         *
-         * @since 3.5.0
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Get a list of countries and states.
-         *
-         * @param  string          $country_code Country code.
-         * @param  WP_REST_Request $request      Request data.
-         * @return array|mixed Response data, ready for insertion into collection data.
-         */
-        public function get_country($country_code = \false, $request)
-        {
-        }
-        /**
-         * Return the list of states for all countries.
-         *
-         * @since  3.5.0
-         * @param  WP_REST_Request $request Request data.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function get_items($request)
-        {
-        }
-        /**
-         * Return the list of states for a given country.
-         *
-         * @since  3.5.0
-         * @param  WP_REST_Request $request Request data.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function get_item($request)
-        {
-        }
-        /**
-         * Prepare the data object for response.
-         *
-         * @since  3.5.0
-         * @param object          $item Data object.
-         * @param WP_REST_Request $request Request object.
-         * @return WP_REST_Response $response Response data.
-         */
-        public function prepare_item_for_response($item, $request)
-        {
-        }
-        /**
-         * Prepare links for the request.
-         *
-         * @param object $item Data object.
-         * @return array Links for the given country.
-         */
-        protected function prepare_links($item)
-        {
-        }
-        /**
-         * Get the location schema, conforming to JSON Schema.
-         *
-         * @since  3.5.0
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-    }
-    /**
-     * REST API Data Currencies controller class.
-     *
-     * @package WooCommerce/API
-     */
-    class WC_REST_Data_Currencies_Controller extends \WC_REST_Data_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'data/currencies';
-        /**
-         * Register routes.
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Get currency information.
-         *
-         * @param  string          $code    Currency code.
-         * @param  WP_REST_Request $request Request data.
-         * @return array|mixed Response data, ready for insertion into collection data.
-         */
-        public function get_currency($code = \false, $request)
-        {
-        }
-        /**
-         * Return the list of currencies.
-         *
-         * @param  WP_REST_Request $request Request data.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function get_items($request)
-        {
-        }
-        /**
-         * Return information for a specific currency.
-         *
-         * @param  WP_REST_Request $request Request data.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function get_item($request)
-        {
-        }
-        /**
-         * Return information for the current site currency.
-         *
-         * @param  WP_REST_Request $request Request data.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function get_current_item($request)
-        {
-        }
-        /**
-         * Prepare the data object for response.
-         *
-         * @param object          $item Data object.
-         * @param WP_REST_Request $request Request object.
-         * @return WP_REST_Response $response Response data.
-         */
-        public function prepare_item_for_response($item, $request)
-        {
-        }
-        /**
-         * Prepare links for the request.
-         *
-         * @param object $item Data object.
-         * @return array Links for the given currency.
-         */
-        protected function prepare_links($item)
-        {
-        }
-        /**
-         * Get the currency schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-    }
-    /**
-     * Data exception class.
-     */
-    class WC_Data_Exception extends \Exception
-    {
-        /**
-         * Sanitized error code.
-         *
-         * @var string
-         */
-        protected $error_code;
-        /**
-         * Error extra data.
-         *
-         * @var array
-         */
-        protected $error_data;
-        /**
-         * Setup exception.
-         *
-         * @param string $code             Machine-readable error code, e.g `woocommerce_invalid_product_id`.
-         * @param string $message          User-friendly translated error message, e.g. 'Product ID is invalid'.
-         * @param int    $http_status_code Proper HTTP status code to respond with, e.g. 400.
-         * @param array  $data             Extra error data.
-         */
-        public function __construct($code, $message, $http_status_code = 400, $data = array())
-        {
-        }
-        /**
-         * Returns the error code.
-         *
-         * @return string
-         */
-        public function getErrorCode()
-        {
-        }
-        /**
-         * Returns error data.
-         *
-         * @return array
-         */
-        public function getErrorData()
-        {
-        }
-    }
-    /**
-     * WC_REST_Exception class.
-     */
-    class WC_REST_Exception extends \WC_Data_Exception
-    {
-    }
-    /**
-     * REST API Orders controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_CRUD_Controller
-     */
-    class WC_REST_Orders_V2_Controller extends \WC_REST_Legacy_Orders_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v2';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'orders';
-        /**
-         * Post type.
-         *
-         * @var string
-         */
-        protected $post_type = 'shop_order';
-        /**
-         * If object is hierarchical.
-         *
-         * @var bool
-         */
-        protected $hierarchical = \true;
-        /**
-         * Stores the request.
-         *
-         * @var array
-         */
-        protected $request = array();
-        /**
-         * Register the routes for orders.
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Get object. Return false if object is not of required type.
-         *
-         * @since  3.0.0
-         * @param  int $id Object ID.
-         * @return WC_Data|bool
-         */
-        protected function get_object($id)
-        {
-        }
-        /**
-         * Expands an order item to get its data.
-         *
-         * @param WC_Order_item $item Order item data.
-         * @return array
-         */
-        protected function get_order_item_data($item)
-        {
-        }
-        /**
-         * Get formatted item data.
-         *
-         * @since  3.0.0
-         * @param  WC_Data $object WC_Data instance.
-         * @return array
-         */
-        protected function get_formatted_item_data($object)
-        {
-        }
-        /**
-         * Prepare a single order output for response.
-         *
-         * @since  3.0.0
-         * @param  WC_Data         $object  Object data.
-         * @param  WP_REST_Request $request Request object.
-         * @return WP_REST_Response
-         */
-        public function prepare_object_for_response($object, $request)
-        {
-        }
-        /**
-         * Prepare links for the request.
-         *
-         * @param WC_Data         $object  Object data.
-         * @param WP_REST_Request $request Request object.
-         * @return array                   Links for the given post.
-         */
-        protected function prepare_links($object, $request)
-        {
-        }
-        /**
-         * Prepare objects query.
-         *
-         * @since  3.0.0
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return array
-         */
-        protected function prepare_objects_query($request)
-        {
-        }
-        /**
-         * Only return writable props from schema.
-         *
-         * @param  array $schema Schema.
-         * @return bool
-         */
-        protected function filter_writable_props($schema)
-        {
-        }
-        /**
-         * Prepare a single order for create or update.
-         *
-         * @param  WP_REST_Request $request Request object.
-         * @param  bool            $creating If is creating a new object.
-         * @return WP_Error|WC_Data
-         */
-        protected function prepare_object_for_database($request, $creating = \false)
-        {
-        }
-        /**
-         * Save an object data.
-         *
-         * @since  3.0.0
-         * @throws WC_REST_Exception But all errors are validated before returning any data.
-         * @param  WP_REST_Request $request  Full details about the request.
-         * @param  bool            $creating If is creating a new object.
-         * @return WC_Data|WP_Error
-         */
-        protected function save_object($request, $creating = \false)
-        {
-        }
-        /**
-         * Update address.
-         *
-         * @param WC_Order $order  Order data.
-         * @param array    $posted Posted data.
-         * @param string   $type   Address type.
-         */
-        protected function update_address($order, $posted, $type = 'billing')
-        {
-        }
-        /**
-         * Gets the product ID from the SKU or posted ID.
-         *
-         * @throws WC_REST_Exception When SKU or ID is not valid.
-         * @param array $posted Request data.
-         * @return int
-         */
-        protected function get_product_id($posted)
-        {
-        }
-        /**
-         * Maybe set an item prop if the value was posted.
-         *
-         * @param WC_Order_Item $item   Order item.
-         * @param string        $prop   Order property.
-         * @param array         $posted Request data.
-         */
-        protected function maybe_set_item_prop($item, $prop, $posted)
-        {
-        }
-        /**
-         * Maybe set item props if the values were posted.
-         *
-         * @param WC_Order_Item $item   Order item data.
-         * @param string[]      $props  Properties.
-         * @param array         $posted Request data.
-         */
-        protected function maybe_set_item_props($item, $props, $posted)
-        {
-        }
-        /**
-         * Maybe set item meta if posted.
-         *
-         * @param WC_Order_Item $item   Order item data.
-         * @param array         $posted Request data.
-         */
-        protected function maybe_set_item_meta_data($item, $posted)
-        {
-        }
-        /**
-         * Create or update a line item.
-         *
-         * @param array  $posted Line item data.
-         * @param string $action 'create' to add line item or 'update' to update it.
-         * @param object $item Passed when updating an item. Null during creation.
-         * @return WC_Order_Item_Product
-         * @throws WC_REST_Exception Invalid data, server error.
-         */
-        protected function prepare_line_items($posted, $action = 'create', $item = \null)
-        {
-        }
-        /**
-         * Create or update an order shipping method.
-         *
-         * @param array  $posted $shipping Item data.
-         * @param string $action 'create' to add shipping or 'update' to update it.
-         * @param object $item Passed when updating an item. Null during creation.
-         * @return WC_Order_Item_Shipping
-         * @throws WC_REST_Exception Invalid data, server error.
-         */
-        protected function prepare_shipping_lines($posted, $action = 'create', $item = \null)
-        {
-        }
-        /**
-         * Create or update an order fee.
-         *
-         * @param array  $posted Item data.
-         * @param string $action 'create' to add fee or 'update' to update it.
-         * @param object $item Passed when updating an item. Null during creation.
-         * @return WC_Order_Item_Fee
-         * @throws WC_REST_Exception Invalid data, server error.
-         */
-        protected function prepare_fee_lines($posted, $action = 'create', $item = \null)
-        {
-        }
-        /**
-         * Create or update an order coupon.
-         *
-         * @param array  $posted Item data.
-         * @param string $action 'create' to add coupon or 'update' to update it.
-         * @param object $item Passed when updating an item. Null during creation.
-         * @return WC_Order_Item_Coupon
-         * @throws WC_REST_Exception Invalid data, server error.
-         */
-        protected function prepare_coupon_lines($posted, $action = 'create', $item = \null)
-        {
-        }
-        /**
-         * Wrapper method to create/update order items.
-         * When updating, the item ID provided is checked to ensure it is associated
-         * with the order.
-         *
-         * @param WC_Order $order order object.
-         * @param string   $item_type The item type.
-         * @param array    $posted item provided in the request body.
-         * @throws WC_REST_Exception If item ID is not associated with order.
-         */
-        protected function set_item($order, $item_type, $posted)
-        {
-        }
-        /**
-         * Helper method to check if the resource ID associated with the provided item is null.
-         * Items can be deleted by setting the resource ID to null.
-         *
-         * @param array $item Item provided in the request body.
-         * @return bool True if the item resource ID is null, false otherwise.
-         */
-        protected function item_is_null($item)
-        {
-        }
-        /**
-         * Get order statuses without prefixes.
-         *
-         * @return array
-         */
-        protected function get_order_statuses()
-        {
-        }
-        /**
-         * Get the Order's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-        /**
-         * Get the query params for collections.
-         *
-         * @return array
-         */
-        public function get_collection_params()
-        {
-        }
-    }
-    /**
-     * REST API Network Orders controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Orders_V2_Controller
-     */
-    class WC_REST_Network_Orders_V2_Controller extends \WC_REST_Orders_V2_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v2';
-        /**
-         * Register the routes for network orders.
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Retrieves the item's schema for display / public consumption purposes.
-         *
-         * @return array Public item schema data.
-         */
-        public function get_public_item_schema()
-        {
-        }
-        /**
-         * Does a permissions check for the proper requested blog
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         *
-         * @return bool $permission
-         */
-        public function network_orders_permissions_check($request)
-        {
-        }
-        /**
-         * Get a collection of orders from the requested blog id
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         *
-         * @return WP_REST_Response
-         */
-        public function network_orders($request)
-        {
-        }
-        /**
-         * Filters the post statuses to on hold and processing for the network order query.
-         *
-         * @param array $args Query args.
-         *
-         * @return array
-         */
-        public function network_orders_filter_args($args)
-        {
-        }
-    }
-    /**
-     * REST API Network Orders controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Network_Orders_V2_Controller
-     */
-    class WC_REST_Network_Orders_Controller extends \WC_REST_Network_Orders_V2_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-    }
-    /**
-     * REST API Order Notes controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Controller
-     */
-    class WC_REST_Order_Notes_V1_Controller extends \WC_REST_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v1';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'orders/(?P<order_id>[\\d]+)/notes';
-        /**
-         * Post type.
-         *
-         * @var string
-         */
-        protected $post_type = 'shop_order';
-        /**
-         * Register the routes for order notes.
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Check whether a given request has permission to read order notes.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_items_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access create order notes.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         *
-         * @return bool|WP_Error
-         */
-        public function create_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access to read a order note.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access delete a order note.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         *
-         * @return bool|WP_Error
-         */
-        public function delete_item_permissions_check($request)
-        {
-        }
-        /**
-         * Get order notes from an order.
-         *
-         * @param WP_REST_Request $request
-         *
-         * @return array|WP_Error
-         */
-        public function get_items($request)
-        {
-        }
-        /**
-         * Create a single order note.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function create_item($request)
-        {
-        }
-        /**
-         * Get a single order note.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function get_item($request)
-        {
-        }
-        /**
-         * Delete a single order note.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_REST_Response|WP_Error
-         */
-        public function delete_item($request)
-        {
-        }
-        /**
-         * Prepare a single order note output for response.
-         *
-         * @param WP_Comment $note Order note object.
-         * @param WP_REST_Request $request Request object.
-         * @return WP_REST_Response $response Response data.
-         */
-        public function prepare_item_for_response($note, $request)
-        {
-        }
-        /**
-         * Prepare links for the request.
-         *
-         * @param WP_Comment $note Delivery order_note object.
-         * @return array Links for the given order note.
-         */
-        protected function prepare_links($note)
-        {
-        }
-        /**
-         * Get the Order Notes schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-        /**
-         * Get the query params for collections.
-         *
-         * @return array
-         */
-        public function get_collection_params()
-        {
-        }
-    }
-    /**
-     * REST API Order Notes controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Order_Notes_V1_Controller
-     */
-    class WC_REST_Order_Notes_V2_Controller extends \WC_REST_Order_Notes_V1_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v2';
-        /**
-         * Get order notes from an order.
-         *
-         * @param WP_REST_Request $request Request data.
-         *
-         * @return array|WP_Error
-         */
-        public function get_items($request)
-        {
-        }
-        /**
-         * Prepare a single order note output for response.
-         *
-         * @param WP_Comment      $note Order note object.
-         * @param WP_REST_Request $request Request object.
-         * @return WP_REST_Response $response Response data.
-         */
-        public function prepare_item_for_response($note, $request)
-        {
-        }
-        /**
-         * Get the Order Notes schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-        /**
-         * Get the query params for collections.
-         *
-         * @return array
-         */
-        public function get_collection_params()
-        {
-        }
-    }
-    /**
-     * REST API Order Notes controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Order_Notes_V2_Controller
-     */
-    class WC_REST_Order_Notes_Controller extends \WC_REST_Order_Notes_V2_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-        /**
-         * Prepare a single order note output for response.
-         *
-         * @param WP_Comment      $note    Order note object.
-         * @param WP_REST_Request $request Request object.
-         * @return WP_REST_Response $response Response data.
-         */
-        public function prepare_item_for_response($note, $request)
-        {
-        }
-        /**
-         * Create a single order note.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function create_item($request)
-        {
-        }
-        /**
-         * Get the Order Notes schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-    }
-    /**
-     * REST API Order Refunds controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Orders_V2_Controller
-     */
-    class WC_REST_Order_Refunds_V2_Controller extends \WC_REST_Orders_V2_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v2';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'orders/(?P<order_id>[\\d]+)/refunds';
-        /**
-         * Post type.
-         *
-         * @var string
-         */
-        protected $post_type = 'shop_order_refund';
-        /**
-         * Stores the request.
-         *
-         * @var array
-         */
-        protected $request = array();
-        /**
-         * Order refunds actions.
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Register the routes for order refunds.
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Get object.
-         *
-         * @since  3.0.0
-         * @param  int $id Object ID.
-         * @return WC_Data
-         */
-        protected function get_object($id)
-        {
-        }
-        /**
-         * Get formatted item data.
-         *
-         * @since  3.0.0
-         * @param  WC_Data $object WC_Data instance.
-         * @return array
-         */
-        protected function get_formatted_item_data($object)
-        {
-        }
-        /**
-         * Prepare a single order output for response.
-         *
-         * @since  3.0.0
-         *
-         * @param  WC_Data         $object  Object data.
-         * @param  WP_REST_Request $request Request object.
-         *
-         * @return WP_Error|WP_REST_Response
-         */
-        public function prepare_object_for_response($object, $request)
-        {
-        }
-        /**
-         * Prepare links for the request.
-         *
-         * @param WC_Data         $object  Object data.
-         * @param WP_REST_Request $request Request object.
-         * @return array                   Links for the given post.
-         */
-        protected function prepare_links($object, $request)
-        {
-        }
-        /**
-         * Prepare objects query.
-         *
-         * @since  3.0.0
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return array
-         */
-        protected function prepare_objects_query($request)
-        {
-        }
-        /**
-         * Prepares one object for create or update operation.
-         *
-         * @since  3.0.0
-         * @param  WP_REST_Request $request Request object.
-         * @param  bool            $creating If is creating a new object.
-         * @return WP_Error|WC_Data The prepared item, or WP_Error object on failure.
-         */
-        protected function prepare_object_for_database($request, $creating = \false)
-        {
-        }
-        /**
-         * Save an object data.
-         *
-         * @since  3.0.0
-         * @param  WP_REST_Request $request  Full details about the request.
-         * @param  bool            $creating If is creating a new object.
-         * @return WC_Data|WP_Error
-         */
-        protected function save_object($request, $creating = \false)
-        {
-        }
-        /**
-         * Get the Order's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-        /**
-         * Get the query params for collections.
-         *
-         * @return array
-         */
-        public function get_collection_params()
-        {
-        }
-    }
-    /**
-     * REST API Order Refunds controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Order_Refunds_V2_Controller
-     */
-    class WC_REST_Order_Refunds_Controller extends \WC_REST_Order_Refunds_V2_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-        /**
-         * Prepares one object for create or update operation.
-         *
-         * @since  3.0.0
-         * @param  WP_REST_Request $request Request object.
-         * @param  bool            $creating If is creating a new object.
-         * @return WP_Error|WC_Data The prepared item, or WP_Error object on failure.
-         */
-        protected function prepare_object_for_database($request, $creating = \false)
-        {
-        }
-    }
-    /**
-     * REST API Orders controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Orders_V2_Controller
-     */
-    class WC_REST_Orders_Controller extends \WC_REST_Orders_V2_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-        /**
-         * Calculate coupons.
-         *
-         * @throws WC_REST_Exception When fails to set any item.
-         * @param WP_REST_Request $request Request object.
-         * @param WC_Order        $order   Order data.
-         * @return bool
-         */
-        protected function calculate_coupons($request, $order)
-        {
-        }
-        /**
-         * Prepare a single order for create or update.
-         *
-         * @throws WC_REST_Exception When fails to set any item.
-         * @param  WP_REST_Request $request Request object.
-         * @param  bool            $creating If is creating a new object.
-         * @return WP_Error|WC_Data
-         */
-        protected function prepare_object_for_database($request, $creating = \false)
-        {
-        }
-        /**
-         * Save an object data.
-         *
-         * @since  3.0.0
-         * @throws WC_REST_Exception But all errors are validated before returning any data.
-         * @param  WP_REST_Request $request  Full details about the request.
-         * @param  bool            $creating If is creating a new object.
-         * @return WC_Data|WP_Error
-         */
-        protected function save_object($request, $creating = \false)
-        {
-        }
-        /**
-         * Purge object when creating.
-         *
-         * @param WC_Data $object  Object data.
-         * @param bool    $creating If is creating a new object.
-         * @return bool
-         */
-        protected function purge($object, $creating)
-        {
-        }
-        /**
-         * Prepare objects query.
-         *
-         * @since  3.0.0
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return array
-         */
-        protected function prepare_objects_query($request)
-        {
-        }
-        /**
-         * Get the Order's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-        /**
-         * Get the query params for collections.
-         *
-         * @return array
-         */
-        public function get_collection_params()
-        {
-        }
-    }
-    /**
-     * Paymenga gateways controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Controller
-     */
-    class WC_REST_Payment_Gateways_V2_Controller extends \WC_REST_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v2';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'payment_gateways';
-        /**
-         * Register the route for /payment_gateways and /payment_gateways/<id>
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Check whether a given request has permission to view payment gateways.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_items_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access to read a payment gateway.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check whether a given request has permission to edit payment gateways.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function update_items_permissions_check($request)
-        {
-        }
-        /**
-         * Get payment gateways.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function get_items($request)
-        {
-        }
-        /**
-         * Get a single payment gateway.
-         *
-         * @param WP_REST_Request $request Request data.
-         * @return WP_REST_Response|WP_Error
-         */
-        public function get_item($request)
-        {
-        }
-        /**
-         * Update A Single Payment Method.
-         *
-         * @param WP_REST_Request $request Request data.
-         * @return WP_REST_Response|WP_Error
-         */
-        public function update_item($request)
-        {
-        }
-        /**
-         * Get a gateway based on the current request object.
-         *
-         * @param WP_REST_Request $request Request data.
-         * @return WP_REST_Response|null
-         */
-        public function get_gateway($request)
-        {
-        }
-        /**
-         * Prepare a payment gateway for response.
-         *
-         * @param  WC_Payment_Gateway $gateway    Payment gateway object.
-         * @param  WP_REST_Request    $request    Request object.
-         * @return WP_REST_Response   $response   Response data.
-         */
-        public function prepare_item_for_response($gateway, $request)
-        {
-        }
-        /**
-         * Return settings associated with this payment gateway.
-         *
-         * @param WC_Payment_Gateway $gateway Gateway data.
-         *
-         * @return array
-         */
-        public function get_settings($gateway)
-        {
-        }
-        /**
-         * Prepare links for the request.
-         *
-         * @param  WC_Payment_Gateway $gateway    Payment gateway object.
-         * @param  WP_REST_Request    $request    Request object.
-         * @return array
-         */
-        protected function prepare_links($gateway, $request)
-        {
-        }
-        /**
-         * Get the payment gateway schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-        /**
-         * Get any query params needed.
-         *
-         * @return array
-         */
-        public function get_collection_params()
-        {
-        }
-    }
-    /**
-     * Paymenga gateways controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Payment_Gateways_V2_Controller
-     */
-    class WC_REST_Payment_Gateways_Controller extends \WC_REST_Payment_Gateways_V2_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-        /**
-         * Prepare a payment gateway for response.
-         *
-         * @param  WC_Payment_Gateway $gateway    Payment gateway object.
-         * @param  WP_REST_Request    $request    Request object.
-         * @return WP_REST_Response   $response   Response data.
-         */
-        public function prepare_item_for_response($gateway, $request)
-        {
-        }
-        /**
-         * Return settings associated with this payment gateway.
-         *
-         * @param WC_Payment_Gateway $gateway Gateway instance.
-         *
-         * @return array
-         */
-        public function get_settings($gateway)
-        {
-        }
-        /**
-         * Get the payment gateway schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-    }
-    /**
-     * REST API Product Attribute Terms controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Terms_Controller
-     */
-    class WC_REST_Product_Attribute_Terms_V1_Controller extends \WC_REST_Terms_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v1';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'products/attributes/(?P<attribute_id>[\\d]+)/terms';
-        /**
-         * Register the routes for terms.
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Prepare a single product attribute term output for response.
-         *
-         * @param WP_Term $item Term object.
-         * @param WP_REST_Request $request
-         * @return WP_REST_Response $response
-         */
-        public function prepare_item_for_response($item, $request)
-        {
-        }
-        /**
-         * Update term meta fields.
-         *
-         * @param WP_Term $term
-         * @param WP_REST_Request $request
-         * @return bool|WP_Error
-         */
-        protected function update_term_meta_fields($term, $request)
-        {
-        }
-        /**
-         * Get the Attribute Term's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-    }
-    /**
-     * REST API Product Attribute Terms controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Product_Attribute_Terms_V1_Controller
-     */
-    class WC_REST_Product_Attribute_Terms_V2_Controller extends \WC_REST_Product_Attribute_Terms_V1_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v2';
-    }
-    /**
-     * REST API Product Attribute Terms controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Product_Attribute_Terms_V2_Controller
-     */
-    class WC_REST_Product_Attribute_Terms_Controller extends \WC_REST_Product_Attribute_Terms_V2_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-    }
-    /**
-     * REST API Product Attributes controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Controller
-     */
-    class WC_REST_Product_Attributes_V1_Controller extends \WC_REST_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v1';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'products/attributes';
-        /**
-         * Attribute name.
-         *
-         * @var string
-         */
-        protected $attribute = '';
-        /**
-         * Register the routes for product attributes.
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Check if a given request has access to read the attributes.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_items_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access to create a attribute.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function create_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access to read a attribute.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access to update a attribute.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function update_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access to delete a attribute.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function delete_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access batch create, update and delete items.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         *
-         * @return bool|WP_Error
-         */
-        public function batch_items_permissions_check($request)
-        {
-        }
-        /**
-         * Get all attributes.
-         *
-         * @param WP_REST_Request $request
-         * @return array
-         */
-        public function get_items($request)
-        {
-        }
-        /**
-         * Create a single attribute.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_REST_Request|WP_Error
-         */
-        public function create_item($request)
-        {
-        }
-        /**
-         * Get a single attribute.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_REST_Request|WP_Error
-         */
-        public function get_item($request)
-        {
-        }
-        /**
-         * Update a single term from a taxonomy.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_REST_Request|WP_Error
-         */
-        public function update_item($request)
-        {
-        }
-        /**
-         * Delete a single attribute.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_REST_Response|WP_Error
-         */
-        public function delete_item($request)
-        {
-        }
-        /**
-         * Prepare a single product attribute output for response.
-         *
-         * @param obj $item Term object.
-         * @param WP_REST_Request $request
-         * @return WP_REST_Response $response
-         */
-        public function prepare_item_for_response($item, $request)
-        {
-        }
-        /**
-         * Prepare links for the request.
-         *
-         * @param object $attribute Attribute object.
-         * @return array Links for the given attribute.
-         */
-        protected function prepare_links($attribute)
-        {
-        }
-        /**
-         * Get the Attribute's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-        /**
-         * Get the query params for collections
-         *
-         * @return array
-         */
-        public function get_collection_params()
-        {
-        }
-        /**
-         * Get attribute name.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return string
-         */
-        protected function get_taxonomy($request)
-        {
-        }
-        /**
-         * Get attribute data.
-         *
-         * @param int $id Attribute ID.
-         * @return stdClass|WP_Error
-         */
-        protected function get_attribute($id)
-        {
-        }
-        /**
-         * Validate attribute slug.
-         *
-         * @deprecated 3.2.0
-         * @param string $slug
-         * @param bool $new_data
-         * @return bool|WP_Error
-         */
-        protected function validate_attribute_slug($slug, $new_data = \true)
-        {
-        }
-        /**
-         * Schedule to flush rewrite rules.
-         *
-         * @deprecated 3.2.0
-         * @since 3.0.0
-         */
-        protected function flush_rewrite_rules()
-        {
-        }
-    }
-    /**
-     * REST API Product Attributes controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Product_Attributes_V1_Controller
-     */
-    class WC_REST_Product_Attributes_V2_Controller extends \WC_REST_Product_Attributes_V1_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v2';
-    }
-    /**
-     * REST API Product Attributes controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Product_Attributes_V2_Controller
-     */
-    class WC_REST_Product_Attributes_Controller extends \WC_REST_Product_Attributes_V2_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-    }
-    /**
-     * REST API Product Categories controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Terms_Controller
-     */
-    class WC_REST_Product_Categories_V1_Controller extends \WC_REST_Terms_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v1';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'products/categories';
-        /**
-         * Taxonomy.
-         *
-         * @var string
-         */
-        protected $taxonomy = 'product_cat';
-        /**
-         * Prepare a single product category output for response.
-         *
-         * @param WP_Term         $item    Term object.
-         * @param WP_REST_Request $request Request instance.
-         * @return WP_REST_Response
-         */
-        public function prepare_item_for_response($item, $request)
-        {
-        }
-        /**
-         * Update term meta fields.
-         *
-         * @param WP_Term         $term    Term object.
-         * @param WP_REST_Request $request Request instance.
-         * @return bool|WP_Error
-         */
-        protected function update_term_meta_fields($term, $request)
-        {
-        }
-        /**
-         * Get the Category schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-    }
-    /**
-     * REST API Product Categories controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Product_Categories_V1_Controller
-     */
-    class WC_REST_Product_Categories_V2_Controller extends \WC_REST_Product_Categories_V1_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v2';
-        /**
-         * Prepare a single product category output for response.
-         *
-         * @param WP_Term         $item    Term object.
-         * @param WP_REST_Request $request Request instance.
-         * @return WP_REST_Response
-         */
-        public function prepare_item_for_response($item, $request)
-        {
-        }
-        /**
-         * Get the Category schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-    }
-    /**
-     * REST API Product Categories controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Product_Categories_V2_Controller
-     */
-    class WC_REST_Product_Categories_Controller extends \WC_REST_Product_Categories_V2_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-        /**
-         * Prepare a single product category output for response.
-         *
-         * @param WP_Term         $item    Term object.
-         * @param WP_REST_Request $request Request instance.
-         * @return WP_REST_Response
-         */
-        public function prepare_item_for_response($item, $request)
-        {
-        }
-        /**
-         * Get the Category schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-        /**
-         * Update term meta fields.
-         *
-         * @param WP_Term         $term    Term object.
-         * @param WP_REST_Request $request Request instance.
-         * @return bool|WP_Error
-         *
-         * @since 3.5.5
-         */
-        protected function update_term_meta_fields($term, $request)
-        {
-        }
-    }
-    /**
-     * REST API Product Reviews Controller Class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Controller
-     */
-    class WC_REST_Product_Reviews_Controller extends \WC_REST_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'products/reviews';
-        /**
-         * Register the routes for product reviews.
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Check whether a given request has permission to read webhook deliveries.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_items_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access to read a product review.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access to create a new product review.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function create_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access to update a product review.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function update_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access to delete a product review.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function delete_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access batch create, update and delete items.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return boolean|WP_Error
-         */
-        public function batch_items_permissions_check($request)
-        {
-        }
-        /**
-         * Get all reviews.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return array|WP_Error
-         */
-        public function get_items($request)
-        {
-        }
-        /**
-         * Create a single review.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function create_item($request)
-        {
-        }
-        /**
-         * Get a single product review.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function get_item($request)
-        {
-        }
-        /**
-         * Updates a review.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response Response object on success, or error object on failure.
-         */
-        public function update_item($request)
-        {
-        }
-        /**
-         * Deletes a review.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response Response object on success, or error object on failure.
-         */
-        public function delete_item($request)
-        {
-        }
-        /**
-         * Prepare a single product review output for response.
-         *
-         * @param WP_Comment      $review Product review object.
-         * @param WP_REST_Request $request Request object.
-         * @return WP_REST_Response $response Response data.
-         */
-        public function prepare_item_for_response($review, $request)
-        {
-        }
-        /**
-         * Prepare a single product review to be inserted into the database.
-         *
-         * @param  WP_REST_Request $request Request object.
-         * @return array|WP_Error  $prepared_review
-         */
-        protected function prepare_item_for_database($request)
-        {
-        }
-        /**
-         * Prepare links for the request.
-         *
-         * @param WP_Comment $review Product review object.
-         * @return array Links for the given product review.
-         */
-        protected function prepare_links($review)
-        {
-        }
-        /**
-         * Get the Product Review's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-        /**
-         * Get the query params for collections.
-         *
-         * @return array
-         */
-        public function get_collection_params()
-        {
-        }
-        /**
-         * Get the reivew, if the ID is valid.
-         *
-         * @since 3.5.0
-         * @param int $id Supplied ID.
-         * @return WP_Comment|WP_Error Comment object if ID is valid, WP_Error otherwise.
-         */
-        protected function get_review($id)
-        {
-        }
-        /**
-         * Prepends internal property prefix to query parameters to match our response fields.
-         *
-         * @since 3.5.0
-         * @param string $query_param Query parameter.
-         * @return string
-         */
-        protected function normalize_query_param($query_param)
-        {
-        }
-        /**
-         * Checks comment_approved to set comment status for single comment output.
-         *
-         * @since 3.5.0
-         * @param string|int $comment_approved comment status.
-         * @return string Comment status.
-         */
-        protected function prepare_status_response($comment_approved)
-        {
-        }
-        /**
-         * Sets the comment_status of a given review object when creating or updating a review.
-         *
-         * @since 3.5.0
-         * @param string|int $new_status New review status.
-         * @param int        $id         Review ID.
-         * @return bool Whether the status was changed.
-         */
-        protected function handle_status_param($new_status, $id)
-        {
-        }
-    }
-    /**
-     * REST API Product Shipping Classes controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Terms_Controller
-     */
-    class WC_REST_Product_Shipping_Classes_V1_Controller extends \WC_REST_Terms_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v1';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'products/shipping_classes';
-        /**
-         * Taxonomy.
-         *
-         * @var string
-         */
-        protected $taxonomy = 'product_shipping_class';
-        /**
-         * Prepare a single product shipping class output for response.
-         *
-         * @param obj $item Term object.
-         * @param WP_REST_Request $request
-         * @return WP_REST_Response $response
-         */
-        public function prepare_item_for_response($item, $request)
-        {
-        }
-        /**
-         * Get the Shipping Class schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-    }
-    /**
-     * REST API Product Shipping Classes controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Product_Shipping_Classes_V1_Controller
-     */
-    class WC_REST_Product_Shipping_Classes_V2_Controller extends \WC_REST_Product_Shipping_Classes_V1_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v2';
-    }
-    /**
-     * REST API Product Shipping Classes controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Product_Shipping_Classes_V2_Controller
-     */
-    class WC_REST_Product_Shipping_Classes_Controller extends \WC_REST_Product_Shipping_Classes_V2_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-    }
-    /**
-     * REST API Product Tags controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Terms_Controller
-     */
-    class WC_REST_Product_Tags_V1_Controller extends \WC_REST_Terms_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v1';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'products/tags';
-        /**
-         * Taxonomy.
-         *
-         * @var string
-         */
-        protected $taxonomy = 'product_tag';
-        /**
-         * Prepare a single product tag output for response.
-         *
-         * @param obj $item Term object.
-         * @param WP_REST_Request $request
-         * @return WP_REST_Response $response
-         */
-        public function prepare_item_for_response($item, $request)
-        {
-        }
-        /**
-         * Get the Tag's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-    }
-    /**
-     * REST API Product Tags controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Product_Tags_V1_Controller
-     */
-    class WC_REST_Product_Tags_V2_Controller extends \WC_REST_Product_Tags_V1_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v2';
-    }
-    /**
-     * REST API Product Tags controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Product_Tags_V2_Controller
-     */
-    class WC_REST_Product_Tags_Controller extends \WC_REST_Product_Tags_V2_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-    }
-    /**
-     * REST API Products controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_CRUD_Controller
-     */
-    class WC_REST_Products_V2_Controller extends \WC_REST_Legacy_Products_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v2';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'products';
-        /**
-         * Post type.
-         *
-         * @var string
-         */
-        protected $post_type = 'product';
-        /**
-         * If object is hierarchical.
-         *
-         * @var bool
-         */
-        protected $hierarchical = \true;
-        /**
-         * Initialize product actions.
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Register the routes for products.
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Get object.
-         *
-         * @param int $id Object ID.
-         *
-         * @since  3.0.0
-         * @return WC_Data
-         */
-        protected function get_object($id)
-        {
-        }
-        /**
-         * Prepare a single product output for response.
-         *
-         * @param WC_Data         $object  Object data.
-         * @param WP_REST_Request $request Request object.
-         *
-         * @since  3.0.0
-         * @return WP_REST_Response
-         */
-        public function prepare_object_for_response($object, $request)
-        {
-        }
-        /**
-         * Prepare objects query.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         *
-         * @since  3.0.0
-         * @return array
-         */
-        protected function prepare_objects_query($request)
-        {
-        }
-        /**
-         * Get the downloads for a product or product variation.
-         *
-         * @param WC_Product|WC_Product_Variation $product Product instance.
-         *
-         * @return array
-         */
-        protected function get_downloads($product)
-        {
-        }
-        /**
-         * Get taxonomy terms.
-         *
-         * @param WC_Product $product  Product instance.
-         * @param string     $taxonomy Taxonomy slug.
-         *
-         * @return array
-         */
-        protected function get_taxonomy_terms($product, $taxonomy = 'cat')
-        {
-        }
-        /**
-         * Get the images for a product or product variation.
-         *
-         * @param WC_Product|WC_Product_Variation $product Product instance.
-         *
-         * @return array
-         */
-        protected function get_images($product)
-        {
-        }
-        /**
-         * Get attribute taxonomy label.
-         *
-         * @param string $name Taxonomy name.
-         *
-         * @deprecated 3.0.0
-         * @return     string
-         */
-        protected function get_attribute_taxonomy_label($name)
-        {
-        }
-        /**
-         * Get product attribute taxonomy name.
-         *
-         * @param string     $slug    Taxonomy name.
-         * @param WC_Product $product Product data.
-         *
-         * @since  3.0.0
-         * @return string
-         */
-        protected function get_attribute_taxonomy_name($slug, $product)
-        {
-        }
-        /**
-         * Get default attributes.
-         *
-         * @param WC_Product $product Product instance.
-         *
-         * @return array
-         */
-        protected function get_default_attributes($product)
-        {
-        }
-        /**
-         * Get attribute options.
-         *
-         * @param int   $product_id Product ID.
-         * @param array $attribute  Attribute data.
-         *
-         * @return array
-         */
-        protected function get_attribute_options($product_id, $attribute)
-        {
-        }
-        /**
-         * Get the attributes for a product or product variation.
-         *
-         * @param WC_Product|WC_Product_Variation $product Product instance.
-         *
-         * @return array
-         */
-        protected function get_attributes($product)
-        {
-        }
-        /**
-         * Get product data.
-         *
-         * @param WC_Product $product Product instance.
-         * @param string     $context Request context.
-         *                            Options: 'view' and 'edit'.
-         *
-         * @return array
-         */
-        protected function get_product_data($product, $context = 'view')
-        {
-        }
-        /**
-         * Prepare links for the request.
-         *
-         * @param WC_Data         $object  Object data.
-         * @param WP_REST_Request $request Request object.
-         *
-         * @return array                   Links for the given post.
-         */
-        protected function prepare_links($object, $request)
-        {
-        }
-        /**
-         * Prepare a single product for create or update.
-         *
-         * @param WP_REST_Request $request Request object.
-         * @param bool            $creating If is creating a new object.
-         *
-         * @return WP_Error|WC_Data
-         */
-        protected function prepare_object_for_database($request, $creating = \false)
-        {
-        }
-        /**
-         * Set product images.
-         *
-         * @param WC_Product $product Product instance.
-         * @param array      $images  Images data.
-         *
-         * @throws WC_REST_Exception REST API exceptions.
-         * @return WC_Product
-         */
-        protected function set_product_images($product, $images)
-        {
-        }
-        /**
-         * Save product shipping data.
-         *
-         * @param WC_Product $product Product instance.
-         * @param array      $data    Shipping data.
-         *
-         * @return WC_Product
-         */
-        protected function save_product_shipping_data($product, $data)
-        {
-        }
-        /**
-         * Save downloadable files.
-         *
-         * @param WC_Product $product    Product instance.
-         * @param array      $downloads  Downloads data.
-         * @param int        $deprecated Deprecated since 3.0.
-         *
-         * @return WC_Product
-         */
-        protected function save_downloadable_files($product, $downloads, $deprecated = 0)
-        {
-        }
-        /**
-         * Save taxonomy terms.
-         *
-         * @param WC_Product $product  Product instance.
-         * @param array      $terms    Terms data.
-         * @param string     $taxonomy Taxonomy name.
-         *
-         * @return WC_Product
-         */
-        protected function save_taxonomy_terms($product, $terms, $taxonomy = 'cat')
-        {
-        }
-        /**
-         * Save default attributes.
-         *
-         * @param WC_Product      $product Product instance.
-         * @param WP_REST_Request $request Request data.
-         *
-         * @since  3.0.0
-         * @return WC_Product
-         */
-        protected function save_default_attributes($product, $request)
-        {
-        }
-        /**
-         * Clear caches here so in sync with any new variations/children.
-         *
-         * @param WC_Data $object Object data.
-         */
-        public function clear_transients($object)
-        {
-        }
-        /**
-         * Delete a single item.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         *
-         * @return WP_REST_Response|WP_Error
-         */
-        public function delete_item($request)
-        {
-        }
-        /**
-         * Get the Product's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-        /**
-         * Get the query params for collections of attachments.
-         *
-         * @return array
-         */
-        public function get_collection_params()
-        {
-        }
-    }
-    /**
-     * REST API variations controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Products_V2_Controller
-     */
-    class WC_REST_Product_Variations_V2_Controller extends \WC_REST_Products_V2_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v2';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'products/(?P<product_id>[\\d]+)/variations';
-        /**
-         * Post type.
-         *
-         * @var string
-         */
-        protected $post_type = 'product_variation';
-        /**
-         * Initialize product actions (parent).
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Register the routes for products.
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Get object.
-         *
-         * @since  3.0.0
-         * @param  int $id Object ID.
-         * @return WC_Data
-         */
-        protected function get_object($id)
-        {
-        }
-        /**
-         * Check if a given request has access to update an item.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function update_item_permissions_check($request)
-        {
-        }
-        /**
-         * Prepare a single variation output for response.
-         *
-         * @since  3.0.0
-         * @param  WC_Data         $object  Object data.
-         * @param  WP_REST_Request $request Request object.
-         * @return WP_REST_Response
-         */
-        public function prepare_object_for_response($object, $request)
-        {
-        }
-        /**
-         * Prepare objects query.
-         *
-         * @since  3.0.0
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return array
-         */
-        protected function prepare_objects_query($request)
-        {
-        }
-        /**
-         * Prepare a single variation for create or update.
-         *
-         * @param  WP_REST_Request $request Request object.
-         * @param  bool            $creating If is creating a new object.
-         * @return WP_Error|WC_Data
-         */
-        protected function prepare_object_for_database($request, $creating = \false)
-        {
-        }
-        /**
-         * Clear caches here so in sync with any new variations.
-         *
-         * @param WC_Data $object Object data.
-         */
-        public function clear_transients($object)
-        {
-        }
-        /**
-         * Delete a variation.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         *
-         * @return bool|WP_Error|WP_REST_Response
-         */
-        public function delete_item($request)
-        {
-        }
-        /**
-         * Bulk create, update and delete items.
-         *
-         * @since  3.0.0
-         * @param WP_REST_Request $request Full details about the request.
-         * @return array Of WP_Error or WP_REST_Response.
-         */
-        public function batch_items($request)
-        {
-        }
-        /**
-         * Prepare links for the request.
-         *
-         * @param WC_Data         $object  Object data.
-         * @param WP_REST_Request $request Request object.
-         * @return array                   Links for the given post.
-         */
-        protected function prepare_links($object, $request)
-        {
-        }
-        /**
-         * Get the Variation's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-    }
-    /**
-     * REST API variations controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Product_Variations_V2_Controller
-     */
-    class WC_REST_Product_Variations_Controller extends \WC_REST_Product_Variations_V2_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-        /**
-         * Prepare a single variation output for response.
-         *
-         * @param  WC_Data         $object  Object data.
-         * @param  WP_REST_Request $request Request object.
-         * @return WP_REST_Response
-         */
-        public function prepare_object_for_response($object, $request)
-        {
-        }
-        /**
-         * Prepare a single variation for create or update.
-         *
-         * @param  WP_REST_Request $request Request object.
-         * @param  bool            $creating If is creating a new object.
-         * @return WP_Error|WC_Data
-         */
-        protected function prepare_object_for_database($request, $creating = \false)
-        {
-        }
-        /**
-         * Get the image for a product variation.
-         *
-         * @param WC_Product_Variation $variation Variation data.
-         * @return array
-         */
-        protected function get_image($variation)
-        {
-        }
-        /**
-         * Set variation image.
-         *
-         * @throws WC_REST_Exception REST API exceptions.
-         * @param  WC_Product_Variation $variation Variation instance.
-         * @param  array                $image    Image data.
-         * @return WC_Product_Variation
-         */
-        protected function set_variation_image($variation, $image)
-        {
-        }
-        /**
-         * Get the Variation's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-        /**
-         * Prepare objects query.
-         *
-         * @since  3.0.0
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return array
-         */
-        protected function prepare_objects_query($request)
-        {
-        }
-        /**
-         * Get the query params for collections of attachments.
-         *
-         * @return array
-         */
-        public function get_collection_params()
-        {
-        }
-    }
-    /**
-     * REST API Products controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Products_V2_Controller
-     */
-    class WC_REST_Products_Controller extends \WC_REST_Products_V2_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-        /**
-         * Get the images for a product or product variation.
-         *
-         * @param WC_Product|WC_Product_Variation $product Product instance.
-         * @return array
-         */
-        protected function get_images($product)
-        {
-        }
-        /**
-         * Make extra product orderby features supported by WooCommerce available to the WC API.
-         * This includes 'price', 'popularity', and 'rating'.
-         *
-         * @param WP_REST_Request $request Request data.
-         * @return array
-         */
-        protected function prepare_objects_query($request)
-        {
-        }
-        /**
-         * Set product images.
-         *
-         * @throws WC_REST_Exception REST API exceptions.
-         * @param WC_Product $product Product instance.
-         * @param array      $images  Images data.
-         * @return WC_Product
-         */
-        protected function set_product_images($product, $images)
-        {
-        }
-        /**
-         * Prepare a single product for create or update.
-         *
-         * @param  WP_REST_Request $request Request object.
-         * @param  bool            $creating If is creating a new object.
-         * @return WP_Error|WC_Data
-         */
-        protected function prepare_object_for_database($request, $creating = \false)
-        {
-        }
-        /**
-         * Get the Product's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-        /**
-         * Add new options for 'orderby' to the collection params.
-         *
-         * @return array
-         */
-        public function get_collection_params()
-        {
-        }
-        /**
-         * Get product data.
-         *
-         * @param WC_Product $product Product instance.
-         * @param string     $context Request context.
-         *                            Options: 'view' and 'edit'.
-         * @return array
-         */
-        protected function get_product_data($product, $context = 'view')
-        {
-        }
-    }
-    /**
-     * REST API Reports controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Controller
-     */
-    class WC_REST_Reports_V1_Controller extends \WC_REST_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v1';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'reports';
-        /**
-         * Register the routes for reports.
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Check whether a given request has permission to read reports.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_items_permissions_check($request)
-        {
-        }
-        /**
-         * Get reports list.
-         *
-         * @since 3.5.0
-         * @return array
-         */
-        protected function get_reports()
-        {
-        }
-        /**
-         * Get all reports.
-         *
-         * @param WP_REST_Request $request
-         * @return array|WP_Error
-         */
-        public function get_items($request)
-        {
-        }
-        /**
-         * Prepare a report object for serialization.
-         *
-         * @param stdClass $report Report data.
-         * @param WP_REST_Request $request Request object.
-         * @return WP_REST_Response $response Response data.
-         */
-        public function prepare_item_for_response($report, $request)
-        {
-        }
-        /**
-         * Get the Report's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-        /**
-         * Get the query params for collections.
-         *
-         * @return array
-         */
-        public function get_collection_params()
-        {
-        }
-    }
-    /**
-     * REST API Reports controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Reports_V1_Controller
-     */
-    class WC_REST_Reports_V2_Controller extends \WC_REST_Reports_V1_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v2';
-    }
-    /**
-     * REST API Reports controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Reports_V2_Controller
-     */
-    class WC_REST_Reports_Controller extends \WC_REST_Reports_V2_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-        /**
-         * Get reports list.
-         *
-         * @since 3.5.0
-         * @return array
-         */
-        protected function get_reports()
-        {
-        }
-    }
-    /**
-     * REST API Reports Coupons Totals controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Reports_Controller
-     */
-    class WC_REST_Report_Coupons_Totals_Controller extends \WC_REST_Reports_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'reports/coupons/totals';
-        /**
-         * Get reports list.
-         *
-         * @since 3.5.0
-         * @return array
-         */
-        protected function get_reports()
-        {
-        }
-        /**
-         * Prepare a report object for serialization.
-         *
-         * @param  stdClass        $report Report data.
-         * @param  WP_REST_Request $request Request object.
-         * @return WP_REST_Response $response Response data.
-         */
-        public function prepare_item_for_response($report, $request)
-        {
-        }
-        /**
-         * Get the Report's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-    }
-    /**
-     * REST API Reports Customers Totals controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Reports_Controller
-     */
-    class WC_REST_Report_Customers_Totals_Controller extends \WC_REST_Reports_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'reports/customers/totals';
-        /**
-         * Get reports list.
-         *
-         * @since 3.5.0
-         * @return array
-         */
-        protected function get_reports()
-        {
-        }
-        /**
-         * Prepare a report object for serialization.
-         *
-         * @param  stdClass        $report Report data.
-         * @param  WP_REST_Request $request Request object.
-         * @return WP_REST_Response $response Response data.
-         */
-        public function prepare_item_for_response($report, $request)
-        {
-        }
-        /**
-         * Get the Report's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-    }
-    /**
-     * REST API Reports Orders Totals controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Reports_Controller
-     */
-    class WC_REST_Report_Orders_Totals_Controller extends \WC_REST_Reports_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'reports/orders/totals';
-        /**
-         * Get reports list.
-         *
-         * @since 3.5.0
-         * @return array
-         */
-        protected function get_reports()
-        {
-        }
-        /**
-         * Prepare a report object for serialization.
-         *
-         * @param  stdClass        $report Report data.
-         * @param  WP_REST_Request $request Request object.
-         * @return WP_REST_Response $response Response data.
-         */
-        public function prepare_item_for_response($report, $request)
-        {
-        }
-        /**
-         * Get the Report's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-    }
-    /**
-     * REST API Reports Products Totals controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Reports_Controller
-     */
-    class WC_REST_Report_Products_Totals_Controller extends \WC_REST_Reports_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'reports/products/totals';
-        /**
-         * Get reports list.
-         *
-         * @since 3.5.0
-         * @return array
-         */
-        protected function get_reports()
-        {
-        }
-        /**
-         * Prepare a report object for serialization.
-         *
-         * @param  stdClass        $report Report data.
-         * @param  WP_REST_Request $request Request object.
-         * @return WP_REST_Response $response Response data.
-         */
-        public function prepare_item_for_response($report, $request)
-        {
-        }
-        /**
-         * Get the Report's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-    }
-    /**
-     * REST API Reports Reviews Totals controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Reports_Controller
-     */
-    class WC_REST_Report_Reviews_Totals_Controller extends \WC_REST_Reports_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'reports/reviews/totals';
-        /**
-         * Get reports list.
-         *
-         * @since 3.5.0
-         * @return array
-         */
-        protected function get_reports()
-        {
-        }
-        /**
-         * Prepare a report object for serialization.
-         *
-         * @param  stdClass        $report Report data.
-         * @param  WP_REST_Request $request Request object.
-         * @return WP_REST_Response $response Response data.
-         */
-        public function prepare_item_for_response($report, $request)
-        {
-        }
-        /**
-         * Get the Report's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-    }
-    /**
-     * REST API Report Sales controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Controller
-     */
-    class WC_REST_Report_Sales_V1_Controller extends \WC_REST_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v1';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'reports/sales';
-        /**
-         * Report instance.
-         *
-         * @var WC_Admin_Report
-         */
-        protected $report;
-        /**
-         * Register the routes for sales reports.
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Check whether a given request has permission to read report.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_items_permissions_check($request)
-        {
-        }
-        /**
-         * Get sales reports.
-         *
-         * @param WP_REST_Request $request
-         * @return array|WP_Error
-         */
-        public function get_items($request)
-        {
-        }
-        /**
-         * Prepare a report sales object for serialization.
-         *
-         * @param null $_
-         * @param WP_REST_Request $request Request object.
-         * @return WP_REST_Response $response Response data.
-         */
-        public function prepare_item_for_response($_, $request)
-        {
-        }
-        /**
-         * Setup the report object and parse any date filtering.
-         *
-         * @param array $filter date filtering
-         */
-        protected function setup_report($filter)
-        {
-        }
-        /**
-         * Get the Report's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-        /**
-         * Get the query params for collections.
-         *
-         * @return array
-         */
-        public function get_collection_params()
-        {
-        }
-    }
-    /**
-     * REST API Report Sales controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Report_Sales_V1_Controller
-     */
-    class WC_REST_Report_Sales_V2_Controller extends \WC_REST_Report_Sales_V1_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v2';
-    }
-    /**
-     * REST API Report Sales controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Report_Sales_V2_Controller
-     */
-    class WC_REST_Report_Sales_Controller extends \WC_REST_Report_Sales_V2_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-    }
-    /**
-     * REST API Report Top Sellers controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Report_Sales_V1_Controller
-     */
-    class WC_REST_Report_Top_Sellers_V1_Controller extends \WC_REST_Report_Sales_V1_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v1';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'reports/top_sellers';
-        /**
-         * Get sales reports.
-         *
-         * @param WP_REST_Request $request
-         * @return array|WP_Error
-         */
-        public function get_items($request)
-        {
-        }
-        /**
-         * Prepare a report sales object for serialization.
-         *
-         * @param stdClass $top_seller
-         * @param WP_REST_Request $request Request object.
-         * @return WP_REST_Response $response Response data.
-         */
-        public function prepare_item_for_response($top_seller, $request)
-        {
-        }
-        /**
-         * Get the Report's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-    }
-    /**
-     * REST API Report Top Sellers controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Report_Top_Sellers_V1_Controller
-     */
-    class WC_REST_Report_Top_Sellers_V2_Controller extends \WC_REST_Report_Top_Sellers_V1_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v2';
-    }
-    /**
-     * REST API Report Top Sellers controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Report_Top_Sellers_V2_Controller
-     */
-    class WC_REST_Report_Top_Sellers_Controller extends \WC_REST_Report_Top_Sellers_V2_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-    }
-    /**
-     * REST API Setting Options controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Controller
-     */
-    class WC_REST_Setting_Options_V2_Controller extends \WC_REST_Controller
-    {
-        /**
-         * WP REST API namespace/version.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v2';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'settings/(?P<group_id>[\\w-]+)';
-        /**
-         * Register routes.
-         *
-         * @since 3.0.0
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Return a single setting.
-         *
-         * @since  3.0.0
-         * @param  WP_REST_Request $request Request data.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function get_item($request)
-        {
-        }
-        /**
-         * Return all settings in a group.
-         *
-         * @since  3.0.0
-         * @param  WP_REST_Request $request Request data.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function get_items($request)
-        {
-        }
-        /**
-         * Get all settings in a group.
-         *
-         * @since  3.0.0
-         * @param string $group_id Group ID.
-         * @return array|WP_Error
-         */
-        public function get_group_settings($group_id)
-        {
-        }
-        /**
-         * Returns a list of countries and states for use in the base location setting.
-         *
-         * @since  3.0.7
-         * @return array Array of states and countries.
-         */
-        private function get_countries_and_states()
-        {
-        }
-        /**
-         * Get setting data.
-         *
-         * @since  3.0.0
-         * @param string $group_id Group ID.
-         * @param string $setting_id Setting ID.
-         * @return stdClass|WP_Error
-         */
-        public function get_setting($group_id, $setting_id)
-        {
-        }
-        /**
-         * Bulk create, update and delete items.
-         *
-         * @since  3.0.0
-         * @param WP_REST_Request $request Full details about the request.
-         * @return array Of WP_Error or WP_REST_Response.
-         */
-        public function batch_items($request)
-        {
-        }
-        /**
-         * Update a single setting in a group.
-         *
-         * @since  3.0.0
-         * @param  WP_REST_Request $request Request data.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function update_item($request)
-        {
-        }
-        /**
-         * Prepare a single setting object for response.
-         *
-         * @since  3.0.0
-         * @param object          $item Setting object.
-         * @param WP_REST_Request $request Request object.
-         * @return WP_REST_Response $response Response data.
-         */
-        public function prepare_item_for_response($item, $request)
-        {
-        }
-        /**
-         * Prepare links for the request.
-         *
-         * @since  3.0.0
-         * @param string $setting_id Setting ID.
-         * @param string $group_id Group ID.
-         * @return array Links for the given setting.
-         */
-        protected function prepare_links($setting_id, $group_id)
-        {
-        }
-        /**
-         * Makes sure the current user has access to READ the settings APIs.
-         *
-         * @since  3.0.0
-         * @param WP_REST_Request $request Full data about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_items_permissions_check($request)
-        {
-        }
-        /**
-         * Makes sure the current user has access to WRITE the settings APIs.
-         *
-         * @since  3.0.0
-         * @param WP_REST_Request $request Full data about the request.
-         * @return WP_Error|boolean
-         */
-        public function update_items_permissions_check($request)
-        {
-        }
-        /**
-         * Filters out bad values from the settings array/filter so we
-         * only return known values via the API.
-         *
-         * @since 3.0.0
-         * @param  array $setting Settings.
-         * @return array
-         */
-        public function filter_setting($setting)
-        {
-        }
-        /**
-         * For image_width, Crop can return "0" instead of false -- so we want
-         * to make sure we return these consistently the same we accept them.
-         *
-         * @todo remove in 4.0
-         * @since 3.0.0
-         * @param  array $setting Settings.
-         * @return array
-         */
-        public function cast_image_width($setting)
-        {
-        }
-        /**
-         * Callback for allowed keys for each setting response.
-         *
-         * @since  3.0.0
-         * @param  string $key Key to check.
-         * @return boolean
-         */
-        public function allowed_setting_keys($key)
-        {
-        }
-        /**
-         * Boolean for if a setting type is a valid supported setting type.
-         *
-         * @since  3.0.0
-         * @param  string $type Type.
-         * @return bool
-         */
-        public function is_setting_type_valid($type)
-        {
-        }
-        /**
-         * Get the settings schema, conforming to JSON Schema.
-         *
-         * @since 3.0.0
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-    }
-    /**
-     * REST API Setting Options controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Setting_Options_V2_Controller
-     */
-    class WC_REST_Setting_Options_Controller extends \WC_REST_Setting_Options_V2_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-        /**
-         * Get setting data.
-         *
-         * @param string $group_id Group ID.
-         * @param string $setting_id Setting ID.
-         * @return stdClass|WP_Error
-         */
-        public function get_setting($group_id, $setting_id)
-        {
-        }
-        /**
-         * Callback for allowed keys for each setting response.
-         *
-         * @param  string $key Key to check.
-         * @return boolean
-         */
-        public function allowed_setting_keys($key)
-        {
-        }
-        /**
-         * Get all settings in a group.
-         *
-         * @param string $group_id Group ID.
-         * @return array|WP_Error
-         */
-        public function get_group_settings($group_id)
-        {
-        }
-        /**
-         * Returns a list of countries and states for use in the base location setting.
-         *
-         * @since  3.0.7
-         * @return array Array of states and countries.
-         */
-        private function get_countries_and_states()
-        {
-        }
-        /**
-         * Get the settings schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-    }
-    /**
-     * REST API Settings controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Controller
-     */
-    class WC_REST_Settings_V2_Controller extends \WC_REST_Controller
-    {
-        /**
-         * WP REST API namespace/version.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v2';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'settings';
-        /**
-         * Register routes.
-         *
-         * @since 3.0.0
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Get all settings groups items.
-         *
-         * @since  3.0.0
-         * @param  WP_REST_Request $request Request data.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function get_items($request)
-        {
-        }
-        /**
-         * Prepare links for the request.
-         *
-         * @param string $group_id Group ID.
-         * @return array Links for the given group.
-         */
-        protected function prepare_links($group_id)
-        {
-        }
-        /**
-         * Prepare a report sales object for serialization.
-         *
-         * @since  3.0.0
-         * @param array           $item Group object.
-         * @param WP_REST_Request $request Request object.
-         * @return WP_REST_Response $response Response data.
-         */
-        public function prepare_item_for_response($item, $request)
-        {
-        }
-        /**
-         * Filters out bad values from the groups array/filter so we
-         * only return known values via the API.
-         *
-         * @since 3.0.0
-         * @param  array $group Group.
-         * @return array
-         */
-        public function filter_group($group)
-        {
-        }
-        /**
-         * Callback for allowed keys for each group response.
-         *
-         * @since  3.0.0
-         * @param  string $key Key to check.
-         * @return boolean
-         */
-        public function allowed_group_keys($key)
-        {
-        }
-        /**
-         * Returns default settings for groups. null means the field is required.
-         *
-         * @since  3.0.0
-         * @return array
-         */
-        protected function group_defaults()
-        {
-        }
-        /**
-         * Makes sure the current user has access to READ the settings APIs.
-         *
-         * @since  3.0.0
-         * @param WP_REST_Request $request Full data about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_items_permissions_check($request)
-        {
-        }
-        /**
-         * Get the groups schema, conforming to JSON Schema.
-         *
-         * @since  3.0.0
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-    }
-    /**
-     * REST API Settings controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Settings_V2_Controller
-     */
-    class WC_REST_Settings_Controller extends \WC_REST_Settings_V2_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-        /**
-         * Register routes.
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Makes sure the current user has access to WRITE the settings APIs.
-         *
-         * @param WP_REST_Request $request Full data about the request.
-         * @return WP_Error|bool
-         */
-        public function update_items_permissions_check($request)
-        {
-        }
-        /**
-         * Update a setting.
-         *
-         * @param  WP_REST_Request $request Request data.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function update_item($request)
-        {
-        }
-        /**
-         * Get the groups schema, conforming to JSON Schema.
-         *
-         * @since  3.0.0
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-    }
-    /**
-     * Shipping methods controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Controller
-     */
-    class WC_REST_Shipping_Methods_V2_Controller extends \WC_REST_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v2';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'shipping_methods';
-        /**
-         * Register the route for /shipping_methods and /shipping_methods/<method>
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Check whether a given request has permission to view shipping methods.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_items_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access to read a shipping method.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_item_permissions_check($request)
-        {
-        }
-        /**
-         * Get shipping methods.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function get_items($request)
-        {
-        }
-        /**
-         * Get a single Shipping Method.
-         *
-         * @param WP_REST_Request $request Request data.
-         * @return WP_REST_Response|WP_Error
-         */
-        public function get_item($request)
-        {
-        }
-        /**
-         * Prepare a shipping method for response.
-         *
-         * @param  WC_Shipping_Method $method   Shipping method object.
-         * @param  WP_REST_Request    $request  Request object.
-         * @return WP_REST_Response   $response Response data.
-         */
-        public function prepare_item_for_response($method, $request)
-        {
-        }
-        /**
-         * Prepare links for the request.
-         *
-         * @param WC_Shipping_Method $method Shipping method object.
-         * @param WP_REST_Request    $request Request object.
-         * @return array
-         */
-        protected function prepare_links($method, $request)
-        {
-        }
-        /**
-         * Get the shipping method schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-        /**
-         * Get any query params needed.
-         *
-         * @return array
-         */
-        public function get_collection_params()
-        {
-        }
-    }
-    /**
-     * Shipping methods controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Shipping_Methods_V2_Controller
-     */
-    class WC_REST_Shipping_Methods_Controller extends \WC_REST_Shipping_Methods_V2_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-    }
-    /**
-     * REST API Shipping Zone Locations class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Shipping_Zones_Controller_Base
-     */
-    class WC_REST_Shipping_Zone_Locations_V2_Controller extends \WC_REST_Shipping_Zones_Controller_Base
-    {
-        /**
-         * Register the routes for Shipping Zone Locations.
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Get all Shipping Zone Locations.
-         *
-         * @param WP_REST_Request $request Request data.
-         * @return WP_REST_Response|WP_Error
-         */
-        public function get_items($request)
-        {
-        }
-        /**
-         * Update all Shipping Zone Locations.
-         *
-         * @param WP_REST_Request $request Request data.
-         * @return WP_REST_Response|WP_Error
-         */
-        public function update_items($request)
-        {
-        }
-        /**
-         * Prepare the Shipping Zone Location for the REST response.
-         *
-         * @param array           $item Shipping Zone Location.
-         * @param WP_REST_Request $request Request object.
-         * @return WP_REST_Response $response
-         */
-        public function prepare_item_for_response($item, $request)
-        {
-        }
-        /**
-         * Prepare links for the request.
-         *
-         * @param int $zone_id Given Shipping Zone ID.
-         * @return array Links for the given Shipping Zone Location.
-         */
-        protected function prepare_links($zone_id)
-        {
-        }
-        /**
-         * Get the Shipping Zone Locations schema, conforming to JSON Schema
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-    }
-    /**
-     * REST API Shipping Zone Locations class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Shipping_Zone_Locations_V2_Controller
-     */
-    class WC_REST_Shipping_Zone_Locations_Controller extends \WC_REST_Shipping_Zone_Locations_V2_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-    }
-    /**
-     * REST API Shipping Zone Methods class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Shipping_Zones_Controller_Base
-     */
-    class WC_REST_Shipping_Zone_Methods_V2_Controller extends \WC_REST_Shipping_Zones_Controller_Base
-    {
-        /**
-         * Register the routes for Shipping Zone Methods.
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Get a single Shipping Zone Method.
-         *
-         * @param WP_REST_Request $request Request data.
-         * @return WP_REST_Response|WP_Error
-         */
-        public function get_item($request)
-        {
-        }
-        /**
-         * Get all Shipping Zone Methods.
-         *
-         * @param WP_REST_Request $request Request data.
-         * @return WP_REST_Response|WP_Error
-         */
-        public function get_items($request)
-        {
-        }
-        /**
-         * Create a new shipping zone method instance.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_REST_Request|WP_Error
-         */
-        public function create_item($request)
-        {
-        }
-        /**
-         * Delete a shipping method instance.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function delete_item($request)
-        {
-        }
-        /**
-         * Update A Single Shipping Zone Method.
-         *
-         * @param WP_REST_Request $request Request data.
-         * @return WP_REST_Response|WP_Error
-         */
-        public function update_item($request)
-        {
-        }
-        /**
-         * Updates settings, order, and enabled status on create.
-         *
-         * @param int                $instance_id Instance ID.
-         * @param WC_Shipping_Method $method      Shipping method data.
-         * @param WP_REST_Request    $request     Request data.
-         *
-         * @return WC_Shipping_Method
-         */
-        public function update_fields($instance_id, $method, $request)
-        {
-        }
-        /**
-         * Prepare the Shipping Zone Method for the REST response.
-         *
-         * @param array           $item Shipping Zone Method.
-         * @param WP_REST_Request $request Request object.
-         * @return WP_REST_Response $response
-         */
-        public function prepare_item_for_response($item, $request)
-        {
-        }
-        /**
-         * Return settings associated with this shipping zone method instance.
-         *
-         * @param WC_Shipping_Method $item Shipping method data.
-         *
-         * @return array
-         */
-        public function get_settings($item)
-        {
-        }
-        /**
-         * Prepare links for the request.
-         *
-         * @param int $zone_id Given Shipping Zone ID.
-         * @param int $instance_id Given Shipping Zone Method Instance ID.
-         * @return array Links for the given Shipping Zone Method.
-         */
-        protected function prepare_links($zone_id, $instance_id)
-        {
-        }
-        /**
-         * Get the Shipping Zone Methods schema, conforming to JSON Schema
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-    }
-    /**
-     * REST API Shipping Zone Methods class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Shipping_Zone_Methods_V2_Controller
-     */
-    class WC_REST_Shipping_Zone_Methods_Controller extends \WC_REST_Shipping_Zone_Methods_V2_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-    }
-    /**
-     * REST API Shipping Zones class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Shipping_Zones_Controller_Base
-     */
-    class WC_REST_Shipping_Zones_V2_Controller extends \WC_REST_Shipping_Zones_Controller_Base
-    {
-        /**
-         * Register the routes for Shipping Zones.
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Get a single Shipping Zone.
-         *
-         * @param WP_REST_Request $request Request data.
-         * @return WP_REST_Response|WP_Error
-         */
-        public function get_item($request)
-        {
-        }
-        /**
-         * Get all Shipping Zones.
-         *
-         * @param WP_REST_Request $request Request data.
-         * @return WP_REST_Response
-         */
-        public function get_items($request)
-        {
-        }
-        /**
-         * Create a single Shipping Zone.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_REST_Request|WP_Error
-         */
-        public function create_item($request)
-        {
-        }
-        /**
-         * Update a single Shipping Zone.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_REST_Request|WP_Error
-         */
-        public function update_item($request)
-        {
-        }
-        /**
-         * Delete a single Shipping Zone.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_REST_Request|WP_Error
-         */
-        public function delete_item($request)
-        {
-        }
-        /**
-         * Prepare the Shipping Zone for the REST response.
-         *
-         * @param array           $item Shipping Zone.
-         * @param WP_REST_Request $request Request object.
-         * @return WP_REST_Response $response
-         */
-        public function prepare_item_for_response($item, $request)
-        {
-        }
-        /**
-         * Prepare links for the request.
-         *
-         * @param int $zone_id Given Shipping Zone ID.
-         * @return array Links for the given Shipping Zone.
-         */
-        protected function prepare_links($zone_id)
-        {
-        }
-        /**
-         * Get the Shipping Zones schema, conforming to JSON Schema
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-    }
-    /**
-     * REST API Shipping Zones class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Shipping_Zones_V2_Controller
-     */
-    class WC_REST_Shipping_Zones_Controller extends \WC_REST_Shipping_Zones_V2_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-    }
-    /**
-     * System status controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Controller
-     */
-    class WC_REST_System_Status_V2_Controller extends \WC_REST_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v2';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'system_status';
-        /**
-         * Register the route for /system_status
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Check whether a given request has permission to view system status.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_items_permissions_check($request)
-        {
-        }
-        /**
-         * Get a system status info, by section.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function get_items($request)
-        {
-        }
-        /**
-         * Get the system status schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-        /**
-         * Return an array of sections and the data associated with each.
-         *
-         * @return array
-         */
-        public function get_item_mappings()
-        {
-        }
-        /**
-         * Get array of environment information. Includes thing like software
-         * versions, and various server settings.
-         *
-         * @return array
-         */
-        public function get_environment_info()
-        {
-        }
-        /**
-         * Add prefix to table.
-         *
-         * @param string $table Table name.
-         * @return stromg
-         */
-        protected function add_db_table_prefix($table)
-        {
-        }
-        /**
-         * Get array of database information. Version, prefix, and table existence.
-         *
-         * @return array
-         */
-        public function get_database_info()
-        {
-        }
-        /**
-         * Get array of counts of objects. Orders, products, etc.
-         *
-         * @return array
-         */
-        public function get_post_type_counts()
-        {
-        }
-        /**
-         * Get a list of plugins active on the site.
-         *
-         * @return array
-         */
-        public function get_active_plugins()
-        {
-        }
-        /**
-         * Get a list of inplugins active on the site.
-         *
-         * @return array
-         */
-        public function get_inactive_plugins()
-        {
-        }
-        /**
-         * Format plugin data, including data on updates, into a standard format.
-         *
-         * @since 3.6.0
-         * @param string $plugin Plugin directory/file.
-         * @param array  $data Plugin data from WP.
-         * @return array Formatted data.
-         */
-        protected function format_plugin_data($plugin, $data)
-        {
-        }
-        /**
-         * Get a list of Dropins and MU plugins.
-         *
-         * @since 3.6.0
-         * @return array
-         */
-        public function get_dropins_mu_plugins()
-        {
-        }
-        /**
-         * Get info on the current active theme, info on parent theme (if presnet)
-         * and a list of template overrides.
-         *
-         * @return array
-         */
-        public function get_theme_info()
-        {
-        }
-        /**
-         * Get some setting values for the site that are useful for debugging
-         * purposes. For full settings access, use the settings api.
-         *
-         * @return array
-         */
-        public function get_settings()
-        {
-        }
-        /**
-         * Returns security tips.
-         *
-         * @return array
-         */
-        public function get_security_info()
-        {
-        }
-        /**
-         * Returns a mini-report on WC pages and if they are configured correctly:
-         * Present, visible, and including the correct shortcode.
-         *
-         * @return array
-         */
-        public function get_pages()
-        {
-        }
-        /**
-         * Get any query params needed.
-         *
-         * @return array
-         */
-        public function get_collection_params()
-        {
-        }
-        /**
-         * Prepare the system status response
-         *
-         * @param  array           $system_status System status data.
-         * @param  WP_REST_Request $request       Request object.
-         * @return WP_REST_Response
-         */
-        public function prepare_item_for_response($system_status, $request)
-        {
-        }
-    }
-    /**
-     * System status controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_System_Status_V2_Controller
-     */
-    class WC_REST_System_Status_Controller extends \WC_REST_System_Status_V2_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-    }
-    /**
-     * System status tools controller.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Controller
-     */
-    class WC_REST_System_Status_Tools_V2_Controller extends \WC_REST_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v2';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'system_status/tools';
-        /**
-         * Register the routes for /system_status/tools/*.
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Check whether a given request has permission to view system status tools.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_items_permissions_check($request)
-        {
-        }
-        /**
-         * Check whether a given request has permission to view a specific system status tool.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check whether a given request has permission to execute a specific system status tool.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function update_item_permissions_check($request)
-        {
-        }
-        /**
-         * A list of available tools for use in the system status section.
-         * 'button' becomes 'action' in the API.
-         *
-         * @return array
-         */
-        public function get_tools()
-        {
-        }
-        /**
-         * Get a list of system status tools.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function get_items($request)
-        {
-        }
-        /**
-         * Return a single tool.
-         *
-         * @param  WP_REST_Request $request Request data.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function get_item($request)
-        {
-        }
-        /**
-         * Update (execute) a tool.
-         *
-         * @param  WP_REST_Request $request Request data.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function update_item($request)
-        {
-        }
-        /**
-         * Prepare a tool item for serialization.
-         *
-         * @param  array           $item     Object.
-         * @param  WP_REST_Request $request  Request object.
-         * @return WP_REST_Response $response Response data.
-         */
-        public function prepare_item_for_response($item, $request)
-        {
-        }
-        /**
-         * Get the system status tools schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-        /**
-         * Prepare links for the request.
-         *
-         * @param string $id ID.
-         * @return array
-         */
-        protected function prepare_links($id)
-        {
-        }
-        /**
-         * Get any query params needed.
-         *
-         * @return array
-         */
-        public function get_collection_params()
-        {
-        }
-        /**
-         * Actually executes a tool.
-         *
-         * @param  string $tool Tool.
-         * @return array
-         */
-        public function execute_tool($tool)
-        {
-        }
-    }
-    /**
-     * System status tools controller.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_System_Status_Tools_V2_Controller
-     */
-    class WC_REST_System_Status_Tools_Controller extends \WC_REST_System_Status_Tools_V2_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-    }
-    /**
-     * REST API Tax Classes controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Controller
-     */
-    class WC_REST_Tax_Classes_V1_Controller extends \WC_REST_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v1';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'taxes/classes';
-        /**
-         * Register the routes for tax classes.
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Check whether a given request has permission to read tax classes.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_items_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access create tax classes.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         *
-         * @return bool|WP_Error
-         */
-        public function create_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access delete a tax.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         *
-         * @return bool|WP_Error
-         */
-        public function delete_item_permissions_check($request)
-        {
-        }
-        /**
-         * Get all tax classes.
-         *
-         * @param WP_REST_Request $request
-         * @return array
-         */
-        public function get_items($request)
-        {
-        }
-        /**
-         * Create a single tax.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function create_item($request)
-        {
-        }
-        /**
-         * Delete a single tax class.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function delete_item($request)
-        {
-        }
-        /**
-         * Prepare a single tax class output for response.
-         *
-         * @param array $tax_class Tax class data.
-         * @param WP_REST_Request $request Request object.
-         * @return WP_REST_Response $response Response data.
-         */
-        public function prepare_item_for_response($tax_class, $request)
-        {
-        }
-        /**
-         * Prepare links for the request.
-         *
-         * @return array Links for the given tax class.
-         */
-        protected function prepare_links()
-        {
-        }
-        /**
-         * Get the Tax Classes schema, conforming to JSON Schema
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-        /**
-         * Get the query params for collections.
-         *
-         * @return array
-         */
-        public function get_collection_params()
-        {
-        }
-    }
-    /**
-     * REST API Tax Classes controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Tax_Classes_V1_Controller
-     */
-    class WC_REST_Tax_Classes_V2_Controller extends \WC_REST_Tax_Classes_V1_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v2';
-    }
-    /**
-     * REST API Tax Classes controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Tax_Classes_V2_Controller
-     */
-    class WC_REST_Tax_Classes_Controller extends \WC_REST_Tax_Classes_V2_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-    }
-    /**
-     * REST API Taxes controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Controller
-     */
-    class WC_REST_Taxes_V1_Controller extends \WC_REST_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v1';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'taxes';
-        /**
-         * Register the routes for taxes.
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Check whether a given request has permission to read taxes.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_items_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access create taxes.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         *
-         * @return bool|WP_Error
-         */
-        public function create_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access to read a tax.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access update a tax.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         *
-         * @return bool|WP_Error
-         */
-        public function update_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access delete a tax.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         *
-         * @return bool|WP_Error
-         */
-        public function delete_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access batch create, update and delete items.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         *
-         * @return bool|WP_Error
-         */
-        public function batch_items_permissions_check($request)
-        {
-        }
-        /**
-         * Get all taxes.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function get_items($request)
-        {
-        }
-        /**
-         * Take tax data from the request and return the updated or newly created rate.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @param stdClass|null $current Existing tax object.
-         * @return object
-         */
-        protected function create_or_update_tax($request, $current = \null)
-        {
-        }
-        /**
-         * Create a single tax.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function create_item($request)
-        {
-        }
-        /**
-         * Get a single tax.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function get_item($request)
-        {
-        }
-        /**
-         * Update a single tax.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function update_item($request)
-        {
-        }
-        /**
-         * Delete a single tax.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function delete_item($request)
-        {
-        }
-        /**
-         * Prepare a single tax output for response.
-         *
-         * @param stdClass $tax Tax object.
-         * @param WP_REST_Request $request Request object.
-         * @return WP_REST_Response $response Response data.
-         */
-        public function prepare_item_for_response($tax, $request)
-        {
-        }
-        /**
-         * Prepare links for the request.
-         *
-         * @param stdClass $tax Tax object.
-         * @return array Links for the given tax.
-         */
-        protected function prepare_links($tax)
-        {
-        }
-        /**
-         * Get the Taxes schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-        /**
-         * Get the query params for collections.
-         *
-         * @return array
-         */
-        public function get_collection_params()
-        {
-        }
-    }
-    /**
-     * REST API Taxes controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Taxes_V1_Controller
-     */
-    class WC_REST_Taxes_V2_Controller extends \WC_REST_Taxes_V1_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v2';
-    }
-    /**
-     * REST API Taxes controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Taxes_V2_Controller
-     */
-    class WC_REST_Taxes_Controller extends \WC_REST_Taxes_V2_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-    }
-    /**
-     * REST API Webhooks controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Controller
-     */
-    class WC_REST_Webhooks_V1_Controller extends \WC_REST_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v1';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'webhooks';
-        /**
-         * Post type.
-         *
-         * @var string
-         */
-        protected $post_type = 'shop_webhook';
-        /**
-         * Register the routes for webhooks.
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Check whether a given request has permission to read webhooks.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_items_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access create webhooks.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         *
-         * @return bool|WP_Error
-         */
-        public function create_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access to read a webhook.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access update a webhook.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         *
-         * @return bool|WP_Error
-         */
-        public function update_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access delete a webhook.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         *
-         * @return bool|WP_Error
-         */
-        public function delete_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access batch create, update and delete items.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         *
-         * @return bool|WP_Error
-         */
-        public function batch_items_permissions_check($request)
-        {
-        }
-        /**
-         * Get the default REST API version.
-         *
-         * @since  3.0.0
-         * @return string
-         */
-        protected function get_default_api_version()
-        {
-        }
-        /**
-         * Get all webhooks.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function get_items($request)
-        {
-        }
-        /**
-         * Get a single item.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function get_item($request)
-        {
-        }
-        /**
-         * Create a single webhook.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function create_item($request)
-        {
-        }
-        /**
-         * Update a single webhook.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function update_item($request)
-        {
-        }
-        /**
-         * Delete a single webhook.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_REST_Response|WP_Error
-         */
-        public function delete_item($request)
-        {
-        }
-        /**
-         * Prepare a single webhook for create or update.
-         *
-         * @param WP_REST_Request $request Request object.
-         * @return WP_Error|stdClass $data Post object.
-         */
-        protected function prepare_item_for_database($request)
-        {
-        }
-        /**
-         * Prepare a single webhook output for response.
-         *
-         * @param int               $id       Webhook ID or object.
-         * @param WP_REST_Request   $request  Request object.
-         * @return WP_REST_Response $response Response data.
-         */
-        public function prepare_item_for_response($id, $request)
-        {
-        }
-        /**
-         * Prepare links for the request.
-         *
-         * @param int $id Webhook ID.
-         * @return array
-         */
-        protected function prepare_links($id)
-        {
-        }
-        /**
-         * Get the Webhook's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-        /**
-         * Get the query params for collections of attachments.
-         *
-         * @return array
-         */
-        public function get_collection_params()
-        {
-        }
-    }
-    /**
-     * REST API Webhooks controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Webhooks_V1_Controller
-     */
-    class WC_REST_Webhooks_V2_Controller extends \WC_REST_Webhooks_V1_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v2';
-        /**
-         * Prepare a single webhook output for response.
-         *
-         * @param int             $id       Webhook ID.
-         * @param WP_REST_Request $request  Request object.
-         * @return WP_REST_Response $response
-         */
-        public function prepare_item_for_response($id, $request)
-        {
-        }
-        /**
-         * Get the default REST API version.
-         *
-         * @since  3.0.0
-         * @return string
-         */
-        protected function get_default_api_version()
-        {
-        }
-        /**
-         * Get the Webhook's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-    }
-    /**
-     * REST API Webhooks controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Webhooks_V2_Controller
-     */
-    class WC_REST_Webhooks_Controller extends \WC_REST_Webhooks_V2_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v3';
-        /**
-         * Get the default REST API version.
-         *
-         * @since  3.0.0
-         * @return string
-         */
-        protected function get_default_api_version()
-        {
-        }
-    }
-    /**
-     * REST API Coupons controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Posts_Controller
-     */
-    class WC_REST_Coupons_V1_Controller extends \WC_REST_Posts_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v1';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'coupons';
-        /**
-         * Post type.
-         *
-         * @var string
-         */
-        protected $post_type = 'shop_coupon';
-        /**
-         * Coupons actions.
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Register the routes for coupons.
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Query args.
-         *
-         * @param array $args Query args
-         * @param WP_REST_Request $request Request data.
-         * @return array
-         */
-        public function query_args($args, $request)
-        {
-        }
-        /**
-         * Prepare a single coupon output for response.
-         *
-         * @param WP_Post $post Post object.
-         * @param WP_REST_Request $request Request object.
-         * @return WP_REST_Response $data
-         */
-        public function prepare_item_for_response($post, $request)
-        {
-        }
-        /**
-         * Only return writable props from schema.
-         * @param  array $schema
-         * @return bool
-         */
-        protected function filter_writable_props($schema)
-        {
-        }
-        /**
-         * Prepare a single coupon for create or update.
-         *
-         * @param WP_REST_Request $request Request object.
-         * @return WP_Error|stdClass $data Post object.
-         */
-        protected function prepare_item_for_database($request)
-        {
-        }
-        /**
-         * Create a single item.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function create_item($request)
-        {
-        }
-        /**
-         * Update a single coupon.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function update_item($request)
-        {
-        }
-        /**
-         * Saves a coupon to the database.
-         *
-         * @since 3.0.0
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|int
-         */
-        protected function save_coupon($request)
-        {
-        }
-        /**
-         * Get the Coupon's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-        /**
-         * Get the query params for collections of attachments.
-         *
-         * @return array
-         */
-        public function get_collection_params()
-        {
-        }
-    }
-    /**
-     * REST API Orders controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Posts_Controller
-     */
-    class WC_REST_Orders_V1_Controller extends \WC_REST_Posts_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v1';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'orders';
-        /**
-         * Post type.
-         *
-         * @var string
-         */
-        protected $post_type = 'shop_order';
-        /**
-         * Initialize orders actions.
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Register the routes for orders.
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Prepare a single order output for response.
-         *
-         * @param WP_Post $post Post object.
-         * @param WP_REST_Request $request Request object.
-         * @return WP_REST_Response $data
-         */
-        public function prepare_item_for_response($post, $request)
-        {
-        }
-        /**
-         * Prepare links for the request.
-         *
-         * @param WC_Order $order Order object.
-         * @param WP_REST_Request $request Request object.
-         * @return array Links for the given order.
-         */
-        protected function prepare_links($order, $request)
-        {
-        }
-        /**
-         * Query args.
-         *
-         * @param array $args
-         * @param WP_REST_Request $request
-         * @return array
-         */
-        public function query_args($args, $request)
-        {
-        }
-        /**
-         * Prepare a single order for create.
-         *
-         * @param  WP_REST_Request $request Request object.
-         * @return WP_Error|WC_Order $data Object.
-         */
-        protected function prepare_item_for_database($request)
-        {
-        }
-        /**
-         * Create base WC Order object.
-         * @deprecated 3.0.0
-         * @param array $data
-         * @return WC_Order
-         */
-        protected function create_base_order($data)
-        {
-        }
-        /**
-         * Only return writable props from schema.
-         * @param  array $schema
-         * @return bool
-         */
-        protected function filter_writable_props($schema)
-        {
-        }
-        /**
-         * Create order.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return int|WP_Error
-         */
-        protected function create_order($request)
-        {
-        }
-        /**
-         * Update order.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return int|WP_Error
-         */
-        protected function update_order($request)
-        {
-        }
-        /**
-         * Update address.
-         *
-         * @param WC_Order $order
-         * @param array $posted
-         * @param string $type
-         */
-        protected function update_address($order, $posted, $type = 'billing')
-        {
-        }
-        /**
-         * Gets the product ID from the SKU or posted ID.
-         *
-         * @param array $posted Request data
-         *
-         * @return int
-         * @throws WC_REST_Exception
-         */
-        protected function get_product_id($posted)
-        {
-        }
-        /**
-         * Maybe set an item prop if the value was posted.
-         * @param WC_Order_Item $item
-         * @param string $prop
-         * @param array $posted Request data.
-         */
-        protected function maybe_set_item_prop($item, $prop, $posted)
-        {
-        }
-        /**
-         * Maybe set item props if the values were posted.
-         * @param WC_Order_Item $item
-         * @param string[] $props
-         * @param array $posted Request data.
-         */
-        protected function maybe_set_item_props($item, $props, $posted)
-        {
-        }
-        /**
-         * Create or update a line item.
-         *
-         * @param array $posted Line item data.
-         * @param string $action 'create' to add line item or 'update' to update it.
-         *
-         * @return WC_Order_Item_Product
-         * @throws WC_REST_Exception Invalid data, server error.
-         */
-        protected function prepare_line_items($posted, $action = 'create')
-        {
-        }
-        /**
-         * Create or update an order shipping method.
-         *
-         * @param $posted $shipping Item data.
-         * @param string $action 'create' to add shipping or 'update' to update it.
-         *
-         * @return WC_Order_Item_Shipping
-         * @throws WC_REST_Exception Invalid data, server error.
-         */
-        protected function prepare_shipping_lines($posted, $action)
-        {
-        }
-        /**
-         * Create or update an order fee.
-         *
-         * @param array $posted Item data.
-         * @param string $action 'create' to add fee or 'update' to update it.
-         *
-         * @return WC_Order_Item_Fee
-         * @throws WC_REST_Exception Invalid data, server error.
-         */
-        protected function prepare_fee_lines($posted, $action)
-        {
-        }
-        /**
-         * Create or update an order coupon.
-         *
-         * @param array $posted Item data.
-         * @param string $action 'create' to add coupon or 'update' to update it.
-         *
-         * @return WC_Order_Item_Coupon
-         * @throws WC_REST_Exception Invalid data, server error.
-         */
-        protected function prepare_coupon_lines($posted, $action)
-        {
-        }
-        /**
-         * Wrapper method to create/update order items.
-         * When updating, the item ID provided is checked to ensure it is associated
-         * with the order.
-         *
-         * @param WC_Order $order order
-         * @param string $item_type
-         * @param array $posted item provided in the request body
-         * @throws WC_REST_Exception If item ID is not associated with order
-         */
-        protected function set_item($order, $item_type, $posted)
-        {
-        }
-        /**
-         * Helper method to check if the resource ID associated with the provided item is null.
-         * Items can be deleted by setting the resource ID to null.
-         *
-         * @param array $item Item provided in the request body.
-         * @return bool True if the item resource ID is null, false otherwise.
-         */
-        protected function item_is_null($item)
-        {
-        }
-        /**
-         * Create a single item.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function create_item($request)
-        {
-        }
-        /**
-         * Update a single order.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function update_item($request)
-        {
-        }
-        /**
-         * Get order statuses without prefixes.
-         * @return array
-         */
-        protected function get_order_statuses()
-        {
-        }
-        /**
-         * Get the Order's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-        /**
-         * Get the query params for collections.
-         *
-         * @return array
-         */
-        public function get_collection_params()
-        {
-        }
-    }
-    /**
-     * REST API Order Refunds controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Orders_V1_Controller
-     */
-    class WC_REST_Order_Refunds_V1_Controller extends \WC_REST_Orders_V1_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v1';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'orders/(?P<order_id>[\\d]+)/refunds';
-        /**
-         * Post type.
-         *
-         * @var string
-         */
-        protected $post_type = 'shop_order_refund';
-        /**
-         * Order refunds actions.
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Register the routes for order refunds.
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Prepare a single order refund output for response.
-         *
-         * @param WP_Post $post Post object.
-         * @param WP_REST_Request $request Request object.
-         *
-         * @return WP_Error|WP_REST_Response
-         */
-        public function prepare_item_for_response($post, $request)
-        {
-        }
-        /**
-         * Prepare links for the request.
-         *
-         * @param WC_Order_Refund $refund Comment object.
-         * @param WP_REST_Request $request Request object.
-         * @return array Links for the given order refund.
-         */
-        protected function prepare_links($refund, $request)
-        {
-        }
-        /**
-         * Query args.
-         *
-         * @param array           $args    Request args.
-         * @param WP_REST_Request $request Request object.
-         * @return array
-         */
-        public function query_args($args, $request)
-        {
-        }
-        /**
-         * Create a single item.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function create_item($request)
-        {
-        }
-        /**
-         * Get the Order's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-        /**
-         * Get the query params for collections.
-         *
-         * @return array
-         */
-        public function get_collection_params()
-        {
-        }
-    }
-    /**
-     * REST API Product Reviews Controller Class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Controller
-     */
-    class WC_REST_Product_Reviews_V1_Controller extends \WC_REST_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v1';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'products/(?P<product_id>[\\d]+)/reviews';
-        /**
-         * Register the routes for product reviews.
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Check whether a given request has permission to read webhook deliveries.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_items_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access to read a product review.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access to create a new product review.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function create_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access to update a product review.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function update_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access to delete a product review.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function delete_item_permissions_check($request)
-        {
-        }
-        /**
-         * Get all reviews from a product.
-         *
-         * @param WP_REST_Request $request
-         *
-         * @return array|WP_Error
-         */
-        public function get_items($request)
-        {
-        }
-        /**
-         * Get a single product review.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function get_item($request)
-        {
-        }
-        /**
-         * Create a product review.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function create_item($request)
-        {
-        }
-        /**
-         * Update a single product review.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function update_item($request)
-        {
-        }
-        /**
-         * Delete a product review.
-         *
-         * @param WP_REST_Request $request Full details about the request
-         *
-         * @return bool|WP_Error|WP_REST_Response
-         */
-        public function delete_item($request)
-        {
-        }
-        /**
-         * Prepare a single product review output for response.
-         *
-         * @param WP_Comment $review Product review object.
-         * @param WP_REST_Request $request Request object.
-         * @return WP_REST_Response $response Response data.
-         */
-        public function prepare_item_for_response($review, $request)
-        {
-        }
-        /**
-         * Prepare a single product review to be inserted into the database.
-         *
-         * @param  WP_REST_Request $request Request object.
-         * @return array|WP_Error  $prepared_review
-         */
-        protected function prepare_item_for_database($request)
-        {
-        }
-        /**
-         * Prepare links for the request.
-         *
-         * @param WP_Comment $review Product review object.
-         * @param WP_REST_Request $request Request object.
-         * @return array Links for the given product review.
-         */
-        protected function prepare_links($review, $request)
-        {
-        }
-        /**
-         * Get the Product Review's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-        /**
-         * Get the query params for collections.
-         *
-         * @return array
-         */
-        public function get_collection_params()
-        {
-        }
-    }
-    /**
-     * REST API Products controller class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Posts_Controller
-     */
-    class WC_REST_Products_V1_Controller extends \WC_REST_Posts_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v1';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'products';
-        /**
-         * Post type.
-         *
-         * @var string
-         */
-        protected $post_type = 'product';
-        /**
-         * Initialize product actions.
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Register the routes for products.
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Get post types.
-         *
-         * @return array
-         */
-        protected function get_post_types()
-        {
-        }
-        /**
-         * Query args.
-         *
-         * @param array           $args    Request args.
-         * @param WP_REST_Request $request Request data.
-         * @return array
-         */
-        public function query_args($args, $request)
-        {
-        }
-        /**
-         * Get the downloads for a product or product variation.
-         *
-         * @param WC_Product|WC_Product_Variation $product Product instance.
-         * @return array
-         */
-        protected function get_downloads($product)
-        {
-        }
-        /**
-         * Get taxonomy terms.
-         *
-         * @param WC_Product $product  Product instance.
-         * @param string     $taxonomy Taxonomy slug.
-         * @return array
-         */
-        protected function get_taxonomy_terms($product, $taxonomy = 'cat')
-        {
-        }
-        /**
-         * Get the images for a product or product variation.
-         *
-         * @param WC_Product|WC_Product_Variation $product Product instance.
-         * @return array
-         */
-        protected function get_images($product)
-        {
-        }
-        /**
-         * Get attribute taxonomy label.
-         *
-         * @param  string $name Taxonomy name.
-         * @return string
-         */
-        protected function get_attribute_taxonomy_label($name)
-        {
-        }
-        /**
-         * Get default attributes.
-         *
-         * @param WC_Product $product Product instance.
-         * @return array
-         */
-        protected function get_default_attributes($product)
-        {
-        }
-        /**
-         * Get attribute options.
-         *
-         * @param int   $product_id Product ID.
-         * @param array $attribute  Attribute data.
-         * @return array
-         */
-        protected function get_attribute_options($product_id, $attribute)
-        {
-        }
-        /**
-         * Get the attributes for a product or product variation.
-         *
-         * @param WC_Product|WC_Product_Variation $product Product instance.
-         * @return array
-         */
-        protected function get_attributes($product)
-        {
-        }
-        /**
-         * Get product menu order.
-         *
-         * @deprecated 3.0.0
-         * @param WC_Product $product Product instance.
-         * @return int
-         */
-        protected function get_product_menu_order($product)
-        {
-        }
-        /**
-         * Get product data.
-         *
-         * @param WC_Product $product Product instance.
-         * @return array
-         */
-        protected function get_product_data($product)
-        {
-        }
-        /**
-         * Get an individual variation's data.
-         *
-         * @param WC_Product $product Product instance.
-         * @return array
-         */
-        protected function get_variation_data($product)
-        {
-        }
-        /**
-         * Prepare a single product output for response.
-         *
-         * @param WP_Post         $post    Post object.
-         * @param WP_REST_Request $request Request object.
-         * @return WP_REST_Response
-         */
-        public function prepare_item_for_response($post, $request)
-        {
-        }
-        /**
-         * Prepare links for the request.
-         *
-         * @param WC_Product      $product Product object.
-         * @param WP_REST_Request $request Request object.
-         * @return array Links for the given product.
-         */
-        protected function prepare_links($product, $request)
-        {
-        }
-        /**
-         * Prepare a single product for create or update.
-         *
-         * @param WP_REST_Request $request Request object.
-         * @return WP_Error|stdClass $data Post object.
-         */
-        protected function prepare_item_for_database($request)
-        {
-        }
-        /**
-         * Create a single product.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function create_item($request)
-        {
-        }
-        /**
-         * Update a single product.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function update_item($request)
-        {
-        }
-        /**
-         * Saves a product to the database.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return int
-         */
-        public function save_product($request)
-        {
-        }
-        /**
-         * Save product images.
-         *
-         * @deprecated 3.0.0
-         * @param int $product_id
-         * @param array $images
-         * @throws WC_REST_Exception
-         */
-        protected function save_product_images($product_id, $images)
-        {
-        }
-        /**
-         * Set product images.
-         *
-         * @throws WC_REST_Exception REST API exceptions.
-         * @param WC_Product $product Product instance.
-         * @param array      $images  Images data.
-         * @return WC_Product
-         */
-        protected function set_product_images($product, $images)
-        {
-        }
-        /**
-         * Save product shipping data.
-         *
-         * @param WC_Product $product Product instance.
-         * @param array      $data    Shipping data.
-         * @return WC_Product
-         */
-        protected function save_product_shipping_data($product, $data)
-        {
-        }
-        /**
-         * Save downloadable files.
-         *
-         * @param WC_Product $product    Product instance.
-         * @param array      $downloads  Downloads data.
-         * @param int        $deprecated Deprecated since 3.0.
-         * @return WC_Product
-         */
-        protected function save_downloadable_files($product, $downloads, $deprecated = 0)
-        {
-        }
-        /**
-         * Save taxonomy terms.
-         *
-         * @param WC_Product $product  Product instance.
-         * @param array      $terms    Terms data.
-         * @param string     $taxonomy Taxonomy name.
-         * @return WC_Product
-         */
-        protected function save_taxonomy_terms($product, $terms, $taxonomy = 'cat')
-        {
-        }
-        /**
-         * Save default attributes.
-         *
-         * @since 3.0.0
-         *
-         * @param WC_Product      $product Product instance.
-         * @param WP_REST_Request $request Request data.
-         * @return WC_Product
-         */
-        protected function save_default_attributes($product, $request)
-        {
-        }
-        /**
-         * Save product meta.
-         *
-         * @deprecated 3.0.0
-         * @param WC_Product $product
-         * @param WP_REST_Request $request
-         * @return bool
-         * @throws WC_REST_Exception
-         */
-        protected function save_product_meta($product, $request)
-        {
-        }
-        /**
-         * Set product meta.
-         *
-         * @throws WC_REST_Exception REST API exceptions.
-         * @param WC_Product      $product Product instance.
-         * @param WP_REST_Request $request Request data.
-         * @return WC_Product
-         */
-        protected function set_product_meta($product, $request)
-        {
-        }
-        /**
-         * Save variations.
-         *
-         * @throws WC_REST_Exception REST API exceptions.
-         * @param WC_Product      $product          Product instance.
-         * @param WP_REST_Request $request          Request data.
-         * @return bool
-         */
-        protected function save_variations_data($product, $request)
-        {
-        }
-        /**
-         * Add post meta fields.
-         *
-         * @param WP_Post         $post    Post data.
-         * @param WP_REST_Request $request Request data.
-         * @return bool|WP_Error
-         */
-        protected function add_post_meta_fields($post, $request)
-        {
-        }
-        /**
-         * Update post meta fields.
-         *
-         * @param WP_Post         $post    Post data.
-         * @param WP_REST_Request $request Request data.
-         * @return bool|WP_Error
-         */
-        protected function update_post_meta_fields($post, $request)
-        {
-        }
-        /**
-         * Clear cache/transients.
-         *
-         * @param WP_Post $post Post data.
-         */
-        public function clear_transients($post)
-        {
-        }
-        /**
-         * Delete post.
-         *
-         * @param int|WP_Post $id Post ID or WP_Post instance.
-         */
-        protected function delete_post($id)
-        {
-        }
-        /**
-         * Delete a single item.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_REST_Response|WP_Error
-         */
-        public function delete_item($request)
-        {
-        }
-        /**
-         * Get the Product's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-        /**
-         * Get the query params for collections of attachments.
-         *
-         * @return array
-         */
-        public function get_collection_params()
-        {
-        }
-    }
-    /**
-     * REST API Webhook Deliveries controller class.
-     *
-     * @deprecated 3.3.0 Webhooks deliveries logs now uses logging system.
-     * @package WooCommerce/API
-     * @extends WC_REST_Controller
-     */
-    class WC_REST_Webhook_Deliveries_V1_Controller extends \WC_REST_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v1';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'webhooks/(?P<webhook_id>[\\d]+)/deliveries';
-        /**
-         * Register the routes for webhook deliveries.
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Check whether a given request has permission to read taxes.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_items_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access to read a tax.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_item_permissions_check($request)
-        {
-        }
-        /**
-         * Get all webhook deliveries.
-         *
-         * @param WP_REST_Request $request
-         *
-         * @return array|WP_Error
-         */
-        public function get_items($request)
-        {
-        }
-        /**
-         * Get a single webhook delivery.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function get_item($request)
-        {
-        }
-        /**
-         * Prepare a single webhook delivery output for response.
-         *
-         * @param stdClass $log Delivery log object.
-         * @param WP_REST_Request $request Request object.
-         * @return WP_REST_Response $response Response data.
-         */
-        public function prepare_item_for_response($log, $request)
-        {
-        }
-        /**
-         * Prepare links for the request.
-         *
-         * @param stdClass $log Delivery log object.
-         * @return array Links for the given webhook delivery.
-         */
-        protected function prepare_links($log)
-        {
-        }
-        /**
-         * Get the Webhook's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-        /**
-         * Get the query params for collections.
-         *
-         * @return array
-         */
-        public function get_collection_params()
-        {
-        }
-    }
-    /**
-     * REST API Product Reviews Controller Class.
-     *
-     * @package WooCommerce/API
-     * @extends WC_REST_Product_Reviews_V1_Controller
-     */
-    class WC_REST_Product_Reviews_V2_Controller extends \WC_REST_Product_Reviews_V1_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v2';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'products/(?P<product_id>[\\d]+)/reviews';
-        /**
-         * Register the routes for product reviews.
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Check if a given request has access to batch manage product reviews.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function batch_items_permissions_check($request)
-        {
-        }
-        /**
-         * Prepare a single product review output for response.
-         *
-         * @param WP_Comment      $review Product review object.
-         * @param WP_REST_Request $request Request object.
-         * @return WP_REST_Response $response Response data.
-         */
-        public function prepare_item_for_response($review, $request)
-        {
-        }
-        /**
-         * Bulk create, update and delete items.
-         *
-         * @since  3.0.0
-         * @param WP_REST_Request $request Full details about the request.
-         * @return array Of WP_Error or WP_REST_Response.
-         */
-        public function batch_items($request)
-        {
-        }
-        /**
-         * Get the Product Review's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-    }
-    /**
-     * REST API Webhook Deliveries controller class.
-     *
-     * @deprecated 3.3.0 Webhooks deliveries logs now uses logging system.
-     * @package WooCommerce/API
-     * @extends WC_REST_Webhook_Deliveries_V1_Controller
-     */
-    class WC_REST_Webhook_Deliveries_V2_Controller extends \WC_REST_Webhook_Deliveries_V1_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc/v2';
-        /**
-         * Prepare a single webhook delivery output for response.
-         *
-         * @param  stdClass        $log Delivery log object.
-         * @param  WP_REST_Request $request Request object.
-         * @return WP_REST_Response
-         */
-        public function prepare_item_for_response($log, $request)
-        {
-        }
-        /**
-         * Get the Webhook's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-    }
-    /**
-     * REST API Product Attribute Terms controller class.
-     *
-     * @package WooCommerce/API
-     */
-    class WC_REST_Blocks_Product_Attribute_Terms_Controller extends \WC_REST_Product_Attribute_Terms_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc-blocks/v1';
-        /**
-         * Register the routes for products.
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Check permissions.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @param string          $context Request context.
-         * @return bool|WP_Error
-         */
-        protected function check_permissions($request, $context = 'read')
-        {
-        }
-        /**
-         * Prepare a single product category output for response.
-         *
-         * @param WP_Term         $item    Term object.
-         * @param WP_REST_Request $request Request instance.
-         * @return WP_REST_Response
-         */
-        public function prepare_item_for_response($item, $request)
-        {
-        }
-        /**
-         * Get the Product's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-    }
-    /**
-     * REST API Product Attributes controller class.
-     *
-     * @package WooCommerce/API
-     */
-    class WC_REST_Blocks_Product_Attributes_Controller extends \WC_REST_Product_Attributes_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc-blocks/v1';
-        /**
-         * Register the routes for products.
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Check if a given request has access to read the attributes.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_items_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access to read a attribute.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_item_permissions_check($request)
-        {
-        }
-        /**
-         * Check permissions.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @param string          $context Request context.
-         * @return bool|WP_Error
-         */
-        protected function check_permissions($request, $context = 'read')
-        {
-        }
-        /**
-         * Prepare a single product category output for response.
-         *
-         * @param WP_Term         $item    Term object.
-         * @param WP_REST_Request $request Request instance.
-         * @return WP_REST_Response
-         */
-        public function prepare_item_for_response($item, $request)
-        {
-        }
-        /**
-         * Get the Product's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-    }
-    /**
-     * REST API Product Categories controller class.
-     *
-     * @package WooCommerce/API
-     */
-    class WC_REST_Blocks_Product_Categories_Controller extends \WC_REST_Product_Categories_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc-blocks/v1';
-        /**
-         * Register the routes for products.
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Check permissions.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @param string          $context Request context.
-         * @return bool|WP_Error
-         */
-        protected function check_permissions($request, $context = 'read')
-        {
-        }
-        /**
-         * Prepare a single product category output for response.
-         *
-         * @param WP_Term         $item    Term object.
-         * @param WP_REST_Request $request Request instance.
-         * @return WP_REST_Response
-         */
-        public function prepare_item_for_response($item, $request)
-        {
-        }
-        /**
-         * Get the Product's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-    }
-    /**
-     * REST API Products controller class.
-     *
-     * @package WooCommerce/API
-     */
-    class WC_REST_Blocks_Products_Controller extends \WC_REST_Products_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc-blocks/v1';
-        /**
-         * Register the routes for products.
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Check if a given request has access to read items.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_items_permissions_check($request)
-        {
-        }
-        /**
-         * Check if a given request has access to read an item.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function get_item_permissions_check($request)
-        {
-        }
-        /**
-         * Get a collection of posts.
-         *
-         * @param WP_REST_Request $request Full details about the request.
-         * @return WP_Error|WP_REST_Response
-         */
-        public function get_items($request)
-        {
-        }
-        /**
-         * Get the images for a product or product variation.
-         *
-         * @param WC_Product|WC_Product_Variation $product Product instance.
-         * @return array
-         */
-        protected function get_images($product)
-        {
-        }
-        /**
-         * Prepare a single product output for response.
-         *
-         * @deprecated 3.0.0
-         *
-         * @param WP_Post         $post    Post object.
-         * @param WP_REST_Request $request Request object.
-         * @return WP_REST_Response
-         */
-        public function prepare_item_for_response($post, $request)
-        {
-        }
-        /**
-         * Make extra product orderby features supported by WooCommerce available to the WC API.
-         * This includes 'price', 'popularity', and 'rating'.
-         *
-         * @param WP_REST_Request $request Request data.
-         * @return array
-         */
-        protected function prepare_objects_query($request)
-        {
-        }
-        /**
-         * Get product data.
-         *
-         * @param WC_Product $product Product instance.
-         * @param string     $context Request context.
-         *                            Options: 'view' and 'edit'.
-         * @return array
-         */
-        protected function get_product_data($product, $context = 'view')
-        {
-        }
-        /**
-         * Update the collection params.
-         *
-         * Adds new options for 'orderby', and new parameters 'category_operator', 'attribute_operator'.
-         *
-         * @return array
-         */
-        public function get_collection_params()
-        {
-        }
-        /**
-         * Get the Product's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-    }
-    /**
-     * Wrapper class for Featured Product callback.
-     */
-    class WC_Block_Featured_Product
-    {
-        /**
-         * Block name.
-         *
-         * @var string
-         */
-        protected static $block_name = 'featured-product';
-        /**
-         * Default attribute values, should match what's set in JS `registerBlockType`.
-         *
-         * @var array
-         */
-        protected static $defaults = array('align' => 'none', 'contentAlign' => 'center', 'dimRatio' => 50, 'height' => \false, 'mediaId' => 0, 'mediaSrc' => '', 'showDesc' => \true, 'showPrice' => \true);
-        /**
-         * Render the Featured Product block.
-         *
-         * @param array  $attributes Block attributes. Default empty array.
-         * @param string $content    Block content. Default empty string.
-         * @return string Rendered block type output.
-         */
-        public static function render($attributes, $content)
-        {
-        }
-        /**
-         * Get the styles for the wrapper element (background image, color).
-         *
-         * @param array      $attributes Block attributes. Default empty array.
-         * @param WC_Product $product Product object.
-         * @return string
-         */
-        public static function get_styles($attributes, $product)
-        {
-        }
-        /**
-         * Get class names for the block container.
-         *
-         * @param array $attributes Block attributes. Default empty array.
-         * @return string
-         */
-        public static function get_classes($attributes)
-        {
-        }
-        /**
-         * Returns the main product image URL.
-         *
-         * @param WC_Product $product Product object.
-         * @param string     $size    Image size, defaults to 'full'.
-         * @return string
-         */
-        public static function get_image($product, $size = 'full')
-        {
-        }
-    }
-    /**
-     * WC_Block_Library Class.
-     */
-    class WC_Block_Library
-    {
-        /**
-         * Class instance.
-         *
-         * @var WC_Block_Library instance
-         */
-        protected static $instance = \null;
-        /**
-         * Get class instance
-         */
-        public static function get_instance()
-        {
-        }
-        /**
-         * Constructor.
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Initialize block library features.
-         */
-        public static function init()
-        {
-        }
-        /**
-         * Get the file modified time as a cache buster if we're in dev mode.
-         *
-         * @param string $file Local path to the file.
-         * @return string The cache buster value to use for the given file.
-         */
-        protected static function get_file_version($file)
-        {
-        }
-        /**
-         * Registers a script according to `wp_register_script`, additionally loading the translations for the file.
-         *
-         * @since 2.0.0
-         *
-         * @param string $handle    Name of the script. Should be unique.
-         * @param string $src       Full URL of the script, or path of the script relative to the WordPress root directory.
-         * @param array  $deps      Optional. An array of registered script handles this script depends on. Default empty array.
-         * @param bool   $has_i18n  Optional. Whether to add a script translation call to this file. Default 'true'.
-         */
-        protected static function register_script($handle, $src, $deps = array(), $has_i18n = \true)
-        {
-        }
-        /**
-         * Registers a style according to `wp_register_style`.
-         *
-         * @since 2.0.0
-         *
-         * @param string $handle Name of the stylesheet. Should be unique.
-         * @param string $src    Full URL of the stylesheet, or path of the stylesheet relative to the WordPress root directory.
-         * @param array  $deps   Optional. An array of registered stylesheet handles this stylesheet depends on. Default empty array.
-         * @param string $media  Optional. The media for which this stylesheet has been defined. Default 'all'. Accepts media types like
-         *                       'all', 'print' and 'screen', or media queries like '(orientation: portrait)' and '(max-width: 640px)'.
-         */
-        protected static function register_style($handle, $src, $deps = array(), $media = 'all')
-        {
-        }
-        /**
-         * Register block scripts & styles.
-         *
-         * @since 2.0.0
-         */
-        public static function register_assets()
-        {
-        }
-        /**
-         * Register blocks, hooking up assets and render functions as needed.
-         *
-         * @since 2.0.0
-         */
-        public static function register_blocks()
-        {
-        }
-        /**
-         * Adds a WooCommerce category to the block inserter.
-         *
-         * @since 2.0.0
-         *
-         * @param array $categories Array of categories.
-         * @return array Array of block categories.
-         */
-        public static function add_block_category($categories)
-        {
-        }
-        /**
-         * Output useful globals before printing any script tags.
-         *
-         * These are used by @woocommerce/components & the block library to set up defaults
-         * based on user-controlled settings from WordPress.
-         *
-         * @since 2.0.0
-         */
-        public static function print_script_settings()
         {
         }
     }
@@ -21824,11 +13595,9 @@ namespace {
          */
         public $authentication;
         /**
-         * Setup class.
-         *
-         * @since 2.0
+         * Init the legacy API.
          */
-        public function __construct()
+        public function init()
         {
         }
         /**
@@ -21895,6 +13664,30 @@ namespace {
         private function handle_v2_rest_api_request()
         {
         }
+        /**
+         * Rest API Init.
+         *
+         * @deprecated since 3.7.0 - REST API clases autoload.
+         */
+        public function rest_api_init()
+        {
+        }
+        /**
+         * Include REST API classes.
+         *
+         * @deprecated since 3.7.0 - REST API clases autoload.
+         */
+        public function rest_api_includes()
+        {
+        }
+        /**
+         * Register REST API routes.
+         *
+         * @deprecated since 3.7.0 - Not used.
+         */
+        public function register_rest_routes()
+        {
+        }
     }
     /**
      * WC_API class.
@@ -21902,25 +13695,47 @@ namespace {
     class WC_API extends \WC_Legacy_API
     {
         /**
-         * Setup class.
-         *
-         * @since 2.0
+         * Init the API by setting up action and filter hooks.
          */
-        public function __construct()
+        public function init()
         {
         }
         /**
-         * Init the WC API by adding endpoints for those requests.
+         * Get the version of the REST API package being ran.
+         *
+         * @since 3.7.0
+         * @return string|null
          */
-        private function wc_api_init()
+        public function get_rest_api_package_version()
         {
         }
         /**
-         * Init WP REST API by hooking into `rest_api_init`.
+         * Get the version of the REST API package being ran.
          *
-         * @since 2.6.0
+         * @since 3.7.0
+         * @return string
          */
-        private function rest_api_init()
+        public function get_rest_api_package_path()
+        {
+        }
+        /**
+         * Return if the rest API classes were already loaded.
+         *
+         * @since 3.7.0
+         * @return boolean
+         */
+        protected function is_rest_api_loaded()
+        {
+        }
+        /**
+         * Get data from a WooCommerce API endpoint.
+         *
+         * @since 3.7.0
+         * @param string $endpoint Endpoint.
+         * @param array  $params Params to passwith request.
+         * @return array|\WP_Error
+         */
+        public function get_endpoint_data($endpoint, $params = array())
         {
         }
         /**
@@ -21948,22 +13763,6 @@ namespace {
          * @version 2.4
          */
         public function handle_api_requests()
-        {
-        }
-        /**
-         * Include REST API classes.
-         *
-         * @since 2.6.0
-         */
-        public function rest_api_includes()
-        {
-        }
-        /**
-         * Register REST API routes.
-         *
-         * @since 2.6.0
-         */
-        public function register_rest_routes()
         {
         }
         /**
@@ -22480,7 +14279,7 @@ namespace {
         {
         }
         /**
-         * Set additonal nocache headers.
+         * Set additional nocache headers.
          *
          * @param array $headers Header names and field values.
          * @since 3.6.0
@@ -23206,6 +15005,16 @@ namespace {
          * @return float
          */
         protected function round_line_tax($value)
+        {
+        }
+        /**
+         * Apply rounding to item subtotal before summing.
+         *
+         * @since 3.7.0
+         * @param float $value Item subtotal value.
+         * @return float
+         */
+        protected function round_item_subtotal($value)
         {
         }
     }
@@ -24124,11 +15933,11 @@ namespace {
         {
         }
         /**
-         * Set the quantity for an item in the cart.
+         * Set the quantity for an item in the cart using it's key.
          *
          * @param string $cart_item_key contains the id of the cart item.
          * @param int    $quantity contains the quantity of the item.
-         * @param bool   $refresh_totals whether or not to calculate totals after setting the new qty.
+         * @param bool   $refresh_totals whether or not to calculate totals after setting the new qty. Can be used to defer calculations if setting quantities in bulk.
          * @return bool
          */
         public function set_quantity($cart_item_key, $quantity = 1, $refresh_totals = \true)
@@ -26030,7 +17839,7 @@ namespace {
          * Map one of the WC_Coupon error codes to a message string.
          *
          * @param int $err_code Message/error code.
-         * @return string| Message/error string
+         * @return string Message/error string
          */
         public function get_coupon_error($err_code)
         {
@@ -26366,20 +18175,6 @@ namespace {
          * @param string $user_ip_address IP Address of the user performing the download.
          */
         public function track_download($user_id = \null, $user_ip_address = \null)
-        {
-        }
-        /*
-        |--------------------------------------------------------------------------
-        | CRUD methods
-        |--------------------------------------------------------------------------
-        */
-        /**
-         * Save data to the database.
-         *
-         * @since 3.0.0
-         * @return int Item ID
-         */
-        public function save()
         {
         }
         /*
@@ -27459,6 +19254,51 @@ namespace {
         }
     }
     /**
+     * Data exception class.
+     */
+    class WC_Data_Exception extends \Exception
+    {
+        /**
+         * Sanitized error code.
+         *
+         * @var string
+         */
+        protected $error_code;
+        /**
+         * Error extra data.
+         *
+         * @var array
+         */
+        protected $error_data;
+        /**
+         * Setup exception.
+         *
+         * @param string $code             Machine-readable error code, e.g `woocommerce_invalid_product_id`.
+         * @param string $message          User-friendly translated error message, e.g. 'Product ID is invalid'.
+         * @param int    $http_status_code Proper HTTP status code to respond with, e.g. 400.
+         * @param array  $data             Extra error data.
+         */
+        public function __construct($code, $message, $http_status_code = 400, $data = array())
+        {
+        }
+        /**
+         * Returns the error code.
+         *
+         * @return string
+         */
+        public function getErrorCode()
+        {
+        }
+        /**
+         * Returns error data.
+         *
+         * @return array
+         */
+        public function getErrorData()
+        {
+        }
+    }
+    /**
      * Data store class.
      */
     class WC_Data_Store
@@ -28530,9 +20370,20 @@ namespace {
         {
         }
         /**
+         * Replace placeholder text in strings.
+         *
+         * @since  3.7.0
+         * @param  string $string Email footer text.
+         * @return string         Email footer text with any replacements done.
+         */
+        public function replace_placeholders($string)
+        {
+        }
+        /**
          * Filter callback to replace {site_title} in email footer
          *
          * @since  3.3.0
+         * @deprecated 3.7.0
          * @param  string $string Email footer text.
          * @return string         Email footer text with any replacements done.
          */
@@ -29651,7 +21502,7 @@ namespace {
          *
          * @var array
          */
-        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'));
+        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'));
         /**
          * Hook in tabs.
          */
@@ -31675,7 +23526,7 @@ namespace {
          * @since 3.0.0
          * @var array
          */
-        protected $extra_data = array('rate_code' => '', 'rate_id' => 0, 'label' => '', 'compound' => \false, 'tax_total' => 0, 'shipping_tax_total' => 0);
+        protected $extra_data = array('rate_code' => '', 'rate_id' => 0, 'label' => '', 'compound' => \false, 'tax_total' => 0, 'shipping_tax_total' => 0, 'rate_percent' => \null);
         /*
         |--------------------------------------------------------------------------
         | Setters
@@ -31735,6 +23586,14 @@ namespace {
          * @param bool $value If tax is compound.
          */
         public function set_compound($value)
+        {
+        }
+        /**
+         * Set rate value.
+         *
+         * @param float $value tax rate value.
+         */
+        public function set_rate_percent($value)
         {
         }
         /**
@@ -31827,6 +23686,15 @@ namespace {
          * @return boolean
          */
         public function is_compound()
+        {
+        }
+        /**
+         * Get rate value
+         *
+         * @param  string $context What the value is for. Valid values are 'view' and 'edit'.
+         * @return float
+         */
+        public function get_rate_percent($context = 'view')
         {
         }
         /*
@@ -32156,6 +24024,16 @@ namespace {
          * @return int order ID
          */
         public function save()
+        {
+        }
+        /**
+         * Log an error about this order is exception is encountered.
+         *
+         * @param Exception $e Exception object.
+         * @param string    $message Message regarding exception thrown.
+         * @since 3.7.0
+         */
+        protected function handle_exception($e, $message = 'Error')
         {
         }
         /**
@@ -36265,6 +28143,258 @@ namespace {
         }
     }
     /**
+     * REST API authentication class.
+     */
+    class WC_REST_Authentication
+    {
+        /**
+         * Authentication error.
+         *
+         * @var WP_Error
+         */
+        protected $error = \null;
+        /**
+         * Logged in user data.
+         *
+         * @var stdClass
+         */
+        protected $user = \null;
+        /**
+         * Current auth method.
+         *
+         * @var string
+         */
+        protected $auth_method = '';
+        /**
+         * Initialize authentication actions.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Check if is request to our REST API.
+         *
+         * @return bool
+         */
+        protected function is_request_to_rest_api()
+        {
+        }
+        /**
+         * Authenticate user.
+         *
+         * @param int|false $user_id User ID if one has been determined, false otherwise.
+         * @return int|false
+         */
+        public function authenticate($user_id)
+        {
+        }
+        /**
+         * Check for authentication error.
+         *
+         * @param WP_Error|null|bool $error Error data.
+         * @return WP_Error|null|bool
+         */
+        public function check_authentication_error($error)
+        {
+        }
+        /**
+         * Set authentication error.
+         *
+         * @param WP_Error $error Authentication error data.
+         */
+        protected function set_error($error)
+        {
+        }
+        /**
+         * Get authentication error.
+         *
+         * @return WP_Error|null.
+         */
+        protected function get_error()
+        {
+        }
+        /**
+         * Basic Authentication.
+         *
+         * SSL-encrypted requests are not subject to sniffing or man-in-the-middle
+         * attacks, so the request can be authenticated by simply looking up the user
+         * associated with the given consumer key and confirming the consumer secret
+         * provided is valid.
+         *
+         * @return int|bool
+         */
+        private function perform_basic_authentication()
+        {
+        }
+        /**
+         * Parse the Authorization header into parameters.
+         *
+         * @since 3.0.0
+         *
+         * @param string $header Authorization header value (not including "Authorization: " prefix).
+         *
+         * @return array Map of parameter values.
+         */
+        public function parse_header($header)
+        {
+        }
+        /**
+         * Get the authorization header.
+         *
+         * On certain systems and configurations, the Authorization header will be
+         * stripped out by the server or PHP. Typically this is then used to
+         * generate `PHP_AUTH_USER`/`PHP_AUTH_PASS` but not passed on. We use
+         * `getallheaders` here to try and grab it out instead.
+         *
+         * @since 3.0.0
+         *
+         * @return string Authorization header if set.
+         */
+        public function get_authorization_header()
+        {
+        }
+        /**
+         * Get oAuth parameters from $_GET, $_POST or request header.
+         *
+         * @since 3.0.0
+         *
+         * @return array|WP_Error
+         */
+        public function get_oauth_parameters()
+        {
+        }
+        /**
+         * Perform OAuth 1.0a "one-legged" (http://oauthbible.com/#oauth-10a-one-legged) authentication for non-SSL requests.
+         *
+         * This is required so API credentials cannot be sniffed or intercepted when making API requests over plain HTTP.
+         *
+         * This follows the spec for simple OAuth 1.0a authentication (RFC 5849) as closely as possible, with two exceptions:
+         *
+         * 1) There is no token associated with request/responses, only consumer keys/secrets are used.
+         *
+         * 2) The OAuth parameters are included as part of the request query string instead of part of the Authorization header,
+         *    This is because there is no cross-OS function within PHP to get the raw Authorization header.
+         *
+         * @link http://tools.ietf.org/html/rfc5849 for the full spec.
+         *
+         * @return int|bool
+         */
+        private function perform_oauth_authentication()
+        {
+        }
+        /**
+         * Verify that the consumer-provided request signature matches our generated signature,
+         * this ensures the consumer has a valid key/secret.
+         *
+         * @param stdClass $user   User data.
+         * @param array    $params The request parameters.
+         * @return true|WP_Error
+         */
+        private function check_oauth_signature($user, $params)
+        {
+        }
+        /**
+         * Creates an array of urlencoded strings out of each array key/value pairs.
+         *
+         * @param  array  $params       Array of parameters to convert.
+         * @param  array  $query_params Array to extend.
+         * @param  string $key          Optional Array key to append.
+         * @return string               Array of urlencoded strings.
+         */
+        private function join_with_equals_sign($params, $query_params = array(), $key = '')
+        {
+        }
+        /**
+         * Normalize each parameter by assuming each parameter may have already been
+         * encoded, so attempt to decode, and then re-encode according to RFC 3986.
+         *
+         * Note both the key and value is normalized so a filter param like:
+         *
+         * 'filter[period]' => 'week'
+         *
+         * is encoded to:
+         *
+         * 'filter%255Bperiod%255D' => 'week'
+         *
+         * This conforms to the OAuth 1.0a spec which indicates the entire query string
+         * should be URL encoded.
+         *
+         * @see rawurlencode()
+         * @param array $parameters Un-normalized parameters.
+         * @return array Normalized parameters.
+         */
+        private function normalize_parameters($parameters)
+        {
+        }
+        /**
+         * Verify that the timestamp and nonce provided with the request are valid. This prevents replay attacks where
+         * an attacker could attempt to re-send an intercepted request at a later time.
+         *
+         * - A timestamp is valid if it is within 15 minutes of now.
+         * - A nonce is valid if it has not been used within the last 15 minutes.
+         *
+         * @param stdClass $user      User data.
+         * @param int      $timestamp The unix timestamp for when the request was made.
+         * @param string   $nonce     A unique (for the given user) 32 alphanumeric string, consumer-generated.
+         * @return bool|WP_Error
+         */
+        private function check_oauth_timestamp_and_nonce($user, $timestamp, $nonce)
+        {
+        }
+        /**
+         * Return the user data for the given consumer_key.
+         *
+         * @param string $consumer_key Consumer key.
+         * @return array
+         */
+        private function get_user_data_by_consumer_key($consumer_key)
+        {
+        }
+        /**
+         * Check that the API keys provided have the proper key-specific permissions to either read or write API resources.
+         *
+         * @param string $method Request method.
+         * @return bool|WP_Error
+         */
+        private function check_permissions($method)
+        {
+        }
+        /**
+         * Updated API Key last access datetime.
+         */
+        private function update_last_access()
+        {
+        }
+        /**
+         * If the consumer_key and consumer_secret $_GET parameters are NOT provided
+         * and the Basic auth headers are either not present or the consumer secret does not match the consumer
+         * key provided, then return the correct Basic headers and an error message.
+         *
+         * @param WP_REST_Response $response Current response being served.
+         * @return WP_REST_Response
+         */
+        public function send_unauthorized_headers($response)
+        {
+        }
+        /**
+         * Check for user permissions and register last access.
+         *
+         * @param mixed           $result  Response to replace the requested version with.
+         * @param WP_REST_Server  $server  Server instance.
+         * @param WP_REST_Request $request Request used to generate the response.
+         * @return mixed
+         */
+        public function check_user_permissions($result, $server, $request)
+        {
+        }
+    }
+    /**
+     * WC_REST_Exception class.
+     */
+    class WC_REST_Exception extends \WC_Data_Exception
+    {
+    }
+    /**
      * Session handler class.
      */
     class WC_Session_Handler extends \WC_Session
@@ -36393,9 +28523,11 @@ namespace {
         {
         }
         /**
-         * Save data.
+         * Save data and delete guest session.
+         *
+         * @param int $old_session_key session ID before user logs in.
          */
-        public function save_data()
+        public function save_data($old_session_key = 0)
         {
         }
         /**
@@ -37479,7 +29611,6 @@ namespace {
          * Generates Product structured data.
          *
          * Hooked into `woocommerce_single_product_summary` action hook.
-         * Hooked into `woocommerce_shop_loop` action hook.
          *
          * @param WC_Product $product Product data (default: null).
          */
@@ -37555,6 +29686,7 @@ namespace {
         /**
          * When the woocommerce_tax_classes option is changed, remove any orphan rates.
          *
+         * @deprecated 3.7.0
          * @param  string $old_value Old rates value.
          * @param  string $value New rates value.
          */
@@ -37754,6 +29886,15 @@ namespace {
         {
         }
         /**
+         * Return a given rates percent.
+         *
+         * @param mixed $key_or_rate Tax rate ID, or the db row itself in object format.
+         * @return  float
+         */
+        public static function get_rate_percent_value($key_or_rate)
+        {
+        }
+        /**
          * Get a rates code. Code is made up of COUNTRY-STATE-NAME-Priority. E.g GB-VAT-1, US-AL-TAX-1.
          *
          * @param mixed $key_or_rate Tax rate ID, or the db row itself in object format.
@@ -37772,20 +29913,20 @@ namespace {
         {
         }
         /**
-         * Get store tax classes.
+         * Gets all tax rate classes from the database.
+         *
+         * @since 3.7.0
+         * @return array Array of tax class objects consisting of tax_rate_class_id, name, and slug.
+         */
+        protected static function get_tax_rate_classes()
+        {
+        }
+        /**
+         * Get store tax class names.
          *
          * @return array Array of class names ("Reduced rate", "Zero rate", etc).
          */
         public static function get_tax_classes()
-        {
-        }
-        /**
-         * Filter out invalid tax classes.
-         *
-         * @param string $tax_class Tax class name.
-         * @return boolean
-         */
-        private static function is_valid_tax_class($tax_class)
         {
         }
         /**
@@ -37795,6 +29936,39 @@ namespace {
          * @return array Array of class slugs ("reduced-rate", "zero-rate", etc).
          */
         public static function get_tax_class_slugs()
+        {
+        }
+        /**
+         * Create a new tax class.
+         *
+         * @since 3.7.0
+         * @param string $name Name of the tax class to add.
+         * @param string $slug (optional) Slug of the tax class to add. Defaults to sanitized name.
+         * @return WP_Error|array Returns name and slug (array) if the tax class is created, or WP_Error if something went wrong.
+         */
+        public static function create_tax_class($name, $slug = '')
+        {
+        }
+        /**
+         * Get an existing tax class.
+         *
+         * @since 3.7.0
+         * @param string     $field Field to get by. Valid values are id, name, or slug.
+         * @param string|int $item Item to get.
+         * @return array|bool Returns the tax class as an array. False if not found.
+         */
+        public static function get_tax_class_by($field, $item)
+        {
+        }
+        /**
+         * Delete an existing tax class.
+         *
+         * @since 3.7.0
+         * @param string     $field Field to delete by. Valid values are id, name, or slug.
+         * @param string|int $item Item to delete.
+         * @return WP_Error|bool Returns true if deleted successfully, false if nothing was deleted, or WP_Error if there is an invalid request.
+         */
+        public static function delete_tax_class_by($field, $item)
         {
         }
         /**
@@ -39025,7 +31199,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '3.6.5';
+        public $version = '3.7.0';
         /**
          * The single instance of the class.
          *
@@ -39410,6 +31584,22 @@ namespace {
          * @return WC_Emails
          */
         public function mailer()
+        {
+        }
+        /**
+         * Check if plugin assets are built and minified
+         *
+         * @return bool
+         */
+        public function build_dependencies_satisfied()
+        {
+        }
+        /**
+         * Output a admin notice when build dependencies not met.
+         *
+         * @return void
+         */
+        public function build_dependencies_notice()
         {
         }
     }
@@ -41157,7 +33347,7 @@ namespace {
          * Get amount already refunded.
          *
          * @param WC_Order $order Order object.
-         * @return string
+         * @return float
          */
         public function get_total_refunded($order);
         /**
@@ -41909,7 +34099,7 @@ namespace {
          * @since 3.0.0
          * @var array
          */
-        protected $internal_meta_keys = array('rate_id', 'label', 'compound', 'tax_amount', 'shipping_tax_amount');
+        protected $internal_meta_keys = array('rate_id', 'label', 'compound', 'tax_amount', 'shipping_tax_amount', 'rate_percent');
         /**
          * Read/populate data properties specific to this order item.
          *
@@ -41967,8 +34157,8 @@ namespace {
         /**
          * Read refund data. Can be overridden by child classes to load other props.
          *
-         * @param WC_Order $refund Refund object.
-         * @param object   $post_object Post object.
+         * @param WC_Order_Refund $refund Refund object.
+         * @param object          $post_object Post object.
          * @since 3.0.0
          */
         protected function read_order_data(&$refund, $post_object)
@@ -41977,7 +34167,7 @@ namespace {
         /**
          * Helper method that updates all the post meta for an order based on it's settings in the WC_Order class.
          *
-         * @param WC_Order $refund Refund object.
+         * @param WC_Order_Refund $refund Refund object.
          * @since 3.0.0
          */
         protected function update_post_meta(&$refund)
@@ -43917,6 +36107,26 @@ namespace {
         {
         }
         /**
+         * Default content to show below main email content.
+         *
+         * @since 3.7.0
+         * @return string
+         */
+        public function get_default_additional_content()
+        {
+        }
+        /**
+         * Return content from the additional_content field.
+         *
+         * Displayed above the footer.
+         *
+         * @since 3.7.0
+         * @return string
+         */
+        public function get_additional_content()
+        {
+        }
+        /**
          * Get email subject.
          *
          * @return string
@@ -44248,6 +36458,15 @@ namespace {
         {
         }
         /**
+         * Default content to show below main email content.
+         *
+         * @since 3.7.0
+         * @return string
+         */
+        public function get_default_additional_content()
+        {
+        }
+        /**
          * Initialise settings form fields.
          */
         public function init_form_fields()
@@ -44316,9 +36535,12 @@ namespace {
         {
         }
         /**
-         * Initialise settings form fields.
+         * Default content to show below main email content.
+         *
+         * @since 3.7.0
+         * @return string
          */
-        public function init_form_fields()
+        public function get_default_additional_content()
         {
         }
     }
@@ -44374,6 +36596,15 @@ namespace {
          * @return string
          */
         public function get_heading()
+        {
+        }
+        /**
+         * Default content to show below main email content.
+         *
+         * @since 3.7.0
+         * @return string
+         */
+        public function get_default_additional_content()
         {
         }
         /**
@@ -44494,6 +36725,15 @@ namespace {
         public function get_content_plain()
         {
         }
+        /**
+         * Default content to show below main email content.
+         *
+         * @since 3.7.0
+         * @return string
+         */
+        public function get_default_additional_content()
+        {
+        }
     }
     /**
      * Customer Note Order Email.
@@ -44561,6 +36801,15 @@ namespace {
         public function get_content_plain()
         {
         }
+        /**
+         * Default content to show below main email content.
+         *
+         * @since 3.7.0
+         * @return string
+         */
+        public function get_default_additional_content()
+        {
+        }
     }
     /**
      * Customer On-hold Order Email.
@@ -44623,6 +36872,15 @@ namespace {
         public function get_content_plain()
         {
         }
+        /**
+         * Default content to show below main email content.
+         *
+         * @since 3.7.0
+         * @return string
+         */
+        public function get_default_additional_content()
+        {
+        }
     }
     /**
      * Customer Processing Order Email.
@@ -44683,6 +36941,15 @@ namespace {
          * @return string
          */
         public function get_content_plain()
+        {
+        }
+        /**
+         * Default content to show below main email content.
+         *
+         * @since 3.7.0
+         * @return string
+         */
+        public function get_default_additional_content()
         {
         }
     }
@@ -44806,6 +37073,15 @@ namespace {
         {
         }
         /**
+         * Default content to show below main email content.
+         *
+         * @since 3.7.0
+         * @return string
+         */
+        public function get_default_additional_content()
+        {
+        }
+        /**
          * Initialise settings form fields.
          */
         public function init_form_fields()
@@ -44897,6 +37173,15 @@ namespace {
         public function get_content_plain()
         {
         }
+        /**
+         * Default content to show below main email content.
+         *
+         * @since 3.7.0
+         * @return string
+         */
+        public function get_default_additional_content()
+        {
+        }
     }
     /**
      * Failed Order Email.
@@ -44957,6 +37242,15 @@ namespace {
          * @return string
          */
         public function get_content_plain()
+        {
+        }
+        /**
+         * Default content to show below main email content.
+         *
+         * @since 3.7.0
+         * @return string
+         */
+        public function get_default_additional_content()
         {
         }
         /**
@@ -45025,6 +37319,15 @@ namespace {
          * @return string
          */
         public function get_content_plain()
+        {
+        }
+        /**
+         * Default content to show below main email content.
+         *
+         * @since 3.7.0
+         * @return string
+         */
+        public function get_default_additional_content()
         {
         }
         /**
@@ -47044,7 +39347,7 @@ namespace {
          *
          * @throws Exception If item cannot be processed.
          * @param  array $data Raw CSV data.
-         * @return array|WC_Error
+         * @return array|WP_Error
          */
         protected function process_item($data)
         {
@@ -47155,10 +39458,11 @@ namespace {
          * separators.
          *
          * @since  3.2.0
-         * @param  string $value Value to explode.
+         * @param  string $value     Value to explode.
+         * @param  string $separator Separator separating each value. Defaults to comma.
          * @return array
          */
-        protected function explode_values($value)
+        protected function explode_values($value, $separator = ',')
         {
         }
         /**
@@ -47307,6 +39611,16 @@ namespace {
         {
         }
         /**
+         * Parse the tax status field.
+         *
+         * @param string $value Field value.
+         *
+         * @return string
+         */
+        public function parse_tax_status_field($value)
+        {
+        }
+        /**
          * Parse a category field from a CSV.
          * Categories are separated by commas and subcategories are "parent > subcategory".
          *
@@ -47325,6 +39639,16 @@ namespace {
          * @return array
          */
         public function parse_tags_field($value)
+        {
+        }
+        /**
+         * Parse a tag field from a CSV with space separators.
+         *
+         * @param string $value Field value.
+         *
+         * @return array
+         */
+        public function parse_tags_spaces_field($value)
         {
         }
         /**
@@ -47411,6 +39735,17 @@ namespace {
          * @return string
          */
         public function parse_description_field($description)
+        {
+        }
+        /**
+         * Parse the published field. 1 is published, 0 is private, -1 is draft.
+         * Alternatively, 'true' can be used for published and 'false' for draft.
+         *
+         * @param string $value Field value.
+         *
+         * @return float|string
+         */
+        public function parse_published_field($value)
         {
         }
         /**
@@ -54177,6 +46512,14 @@ namespace {
         public function calculate_shipping($package = array())
         {
         }
+        /**
+         * Enqueue JS to handle free shipping options.
+         *
+         * Static so that's enqueued only once.
+         */
+        public static function enqueue_admin_js()
+        {
+        }
     }
     /**
      * Flat Rate Shipping Method.
@@ -55761,6 +48104,14 @@ namespace {
         {
         }
         /**
+         * Tracks when last next_steps screen is viewed in the OBW.
+         *
+         * @return void
+         */
+        public function track_next_steps()
+        {
+        }
+        /**
          * Track skipped steps.
          *
          * @return void
@@ -55774,6 +48125,30 @@ namespace {
          * @param array $steps Array of OBW steps.
          */
         public function set_obw_steps($steps)
+        {
+        }
+    }
+    /**
+     * This class adds actions to track usage of WooCommerce Orders.
+     */
+    class WC_Coupons_Tracking
+    {
+        /**
+         * Init tracking.
+         */
+        public function init()
+        {
+        }
+        /**
+         * Add a listener on the "Apply" button to track bulk actions.
+         */
+        public function tracks_coupons_bulk_actions()
+        {
+        }
+        /**
+         * Track page view events.
+         */
+        public function tracks_coupons_events()
         {
         }
     }
@@ -55888,6 +48263,28 @@ namespace {
         public function track_order_status_change($id, $previous_status, $next_status)
         {
         }
+        /**
+         * Send a Tracks event when an order date is changed.
+         *
+         * @param int $id Order id.
+         */
+        public function track_created_date_change($id)
+        {
+        }
+        /**
+         * Track order actions taken.
+         *
+         * @param int $order_id Order ID.
+         */
+        public function track_order_action($order_id)
+        {
+        }
+        /**
+         * Track "add order" button on the Edit Order screen.
+         */
+        public function track_add_order_from_edit()
+        {
+        }
     }
     /**
      * This class adds actions to track usage of WooCommerce Products.
@@ -55984,6 +48381,24 @@ namespace {
          * Send a Tracks event for WooCommerce settings page views.
          */
         public function track_settings_page_view()
+        {
+        }
+    }
+    /**
+     * This class adds actions to track usage of WooCommerce Orders.
+     */
+    class WC_Status_Tracking
+    {
+        /**
+         * Init tracking.
+         */
+        public function init()
+        {
+        }
+        /**
+         * Add Tracks events to the status page.
+         */
+        public function track_status_view()
         {
         }
     }
@@ -56136,6 +48551,289 @@ namespace {
          * @return null Null on failure with no changes to parameters.
          */
         public function display_element($element, &$children_elements, $max_depth, $depth = 0, $args, &$output)
+        {
+        }
+    }
+    /**
+     * WC_WCCOM_Site_Installer Class
+     *
+     * Contains functionalities to install products via WooCommerce.com helper connection.
+     */
+    class WC_WCCOM_Site_Installer
+    {
+        /**
+         * Default state.
+         *
+         * @var array
+         */
+        private static $default_state = array('status' => 'idle', 'steps' => array(), 'current_step' => \null);
+        /**
+         * Represents product step state.
+         *
+         * @var array
+         */
+        private static $default_step_state = array('download_url' => '', 'product_type' => '', 'last_step' => '', 'last_error' => '', 'download_path' => '', 'unpacked_path' => '', 'installed_path' => '', 'activate' => \false);
+        /**
+         * Product install steps. Each step is a method name in this class that
+         * will be passed with product ID arg \WP_Upgrader instance.
+         *
+         * @var array
+         */
+        private static $install_steps = array('get_product_info', 'download_product', 'unpack_product', 'move_product', 'activate_product');
+        /**
+         * Get the product install state.
+         *
+         * @since 3.7.0
+         * @param string $key Key in state data. If empty key is passed array of
+         *                    state will be returned.
+         * @return array Product install state.
+         */
+        public static function get_state($key = '')
+        {
+        }
+        /**
+         * Update the product install state.
+         *
+         * @since 3.7.0
+         * @param string $key   Key in state data.
+         * @param mixed  $value Value.
+         */
+        public static function update_state($key, $value)
+        {
+        }
+        /**
+         * Reset product install state.
+         *
+         * @since 3.7.0
+         * @param array $products List of product IDs.
+         */
+        public static function reset_state($products = array())
+        {
+        }
+        /**
+         * Schedule installing given list of products.
+         *
+         * @since 3.7.0
+         * @param array $products Array of products where key is product ID and
+         *                        element is install args.
+         * @return array State.
+         */
+        public static function schedule_install($products)
+        {
+        }
+        /**
+         * Install a given product IDs.
+         *
+         * Run via `woocommerce_wccom_install_products` hook.
+         *
+         * @since 3.7.0
+         * @param array $products Array of products where key is product ID and
+         *                        element is install args.
+         */
+        public static function install($products)
+        {
+        }
+        /**
+         * Finish installation by updating the state.
+         *
+         * @since 3.7.0
+         */
+        private static function finish_installation()
+        {
+        }
+        /**
+         * Install a single product given its ID.
+         *
+         * @since 3.7.0
+         * @param int          $product_id   Product ID.
+         * @param array        $install_args Install args.
+         * @param \WP_Upgrader $upgrader     Core class to handle installation.
+         */
+        private static function install_product($product_id, $install_args, $upgrader)
+        {
+        }
+        /**
+         * Perform product installation step.
+         *
+         * @since 3.7.0
+         * @param int          $product_id   Product ID.
+         * @param array        $install_args Install args.
+         * @param string       $step         Installation step.
+         * @param \WP_Upgrader $upgrader     Core class to handle installation.
+         */
+        private static function do_install_step($product_id, $install_args, $step, $upgrader)
+        {
+        }
+        /**
+         * Get product info from its ID.
+         *
+         * @since 3.7.0
+         * @param int $product_id Product ID.
+         * @return bool|\WP_Error
+         */
+        private static function get_product_info($product_id)
+        {
+        }
+        /**
+         * Download product by its ID and returns the path of the zip package.
+         *
+         * @since 3.7.0
+         * @param int          $product_id Product ID.
+         * @param \WP_Upgrader $upgrader   Core class to handle installation.
+         * @return \WP_Error|string
+         */
+        private static function download_product($product_id, $upgrader)
+        {
+        }
+        /**
+         * Unpack downloaded product.
+         *
+         * @since 3.7.0
+         * @param int          $product_id Product ID.
+         * @param \WP_Upgrader $upgrader   Core class to handle installation.
+         * @return \WP_Error|string
+         */
+        private static function unpack_product($product_id, $upgrader)
+        {
+        }
+        /**
+         * Move product to plugins directory.
+         *
+         * @since 3.7.0
+         * @param int          $product_id Product ID.
+         * @param \WP_Upgrader $upgrader   Core class to handle installation.
+         * @return array|\WP_Error
+         */
+        private static function move_product($product_id, $upgrader)
+        {
+        }
+        /**
+         * Activate product given its product ID.
+         *
+         * @since 3.7.0
+         * @param int $product_id Product ID.
+         * @return \WP_Error|null
+         */
+        private static function activate_product($product_id)
+        {
+        }
+        /**
+         * Activate plugin given its product ID.
+         *
+         * @since 3.7.0
+         * @param int $product_id Product ID.
+         * @return \WP_Error|null
+         */
+        private static function activate_plugin($product_id)
+        {
+        }
+        /**
+         * Activate theme given its product ID.
+         *
+         * @since 3.7.0
+         * @param int $product_id Product ID.
+         * @return \WP_Error|null
+         */
+        private static function activate_theme($product_id)
+        {
+        }
+        /**
+         * Get installed directory of WP.org product.
+         *
+         * @since 3.7.0
+         * @param int $product_id Product ID.
+         * @return bool|string
+         */
+        private static function get_wporg_product_dir_name($product_id)
+        {
+        }
+        /**
+         * Get WP.org plugin's main file.
+         *
+         * @since 3.7.0
+         * @param string $dir Directory name of the plugin.
+         * @return bool|string
+         */
+        private static function get_wporg_plugin_main_file($dir)
+        {
+        }
+    }
+    /**
+     * WC_WCCOM_Site Class
+     *
+     * Main class for WooCommerce.com connected site.
+     */
+    class WC_WCCOM_Site
+    {
+        /**
+         * Load the WCCOM site class.
+         *
+         * @since 3.7.0
+         */
+        public static function load()
+        {
+        }
+        /**
+         * Include support files.
+         *
+         * @since 3.7.0
+         */
+        protected static function includes()
+        {
+        }
+        /**
+         * Authenticate WooCommerce.com request.
+         *
+         * @since 3.7.0
+         * @param int|false $user_id User ID.
+         * @return int|false
+         */
+        public static function authenticate_wccom($user_id)
+        {
+        }
+        /**
+         * Get the authorization header.
+         *
+         * On certain systems and configurations, the Authorization header will be
+         * stripped out by the server or PHP. Typically this is then used to
+         * generate `PHP_AUTH_USER`/`PHP_AUTH_PASS` but not passed on. We use
+         * `getallheaders` here to try and grab it out instead.
+         *
+         * @since 3.7.0
+         * @return string Authorization header if set.
+         */
+        protected static function get_authorization_header()
+        {
+        }
+        /**
+         * Check if this is a request to WCCOM Site REST API.
+         *
+         * @since 3.7.0
+         * @return bool
+         */
+        protected static function is_request_to_wccom_site_rest_api()
+        {
+        }
+        /**
+         * Verify WooCommerce.com request from a given body and signature request.
+         *
+         * @since 3.7.0
+         * @param string $body                Request body.
+         * @param string $signature           Request signature found in X-Woo-Signature header.
+         * @param string $access_token_secret Access token secret for this site.
+         * @return bool
+         */
+        protected static function verify_wccom_request($body, $signature, $access_token_secret)
+        {
+        }
+        /**
+         * Register wccom-site REST namespace.
+         *
+         * @since 3.7.0
+         * @param array $namespaces List of registered namespaces.
+         * @return array Registered namespaces.
+         */
+        public static function register_rest_namespace($namespaces)
         {
         }
     }
@@ -56650,6 +49348,38 @@ namespace {
     {
     }
     /**
+     * Add Shopify mappings.
+     *
+     * @since 3.7.0
+     * @param array $mappings    Importer columns mappings.
+     * @param array $raw_headers Raw headers from CSV being imported.
+     * @return array
+     */
+    function wc_importer_shopify_mappings($mappings, $raw_headers)
+    {
+    }
+    /**
+     * Add special wildcard Shopify mappings.
+     *
+     * @since 3.7.0
+     * @param array $mappings    Importer columns mappings.
+     * @param array $raw_headers Raw headers from CSV being imported.
+     * @return array
+     */
+    function wc_importer_shopify_special_mappings($mappings, $raw_headers)
+    {
+    }
+    /**
+     * Expand special Shopify columns to WC format.
+     *
+     * @since 3.7.0
+     * @param  array $data Array of data.
+     * @return array Expanded data.
+     */
+    function wc_importer_shopify_expand_data($data)
+    {
+    }
+    /**
      * Add mappings for WordPress tables.
      *
      * @since 3.1.0
@@ -56738,6 +49468,15 @@ namespace {
      * @return string
      */
     function wc_render_action_buttons($actions)
+    {
+    }
+    /**
+     * Shows a notice if variations are missing prices.
+     *
+     * @since 3.6.0
+     * @param WC_Product $product_object Product object.
+     */
+    function wc_render_invalid_variation_notice($product_object)
     {
     }
     /**
@@ -62517,6 +55256,14 @@ namespace {
     {
     }
     /**
+     * Output to view cart subtotal.
+     *
+     * @since 3.7.0
+     */
+    function woocommerce_widget_shopping_cart_subtotal()
+    {
+    }
+    /**
      * Output the Mini-cart - used by cart widget.
      *
      * @param array $args Arguments.
@@ -63715,6 +56462,28 @@ namespace {
     {
     }
     /**
+     * Put tax classes into a DB table.
+     *
+     * @return void
+     */
+    function wc_update_370_tax_rate_classes()
+    {
+    }
+    /**
+     * Update currency settings for 3.7.0
+     *
+     * @return void
+     */
+    function wc_update_370_mro_std_currency()
+    {
+    }
+    /**
+     * Update DB Version.
+     */
+    function wc_update_370_db_version()
+    {
+    }
+    /**
      * Prevent any user who cannot 'edit_posts' (subscribers, customers etc) from seeing the admin bar.
      *
      * Note: get_option( 'woocommerce_lock_down_admin', true ) is a deprecated option here for backwards compatibility. Defaults to true.
@@ -63746,7 +56515,7 @@ namespace {
      * @param string $suffix Append string to username to make it unique.
      * @return string Generated username.
      */
-    function wc_create_new_customer_username($email, $new_user_args, $suffix = '')
+    function wc_create_new_customer_username($email, $new_user_args = array(), $suffix = '')
     {
     }
     /**
@@ -63767,7 +56536,7 @@ namespace {
     {
     }
     /**
-     * Order Status completed - This is a paying customer.
+     * Order payment completed - This is a paying customer.
      *
      * @param int $order_id Order ID.
      */
@@ -64019,6 +56788,19 @@ namespace {
      * @param int $user_id User ID to mark active.
      */
     function wc_update_user_last_active($user_id)
+    {
+    }
+    /**
+     * Translate WC roles using the woocommerce textdomain.
+     *
+     * @since 3.7.0
+     * @param string $translation  Translated text.
+     * @param string $text         Text to translate.
+     * @param string $context      Context information for the translators.
+     * @param string $domain       Text domain. Unique identifier for retrieving translated strings.
+     * @return string
+     */
+    function wc_translate_user_roles($translation, $text, $context, $domain)
     {
     }
     /**
