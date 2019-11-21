@@ -9656,6 +9656,18 @@ namespace {
         public function setup_wizard_check_jetpack()
         {
         }
+        /**
+         * Disable WXR export of scheduled action posts.
+         *
+         * @since 3.6.2
+         *
+         * @param array $args Scehduled action post type registration args.
+         *
+         * @return array
+         */
+        public function disable_webhook_post_export($args)
+        {
+        }
     }
     /**
      * WC_Helper_API Class
@@ -11346,10 +11358,10 @@ namespace {
         /**
          * Remove ordering queries.
          *
-         * @param array $posts Posts from WP Query.
+         * @param array $posts Posts array, keeping this for backwards compatibility defaulting to empty array.
          * @return array
          */
-        public function remove_ordering_args($posts)
+        public function remove_ordering_args($posts = array())
         {
         }
         /**
@@ -26589,7 +26601,7 @@ namespace {
          *
          * @var array
          */
-        protected $data = array('date_created' => \null, 'date_modified' => \null, 'email' => '', 'first_name' => '', 'last_name' => '', 'display_name' => '', 'role' => 'customer', 'username' => '', 'billing' => array('first_name' => '', 'last_name' => '', 'company' => '', 'address_1' => '', 'address_2' => '', 'city' => '', 'state' => '', 'postcode' => '', 'country' => '', 'email' => '', 'phone' => ''), 'shipping' => array('first_name' => '', 'last_name' => '', 'company' => '', 'address_1' => '', 'address_2' => '', 'city' => '', 'state' => '', 'postcode' => '', 'country' => ''), 'is_paying_customer' => \false);
+        protected $data = array('date_created' => \null, 'date_modified' => \null, 'email' => '', 'first_name' => '', 'last_name' => '', 'display_name' => '', 'role' => 'customer', 'username' => '', 'billing' => array('first_name' => '', 'last_name' => '', 'company' => '', 'address_1' => '', 'address_2' => '', 'city' => '', 'postcode' => '', 'country' => '', 'state' => '', 'email' => '', 'phone' => ''), 'shipping' => array('first_name' => '', 'last_name' => '', 'company' => '', 'address_1' => '', 'address_2' => '', 'city' => '', 'postcode' => '', 'country' => '', 'state' => ''), 'is_paying_customer' => \false);
         /**
          * Stores a password if this needs to be changed. Write-only and hidden from _data.
          *
@@ -38419,7 +38431,7 @@ namespace {
          *
          * @var array
          */
-        protected $data = array('date_created' => \null, 'date_modified' => \null, 'status' => 'disabled', 'delivery_url' => '', 'secret' => '', 'name' => '', 'topic' => '', 'hooks' => '', 'resource' => '', 'event' => '', 'failure_count' => 0, 'user_id' => 0, 'api_version' => 2, 'pending_delivery' => \false);
+        protected $data = array('date_created' => \null, 'date_modified' => \null, 'status' => 'disabled', 'delivery_url' => '', 'secret' => '', 'name' => '', 'topic' => '', 'hooks' => '', 'resource' => '', 'event' => '', 'failure_count' => 0, 'user_id' => 0, 'api_version' => 3, 'pending_delivery' => \false);
         /**
          * Load webhook data based on how WC_Webhook is called.
          *
@@ -38953,7 +38965,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '3.6.2';
+        public $version = '3.6.3';
         /**
          * The single instance of the class.
          *
@@ -39097,6 +39109,12 @@ namespace {
          * Define WC Constants.
          */
         private function define_constants()
+        {
+        }
+        /**
+         * Register custom tables within $wpdb object.
+         */
+        private function define_tables()
         {
         }
         /**
@@ -40052,6 +40070,8 @@ namespace {
          * @since 3.6.0
          * @param int    $id ID of object to update.
          * @param string $table Lookup table name.
+         *
+         * @return NULL
          */
         protected function update_lookup_table($id, $table)
         {
@@ -42303,6 +42323,15 @@ namespace {
         {
         }
         /**
+         * Re-reads stock from the DB ignoring changes.
+         *
+         * @param WC_Product $product Product object.
+         * @param int|float  $new_stock New stock level if already read.
+         */
+        public function read_stock_quantity(&$product, $new_stock = \null)
+        {
+        }
+        /**
          * Read extra data associated with the product, like button text or product URL for external products.
          *
          * @param WC_Product $product Product object.
@@ -42543,14 +42572,28 @@ namespace {
         {
         }
         /**
+         * Update a product's stock amount directly in the database.
+         *
+         * Updates both post meta and lookup tables. Ignores manage stock setting on the product.
+         *
+         * @param int            $product_id_with_stock Product ID.
+         * @param int|float|null $stock_quantity        Stock quantity.
+         */
+        protected function set_product_stock($product_id_with_stock, $stock_quantity)
+        {
+        }
+        /**
          * Update a product's stock amount directly.
          *
          * Uses queries rather than update_post_meta so we can do this in one query (to avoid stock issues).
+         * Ignores manage stock setting on the product and sets quantities directly in the db: post meta and lookup tables.
+         * Uses locking to update the quantity. If the lock is not acquired, change is lost.
          *
          * @since  3.0.0 this supports set, increase and decrease.
-         * @param  int      $product_id_with_stock Product ID.
-         * @param  int|null $stock_quantity Stock quantity.
-         * @param  string   $operation Set, increase and decrease.
+         * @param  int            $product_id_with_stock Product ID.
+         * @param  int|float|null $stock_quantity Stock quantity.
+         * @param  string         $operation Set, increase and decrease.
+         * @return int|float New stock level.
          */
         public function update_product_stock($product_id_with_stock, $stock_quantity = \null, $operation = 'set')
         {
@@ -61598,10 +61641,10 @@ namespace {
      * @param  int|WC_Product $product        Product ID or product instance.
      * @param  int|null       $stock_quantity Stock quantity.
      * @param  string         $operation      Type of opertion, allows 'set', 'increase' and 'decrease'.
-     *
+     * @param  bool           $updating       If true, the product object won't be saved here as it will be updated later.
      * @return bool|int|null
      */
-    function wc_update_product_stock($product, $stock_quantity = \null, $operation = 'set')
+    function wc_update_product_stock($product, $stock_quantity = \null, $operation = 'set', $updating = \false)
     {
     }
     /**
