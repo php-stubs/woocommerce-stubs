@@ -8685,7 +8685,7 @@ namespace {
         {
         }
         /**
-         * Should we show the MailChimp install option?
+         * Should we show the Mailchimp install option?
          * True only if the user can install plugins.
          *
          * @return boolean
@@ -11490,7 +11490,7 @@ namespace {
         /**
          * Output the metabox.
          *
-         * @param WP_Post $post
+         * @param WP_Post $post Post object.
          */
         public static function output($post)
         {
@@ -11532,7 +11532,7 @@ namespace {
         /**
          * Filter callback for finding variation attributes.
          *
-         * @param  WC_Product_Attribute $attribute
+         * @param  WC_Product_Attribute $attribute Product attribute.
          * @return bool
          */
         private static function filter_variation_attributes($attribute)
@@ -11547,9 +11547,9 @@ namespace {
         /**
          * Prepare downloads for save.
          *
-         * @param array $file_names
-         * @param array $file_urls
-         * @param array $file_hashes
+         * @param array $file_names File names.
+         * @param array $file_urls File urls.
+         * @param array $file_hashes File hashes.
          *
          * @return array
          */
@@ -11567,7 +11567,7 @@ namespace {
         /**
          * Prepare attributes for save.
          *
-         * @param array $data
+         * @param array $data Attribute data.
          *
          * @return array
          */
@@ -11577,9 +11577,9 @@ namespace {
         /**
          * Prepare attributes for a specific variation or defaults.
          *
-         * @param  array  $all_attributes
-         * @param  string $key_prefix
-         * @param  int    $index
+         * @param  array  $all_attributes List of attribute keys.
+         * @param  string $key_prefix Attribute key prefix.
+         * @param  int    $index Attribute array index.
          * @return array
          */
         private static function prepare_set_attributes($all_attributes, $key_prefix = 'attribute_', $index = \null)
@@ -11588,17 +11588,17 @@ namespace {
         /**
          * Save meta box data.
          *
-         * @param int  $post_id
-         * @param $post
+         * @param int     $post_id WP post id.
+         * @param WP_Post $post Post object.
          */
         public static function save($post_id, $post)
         {
         }
         /**
-         * Save meta box data.
+         * Save variation meta box data.
          *
-         * @param int     $post_id
-         * @param WP_Post $post
+         * @param int     $post_id WP post id.
+         * @param WP_Post $post Post object.
          */
         public static function save_variations($post_id, $post)
         {
@@ -12572,8 +12572,6 @@ namespace {
     /**
      * WC_Report_Sales_By_Product
      *
-     * @author      WooThemes
-     * @category    Admin
      * @package     WooCommerce/Admin/Reports
      * @version     2.1.0
      */
@@ -15896,6 +15894,18 @@ namespace {
          * @return array
          */
         public function get_item_schema()
+        {
+        }
+        /**
+         * Update term meta fields.
+         *
+         * @param WP_Term         $term    Term object.
+         * @param WP_REST_Request $request Request instance.
+         * @return bool|WP_Error
+         *
+         * @since 3.5.5
+         */
+        protected function update_term_meta_fields($term, $request)
         {
         }
     }
@@ -20375,7 +20385,8 @@ namespace {
         /**
          * Get WC Ajax Endpoint.
          *
-         * @param  string $request Optional.
+         * @param string $request Optional.
+         *
          * @return string
          */
         public static function get_endpoint($request = '')
@@ -20721,10 +20732,10 @@ namespace {
         /**
          * Bulk action - Toggle Enabled.
          *
-         * @access private
+         * @param array $variations
+         * @param array $data
+         *
          * @used-by bulk_edit_variations
-         * @param  array $variations
-         * @param  array $data
          */
         private static function variation_bulk_action_toggle_enabled($variations, $data)
         {
@@ -20732,10 +20743,10 @@ namespace {
         /**
          * Bulk action - Toggle Downloadable Checkbox.
          *
-         * @access private
+         * @param array $variations
+         * @param array $data
+         *
          * @used-by bulk_edit_variations
-         * @param  array $variations
-         * @param  array $data
          */
         private static function variation_bulk_action_toggle_downloadable($variations, $data)
         {
@@ -20743,10 +20754,10 @@ namespace {
         /**
          * Bulk action - Toggle Virtual Checkbox.
          *
-         * @access private
+         * @param array $variations
+         * @param array $data
+         *
          * @used-by bulk_edit_variations
-         * @param  array $variations
-         * @param  array $data
          */
         private static function variation_bulk_action_toggle_virtual($variations, $data)
         {
@@ -20754,10 +20765,10 @@ namespace {
         /**
          * Bulk action - Toggle Manage Stock Checkbox.
          *
-         * @access private
+         * @param array $variations
+         * @param array $data
+         *
          * @used-by bulk_edit_variations
-         * @param  array $variations
-         * @param  array $data
          */
         private static function variation_bulk_action_toggle_manage_stock($variations, $data)
         {
@@ -20765,10 +20776,10 @@ namespace {
         /**
          * Bulk action - Set Regular Prices.
          *
-         * @access private
+         * @param array $variations
+         * @param array $data
+         *
          * @used-by bulk_edit_variations
-         * @param  array $variations
-         * @param  array $data
          */
         private static function variation_bulk_action_variable_regular_price($variations, $data)
         {
@@ -20776,10 +20787,10 @@ namespace {
         /**
          * Bulk action - Set Sale Prices.
          *
-         * @access private
+         * @param array $variations
+         * @param array $data
+         *
          * @used-by bulk_edit_variations
-         * @param  array $variations
-         * @param  array $data
          */
         private static function variation_bulk_action_variable_sale_price($variations, $data)
         {
@@ -20787,10 +20798,10 @@ namespace {
         /**
          * Bulk action - Set Stock Status as In Stock.
          *
-         * @access private
+         * @param array $variations
+         * @param array $data
+         *
          * @used-by bulk_edit_variations
-         * @param  array $variations
-         * @param  array $data
          */
         private static function variation_bulk_action_variable_stock_status_instock($variations, $data)
         {
@@ -20798,10 +20809,10 @@ namespace {
         /**
          * Bulk action - Set Stock Status as Out of Stock.
          *
-         * @access private
+         * @param array $variations
+         * @param array $data
+         *
          * @used-by bulk_edit_variations
-         * @param  array $variations
-         * @param  array $data
          */
         private static function variation_bulk_action_variable_stock_status_outofstock($variations, $data)
         {
@@ -20809,10 +20820,10 @@ namespace {
         /**
          * Bulk action - Set Stock Status as On Backorder.
          *
-         * @access private
+         * @param array $variations
+         * @param array $data
+         *
          * @used-by bulk_edit_variations
-         * @param  array $variations
-         * @param  array $data
          */
         private static function variation_bulk_action_variable_stock_status_onbackorder($variations, $data)
         {
@@ -20820,10 +20831,10 @@ namespace {
         /**
          * Bulk action - Set Stock.
          *
-         * @access private
+         * @param array $variations
+         * @param array $data
+         *
          * @used-by bulk_edit_variations
-         * @param  array $variations
-         * @param  array $data
          */
         private static function variation_bulk_action_variable_stock($variations, $data)
         {
@@ -20831,10 +20842,10 @@ namespace {
         /**
          * Bulk action - Set Weight.
          *
-         * @access private
+         * @param array $variations
+         * @param array $data
+         *
          * @used-by bulk_edit_variations
-         * @param  array $variations
-         * @param  array $data
          */
         private static function variation_bulk_action_variable_weight($variations, $data)
         {
@@ -20842,10 +20853,10 @@ namespace {
         /**
          * Bulk action - Set Length.
          *
-         * @access private
+         * @param array $variations
+         * @param array $data
+         *
          * @used-by bulk_edit_variations
-         * @param  array $variations
-         * @param  array $data
          */
         private static function variation_bulk_action_variable_length($variations, $data)
         {
@@ -20853,10 +20864,10 @@ namespace {
         /**
          * Bulk action - Set Width.
          *
-         * @access private
+         * @param array $variations
+         * @param array $data
+         *
          * @used-by bulk_edit_variations
-         * @param  array $variations
-         * @param  array $data
          */
         private static function variation_bulk_action_variable_width($variations, $data)
         {
@@ -20864,10 +20875,10 @@ namespace {
         /**
          * Bulk action - Set Height.
          *
-         * @access private
+         * @param array $variations
+         * @param array $data
+         *
          * @used-by bulk_edit_variations
-         * @param  array $variations
-         * @param  array $data
          */
         private static function variation_bulk_action_variable_height($variations, $data)
         {
@@ -20875,10 +20886,10 @@ namespace {
         /**
          * Bulk action - Set Download Limit.
          *
-         * @access private
+         * @param array $variations
+         * @param array $data
+         *
          * @used-by bulk_edit_variations
-         * @param  array $variations
-         * @param  array $data
          */
         private static function variation_bulk_action_variable_download_limit($variations, $data)
         {
@@ -20886,10 +20897,10 @@ namespace {
         /**
          * Bulk action - Set Download Expiry.
          *
-         * @access private
+         * @param array $variations
+         * @param array $data
+         *
          * @used-by bulk_edit_variations
-         * @param  array $variations
-         * @param  array $data
          */
         private static function variation_bulk_action_variable_download_expiry($variations, $data)
         {
@@ -20897,10 +20908,10 @@ namespace {
         /**
          * Bulk action - Delete all.
          *
-         * @access private
+         * @param array $variations
+         * @param array $data
+         *
          * @used-by bulk_edit_variations
-         * @param  array $variations
-         * @param  array $data
          */
         private static function variation_bulk_action_delete_all($variations, $data)
         {
@@ -20908,10 +20919,10 @@ namespace {
         /**
          * Bulk action - Sale Schedule.
          *
-         * @access private
+         * @param array $variations
+         * @param array $data
+         *
          * @used-by bulk_edit_variations
-         * @param  array $variations
-         * @param  array $data
          */
         private static function variation_bulk_action_variable_sale_schedule($variations, $data)
         {
@@ -20919,10 +20930,10 @@ namespace {
         /**
          * Bulk action - Increase Regular Prices.
          *
-         * @access private
+         * @param array $variations
+         * @param array $data
+         *
          * @used-by bulk_edit_variations
-         * @param  array $variations
-         * @param  array $data
          */
         private static function variation_bulk_action_variable_regular_price_increase($variations, $data)
         {
@@ -20930,10 +20941,10 @@ namespace {
         /**
          * Bulk action - Decrease Regular Prices.
          *
-         * @access private
+         * @param array $variations
+         * @param array $data
+         *
          * @used-by bulk_edit_variations
-         * @param  array $variations
-         * @param  array $data
          */
         private static function variation_bulk_action_variable_regular_price_decrease($variations, $data)
         {
@@ -20941,10 +20952,10 @@ namespace {
         /**
          * Bulk action - Increase Sale Prices.
          *
-         * @access private
+         * @param array $variations
+         * @param array $data
+         *
          * @used-by bulk_edit_variations
-         * @param  array $variations
-         * @param  array $data
          */
         private static function variation_bulk_action_variable_sale_price_increase($variations, $data)
         {
@@ -20952,10 +20963,10 @@ namespace {
         /**
          * Bulk action - Decrease Sale Prices.
          *
-         * @access private
+         * @param array $variations
+         * @param array $data
+         *
          * @used-by bulk_edit_variations
-         * @param  array $variations
-         * @param  array $data
          */
         private static function variation_bulk_action_variable_sale_price_decrease($variations, $data)
         {
@@ -20963,12 +20974,12 @@ namespace {
         /**
          * Bulk action - Set Price.
          *
-         * @access private
-         * @used-by bulk_edit_variations
          * @param array  $variations
          * @param string $operator + or -
          * @param string $field price being adjusted _regular_price or _sale_price
          * @param string $value Price or Percent
+         *
+         * @used-by bulk_edit_variations
          */
         private static function variation_bulk_adjust_price($variations, $field, $operator, $value)
         {
@@ -20976,7 +20987,6 @@ namespace {
         /**
          * Bulk set convenience function.
          *
-         * @access private
          * @param array  $variations
          * @param string $field
          * @param string $value
@@ -20987,7 +20997,6 @@ namespace {
         /**
          * Bulk toggle convenience function.
          *
-         * @access private
          * @param array  $variations
          * @param string $field
          */
@@ -29130,7 +29139,7 @@ namespace {
         {
         }
         /**
-         * Removes redirect added during MailChimp plugin's activation.
+         * Removes redirect added during Mailchimp plugin's activation.
          *
          * @param string $option Option name.
          * @param string $value  Option value.
@@ -38036,7 +38045,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '3.5.4';
+        public $version = '3.5.5';
         /**
          * The single instance of the class.
          *
@@ -41723,7 +41732,7 @@ namespace {
     /**
      * WC Variable Product Data Store: Stored in CPT.
      *
-     * @version  3.0.0
+     * @version 3.0.0
      */
     class WC_Product_Variable_Data_Store_CPT extends \WC_Product_Data_Store_CPT implements \WC_Object_Data_Store_Interface, \WC_Product_Variable_Data_Store_Interface
     {
@@ -41744,9 +41753,9 @@ namespace {
         /**
          * Read product data.
          *
-         * @since 3.0.0
-         *
          * @param WC_Product $product Product object.
+         *
+         * @since 3.0.0
          */
         protected function read_product_data(&$product)
         {
@@ -41754,8 +41763,9 @@ namespace {
         /**
          * Loads variation child IDs.
          *
-         * @param  WC_Product $product Product object.
-         * @param  bool       $force_read True to bypass the transient.
+         * @param WC_Product $product Product object.
+         * @param bool       $force_read True to bypass the transient.
+         *
          * @return array
          */
         public function read_children(&$product, $force_read = \false)
@@ -41765,6 +41775,7 @@ namespace {
          * Loads an array of attributes used for variations, as well as their possible values.
          *
          * @param WC_Product $product Product object.
+         *
          * @return array
          */
         public function read_variation_attributes(&$product)
@@ -41776,10 +41787,11 @@ namespace {
          * Can be filtered by plugins which modify costs, but otherwise will include the raw meta costs unlike get_price() which runs costs through the woocommerce_get_price filter.
          * This is to ensure modified prices are not cached, unless intended.
          *
-         * @since  3.0.0
-         * @param  WC_Product $product Product object.
-         * @param  bool       $for_display If true, prices will be adapted for display based on the `woocommerce_tax_display_shop` setting (including or excluding taxes).
+         * @param WC_Product $product Product object.
+         * @param bool       $for_display If true, prices will be adapted for display based on the `woocommerce_tax_display_shop` setting (including or excluding taxes).
+         *
          * @return array of prices
+         * @since  3.0.0
          */
         public function read_price_data(&$product, $for_display = \false)
         {
@@ -41788,9 +41800,10 @@ namespace {
          * Create unique cache key based on the tax location (affects displayed/cached prices), product version and active price filters.
          * DEVELOPERS should filter this hash if offering conditional pricing to keep it unique.
          *
+         * @param WC_Product $product Product object.
+         * @param bool       $for_display If taxes should be calculated or not.
+         *
          * @since  3.0.0
-         * @param  WC_Product $product Product object.
-         * @param  bool       $for_display If taxes should be calculated or not.
          * @return string
          */
         protected function get_price_hash(&$product, $for_display = \false)
@@ -41799,8 +41812,9 @@ namespace {
         /**
          * Does a child have a weight set?
          *
-         * @since 3.0.0
          * @param WC_Product $product Product object.
+         *
+         * @since  3.0.0
          * @return boolean
          */
         public function child_has_weight($product)
@@ -41809,8 +41823,9 @@ namespace {
         /**
          * Does a child have dimensions set?
          *
-         * @since 3.0.0
          * @param WC_Product $product Product object.
+         *
+         * @since  3.0.0
          * @return boolean
          */
         public function child_has_dimensions($product)
@@ -41819,8 +41834,9 @@ namespace {
         /**
          * Is a child in stock?
          *
-         * @since 3.0.0
          * @param WC_Product $product Product object.
+         *
+         * @since  3.0.0
          * @return boolean
          */
         public function child_is_in_stock($product)
@@ -41829,9 +41845,10 @@ namespace {
         /**
          * Does a child have a stock status?
          *
-         * @since 3.3.0
          * @param WC_Product $product Product object.
          * @param string     $status 'instock', 'outofstock', or 'onbackorder'.
+         *
+         * @since  3.3.0
          * @return boolean
          */
         public function child_has_stock_status($product, $status)
@@ -41843,6 +41860,7 @@ namespace {
          * @param WC_Product $product Product object.
          * @param string     $previous_name Variation previous name.
          * @param string     $new_name Variation new name.
+         *
          * @since 3.0.0
          */
         public function sync_variation_names(&$product, $previous_name = '', $new_name = '')
@@ -41853,6 +41871,7 @@ namespace {
          * This sync function syncs downwards (from parent to child) when the variable product is saved.
          *
          * @param WC_Product $product Product object.
+         *
          * @since 3.0.0
          */
         public function sync_managed_variation_stock_status(&$product)
@@ -41861,8 +41880,9 @@ namespace {
         /**
          * Sync variable product prices with children.
          *
-         * @since 3.0.0
          * @param WC_Product $product Product object.
+         *
+         * @since 3.0.0
          */
         public function sync_price(&$product)
         {
@@ -41871,8 +41891,9 @@ namespace {
          * Sync variable product stock status with children.
          * Change does not persist unless saved by caller.
          *
-         * @since 3.0.0
          * @param WC_Product $product Product object.
+         *
+         * @since 3.0.0
          */
         public function sync_stock_status(&$product)
         {
@@ -41880,9 +41901,10 @@ namespace {
         /**
          * Delete variations of a product.
          *
-         * @since 3.0.0
          * @param int  $product_id Product ID.
          * @param bool $force_delete False to trash.
+         *
+         * @since 3.0.0
          */
         public function delete_variations($product_id, $force_delete = \false)
         {
@@ -59464,6 +59486,17 @@ namespace {
      * @return string
      */
     function wc_implode_html_attributes($raw_attributes)
+    {
+    }
+    /**
+     * Escape JSON for use on HTML or attribute text nodes.
+     *
+     * @since 3.5.5
+     * @param string $json JSON to escape.
+     * @param bool   $html True if escaping for HTML text node, false for attributes. Determines how quotes are handled.
+     * @return string Escaped JSON.
+     */
+    function wc_esc_json($json, $html = \false)
     {
     }
     /**
