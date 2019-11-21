@@ -1,3 +1,5 @@
 /vendor/
 composer.lock
 /woocommerce/
+/woocommerce-blocks/
+/woocommerce-rest-api/

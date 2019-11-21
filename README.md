@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/php-stubs/woocommerce-stubs.svg?branch=master)](https://travis-ci.org/php-stubs/woocommerce-stubs)
 
 It provides stub declarations for [WooCommerce](https://woocommerce.com/)
-core functions, classes and interfaces.
+functions, classes and interfaces.
 These stubs can help plugin and theme developers leverage static analysis tools
 like [PHPStan](https://github.com/phpstan/phpstan),
 which is not able to parse WordPress as it is not OOP code.

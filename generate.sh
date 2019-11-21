@@ -19,3 +19,7 @@ test -d "woocommerce"
     --interfaces \
     --traits \
     --out="$FILE"
+
+# There are no WC functions to read these constants.
+# See define_constants() in includes/class-woocommerce.php
+printf '\nnamespace {\n    %s\n}\n' "define('WC_VERSION', '0.0.0');" >>"$FILE"
