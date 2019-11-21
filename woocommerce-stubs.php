@@ -38045,7 +38045,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '3.5.5';
+        public $version = '3.5.6';
         /**
          * The single instance of the class.
          *
