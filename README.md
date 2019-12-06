@@ -27,11 +27,12 @@ Alternatively you may download `woocommerce-stubs.php` directly.
 
 ### Usage in PHPStan
 
-Include both stubs in PHPStan configuration file.
+Include all stubs in PHPStan configuration file.
 
 ```yaml
 parameters:
     autoload_files:
         - %rootDir%/../../php-stubs/wordpress-stubs/wordpress-stubs.php
         - %rootDir%/../../php-stubs/woocommerce-stubs/woocommerce-stubs.php
+        #- %rootDir%/../../php-stubs/woocommerce-stubs/woocommerce-packages-stubs.php
 ```
