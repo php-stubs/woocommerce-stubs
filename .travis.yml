@@ -12,11 +12,11 @@ php:
   - "7.1"
   - "7.2"
   - "7.3"
-  - "7.4snapshot"
+  - "7.4"
 
 before_install:
   - |
-    if [ "$(phpenv version-name)" != "7.4snapshot" ]; then
+    if [ "$(phpenv version-name)" != 7.4 ]; then
       phpenv config-rm xdebug.ini
     fi
   - |
@@ -32,8 +32,12 @@ before_script:
 
 script:
   - |
+    composer --working-dir=source/ install --no-interaction --no-suggest
+  - |
     bash -x ./generate.sh
   - |
     php -l woocommerce-stubs.php
+  - |
+    php -l woocommerce-packages-stubs.php
   - |
     git diff --exit-code

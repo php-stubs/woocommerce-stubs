@@ -14,26 +14,13 @@
     },
     "require-dev": {
         "php": "~7.1",
-        "ext-gettext": "*",
-        "ext-hash": "*",
-        "ext-json": "*",
-        "ext-mbstring": "*",
-        "ext-openssl": "*",
-        "giacocorsiglia/stubs-generator": "^0.5.0",
-        "woocommerce/woocommerce": "3.8.0"
+        "giacocorsiglia/stubs-generator": "^0.5.0"
     },
     "suggest": {
         "szepeviktor/phpstan-wordpress": "WordPress extensions for PHPStan",
         "symfony/polyfill-php73": "Symfony polyfill backporting some PHP 7.3+ features to lower PHP versions"
     },
     "minimum-stability": "stable",
-    "extra": {
-        "installer-paths": {
-            "{$name}/": [
-                "type:wordpress-plugin"
-            ]
-        }
-    },
     "scripts": {
         "cleanup": "git status --short --ignored | sed -n -e 's#^!! ##p' | xargs -r rm -vrf"
     },
