@@ -25,14 +25,14 @@ before_install:
 install:
   - |
     composer install --no-interaction --no-suggest
+  - |
+    composer --working-dir=source/ install --no-interaction --no-suggest
 
 before_script:
   - |
-    cat ./woocommerce/woocommerce.php
+    cat ./source/woocommerce/woocommerce.php
 
 script:
-  - |
-    composer --working-dir=source/ install --no-interaction --no-suggest
   - |
     bash -x ./generate.sh
   - |

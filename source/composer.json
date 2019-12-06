@@ -1,14 +1,4 @@
 {
-    "name": "php-stubs/woocommerce-stubs",
-    "description": "WooCommerce function and class declaration stubs for static analysis.",
-    "keywords": [
-        "woocommerce",
-        "wordpress",
-        "static analysis",
-        "phpstan"
-    ],
-    "homepage": "https://github.com/php-stubs/woocommerce-stubs",
-    "license": "MIT",
     "require": {
         "php": "~7.1",
         "ext-gettext": "*",
