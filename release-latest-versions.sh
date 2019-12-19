@@ -21,12 +21,11 @@ for V in 3.5  3.6  3.7  3.8; do
         continue;
     fi
 
-    # Modify composer.json
-    printf -v SED_EXP 's#\\("woocommerce/woocommerce"\\): "[0-9]\\+\\.[0-9]\\+\\.[0-9]\\+"#\\1: "%s"#' "$LATEST"
-    sed -e "$SED_EXP" -i composer.json
+    # Require new version
+    composer --working-dir=source/ require --no-interaction --no-suggest --update-no-dev \
+        "woocommerce/woocommerce:$LATEST"
 
     # Generate stubs
-    composer update --no-interaction --no-suggest
     echo "Generating stubs ..."
     ./generate.sh
 
