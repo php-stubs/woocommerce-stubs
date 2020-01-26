@@ -6,7 +6,7 @@
         "ext-json": "*",
         "ext-mbstring": "*",
         "ext-openssl": "*",
-        "woocommerce/woocommerce": "3.8.1"
+        "woocommerce/woocommerce": "3.9.0"
     },
     "minimum-stability": "stable",
     "extra": {

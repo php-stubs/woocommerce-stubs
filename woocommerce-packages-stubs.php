@@ -13,28 +13,22 @@ namespace Automattic\WooCommerce\Blocks {
     {
         /**
          * Initialize class features on init.
+         *
+         * @since 2.5.0
+         * Moved most initialization to BootStrap and AssetDataRegistry
+         * classes as a part of ongoing refactor
          */
         public static function init()
         {
         }
         /**
          * Register block scripts & styles.
+         *
+         * @since 2.5.0
+         * Moved data related enqueuing to new AssetDataRegistry class
+         * as part of ongoing refactoring.
          */
         public static function register_assets()
-        {
-        }
-        /**
-         * Print wcSettings in all pages. This is a temporary fix until we find a better
-         * solution to share settings between WooCommerce Admin and WooCommerce Blocks.
-         * See https://github.com/woocommerce/woocommerce-gutenberg-products-block/issues/932
-         */
-        public static function print_shared_settings()
-        {
-        }
-        /**
-         * Attach data to registered assets using inline scripts.
-         */
-        public static function maybe_add_asset_data()
         {
         }
         /**
@@ -47,22 +41,16 @@ namespace Automattic\WooCommerce\Blocks {
         {
         }
         /**
-         * Returns javascript to inject as data for enqueued wc-shared-settings script.
-         *
-         * @return string;
-         * @since 2.4.0
-         */
-        protected static function get_wc_settings_data()
-        {
-        }
-        /**
-         * Returns block-related data for enqueued wc-shared-settings script.
+         * Returns block-related data for enqueued wc-block-settings script.
          *
          * This is used to map site settings & data into JS-accessible variables.
          *
+         * @param array $settings The original settings array from the filter.
+         *
          * @since 2.4.0
+         * @since 2.5.0 returned merged data along with incoming $settings
          */
-        protected static function get_wc_block_data()
+        public static function get_wc_block_data($settings)
         {
         }
         /**
@@ -109,6 +97,298 @@ namespace Automattic\WooCommerce\Blocks {
          *                       'all', 'print' and 'screen', or media queries like '(orientation: portrait)' and '(max-width: 640px)'.
          */
         protected static function register_style($handle, $src, $deps = [], $media = 'all')
+        {
+        }
+        /**
+         * Returns the appropriate asset path for loading either legacy builds or
+         * current builds.
+         *
+         * @param   string $filename  Filename for asset path (without extension).
+         * @param   string $type      File type (.css or .js).
+         *
+         * @return  string             The generated path.
+         */
+        protected static function get_block_asset_build_path($filename, $type = 'js')
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Blocks\Assets {
+    /**
+     * The Api class provides an interface to various asset registration helpers.
+     *
+     * @since 2.5.0
+     */
+    class Api
+    {
+        /**
+         * Reference to the Package instance
+         *
+         * @var Package
+         */
+        private $package;
+        /**
+         * Constructor for class
+         *
+         * @param Package $package An instance of Package.
+         */
+        public function __construct(\Automattic\WooCommerce\Blocks\Domain\Package $package)
+        {
+        }
+        /**
+         * Get the file modified time as a cache buster if we're in dev mode.
+         *
+         * @param string $file Local path to the file (relative to the plugin
+         *                     directory).
+         * @return string The cache buster value to use for the given file.
+         */
+        protected function get_file_version($file)
+        {
+        }
+        /**
+         * Retrieve the url to an asset for this plugin.
+         *
+         * @param string $relative_path An optional relative path appended to the
+         *                              returned url.
+         *
+         * @return string
+         */
+        protected function get_asset_url($relative_path = '')
+        {
+        }
+        /**
+         * Returns the dependency array for the given asset relative path.
+         *
+         * @param string $asset_relative_path  Something like 'build/constants.js'
+         *                                     considered to be relative to the main
+         *                                     asset path.
+         * @param array  $extra_dependencies   Extra dependencies to be explicitly
+         *                                     added to the generated array.
+         *
+         * @return array  An array of dependencies
+         */
+        protected function get_dependencies($asset_relative_path, $extra_dependencies = [])
+        {
+        }
+        /**
+         * Registers a script according to `wp_register_script`, additionally
+         * loading the translations for the file.
+         *
+         * @since 2.5.0
+         *
+         * @param string $handle        Name of the script. Should be unique.
+         * @param string $relative_src  Relative url for the script to the path
+         *                              from plugin root.
+         * @param array  $deps          Optional. An array of registered script
+         *                              handles this script depends on. Default
+         *                              empty array.
+         * @param bool   $has_i18n      Optional. Whether to add a script
+         *                              translation call to this file. Default:
+         *                              true.
+         */
+        public function register_script($handle, $relative_src, $deps = [], $has_i18n = true)
+        {
+        }
+        /**
+         * Queues a block script.
+         *
+         * @since 2.5.0
+         *
+         * @param string $name Name of the script used to identify the file inside build folder.
+         */
+        public function register_block_script($name)
+        {
+        }
+        /**
+         * Registers a style according to `wp_register_style`.
+         *
+         * @since 2.5.0
+         *
+         * @param string $handle Name of the stylesheet. Should be unique.
+         * @param string $src    Full URL of the stylesheet, or path of the stylesheet relative to the WordPress root directory.
+         * @param array  $deps   Optional. An array of registered stylesheet handles this stylesheet depends on. Default empty array.
+         * @param string $media  Optional. The media for which this stylesheet has been defined. Default 'all'. Accepts media types like
+         *                       'all', 'print' and 'screen', or media queries like '(orientation: portrait)' and '(max-width: 640px)'.
+         */
+        public function register_style($handle, $src, $deps = [], $media = 'all')
+        {
+        }
+    }
+    /**
+     * Class instance for registering data used on the current view session by
+     * assets.
+     *
+     * @since 2.5.0
+     */
+    class AssetDataRegistry
+    {
+        /**
+         * Contains registered data.
+         *
+         * @var array
+         */
+        private $data = [];
+        /**
+         * Lazy data is an array of closures that will be invoked just before
+         * asset data is generated for the enqueued script.
+         *
+         * @var array
+         */
+        private $lazy_data = [];
+        /**
+         * Asset handle for registered data.
+         *
+         * @var string
+         */
+        private $handle = 'wc-settings';
+        /**
+         * Asset API interface for various asset registration.
+         *
+         * @var API
+         */
+        private $api;
+        /**
+         * Constructor
+         *
+         * @param Api $asset_api  Asset API interface for various asset registration.
+         */
+        public function __construct(\Automattic\WooCommerce\Blocks\Assets\Api $asset_api)
+        {
+        }
+        /**
+         * Hook into WP asset registration for enqueueing asset data.
+         */
+        protected function init()
+        {
+        }
+        /**
+         * Exposes core asset data
+         *
+         * @return array  An array containing core data.
+         */
+        protected function get_core_data()
+        {
+        }
+        /**
+         * Returns block-related data for enqueued wc-settings script.
+         * Format order statuses by removing a leading 'wc-' if present.
+         *
+         * @param array $statuses Order statuses.
+         * @return array formatted statuses.
+         */
+        protected function get_order_statuses($statuses)
+        {
+        }
+        /**
+         * Used for on demand initialization of asset data and registering it with
+         * the internal data registry.
+         *
+         * Note: core data will overwrite any externally registered data via the api.
+         */
+        protected function initialize_core_data()
+        {
+        }
+        /**
+         * Loops through each registered lazy data callback and adds the returned
+         * value to the data array.
+         *
+         * This method is executed right before preparing the data for printing to
+         * the rendered screen.
+         *
+         * @return void
+         */
+        protected function execute_lazy_data()
+        {
+        }
+        /**
+         * Exposes private registered data to child classes.
+         *
+         * @return array  The registered data on the private data property
+         */
+        protected function get()
+        {
+        }
+        /**
+         * Interface for adding data to the registry.
+         *
+         * @param string $key  The key used to reference the data being registered.
+         *                     You can only register data that is not already in the
+         *                     registry identified by the given key.
+         * @param mixed  $data If not a function, registered to the registry as is.
+         *                     If a function, then the callback is invoked right
+         *                     before output to the screen.
+         *
+         * @throws InvalidArgumentException  Only throws when site is in debug mode.
+         *                                   Always logs the error.
+         */
+        public function add($key, $data)
+        {
+        }
+        /**
+         * Callback for registering the data script via WordPress API.
+         *
+         * @return void
+         */
+        public function register_data_script()
+        {
+        }
+        /**
+         * Callback for enqueuing asset data via the WP api.
+         *
+         * Note: while this is hooked into print/admin_print_scripts, it still only
+         * happens if the script attached to `wc-settings` handle is enqueued. This
+         * is done to allow for any potentially expensive data generation to only
+         * happen for routes that need it.
+         */
+        public function enqueue_asset_data()
+        {
+        }
+        /**
+         * See self::add() for docs.
+         *
+         * @param   string $key   Key for the data.
+         * @param   mixed  $data  Value for the data.
+         *
+         * @throws InvalidArgumentException  If key is not a string or already
+         *                                   exists in internal data cache.
+         */
+        protected function add_data($key, $data)
+        {
+        }
+        /**
+         * Exposes whether the current site is in debug mode or not.
+         *
+         * @return boolean  True means the site is in debug mode.
+         */
+        protected function debug()
+        {
+        }
+    }
+    /**
+     * Backwards Compatibility class for plugins using wcSettings in prior versions.
+     *
+     * Note: This will be removed at some point.
+     *
+     * @since 2.5.0
+     */
+    class BackCompatAssetDataRegistry extends \Automattic\WooCommerce\Blocks\Assets\AssetDataRegistry
+    {
+        /**
+         * Overrides parent method.
+         *
+         * @see AssetDataRegistry::enqueue_asset_data
+         */
+        public function enqueue_asset_data()
+        {
+        }
+        /**
+         * Override parent method.
+         *
+         * @see AssetDataRegistry::get_core_data
+         *
+         * @return array  An array of data to output for enqueued script.
+         */
+        protected function get_core_data()
         {
         }
     }
@@ -423,6 +703,62 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         }
     }
     /**
+     * ActiveFilters class.
+     */
+    class ActiveFilters extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'active-filters';
+        /**
+         * Registers the block type with WordPress.
+         */
+        public function register_block_type()
+        {
+        }
+        /**
+         * Append frontend scripts when rendering the block.
+         *
+         * @param array  $attributes Block attributes. Default empty array.
+         * @param string $content    Block content. Default empty string.
+         * @return string Rendered block type output.
+         */
+        public function render($attributes = array(), $content = '')
+        {
+        }
+    }
+    /**
+     * AllProducts class.
+     */
+    class AllProducts extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractDynamicBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'all-products';
+        /**
+         * Registers the block type with WordPress.
+         */
+        public function register_block_type()
+        {
+        }
+        /**
+         * Append frontend scripts when rendering the Product Categories List block.
+         *
+         * @param array  $attributes Block attributes. Default empty array.
+         * @param string $content    Block content. Default empty string.
+         * @return string Rendered block type output.
+         */
+        public function render($attributes = array(), $content = '')
+        {
+        }
+    }
+    /**
      * AllReviews class.
      */
     class AllReviews extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
@@ -441,6 +777,34 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         }
         /**
          * Append frontend scripts when rendering the Product Categories List block.
+         *
+         * @param array  $attributes Block attributes. Default empty array.
+         * @param string $content    Block content. Default empty string.
+         * @return string Rendered block type output.
+         */
+        public function render($attributes = array(), $content = '')
+        {
+        }
+    }
+    /**
+     * AttributeFilter class.
+     */
+    class AttributeFilter extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'attribute-filter';
+        /**
+         * Registers the block type with WordPress.
+         */
+        public function register_block_type()
+        {
+        }
+        /**
+         * Append frontend scripts when rendering the block.
          *
          * @param array  $attributes Block attributes. Default empty array.
          * @param string $content    Block content. Default empty string.
@@ -601,6 +965,34 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         }
     }
     /**
+     * PriceFilter class.
+     */
+    class PriceFilter extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'price-filter';
+        /**
+         * Registers the block type with WordPress.
+         */
+        public function register_block_type()
+        {
+        }
+        /**
+         * Append frontend scripts when rendering the Product Categories List block.
+         *
+         * @param array  $attributes Block attributes. Default empty array.
+         * @param string $content    Block content. Default empty string.
+         * @return string Rendered block type output.
+         */
+        public function render($attributes = array(), $content = '')
+        {
+        }
+    }
+    /**
      * ProductBestSellers class.
      */
     class ProductBestSellers extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractProductGrid
@@ -623,7 +1015,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
     /**
      * ProductCategories class.
      */
-    class ProductCategories extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    class ProductCategories extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractDynamicBlock
     {
         /**
          * Block name.
@@ -632,19 +1024,112 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          */
         protected $block_name = 'product-categories';
         /**
-         * Registers the block type with WordPress.
+         * Default attribute values, should match what's set in JS `registerBlockType`.
+         *
+         * @var array
          */
-        public function register_block_type()
+        protected $defaults = array('hasCount' => true, 'hasEmpty' => false, 'isDropdown' => false, 'isHierarchical' => true);
+        /**
+         * Get block attributes.
+         *
+         * @return array
+         */
+        protected function get_attributes()
         {
         }
         /**
-         * Append frontend scripts when rendering the Product Categories List block.
+         * Render the Product Categories List block.
          *
          * @param array  $attributes Block attributes. Default empty array.
          * @param string $content    Block content. Default empty string.
          * @return string Rendered block type output.
          */
         public function render($attributes = array(), $content = '')
+        {
+        }
+        /**
+         * Get categories (terms) from the db.
+         *
+         * @param array $attributes Block attributes. Default empty array.
+         * @return array
+         */
+        protected function get_categories($attributes)
+        {
+        }
+        /**
+         * Build hierarchical tree of categories.
+         *
+         * @param array $categories List of terms.
+         * @return array
+         */
+        protected function build_category_tree($categories)
+        {
+        }
+        /**
+         * Build hierarchical tree of categories by appending children in the tree.
+         *
+         * @param array $categories List of terms.
+         * @param array $categories_by_parent List of terms grouped by parent.
+         * @return array
+         */
+        protected function fill_category_children($categories, $categories_by_parent)
+        {
+        }
+        /**
+         * Render the category list as a dropdown.
+         *
+         * @param array $categories List of terms.
+         * @param array $attributes Block attributes. Default empty array.
+         * @param int   $uid Unique ID for the rendered block, used for HTML IDs.
+         * @return string Rendered output.
+         */
+        protected function renderDropdown($categories, $attributes, $uid)
+        {
+        }
+        /**
+         * Render dropdown options list.
+         *
+         * @param array $categories List of terms.
+         * @param array $attributes Block attributes. Default empty array.
+         * @param int   $uid Unique ID for the rendered block, used for HTML IDs.
+         * @param int   $depth Current depth.
+         * @return string Rendered output.
+         */
+        protected function renderDropdownOptions($categories, $attributes, $uid, $depth = 0)
+        {
+        }
+        /**
+         * Render the category list as a list.
+         *
+         * @param array $categories List of terms.
+         * @param array $attributes Block attributes. Default empty array.
+         * @param int   $uid Unique ID for the rendered block, used for HTML IDs.
+         * @param int   $depth Current depth.
+         * @return string Rendered output.
+         */
+        protected function renderList($categories, $attributes, $uid, $depth = 0)
+        {
+        }
+        /**
+         * Render a list of terms.
+         *
+         * @param array $categories List of terms.
+         * @param array $attributes Block attributes. Default empty array.
+         * @param int   $uid Unique ID for the rendered block, used for HTML IDs.
+         * @param int   $depth Current depth.
+         * @return string Rendered output.
+         */
+        protected function renderListItems($categories, $attributes, $uid, $depth = 0)
+        {
+        }
+        /**
+         * Get the count, if displaying.
+         *
+         * @param object $category Term object.
+         * @param array  $attributes Block attributes. Default empty array.
+         * @return string
+         */
+        protected function getCount($category, $attributes)
         {
         }
     }
@@ -869,6 +1354,134 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         }
     }
 }
+namespace Automattic\WooCommerce\Blocks\Domain {
+    /**
+     * Takes care of bootstrapping the plugin.
+     *
+     * @since 2.5.0
+     */
+    class Bootstrap
+    {
+        /**
+         * Holds the Dependency Injection Container
+         *
+         * @var Container
+         */
+        private $container;
+        /**
+         * Holds the Package instance
+         *
+         * @var Package
+         */
+        private $package;
+        /**
+         * Constructor
+         *
+         * @param Container $container  The Dependency Injection Container.
+         */
+        public function __construct(\Automattic\WooCommerce\Blocks\Registry\Container $container)
+        {
+        }
+        /**
+         * Init the package - load the blocks library and define constants.
+         */
+        public function init()
+        {
+        }
+        /**
+         * Check dependencies exist.
+         *
+         * @return boolean
+         */
+        protected function has_dependencies()
+        {
+        }
+        /**
+         * See if files have been built or not.
+         *
+         * @return bool
+         */
+        protected function is_built()
+        {
+        }
+        /**
+         * Add a notice stating that the build has not been done yet.
+         */
+        protected function add_build_notice()
+        {
+        }
+        /**
+         * Remove core blocks.
+         *
+         * Older installs of WooCommerce (3.6 and below) did not use the blocks package and instead included classes directly.
+         * This code disables those core classes when running blocks as a feature plugin. Newer versions which use the Blocks package are unaffected.
+         *
+         * When the feature plugin supports only WooCommerce 3.7+ this method can be removed.
+         */
+        protected function remove_core_blocks()
+        {
+        }
+    }
+    /**
+     * Main package class.
+     *
+     * @since 2.5.0
+     */
+    class Package
+    {
+        /**
+         * Holds the current version of the blocks plugin.
+         *
+         * @var string
+         */
+        private $version;
+        /**
+         * Holds the main path to the blocks plugin directory.
+         *
+         * @var string
+         */
+        private $path;
+        /**
+         * Constructor
+         *
+         * @param string $version      Version of the plugin.
+         * @param string $plugin_path  Path to the main plugin file.
+         */
+        public function __construct($version, $plugin_path)
+        {
+        }
+        /**
+         * Returns the version of the plugin.
+         *
+         * @return string
+         */
+        public function get_version()
+        {
+        }
+        /**
+         * Returns the path to the plugin directory.
+         *
+         * @param string $relative_path  If provided, the relative path will be
+         *                               appended to the plugin path.
+         *
+         * @return string
+         */
+        public function get_path($relative_path = '')
+        {
+        }
+        /**
+         * Returns the url to the blocks plugin directory.
+         *
+         * @param string $relative_url If provided, the relative url will be
+         *                             appended to the plugin url.
+         *
+         * @return string
+         */
+        public function get_url($relative_url = '')
+        {
+        }
+    }
+}
 namespace Automattic\WooCommerce\Blocks {
     /**
      * Library class.
@@ -890,23 +1503,26 @@ namespace Automattic\WooCommerce\Blocks {
     }
     /**
      * Main package class.
+     *
+     * @since 2.5.0
      */
     class Package
     {
         /**
-         * Version.
+         * For back compat this is provided. Ideally, you should register your
+         * class with Automattic\Woocommerce\Blocks\Container and make Package a
+         * dependency.
          *
-         * @var string
+         * @since 2.5.0
+         * @return Package  The Package instance class
          */
-        const VERSION = '2.4.5';
-        /**
-         * Stores if init has ran yet.
-         *
-         * @var boolean
-         */
-        protected static $did_init = false;
+        protected static function get_package()
+        {
+        }
         /**
          * Init the package - load the blocks library and define constants.
+         *
+         * @since 2.5.0 Handled by new NewPackage.
          */
         public static function init()
         {
@@ -928,34 +1544,184 @@ namespace Automattic\WooCommerce\Blocks {
         {
         }
         /**
-         * Check dependencies exist.
+         * Loads the dependency injection container for woocommerce blocks.
          *
-         * @return boolean
+         * @param boolean $reset Used to reset the container to a fresh instance.
+         *                       Note: this means all dependencies will be
+         *                       reconstructed.
          */
-        protected static function has_dependencies()
-        {
-        }
-        /**
-         * See if files have been built or not.
-         *
-         * @return bool
-         */
-        protected static function is_built()
-        {
-        }
-        /**
-         * Add a notice stating that the build has not been done yet.
-         */
-        protected static function add_build_notice()
-        {
-        }
-        /**
-         * Remove core blocks (for 3.6 and below).
-         */
-        protected static function remove_core_blocks()
+        public static function container($reset = false)
         {
         }
     }
+}
+namespace Automattic\WooCommerce\Blocks\Registry {
+    /**
+     * An abstract class for dependency types.
+     *
+     * Dependency types are instances of a dependency used by the
+     * Dependency Injection Container for storing dependencies to invoke as they
+     * are needed.
+     *
+     * @since 2.5.0
+     */
+    abstract class AbstractDependencyType
+    {
+        /**
+         * Holds a callable or value provided for this type.
+         *
+         * @var mixed
+         */
+        private $callable_or_value;
+        /**
+         * Constructor
+         *
+         * @param mixed $callable_or_value  A callable or value for the dependency
+         *                                  type instance.
+         */
+        public function __construct($callable_or_value)
+        {
+        }
+        /**
+         * Resolver for the internal dependency value.
+         *
+         * @param Container $container  The Dependency Injection Container.
+         *
+         * @return mixed
+         */
+        protected function resolve_value(\Automattic\WooCommerce\Blocks\Registry\Container $container)
+        {
+        }
+        /**
+         * Retrieves the value stored internally for this DependencyType
+         *
+         * @param Container $container  The Dependency Injection Container.
+         *
+         * @return void
+         */
+        public abstract function get(\Automattic\WooCommerce\Blocks\Registry\Container $container);
+    }
+    /**
+     * A simple Dependency Injection Container
+     *
+     * This is used to manage dependencies used throughout the plugin.
+     *
+     * @since 2.5.0
+     */
+    class Container
+    {
+        /**
+         * A map of Dependency Type objects used to resolve dependencies.
+         *
+         * @var AbstractDependencyType[]
+         */
+        private $registry = [];
+        /**
+         * Public api for adding a factory to the container.
+         *
+         * Factory dependencies will have the instantiation callback invoked
+         * everytime the dependency is requested.
+         *
+         * Typical Usage:
+         *
+         * ```
+         * $container->register( MyClass::class, $container->factory( $mycallback ) );
+         * ```
+         *
+         * @param Closure $instantiation_callback  This will be invoked when the
+         *                                         dependency is required.  It will
+         *                                         receive an instance of this
+         *                                         container so the callback can
+         *                                         retrieve dependencies from the
+         *                                         container.
+         *
+         * @return FactoryType  An instance of the FactoryType dependency.
+         */
+        public function factory(\Closure $instantiation_callback)
+        {
+        }
+        /**
+         * Interface for registering a new dependency with the container.
+         *
+         * By default, the $value will be added as a shared dependency.  This means
+         * that it will be a single instance shared among any other classes having
+         * that dependency.
+         *
+         * If you want a new instance everytime it's required, then wrap the value
+         * in a call to the factory method (@see Container::factory for example)
+         *
+         * Note: Currently if the provided id already is registered in the container,
+         * the provided value is ignored.
+         *
+         * @param string $id    A unique string identifier for the provided value.
+         *                      Typically it's the fully qualified name for the
+         *                      dependency.
+         * @param mixed  $value The value for the dependency. Typically, this is a
+         *                      closure that will create the class instance needed.
+         */
+        public function register($id, $value)
+        {
+        }
+        /**
+         * Interface for retrieving the dependency stored in the container for the
+         * given identifier.
+         *
+         * @param string $id  The identifier for the dependency being retrieved.
+         * @throws Exception  If there is no dependency for the given identifier in
+         *                    the container.
+         *
+         * @return mixed  Typically a class instance.
+         */
+        public function get($id)
+        {
+        }
+    }
+    /**
+     * Definition for the FactoryType dependency type.
+     *
+     * @since 2.5.0
+     */
+    class FactoryType extends \Automattic\WooCommerce\Blocks\Registry\AbstractDependencyType
+    {
+        /**
+         * Invokes and returns the value from the stored internal callback.
+         *
+         * @param Container $container  An instance of the dependency injection
+         *                              container.
+         *
+         * @return mixed
+         */
+        public function get(\Automattic\WooCommerce\Blocks\Registry\Container $container)
+        {
+        }
+    }
+    /**
+     * A definition for the SharedType dependency type.
+     *
+     * @since 2.5.0
+     */
+    class SharedType extends \Automattic\WooCommerce\Blocks\Registry\AbstractDependencyType
+    {
+        /**
+         * Holds a cached instance of the value stored (or returned) internally.
+         *
+         * @var mixed
+         */
+        private $shared_instance;
+        /**
+         * Returns the internal stored and shared value after initial generation.
+         *
+         * @param Container $container An instance of the dependency injection
+         *                             container.
+         *
+         * @return mixed
+         */
+        public function get(\Automattic\WooCommerce\Blocks\Registry\Container $container)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Blocks {
     /**
      * RestApi class.
      */
@@ -974,11 +1740,116 @@ namespace Automattic\WooCommerce\Blocks {
         {
         }
         /**
+         * Get routes for a namespace.
+         *
+         * @param string $namespace Namespace to retrieve.
+         * @return array|null
+         */
+        public static function get_routes_from_namespace($namespace)
+        {
+        }
+        /**
+         * If we're making a cart request, we may need to load some additonal classes from WC Core so we're ready to deal with requests.
+         *
+         * Note: We load the session here early so guest nonces are in place.
+         *
+         * @todo check compat < WC 3.6. Make specific to cart endpoint.
+         * @param mixed $return Value being filtered.
+         * @param array $request Request data.
+         * @return mixed
+         */
+        public static function maybe_init_cart_session($return, $request = false)
+        {
+        }
+        /**
          * Return a list of controller classes for this REST API namespace.
          *
          * @return array
          */
         protected static function get_controllers()
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Blocks\RestApi\Controllers {
+    /**
+     * Cart API.
+     */
+    class Cart extends \WP_REST_Controller
+    {
+        /**
+         * Endpoint namespace.
+         *
+         * @var string
+         */
+        protected $namespace = 'wc/blocks';
+        /**
+         * Route base.
+         *
+         * @var string
+         */
+        protected $rest_base = 'cart';
+        /**
+         * Register routes.
+         */
+        public function register_routes()
+        {
+        }
+        /**
+         * Cart item schema.
+         *
+         * @return array
+         */
+        public function get_item_schema()
+        {
+        }
+        /**
+         * Get a collection of cart items.
+         *
+         * @param \WP_REST_Request $request Full details about the request.
+         * @return \WP_Error|\WP_REST_Response
+         */
+        public function get_items($request)
+        {
+        }
+        /**
+         * Get a single cart items.
+         *
+         * @param \WP_REST_Request $request Full details about the request.
+         * @return \WP_Error|\WP_REST_Response
+         */
+        public function get_item($request)
+        {
+        }
+        /**
+         * Adds an item to the cart.
+         *
+         * @param \WP_REST_Request $request Full details about the request.
+         * @return \WP_Error|\WP_REST_Response
+         */
+        public function add_item($request)
+        {
+        }
+        /**
+         * Convert a woo cart item to JSON schema.
+         *
+         * @param array $cart_item Cart item array.
+         * @return array
+         */
+        protected function get_object_for_response($cart_item)
+        {
+        }
+        /**
+         * Based on the core cart class but returns errors rather than rendering notices directly.
+         *
+         * @param int   $product_id contains the id of the product to add to the cart.
+         * @param int   $quantity contains the quantity of the item to add.
+         * @param int   $variation_id ID of the variation being added to the cart.
+         * @param array $variation attribute values.
+         * @param array $cart_item_data extra cart item data we want to pass into the item.
+         * @return string|\WP_Error
+         */
+        protected function add_to_cart($product_id = 0, $quantity = 1, $variation_id = 0, $variation = array(), $cart_item_data = array())
         {
         }
     }
@@ -1141,8 +2012,9 @@ namespace {
         }
         /**
          * Gets an array of fields to be included on the response.
+         *
          * Included fields are based on item schema and `_fields=` request argument.
-         * Introduced to support WordPress 4.9.6 changes.
+         * Updated from WordPress 5.3, included into this class to support old versions.
          *
          * @since 3.5.0
          * @param WP_REST_Request $request Full details about the request.
@@ -1958,6 +2830,16 @@ namespace Automattic\WooCommerce\Blocks\RestApi\Controllers {
          * @return \WP_REST_Response
          */
         public function prepare_item_for_response($item, $request)
+        {
+        }
+        /**
+         * Update the collection params.
+         *
+         * Adds new options for 'show_review_count'.
+         *
+         * @return array
+         */
+        public function get_collection_params()
         {
         }
         /**
@@ -2991,12 +3873,12 @@ namespace Automattic\WooCommerce\Blocks\RestApi\Controllers {
         {
         }
         /**
-         * Get the images for a product or product variation.
+         * Get a usable add to cart URL.
          *
          * @param \WC_Product|\WC_Product_Variation $product Product instance.
          * @return array
          */
-        protected function get_images($product)
+        protected function get_add_to_cart_url($product)
         {
         }
         /**
@@ -3274,6 +4156,1082 @@ namespace Automattic\WooCommerce\Blocks\RestApi\Controllers {
          * @return array
          */
         public function get_item_schema()
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Blocks\RestApi\StoreApi\Controllers {
+    /**
+     * Cart API.
+     *
+     * @since 2.5.0
+     */
+    class Cart extends \WP_REST_Controller
+    {
+        /**
+         * Endpoint namespace.
+         *
+         * @var string
+         */
+        protected $namespace = 'wc/store';
+        /**
+         * Route base.
+         *
+         * @var string
+         */
+        protected $rest_base = 'cart';
+        /**
+         * Schema class instance.
+         *
+         * @var object
+         */
+        protected $schema;
+        /**
+         * Setup API class.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Register routes.
+         */
+        public function register_routes()
+        {
+        }
+        /**
+         * Get the cart.
+         *
+         * @param \WP_REST_Request $request Full details about the request.
+         * @return \WP_Error|\WP_REST_Response
+         */
+        public function get_item($request)
+        {
+        }
+        /**
+         * Cart item schema.
+         *
+         * @return array
+         */
+        public function get_item_schema()
+        {
+        }
+        /**
+         * Prepares a single item output for response.
+         *
+         * @param array            $cart    Cart array.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response Response object.
+         */
+        public function prepare_item_for_response($cart, $request)
+        {
+        }
+    }
+    /**
+     * Cart API.
+     *
+     * @since 2.5.0
+     */
+    class CartItems extends \WP_REST_Controller
+    {
+        /**
+         * Endpoint namespace.
+         *
+         * @var string
+         */
+        protected $namespace = 'wc/store';
+        /**
+         * Route base.
+         *
+         * @var string
+         */
+        protected $rest_base = 'cart/items';
+        /**
+         * Schema class instance.
+         *
+         * @var object
+         */
+        protected $schema;
+        /**
+         * Setup API class.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Register routes.
+         */
+        public function register_routes()
+        {
+        }
+        /**
+         * Get a collection of cart items.
+         *
+         * @param \WP_REST_Request $request Full details about the request.
+         * @return \WP_Error|\WP_REST_Response
+         */
+        public function get_items($request)
+        {
+        }
+        /**
+         * Get a single cart items.
+         *
+         * @param \WP_REST_Request $request Full details about the request.
+         * @return \WP_Error|\WP_REST_Response
+         */
+        public function get_item($request)
+        {
+        }
+        /**
+         * Creates one item from the collection.
+         *
+         * @param \WP_REST_Request $request Full data about the request.
+         * @return \WP_Error|\WP_REST_Response Response object on success, or WP_Error object on failure.
+         */
+        public function create_item($request)
+        {
+        }
+        /**
+         * Update a single cart item.
+         *
+         * @param \WP_Rest_Request $request Full data about the request.
+         * @return \WP_Error|\WP_REST_Response Response object on success, or WP_Error object on failure.
+         */
+        public function update_item($request)
+        {
+        }
+        /**
+         * Delete a single cart item.
+         *
+         * @param \WP_Rest_Request $request Full data about the request.
+         * @return \WP_Error|\WP_REST_Response Response object on success, or WP_Error object on failure.
+         */
+        public function delete_item($request)
+        {
+        }
+        /**
+         * Deletes all items in the cart.
+         *
+         * @param \WP_Rest_Request $request Full data about the request.
+         * @return \WP_Error|\WP_REST_Response Response object on success, or WP_Error object on failure.
+         */
+        public function delete_items($request)
+        {
+        }
+        /**
+         * Cart item schema.
+         *
+         * @return array
+         */
+        public function get_item_schema()
+        {
+        }
+        /**
+         * Prepares a single item output for response.
+         *
+         * @param array            $cart_item    Cart item array.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response Response object.
+         */
+        public function prepare_item_for_response($cart_item, $request)
+        {
+        }
+    }
+    /**
+     * Product attribute terms API.
+     *
+     * @since 2.5.0
+     */
+    class ProductAttributeTerms extends \WP_REST_Controller
+    {
+        /**
+         * Endpoint namespace.
+         *
+         * @var string
+         */
+        protected $namespace = 'wc/store';
+        /**
+         * Route base.
+         *
+         * @var string
+         */
+        protected $rest_base = 'products/attributes/(?P<attribute_id>[\\d]+)/terms';
+        /**
+         * Schema class instance.
+         *
+         * @var TermSchema
+         */
+        protected $schema;
+        /**
+         * Query class instance.
+         *
+         * @var TermQuery
+         */
+        protected $term_query;
+        /**
+         * Setup API class.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Register the routes.
+         */
+        public function register_routes()
+        {
+        }
+        /**
+         * Item schema.
+         *
+         * @return array
+         */
+        public function get_item_schema()
+        {
+        }
+        /**
+         * Prepare a single item for response.
+         *
+         * @param \WP_Term         $item Term object.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response $response Response data.
+         */
+        public function prepare_item_for_response($item, $request)
+        {
+        }
+        /**
+         * Get a collection of attribute terms.
+         *
+         * @param \WP_REST_Request $request Full details about the request.
+         * @return RestError|\WP_REST_Response
+         */
+        public function get_items($request)
+        {
+        }
+        /**
+         * Get the query params for collections of attributes.
+         *
+         * @return array
+         */
+        public function get_collection_params()
+        {
+        }
+    }
+    /**
+     * Product attributes API.
+     *
+     * @since 2.5.0
+     */
+    class ProductAttributes extends \WP_REST_Controller
+    {
+        /**
+         * Endpoint namespace.
+         *
+         * @var string
+         */
+        protected $namespace = 'wc/store';
+        /**
+         * Route base.
+         *
+         * @var string
+         */
+        protected $rest_base = 'products/attributes';
+        /**
+         * Schema class instance.
+         *
+         * @var ProductAttributeSchema
+         */
+        protected $schema;
+        /**
+         * Setup API class.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Register the routes.
+         */
+        public function register_routes()
+        {
+        }
+        /**
+         * Item schema.
+         *
+         * @return array
+         */
+        public function get_item_schema()
+        {
+        }
+        /**
+         * Prepare a single item for response.
+         *
+         * @param object           $item Attribute object.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response $response Response data.
+         */
+        public function prepare_item_for_response($item, $request)
+        {
+        }
+        /**
+         * Get a single item.
+         *
+         * @param \WP_REST_Request $request Full details about the request.
+         * @return RestError|\WP_REST_Response
+         */
+        public function get_item($request)
+        {
+        }
+        /**
+         * Get a collection of attributes.
+         *
+         * @param \WP_REST_Request $request Full details about the request.
+         * @return RestError|\WP_REST_Response
+         */
+        public function get_items($request)
+        {
+        }
+    }
+    /**
+     * ProductCollectionData API.
+     *
+     * @since 2.5.0
+     */
+    class ProductCollectionData extends \WP_REST_Controller
+    {
+        /**
+         * Endpoint namespace.
+         *
+         * @var string
+         */
+        protected $namespace = 'wc/store';
+        /**
+         * Route base.
+         *
+         * @var string
+         */
+        protected $rest_base = 'products/collection-data';
+        /**
+         * Register the routes for products.
+         */
+        public function register_routes()
+        {
+        }
+        /**
+         * Return the schema.
+         *
+         * @return array
+         */
+        public function get_item_schema()
+        {
+        }
+        /**
+         * Get a collection of posts and add the post title filter option to \WP_Query.
+         *
+         * @param \WP_REST_Request $request Full details about the request.
+         * @return RestError|\WP_REST_Response
+         */
+        public function get_items($request)
+        {
+        }
+        /**
+         * Get the query params for collections of products.
+         *
+         * @return array
+         */
+        public function get_collection_params()
+        {
+        }
+    }
+    /**
+     * Products API.
+     *
+     * @since 2.5.0
+     */
+    class Products extends \WP_REST_Controller
+    {
+        /**
+         * Endpoint namespace.
+         *
+         * @var string
+         */
+        protected $namespace = 'wc/store';
+        /**
+         * Route base.
+         *
+         * @var string
+         */
+        protected $rest_base = 'products';
+        /**
+         * Schema class instance.
+         *
+         * @var ProductSchema
+         */
+        protected $schema;
+        /**
+         * Query class instance.
+         *
+         * @var ProductQuery
+         */
+        protected $product_query;
+        /**
+         * Setup API class.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Register the routes for products.
+         */
+        public function register_routes()
+        {
+        }
+        /**
+         * Product item schema.
+         *
+         * @return array
+         */
+        public function get_item_schema()
+        {
+        }
+        /**
+         * Prepare a single item for response.
+         *
+         * @param \WC_Product      $item Product object.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response $response Response data.
+         */
+        public function prepare_item_for_response($item, $request)
+        {
+        }
+        /**
+         * Get a single item.
+         *
+         * @param \WP_REST_Request $request Full details about the request.
+         * @return RestError|\WP_REST_Response
+         */
+        public function get_item($request)
+        {
+        }
+        /**
+         * Get a collection of posts and add the post title filter option to \WP_Query.
+         *
+         * @param \WP_REST_Request $request Full details about the request.
+         * @return RestError|\WP_REST_Response
+         */
+        public function get_items($request)
+        {
+        }
+        /**
+         * Prepare links for the request.
+         *
+         * @param \WC_Product      $item Product object.
+         * @param \WP_REST_Request $request Request object.
+         * @return array
+         */
+        protected function prepare_links($item, $request)
+        {
+        }
+        /**
+         * Get the query params for collections of products.
+         *
+         * @return array
+         */
+        public function get_collection_params()
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Blocks\RestApi\StoreApi\Schemas {
+    /**
+     * AbstractBlock class.
+     *
+     * @since 2.5.0
+     */
+    abstract class AbstractSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'Schema';
+        /**
+         * Returns the full item schema.
+         *
+         * @return array
+         */
+        public function get_item_schema()
+        {
+        }
+        /**
+         * Returns schema properties.
+         *
+         * @return array
+         */
+        protected abstract function get_properties();
+        /**
+         * Force all schema properties to be readonly.
+         *
+         * @param array $properties Schema.
+         * @return array Updated schema.
+         */
+        protected function force_schema_readonly($properties)
+        {
+        }
+        /**
+         * Prepares HTML based content, such as post titles and content, for the API response.
+         *
+         * The wptexturize, convert_chars, and trim functions are also used in the `the_title` filter.
+         * The function wp_kses_post removes disallowed HTML tags.
+         *
+         * @param string|array $response Data to format.
+         * @return string|array Formatted data.
+         */
+        protected function prepare_html_response($response)
+        {
+        }
+    }
+    /**
+     * AbstractBlock class.
+     *
+     * @since 2.5.0
+     */
+    class CartItemSchema extends \Automattic\WooCommerce\Blocks\RestApi\StoreApi\Schemas\AbstractSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'cart_item';
+        /**
+         * Cart schema properties.
+         *
+         * @return array
+         */
+        protected function get_properties()
+        {
+        }
+        /**
+         * Check given ID exists,
+         *
+         * @param integer $product_id Product ID.
+         * @return bool
+         */
+        public function product_id_exists($product_id)
+        {
+        }
+        /**
+         * Convert a WooCommerce cart item to an object suitable for the response.
+         *
+         * @param array $cart_item Cart item array.
+         * @return array
+         */
+        public function get_item_response($cart_item)
+        {
+        }
+        /**
+         * Format variation data, for example convert slugs such as attribute_pa_size to Size.
+         *
+         * @param array       $variation_data Array of data from the cart.
+         * @param \WC_Product $product Product data.
+         * @return array
+         */
+        protected function format_variation_data($variation_data, $product)
+        {
+        }
+        /**
+         * Get product attribute taxonomy name.
+         *
+         * @param string      $slug   Taxonomy name.
+         * @param \WC_Product $object Product data.
+         * @return string
+         */
+        protected function get_attribute_taxonomy_name($slug, $object)
+        {
+        }
+    }
+    /**
+     * CartSchema class.
+     *
+     * @since 2.5.0
+     */
+    class CartSchema extends \Automattic\WooCommerce\Blocks\RestApi\StoreApi\Schemas\AbstractSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'cart';
+        /**
+         * Cart schema properties.
+         *
+         * @return array
+         */
+        protected function get_properties()
+        {
+        }
+        /**
+         * Convert a woo cart into an object suitable for the response.
+         *
+         * @param \WC_Cart $cart Cart class instance.
+         * @return array
+         */
+        public function get_item_response($cart)
+        {
+        }
+    }
+    /**
+     * ProductAttributeSchema class.
+     *
+     * @since 2.5.0
+     */
+    class ProductAttributeSchema extends \Automattic\WooCommerce\Blocks\RestApi\StoreApi\Schemas\AbstractSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'product_attribute';
+        /**
+         * Term properties.
+         *
+         * @return array
+         */
+        protected function get_properties()
+        {
+        }
+        /**
+         * Convert an attribute object into an object suitable for the response.
+         *
+         * @param object $attribute Attribute object.
+         * @return array
+         */
+        public function get_item_response($attribute)
+        {
+        }
+    }
+    /**
+     * ProductSchema class.
+     *
+     * @since 2.5.0
+     */
+    class ProductSchema extends \Automattic\WooCommerce\Blocks\RestApi\StoreApi\Schemas\AbstractSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'product';
+        /**
+         * Product schema properties.
+         *
+         * @return array
+         */
+        protected function get_properties()
+        {
+        }
+        /**
+         * Convert a WooCommerce product into an object suitable for the response.
+         *
+         * @param array $product Product object.
+         * @return array
+         */
+        public function get_item_response($product)
+        {
+        }
+        /**
+         * Get an array of pricing data.
+         *
+         * @param \WC_Product|\WC_Product_Variation $product Product instance.
+         * @return array
+         */
+        protected function get_prices($product)
+        {
+        }
+        /**
+         * Get price range from certain product types.
+         *
+         * @param \WC_Product|\WC_Product_Variation $product Product instance.
+         * @return arary|null
+         */
+        protected function get_price_range($product)
+        {
+        }
+    }
+    /**
+     * TermSchema class.
+     *
+     * @since 2.5.0
+     */
+    class TermSchema extends \Automattic\WooCommerce\Blocks\RestApi\StoreApi\Schemas\AbstractSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'term';
+        /**
+         * Term properties.
+         *
+         * @return array
+         */
+        protected function get_properties()
+        {
+        }
+        /**
+         * Convert a term object into an object suitable for the response.
+         *
+         * @param \WP_Term $term Term object.
+         * @return array
+         */
+        public function get_item_response($term)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Blocks\RestApi\StoreApi\Utilities {
+    /**
+     * Woo Cart Controller class.
+     *
+     * @since 2.5.0
+     */
+    class CartController
+    {
+        /**
+         * Based on the core cart class but returns errors rather than rendering notices directly.
+         *
+         * @throws RestException Exception if invalid data is detected.
+         *
+         * @param array $request Add to cart request params.
+         * @return string|Error
+         */
+        public function add_to_cart($request)
+        {
+        }
+        /**
+         * Get main instance of cart class.
+         *
+         * @return \WC_Cart
+         */
+        public function get_cart_instance()
+        {
+        }
+        /**
+         * Return a cart item from the woo core cart class.
+         *
+         * @param string $item_id Cart item id.
+         * @return array
+         */
+        public function get_cart_item($item_id)
+        {
+        }
+        /**
+         * Returns all cart items.
+         *
+         * @return array
+         */
+        public function get_cart_items()
+        {
+        }
+        /**
+         * Empty cart contents.
+         */
+        public function empty_cart()
+        {
+        }
+        /**
+         * Get a product object to be added to the cart.
+         *
+         * @throws RestException Exception if invalid data is detected.
+         *
+         * @param array $request Add to cart request params.
+         * @return \WC_Product|Error Returns a product object if purchasable.
+         */
+        protected function get_product_for_cart($request)
+        {
+        }
+        /**
+         * Filter data for add to cart requests.
+         *
+         * @param array $request Add to cart request params.
+         * @return array Updated request array.
+         */
+        protected function filter_request_data($request)
+        {
+        }
+        /**
+         * If variations are set, validate and format the values ready to add to the cart.
+         *
+         * @throws RestException Exception if invalid data is detected.
+         *
+         * @param array $request Add to cart request params.
+         * @return array Updated request array.
+         */
+        protected function parse_variation_data($request)
+        {
+        }
+        /**
+         * Try to match request data to a variation ID and return the ID.
+         *
+         * @throws RestException Exception if variation cannot be found.
+         *
+         * @param array       $request Add to cart request params.
+         * @param \WC_Product $product Product being added to the cart.
+         * @return int Matching variation ID.
+         */
+        protected function get_variation_id_from_variation_data($request, $product)
+        {
+        }
+        /**
+         * Format and sanitize variation data posted to the API.
+         *
+         * Labels are converted to names (e.g. Size to pa_size), and values are cleaned.
+         *
+         * @throws RestException Exception if variation cannot be found.
+         *
+         * @param array $variation_data Key value pairs of attributes and values.
+         * @param array $variable_product_attributes Product attributes we're expecting.
+         * @return array
+         */
+        protected function sanitize_variation_data($variation_data, $variable_product_attributes)
+        {
+        }
+        /**
+         * Get product attributes from the variable product (which may be the parent if the product object is a variation).
+         *
+         * @throws RestException Exception if product is invalid.
+         *
+         * @param \WC_Product $product Product being added to the cart.
+         * @return array
+         */
+        protected function get_variable_product_attributes($product)
+        {
+        }
+    }
+    /**
+     * Pagination class.
+     *
+     * @since 2.5.0
+     */
+    class Pagination
+    {
+        /**
+         * Add pagination headers to a response object.
+         *
+         * @param \WP_REST_Response $response Reference to the response object.
+         * @param \WP_REST_Request  $request The request object.
+         * @param int               $total_items Total items found.
+         * @param int               $total_pages Total pages found.
+         * @return \WP_REST_Response
+         */
+        public function add_headers($response, $request, $total_items, $total_pages)
+        {
+        }
+        /**
+         * Get current page.
+         *
+         * @param \WP_REST_Request $request The request object.
+         * @return int Get the page from the request object.
+         */
+        protected function get_current_page($request)
+        {
+        }
+        /**
+         * Get base for links from the request object.
+         *
+         * @param \WP_REST_Request $request The request object.
+         * @return string
+         */
+        protected function get_link_base($request)
+        {
+        }
+        /**
+         * Add a page link.
+         *
+         * @param \WP_REST_Response $response Reference to the response object.
+         * @param string            $name Page link name. e.g. prev.
+         * @param int               $page Page number.
+         * @param string            $link_base Base URL.
+         */
+        protected function add_page_link(&$response, $name, $page, $link_base)
+        {
+        }
+    }
+    /**
+     * Product Query fllters class.
+     *
+     * @since 2.5.0
+     */
+    class ProductQueryFilters
+    {
+        /**
+         * Get filtered min price for current products.
+         *
+         * @param \WP_REST_Request $request The request object.
+         * @return array
+         */
+        public function get_filtered_price($request)
+        {
+        }
+        /**
+         * Get attribute counts for the current products.
+         *
+         * @param \WP_REST_Request $request The request object.
+         * @param array            $attributes Attributes to count, either names or ids.
+         * @return array termId=>count pairs.
+         */
+        public function get_attribute_counts($request, $attributes = [])
+        {
+        }
+        /**
+         * Get rating counts for the current products.
+         *
+         * @param \WP_REST_Request $request The request object.
+         * @return array rating=>count pairs.
+         */
+        public function get_rating_counts($request)
+        {
+        }
+    }
+    /**
+     * Product Query class.
+     *
+     * @since 2.5.0
+     */
+    class ProductQuery
+    {
+        /**
+         * Prepare query args to pass to WP_Query for a REST API request.
+         *
+         * @param \WP_REST_Request $request Request data.
+         * @return array
+         */
+        public function prepare_objects_query($request)
+        {
+        }
+        /**
+         * Get objects.
+         *
+         * @param \WP_REST_Request $request Request data.
+         * @return array
+         */
+        public function get_objects($request)
+        {
+        }
+        /**
+         * Add in conditional search filters for products.
+         *
+         * @param array     $args Query args.
+         * @param \WC_Query $wp_query WC_Query object.
+         * @return array
+         */
+        public function add_query_clauses($args, $wp_query)
+        {
+        }
+        /**
+         * Add meta query.
+         *
+         * @param array $args       Query args.
+         * @param array $meta_query Meta query.
+         * @return array
+         */
+        protected function add_meta_query($args, $meta_query)
+        {
+        }
+        /**
+         * Join wc_product_meta_lookup to posts if not already joined.
+         *
+         * @param string $sql SQL join.
+         * @return string
+         */
+        protected function append_product_sorting_table_join($sql)
+        {
+        }
+    }
+    /**
+     * Term Query class.
+     *
+     * @since 2.5.0
+     */
+    class TermQuery
+    {
+        /**
+         * Prepare query args to pass to WP_Query for a REST API request.
+         *
+         * @param \WP_REST_Request $request Request data.
+         * @return array
+         */
+        public function prepare_objects_query($request)
+        {
+        }
+        /**
+         * Get objects.
+         *
+         * @param \WP_REST_Request $request Request data.
+         * @return array
+         */
+        public function get_objects($request)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Blocks\RestApi\Utilities {
+    /**
+     * ProductImages class.
+     */
+    class ProductImages
+    {
+        /**
+         * Convert product images/attachments to an array.
+         *
+         * @param \WC_Product|\WC_Product_Variation $product Product instance.
+         * @return array Array of images confirming to product schema.
+         */
+        public function images_to_array($product)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Blocks\Utils {
+    /**
+     * BlocksWpQuery query.
+     *
+     * @deprecated 2.5.0
+     */
+    class BlocksWpQuery extends \WP_Query
+    {
+        /**
+         * Constructor.
+         *
+         * Sets up the WordPress query, if parameter is not empty.
+         *
+         * Unlike the constructor in WP_Query, this does not RUN the query.
+         *
+         * @param string|array $query URL query string or array of vars.
+         */
+        public function __construct($query = '')
+        {
+        }
+        /**
+         * Get cached posts, if a cache exists.
+         *
+         * A hash is generated using the array of query_vars. If doing custom queries via filters such as posts_where
+         * (where the SQL query is manipulated directly) you can still ensure there is a unique hash by injecting custom
+         * query vars via the parse_query filter. For example:
+         *
+         *      add_filter( 'parse_query', function( $wp_query ) {
+         *           $wp_query->query_vars['my_custom_query_var'] = true;
+         *      } );
+         *
+         * Doing so won't have any negative effect on the query itself, and it will cause the hash to change.
+         *
+         * @param string $transient_version Transient version to allow for invalidation.
+         * @return WP_Post[]|int[] Array of post objects or post IDs.
+         */
+        public function get_cached_posts($transient_version = '')
         {
         }
     }
@@ -3930,12 +5888,12 @@ namespace {
         /**
          * Gets the product ID from the SKU or posted ID.
          *
-         * @param array $posted Request data
-         *
+         * @throws WC_REST_Exception When SKU or ID is not valid.
+         * @param array           $posted Request data.
+         * @param string          $action 'create' to add line item or 'update' to update it.
          * @return int
-         * @throws WC_REST_Exception
          */
-        protected function get_product_id($posted)
+        protected function get_product_id($posted, $action = 'create')
         {
         }
         /**
@@ -5877,10 +7835,11 @@ namespace {
          * Gets the product ID from the SKU or posted ID.
          *
          * @throws WC_REST_Exception When SKU or ID is not valid.
-         * @param array $posted Request data.
+         * @param array           $posted Request data.
+         * @param string          $action 'create' to add line item or 'update' to update it.
          * @return int
          */
-        protected function get_product_id($posted)
+        protected function get_product_id($posted, $action = 'create')
         {
         }
         /**
@@ -7426,18 +9385,52 @@ namespace {
         /**
          * Return an array of sections and the data associated with each.
          *
+         * @deprecated 3.9.0
          * @return array
          */
         public function get_item_mappings()
         {
         }
         /**
+         * Return an array of sections and the data associated with each.
+         *
+         * @since 3.9.0
+         * @param array $fields List of fields to be included on the response.
+         * @return array
+         */
+        public function get_item_mappings_per_fields($fields)
+        {
+        }
+        /**
          * Get array of environment information. Includes thing like software
          * versions, and various server settings.
          *
+         * @deprecated 3.9.0
          * @return array
          */
         public function get_environment_info()
+        {
+        }
+        /**
+         * Check if field item exists.
+         *
+         * @since 3.9.0
+         * @param string $section Fields section.
+         * @param array  $items List of items to check for.
+         * @param array  $fields List of fields to be included on the response.
+         * @return bool
+         */
+        private function check_if_field_item_exists($section, $items, $fields)
+        {
+        }
+        /**
+         * Get array of environment information. Includes thing like software
+         * versions, and various server settings.
+         *
+         * @param array $fields List of fields to be included on the response.
+         * @return array
+         */
+        public function get_environment_info_per_fields($fields)
         {
         }
         /**
@@ -9062,7 +11055,7 @@ namespace Automattic\WooCommerce\RestApi {
          *
          * @var string
          */
-        const VERSION = '1.0.2';
+        const VERSION = '1.0.6';
         /**
          * Init the package - load the REST API Server class.
          */

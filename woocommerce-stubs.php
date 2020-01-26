@@ -1511,10 +1511,72 @@ namespace {
         }
     }
     /**
+     * Trait WC_Item_Totals.
+     *
+     * Right now this do not have much, but plan is to eventually move all shared calculation logic between Orders and Cart in this file.
+     *
+     * @since 3.9.0
+     */
+    trait WC_Item_Totals
+    {
+        /**
+         * Line items to calculate. Define in child class.
+         *
+         * @since 3.9.0
+         * @param string $field Field name to calculate upon.
+         *
+         * @return array having `total`|`subtotal` property.
+         */
+        protected abstract function get_values_for_total($field);
+        /**
+         * Return rounded total based on settings. Will be used by Cart and Orders.
+         *
+         * @since 3.9.0
+         *
+         * @param array $values Values to round. Should be with precision.
+         *
+         * @return float|int Appropriately rounded value.
+         */
+        public static function get_rounded_items_total($values)
+        {
+        }
+        /**
+         * Apply rounding to item subtotal before summing.
+         *
+         * @since 3.9.0
+         * @param float $value Item subtotal value.
+         * @return float
+         */
+        public static function round_item_subtotal($value)
+        {
+        }
+        /**
+         * Should always round at subtotal?
+         *
+         * @since 3.9.0
+         * @return bool
+         */
+        protected static function round_at_subtotal()
+        {
+        }
+        /**
+         * Apply rounding to an array of taxes before summing. Rounds to store DP setting, ignoring precision.
+         *
+         * @since  3.2.6
+         * @param  float $value    Tax value.
+         * @param  bool  $in_cents Whether precision of value is in cents.
+         * @return float
+         */
+        protected static function round_line_tax($value, $in_cents = \true)
+        {
+        }
+    }
+    /**
      * WC_Abstract_Order class.
      */
     abstract class WC_Abstract_Order extends \WC_Abstract_Legacy_Order
     {
+        use \WC_Item_Totals;
         /**
          * Order Data array. This is the core order data exposed in APIs since 3.0.0.
          *
@@ -1989,6 +2051,16 @@ namespace {
         {
         }
         /**
+         * Return array of values for calculations.
+         *
+         * @param string $field Field name to return.
+         *
+         * @return array Array of values.
+         */
+        protected function get_values_for_total($field)
+        {
+        }
+        /**
          * Return an array of coupons within this order.
          *
          * @since  3.7.0
@@ -2085,6 +2157,53 @@ namespace {
          * @return false|void
          */
         public function add_item($item)
+        {
+        }
+        /**
+         * Check and records coupon usage tentatively so that counts validation is correct. Display an error if coupon usage limit has been reached.
+         *
+         * If you are using this method, make sure to `release_held_coupons` in case an Exception is thrown.
+         *
+         * @throws Exception When not able to apply coupon.
+         *
+         * @param string $billing_email Billing email of order.
+         */
+        public function hold_applied_coupons($billing_email)
+        {
+        }
+        /**
+         * Hold coupon if a global usage limit is defined.
+         *
+         * @param WC_Coupon $coupon Coupon object.
+         *
+         * @return string    Meta key which indicates held coupon.
+         * @throws Exception When can't be held.
+         */
+        private function hold_coupon($coupon)
+        {
+        }
+        /**
+         * Hold coupon if usage limit per customer is defined.
+         *
+         * @param WC_Coupon $coupon              Coupon object.
+         * @param array     $user_ids_and_emails Array of user Id and emails to check for usage limit.
+         * @param string    $user_alias          User ID or email to use to record current usage.
+         *
+         * @return string    Meta key which indicates held coupon.
+         * @throws Exception When coupon can't be held.
+         */
+        private function hold_coupon_for_users($coupon, $user_ids_and_emails, $user_alias)
+        {
+        }
+        /**
+         * Helper method to get all aliases for current user and provide billing email.
+         *
+         * @param string $billing_email Billing email provided in form.
+         *
+         * @return array     Array of all aliases.
+         * @throws Exception When validation fails.
+         */
+        private function get_billing_and_current_user_aliases($billing_email)
         {
         }
         /**
@@ -2235,6 +2354,24 @@ namespace {
          * Update tax lines for the order based on the line item taxes themselves.
          */
         public function update_taxes()
+        {
+        }
+        /**
+         * Helper function.
+         * If you add all items in this order in cart again, this would be the cart subtotal (assuming all other settings are same).
+         *
+         * @return float Cart subtotal.
+         */
+        protected function get_cart_subtotal_for_order()
+        {
+        }
+        /**
+         * Helper function.
+         * If you add all items in this order in cart again, this would be the cart total (assuming all other settings are same).
+         *
+         * @return float Cart total.
+         */
+        protected function get_cart_total_for_order()
         {
         }
         /**
@@ -2560,6 +2697,12 @@ namespace {
          */
         public $new_method_label = '';
         /**
+         * Pay button ID if supported.
+         *
+         * @var string
+         */
+        public $pay_button_id = '';
+        /**
          * Contains a users saved tokens for this gateway.
          *
          * @var array
@@ -2678,6 +2821,15 @@ namespace {
          * @return string
          */
         public function get_icon()
+        {
+        }
+        /**
+         * Return the gateway's pay button ID.
+         *
+         * @since 3.9.0
+         * @return string
+         */
+        public function get_pay_button_id()
         {
         }
         /**
@@ -6661,8 +6813,8 @@ namespace {
         /**
          * Function to create the duplicate of the product.
          *
-         * @param WC_Product $product
-         * @return WC_Product
+         * @param WC_Product $product The product to duplicate.
+         * @return WC_Product The duplicate.
          */
         public function product_duplicate($product)
         {
@@ -6671,11 +6823,22 @@ namespace {
          * Get a product from the database to duplicate.
          *
          * @deprecated 3.0.0
-         * @param mixed $id
+         * @param mixed $id The ID of the product to duplicate.
          * @return object|bool
          * @see duplicate_product
          */
         private function get_product_to_duplicate($id)
+        {
+        }
+        /**
+         * Generates a unique slug for a given product. We do this so that we can override the
+         * behavior of wp_unique_post_slug(). The normal slug generation will run single
+         * select queries on every non-unique slug, resulting in very bad performance.
+         *
+         * @param WC_Product $product The product to generate a slug for.
+         * @since 3.9.0
+         */
+        private function generate_unique_slug($product)
         {
         }
     }
@@ -7229,7 +7392,7 @@ namespace {
          *
          * @var array
          */
-        private static $core_notices = array('install' => 'install_notice', 'update' => 'update_notice', 'template_files' => 'template_file_check_notice', 'legacy_shipping' => 'legacy_shipping_notice', 'no_shipping_methods' => 'no_shipping_methods_notice', 'regenerating_thumbnails' => 'regenerating_thumbnails_notice', 'regenerating_lookup_table' => 'regenerating_lookup_table_notice', 'no_secure_connection' => 'secure_connection_notice', 'wc_admin' => 'wc_admin_feature_plugin_notice', \WC_PHP_MIN_REQUIREMENTS_NOTICE => 'wp_php_min_requirements_notice');
+        private static $core_notices = array('install' => 'install_notice', 'update' => 'update_notice', 'template_files' => 'template_file_check_notice', 'legacy_shipping' => 'legacy_shipping_notice', 'no_shipping_methods' => 'no_shipping_methods_notice', 'regenerating_thumbnails' => 'regenerating_thumbnails_notice', 'regenerating_lookup_table' => 'regenerating_lookup_table_notice', 'no_secure_connection' => 'secure_connection_notice', 'wc_admin' => 'wc_admin_feature_plugin_notice', \WC_PHP_MIN_REQUIREMENTS_NOTICE => 'wp_php_min_requirements_notice', 'maxmind_license_key' => 'maxmind_missing_license_key_notice');
         /**
          * Constructor.
          */
@@ -7400,6 +7563,22 @@ namespace {
          * @return void
          */
         public static function wp_php_min_requirements_notice()
+        {
+        }
+        /**
+         * Add MaxMind missing license key notice.
+         *
+         * @since 3.9.0
+         */
+        public static function add_maxmind_missing_license_key_notice()
+        {
+        }
+        /**
+         * Display MaxMind missing license key notice.
+         *
+         * @since 3.9.0
+         */
+        public static function maxmind_missing_license_key_notice()
         {
         }
         /**
@@ -7946,6 +8125,12 @@ namespace {
          */
         private $tweets = array('Someone give me woo-t, I just set up a new store with #WordPress and @WooCommerce!', 'Someone give me high five, I just set up a new store with #WordPress and @WooCommerce!');
         /**
+         * The version of WordPress required to run the WooCommerce Admin plugin
+         *
+         * @var string
+         */
+        private $wc_admin_plugin_minimum_wordpress_version = '5.3';
+        /**
          * Hook in tabs.
          */
         public function __construct()
@@ -7964,14 +8149,6 @@ namespace {
          * @return boolean
          */
         protected function should_show_theme()
-        {
-        }
-        /**
-         * Is the user using a default WP theme?
-         *
-         * @return boolean
-         */
-        protected function is_default_theme()
         {
         }
         /**
@@ -8003,11 +8180,21 @@ namespace {
         /**
          * Should we show the WooCommerce Admin install option?
          * True only if the user can install plugins,
-         * and up until the end date of the recommendation.
+         * and is running the correct version of WordPress.
+         *
+         * @see WC_Admin_Setup_Wizard::$wc_admin_plugin_minimum_wordpress_version
          *
          * @return boolean
          */
         protected function should_show_wc_admin()
+        {
+        }
+        /**
+         * Should we show the new WooCommerce Admin onboarding experience?
+         *
+         * @return boolean
+         */
+        protected function should_show_wc_admin_onboarding()
         {
         }
         /**
@@ -8076,6 +8263,24 @@ namespace {
          * Output the content for the current step.
          */
         public function setup_wizard_content()
+        {
+        }
+        /**
+         * Display's a prompt for users to try out the new improved WooCommerce onboarding experience in WooCommerce Admin.
+         */
+        public function wc_setup_new_onboarding()
+        {
+        }
+        /**
+         * Installs WooCommerce admin and redirects to the new onboarding experience.
+         */
+        public function wc_setup_new_onboarding_save()
+        {
+        }
+        /**
+         * Redirects to the onboarding wizard in WooCommerce Admin.
+         */
+        private function wc_setup_redirect_to_wc_admin_onboarding()
         {
         }
         /**
@@ -14338,6 +14543,15 @@ namespace {
         {
         }
         /**
+         * Invalidate cache group.
+         *
+         * @param string $group Group of cache to clear.
+         * @since 3.9.0
+         */
+        public static function invalidate_cache_group($group)
+        {
+        }
+        /**
          * Get a hash of the customer location.
          *
          * @return string
@@ -14635,6 +14849,7 @@ namespace {
      */
     final class WC_Cart_Totals
     {
+        use \WC_Item_Totals;
         /**
          * Reference to cart object.
          *
@@ -14747,14 +14962,6 @@ namespace {
          * @return array
          */
         protected function get_default_shipping_props()
-        {
-        }
-        /**
-         * Should we round at subtotal level only?
-         *
-         * @return bool
-         */
-        protected function round_at_subtotal()
         {
         }
         /**
@@ -14909,6 +15116,15 @@ namespace {
         {
         }
         /**
+         * Returns array of values for totals calculation.
+         *
+         * @param string $field Field name. Will probably be `total` or `subtotal`.
+         * @return array Items object
+         */
+        protected function get_values_for_total($field)
+        {
+        }
+        /**
          * Get taxes merged by type.
          *
          * @since 3.2.0
@@ -14922,6 +15138,7 @@ namespace {
         /**
          * Round merged taxes.
          *
+         * @deprecated 3.9.0 `calculate_item_subtotals` should already appropriately round the tax values.
          * @since 3.5.4
          * @param array $taxes Taxes to round.
          * @return array
@@ -15002,26 +15219,6 @@ namespace {
          * @since 3.2.0
          */
         protected function calculate_totals()
-        {
-        }
-        /**
-         * Apply rounding to an array of taxes before summing. Rounds to store DP setting, ignoring precision.
-         *
-         * @since  3.2.6
-         * @param  float $value Tax value.
-         * @return float
-         */
-        protected function round_line_tax($value)
-        {
-        }
-        /**
-         * Apply rounding to item subtotal before summing.
-         *
-         * @since 3.7.0
-         * @param float $value Item subtotal value.
-         * @return float
-         */
-        protected function round_item_subtotal($value)
         {
         }
     }
@@ -17020,6 +17217,14 @@ namespace {
         {
         }
         /**
+         * Gets an array of Non-EU countries that use VAT as the Local name for their taxes based on this list - https://en.wikipedia.org/wiki/Value-added_tax#Non-European_Union_countries
+         *
+         * @return string[]
+         */
+        public function countries_using_vat()
+        {
+        }
+        /**
          * Gets the correct string for shipping - either 'to the' or 'to'.
          *
          * @param string $country_code Country code.
@@ -17770,9 +17975,10 @@ namespace {
         /**
          * Increase usage count for current coupon.
          *
-         * @param string $used_by Either user ID or billing email.
+         * @param string   $used_by  Either user ID or billing email.
+         * @param WC_Order $order  If provided, will clear the coupons held by this order.
          */
-        public function increase_usage_count($used_by = '')
+        public function increase_usage_count($used_by = '', $order = \null)
         {
         }
         /**
@@ -17790,8 +17996,6 @@ namespace {
         */
         /**
          * Returns the error_message string.
-         *
-         * @access public
          * @return string
          */
         public function get_error_message()
@@ -20301,8 +20505,10 @@ namespace {
         /**
          * Queues transactional email so it's not sent in current request if enabled,
          * otherwise falls back to send now.
+         *
+         * @param mixed ...$args Optional arguments.
          */
-        public static function queue_transactional_email()
+        public static function queue_transactional_email(...$args)
         {
         }
         /**
@@ -21231,6 +21437,8 @@ namespace {
     }
     /**
      * Geolite integration class.
+     *
+     * @deprecated 3.9.0
      */
     class WC_Geolite_Integration
     {
@@ -21260,6 +21468,7 @@ namespace {
          *
          * @param string $ip_address User IP address.
          * @return string
+         * @deprecated 3.9.0
          */
         public function get_country_iso($ip_address)
         {
@@ -21275,12 +21484,6 @@ namespace {
          *                        Defaults to 'info'.
          */
         private function log($message, $level = 'info')
-        {
-        }
-        /**
-         * Require geolite library.
-         */
-        private function require_geolite_library()
         {
         }
     }
@@ -21305,6 +21508,7 @@ namespace {
          * GeoLite2 DB.
          *
          * @since 3.4.0
+         * @deprecated 3.9.0
          */
         const GEOLITE2_DB = 'http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country.tar.gz';
         /**
@@ -21320,15 +21524,6 @@ namespace {
          */
         private static $geoip_apis = array('ipinfo.io' => 'https://ipinfo.io/%s/json', 'ip-api.com' => 'http://ip-api.com/json/%s');
         /**
-         * Check if server supports MaxMind GeoLite2 Reader.
-         *
-         * @since 3.4.0
-         * @return bool
-         */
-        private static function supports_geolite2()
-        {
-        }
-        /**
          * Check if geolocation is enabled.
          *
          * @since 3.4.0
@@ -21336,32 +21531,6 @@ namespace {
          * @return bool
          */
         private static function is_geolocation_enabled($current_settings)
-        {
-        }
-        /**
-         * Prevent geolocation via MaxMind when using legacy versions of php.
-         *
-         * @since 3.4.0
-         * @param string $default_customer_address current value.
-         * @return string
-         */
-        public static function disable_geolocation_on_legacy_php($default_customer_address)
-        {
-        }
-        /**
-         * Hook in geolocation functionality.
-         */
-        public static function init()
-        {
-        }
-        /**
-         * Maybe trigger a DB update for the first time.
-         *
-         * @param  string $new_value New value.
-         * @param  string $old_value Old value.
-         * @return string
-         */
-        public static function maybe_update_database($new_value, $old_value)
         {
         }
         /**
@@ -21396,6 +21565,7 @@ namespace {
         /**
          * Path to our local db.
          *
+         * @deprecated 3.9.0
          * @param  string $deprecated Deprecated since 3.4.0.
          * @return string
          */
@@ -21405,19 +21575,19 @@ namespace {
         /**
          * Update geoip database.
          *
+         * @deprecated 3.9.0
          * Extract files with PharData. Tool built into PHP since 5.3.
          */
         public static function update_database()
         {
         }
         /**
-         * Use MAXMIND GeoLite database to geolocation the user.
+         * Fetches the country code from the request headers, if one is available.
          *
-         * @param  string $ip_address IP address.
-         * @param  string $database   Database path.
-         * @return string
+         * @since 3.9.0
+         * @return string The country code pulled from the headers, or empty string if one was not found.
          */
-        private static function geolocate_via_db($ip_address, $database)
+        private static function get_country_code_from_headers()
         {
         }
         /**
@@ -21433,6 +21603,37 @@ namespace {
          * @return string
          */
         private static function geolocate_via_api($ip_address)
+        {
+        }
+        /**
+         * Hook in geolocation functionality.
+         *
+         * @deprecated 3.9.0
+         * @return null
+         */
+        public static function init()
+        {
+        }
+        /**
+         * Prevent geolocation via MaxMind when using legacy versions of php.
+         *
+         * @deprecated 3.9.0
+         * @since 3.4.0
+         * @param string $default_customer_address current value.
+         * @return string
+         */
+        public static function disable_geolocation_on_legacy_php($default_customer_address)
+        {
+        }
+        /**
+         * Maybe trigger a DB update for the first time.
+         *
+         * @deprecated 3.9.0
+         * @param  string $new_value New value.
+         * @param  string $old_value Old value.
+         * @return string
+         */
+        public static function maybe_update_database($new_value, $old_value)
         {
         }
     }
@@ -21509,7 +21710,7 @@ namespace {
          *
          * @var array
          */
-        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'));
+        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'));
         /**
          * Hook in tabs.
          */
@@ -21879,6 +22080,16 @@ namespace {
          * @return array
          */
         public function get_integrations()
+        {
+        }
+        /**
+         * Return a desired integration.
+         *
+         * @since 3.9.0
+         * @param string $id The id of the integration to get.
+         * @return mixed|null The integration if one is found, otherwise null.
+         */
+        public function get_integration($id)
         {
         }
     }
@@ -25016,6 +25227,18 @@ namespace {
         {
         }
         /**
+         * Add an order note for status transition
+         *
+         * @since 3.9.0
+         * @uses WC_Order::add_order_note()
+         * @param string $note          Note to be added giving status transition from and to details.
+         * @param bool   $transition    Details of the status transition.
+         * @return int                  Comment ID.
+         */
+        private function add_status_transition_note($note, $transition)
+        {
+        }
+        /**
          * List order notes (public) for the customer.
          *
          * @return array
@@ -27845,6 +28068,40 @@ namespace {
          * @deprecated 3.2.0 - Nothing to remove anymore because search_post_excerpt() is deprecated.
          */
         public function remove_posts_where()
+        {
+        }
+    }
+    /**
+     * Rate limit class.
+     */
+    class WC_Rate_Limiter
+    {
+        /**
+         * Constructs Option name from action identifier.
+         *
+         * @param string $action_id Identifier of the action.
+         * @return string
+         */
+        public static function storage_id($action_id)
+        {
+        }
+        /**
+         * Returns true if the action is not allowed to be run by the rate limiter yet, false otherwise.
+         *
+         * @param string $action_id Identifier of the action.
+         * @return bool
+         */
+        public static function retried_too_soon($action_id)
+        {
+        }
+        /**
+         * Sets the rate limit delay in seconds for action with identifier $id.
+         *
+         * @param string $action_id Identifier of the action.
+         * @param int    $delay Delay in seconds.
+         * @return bool True if the option setting was successful, false otherwise.
+         */
+        public static function set_rate_limit($action_id, $delay)
         {
         }
     }
@@ -31216,7 +31473,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '3.8.1';
+        public $version = '3.9.0';
         /**
          * The single instance of the class.
          *
@@ -32738,11 +32995,22 @@ namespace {
          * Increase usage count for current coupon.
          *
          * @since 3.0.0
-         * @param WC_Coupon $coupon Coupon object.
-         * @param string    $used_by Either user ID or billing email.
+         * @param WC_Coupon $coupon           Coupon object.
+         * @param string    $used_by          Either user ID or billing email.
+         * @param WC_Order  $order (Optional) If passed, clears the hold record associated with order.
          * @return int New usage count.
          */
-        public function increase_usage_count(&$coupon, $used_by = '')
+        public function increase_usage_count(&$coupon, $used_by = '', $order = \null)
+        {
+        }
+        /**
+         * Helper function to add a `_used_by` record to track coupons used by the user.
+         *
+         * @param WC_Coupon $coupon           Coupon object.
+         * @param string    $used_by          Either user ID or billing email.
+         * @param string    $coupon_held_key (Optional) Update meta key to `_used_by` instead of adding a new record.
+         */
+        private function add_coupon_used_by($coupon, $used_by, $coupon_held_key)
         {
         }
         /**
@@ -32768,6 +33036,16 @@ namespace {
         {
         }
         /**
+         * Returns tentative usage count for coupon.
+         *
+         * @param int $coupon_id Coupon ID.
+         *
+         * @return int Tentative usage count.
+         */
+        public function get_tentative_usage_count($coupon_id)
+        {
+        }
+        /**
          * Get the number of uses for a coupon by user ID.
          *
          * @since 3.0.0
@@ -32787,6 +33065,69 @@ namespace {
          * @return int
          */
         public function get_usage_by_email(&$coupon, $email)
+        {
+        }
+        /**
+         * Get tentative coupon usages for user.
+         *
+         * @param int   $coupon_id    Coupon ID.
+         * @param array $user_aliases Array of user aliases to check tentative usages for.
+         *
+         * @return string|null
+         */
+        public function get_tentative_usages_for_user($coupon_id, $user_aliases)
+        {
+        }
+        /**
+         * Get held time for resources before cancelling the order. Use 60 minutes as sane default.
+         * Note that the filter `woocommerce_coupon_hold_minutes` only support minutes because it's getting used elsewhere as well, however this function returns in seconds.
+         *
+         * @return int
+         */
+        private function get_tentative_held_time()
+        {
+        }
+        /**
+         * Check and records coupon usage tentatively for short period of time so that counts validation is correct. Returns early if there is no limit defined for the coupon.
+         *
+         * @param WC_Coupon $coupon Coupon object.
+         *
+         * @return bool|int|string|null Returns meta key if coupon was held, null if returned early.
+         */
+        public function check_and_hold_coupon($coupon)
+        {
+        }
+        /**
+         * Generate query to calculate tentative usages for the coupon.
+         *
+         * @param int $coupon_id Coupon ID to get tentative usage query for.
+         *
+         * @return string Query for tentative usages.
+         */
+        private function get_tentative_usage_query($coupon_id)
+        {
+        }
+        /**
+         * Check and records coupon usage tentatively for passed user aliases for short period of time so that counts validation is correct. Returns early if there is no limit per user for the coupon.
+         *
+         * @param WC_Coupon $coupon       Coupon object.
+         * @param array     $user_aliases Emails or Ids to check for user.
+         * @param string    $user_alias   Email/ID to use as `used_by` value.
+         *
+         * @return null|false|int
+         */
+        public function check_and_hold_coupon_for_user($coupon, $user_aliases, $user_alias)
+        {
+        }
+        /**
+         * Generate query to calculate tentative usages for the coupon by the user.
+         *
+         * @param int   $coupon_id    Coupon ID.
+         * @param array $user_aliases List of user aliases to check for usages.
+         *
+         * @return string Tentative usages query.
+         */
+        private function get_tentative_usage_query_for_user($coupon_id, $user_aliases)
         {
         }
         /**
@@ -33057,6 +33398,16 @@ namespace {
          * @return array
          */
         public function search_customers($term, $limit = '')
+        {
+        }
+        /**
+         * Get all user ids who have `billing_email` set to any of the email passed in array.
+         *
+         * @param array $emails List of emails to check against.
+         *
+         * @return array
+         */
+        public function get_user_ids_for_billing_email($emails)
         {
         }
     }
@@ -33663,6 +34014,51 @@ namespace {
          * @param bool         $set True or false.
          */
         public function set_recorded_coupon_usage_counts($order, $set)
+        {
+        }
+        /**
+         * Return array of coupon_code => meta_key for coupon which have usage limit and have tentative keys.
+         * Pass $coupon_id if key for only one of the coupon is needed.
+         *
+         * @param WC_Order $order     Order object.
+         * @param int      $coupon_id If passed, will return held key for that coupon.
+         *
+         * @return array|string Key value pair for coupon code and meta key name. If $coupon_id is passed, returns meta_key for only that coupon.
+         */
+        public function get_coupon_held_keys($order, $coupon_id = \null)
+        {
+        }
+        /**
+         * Return array of coupon_code => meta_key for coupon which have usage limit per customer and have tentative keys.
+         *
+         * @param WC_Order $order Order object.
+         * @param int      $coupon_id If passed, will return held key for that coupon.
+         *
+         * @return mixed
+         */
+        public function get_coupon_held_keys_for_users($order, $coupon_id = \null)
+        {
+        }
+        /**
+         * Add/Update list of meta keys that are currently being used by this order to hold a coupon.
+         * This is used to figure out what all meta entries we should delete when order is cancelled/completed.
+         *
+         * @param WC_Order $order              Order object.
+         * @param array    $held_keys          Array of coupon_code => meta_key.
+         * @param array    $held_keys_for_user Array of coupon_code => meta_key for held coupon for user.
+         *
+         * @return mixed
+         */
+        public function set_coupon_held_keys($order, $held_keys, $held_keys_for_user)
+        {
+        }
+        /**
+         * Release all coupons held by this order.
+         *
+         * @param WC_Order $order Current order object.
+         * @param bool     $save  Whether to delete keys from DB right away. Could be useful to pass `false` if you are building a bulk request.
+         */
+        public function release_held_coupons($order, $save = \true)
         {
         }
         /**
@@ -35361,7 +35757,7 @@ namespace {
          *
          * @since 3.0.0
          * @param WC_Product_Variation $product Product object.
-         * @throws WC_Data_Exception If WC_Product::set_tax_status() is called with an invalid tax status (via read_product_data).
+         * @throws WC_Data_Exception If WC_Product::set_tax_status() is called with an invalid tax status (via read_product_data), or when passing an invalid ID.
          */
         public function read(&$product)
         {
@@ -37408,6 +37804,12 @@ namespace {
          */
         protected $columns_to_export = array();
         /**
+         * The delimiter parameter sets the field delimiter (one character only).
+         *
+         * @var string
+         */
+        protected $delimiter = ',';
+        /**
          * Prepare data that will be exported.
          */
         public abstract function prepare_data_to_export();
@@ -37436,6 +37838,15 @@ namespace {
          * @return array
          */
         public function get_columns_to_export()
+        {
+        }
+        /**
+         * Return the delimiter to use in CSV file
+         *
+         * @since 3.9.0
+         * @return string
+         */
+        public function get_delimiter()
         {
         }
         /**
@@ -37643,6 +38054,8 @@ namespace {
          * @see https://bugs.php.net/bug.php?id=50686
          * @see https://github.com/woocommerce/woocommerce/issues/19514
          * @since 3.4.0
+         * @see https://github.com/woocommerce/woocommerce/issues/24579
+         * @since 3.9.0
          * @param resource $buffer Resource we are writing to.
          * @param array    $export_row Row to export.
          */
@@ -38566,6 +38979,17 @@ namespace {
          * @since 3.3.0
          */
         public function admin_scripts()
+        {
+        }
+        /**
+         * Custom PayPal order received text.
+         *
+         * @since 3.9.0
+         * @param string   $text Default text.
+         * @param WC_Order $order Order data.
+         * @return string
+         */
+        public function order_received_text($text, $order)
         {
         }
     }
@@ -39820,6 +40244,160 @@ namespace {
          * @return array
          */
         public function import()
+        {
+        }
+    }
+    /**
+     * The service class responsible for interacting with MaxMind databases.
+     *
+     * @since 3.9.0
+     */
+    class WC_Integration_MaxMind_Database_Service
+    {
+        /**
+         * The name of the MaxMind database to utilize.
+         */
+        const DATABASE = 'GeoLite2-Country';
+        /**
+         * The extension for the MaxMind database.
+         */
+        const DATABASE_EXTENSION = '.mmdb';
+        /**
+         * A prefix for the MaxMind database filename.
+         *
+         * @var string
+         */
+        private $database_prefix;
+        /**
+         * WC_Integration_MaxMind_Database_Service constructor.
+         *
+         * @param string|null $database_prefix A prefix for the MaxMind database filename.
+         */
+        public function __construct($database_prefix)
+        {
+        }
+        /**
+         * Fetches the path that the database should be stored.
+         *
+         * @return string The local database path.
+         */
+        public function get_database_path()
+        {
+        }
+        /**
+         * Fetches the database from the MaxMind service.
+         *
+         * @param string $license_key The license key to be used when downloading the database.
+         * @return string|WP_Error The path to the database file or an error if invalid.
+         */
+        public function download_database($license_key)
+        {
+        }
+        /**
+         * Fetches the ISO country code associated with an IP address.
+         *
+         * @param string $ip_address The IP address to find the country code for.
+         * @return string The country code for the IP address, or empty if not found.
+         */
+        public function get_iso_country_code_for_ip($ip_address)
+        {
+        }
+    }
+    /**
+     * WC Integration MaxMind Geolocation
+     *
+     * @since 3.9.0
+     */
+    class WC_Integration_MaxMind_Geolocation extends \WC_Integration
+    {
+        /**
+         * The service responsible for interacting with the MaxMind database.
+         *
+         * @var WC_Integration_MaxMind_Database_Service
+         */
+        private $database_service;
+        /**
+         * Initialize the integration.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Override the normal options so we can print the database file path to the admin,
+         */
+        public function admin_options()
+        {
+        }
+        /**
+         * Initializes the settings fields.
+         */
+        public function init_form_fields()
+        {
+        }
+        /**
+         * Get database service.
+         *
+         * @return WC_Integration_MaxMind_Database_Service|null
+         */
+        public function get_database_service()
+        {
+        }
+        /**
+         * Checks to make sure that the license key is valid.
+         *
+         * @param string $key The key of the field.
+         * @param mixed  $value The value of the field.
+         * @return mixed
+         * @throws Exception When the license key is invalid.
+         */
+        public function validate_license_key_field($key, $value)
+        {
+        }
+        /**
+         * Updates the database used for geolocation queries.
+         *
+         * @param string|null $new_database_path The path to the new database file. Null will fetch a new archive.
+         */
+        public function update_database($new_database_path = \null)
+        {
+        }
+        /**
+         * Performs a geolocation lookup against the MaxMind database for the given IP address.
+         *
+         * @param array  $data       Geolocation data.
+         * @param string $ip_address The IP address to geolocate.
+         * @return array Geolocation including country code, state, city and postcode based on an IP address.
+         */
+        public function get_geolocation($data, $ip_address)
+        {
+        }
+        /**
+         * Fetches the prefix for the MaxMind database file.
+         *
+         * @return string
+         */
+        private function get_database_prefix()
+        {
+        }
+        /**
+         * Add missing license key notice.
+         */
+        private function add_missing_license_key_notice()
+        {
+        }
+        /**
+         * Remove missing license key notice.
+         */
+        private function remove_missing_license_key_notice()
+        {
+        }
+        /**
+         * Display notice if license key is missing.
+         *
+         * @param mixed $old_value Option old value.
+         * @param mixed $new_value Current value.
+         */
+        public function display_missing_license_key_notice($old_value, $new_value)
         {
         }
     }
@@ -45309,227 +45887,6 @@ namespace {
         {
         }
     }
-}
-namespace MaxMind\Db {
-    /**
-     * Instances of this class provide a reader for the MaxMind DB format. IP
-     * addresses can be looked up using the <code>get</code> method.
-     */
-    class Reader
-    {
-        private static $DATA_SECTION_SEPARATOR_SIZE = 16;
-        private static $METADATA_START_MARKER = "«ÍïMaxMind.com";
-        private static $METADATA_START_MARKER_LENGTH = 14;
-        private static $METADATA_MAX_SIZE = 131072;
-        // 128 * 1024 = 128KB
-        private $decoder;
-        private $fileHandle;
-        private $fileSize;
-        private $ipV4Start;
-        private $metadata;
-        /**
-         * Constructs a Reader for the MaxMind DB format. The file passed to it must
-         * be a valid MaxMind DB file such as a GeoIp2 database file.
-         *
-         * @param string $database
-         *                         the MaxMind DB file to use
-         *
-         * @throws \InvalidArgumentException                   for invalid database path or unknown arguments
-         * @throws \MaxMind\Db\Reader\InvalidDatabaseException
-         *                                                     if the database is invalid or there is an error reading
-         *                                                     from it
-         */
-        public function __construct($database)
-        {
-        }
-        /**
-         * Looks up the <code>address</code> in the MaxMind DB.
-         *
-         * @param string $ipAddress
-         *                          the IP address to look up
-         *
-         * @throws \BadMethodCallException   if this method is called on a closed database
-         * @throws \InvalidArgumentException if something other than a single IP address is passed to the method
-         * @throws InvalidDatabaseException
-         *                                   if the database is invalid or there is an error reading
-         *                                   from it
-         *
-         * @return array the record for the IP address
-         */
-        public function get($ipAddress)
-        {
-        }
-        private function findAddressInTree($ipAddress)
-        {
-        }
-        private function startNode($length)
-        {
-        }
-        private function ipV4StartNode()
-        {
-        }
-        private function readNode($nodeNumber, $index)
-        {
-        }
-        private function resolveDataPointer($pointer)
-        {
-        }
-        /*
-         * This is an extremely naive but reasonably readable implementation. There
-         * are much faster algorithms (e.g., Boyer-Moore) for this if speed is ever
-         * an issue, but I suspect it won't be.
-         */
-        private function findMetadataStart($filename)
-        {
-        }
-        /**
-         * @throws \InvalidArgumentException if arguments are passed to the method
-         * @throws \BadMethodCallException   if the database has been closed
-         *
-         * @return Metadata object for the database
-         */
-        public function metadata()
-        {
-        }
-        /**
-         * Closes the MaxMind DB and returns resources to the system.
-         *
-         * @throws \Exception
-         *                    if an I/O error occurs
-         */
-        public function close()
-        {
-        }
-    }
-}
-namespace MaxMind\Db\Reader {
-    class Decoder
-    {
-        private $fileStream;
-        private $pointerBase;
-        // This is only used for unit testing
-        private $pointerTestHack;
-        private $switchByteOrder;
-        private $types = [0 => 'extended', 1 => 'pointer', 2 => 'utf8_string', 3 => 'double', 4 => 'bytes', 5 => 'uint16', 6 => 'uint32', 7 => 'map', 8 => 'int32', 9 => 'uint64', 10 => 'uint128', 11 => 'array', 12 => 'container', 13 => 'end_marker', 14 => 'boolean', 15 => 'float'];
-        public function __construct($fileStream, $pointerBase = 0, $pointerTestHack = false)
-        {
-        }
-        public function decode($offset)
-        {
-        }
-        private function decodeByType($type, $offset, $size)
-        {
-        }
-        private function verifySize($expected, $actual)
-        {
-        }
-        private function decodeArray($size, $offset)
-        {
-        }
-        private function decodeBoolean($size)
-        {
-        }
-        private function decodeDouble($bits)
-        {
-        }
-        private function decodeFloat($bits)
-        {
-        }
-        private function decodeInt32($bytes)
-        {
-        }
-        private function decodeMap($size, $offset)
-        {
-        }
-        private $pointerValueOffset = [1 => 0, 2 => 2048, 3 => 526336, 4 => 0];
-        private function decodePointer($ctrlByte, $offset)
-        {
-        }
-        private function decodeUint($bytes)
-        {
-        }
-        private function decodeBigUint($bytes, $byteLength)
-        {
-        }
-        private function decodeString($bytes)
-        {
-        }
-        private function sizeFromCtrlByte($ctrlByte, $offset)
-        {
-        }
-        private function zeroPadLeft($content, $desiredLength)
-        {
-        }
-        private function maybeSwitchByteOrder($bytes)
-        {
-        }
-        private function isPlatformLittleEndian()
-        {
-        }
-    }
-    /**
-     * This class should be thrown when unexpected data is found in the database.
-     */
-    class InvalidDatabaseException extends \Exception
-    {
-    }
-    /**
-     * This class provides the metadata for the MaxMind DB file.
-     *
-     * @property int nodeCount This is an unsigned 32-bit integer indicating
-     * the number of nodes in the search tree.
-     * @property int recordSize This is an unsigned 16-bit integer. It
-     * indicates the number of bits in a record in the search tree. Note that each
-     * node consists of two records.
-     * @property int ipVersion This is an unsigned 16-bit integer which is
-     * always 4 or 6. It indicates whether the database contains IPv4 or IPv6
-     * address data.
-     * @property string databaseType This is a string that indicates the structure
-     * of each data record associated with an IP address. The actual definition of
-     * these structures is left up to the database creator.
-     * @property array languages An array of strings, each of which is a language
-     * code. A given record may contain data items that have been localized to
-     * some or all of these languages. This may be undefined.
-     * @property int binaryFormatMajorVersion This is an unsigned 16-bit
-     * integer indicating the major version number for the database's binary
-     * format.
-     * @property int binaryFormatMinorVersion This is an unsigned 16-bit
-     * integer indicating the minor version number for the database's binary format.
-     * @property int buildEpoch This is an unsigned 64-bit integer that
-     * contains the database build timestamp as a Unix epoch value.
-     * @property array description This key will always point to a map
-     * (associative array). The keys of that map will be language codes, and the
-     * values will be a description in that language as a UTF-8 string. May be
-     * undefined for some databases.
-     */
-    class Metadata
-    {
-        private $binaryFormatMajorVersion;
-        private $binaryFormatMinorVersion;
-        private $buildEpoch;
-        private $databaseType;
-        private $description;
-        private $ipVersion;
-        private $languages;
-        private $nodeByteSize;
-        private $nodeCount;
-        private $recordSize;
-        private $searchTreeSize;
-        public function __construct($metadata)
-        {
-        }
-        public function __get($var)
-        {
-        }
-    }
-    class Util
-    {
-        public static function read($stream, $offset, $numberOfBytes)
-        {
-        }
-    }
-}
-namespace {
     /**
      * Handles log entries by writing to database.
      *
@@ -48652,6 +49009,12 @@ namespace {
     class WC_WCCOM_Site_Installer
     {
         /**
+         * Error message returned install_package if the folder already exists.
+         *
+         * @var string
+         */
+        private static $folder_exists = 'folder_exists';
+        /**
          * Default state.
          *
          * @var array
@@ -48847,6 +49210,16 @@ namespace {
         private static function get_wporg_plugin_main_file($dir)
         {
         }
+        /**
+         * Get plugin info
+         *
+         * @since 3.9.0
+         * @param string $dir Directory name of the plugin.
+         * @return bool|array
+         */
+        private static function get_plugin_info($dir)
+        {
+        }
     }
     /**
      * WC_WCCOM_Site Class
@@ -48855,6 +49228,7 @@ namespace {
      */
     class WC_WCCOM_Site
     {
+        const AUTH_ERROR_FILTER_NAME = 'wccom_auth_error';
         /**
          * Load the WCCOM site class.
          *
@@ -48926,6 +49300,68 @@ namespace {
         public static function register_rest_namespace($namespaces)
         {
         }
+    }
+    /**
+     * WCCOM Site Installer Errors Class
+     *
+     * Stores data for errors, returned by installer API.
+     */
+    class WC_REST_WCCOM_Site_Installer_Errors
+    {
+        /**
+         * Not unauthenticated generic error
+         */
+        const NOT_AUTHENTICATED_CODE = 'not_authenticated';
+        const NOT_AUTHENTICATED_MESSAGE = 'Authentication required';
+        const NOT_AUTHENTICATED_HTTP_CODE = 401;
+        /**
+         * No Authorization header
+         */
+        const NO_AUTH_HEADER_CODE = 'no_auth_header';
+        const NO_AUTH_HEADER_MESSAGE = 'No header "Authorization" present';
+        const NO_AUTH_HEADER_HTTP_CODE = 400;
+        /**
+         * Authorization header invalid
+         */
+        const INVALID_AUTH_HEADER_CODE = 'no_auth_header';
+        const INVALID_AUTH_HEADER_MESSAGE = 'Header "Authorization" is invalid';
+        const INVALID_AUTH_HEADER_HTTP_CODE = 400;
+        /**
+         * No Signature header
+         */
+        const NO_SIGNATURE_HEADER_CODE = 'no_signature_header';
+        const NO_SIGNATURE_HEADER_MESSAGE = 'No header "X-Woo-Signature" present';
+        const NO_SIGNATURE_HEADER_HTTP_CODE = 400;
+        /**
+         * Site not connected to WooCommerce.com
+         */
+        const SITE_NOT_CONNECTED_CODE = 'site_not_connnected';
+        const SITE_NOT_CONNECTED_MESSAGE = 'Site not connected to WooCommerce.com';
+        const SITE_NOT_CONNECTED_HTTP_CODE = 401;
+        /**
+         * Provided access token is not valid
+         */
+        const INVALID_TOKEN_CODE = 'invalid_token';
+        const INVALID_TOKEN_MESSAGE = 'Invalid access token provided';
+        const INVALID_TOKEN_HTTP_CODE = 401;
+        /**
+         * Request verification by provided signature failed
+         */
+        const REQUEST_VERIFICATION_FAILED_CODE = 'request_verification_failed';
+        const REQUEST_VERIFICATION_FAILED_MESSAGE = 'Request verification by signature failed';
+        const REQUEST_VERIFICATION_FAILED_HTTP_CODE = 400;
+        /**
+         * User doesn't exist
+         */
+        const USER_NOT_FOUND_CODE = 'user_not_found';
+        const USER_NOT_FOUND_MESSAGE = 'Token owning user not found';
+        const USER_NOT_FOUND_HTTP_CODE = 401;
+        /**
+         * No permissions error
+         */
+        const NO_PERMISSION_CODE = 'forbidden';
+        const NO_PERMISSION_MESSAGE = 'You do not have permission to install plugin or theme';
+        const NO_PERMISSION_HTTP_CODE = 403;
     }
     /**
      * Widget cart class.
@@ -51528,6 +51964,14 @@ namespace {
     {
     }
     /**
+     * Is the site using a default WP theme?
+     *
+     * @return boolean
+     */
+    function wc_is_wp_default_theme_active()
+    {
+    }
+    /**
      * Cleans up session data - cron callback.
      *
      * @since 3.3.0
@@ -53223,17 +53667,18 @@ namespace {
      * Add and store a notice.
      *
      * @since 2.1
-     * @param string $message The text to display in the notice.
+     * @param string $message     The text to display in the notice.
      * @param string $notice_type Optional. The name of the notice type - either error, success or notice.
+     * @param array  $data        Optional notice data.
      */
-    function wc_add_notice($message, $notice_type = 'success')
+    function wc_add_notice($message, $notice_type = 'success', $data = array())
     {
     }
     /**
      * Set all notices at once.
      *
      * @since 2.6.0
-     * @param mixed $notices Array of notices.
+     * @param array[] $notices Array of notices.
      */
     function wc_set_notices($notices)
     {
@@ -53262,8 +53707,9 @@ namespace {
      * @since 2.1
      * @param string $message The text to display in the notice.
      * @param string $notice_type Optional. The singular name of the notice type - either error, success or notice.
+     * @param array  $data        Optional notice data. @since 3.9.0.
      */
-    function wc_print_notice($message, $notice_type = 'success')
+    function wc_print_notice($message, $notice_type = 'success', $data = array())
     {
     }
     /**
@@ -53271,7 +53717,7 @@ namespace {
      *
      * @since  2.1
      * @param  string $notice_type Optional. The singular name of the notice type - either error, success or notice.
-     * @return array|mixed
+     * @return array[]
      */
     function wc_get_notices($notice_type = '')
     {
@@ -53292,6 +53738,16 @@ namespace {
      * @return string
      */
     function wc_kses_notice($message)
+    {
+    }
+    /**
+     * Get notice data attribute.
+     *
+     * @since 3.9.0
+     * @param array $notice Notice data.
+     * @return string
+     */
+    function wc_get_notice_data_attr($notice)
     {
     }
     /**
@@ -53855,6 +54311,9 @@ namespace {
     /**
      * Main function for returning products, uses the WC_Product_Factory class.
      *
+     * This function should only be called after 'init' action is finished, as there might be taxonomies that are getting
+     * registered during the init action.
+     *
      * @since 2.2.0
      *
      * @param mixed $the_product Post object or post ID of the product.
@@ -53862,6 +54321,18 @@ namespace {
      * @return WC_Product|null|false
      */
     function wc_get_product($the_product = \false, $deprecated = array())
+    {
+    }
+    /**
+     * Get a product object.
+     *
+     * @see WC_Product_Factory::get_product_classname
+     * @since 3.9.0
+     * @param string $product_type Product type. If used an invalid type a WC_Product_Simple instance will be returned.
+     * @param int    $product_id   Product ID.
+     * @return WC_Product
+     */
+    function wc_get_product_object($product_type, $product_id = 0)
     {
     }
     /**
@@ -53938,10 +54409,11 @@ namespace {
      *
      * Uses wp_get_attachment_image if using an attachment ID @since 3.6.0 to handle responsiveness.
      *
-     * @param string $size Image size.
+     * @param string       $size Image size.
+     * @param string|array $attr Optional. Attributes for the image markup. Default empty.
      * @return string
      */
-    function wc_placeholder_img($size = 'woocommerce_thumbnail')
+    function wc_placeholder_img($size = 'woocommerce_thumbnail', $attr = '')
     {
     }
     /**
@@ -55824,6 +56296,14 @@ namespace {
     {
     }
     /**
+     * Display pay buttons HTML.
+     *
+     * @since 3.9.0
+     */
+    function wc_get_pay_buttons()
+    {
+    }
+    /**
      * Change get terms defaults for attributes to order by the sorting setting, or default to menu_order for sortable taxonomies.
      *
      * @since 3.6.0 Sorting options are now set as the default automatically, so you no longer have to request to orderby menu_order.
@@ -55926,9 +56406,10 @@ namespace {
      *
      * Previously used by wc_product_dropdown_categories, but wp_dropdown_categories has been fixed in core.
      *
+     * @param mixed ...$args Variable number of parameters to be passed to the walker.
      * @return mixed
      */
-    function wc_walk_category_dropdown_tree()
+    function wc_walk_category_dropdown_tree(...$args)
     {
     }
     /**
@@ -56576,6 +57057,25 @@ namespace {
      * Update DB Version.
      */
     function wc_update_370_db_version()
+    {
+    }
+    /**
+     * We've moved the MaxMind database to a new location, as per the TOS' requirement that the database not
+     * be publicly accessible.
+     */
+    function wc_update_390_move_maxmind_database()
+    {
+    }
+    /**
+     * So that we can best meet MaxMind's TOS, the geolocation database update cron should run once per 15 days.
+     */
+    function wc_update_390_change_geolocation_database_update_cron()
+    {
+    }
+    /**
+     * Update DB version.
+     */
+    function wc_update_390_db_version()
     {
     }
     /**
