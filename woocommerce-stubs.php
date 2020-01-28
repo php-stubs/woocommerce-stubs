@@ -31473,7 +31473,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '3.9.0';
+        public $version = '3.9.1';
         /**
          * The single instance of the class.
          *
@@ -38899,7 +38899,7 @@ namespace {
         {
         }
         /**
-         * Check if this gateway is enabled and available in the user's country.
+         * Check if this gateway is available in the user's country based on currency.
          *
          * @return bool
          */
@@ -53667,6 +53667,7 @@ namespace {
      * Add and store a notice.
      *
      * @since 2.1
+     * @version 3.9.0
      * @param string $message     The text to display in the notice.
      * @param string $notice_type Optional. The name of the notice type - either error, success or notice.
      * @param array  $data        Optional notice data.
@@ -53705,6 +53706,7 @@ namespace {
      * Print a single notice immediately.
      *
      * @since 2.1
+     * @version 3.9.0
      * @param string $message The text to display in the notice.
      * @param string $notice_type Optional. The singular name of the notice type - either error, success or notice.
      * @param array  $data        Optional notice data. @since 3.9.0.
@@ -53716,6 +53718,7 @@ namespace {
      * Returns all queued notices, optionally filtered by a notice type.
      *
      * @since  2.1
+     * @version 3.9.0
      * @param  string $notice_type Optional. The singular name of the notice type - either error, success or notice.
      * @return array[]
      */

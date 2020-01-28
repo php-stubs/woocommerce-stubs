@@ -11055,7 +11055,7 @@ namespace Automattic\WooCommerce\RestApi {
          *
          * @var string
          */
-        const VERSION = '1.0.6';
+        const VERSION = '1.0.7';
         /**
          * Init the package - load the REST API Server class.
          */
