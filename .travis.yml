@@ -25,8 +25,8 @@ before_install:
 install:
   - |
     composer install --no-interaction --no-suggest
-  - |
-    composer run-script post-install-cmd
+#  - |
+#    composer run-script post-install-cmd
 
 before_script:
   - |
