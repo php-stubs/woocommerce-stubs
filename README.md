@@ -1,6 +1,6 @@
 # WooCommerce Stubs
 
-[![Build Status](https://travis-ci.org/php-stubs/woocommerce-stubs.svg?branch=master)](https://travis-ci.org/php-stubs/woocommerce-stubs)
+[![Build Status](https://travis-ci.com/php-stubs/woocommerce-stubs.svg?branch=master)](https://travis-ci.com/php-stubs/woocommerce-stubs)
 
 This package provides stub declarations for [WooCommerce](https://woocommerce.com/)
 functions, classes and interfaces.
