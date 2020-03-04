@@ -30671,6 +30671,19 @@ namespace {
         {
         }
         /**
+         * Test whether this site is a staging site according to the Jetpack criteria.
+         *
+         * With Jetpack 8.1+, Jetpack::is_staging_site has been deprecated.
+         * \Automattic\Jetpack\Status::is_staging_site is the replacement.
+         * However, there are version of JP where \Automattic\Jetpack\Status exists, but does *not* contain is_staging_site method,
+         * so with those, code still needs to use the previous check as a fallback.
+         *
+         * @return bool
+         */
+        private static function is_jetpack_staging_site()
+        {
+        }
+        /**
          * Get all the tracking data.
          *
          * @return array
@@ -31473,7 +31486,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '3.9.2';
+        public $version = '3.9.3';
         /**
          * The single instance of the class.
          *
@@ -34366,6 +34379,15 @@ namespace {
          * @return string|null Order item type or null if no order item entry found.
          */
         public function get_order_item_type($item_id)
+        {
+        }
+        /**
+         * Clear meta cache.
+         *
+         * @param int      $item_id Item ID.
+         * @param int|null $order_id Order ID. If not set, it will be loaded using the item ID.
+         */
+        protected function clear_caches($item_id, $order_id)
         {
         }
     }

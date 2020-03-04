@@ -1755,10 +1755,9 @@ namespace Automattic\WooCommerce\Blocks {
          *
          * @todo check compat < WC 3.6. Make specific to cart endpoint.
          * @param mixed $return Value being filtered.
-         * @param array $request Request data.
          * @return mixed
          */
-        public static function maybe_init_cart_session($return, $request = false)
+        public static function maybe_init_cart_session($return)
         {
         }
         /**
