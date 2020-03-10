@@ -52268,6 +52268,4 @@ function wc_register_widgets()
 function WC()
 {
 }
-namespace {
-    define('WC_VERSION', '0.0.0');
-}
+define('WC_VERSION', '0.0.0');

@@ -20,8 +20,5 @@ return \StubsGenerator\Finder::create()
     // Legacy WooCommerce API.
     ->notPath('api/legacy')
     ->notPath('legacy/api')
-    // Uses WP-CLI.
-    // $ grep -rFl 'WP_CLI_Command'
-    ->notPath('libraries/action-scheduler/classes/ActionScheduler_WPCLI_Scheduler_command.php')
     ->sortByName()
 ;
