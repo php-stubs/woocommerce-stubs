@@ -29711,7 +29711,7 @@ class WC_Shipping
     /**
      * See if package is shippable.
      *
-     * Packages must have a valid destination to be shipped.
+     * Packages are shippable until proven otherwise e.g. after getting a shipping country.
      *
      * @param  array $package Package of cart items.
      * @return bool
@@ -31681,7 +31681,7 @@ final class WooCommerce
      *
      * @var string
      */
-    public $version = '4.0.0';
+    public $version = '4.0.1';
     /**
      * The single instance of the class.
      *
@@ -41765,7 +41765,7 @@ class WC_Shipping_Flat_Rate extends \WC_Shipping_Method
      * Evaluate a cost from a sum/string.
      *
      * @param  string $sum Sum of shipping.
-     * @param  array  $args Args.
+     * @param  array  $args Args, must contain `cost` and `qty` keys. Having `array()` as default is for back compat reasons.
      * @return string
      */
     protected function evaluate_cost($sum, $args = array())

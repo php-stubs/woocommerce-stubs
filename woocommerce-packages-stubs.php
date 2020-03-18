@@ -10116,7 +10116,7 @@ namespace Automattic\WooCommerce\Admin {
          *
          * @return bool
          */
-        protected function has_satisfied_dependencies()
+        public function has_satisfied_dependencies()
         {
         }
         /**
@@ -12697,8 +12697,8 @@ namespace Automattic\WooCommerce\Admin\Overrides {
          * For WC Admin actions, force a lower action claim
          * priority by setting a high value for `menu_order`.
          *
-         * @param ActionScheduler_Action $action Action.
-         * @param DateTime               $scheduled_date Action schedule.
+         * @param \ActionScheduler_Action $action Action.
+         * @param \DateTime               $scheduled_date Action schedule.
          * @return array Post data array for usage in wp_insert_post().
          */
         protected function create_post_array(\ActionScheduler_Action $action, \DateTime $scheduled_date = null)
@@ -12711,6 +12711,14 @@ namespace Automattic\WooCommerce\Admin\Overrides {
          * @param array $action_types Array of actions to delete.
          */
         public function clear_pending_wcadmin_actions($action_types)
+        {
+        }
+        /**
+         * Cancel all actions by group.
+         *
+         * @param string $group Group name.
+         */
+        public function cancel_actions_by_group($group)
         {
         }
     }
@@ -12726,13 +12734,19 @@ namespace Automattic\WooCommerce\Admin\Composer {
          *
          * @var string
          */
-        const VERSION = '1.0.0';
+        const VERSION = '1.0.2';
         /**
          * Package active.
          *
          * @var bool
          */
         private static $package_active = false;
+        /**
+         * Active version
+         *
+         * @var bool
+         */
+        private static $active_version = null;
         /**
          * Init the package.
          *
@@ -13239,6 +13253,16 @@ namespace Automattic\WooCommerce\Admin\Schedulers {
          * Check for blocking jobs and reschedule if any exist.
          */
         public static function do_action_or_reschedule()
+        {
+        }
+        /**
+         * Get the DateTime for the next scheduled time an action should run.
+         * This function allows backwards compatibility with Action Scheduler < v3.0.
+         *
+         * @param \ActionScheduler_Action $action Action.
+         * @return DateTime|null
+         */
+        public static function get_next_action_time($action)
         {
         }
         /**
