@@ -22161,6 +22161,133 @@ namespace {
         }
     }
     /**
+     * Class ActionScheduler_AdminView_Deprecated
+     *
+     * Store deprecated public functions previously found in the ActionScheduler_AdminView class.
+     * Keeps them out of the way of the main class.
+     *
+     * @codeCoverageIgnore
+     */
+    class ActionScheduler_AdminView_Deprecated
+    {
+        public function action_scheduler_post_type_args($args)
+        {
+        }
+        /**
+         * Customise the post status related views displayed on the Scheduled Actions administration screen.
+         *
+         * @param array $views An associative array of views and view labels which can be used to filter the 'scheduled-action' posts displayed on the Scheduled Actions administration screen.
+         * @return array $views An associative array of views and view labels which can be used to filter the 'scheduled-action' posts displayed on the Scheduled Actions administration screen.
+         */
+        public function list_table_views($views)
+        {
+        }
+        /**
+         * Do not include the "Edit" action for the Scheduled Actions administration screen.
+         *
+         * Hooked to the 'bulk_actions-edit-action-scheduler' filter.
+         *
+         * @param array $actions An associative array of actions which can be performed on the 'scheduled-action' post type.
+         * @return array $actions An associative array of actions which can be performed on the 'scheduled-action' post type.
+         */
+        public function bulk_actions($actions)
+        {
+        }
+        /**
+         * Completely customer the columns displayed on the Scheduled Actions administration screen.
+         *
+         * Because we can't filter the content of the default title and date columns, we need to recreate our own
+         * custom columns for displaying those post fields. For the column content, @see self::list_table_column_content().
+         *
+         * @param array $columns An associative array of columns that are use for the table on the Scheduled Actions administration screen.
+         * @return array $columns An associative array of columns that are use for the table on the Scheduled Actions administration screen.
+         */
+        public function list_table_columns($columns)
+        {
+        }
+        /**
+         * Make our custom title & date columns use defaulting title & date sorting.
+         *
+         * @param array $columns An associative array of columns that can be used to sort the table on the Scheduled Actions administration screen.
+         * @return array $columns An associative array of columns that can be used to sort the table on the Scheduled Actions administration screen.
+         */
+        public static function list_table_sortable_columns($columns)
+        {
+        }
+        /**
+         * Print the content for our custom columns.
+         *
+         * @param string $column_name The key for the column for which we should output our content.
+         * @param int $post_id The ID of the 'scheduled-action' post for which this row relates.
+         */
+        public static function list_table_column_content($column_name, $post_id)
+        {
+        }
+        /**
+         * Hide the inline "Edit" action for all 'scheduled-action' posts.
+         *
+         * Hooked to the 'post_row_actions' filter.
+         *
+         * @param array $actions An associative array of actions which can be performed on the 'scheduled-action' post type.
+         * @return array $actions An associative array of actions which can be performed on the 'scheduled-action' post type.
+         */
+        public static function row_actions($actions, $post)
+        {
+        }
+        /**
+         * Run an action when triggered from the Action Scheduler administration screen.
+         *
+         * @codeCoverageIgnore
+         */
+        public static function maybe_execute_action()
+        {
+        }
+        /**
+         * Convert an interval of seconds into a two part human friendly string.
+         *
+         * The WordPress human_time_diff() function only calculates the time difference to one degree, meaning
+         * even if an action is 1 day and 11 hours away, it will display "1 day". This funciton goes one step
+         * further to display two degrees of accuracy.
+         *
+         * Based on Crontrol::interval() function by Edward Dale: https://wordpress.org/plugins/wp-crontrol/
+         *
+         * @param int $interval A interval in seconds.
+         * @return string A human friendly string representation of the interval.
+         */
+        public static function admin_notices()
+        {
+        }
+        /**
+         * Filter search queries to allow searching by Claim ID (i.e. post_password).
+         *
+         * @param string $orderby MySQL orderby string.
+         * @param WP_Query $query Instance of a WP_Query object
+         * @return string MySQL orderby string.
+         */
+        public function custom_orderby($orderby, $query)
+        {
+        }
+        /**
+         * Filter search queries to allow searching by Claim ID (i.e. post_password).
+         *
+         * @param string $search MySQL search string.
+         * @param WP_Query $query Instance of a WP_Query object
+         * @return string MySQL search string.
+         */
+        public function search_post_password($search, $query)
+        {
+        }
+        /**
+         * Change messages when a scheduled action is updated.
+         *
+         * @param  array $messages
+         * @return array
+         */
+        public function post_updated_messages($messages)
+        {
+        }
+    }
+    /**
      * Class ActionScheduler_AdminView
      * @codeCoverageIgnore
      */
@@ -23382,6 +23509,21 @@ namespace {
     /**
      * Abstract class with common Queue Cleaner functionality.
      */
+    abstract class ActionScheduler_Abstract_QueueRunner_Deprecated
+    {
+        /**
+         * Get the maximum number of seconds a batch can run for.
+         *
+         * @deprecated 2.1.1
+         * @return int The number of seconds.
+         */
+        protected function get_maximum_execution_time()
+        {
+        }
+    }
+    /**
+     * Abstract class with common Queue Cleaner functionality.
+     */
     abstract class ActionScheduler_Abstract_QueueRunner extends \ActionScheduler_Abstract_QueueRunner_Deprecated
     {
         /** @var ActionScheduler_QueueCleaner */
@@ -23803,340 +23945,6 @@ namespace {
         }
     }
     /**
-     * WP CLI Queue runner.
-     *
-     * This class can only be called from within a WP CLI instance.
-     */
-    class ActionScheduler_WPCLI_QueueRunner extends \ActionScheduler_Abstract_QueueRunner
-    {
-        /** @var array */
-        protected $actions;
-        /** @var  ActionScheduler_ActionClaim */
-        protected $claim;
-        /** @var \cli\progress\Bar */
-        protected $progress_bar;
-        /**
-         * ActionScheduler_WPCLI_QueueRunner constructor.
-         *
-         * @param ActionScheduler_Store             $store
-         * @param ActionScheduler_FatalErrorMonitor $monitor
-         * @param ActionScheduler_QueueCleaner      $cleaner
-         *
-         * @throws Exception When this is not run within WP CLI
-         */
-        public function __construct(\ActionScheduler_Store $store = \null, \ActionScheduler_FatalErrorMonitor $monitor = \null, \ActionScheduler_QueueCleaner $cleaner = \null)
-        {
-        }
-        /**
-         * Set up the Queue before processing.
-         *
-         * @author Jeremy Pry
-         *
-         * @param int    $batch_size The batch size to process.
-         * @param array  $hooks      The hooks being used to filter the actions claimed in this batch.
-         * @param string $group      The group of actions to claim with this batch.
-         * @param bool   $force      Whether to force running even with too many concurrent processes.
-         *
-         * @return int The number of actions that will be run.
-         * @throws \WP_CLI\ExitException When there are too many concurrent batches.
-         */
-        public function setup($batch_size, $hooks = array(), $group = '', $force = \false)
-        {
-        }
-        /**
-         * Add our hooks to the appropriate actions.
-         *
-         * @author Jeremy Pry
-         */
-        protected function add_hooks()
-        {
-        }
-        /**
-         * Set up the WP CLI progress bar.
-         *
-         * @author Jeremy Pry
-         */
-        protected function setup_progress_bar()
-        {
-        }
-        /**
-         * Process actions in the queue.
-         *
-         * @author Jeremy Pry
-         *
-         * @param string $context Optional runner context. Default 'WP CLI'.
-         *
-         * @return int The number of actions processed.
-         */
-        public function run($context = 'WP CLI')
-        {
-        }
-        /**
-         * Handle WP CLI message when the action is starting.
-         *
-         * @author Jeremy Pry
-         *
-         * @param $action_id
-         */
-        public function before_execute($action_id)
-        {
-        }
-        /**
-         * Handle WP CLI message when the action has completed.
-         *
-         * @author Jeremy Pry
-         *
-         * @param int $action_id
-         * @param null|ActionScheduler_Action $action The instance of the action. Default to null for backward compatibility.
-         */
-        public function after_execute($action_id, $action = \null)
-        {
-        }
-        /**
-         * Handle WP CLI message when the action has failed.
-         *
-         * @author Jeremy Pry
-         *
-         * @param int       $action_id
-         * @param Exception $exception
-         * @throws \WP_CLI\ExitException With failure message.
-         */
-        public function action_failed($action_id, $exception)
-        {
-        }
-        /**
-         * Sleep and help avoid hitting memory limit
-         *
-         * @param int $sleep_time Amount of seconds to sleep
-         * @deprecated 3.0.0
-         */
-        protected function stop_the_insanity($sleep_time = 0)
-        {
-        }
-        /**
-         * Maybe trigger the stop_the_insanity() method to free up memory.
-         */
-        protected function maybe_stop_the_insanity()
-        {
-        }
-    }
-    /**
-     * Commands for Action Scheduler.
-     */
-    class ActionScheduler_WPCLI_Scheduler_command extends \WP_CLI_Command
-    {
-        /**
-         * Run the Action Scheduler
-         *
-         * ## OPTIONS
-         *
-         * [--batch-size=<size>]
-         * : The maximum number of actions to run. Defaults to 100.
-         *
-         * [--batches=<size>]
-         * : Limit execution to a number of batches. Defaults to 0, meaning batches will continue being executed until all actions are complete.
-         *
-         * [--cleanup-batch-size=<size>]
-         * : The maximum number of actions to clean up. Defaults to the value of --batch-size.
-         *
-         * [--hooks=<hooks>]
-         * : Only run actions with the specified hook. Omitting this option runs actions with any hook. Define multiple hooks as a comma separated string (without spaces), e.g. `--hooks=hook_one,hook_two,hook_three`
-         *
-         * [--group=<group>]
-         * : Only run actions from the specified group. Omitting this option runs actions from all groups.
-         *
-         * [--free-memory-on=<count>]
-         * : The number of actions to process between freeing memory. 0 disables freeing memory. Default 50.
-         *
-         * [--pause=<seconds>]
-         * : The number of seconds to pause when freeing memory. Default no pause.
-         *
-         * [--force]
-         * : Whether to force execution despite the maximum number of concurrent processes being exceeded.
-         *
-         * @param array $args Positional arguments.
-         * @param array $assoc_args Keyed arguments.
-         * @throws \WP_CLI\ExitException When an error occurs.
-         *
-         * @subcommand run
-         */
-        public function run($args, $assoc_args)
-        {
-        }
-        /**
-         * Print WP CLI message about how many actions are about to be processed.
-         *
-         * @author Jeremy Pry
-         *
-         * @param int $total
-         */
-        protected function print_total_actions($total)
-        {
-        }
-        /**
-         * Print WP CLI message about how many batches of actions were processed.
-         *
-         * @author Jeremy Pry
-         *
-         * @param int $batches_completed
-         */
-        protected function print_total_batches($batches_completed)
-        {
-        }
-        /**
-         * Convert an exception into a WP CLI error.
-         *
-         * @author Jeremy Pry
-         *
-         * @param Exception $e The error object.
-         *
-         * @throws \WP_CLI\ExitException
-         */
-        protected function print_error(\Exception $e)
-        {
-        }
-        /**
-         * Print a success message with the number of completed actions.
-         *
-         * @author Jeremy Pry
-         *
-         * @param int $actions_completed
-         */
-        protected function print_success($actions_completed)
-        {
-        }
-    }
-}
-namespace Action_Scheduler\WP_CLI {
-    /**
-     * Class Migration_Command
-     *
-     * @package Action_Scheduler\WP_CLI
-     *
-     * @since 3.0.0
-     *
-     * @codeCoverageIgnore
-     */
-    class Migration_Command extends \WP_CLI_Command
-    {
-        /** @var int */
-        private $total_processed = 0;
-        /**
-         * Register the command with WP-CLI
-         */
-        public function register()
-        {
-        }
-        /**
-         * Process the data migration.
-         *
-         * @param array $positional_args Required for WP CLI. Not used in migration.
-         * @param array $assoc_args Optional arguments.
-         *
-         * @return void
-         */
-        public function migrate($positional_args, $assoc_args)
-        {
-        }
-        /**
-         * Build the config object used to create the Runner
-         *
-         * @param array $args Optional arguments.
-         *
-         * @return ActionScheduler\Migration\Config
-         */
-        private function get_migration_config($args)
-        {
-        }
-        /**
-         * Hook command line logging into migration actions.
-         */
-        private function init_logging()
-        {
-        }
-    }
-    /**
-     * WP_CLI progress bar for Action Scheduler.
-     */
-    /**
-     * Class ProgressBar
-     *
-     * @package Action_Scheduler\WP_CLI
-     *
-     * @since 3.0.0
-     *
-     * @codeCoverageIgnore
-     */
-    class ProgressBar
-    {
-        /** @var integer */
-        protected $total_ticks;
-        /** @var integer */
-        protected $count;
-        /** @var integer */
-        protected $interval;
-        /** @var string */
-        protected $message;
-        /** @var \cli\progress\Bar */
-        protected $progress_bar;
-        /**
-         * ProgressBar constructor.
-         *
-         * @param string  $message    Text to display before the progress bar.
-         * @param integer $count      Total number of ticks to be performed.
-         * @param integer $interval   Optional. The interval in milliseconds between updates. Default 100.
-         *
-         * @throws Exception When this is not run within WP CLI
-         */
-        public function __construct($message, $count, $interval = 100)
-        {
-        }
-        /**
-         * Increment the progress bar ticks.
-         */
-        public function tick()
-        {
-        }
-        /**
-         * Get the progress bar tick count.
-         *
-         * @return int
-         */
-        public function current()
-        {
-        }
-        /**
-         * Finish the current progress bar.
-         */
-        public function finish()
-        {
-        }
-        /**
-         * Set the message used when creating the progress bar.
-         *
-         * @param string $message The message to be used when the next progress bar is created.
-         */
-        public function set_message($message)
-        {
-        }
-        /**
-         * Set the count for a new progress bar.
-         *
-         * @param integer $count The total number of ticks expected to complete.
-         */
-        public function set_count($count)
-        {
-        }
-        /**
-         * Set up the progress bar.
-         */
-        protected function setup_progress_bar()
-        {
-        }
-    }
-}
-namespace {
-    /**
      * Class ActionScheduler
      * @codeCoverageIgnore
      */
@@ -24240,6 +24048,38 @@ namespace {
         }
         /** Deprecated **/
         public static function get_datetime_object($when = \null, $timezone = 'UTC')
+        {
+        }
+    }
+    /**
+     * Class ActionScheduler_Schedule
+     */
+    interface ActionScheduler_Schedule
+    {
+        /**
+         * @param DateTime $after
+         * @return DateTime|null
+         */
+        public function next(\DateTime $after = \NULL);
+        /**
+         * @return bool
+         */
+        public function is_recurring();
+    }
+    /**
+     * Class ActionScheduler_Abstract_Schedule
+     */
+    abstract class ActionScheduler_Schedule_Deprecated implements \ActionScheduler_Schedule
+    {
+        /**
+         * Get the date & time this schedule was created to run, or calculate when it should be run
+         * after a given date & time.
+         *
+         * @param DateTime $after
+         *
+         * @return DateTime|null
+         */
+        public function next(\DateTime $after = \NULL)
         {
         }
     }
@@ -24554,6 +24394,48 @@ namespace {
          * @param array $action_ids List of action ID.
          */
         public function bulk_log_cancel_actions($action_ids)
+        {
+        }
+    }
+    /**
+     * Class ActionScheduler_Store_Deprecated
+     * @codeCoverageIgnore
+     */
+    abstract class ActionScheduler_Store_Deprecated
+    {
+        /**
+         * Mark an action that failed to fetch correctly as failed.
+         *
+         * @since 2.2.6
+         *
+         * @param int $action_id The ID of the action.
+         */
+        public function mark_failed_fetch_action($action_id)
+        {
+        }
+        /**
+         * Add base hooks
+         *
+         * @since 2.2.6
+         */
+        protected static function hook()
+        {
+        }
+        /**
+         * Remove base hooks
+         *
+         * @since 2.2.6
+         */
+        protected static function unhook()
+        {
+        }
+        /**
+         * Get the site's local time.
+         *
+         * @deprecated 2.1.0
+         * @return DateTimeZone
+         */
+        protected function get_local_timezone()
         {
         }
     }
@@ -26753,21 +26635,6 @@ namespace {
         }
     }
     /**
-     * Class ActionScheduler_Schedule
-     */
-    interface ActionScheduler_Schedule
-    {
-        /**
-         * @param DateTime $after
-         * @return DateTime|null
-         */
-        public function next(\DateTime $after = \NULL);
-        /**
-         * @return bool
-         */
-        public function is_recurring();
-    }
-    /**
      * Class ActionScheduler_CronSchedule
      */
     class ActionScheduler_CronSchedule extends \ActionScheduler_Abstract_RecurringSchedule implements \ActionScheduler_Schedule
@@ -27119,6 +26986,118 @@ namespace {
     {
     }
     function action_scheduler_initialize_3_dot_1_dot_4()
+    {
+    }
+    /**
+     * Deprecated API functions for scheduling actions
+     *
+     * Functions with the wc prefix were deprecated to avoid confusion with
+     * Action Scheduler being included in WooCommerce core, and it providing
+     * a different set of APIs for working with the action queue.
+     */
+    /**
+     * Schedule an action to run one time
+     *
+     * @param int $timestamp When the job will run
+     * @param string $hook The hook to trigger
+     * @param array $args Arguments to pass when the hook triggers
+     * @param string $group The group to assign this job to
+     *
+     * @return string The job ID
+     */
+    function wc_schedule_single_action($timestamp, $hook, $args = array(), $group = '')
+    {
+    }
+    /**
+     * Schedule a recurring action
+     *
+     * @param int $timestamp When the first instance of the job will run
+     * @param int $interval_in_seconds How long to wait between runs
+     * @param string $hook The hook to trigger
+     * @param array $args Arguments to pass when the hook triggers
+     * @param string $group The group to assign this job to
+     *
+     * @deprecated 2.1.0
+     *
+     * @return string The job ID
+     */
+    function wc_schedule_recurring_action($timestamp, $interval_in_seconds, $hook, $args = array(), $group = '')
+    {
+    }
+    /**
+     * Schedule an action that recurs on a cron-like schedule.
+     *
+     * @param int $timestamp The schedule will start on or after this time
+     * @param string $schedule A cron-link schedule string
+     * @see http://en.wikipedia.org/wiki/Cron
+     *   *    *    *    *    *    *
+     *   ┬    ┬    ┬    ┬    ┬    ┬
+     *   |    |    |    |    |    |
+     *   |    |    |    |    |    + year [optional]
+     *   |    |    |    |    +----- day of week (0 - 7) (Sunday=0 or 7)
+     *   |    |    |    +---------- month (1 - 12)
+     *   |    |    +--------------- day of month (1 - 31)
+     *   |    +-------------------- hour (0 - 23)
+     *   +------------------------- min (0 - 59)
+     * @param string $hook The hook to trigger
+     * @param array $args Arguments to pass when the hook triggers
+     * @param string $group The group to assign this job to
+     *
+     * @deprecated 2.1.0
+     *
+     * @return string The job ID
+     */
+    function wc_schedule_cron_action($timestamp, $schedule, $hook, $args = array(), $group = '')
+    {
+    }
+    /**
+     * Cancel the next occurrence of a job.
+     *
+     * @param string $hook The hook that the job will trigger
+     * @param array $args Args that would have been passed to the job
+     * @param string $group
+     *
+     * @deprecated 2.1.0
+     */
+    function wc_unschedule_action($hook, $args = array(), $group = '')
+    {
+    }
+    /**
+     * @param string $hook
+     * @param array $args
+     * @param string $group
+     *
+     * @deprecated 2.1.0
+     *
+     * @return int|bool The timestamp for the next occurrence, or false if nothing was found
+     */
+    function wc_next_scheduled_action($hook, $args = \NULL, $group = '')
+    {
+    }
+    /**
+     * Find scheduled actions
+     *
+     * @param array $args Possible arguments, with their default values:
+     *        'hook' => '' - the name of the action that will be triggered
+     *        'args' => NULL - the args array that will be passed with the action
+     *        'date' => NULL - the scheduled date of the action. Expects a DateTime object, a unix timestamp, or a string that can parsed with strtotime(). Used in UTC timezone.
+     *        'date_compare' => '<=' - operator for testing "date". accepted values are '!=', '>', '>=', '<', '<=', '='
+     *        'modified' => NULL - the date the action was last updated. Expects a DateTime object, a unix timestamp, or a string that can parsed with strtotime(). Used in UTC timezone.
+     *        'modified_compare' => '<=' - operator for testing "modified". accepted values are '!=', '>', '>=', '<', '<=', '='
+     *        'group' => '' - the group the action belongs to
+     *        'status' => '' - ActionScheduler_Store::STATUS_COMPLETE or ActionScheduler_Store::STATUS_PENDING
+     *        'claimed' => NULL - TRUE to find claimed actions, FALSE to find unclaimed actions, a string to find a specific claim ID
+     *        'per_page' => 5 - Number of results to return
+     *        'offset' => 0
+     *        'orderby' => 'date' - accepted values are 'hook', 'group', 'modified', or 'date'
+     *        'order' => 'ASC'
+     * @param string $return_format OBJECT, ARRAY_A, or ids
+     *
+     * @deprecated 2.1.0
+     *
+     * @return array
+     */
+    function wc_get_scheduled_actions($args = array(), $return_format = \OBJECT)
     {
     }
 }
