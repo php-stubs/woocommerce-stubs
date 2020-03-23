@@ -6,6 +6,7 @@ return \StubsGenerator\Finder::create()
         'source/woocommerce/packages/action-scheduler/classes',
         // Current classes extend deprecated ones.
         'source/woocommerce/packages/action-scheduler/deprecated',
+
         'source/woocommerce/packages/woocommerce-admin/includes',
     ])
     ->append(
