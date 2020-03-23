@@ -41,3 +41,5 @@ script:
     php -l woocommerce-packages-stubs.php
   - |
     git diff --exit-code
+  - |
+    php -r 'require "vendor/php-stubs/wordpress-stubs/wordpress-stubs.php"; require "woocommerce-stubs.php"; require "woocommerce-packages-stubs.php";'
