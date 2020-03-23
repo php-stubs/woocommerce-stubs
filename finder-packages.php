@@ -4,7 +4,6 @@ return \StubsGenerator\Finder::create()
     ->in([
         'source/woocommerce/packages/*/src',
         'source/woocommerce/packages/action-scheduler/classes',
-        'source/woocommerce/packages/action-scheduler/deprecated',
         ])
         ->append(
             \StubsGenerator\Finder::create()

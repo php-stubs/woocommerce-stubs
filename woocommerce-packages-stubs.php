@@ -22161,133 +22161,6 @@ namespace {
         }
     }
     /**
-     * Class ActionScheduler_AdminView_Deprecated
-     *
-     * Store deprecated public functions previously found in the ActionScheduler_AdminView class.
-     * Keeps them out of the way of the main class.
-     *
-     * @codeCoverageIgnore
-     */
-    class ActionScheduler_AdminView_Deprecated
-    {
-        public function action_scheduler_post_type_args($args)
-        {
-        }
-        /**
-         * Customise the post status related views displayed on the Scheduled Actions administration screen.
-         *
-         * @param array $views An associative array of views and view labels which can be used to filter the 'scheduled-action' posts displayed on the Scheduled Actions administration screen.
-         * @return array $views An associative array of views and view labels which can be used to filter the 'scheduled-action' posts displayed on the Scheduled Actions administration screen.
-         */
-        public function list_table_views($views)
-        {
-        }
-        /**
-         * Do not include the "Edit" action for the Scheduled Actions administration screen.
-         *
-         * Hooked to the 'bulk_actions-edit-action-scheduler' filter.
-         *
-         * @param array $actions An associative array of actions which can be performed on the 'scheduled-action' post type.
-         * @return array $actions An associative array of actions which can be performed on the 'scheduled-action' post type.
-         */
-        public function bulk_actions($actions)
-        {
-        }
-        /**
-         * Completely customer the columns displayed on the Scheduled Actions administration screen.
-         *
-         * Because we can't filter the content of the default title and date columns, we need to recreate our own
-         * custom columns for displaying those post fields. For the column content, @see self::list_table_column_content().
-         *
-         * @param array $columns An associative array of columns that are use for the table on the Scheduled Actions administration screen.
-         * @return array $columns An associative array of columns that are use for the table on the Scheduled Actions administration screen.
-         */
-        public function list_table_columns($columns)
-        {
-        }
-        /**
-         * Make our custom title & date columns use defaulting title & date sorting.
-         *
-         * @param array $columns An associative array of columns that can be used to sort the table on the Scheduled Actions administration screen.
-         * @return array $columns An associative array of columns that can be used to sort the table on the Scheduled Actions administration screen.
-         */
-        public static function list_table_sortable_columns($columns)
-        {
-        }
-        /**
-         * Print the content for our custom columns.
-         *
-         * @param string $column_name The key for the column for which we should output our content.
-         * @param int $post_id The ID of the 'scheduled-action' post for which this row relates.
-         */
-        public static function list_table_column_content($column_name, $post_id)
-        {
-        }
-        /**
-         * Hide the inline "Edit" action for all 'scheduled-action' posts.
-         *
-         * Hooked to the 'post_row_actions' filter.
-         *
-         * @param array $actions An associative array of actions which can be performed on the 'scheduled-action' post type.
-         * @return array $actions An associative array of actions which can be performed on the 'scheduled-action' post type.
-         */
-        public static function row_actions($actions, $post)
-        {
-        }
-        /**
-         * Run an action when triggered from the Action Scheduler administration screen.
-         *
-         * @codeCoverageIgnore
-         */
-        public static function maybe_execute_action()
-        {
-        }
-        /**
-         * Convert an interval of seconds into a two part human friendly string.
-         *
-         * The WordPress human_time_diff() function only calculates the time difference to one degree, meaning
-         * even if an action is 1 day and 11 hours away, it will display "1 day". This funciton goes one step
-         * further to display two degrees of accuracy.
-         *
-         * Based on Crontrol::interval() function by Edward Dale: https://wordpress.org/plugins/wp-crontrol/
-         *
-         * @param int $interval A interval in seconds.
-         * @return string A human friendly string representation of the interval.
-         */
-        public static function admin_notices()
-        {
-        }
-        /**
-         * Filter search queries to allow searching by Claim ID (i.e. post_password).
-         *
-         * @param string $orderby MySQL orderby string.
-         * @param WP_Query $query Instance of a WP_Query object
-         * @return string MySQL orderby string.
-         */
-        public function custom_orderby($orderby, $query)
-        {
-        }
-        /**
-         * Filter search queries to allow searching by Claim ID (i.e. post_password).
-         *
-         * @param string $search MySQL search string.
-         * @param WP_Query $query Instance of a WP_Query object
-         * @return string MySQL search string.
-         */
-        public function search_post_password($search, $query)
-        {
-        }
-        /**
-         * Change messages when a scheduled action is updated.
-         *
-         * @param  array $messages
-         * @return array
-         */
-        public function post_updated_messages($messages)
-        {
-        }
-    }
-    /**
      * Class ActionScheduler_AdminView
      * @codeCoverageIgnore
      */
@@ -23509,21 +23382,6 @@ namespace {
     /**
      * Abstract class with common Queue Cleaner functionality.
      */
-    abstract class ActionScheduler_Abstract_QueueRunner_Deprecated
-    {
-        /**
-         * Get the maximum number of seconds a batch can run for.
-         *
-         * @deprecated 2.1.1
-         * @return int The number of seconds.
-         */
-        protected function get_maximum_execution_time()
-        {
-        }
-    }
-    /**
-     * Abstract class with common Queue Cleaner functionality.
-     */
     abstract class ActionScheduler_Abstract_QueueRunner extends \ActionScheduler_Abstract_QueueRunner_Deprecated
     {
         /** @var ActionScheduler_QueueCleaner */
@@ -24386,38 +24244,6 @@ namespace {
         }
     }
     /**
-     * Class ActionScheduler_Schedule
-     */
-    interface ActionScheduler_Schedule
-    {
-        /**
-         * @param DateTime $after
-         * @return DateTime|null
-         */
-        public function next(\DateTime $after = \NULL);
-        /**
-         * @return bool
-         */
-        public function is_recurring();
-    }
-    /**
-     * Class ActionScheduler_Abstract_Schedule
-     */
-    abstract class ActionScheduler_Schedule_Deprecated implements \ActionScheduler_Schedule
-    {
-        /**
-         * Get the date & time this schedule was created to run, or calculate when it should be run
-         * after a given date & time.
-         *
-         * @param DateTime $after
-         *
-         * @return DateTime|null
-         */
-        public function next(\DateTime $after = \NULL)
-        {
-        }
-    }
-    /**
      * Class ActionScheduler_Abstract_Schedule
      */
     abstract class ActionScheduler_Abstract_Schedule extends \ActionScheduler_Schedule_Deprecated
@@ -24728,48 +24554,6 @@ namespace {
          * @param array $action_ids List of action ID.
          */
         public function bulk_log_cancel_actions($action_ids)
-        {
-        }
-    }
-    /**
-     * Class ActionScheduler_Store_Deprecated
-     * @codeCoverageIgnore
-     */
-    abstract class ActionScheduler_Store_Deprecated
-    {
-        /**
-         * Mark an action that failed to fetch correctly as failed.
-         *
-         * @since 2.2.6
-         *
-         * @param int $action_id The ID of the action.
-         */
-        public function mark_failed_fetch_action($action_id)
-        {
-        }
-        /**
-         * Add base hooks
-         *
-         * @since 2.2.6
-         */
-        protected static function hook()
-        {
-        }
-        /**
-         * Remove base hooks
-         *
-         * @since 2.2.6
-         */
-        protected static function unhook()
-        {
-        }
-        /**
-         * Get the site's local time.
-         *
-         * @deprecated 2.1.0
-         * @return DateTimeZone
-         */
-        protected function get_local_timezone()
         {
         }
     }
@@ -26969,6 +26753,21 @@ namespace {
         }
     }
     /**
+     * Class ActionScheduler_Schedule
+     */
+    interface ActionScheduler_Schedule
+    {
+        /**
+         * @param DateTime $after
+         * @return DateTime|null
+         */
+        public function next(\DateTime $after = \NULL);
+        /**
+         * @return bool
+         */
+        public function is_recurring();
+    }
+    /**
      * Class ActionScheduler_CronSchedule
      */
     class ActionScheduler_CronSchedule extends \ActionScheduler_Abstract_RecurringSchedule implements \ActionScheduler_Schedule
@@ -27157,118 +26956,6 @@ namespace {
     }
 }
 namespace {
-    /**
-     * Deprecated API functions for scheduling actions
-     *
-     * Functions with the wc prefix were deprecated to avoid confusion with
-     * Action Scheduler being included in WooCommerce core, and it providing
-     * a different set of APIs for working with the action queue.
-     */
-    /**
-     * Schedule an action to run one time
-     *
-     * @param int $timestamp When the job will run
-     * @param string $hook The hook to trigger
-     * @param array $args Arguments to pass when the hook triggers
-     * @param string $group The group to assign this job to
-     *
-     * @return string The job ID
-     */
-    function wc_schedule_single_action($timestamp, $hook, $args = array(), $group = '')
-    {
-    }
-    /**
-     * Schedule a recurring action
-     *
-     * @param int $timestamp When the first instance of the job will run
-     * @param int $interval_in_seconds How long to wait between runs
-     * @param string $hook The hook to trigger
-     * @param array $args Arguments to pass when the hook triggers
-     * @param string $group The group to assign this job to
-     *
-     * @deprecated 2.1.0
-     *
-     * @return string The job ID
-     */
-    function wc_schedule_recurring_action($timestamp, $interval_in_seconds, $hook, $args = array(), $group = '')
-    {
-    }
-    /**
-     * Schedule an action that recurs on a cron-like schedule.
-     *
-     * @param int $timestamp The schedule will start on or after this time
-     * @param string $schedule A cron-link schedule string
-     * @see http://en.wikipedia.org/wiki/Cron
-     *   *    *    *    *    *    *
-     *   ┬    ┬    ┬    ┬    ┬    ┬
-     *   |    |    |    |    |    |
-     *   |    |    |    |    |    + year [optional]
-     *   |    |    |    |    +----- day of week (0 - 7) (Sunday=0 or 7)
-     *   |    |    |    +---------- month (1 - 12)
-     *   |    |    +--------------- day of month (1 - 31)
-     *   |    +-------------------- hour (0 - 23)
-     *   +------------------------- min (0 - 59)
-     * @param string $hook The hook to trigger
-     * @param array $args Arguments to pass when the hook triggers
-     * @param string $group The group to assign this job to
-     *
-     * @deprecated 2.1.0
-     *
-     * @return string The job ID
-     */
-    function wc_schedule_cron_action($timestamp, $schedule, $hook, $args = array(), $group = '')
-    {
-    }
-    /**
-     * Cancel the next occurrence of a job.
-     *
-     * @param string $hook The hook that the job will trigger
-     * @param array $args Args that would have been passed to the job
-     * @param string $group
-     *
-     * @deprecated 2.1.0
-     */
-    function wc_unschedule_action($hook, $args = array(), $group = '')
-    {
-    }
-    /**
-     * @param string $hook
-     * @param array $args
-     * @param string $group
-     *
-     * @deprecated 2.1.0
-     *
-     * @return int|bool The timestamp for the next occurrence, or false if nothing was found
-     */
-    function wc_next_scheduled_action($hook, $args = \NULL, $group = '')
-    {
-    }
-    /**
-     * Find scheduled actions
-     *
-     * @param array $args Possible arguments, with their default values:
-     *        'hook' => '' - the name of the action that will be triggered
-     *        'args' => NULL - the args array that will be passed with the action
-     *        'date' => NULL - the scheduled date of the action. Expects a DateTime object, a unix timestamp, or a string that can parsed with strtotime(). Used in UTC timezone.
-     *        'date_compare' => '<=' - operator for testing "date". accepted values are '!=', '>', '>=', '<', '<=', '='
-     *        'modified' => NULL - the date the action was last updated. Expects a DateTime object, a unix timestamp, or a string that can parsed with strtotime(). Used in UTC timezone.
-     *        'modified_compare' => '<=' - operator for testing "modified". accepted values are '!=', '>', '>=', '<', '<=', '='
-     *        'group' => '' - the group the action belongs to
-     *        'status' => '' - ActionScheduler_Store::STATUS_COMPLETE or ActionScheduler_Store::STATUS_PENDING
-     *        'claimed' => NULL - TRUE to find claimed actions, FALSE to find unclaimed actions, a string to find a specific claim ID
-     *        'per_page' => 5 - Number of results to return
-     *        'offset' => 0
-     *        'orderby' => 'date' - accepted values are 'hook', 'group', 'modified', or 'date'
-     *        'order' => 'ASC'
-     * @param string $return_format OBJECT, ARRAY_A, or ids
-     *
-     * @deprecated 2.1.0
-     *
-     * @return array
-     */
-    function wc_get_scheduled_actions($args = array(), $return_format = \OBJECT)
-    {
-    }
     /**
      * General API functions for scheduling actions
      */
