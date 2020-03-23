@@ -6,6 +6,7 @@ return \StubsGenerator\Finder::create()
         'source/woocommerce/packages/action-scheduler/classes',
         // Current classes extend deprecated ones.
         'source/woocommerce/packages/action-scheduler/deprecated',
+        'source/woocommerce/packages/woocommerce-admin/includes',
     ])
     ->append(
         \StubsGenerator\Finder::create()
@@ -16,5 +17,9 @@ return \StubsGenerator\Finder::create()
     )
     // Uses WP-CLI.
     ->notPath('WP_CLI')
+    // Exclude email templates.
+    ->notPath('emails')
+    // Update functions.
+    ->notPath('wc-admin-update-functions.php')
     ->sortByName()
 ;
