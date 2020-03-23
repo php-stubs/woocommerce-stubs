@@ -10089,6 +10089,15 @@ namespace Automattic\WooCommerce\Admin {
         {
         }
         /**
+         * Filter in our ActionScheduler Store class.
+         *
+         * @param string $store_class ActionScheduler Store class name.
+         * @return string ActionScheduler Store class name.
+         */
+        public function replace_actionscheduler_store_class($store_class)
+        {
+        }
+        /**
          * Set up our admin hooks and plugin loader.
          */
         protected function hooks()
@@ -11815,6 +11824,24 @@ namespace Automattic\WooCommerce\Admin\Notes {
          */
         const UNSNOOZE_HOOK = 'wc_admin_unsnooze_admin_notes';
         /**
+         * Action scheduler group.
+         */
+        const QUEUE_GROUP = 'wc-admin-notes';
+        /**
+         * Queue instance.
+         *
+         * @var WC_Queue_Interface
+         */
+        protected static $queue = null;
+        /**
+         * Get queue instance.
+         *
+         * @return WC_Queue_Interface
+         */
+        public static function queue()
+        {
+        }
+        /**
          * Hook appropriate actions.
          */
         public static function init()
@@ -11870,7 +11897,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
         {
         }
         /**
-         * Unschedule unsnooze notes event.
+         * Clears all queued actions.
          */
         public static function clear_queued_actions()
         {
@@ -12645,13 +12672,638 @@ namespace Automattic\WooCommerce\Admin\Overrides {
          *
          * @param string $string String to display.
          */
-        public function feedback($string)
+        public function feedback($string, ...$args)
         {
         }
         /**
          * Hide the skin after display.
          */
         public function after()
+        {
+        }
+    }
+}
+namespace {
+    /**
+     * Class ActionScheduler_Store_Deprecated
+     * @codeCoverageIgnore
+     */
+    abstract class ActionScheduler_Store_Deprecated
+    {
+        /**
+         * Mark an action that failed to fetch correctly as failed.
+         *
+         * @since 2.2.6
+         *
+         * @param int $action_id The ID of the action.
+         */
+        public function mark_failed_fetch_action($action_id)
+        {
+        }
+        /**
+         * Add base hooks
+         *
+         * @since 2.2.6
+         */
+        protected static function hook()
+        {
+        }
+        /**
+         * Remove base hooks
+         *
+         * @since 2.2.6
+         */
+        protected static function unhook()
+        {
+        }
+        /**
+         * Get the site's local time.
+         *
+         * @deprecated 2.1.0
+         * @return DateTimeZone
+         */
+        protected function get_local_timezone()
+        {
+        }
+    }
+    /**
+     * Class ActionScheduler_Store
+     * @codeCoverageIgnore
+     */
+    abstract class ActionScheduler_Store extends \ActionScheduler_Store_Deprecated
+    {
+        const STATUS_COMPLETE = 'complete';
+        const STATUS_PENDING = 'pending';
+        const STATUS_RUNNING = 'in-progress';
+        const STATUS_FAILED = 'failed';
+        const STATUS_CANCELED = 'canceled';
+        const DEFAULT_CLASS = 'ActionScheduler_wpPostStore';
+        /** @var ActionScheduler_Store */
+        private static $store = \NULL;
+        /** @var int */
+        protected static $max_args_length = 191;
+        /**
+         * @param ActionScheduler_Action $action
+         * @param DateTime $scheduled_date Optional Date of the first instance
+         *        to store. Otherwise uses the first date of the action's
+         *        schedule.
+         *
+         * @return string The action ID
+         */
+        public abstract function save_action(\ActionScheduler_Action $action, \DateTime $scheduled_date = \NULL);
+        /**
+         * @param string $action_id
+         *
+         * @return ActionScheduler_Action
+         */
+        public abstract function fetch_action($action_id);
+        /**
+         * @param string $hook Hook name/slug.
+         * @param array  $params Hook arguments.
+         * @return string ID of the next action matching the criteria.
+         */
+        public abstract function find_action($hook, $params = array());
+        /**
+         * @param array  $query Query parameters.
+         * @param string $query_type Whether to select or count the results. Default, select.
+         *
+         * @return array|int The IDs of or count of actions matching the query.
+         */
+        public abstract function query_actions($query = array(), $query_type = 'select');
+        /**
+         * Get a count of all actions in the store, grouped by status
+         *
+         * @return array
+         */
+        public abstract function action_counts();
+        /**
+         * @param string $action_id
+         */
+        public abstract function cancel_action($action_id);
+        /**
+         * @param string $action_id
+         */
+        public abstract function delete_action($action_id);
+        /**
+         * @param string $action_id
+         *
+         * @return DateTime The date the action is schedule to run, or the date that it ran.
+         */
+        public abstract function get_date($action_id);
+        /**
+         * @param int      $max_actions
+         * @param DateTime $before_date Claim only actions schedule before the given date. Defaults to now.
+         * @param array    $hooks       Claim only actions with a hook or hooks.
+         * @param string   $group       Claim only actions in the given group.
+         *
+         * @return ActionScheduler_ActionClaim
+         */
+        public abstract function stake_claim($max_actions = 10, \DateTime $before_date = \null, $hooks = array(), $group = '');
+        /**
+         * @return int
+         */
+        public abstract function get_claim_count();
+        /**
+         * @param ActionScheduler_ActionClaim $claim
+         */
+        public abstract function release_claim(\ActionScheduler_ActionClaim $claim);
+        /**
+         * @param string $action_id
+         */
+        public abstract function unclaim_action($action_id);
+        /**
+         * @param string $action_id
+         */
+        public abstract function mark_failure($action_id);
+        /**
+         * @param string $action_id
+         */
+        public abstract function log_execution($action_id);
+        /**
+         * @param string $action_id
+         */
+        public abstract function mark_complete($action_id);
+        /**
+         * @param string $action_id
+         *
+         * @return string
+         */
+        public abstract function get_status($action_id);
+        /**
+         * @param string $action_id
+         * @return mixed
+         */
+        public abstract function get_claim_id($action_id);
+        /**
+         * @param string $claim_id
+         * @return array
+         */
+        public abstract function find_actions_by_claim_id($claim_id);
+        /**
+         * @param string $comparison_operator
+         * @return string
+         */
+        protected function validate_sql_comparator($comparison_operator)
+        {
+        }
+        /**
+         * Get the time MySQL formated date/time string for an action's (next) scheduled date.
+         *
+         * @param ActionScheduler_Action $action
+         * @param DateTime $scheduled_date (optional)
+         * @return string
+         */
+        protected function get_scheduled_date_string(\ActionScheduler_Action $action, \DateTime $scheduled_date = \NULL)
+        {
+        }
+        /**
+         * Get the time MySQL formated date/time string for an action's (next) scheduled date.
+         *
+         * @param ActionScheduler_Action $action
+         * @param DateTime $scheduled_date (optional)
+         * @return string
+         */
+        protected function get_scheduled_date_string_local(\ActionScheduler_Action $action, \DateTime $scheduled_date = \NULL)
+        {
+        }
+        /**
+         * Validate that we could decode action arguments.
+         *
+         * @param mixed $args      The decoded arguments.
+         * @param int   $action_id The action ID.
+         *
+         * @throws ActionScheduler_InvalidActionException When the decoded arguments are invalid.
+         */
+        protected function validate_args($args, $action_id)
+        {
+        }
+        /**
+         * Validate a ActionScheduler_Schedule object.
+         *
+         * @param mixed $schedule  The unserialized ActionScheduler_Schedule object.
+         * @param int   $action_id The action ID.
+         *
+         * @throws ActionScheduler_InvalidActionException When the schedule is invalid.
+         */
+        protected function validate_schedule($schedule, $action_id)
+        {
+        }
+        /**
+         * InnoDB indexes have a maximum size of 767 bytes by default, which is only 191 characters with utf8mb4.
+         *
+         * Previously, AS wasn't concerned about args length, as we used the (unindex) post_content column. However,
+         * with custom tables, we use an indexed VARCHAR column instead.
+         *
+         * @param  ActionScheduler_Action $action Action to be validated.
+         * @throws InvalidArgumentException When json encoded args is too long.
+         */
+        protected function validate_action(\ActionScheduler_Action $action)
+        {
+        }
+        /**
+         * Cancel pending actions by hook.
+         *
+         * @since 3.0.0
+         *
+         * @param string $hook Hook name.
+         *
+         * @return void
+         */
+        public function cancel_actions_by_hook($hook)
+        {
+        }
+        /**
+         * Cancel pending actions by group.
+         *
+         * @since 3.0.0
+         *
+         * @param string $group Group slug.
+         *
+         * @return void
+         */
+        public function cancel_actions_by_group($group)
+        {
+        }
+        /**
+         * Cancel a set of action IDs.
+         *
+         * @since 3.0.0
+         *
+         * @param array $action_ids List of action IDs.
+         *
+         * @return void
+         */
+        private function bulk_cancel_actions($action_ids)
+        {
+        }
+        /**
+         * @return array
+         */
+        public function get_status_labels()
+        {
+        }
+        /**
+         * Check if there are any pending scheduled actions due to run.
+         *
+         * @param ActionScheduler_Action $action
+         * @param DateTime $scheduled_date (optional)
+         * @return string
+         */
+        public function has_pending_actions_due()
+        {
+        }
+        /**
+         * Callable initialization function optionally overridden in derived classes.
+         */
+        public function init()
+        {
+        }
+        /**
+         * Callable function to mark an action as migrated optionally overridden in derived classes.
+         */
+        public function mark_migrated($action_id)
+        {
+        }
+        /**
+         * @return ActionScheduler_Store
+         */
+        public static function instance()
+        {
+        }
+    }
+    /**
+     * Class ActionScheduler_wpPostStore
+     */
+    class ActionScheduler_wpPostStore extends \ActionScheduler_Store
+    {
+        const POST_TYPE = 'scheduled-action';
+        const GROUP_TAXONOMY = 'action-group';
+        const SCHEDULE_META_KEY = '_action_manager_schedule';
+        const DEPENDENCIES_MET = 'as-post-store-dependencies-met';
+        /** @var DateTimeZone */
+        protected $local_timezone = \NULL;
+        public function save_action(\ActionScheduler_Action $action, \DateTime $scheduled_date = \NULL)
+        {
+        }
+        protected function create_post_array(\ActionScheduler_Action $action, \DateTime $scheduled_date = \NULL)
+        {
+        }
+        protected function save_post_array($post_array)
+        {
+        }
+        public function filter_insert_post_data($postdata)
+        {
+        }
+        /**
+         * Create a (probably unique) post name for scheduled actions in a more performant manner than wp_unique_post_slug().
+         *
+         * When an action's post status is transitioned to something other than 'draft', 'pending' or 'auto-draft, like 'publish'
+         * or 'failed' or 'trash', WordPress will find a unique slug (stored in post_name column) using the wp_unique_post_slug()
+         * function. This is done to ensure URL uniqueness. The approach taken by wp_unique_post_slug() is to iterate over existing
+         * post_name values that match, and append a number 1 greater than the largest. This makes sense when manually creating a
+         * post from the Edit Post screen. It becomes a bottleneck when automatically processing thousands of actions, with a
+         * database containing thousands of related post_name values.
+         *
+         * WordPress 5.1 introduces the 'pre_wp_unique_post_slug' filter for plugins to address this issue.
+         *
+         * We can short-circuit WordPress's wp_unique_post_slug() approach using the 'pre_wp_unique_post_slug' filter. This
+         * method is available to be used as a callback on that filter. It provides a more scalable approach to generating a
+         * post_name/slug that is probably unique. Because Action Scheduler never actually uses the post_name field, or an
+         * action's slug, being probably unique is good enough.
+         *
+         * For more backstory on this issue, see:
+         * - https://github.com/woocommerce/action-scheduler/issues/44 and
+         * - https://core.trac.wordpress.org/ticket/21112
+         *
+         * @param string $override_slug Short-circuit return value.
+         * @param string $slug          The desired slug (post_name).
+         * @param int    $post_ID       Post ID.
+         * @param string $post_status   The post status.
+         * @param string $post_type     Post type.
+         * @return string
+         */
+        public function set_unique_post_slug($override_slug, $slug, $post_ID, $post_status, $post_type)
+        {
+        }
+        protected function save_post_schedule($post_id, $schedule)
+        {
+        }
+        protected function save_action_group($post_id, $group)
+        {
+        }
+        public function fetch_action($action_id)
+        {
+        }
+        protected function get_post($action_id)
+        {
+        }
+        protected function get_null_action()
+        {
+        }
+        protected function make_action_from_post($post)
+        {
+        }
+        /**
+         * @param string $post_status
+         *
+         * @throws InvalidArgumentException if $post_status not in known status fields returned by $this->get_status_labels()
+         * @return string
+         */
+        protected function get_action_status_by_post_status($post_status)
+        {
+        }
+        /**
+         * @param string $action_status
+         * @throws InvalidArgumentException if $post_status not in known status fields returned by $this->get_status_labels()
+         * @return string
+         */
+        protected function get_post_status_by_action_status($action_status)
+        {
+        }
+        /**
+         * @param string $hook
+         * @param array $params
+         *
+         * @return string ID of the next action matching the criteria or NULL if not found
+         */
+        public function find_action($hook, $params = array())
+        {
+        }
+        /**
+         * Returns the SQL statement to query (or count) actions.
+         *
+         * @param array $query Filtering options
+         * @param string $select_or_count  Whether the SQL should select and return the IDs or just the row count
+         * @throws InvalidArgumentException if $select_or_count not count or select
+         * @return string SQL statement. The returned SQL is already properly escaped.
+         */
+        protected function get_query_actions_sql(array $query, $select_or_count = 'select')
+        {
+        }
+        /**
+         * @param array $query
+         * @param string $query_type Whether to select or count the results. Default, select.
+         * @return string|array The IDs of actions matching the query
+         */
+        public function query_actions($query = array(), $query_type = 'select')
+        {
+        }
+        /**
+         * Get a count of all actions in the store, grouped by status
+         *
+         * @return array
+         */
+        public function action_counts()
+        {
+        }
+        /**
+         * @param string $action_id
+         *
+         * @throws InvalidArgumentException
+         */
+        public function cancel_action($action_id)
+        {
+        }
+        public function delete_action($action_id)
+        {
+        }
+        /**
+         * @param string $action_id
+         *
+         * @throws InvalidArgumentException
+         * @return ActionScheduler_DateTime The date the action is schedule to run, or the date that it ran.
+         */
+        public function get_date($action_id)
+        {
+        }
+        /**
+         * @param string $action_id
+         *
+         * @throws InvalidArgumentException
+         * @return ActionScheduler_DateTime The date the action is schedule to run, or the date that it ran.
+         */
+        public function get_date_gmt($action_id)
+        {
+        }
+        /**
+         * @param int      $max_actions
+         * @param DateTime $before_date Jobs must be schedule before this date. Defaults to now.
+         * @param array    $hooks       Claim only actions with a hook or hooks.
+         * @param string   $group       Claim only actions in the given group.
+         *
+         * @return ActionScheduler_ActionClaim
+         * @throws RuntimeException When there is an error staking a claim.
+         * @throws InvalidArgumentException When the given group is not valid.
+         */
+        public function stake_claim($max_actions = 10, \DateTime $before_date = \null, $hooks = array(), $group = '')
+        {
+        }
+        /**
+         * @return int
+         */
+        public function get_claim_count()
+        {
+        }
+        protected function generate_claim_id()
+        {
+        }
+        /**
+         * @param string   $claim_id
+         * @param int      $limit
+         * @param DateTime $before_date Should use UTC timezone.
+         * @param array    $hooks       Claim only actions with a hook or hooks.
+         * @param string   $group       Claim only actions in the given group.
+         *
+         * @return int The number of actions that were claimed
+         * @throws RuntimeException When there is a database error.
+         * @throws InvalidArgumentException When the group is invalid.
+         */
+        protected function claim_actions($claim_id, $limit, \DateTime $before_date = \null, $hooks = array(), $group = '')
+        {
+        }
+        /**
+         * Get IDs of actions within a certain group and up to a certain date/time.
+         *
+         * @param string   $group The group to use in finding actions.
+         * @param int      $limit The number of actions to retrieve.
+         * @param DateTime $date  DateTime object representing cutoff time for actions. Actions retrieved will be
+         *                        up to and including this DateTime.
+         *
+         * @return array IDs of actions in the appropriate group and before the appropriate time.
+         * @throws InvalidArgumentException When the group does not exist.
+         */
+        protected function get_actions_by_group($group, $limit, \DateTime $date)
+        {
+        }
+        /**
+         * @param string $claim_id
+         * @return array
+         */
+        public function find_actions_by_claim_id($claim_id)
+        {
+        }
+        public function release_claim(\ActionScheduler_ActionClaim $claim)
+        {
+        }
+        /**
+         * @param string $action_id
+         */
+        public function unclaim_action($action_id)
+        {
+        }
+        public function mark_failure($action_id)
+        {
+        }
+        /**
+         * Return an action's claim ID, as stored in the post password column
+         *
+         * @param string $action_id
+         * @return mixed
+         */
+        public function get_claim_id($action_id)
+        {
+        }
+        /**
+         * Return an action's status, as stored in the post status column
+         *
+         * @param string $action_id
+         * @return mixed
+         */
+        public function get_status($action_id)
+        {
+        }
+        private function get_post_column($action_id, $column_name)
+        {
+        }
+        /**
+         * @param string $action_id
+         */
+        public function log_execution($action_id)
+        {
+        }
+        /**
+         * Record that an action was completed.
+         *
+         * @param int $action_id ID of the completed action.
+         * @throws InvalidArgumentException|RuntimeException
+         */
+        public function mark_complete($action_id)
+        {
+        }
+        /**
+         * Mark action as migrated when there is an error deleting the action.
+         *
+         * @param int $action_id Action ID.
+         */
+        public function mark_migrated($action_id)
+        {
+        }
+        /**
+         * Determine whether the post store can be migrated.
+         *
+         * @return bool
+         */
+        public function migration_dependencies_met($setting)
+        {
+        }
+        /**
+         * InnoDB indexes have a maximum size of 767 bytes by default, which is only 191 characters with utf8mb4.
+         *
+         * Previously, AS wasn't concerned about args length, as we used the (unindex) post_content column. However,
+         * as we prepare to move to custom tables, and can use an indexed VARCHAR column instead, we want to warn
+         * developers of this impending requirement.
+         *
+         * @param ActionScheduler_Action $action
+         */
+        protected function validate_action(\ActionScheduler_Action $action)
+        {
+        }
+        /**
+         * @codeCoverageIgnore
+         */
+        public function init()
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Admin\Overrides {
+    /**
+     * Class WC Admin Action Scheduler Store.
+     */
+    class WPPostStore extends \ActionScheduler_wpPostStore
+    {
+        /**
+         * Action scheduler job priority (lower numbers are claimed first).
+         */
+        const JOB_PRIORITY = 30;
+        /**
+         * Create the post array for storing actions as WP posts.
+         *
+         * For WC Admin actions, force a lower action claim
+         * priority by setting a high value for `menu_order`.
+         *
+         * @param \ActionScheduler_Action $action Action.
+         * @param \DateTime               $scheduled_date Action schedule.
+         * @return array Post data array for usage in wp_insert_post().
+         */
+        protected function create_post_array(\ActionScheduler_Action $action, \DateTime $scheduled_date = null)
+        {
+        }
+        /**
+         * Forcefully delete all pending WC Admin scheduled actions.
+         * Directly trashes items from in database for performance.
+         *
+         * @param array $action_types Array of actions to delete.
+         */
+        public function clear_pending_wcadmin_actions($action_types)
+        {
+        }
+        /**
+         * Cancel all actions by group.
+         *
+         * @param string $group Group name.
+         */
+        public function cancel_actions_by_group($group)
         {
         }
     }
@@ -12667,7 +13319,7 @@ namespace Automattic\WooCommerce\Admin\Composer {
          *
          * @var string
          */
-        const VERSION = '1.0.3';
+        const VERSION = '1.0.2';
         /**
          * Package active.
          *
@@ -24398,293 +25050,6 @@ namespace {
         }
     }
     /**
-     * Class ActionScheduler_Store_Deprecated
-     * @codeCoverageIgnore
-     */
-    abstract class ActionScheduler_Store_Deprecated
-    {
-        /**
-         * Mark an action that failed to fetch correctly as failed.
-         *
-         * @since 2.2.6
-         *
-         * @param int $action_id The ID of the action.
-         */
-        public function mark_failed_fetch_action($action_id)
-        {
-        }
-        /**
-         * Add base hooks
-         *
-         * @since 2.2.6
-         */
-        protected static function hook()
-        {
-        }
-        /**
-         * Remove base hooks
-         *
-         * @since 2.2.6
-         */
-        protected static function unhook()
-        {
-        }
-        /**
-         * Get the site's local time.
-         *
-         * @deprecated 2.1.0
-         * @return DateTimeZone
-         */
-        protected function get_local_timezone()
-        {
-        }
-    }
-    /**
-     * Class ActionScheduler_Store
-     * @codeCoverageIgnore
-     */
-    abstract class ActionScheduler_Store extends \ActionScheduler_Store_Deprecated
-    {
-        const STATUS_COMPLETE = 'complete';
-        const STATUS_PENDING = 'pending';
-        const STATUS_RUNNING = 'in-progress';
-        const STATUS_FAILED = 'failed';
-        const STATUS_CANCELED = 'canceled';
-        const DEFAULT_CLASS = 'ActionScheduler_wpPostStore';
-        /** @var ActionScheduler_Store */
-        private static $store = \NULL;
-        /** @var int */
-        protected static $max_args_length = 191;
-        /**
-         * @param ActionScheduler_Action $action
-         * @param DateTime $scheduled_date Optional Date of the first instance
-         *        to store. Otherwise uses the first date of the action's
-         *        schedule.
-         *
-         * @return string The action ID
-         */
-        public abstract function save_action(\ActionScheduler_Action $action, \DateTime $scheduled_date = \NULL);
-        /**
-         * @param string $action_id
-         *
-         * @return ActionScheduler_Action
-         */
-        public abstract function fetch_action($action_id);
-        /**
-         * @param string $hook Hook name/slug.
-         * @param array  $params Hook arguments.
-         * @return string ID of the next action matching the criteria.
-         */
-        public abstract function find_action($hook, $params = array());
-        /**
-         * @param array  $query Query parameters.
-         * @param string $query_type Whether to select or count the results. Default, select.
-         *
-         * @return array|int The IDs of or count of actions matching the query.
-         */
-        public abstract function query_actions($query = array(), $query_type = 'select');
-        /**
-         * Get a count of all actions in the store, grouped by status
-         *
-         * @return array
-         */
-        public abstract function action_counts();
-        /**
-         * @param string $action_id
-         */
-        public abstract function cancel_action($action_id);
-        /**
-         * @param string $action_id
-         */
-        public abstract function delete_action($action_id);
-        /**
-         * @param string $action_id
-         *
-         * @return DateTime The date the action is schedule to run, or the date that it ran.
-         */
-        public abstract function get_date($action_id);
-        /**
-         * @param int      $max_actions
-         * @param DateTime $before_date Claim only actions schedule before the given date. Defaults to now.
-         * @param array    $hooks       Claim only actions with a hook or hooks.
-         * @param string   $group       Claim only actions in the given group.
-         *
-         * @return ActionScheduler_ActionClaim
-         */
-        public abstract function stake_claim($max_actions = 10, \DateTime $before_date = \null, $hooks = array(), $group = '');
-        /**
-         * @return int
-         */
-        public abstract function get_claim_count();
-        /**
-         * @param ActionScheduler_ActionClaim $claim
-         */
-        public abstract function release_claim(\ActionScheduler_ActionClaim $claim);
-        /**
-         * @param string $action_id
-         */
-        public abstract function unclaim_action($action_id);
-        /**
-         * @param string $action_id
-         */
-        public abstract function mark_failure($action_id);
-        /**
-         * @param string $action_id
-         */
-        public abstract function log_execution($action_id);
-        /**
-         * @param string $action_id
-         */
-        public abstract function mark_complete($action_id);
-        /**
-         * @param string $action_id
-         *
-         * @return string
-         */
-        public abstract function get_status($action_id);
-        /**
-         * @param string $action_id
-         * @return mixed
-         */
-        public abstract function get_claim_id($action_id);
-        /**
-         * @param string $claim_id
-         * @return array
-         */
-        public abstract function find_actions_by_claim_id($claim_id);
-        /**
-         * @param string $comparison_operator
-         * @return string
-         */
-        protected function validate_sql_comparator($comparison_operator)
-        {
-        }
-        /**
-         * Get the time MySQL formated date/time string for an action's (next) scheduled date.
-         *
-         * @param ActionScheduler_Action $action
-         * @param DateTime $scheduled_date (optional)
-         * @return string
-         */
-        protected function get_scheduled_date_string(\ActionScheduler_Action $action, \DateTime $scheduled_date = \NULL)
-        {
-        }
-        /**
-         * Get the time MySQL formated date/time string for an action's (next) scheduled date.
-         *
-         * @param ActionScheduler_Action $action
-         * @param DateTime $scheduled_date (optional)
-         * @return string
-         */
-        protected function get_scheduled_date_string_local(\ActionScheduler_Action $action, \DateTime $scheduled_date = \NULL)
-        {
-        }
-        /**
-         * Validate that we could decode action arguments.
-         *
-         * @param mixed $args      The decoded arguments.
-         * @param int   $action_id The action ID.
-         *
-         * @throws ActionScheduler_InvalidActionException When the decoded arguments are invalid.
-         */
-        protected function validate_args($args, $action_id)
-        {
-        }
-        /**
-         * Validate a ActionScheduler_Schedule object.
-         *
-         * @param mixed $schedule  The unserialized ActionScheduler_Schedule object.
-         * @param int   $action_id The action ID.
-         *
-         * @throws ActionScheduler_InvalidActionException When the schedule is invalid.
-         */
-        protected function validate_schedule($schedule, $action_id)
-        {
-        }
-        /**
-         * InnoDB indexes have a maximum size of 767 bytes by default, which is only 191 characters with utf8mb4.
-         *
-         * Previously, AS wasn't concerned about args length, as we used the (unindex) post_content column. However,
-         * with custom tables, we use an indexed VARCHAR column instead.
-         *
-         * @param  ActionScheduler_Action $action Action to be validated.
-         * @throws InvalidArgumentException When json encoded args is too long.
-         */
-        protected function validate_action(\ActionScheduler_Action $action)
-        {
-        }
-        /**
-         * Cancel pending actions by hook.
-         *
-         * @since 3.0.0
-         *
-         * @param string $hook Hook name.
-         *
-         * @return void
-         */
-        public function cancel_actions_by_hook($hook)
-        {
-        }
-        /**
-         * Cancel pending actions by group.
-         *
-         * @since 3.0.0
-         *
-         * @param string $group Group slug.
-         *
-         * @return void
-         */
-        public function cancel_actions_by_group($group)
-        {
-        }
-        /**
-         * Cancel a set of action IDs.
-         *
-         * @since 3.0.0
-         *
-         * @param array $action_ids List of action IDs.
-         *
-         * @return void
-         */
-        private function bulk_cancel_actions($action_ids)
-        {
-        }
-        /**
-         * @return array
-         */
-        public function get_status_labels()
-        {
-        }
-        /**
-         * Check if there are any pending scheduled actions due to run.
-         *
-         * @param ActionScheduler_Action $action
-         * @param DateTime $scheduled_date (optional)
-         * @return string
-         */
-        public function has_pending_actions_due()
-        {
-        }
-        /**
-         * Callable initialization function optionally overridden in derived classes.
-         */
-        public function init()
-        {
-        }
-        /**
-         * Callable function to mark an action as migrated optionally overridden in derived classes.
-         */
-        public function mark_migrated($action_id)
-        {
-        }
-        /**
-         * @return ActionScheduler_Store
-         */
-        public static function instance()
-        {
-        }
-    }
-    /**
      * Class ActionScheduler_TimezoneHelper
      */
     abstract class ActionScheduler_TimezoneHelper
@@ -25589,300 +25954,6 @@ namespace {
         {
         }
         public function enable_comment_counting()
-        {
-        }
-    }
-    /**
-     * Class ActionScheduler_wpPostStore
-     */
-    class ActionScheduler_wpPostStore extends \ActionScheduler_Store
-    {
-        const POST_TYPE = 'scheduled-action';
-        const GROUP_TAXONOMY = 'action-group';
-        const SCHEDULE_META_KEY = '_action_manager_schedule';
-        const DEPENDENCIES_MET = 'as-post-store-dependencies-met';
-        /** @var DateTimeZone */
-        protected $local_timezone = \NULL;
-        public function save_action(\ActionScheduler_Action $action, \DateTime $scheduled_date = \NULL)
-        {
-        }
-        protected function create_post_array(\ActionScheduler_Action $action, \DateTime $scheduled_date = \NULL)
-        {
-        }
-        protected function save_post_array($post_array)
-        {
-        }
-        public function filter_insert_post_data($postdata)
-        {
-        }
-        /**
-         * Create a (probably unique) post name for scheduled actions in a more performant manner than wp_unique_post_slug().
-         *
-         * When an action's post status is transitioned to something other than 'draft', 'pending' or 'auto-draft, like 'publish'
-         * or 'failed' or 'trash', WordPress will find a unique slug (stored in post_name column) using the wp_unique_post_slug()
-         * function. This is done to ensure URL uniqueness. The approach taken by wp_unique_post_slug() is to iterate over existing
-         * post_name values that match, and append a number 1 greater than the largest. This makes sense when manually creating a
-         * post from the Edit Post screen. It becomes a bottleneck when automatically processing thousands of actions, with a
-         * database containing thousands of related post_name values.
-         *
-         * WordPress 5.1 introduces the 'pre_wp_unique_post_slug' filter for plugins to address this issue.
-         *
-         * We can short-circuit WordPress's wp_unique_post_slug() approach using the 'pre_wp_unique_post_slug' filter. This
-         * method is available to be used as a callback on that filter. It provides a more scalable approach to generating a
-         * post_name/slug that is probably unique. Because Action Scheduler never actually uses the post_name field, or an
-         * action's slug, being probably unique is good enough.
-         *
-         * For more backstory on this issue, see:
-         * - https://github.com/woocommerce/action-scheduler/issues/44 and
-         * - https://core.trac.wordpress.org/ticket/21112
-         *
-         * @param string $override_slug Short-circuit return value.
-         * @param string $slug          The desired slug (post_name).
-         * @param int    $post_ID       Post ID.
-         * @param string $post_status   The post status.
-         * @param string $post_type     Post type.
-         * @return string
-         */
-        public function set_unique_post_slug($override_slug, $slug, $post_ID, $post_status, $post_type)
-        {
-        }
-        protected function save_post_schedule($post_id, $schedule)
-        {
-        }
-        protected function save_action_group($post_id, $group)
-        {
-        }
-        public function fetch_action($action_id)
-        {
-        }
-        protected function get_post($action_id)
-        {
-        }
-        protected function get_null_action()
-        {
-        }
-        protected function make_action_from_post($post)
-        {
-        }
-        /**
-         * @param string $post_status
-         *
-         * @throws InvalidArgumentException if $post_status not in known status fields returned by $this->get_status_labels()
-         * @return string
-         */
-        protected function get_action_status_by_post_status($post_status)
-        {
-        }
-        /**
-         * @param string $action_status
-         * @throws InvalidArgumentException if $post_status not in known status fields returned by $this->get_status_labels()
-         * @return string
-         */
-        protected function get_post_status_by_action_status($action_status)
-        {
-        }
-        /**
-         * @param string $hook
-         * @param array $params
-         *
-         * @return string ID of the next action matching the criteria or NULL if not found
-         */
-        public function find_action($hook, $params = array())
-        {
-        }
-        /**
-         * Returns the SQL statement to query (or count) actions.
-         *
-         * @param array $query Filtering options
-         * @param string $select_or_count  Whether the SQL should select and return the IDs or just the row count
-         * @throws InvalidArgumentException if $select_or_count not count or select
-         * @return string SQL statement. The returned SQL is already properly escaped.
-         */
-        protected function get_query_actions_sql(array $query, $select_or_count = 'select')
-        {
-        }
-        /**
-         * @param array $query
-         * @param string $query_type Whether to select or count the results. Default, select.
-         * @return string|array The IDs of actions matching the query
-         */
-        public function query_actions($query = array(), $query_type = 'select')
-        {
-        }
-        /**
-         * Get a count of all actions in the store, grouped by status
-         *
-         * @return array
-         */
-        public function action_counts()
-        {
-        }
-        /**
-         * @param string $action_id
-         *
-         * @throws InvalidArgumentException
-         */
-        public function cancel_action($action_id)
-        {
-        }
-        public function delete_action($action_id)
-        {
-        }
-        /**
-         * @param string $action_id
-         *
-         * @throws InvalidArgumentException
-         * @return ActionScheduler_DateTime The date the action is schedule to run, or the date that it ran.
-         */
-        public function get_date($action_id)
-        {
-        }
-        /**
-         * @param string $action_id
-         *
-         * @throws InvalidArgumentException
-         * @return ActionScheduler_DateTime The date the action is schedule to run, or the date that it ran.
-         */
-        public function get_date_gmt($action_id)
-        {
-        }
-        /**
-         * @param int      $max_actions
-         * @param DateTime $before_date Jobs must be schedule before this date. Defaults to now.
-         * @param array    $hooks       Claim only actions with a hook or hooks.
-         * @param string   $group       Claim only actions in the given group.
-         *
-         * @return ActionScheduler_ActionClaim
-         * @throws RuntimeException When there is an error staking a claim.
-         * @throws InvalidArgumentException When the given group is not valid.
-         */
-        public function stake_claim($max_actions = 10, \DateTime $before_date = \null, $hooks = array(), $group = '')
-        {
-        }
-        /**
-         * @return int
-         */
-        public function get_claim_count()
-        {
-        }
-        protected function generate_claim_id()
-        {
-        }
-        /**
-         * @param string   $claim_id
-         * @param int      $limit
-         * @param DateTime $before_date Should use UTC timezone.
-         * @param array    $hooks       Claim only actions with a hook or hooks.
-         * @param string   $group       Claim only actions in the given group.
-         *
-         * @return int The number of actions that were claimed
-         * @throws RuntimeException When there is a database error.
-         * @throws InvalidArgumentException When the group is invalid.
-         */
-        protected function claim_actions($claim_id, $limit, \DateTime $before_date = \null, $hooks = array(), $group = '')
-        {
-        }
-        /**
-         * Get IDs of actions within a certain group and up to a certain date/time.
-         *
-         * @param string   $group The group to use in finding actions.
-         * @param int      $limit The number of actions to retrieve.
-         * @param DateTime $date  DateTime object representing cutoff time for actions. Actions retrieved will be
-         *                        up to and including this DateTime.
-         *
-         * @return array IDs of actions in the appropriate group and before the appropriate time.
-         * @throws InvalidArgumentException When the group does not exist.
-         */
-        protected function get_actions_by_group($group, $limit, \DateTime $date)
-        {
-        }
-        /**
-         * @param string $claim_id
-         * @return array
-         */
-        public function find_actions_by_claim_id($claim_id)
-        {
-        }
-        public function release_claim(\ActionScheduler_ActionClaim $claim)
-        {
-        }
-        /**
-         * @param string $action_id
-         */
-        public function unclaim_action($action_id)
-        {
-        }
-        public function mark_failure($action_id)
-        {
-        }
-        /**
-         * Return an action's claim ID, as stored in the post password column
-         *
-         * @param string $action_id
-         * @return mixed
-         */
-        public function get_claim_id($action_id)
-        {
-        }
-        /**
-         * Return an action's status, as stored in the post status column
-         *
-         * @param string $action_id
-         * @return mixed
-         */
-        public function get_status($action_id)
-        {
-        }
-        private function get_post_column($action_id, $column_name)
-        {
-        }
-        /**
-         * @param string $action_id
-         */
-        public function log_execution($action_id)
-        {
-        }
-        /**
-         * Record that an action was completed.
-         *
-         * @param int $action_id ID of the completed action.
-         * @throws InvalidArgumentException|RuntimeException
-         */
-        public function mark_complete($action_id)
-        {
-        }
-        /**
-         * Mark action as migrated when there is an error deleting the action.
-         *
-         * @param int $action_id Action ID.
-         */
-        public function mark_migrated($action_id)
-        {
-        }
-        /**
-         * Determine whether the post store can be migrated.
-         *
-         * @return bool
-         */
-        public function migration_dependencies_met($setting)
-        {
-        }
-        /**
-         * InnoDB indexes have a maximum size of 767 bytes by default, which is only 191 characters with utf8mb4.
-         *
-         * Previously, AS wasn't concerned about args length, as we used the (unindex) post_content column. However,
-         * as we prepare to move to custom tables, and can use an indexed VARCHAR column instead, we want to warn
-         * developers of this impending requirement.
-         *
-         * @param ActionScheduler_Action $action
-         */
-        protected function validate_action(\ActionScheduler_Action $action)
-        {
-        }
-        /**
-         * @codeCoverageIgnore
-         */
-        public function init()
         {
         }
     }
@@ -26824,6 +26895,118 @@ namespace {
 }
 namespace {
     /**
+     * Deprecated API functions for scheduling actions
+     *
+     * Functions with the wc prefix were deprecated to avoid confusion with
+     * Action Scheduler being included in WooCommerce core, and it providing
+     * a different set of APIs for working with the action queue.
+     */
+    /**
+     * Schedule an action to run one time
+     *
+     * @param int $timestamp When the job will run
+     * @param string $hook The hook to trigger
+     * @param array $args Arguments to pass when the hook triggers
+     * @param string $group The group to assign this job to
+     *
+     * @return string The job ID
+     */
+    function wc_schedule_single_action($timestamp, $hook, $args = array(), $group = '')
+    {
+    }
+    /**
+     * Schedule a recurring action
+     *
+     * @param int $timestamp When the first instance of the job will run
+     * @param int $interval_in_seconds How long to wait between runs
+     * @param string $hook The hook to trigger
+     * @param array $args Arguments to pass when the hook triggers
+     * @param string $group The group to assign this job to
+     *
+     * @deprecated 2.1.0
+     *
+     * @return string The job ID
+     */
+    function wc_schedule_recurring_action($timestamp, $interval_in_seconds, $hook, $args = array(), $group = '')
+    {
+    }
+    /**
+     * Schedule an action that recurs on a cron-like schedule.
+     *
+     * @param int $timestamp The schedule will start on or after this time
+     * @param string $schedule A cron-link schedule string
+     * @see http://en.wikipedia.org/wiki/Cron
+     *   *    *    *    *    *    *
+     *   ┬    ┬    ┬    ┬    ┬    ┬
+     *   |    |    |    |    |    |
+     *   |    |    |    |    |    + year [optional]
+     *   |    |    |    |    +----- day of week (0 - 7) (Sunday=0 or 7)
+     *   |    |    |    +---------- month (1 - 12)
+     *   |    |    +--------------- day of month (1 - 31)
+     *   |    +-------------------- hour (0 - 23)
+     *   +------------------------- min (0 - 59)
+     * @param string $hook The hook to trigger
+     * @param array $args Arguments to pass when the hook triggers
+     * @param string $group The group to assign this job to
+     *
+     * @deprecated 2.1.0
+     *
+     * @return string The job ID
+     */
+    function wc_schedule_cron_action($timestamp, $schedule, $hook, $args = array(), $group = '')
+    {
+    }
+    /**
+     * Cancel the next occurrence of a job.
+     *
+     * @param string $hook The hook that the job will trigger
+     * @param array $args Args that would have been passed to the job
+     * @param string $group
+     *
+     * @deprecated 2.1.0
+     */
+    function wc_unschedule_action($hook, $args = array(), $group = '')
+    {
+    }
+    /**
+     * @param string $hook
+     * @param array $args
+     * @param string $group
+     *
+     * @deprecated 2.1.0
+     *
+     * @return int|bool The timestamp for the next occurrence, or false if nothing was found
+     */
+    function wc_next_scheduled_action($hook, $args = \NULL, $group = '')
+    {
+    }
+    /**
+     * Find scheduled actions
+     *
+     * @param array $args Possible arguments, with their default values:
+     *        'hook' => '' - the name of the action that will be triggered
+     *        'args' => NULL - the args array that will be passed with the action
+     *        'date' => NULL - the scheduled date of the action. Expects a DateTime object, a unix timestamp, or a string that can parsed with strtotime(). Used in UTC timezone.
+     *        'date_compare' => '<=' - operator for testing "date". accepted values are '!=', '>', '>=', '<', '<=', '='
+     *        'modified' => NULL - the date the action was last updated. Expects a DateTime object, a unix timestamp, or a string that can parsed with strtotime(). Used in UTC timezone.
+     *        'modified_compare' => '<=' - operator for testing "modified". accepted values are '!=', '>', '>=', '<', '<=', '='
+     *        'group' => '' - the group the action belongs to
+     *        'status' => '' - ActionScheduler_Store::STATUS_COMPLETE or ActionScheduler_Store::STATUS_PENDING
+     *        'claimed' => NULL - TRUE to find claimed actions, FALSE to find unclaimed actions, a string to find a specific claim ID
+     *        'per_page' => 5 - Number of results to return
+     *        'offset' => 0
+     *        'orderby' => 'date' - accepted values are 'hook', 'group', 'modified', or 'date'
+     *        'order' => 'ASC'
+     * @param string $return_format OBJECT, ARRAY_A, or ids
+     *
+     * @deprecated 2.1.0
+     *
+     * @return array
+     */
+    function wc_get_scheduled_actions($args = array(), $return_format = \OBJECT)
+    {
+    }
+    /**
      * General API functions for scheduling actions
      */
     /**
@@ -26986,118 +27169,6 @@ namespace {
     {
     }
     function action_scheduler_initialize_3_dot_1_dot_4()
-    {
-    }
-    /**
-     * Deprecated API functions for scheduling actions
-     *
-     * Functions with the wc prefix were deprecated to avoid confusion with
-     * Action Scheduler being included in WooCommerce core, and it providing
-     * a different set of APIs for working with the action queue.
-     */
-    /**
-     * Schedule an action to run one time
-     *
-     * @param int $timestamp When the job will run
-     * @param string $hook The hook to trigger
-     * @param array $args Arguments to pass when the hook triggers
-     * @param string $group The group to assign this job to
-     *
-     * @return string The job ID
-     */
-    function wc_schedule_single_action($timestamp, $hook, $args = array(), $group = '')
-    {
-    }
-    /**
-     * Schedule a recurring action
-     *
-     * @param int $timestamp When the first instance of the job will run
-     * @param int $interval_in_seconds How long to wait between runs
-     * @param string $hook The hook to trigger
-     * @param array $args Arguments to pass when the hook triggers
-     * @param string $group The group to assign this job to
-     *
-     * @deprecated 2.1.0
-     *
-     * @return string The job ID
-     */
-    function wc_schedule_recurring_action($timestamp, $interval_in_seconds, $hook, $args = array(), $group = '')
-    {
-    }
-    /**
-     * Schedule an action that recurs on a cron-like schedule.
-     *
-     * @param int $timestamp The schedule will start on or after this time
-     * @param string $schedule A cron-link schedule string
-     * @see http://en.wikipedia.org/wiki/Cron
-     *   *    *    *    *    *    *
-     *   ┬    ┬    ┬    ┬    ┬    ┬
-     *   |    |    |    |    |    |
-     *   |    |    |    |    |    + year [optional]
-     *   |    |    |    |    +----- day of week (0 - 7) (Sunday=0 or 7)
-     *   |    |    |    +---------- month (1 - 12)
-     *   |    |    +--------------- day of month (1 - 31)
-     *   |    +-------------------- hour (0 - 23)
-     *   +------------------------- min (0 - 59)
-     * @param string $hook The hook to trigger
-     * @param array $args Arguments to pass when the hook triggers
-     * @param string $group The group to assign this job to
-     *
-     * @deprecated 2.1.0
-     *
-     * @return string The job ID
-     */
-    function wc_schedule_cron_action($timestamp, $schedule, $hook, $args = array(), $group = '')
-    {
-    }
-    /**
-     * Cancel the next occurrence of a job.
-     *
-     * @param string $hook The hook that the job will trigger
-     * @param array $args Args that would have been passed to the job
-     * @param string $group
-     *
-     * @deprecated 2.1.0
-     */
-    function wc_unschedule_action($hook, $args = array(), $group = '')
-    {
-    }
-    /**
-     * @param string $hook
-     * @param array $args
-     * @param string $group
-     *
-     * @deprecated 2.1.0
-     *
-     * @return int|bool The timestamp for the next occurrence, or false if nothing was found
-     */
-    function wc_next_scheduled_action($hook, $args = \NULL, $group = '')
-    {
-    }
-    /**
-     * Find scheduled actions
-     *
-     * @param array $args Possible arguments, with their default values:
-     *        'hook' => '' - the name of the action that will be triggered
-     *        'args' => NULL - the args array that will be passed with the action
-     *        'date' => NULL - the scheduled date of the action. Expects a DateTime object, a unix timestamp, or a string that can parsed with strtotime(). Used in UTC timezone.
-     *        'date_compare' => '<=' - operator for testing "date". accepted values are '!=', '>', '>=', '<', '<=', '='
-     *        'modified' => NULL - the date the action was last updated. Expects a DateTime object, a unix timestamp, or a string that can parsed with strtotime(). Used in UTC timezone.
-     *        'modified_compare' => '<=' - operator for testing "modified". accepted values are '!=', '>', '>=', '<', '<=', '='
-     *        'group' => '' - the group the action belongs to
-     *        'status' => '' - ActionScheduler_Store::STATUS_COMPLETE or ActionScheduler_Store::STATUS_PENDING
-     *        'claimed' => NULL - TRUE to find claimed actions, FALSE to find unclaimed actions, a string to find a specific claim ID
-     *        'per_page' => 5 - Number of results to return
-     *        'offset' => 0
-     *        'orderby' => 'date' - accepted values are 'hook', 'group', 'modified', or 'date'
-     *        'order' => 'ASC'
-     * @param string $return_format OBJECT, ARRAY_A, or ids
-     *
-     * @deprecated 2.1.0
-     *
-     * @return array
-     */
-    function wc_get_scheduled_actions($args = array(), $return_format = \OBJECT)
     {
     }
 }

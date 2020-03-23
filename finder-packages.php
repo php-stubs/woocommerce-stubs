@@ -4,7 +4,9 @@ return \StubsGenerator\Finder::create()
     ->in([
         'source/woocommerce/packages/*/src',
         'source/woocommerce/packages/action-scheduler/classes',
-        ])
+        // Current classes extend deprecated ones.
+        'source/woocommerce/packages/action-scheduler/deprecated',
+    ])
     ->append(
         \StubsGenerator\Finder::create()
             ->files()
@@ -12,14 +14,7 @@ return \StubsGenerator\Finder::create()
             ->name('functions.php')
             ->in(['source/woocommerce/packages/action-scheduler'])
     )
-    ->append(
-        \StubsGenerator\Finder::create()
-            ->files()
-            ->depth('< 1')
-            ->name('ActionScheduler_AdminView_Deprecated.php')
-            ->in(['source/woocommerce/packages/action-scheduler/deprecated'])
-    )
-    // Exclude command classes as is uses the wp-cli package.
+    // Uses WP-CLI.
     ->notPath('WP_CLI')
     ->sortByName()
 ;

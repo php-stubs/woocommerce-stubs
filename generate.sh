@@ -36,3 +36,5 @@ printf '\n%s\n' "define('WC_VERSION', '0.0.0');" >>"$FILE"
     --interfaces \
     --traits \
     --out="$FILE_PKGS"
+# FIXME Add modern core arguments.
+sed -e 's#^\s*public function feedback(\$string#&, ...$args#' -i "$FILE_PKGS"
