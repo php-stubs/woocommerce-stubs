@@ -27100,4 +27100,110 @@ namespace {
     function action_scheduler_initialize_3_dot_1_dot_4()
     {
     }
+    /**
+     * Returns core WC pages to connect to WC-Admin.
+     *
+     * @return array
+     */
+    function wc_admin_get_core_pages_to_connect()
+    {
+    }
+    /**
+     * Filter breadcrumbs for core pages that aren't explicitly connected.
+     *
+     * @param array $breadcrumbs Breadcrumb pieces.
+     * @return array Filtered breadcrumb pieces.
+     */
+    function wc_admin_filter_core_page_breadcrumbs($breadcrumbs)
+    {
+    }
+    /**
+     * Render the WC-Admin header bar on all WooCommerce core pages.
+     *
+     * @param bool $is_connected Whether the current page is connected.
+     * @param bool $current_page The current page, if connected.
+     * @return bool Whether to connect the page.
+     */
+    function wc_admin_connect_core_pages($is_connected, $current_page)
+    {
+    }
+    /**
+     * Format a number using the decimal and thousands separator settings in WooCommerce.
+     *
+     * @param mixed $number Number to be formatted.
+     * @return string
+     */
+    function wc_admin_number_format($number)
+    {
+    }
+    /**
+     * Retrieves a URL to relative path inside WooCommerce admin with
+     * the provided query parameters.
+     *
+     * @param  string $path Relative path of the desired page.
+     * @param  array  $query Query parameters to append to the path.
+     *
+     * @return string       Fully qualified URL pointing to the desired path.
+     */
+    function wc_admin_url($path = \null, $query = array())
+    {
+    }
+    /**
+     * Record an event using Tracks.
+     *
+     * @internal WooCommerce core only includes Tracks in admin, not the REST API, so we need to include it.
+     * @param string $event_name Event name for tracks.
+     * @param array  $properties Properties to pass along with event.
+     */
+    function wc_admin_record_tracks_event($event_name, $properties = array())
+    {
+    }
+    function wc_admin_get_feature_config()
+    {
+    }
+    /**
+     * Connect an existing page to WooCommerce Admin.
+     * Passthrough to PageController::connect_page().
+     *
+     * @param array $options Options for PageController::connect_page().
+     */
+    function wc_admin_connect_page($options)
+    {
+    }
+    /**
+     * Register JS-powered WooCommerce Admin Page.
+     * Passthrough to PageController::register_page().
+     *
+     * @param array $options Options for PageController::register_page().
+     */
+    function wc_admin_register_page($options)
+    {
+    }
+    /**
+     * Is this page connected to WooCommerce Admin?
+     * Passthrough to PageController::is_connected_page().
+     *
+     * @return boolean True if the page is connected to WooCommerce Admin.
+     */
+    function wc_admin_is_connected_page()
+    {
+    }
+    /**
+     * Is this a WooCommerce Admin Page?
+     * Passthrough to PageController::is_registered_page().
+     *
+     * @return boolean True if the page is a WooCommerce Admin page.
+     */
+    function wc_admin_is_registered_page()
+    {
+    }
+    /**
+     * Get breadcrumbs for WooCommerce Admin Page navigation.
+     * Passthrough to PageController::get_breadcrumbs().
+     *
+     * @return array Navigation pieces (breadcrumbs).
+     */
+    function wc_admin_get_breadcrumbs()
+    {
+    }
 }
