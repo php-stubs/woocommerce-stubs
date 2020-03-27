@@ -23,7 +23,7 @@ return \StubsGenerator\Finder::create()
             ->notPath('WP_CLI')
             ->sortByName()
     )
-    // WC Admin
+    // WC Admin.
     ->append(
         \StubsGenerator\Finder::create()
             ->in([
