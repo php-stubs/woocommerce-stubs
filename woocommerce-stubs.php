@@ -8761,6 +8761,17 @@ class WC_Admin_Status
     private static function log_table_bulk_actions()
     {
     }
+    /**
+     * Prints the information about plugins for the system status report.
+     * Used for both active and inactive plugins sections.
+     *
+     * @param array $plugins List of plugins to display.
+     * @param array $untested_plugins List of plugins that haven't been tested with the current WooCommerce version.
+     * @return void
+     */
+    private static function output_plugins_info($plugins, $untested_plugins)
+    {
+    }
 }
 /**
  * WC_Admin_Taxonomies class.
@@ -9478,6 +9489,7 @@ class WC_Helper_Updater
      * The call is cached based on the payload (product ids, file ids). If
      * the payload changes, the cache is going to miss.
      *
+     * @param array $payload Information about the plugin to update.
      * @return array Update data for each requested product.
      */
     private static function _update_check($payload)
@@ -9523,6 +9535,19 @@ class WC_Helper_Updater
      * Fires when a user successfully updated a theme or a plugin.
      */
     public static function upgrader_process_complete()
+    {
+    }
+    /**
+     * Hooked into the upgrader_pre_download filter in order to better handle error messaging around expired
+     * plugin updates. Initially we were using an empty string, but the error message that no_package
+     * results in does not fit the cause.
+     *
+     * @since 4.1.0
+     * @param bool   $reply Holds the current filtered response.
+     * @param string $package The path to the package file for the update.
+     * @return false|WP_Error False to proceed with the update as normal, anything else to be returned instead of updating.
+     */
+    public static function block_expired_updates($reply, $package)
     {
     }
 }
@@ -11651,7 +11676,7 @@ class WC_Plugin_Updates
     | Methods for getting & manipulating data.
     */
     /**
-     * Get active plugins that have a tested version lower than the input version.
+     * Get installed plugins that have a tested version lower than the input version.
      *
      * In case of testing major version compatibility and if current WC version is >= major version part
      * of the $new_version, no plugins are returned, even if they don't explicitly declare compatibility
@@ -16792,6 +16817,16 @@ class WC_Checkout
     {
     }
     /**
+     * Copy line items, tax, totals data from cart to order.
+     *
+     * @param WC_Order $order Order object.
+     *
+     * @throws Exception When unable to create order.
+     */
+    public function set_data_from_cart(&$order)
+    {
+    }
+    /**
      * Add line items to the order.
      *
      * @param WC_Order $order Order instance.
@@ -17357,10 +17392,10 @@ class WC_Countries
     /**
      * Gets an array of countries in the EU.
      *
-     * @param  string $deprecated Function used to return VAT countries based on this.
+     * @param  string $type Type of countries to retrieve. Blank for EU member countries. eu_vat for EU VAT countries.
      * @return string[]
      */
-    public function get_european_union_countries($deprecated = '')
+    public function get_european_union_countries($type = '')
     {
     }
     /**
@@ -21868,7 +21903,7 @@ class WC_Install
      *
      * @var array
      */
-    private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_db_version', 'wc_reset_action_scheduler_migration_status'));
+    private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_update_400_db_version'));
     /**
      * Hook in tabs.
      */
@@ -31011,6 +31046,56 @@ class WC_Tracker
     private static function get_order_dates()
     {
     }
+    /**
+     * Search a specific post for text content.
+     *
+     * @param integer $post_id The id of the post to search.
+     * @param string  $text    The text to search for.
+     * @return string 'Yes' if post contains $text (otherwise 'No').
+     */
+    public static function post_contains_text($post_id, $text)
+    {
+    }
+    /**
+     * Get blocks from a woocommerce page.
+     *
+     * @param string $woo_page_name A woocommerce page e.g. `checkout` or `cart`.
+     * @return array Array of blocks as returned by parse_blocks().
+     */
+    private static function get_all_blocks_from_page($woo_page_name)
+    {
+    }
+    /**
+     * Get all instances of the specified block on a specific woo page
+     * (e.g. `cart` or `checkout` page).
+     *
+     * @param string $block_name The name (id) of a block, e.g. `woocommerce/cart`.
+     * @param string $woo_page_name The woo page to search, e.g. `cart`.
+     * @return array Array of blocks as returned by parse_blocks().
+     */
+    private static function get_blocks_from_page($block_name, $woo_page_name)
+    {
+    }
+    /**
+     * Get tracker data for a specific block type on a woocommerce page.
+     *
+     * @param string $block_name The name (id) of a block, e.g. `woocommerce/cart`.
+     * @param string $woo_page_name The woo page to search, e.g. `cart`.
+     * @return array Associative array of tracker data with keys:
+     * - page_contains_block
+     * - block_attributes
+     */
+    public static function get_block_tracker_data($block_name, $woo_page_name)
+    {
+    }
+    /**
+     * Get info about the cart & checkout pages.
+     *
+     * @return array
+     */
+    public static function get_cart_checkout_info()
+    {
+    }
 }
 /**
  * Validation class.
@@ -31681,7 +31766,7 @@ final class WooCommerce
      *
      * @var string
      */
-    public $version = '4.0.1';
+    public $version = '4.1.0';
     /**
      * The single instance of the class.
      *
@@ -33158,6 +33243,13 @@ class WC_Coupon_Data_Store_CPT extends \WC_Data_Store_WP implements \WC_Coupon_D
      * @var array
      */
     protected $internal_meta_keys = array('discount_type', 'coupon_amount', 'expiry_date', 'date_expires', 'usage_count', 'individual_use', 'product_ids', 'exclude_product_ids', 'usage_limit', 'usage_limit_per_user', 'limit_usage_to_x_items', 'free_shipping', 'product_categories', 'exclude_product_categories', 'exclude_sale_items', 'minimum_amount', 'maximum_amount', 'customer_email', '_used_by', '_edit_lock', '_edit_last');
+    /**
+     * The updated coupon properties
+     *
+     * @since 4.1.0
+     * @var array
+     */
+    protected $updated_props = array();
     /**
      * Method to create a new coupon in the database.
      *
@@ -43544,6 +43636,32 @@ class WC_Admin_Setup_Wizard_Tracking
     }
 }
 /**
+ * WooCommerce Coupon Tracking
+ *
+ * @package WooCommerce\Tracks
+ */
+/**
+ * This class adds actions to track usage of a WooCommerce Coupon.
+ */
+class WC_Coupon_Tracking
+{
+    /**
+     * Init tracking.
+     */
+    public function init()
+    {
+    }
+    /**
+     * Send a Tracks event when a coupon is updated.
+     *
+     * @param WC_Coupon $coupon        The coupon that has been updated.
+     * @param Array     $updated_props The props of the coupon that have been updated.
+     */
+    public function track_coupon_updated($coupon, $updated_props)
+    {
+    }
+}
+/**
  * This class adds actions to track usage of WooCommerce Orders.
  */
 class WC_Coupons_Tracking
@@ -43652,6 +43770,26 @@ class WC_Importer_Tracking
     }
 }
 /**
+ * This class adds actions to track usage of a WooCommerce Order.
+ */
+class WC_Order_Tracking
+{
+    /**
+     * Init tracking.
+     */
+    public function init()
+    {
+    }
+    /**
+     * Send a Tracks event when an order is viewed.
+     *
+     * @param WC_Order $order Order.
+     */
+    public function track_order_viewed($order)
+    {
+    }
+}
+/**
  * This class adds actions to track usage of WooCommerce Orders.
  */
 class WC_Orders_Tracking
@@ -43716,9 +43854,19 @@ class WC_Products_Tracking
      * Send a Tracks event when a product is updated.
      *
      * @param int    $product_id Product id.
-     * @param object $post WordPress post.
+     * @param object $post       WordPress post.
      */
     public function track_product_updated($product_id, $post)
+    {
+    }
+    /**
+     * Track the Update button being clicked on the client side.
+     * This is needed because `track_product_updated` (using the `edit_post`
+     * hook) is called in response to a number of other triggers.
+     *
+     * @param WP_Post $post The post, not used.
+     */
+    public function track_product_updated_client_side($post)
     {
     }
     /**
@@ -46028,7 +46176,7 @@ function get_woocommerce_currency()
 /**
  * Get full list of currency codes.
  *
- * Currency Symbols and mames should follow the Unicode CLDR recommendation (http://cldr.unicode.org/translation/currency-names)
+ * Currency symbols and names should follow the Unicode CLDR recommendation (http://cldr.unicode.org/translation/currency-names)
  *
  * @return array
  */
@@ -46036,9 +46184,20 @@ function get_woocommerce_currencies()
 {
 }
 /**
+ * Get all available Currency symbols.
+ *
+ * Currency symbols and names should follow the Unicode CLDR recommendation (http://cldr.unicode.org/translation/currency-names)
+ *
+ * @since 4.1.0
+ * @return array
+ */
+function get_woocommerce_currency_symbols()
+{
+}
+/**
  * Get Currency symbol.
  *
- * Currency Symbols and mames should follow the Unicode CLDR recommendation (http://cldr.unicode.org/translation/currency-names)
+ * Currency symbols and names should follow the Unicode CLDR recommendation (http://cldr.unicode.org/translation/currency-names)
  *
  * @param string $currency Currency. (default: '').
  * @return string
@@ -50226,7 +50385,7 @@ function woocommerce_template_loop_product_link_open()
 {
 }
 /**
- * Insert the opening anchor tag for products in the loop.
+ * Insert the closing anchor tag for products in the loop.
  */
 function woocommerce_template_loop_product_link_close()
 {
@@ -51837,7 +51996,7 @@ function wc_update_400_increase_size_of_column()
 /**
  * Reset ActionScheduler migration status. Needs AS >= 3.0 shipped with WC >= 4.0.
  */
-function wc_reset_action_scheduler_migration_status()
+function wc_update_400_reset_action_scheduler_migration_status()
 {
 }
 /**

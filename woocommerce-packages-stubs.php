@@ -1506,6 +1506,83 @@ namespace Automattic\WooCommerce\Admin\API {
         }
     }
     /**
+     * Marketing Overview Controller.
+     *
+     * @package WooCommerce Admin/API
+     * @extends WC_REST_Data_Controller
+     */
+    class MarketingOverview extends \WC_REST_Data_Controller
+    {
+        /**
+         * Endpoint namespace.
+         *
+         * @var string
+         */
+        protected $namespace = 'wc-admin';
+        /**
+         * Route base.
+         *
+         * @var string
+         */
+        protected $rest_base = 'marketing/overview';
+        /**
+         * Register routes.
+         */
+        public function register_routes()
+        {
+        }
+        /**
+         * Return installed marketing extensions data.
+         *
+         * @param \WP_REST_Request $request Request data.
+         *
+         * @return \WP_Error|\WP_REST_Response
+         */
+        public function activate_plugin($request)
+        {
+        }
+        /**
+         * Check if a given request has access to manage plugins.
+         *
+         * @param \WP_REST_Request $request Full details about the request.
+         *
+         * @return \WP_Error|boolean
+         */
+        public function install_plugins_permissions_check($request)
+        {
+        }
+        /**
+         * Return installed marketing extensions data.
+         *
+         * @param \WP_REST_Request $request Request data.
+         *
+         * @return \WP_Error|\WP_REST_Response
+         */
+        public function get_recommended_plugins($request)
+        {
+        }
+        /**
+         * Return installed marketing extensions data.
+         *
+         * @param \WP_REST_Request $request Request data.
+         *
+         * @return \WP_Error|\WP_REST_Response
+         */
+        public function get_installed_plugins($request)
+        {
+        }
+        /**
+         * Return installed marketing extensions data.
+         *
+         * @param \WP_REST_Request $request Request data.
+         *
+         * @return \WP_Error|\WP_REST_Response
+         */
+        public function get_knowledge_base_posts($request)
+        {
+        }
+    }
+    /**
      * REST API Admin Notes controller class.
      *
      * @package WooCommerce/API
@@ -1755,6 +1832,14 @@ namespace Automattic\WooCommerce\Admin\API {
          * @return WP_Error|array Connect URL.
          */
         public function connect_square()
+        {
+        }
+        /**
+         * Returns a URL that can be used to by WCPay to verify business details with Stripe.
+         *
+         * @return WP_Error|array Connect URL.
+         */
+        public function connect_wcpay()
         {
         }
         /**
@@ -2555,6 +2640,15 @@ namespace Automattic\WooCommerce\Admin\API {
          * @return array
          */
         protected function prepare_objects_query($request)
+        {
+        }
+        /**
+         * Get formatted item data.
+         *
+         * @param  WC_Data $object WC_Data instance.
+         * @return array
+         */
+        protected function get_formatted_item_data($object)
         {
         }
     }
@@ -6912,6 +7006,14 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Orders {
         {
         }
         /**
+         * Get all statuses that have been synced.
+         *
+         * @return array Unique order statuses.
+         */
+        public static function get_all_statuses()
+        {
+        }
+        /**
          * Initialize query objects.
          */
         protected function initialize_queries()
@@ -7349,6 +7451,12 @@ namespace Automattic\WooCommerce\Admin\API\Reports\PerformanceIndicators {
          */
         protected $urls = array();
         /**
+         * Contains a cache of retrieved stats data, grouped by report slug.
+         *
+         * @var array
+         */
+        protected $stats_data = array();
+        /**
          * Register the routes for reports.
          */
         public function register_routes()
@@ -7389,6 +7497,16 @@ namespace Automattic\WooCommerce\Admin\API\Reports\PerformanceIndicators {
          * @return order
          */
         public function sort($a, $b)
+        {
+        }
+        /**
+         * Get report stats data, avoiding duplicate requests for stats that use the same endpoint.
+         *
+         * @param string $report Report slug to request data for.
+         * @param array  $query_args Report query args.
+         * @return WP_REST_Response|WP_Error Report stats data.
+         */
+        public function get_stats_data($report, $query_args)
         {
         }
         /**
@@ -10349,6 +10467,82 @@ namespace Automattic\WooCommerce\Admin\Features {
         }
     }
     /**
+     * Contains backend logic for the Marketing feature.
+     */
+    class Marketing
+    {
+        /**
+         * Name of recommended plugins transient.
+         *
+         * @var string
+         */
+        const RECOMMENDED_PLUGINS_TRANSIENT = 'wc_marketing_recommended_plugins';
+        /**
+         * Name of knowledge base post transient.
+         *
+         * @var string
+         */
+        const KNOWLEDGE_BASE_TRANSIENT = 'wc_marketing_knowledge_base';
+        /**
+         * Class instance.
+         *
+         * @var Marketing instance
+         */
+        protected static $instance = null;
+        /**
+         * Get class instance.
+         */
+        public static function get_instance()
+        {
+        }
+        /**
+         * Hook into WooCommerce.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Registers report pages.
+         */
+        public function register_pages()
+        {
+        }
+        /**
+         * Preload options to prime state of the application.
+         *
+         * @param array $options Array of options to preload.
+         * @return array
+         */
+        public function preload_options($options)
+        {
+        }
+        /**
+         * Add settings for marketing feature.
+         *
+         * @param array $settings Component settings.
+         * @return array
+         */
+        public function component_settings($settings)
+        {
+        }
+        /**
+         * Load recommended plugins from WooCommerce.com
+         *
+         * @return array
+         */
+        public function get_recommended_plugins()
+        {
+        }
+        /**
+         * Load knowledge base posts from WooCommerce.com
+         *
+         * @return array
+         */
+        public function get_knowledge_base_posts()
+        {
+        }
+    }
+    /**
      * Contains backend logic for the onboarding profile and checklist feature.
      */
     class Onboarding
@@ -10445,6 +10639,15 @@ namespace Automattic\WooCommerce\Admin\Features {
          * @return array
          */
         public static function get_allowed_product_types()
+        {
+        }
+        /**
+         * Sort themes returned from WooCommerce.com
+         *
+         * @param  array $themes Array of themes from WooCommerce.com.
+         * @return array
+         */
+        public static function sort_woocommerce_themes($themes)
         {
         }
         /**
@@ -10563,14 +10766,6 @@ namespace Automattic\WooCommerce\Admin\Features {
          * @return array
          */
         public static function get_allowed_themes()
-        {
-        }
-        /**
-         * Get an array of installed plugin slugs.
-         *
-         * @return array
-         */
-        public static function get_installed_plugins()
         {
         }
         /**
@@ -10717,41 +10912,6 @@ namespace Automattic\WooCommerce\Admin\Features {
         {
         }
         /**
-         * Check if Square payment settings are complete.
-         *
-         * @param string $option Option name.
-         * @param array  $value Current value.
-         */
-        public static function check_square_completion($option, $value)
-        {
-        }
-        /**
-         * Check if Paypal payment settings are complete.
-         *
-         * @param mixed $old_value Old value.
-         * @param array $value Current value.
-         */
-        public static function check_paypal_completion($old_value, $value)
-        {
-        }
-        /**
-         * Check if Stripe payment settings are complete.
-         *
-         * @param mixed $old_value Old value.
-         * @param array $value Current value.
-         */
-        public static function check_stripe_completion($old_value, $value)
-        {
-        }
-        /**
-         * Update the payments cache to complete if not already.
-         *
-         * @param string $payment_method Payment method slug.
-         */
-        public static function mark_payment_method_configured($payment_method)
-        {
-        }
-        /**
          * Enqueue scripts and styles.
          */
         public function add_media_scripts()
@@ -10842,6 +11002,238 @@ namespace Automattic\WooCommerce\Admin\Features {
          * @param mixed $new_value New value.
          */
         public static function add_completion_note($old_value, $new_value)
+        {
+        }
+        /**
+         * Records an event when all tasks are completed in the task list.
+         *
+         * @param mixed $old_value Old value.
+         * @param mixed $new_value New value.
+         */
+        public static function track_completion($old_value, $new_value)
+        {
+        }
+        /**
+         * Records an event for individual task completion.
+         *
+         * @param mixed $old_value Old value.
+         * @param mixed $new_value New value.
+         */
+        public static function track_task_completion($old_value, $new_value)
+        {
+        }
+    }
+    /**
+     * Shows print shipping label banner on edit order page.
+     */
+    class ShippingLabelBanner
+    {
+        /**
+         * Singleton for the display rules class
+         *
+         * @var ShippingLabelBannerDisplayRules
+         */
+        private $shipping_label_banner_display_rules;
+        /**
+         * Constructor
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Gets an array of plugins that can be installed & activated via shipping label prompt.
+         *
+         * @param array $plugins Array of plugin slugs to be allowed.
+         *
+         * @return array
+         */
+        public static function get_shipping_banner_allowed_plugins($plugins)
+        {
+        }
+        /**
+         * Check if WooCommerce Shipping makes sense for this merchant.
+         *
+         * @return bool
+         */
+        private function should_show_meta_box()
+        {
+        }
+        /**
+         * Add metabox to order page.
+         *
+         * @param string   $post_type current post type.
+         * @param \WP_Post $post Current post object.
+         */
+        public function add_meta_boxes($post_type, $post)
+        {
+        }
+        /**
+         * Count shippable items
+         *
+         * @param \WC_Order $order Current order.
+         * @return int
+         */
+        private function count_shippable_items(\WC_Order $order)
+        {
+        }
+        /**
+         * Adds JS to order page to render shipping banner.
+         *
+         * @param string $hook current page hook.
+         */
+        public function add_print_shipping_label_script($hook)
+        {
+        }
+        /**
+         * Render placeholder metabox.
+         *
+         * @param \WP_Post $post current post.
+         * @param array    $args empty args.
+         */
+        public function meta_box($post, $args)
+        {
+        }
+        /**
+         * Return the settings for the component for wc-api to use. If onboarding
+         * is active, return its settings. Otherwise, loads "activePlugins" since
+         * that's the ones we need to get installation status for WCS and Jetpack.
+         *
+         * @param array $settings Component settings.
+         * @return array
+         */
+        public function component_settings($settings)
+        {
+        }
+    }
+    /**
+     * Determines whether or not the Shipping Label Banner should be displayed
+     */
+    class ShippingLabelBannerDisplayRules
+    {
+        /**
+         * Holds the installed Jetpack version.
+         *
+         * @var string
+         */
+        private $jetpack_version;
+        /**
+         * Whether or not the installed Jetpack is connected.
+         *
+         * @var bool
+         */
+        private $jetpack_connected;
+        /**
+         * Holds the installed WooCommerce Services version.
+         *
+         * @var string
+         */
+        private $wcs_version;
+        /**
+         * Whether or not there're plugins installed incompatible with the banner.
+         *
+         * @var bool
+         */
+        private $no_incompatible_plugins_installed;
+        /**
+         * Whether or not the WooCommerce Services ToS has been accepted.
+         *
+         * @var bool
+         */
+        private $wcs_tos_accepted;
+        /**
+         * Minimum supported Jetpack version.
+         *
+         * @var string
+         */
+        private $min_jetpack_version = '4.4';
+        /**
+         * Minimum supported WooCommerce Services version.
+         *
+         * @var string
+         */
+        private $min_wcs_version = '1.22.5';
+        /**
+         * Supported countries by USPS, see: https://webpmt.usps.gov/pmt010.cfm
+         *
+         * @var array
+         */
+        private $supported_countries = array('US', 'AS', 'PR', 'VI', 'GU', 'MP', 'UM', 'FM', 'MH');
+        /**
+         * Array of supported currency codes.
+         *
+         * @var array
+         */
+        private $supported_currencies = array('USD');
+        /**
+         * Constructor.
+         *
+         * @param string $jetpack_version Installed Jetpack version to check.
+         * @param bool   $jetpack_connected Is Jetpack connected?.
+         * @param string $wcs_version Installed WooCommerce Services version to check.
+         * @param bool   $wcs_tos_accepted WooCommerce Services Terms of Service accepted?.
+         * @param bool   $incompatible_plugins_installed Are there any incompatible plugins installed?.
+         */
+        public function __construct($jetpack_version, $jetpack_connected, $wcs_version, $wcs_tos_accepted, $incompatible_plugins_installed)
+        {
+        }
+        /**
+         * Determines whether banner is eligible for display (does not include a/b logic).
+         */
+        public function should_display_banner()
+        {
+        }
+        /**
+         * Checks if the banner was not dismissed by the user.
+         *
+         * @return bool
+         */
+        private function banner_not_dismissed()
+        {
+        }
+        /**
+         * Checks if jetpack is installed and active.
+         *
+         * @return bool
+         */
+        private function jetpack_installed_and_active()
+        {
+        }
+        /**
+         * Checks if Jetpack version is supported.
+         *
+         * @return bool
+         */
+        private function jetpack_up_to_date()
+        {
+        }
+        /**
+         * Checks if there's a shippable product in the current order.
+         *
+         * @return bool
+         */
+        private function order_has_shippable_products()
+        {
+        }
+        /**
+         * Checks if the store is in the US and has its default currency set to USD.
+         *
+         * @return bool
+         */
+        private function store_in_us_and_usd()
+        {
+        }
+        /**
+         * Checks if WooCommerce Services is not installed.
+         *
+         * @return bool
+         */
+        private function wcs_not_installed()
+        {
+        }
+        /**
+         * Checks if WooCommerce Services is up to date.
+         */
+        private function wcs_up_to_date()
         {
         }
     }
@@ -11152,6 +11544,13 @@ namespace Automattic\WooCommerce\Admin {
         {
         }
         /**
+         * Returns true if we are on a JS powered admin page or
+         * a "classic" (non JS app) powered admin page (an embedded page).
+         */
+        public static function is_admin_or_embed_page()
+        {
+        }
+        /**
          * Returns true if we are on a JS powered admin page.
          */
         public static function is_admin_page()
@@ -11246,6 +11645,14 @@ namespace Automattic\WooCommerce\Admin {
         {
         }
         /**
+         * Get all order statuses present in analytics tables that aren't registered.
+         *
+         * @return array Unregistered order statuses.
+         */
+        public static function get_unregistered_order_statuses()
+        {
+        }
+        /**
          * Register the admin settings for use in the WC REST API
          *
          * @param array $groups Array of setting groups.
@@ -11261,15 +11668,6 @@ namespace Automattic\WooCommerce\Admin {
          * @return array
          */
         public static function add_settings($settings)
-        {
-        }
-        /**
-         * Filter invalid statuses from saved settings to avoid removed statuses throwing errors.
-         *
-         * @param array|null $value Saved order statuses.
-         * @return array|null
-         */
-        public static function filter_invalid_statuses($value)
         {
         }
         /**
@@ -11357,6 +11755,96 @@ namespace Automattic\WooCommerce\Admin {
          * Injects wp-shared-settings as a dependency if it's present.
          */
         public static function inject_wc_settings_dependencies()
+        {
+        }
+        /**
+         * Delete woocommerce_onboarding_homepage_post_id field when the homepage is deleted
+         *
+         * @param int $post_id The deleted post id.
+         */
+        public static function delete_homepage($post_id)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Admin\Marketing {
+    /**
+     * Installed Marketing Extensions class.
+     */
+    class InstalledExtensions
+    {
+        /**
+         * Gets an array of plugin data for the "Installed marketing extensions" card.
+         *
+         * Valid extensions statuses are: installed, activated, configured
+         */
+        public static function get_data()
+        {
+        }
+        /**
+         * Get allowed plugins.
+         *
+         * @return array
+         */
+        public static function get_allowed_plugins()
+        {
+        }
+        /**
+         * Get AutomateWoo extension data.
+         *
+         * @return array|bool
+         */
+        protected static function get_automatewoo_extension_data()
+        {
+        }
+        /**
+         * Get MailChimp extension data.
+         *
+         * @return array|bool
+         */
+        protected static function get_mailchimp_extension_data()
+        {
+        }
+        /**
+         * Get Facebook extension data.
+         *
+         * @return array|bool
+         */
+        protected static function get_facebook_extension_data()
+        {
+        }
+        /**
+         * Get Google extension data.
+         *
+         * @return array|bool
+         */
+        protected static function get_google_extension_data()
+        {
+        }
+        /**
+         * Get Hubspot extension data.
+         *
+         * @return array|bool
+         */
+        protected static function get_hubspot_extension_data()
+        {
+        }
+        /**
+         * Get Amazon / Ebay extension data.
+         *
+         * @return array|bool
+         */
+        protected static function get_amazon_ebay_extension_data()
+        {
+        }
+        /**
+         * Get an array of basic data for a given extension.
+         *
+         * @param string $slug Plugin slug.
+         *
+         * @return array|false
+         */
+        protected static function get_extension_base_data($slug)
         {
         }
     }
@@ -11877,22 +12365,6 @@ namespace Automattic\WooCommerce\Admin\Notes {
         }
     }
     /**
-     * WC_Admin_Notes_Add_First_Product
-     */
-    class WC_Admin_Notes_Add_First_Product
-    {
-        /**
-         * Name of the note for use in the database.
-         */
-        const NOTE_NAME = 'wc-admin-add-first-product';
-        /**
-         * Possibly add the note.
-         */
-        public static function possibly_add_first_product_note()
-        {
-        }
-    }
-    /**
      * WC_Admin_Notes_Deactivate_Plugin.
      */
     class WC_Admin_Notes_Deactivate_Plugin
@@ -12251,6 +12723,26 @@ namespace Automattic\WooCommerce\Admin\Notes {
         }
     }
     /**
+     * WC_Admin_Notes_Personalize_Store
+     */
+    class WC_Admin_Notes_Personalize_Store
+    {
+        /**
+         * Note traits.
+         */
+        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
+        /**
+         * Name of the note for use in the database.
+         */
+        const NOTE_NAME = 'wc-admin-personalize-store';
+        /**
+         * Possibly add the note.
+         */
+        public static function possibly_add_personalize_store_note()
+        {
+        }
+    }
+    /**
      * WC_Admin_Notes_Settings_Notes
      */
     class WC_Admin_Notes_Settings_Notes
@@ -12312,6 +12804,60 @@ namespace Automattic\WooCommerce\Admin\Notes {
          * Creates a note for welcome message.
          */
         public static function add_welcome_note()
+        {
+        }
+    }
+    /**
+     * WC_Admin_Notes_WooCommerce_Payments
+     */
+    class WC_Admin_Notes_WooCommerce_Payments
+    {
+        /**
+         * Note traits.
+         */
+        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
+        /**
+         * Name of the note for use in the database.
+         */
+        const NOTE_NAME = 'wc-admin-woocommerce-payments';
+        /**
+         * Name of the note for use in the database.
+         */
+        const PLUGIN_SLUG = 'woocommerce-payments';
+        /**
+         * Name of the note for use in the database.
+         */
+        const PLUGIN_FILE = 'woocommerce-payments/woocommerce-payments.php';
+        /**
+         * Attach hooks.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Maybe add a note on WooCommerce Payments for US based sites older than a week without the plugin installed.
+         */
+        public static function possibly_add_note()
+        {
+        }
+        /**
+         * Add a note about WooCommerce Payments.
+         */
+        public static function add_note()
+        {
+        }
+        /**
+         * Check if the WooCommerce Payments plugin is active or installed.
+         */
+        protected static function is_installed()
+        {
+        }
+        /**
+         * Install WooCommerce Payments when note is actioned.
+         *
+         * @param WC_Admin_Note $note Note being acted upon.
+         */
+        public function install($note)
         {
         }
     }
@@ -12511,6 +13057,23 @@ namespace Automattic\WooCommerce\Admin\Overrides {
          */
         protected $refunded_line_items;
         /**
+         * Get only core class data in array format.
+         *
+         * @return array
+         */
+        public function get_data_without_line_items()
+        {
+        }
+        /**
+         * Get order line item data by type.
+         *
+         * @param string $type Order line item type.
+         * @return array|bool Array of line items on success, boolean false on failure.
+         */
+        public function get_line_item_data($type)
+        {
+        }
+        /**
          * Add filter(s) required to hook this class to substitute WC_Order.
          */
         public static function add_filters()
@@ -12667,7 +13230,7 @@ namespace Automattic\WooCommerce\Admin\Composer {
          *
          * @var string
          */
-        const VERSION = '1.0.3';
+        const VERSION = '1.1.1';
         /**
          * Package active.
          *
@@ -12867,6 +13430,70 @@ namespace Automattic\WooCommerce\Admin {
          * Set up a div for the app to render into.
          */
         public static function page_wrapper()
+        {
+        }
+    }
+    /**
+     * Class PluginsHelper
+     */
+    class PluginsHelper
+    {
+        /**
+         * Get the path to the plugin file relative to the plugins directory from the plugin slug.
+         *
+         * E.g. 'woocommerce' returns 'woocommerce/woocommerce.php'
+         *
+         * @param string $slug Plugin slug to get path for.
+         *
+         * @return string|false
+         */
+        public static function get_plugin_path_from_slug($slug)
+        {
+        }
+        /**
+         * Get an array of installed plugin slugs.
+         *
+         * @return array
+         */
+        public static function get_installed_plugin_slugs()
+        {
+        }
+        /**
+         * Get an array of active plugin slugs.
+         *
+         * @return array
+         */
+        public static function get_active_plugin_slugs()
+        {
+        }
+        /**
+         * Checks if a plugin is installed.
+         *
+         * @param string $plugin Path to the plugin file relative to the plugins directory or the plugin directory name.
+         *
+         * @return bool
+         */
+        public static function is_plugin_installed($plugin)
+        {
+        }
+        /**
+         * Checks if a plugin is active.
+         *
+         * @param string $plugin Path to the plugin file relative to the plugins directory or the plugin directory name.
+         *
+         * @return bool
+         */
+        public static function is_plugin_active($plugin)
+        {
+        }
+        /**
+         * Get plugin data.
+         *
+         * @param string $plugin Path to the plugin file relative to the plugins directory or the plugin directory name.
+         *
+         * @return array|false
+         */
+        public static function get_plugin_data($plugin)
         {
         }
     }
@@ -22078,7 +22705,7 @@ namespace {
          * @param array $args Args to pass when the hook is triggered
          * @param string $group A group to put the action in
          *
-         * @return string The ID of the stored action
+         * @return int The ID of the stored action
          */
         public function async($hook, $args = array(), $group = '')
         {
@@ -22089,7 +22716,7 @@ namespace {
          * @param int $when Unix timestamp when the action will run
          * @param string $group A group to put the action in
          *
-         * @return string The ID of the stored action
+         * @return int The ID of the stored action
          */
         public function single($hook, $args = array(), $when = \null, $group = '')
         {
@@ -22103,7 +22730,7 @@ namespace {
          * @param int $interval Seconds between runs
          * @param string $group A group to put the action in
          *
-         * @return string The ID of the stored action
+         * @return int The ID of the stored action
          */
         public function recurring($hook, $args = array(), $first = \null, $interval = \null, $group = '')
         {
@@ -22119,7 +22746,7 @@ namespace {
          * @param int $schedule A cron definition string
          * @param string $group A group to put the action in
          *
-         * @return string The ID of the stored action
+         * @return int The ID of the stored action
          */
         public function cron($hook, $args = array(), $base_timestamp = \null, $schedule = \null, $group = '')
         {
@@ -22154,7 +22781,7 @@ namespace {
         /**
          * @param ActionScheduler_Action $action
          *
-         * @return string The ID of the stored action
+         * @return int The ID of the stored action
          */
         protected function store(\ActionScheduler_Action $action)
         {
@@ -24002,6 +24629,14 @@ namespace {
         {
         }
         /**
+         * Issue deprecated warning if an Action Scheduler function is called in the shutdown hook.
+         *
+         * @param string $function_name The name of the function being called.
+         */
+        public static function check_shutdown_hook($function_name)
+        {
+        }
+        /**
          * Determine if the class is one of our abstract classes.
          *
          * @since 3.0.0
@@ -24461,7 +25096,7 @@ namespace {
          *        to store. Otherwise uses the first date of the action's
          *        schedule.
          *
-         * @return string The action ID
+         * @return int The action ID
          */
         public abstract function save_action(\ActionScheduler_Action $action, \DateTime $scheduled_date = \NULL);
         /**
@@ -25368,6 +26003,8 @@ namespace {
          *
          * @param ActionScheduler_Action $action Action object to be saved.
          * @param DateTime               $date Optional. Schedule date. Default null.
+         *
+         * @return int The action ID
          */
         public function save_action(\ActionScheduler_Action $action, \DateTime $date = \null)
         {
@@ -25434,6 +26071,16 @@ namespace {
          * @param int $action_id Action ID.
          */
         public function get_status($action_id)
+        {
+        }
+        /**
+         * Return which store an action is stored in.
+         *
+         * @param int  $action_id ID of the action.
+         * @param bool $primary_first Optional flag indicating search the primary store first.
+         * @return ActionScheduler_Store
+         */
+        protected function get_store_from_action_id($action_id, $primary_first = \false)
         {
         }
         /* * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -26944,7 +27591,7 @@ namespace {
      * @param string $hook The hook to trigger.
      * @param array  $args Arguments to pass when the hook triggers.
      * @param string $group The group to assign this job to.
-     * @return string The action ID.
+     * @return int The action ID.
      */
     function as_enqueue_async_action($hook, $args = array(), $group = '')
     {
@@ -26952,12 +27599,12 @@ namespace {
     /**
      * Schedule an action to run one time
      *
-     * @param int $timestamp When the job will run
-     * @param string $hook The hook to trigger
-     * @param array $args Arguments to pass when the hook triggers
-     * @param string $group The group to assign this job to
+     * @param int $timestamp When the job will run.
+     * @param string $hook The hook to trigger.
+     * @param array $args Arguments to pass when the hook triggers.
+     * @param string $group The group to assign this job to.
      *
-     * @return string The job ID
+     * @return int The action ID.
      */
     function as_schedule_single_action($timestamp, $hook, $args = array(), $group = '')
     {
@@ -26965,13 +27612,13 @@ namespace {
     /**
      * Schedule a recurring action
      *
-     * @param int $timestamp When the first instance of the job will run
-     * @param int $interval_in_seconds How long to wait between runs
-     * @param string $hook The hook to trigger
-     * @param array $args Arguments to pass when the hook triggers
-     * @param string $group The group to assign this job to
+     * @param int $timestamp When the first instance of the job will run.
+     * @param int $interval_in_seconds How long to wait between runs.
+     * @param string $hook The hook to trigger.
+     * @param array $args Arguments to pass when the hook triggers.
+     * @param string $group The group to assign this job to.
      *
-     * @return string The job ID
+     * @return int The action ID.
      */
     function as_schedule_recurring_action($timestamp, $interval_in_seconds, $hook, $args = array(), $group = '')
     {
@@ -26993,11 +27640,11 @@ namespace {
      *   |    |    +--------------- day of month (1 - 31)
      *   |    +-------------------- hour (0 - 23)
      *   +------------------------- min (0 - 59)
-     * @param string $hook The hook to trigger
-     * @param array $args Arguments to pass when the hook triggers
-     * @param string $group The group to assign this job to
+     * @param string $hook The hook to trigger.
+     * @param array $args Arguments to pass when the hook triggers.
+     * @param string $group The group to assign this job to.
      *
-     * @return string The job ID
+     * @return int The action ID.
      */
     function as_schedule_cron_action($timestamp, $schedule, $hook, $args = array(), $group = '')
     {
@@ -27012,11 +27659,11 @@ namespace {
      * then the following instance will never be scheduled (or exist), which is effectively the same as being unscheduled
      * by this method also.
      *
-     * @param string $hook The hook that the job will trigger
-     * @param array $args Args that would have been passed to the job
-     * @param string $group
+     * @param string $hook The hook that the job will trigger.
+     * @param array $args Args that would have been passed to the job.
+     * @param string $group The group the job is assigned to.
      *
-     * @return string The scheduled action ID if a scheduled action was found, or empty string if no matching action found.
+     * @return string|null The scheduled action ID if a scheduled action was found, or null if no matching action found.
      */
     function as_unschedule_action($hook, $args = array(), $group = '')
     {
@@ -27024,9 +27671,9 @@ namespace {
     /**
      * Cancel all occurrences of a scheduled action.
      *
-     * @param string $hook The hook that the job will trigger
-     * @param array $args Args that would have been passed to the job
-     * @param string $group
+     * @param string $hook The hook that the job will trigger.
+     * @param array $args Args that would have been passed to the job.
+     * @param string $group The group the job is assigned to.
      */
     function as_unschedule_all_actions($hook, $args = array(), $group = '')
     {
@@ -27034,7 +27681,7 @@ namespace {
     /**
      * Check if there is an existing action in the queue with a given hook, args and group combination.
      *
-     * An action in the queue could be pending, in-progress or aysnc. If the is pending for a time in
+     * An action in the queue could be pending, in-progress or async. If the is pending for a time in
      * future, its scheduled date will be returned as a timestamp. If it is currently being run, or an
      * async action sitting in the queue waiting to be processed, in which case boolean true will be
      * returned. Or there may be no async, in-progress or pending action for this hook, in which case,
@@ -27067,7 +27714,7 @@ namespace {
      *        'orderby' => 'date' - accepted values are 'hook', 'group', 'modified', or 'date'
      *        'order' => 'ASC'
      *
-     * @param string $return_format OBJECT, ARRAY_A, or ids
+     * @param string $return_format OBJECT, ARRAY_A, or ids.
      *
      * @return array
      */
@@ -27086,18 +27733,18 @@ namespace {
      * timezone when instantiating datetimes rather than leaving it up to
      * the PHP default.
      *
-     * @param mixed $date_string A date/time string. Valid formats are explained in http://php.net/manual/en/datetime.formats.php
-     * @param string $timezone A timezone identifier, like UTC or Europe/Lisbon. The list of valid identifiers is available http://php.net/manual/en/timezones.php
+     * @param mixed $date_string A date/time string. Valid formats are explained in http://php.net/manual/en/datetime.formats.php.
+     * @param string $timezone A timezone identifier, like UTC or Europe/Lisbon. The list of valid identifiers is available http://php.net/manual/en/timezones.php.
      *
      * @return ActionScheduler_DateTime
      */
     function as_get_datetime_object($date_string = \null, $timezone = 'UTC')
     {
     }
-    function action_scheduler_register_3_dot_1_dot_4()
+    function action_scheduler_register_3_dot_1_dot_5()
     {
     }
-    function action_scheduler_initialize_3_dot_1_dot_4()
+    function action_scheduler_initialize_3_dot_1_dot_5()
     {
     }
     /**
