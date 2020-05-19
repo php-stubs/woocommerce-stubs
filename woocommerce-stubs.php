@@ -7405,7 +7405,7 @@ class WC_Admin_Notices
      *
      * @var array
      */
-    private static $core_notices = array('install' => 'install_notice', 'update' => 'update_notice', 'template_files' => 'template_file_check_notice', 'legacy_shipping' => 'legacy_shipping_notice', 'no_shipping_methods' => 'no_shipping_methods_notice', 'regenerating_thumbnails' => 'regenerating_thumbnails_notice', 'regenerating_lookup_table' => 'regenerating_lookup_table_notice', 'no_secure_connection' => 'secure_connection_notice', \WC_PHP_MIN_REQUIREMENTS_NOTICE => 'wp_php_min_requirements_notice', 'maxmind_license_key' => 'maxmind_missing_license_key_notice', 'redirect_download_method' => 'redirect_download_method_notice');
+    private static $core_notices = array('install' => 'install_notice', 'update' => 'update_notice', 'template_files' => 'template_file_check_notice', 'legacy_shipping' => 'legacy_shipping_notice', 'no_shipping_methods' => 'no_shipping_methods_notice', 'regenerating_thumbnails' => 'regenerating_thumbnails_notice', 'regenerating_lookup_table' => 'regenerating_lookup_table_notice', 'no_secure_connection' => 'secure_connection_notice', \WC_PHP_MIN_REQUIREMENTS_NOTICE => 'wp_php_min_requirements_notice', 'maxmind_license_key' => 'maxmind_missing_license_key_notice', 'redirect_download_method' => 'redirect_download_method_notice', 'uploads_directory_is_unprotected' => 'uploads_directory_is_unprotected_notice');
     /**
      * Constructor.
      */
@@ -7593,6 +7593,14 @@ class WC_Admin_Notices
     {
     }
     /**
+     * Notice about uploads directory begin unprotected.
+     *
+     * @since 4.1.1
+     */
+    public static function uploads_directory_is_unprotected_notice()
+    {
+    }
+    /**
      * Determine if the store is running SSL.
      *
      * @return bool Flag SSL enabled.
@@ -7624,6 +7632,15 @@ class WC_Admin_Notices
      * @deprecated 3.3.0 No longer shown.
      */
     public static function theme_check_notice()
+    {
+    }
+    /**
+     * Check if uploads directory is protected.
+     *
+     * @since 4.1.1
+     * @return bool
+     */
+    protected static function is_uploads_directory_protected()
     {
     }
 }
@@ -11535,11 +11552,12 @@ class WC_Notes_Run_Db_Update
      *  - actions are set up for the first 'Update database' notice, and
      *  - URL for note's action is equal to the given URL (to check for potential nonce update).
      *
-     * @param WC_Admin_Note $note Note to check.
-     * @param string        $update_url  URL to check the note against.
+     * @param WC_Admin_Note   $note            Note to check.
+     * @param string          $update_url      URL to check the note against.
+     * @param array( string ) $current_actions List of actions to check for.
      * @return bool
      */
-    private static function note_up_to_date($note, $update_url)
+    private static function note_up_to_date($note, $update_url, $current_actions)
     {
     }
     /**
@@ -11574,23 +11592,15 @@ class WC_Notes_Run_Db_Update
     {
     }
     /**
-     * Return true if db update notice should be shown, false otherwise.
-     *
-     * If the db needs an update, the notice should be always shown.
-     * If the db does not need an update, but the notice has *not* been actioned (i.e. after the db update, when
-     * store owner hasn't acknowledged the successful db update), still show the notice.
-     * If the db does not need an update, and the notice has been actioned, then notice should *not* be shown.
-     * The same is true if the db does not need an update and the notice does not exist.
-     *
-     * @return bool
-     */
-    private static function should_show_notice()
-    {
-    }
-    /**
      * Prepare the correct content of the db update note to be displayed by WC Admin.
      *
      * This one gets called on each page load, so try to bail quickly.
+     *
+     * If the db needs an update, the notice should be always shown.
+     * If the db does not need an update, but the notice has *not* been actioned (i.e. after the db update, when
+     * store owner hasn't acknowledged the successful db update), still show the Thanks notice.
+     * If the db does not need an update, and the notice has been actioned, then notice should *not* be shown.
+     * The notice should also be hidden if the db does not need an update and the notice does not exist.
      */
     public static function show_reminder()
     {
@@ -31766,7 +31776,7 @@ final class WooCommerce
      *
      * @var string
      */
-    public $version = '4.1.0';
+    public $version = '4.1.1';
     /**
      * The single instance of the class.
      *
@@ -43216,6 +43226,12 @@ class WC_Site_Tracking
     {
     }
     /**
+     * Register scripts required to record events from javascript.
+     */
+    public static function register_scripts()
+    {
+    }
+    /**
      * Add scripts required to record events from javascript.
      */
     public static function enqueue_scripts()
@@ -43228,10 +43244,11 @@ class WC_Site_Tracking
     {
     }
     /**
-     * Add empty tracking function to admin footer when tracking is disabled in case
-     * it's called without checking if it's defined beforehand.
+     * Adds a function to load tracking scripts and enable them client-side on the fly.
+     * Note that this function does not update `woocommerce_allow_tracking` in the database
+     * and will not persist enabled tracking across page loads.
      */
-    public static function add_empty_tracking_function()
+    public static function add_enable_tracking_function()
     {
     }
     /**

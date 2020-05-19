@@ -13230,7 +13230,7 @@ namespace Automattic\WooCommerce\Admin\Composer {
          *
          * @var string
          */
-        const VERSION = '1.1.1';
+        const VERSION = '1.1.3';
         /**
          * Package active.
          *
@@ -24580,6 +24580,8 @@ namespace {
         private static $plugin_file = '';
         /** @var ActionScheduler_ActionFactory */
         private static $factory = \NULL;
+        /** @var bool */
+        private static $data_store_initialized = \false;
         public static function factory()
         {
         }
@@ -24629,11 +24631,12 @@ namespace {
         {
         }
         /**
-         * Issue deprecated warning if an Action Scheduler function is called in the shutdown hook.
+         * Check whether the AS data store has been initialized.
          *
-         * @param string $function_name The name of the function being called.
+         * @param string $function_name The name of the function being called. Optional. Default `null`.
+         * @return bool
          */
-        public static function check_shutdown_hook($function_name)
+        public static function is_initialized($function_name = \null)
         {
         }
         /**
@@ -24683,6 +24686,15 @@ namespace {
         }
         /** Deprecated **/
         public static function get_datetime_object($when = \null, $timezone = 'UTC')
+        {
+        }
+        /**
+         * Issue deprecated warning if an Action Scheduler function is called in the shutdown hook.
+         *
+         * @param string $function_name The name of the function being called.
+         * @deprecated 3.1.6.
+         */
+        public static function check_shutdown_hook($function_name)
         {
         }
     }
@@ -27741,10 +27753,10 @@ namespace {
     function as_get_datetime_object($date_string = \null, $timezone = 'UTC')
     {
     }
-    function action_scheduler_register_3_dot_1_dot_5()
+    function action_scheduler_register_3_dot_1_dot_6()
     {
     }
-    function action_scheduler_initialize_3_dot_1_dot_5()
+    function action_scheduler_initialize_3_dot_1_dot_6()
     {
     }
     /**
