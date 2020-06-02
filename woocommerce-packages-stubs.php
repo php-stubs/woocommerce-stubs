@@ -1732,134 +1732,6 @@ namespace Automattic\WooCommerce\Admin\API {
         }
     }
     /**
-     * Onboarding Plugins Controller.
-     *
-     * @package WooCommerce Admin/API
-     * @extends WC_REST_Data_Controller
-     */
-    class OnboardingPlugins extends \WC_REST_Data_Controller
-    {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc-admin';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'onboarding/plugins';
-        /**
-         * Register routes.
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Check if a given request has access to manage plugins.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|boolean
-         */
-        public function update_item_permissions_check($request)
-        {
-        }
-        /**
-         * Installs the requested plugin.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|array Plugin Status
-         */
-        public function install_plugin($request)
-        {
-        }
-        /**
-         * Returns a list of active plugins.
-         *
-         * @return array Active plugins
-         */
-        public function active_plugins()
-        {
-        }
-        /**
-         * Activate the requested plugin.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|array Plugin Status
-         */
-        public function activate_plugins($request)
-        {
-        }
-        /**
-         * Generates a Jetpack Connect URL.
-         *
-         * @param  WP_REST_Request $request Full details about the request.
-         * @return WP_Error|array Connection URL for Jetpack
-         */
-        public function connect_jetpack($request)
-        {
-        }
-        /**
-         *  Kicks off the WCCOM Connect process.
-         *
-         * @return WP_Error|array Connection URL for WooCommerce.com
-         */
-        public function request_wccom_connect()
-        {
-        }
-        /**
-         * Finishes connecting to WooCommerce.com.
-         *
-         * @param  object $rest_request Request details.
-         * @return WP_Error|array Contains success status.
-         */
-        public function finish_wccom_connect($rest_request)
-        {
-        }
-        /**
-         * Returns a URL that can be used to connect to PayPal.
-         *
-         * @return WP_Error|array Connect URL.
-         */
-        public function connect_paypal()
-        {
-        }
-        /**
-         * Returns a URL that can be used to connect to Square.
-         *
-         * @return WP_Error|array Connect URL.
-         */
-        public function connect_square()
-        {
-        }
-        /**
-         * Returns a URL that can be used to by WCPay to verify business details with Stripe.
-         *
-         * @return WP_Error|array Connect URL.
-         */
-        public function connect_wcpay()
-        {
-        }
-        /**
-         * Get the schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-        /**
-         * Get the schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_connect_schema()
-        {
-        }
-    }
-    /**
      * Onboarding Profile controller.
      *
      * @package WooCommerce Admin/API
@@ -2649,6 +2521,168 @@ namespace Automattic\WooCommerce\Admin\API {
          * @return array
          */
         protected function get_formatted_item_data($object)
+        {
+        }
+    }
+    /**
+     * Plugins Controller.
+     *
+     * @package WooCommerce Admin/API
+     * @extends WC_REST_Data_Controller
+     */
+    class Plugins extends \WC_REST_Data_Controller
+    {
+        /**
+         * Endpoint namespace.
+         *
+         * @var string
+         */
+        protected $namespace = 'wc-admin';
+        /**
+         * Route base.
+         *
+         * @var string
+         */
+        protected $rest_base = 'plugins';
+        /**
+         * Register routes.
+         */
+        public function register_routes()
+        {
+        }
+        /**
+         * Check if a given request has access to manage plugins.
+         *
+         * @param  WP_REST_Request $request Full details about the request.
+         * @return WP_Error|boolean
+         */
+        public function update_item_permissions_check($request)
+        {
+        }
+        /**
+         * Create an alert notification in response to an error installing a plugin.
+         *
+         * @todo This should be moved to a filter to make this API more generic and less plugin-specific.
+         *
+         * @param string $slug The slug of the plugin being installed.
+         */
+        private function create_install_plugin_error_inbox_notification_for_jetpack_installs($slug)
+        {
+        }
+        /**
+         * Installs the requested plugin.
+         *
+         * @param  WP_REST_Request $request Full details about the request.
+         * @return WP_Error|array Plugin Status
+         */
+        public function install_plugin($request)
+        {
+        }
+        /**
+         * Gets an array of plugins that can be installed & activated.
+         *
+         * @return array
+         */
+        public static function get_allowed_plugins()
+        {
+        }
+        /**
+         * Returns a list of active plugins in API format.
+         *
+         * @return array Active plugins
+         */
+        public static function active_plugins()
+        {
+        }
+        /**
+         * Returns a list of active plugins.
+         *
+         * @return array Active plugins
+         */
+        public static function get_active_plugins()
+        {
+        }
+        /**
+         * Returns a list of installed plugins.
+         *
+         * @return array Installed plugins
+         */
+        public function installed_plugins()
+        {
+        }
+        /**
+         * Activate the requested plugin.
+         *
+         * @param  WP_REST_Request $request Full details about the request.
+         * @return WP_Error|array Plugin Status
+         */
+        public function activate_plugins($request)
+        {
+        }
+        /**
+         * Generates a Jetpack Connect URL.
+         *
+         * @param  WP_REST_Request $request Full details about the request.
+         * @return WP_Error|array Connection URL for Jetpack
+         */
+        public function connect_jetpack($request)
+        {
+        }
+        /**
+         *  Kicks off the WCCOM Connect process.
+         *
+         * @return WP_Error|array Connection URL for WooCommerce.com
+         */
+        public function request_wccom_connect()
+        {
+        }
+        /**
+         * Finishes connecting to WooCommerce.com.
+         *
+         * @param  object $rest_request Request details.
+         * @return WP_Error|array Contains success status.
+         */
+        public function finish_wccom_connect($rest_request)
+        {
+        }
+        /**
+         * Returns a URL that can be used to connect to PayPal.
+         *
+         * @return WP_Error|array Connect URL.
+         */
+        public function connect_paypal()
+        {
+        }
+        /**
+         * Returns a URL that can be used to connect to Square.
+         *
+         * @return WP_Error|array Connect URL.
+         */
+        public function connect_square()
+        {
+        }
+        /**
+         * Returns a URL that can be used to by WCPay to verify business details with Stripe.
+         *
+         * @return WP_Error|array Connect URL.
+         */
+        public function connect_wcpay()
+        {
+        }
+        /**
+         * Get the schema, conforming to JSON Schema.
+         *
+         * @return array
+         */
+        public function get_item_schema()
+        {
+        }
+        /**
+         * Get the schema, conforming to JSON Schema.
+         *
+         * @return array
+         */
+        public function get_connect_schema()
         {
         }
     }
@@ -10352,12 +10386,6 @@ namespace Automattic\WooCommerce\Admin\Features {
         public function component_settings($settings)
         {
         }
-        /**
-         * Things to do after WooCommerce updates.
-         */
-        public function woocommerce_updated_note()
-        {
-        }
     }
     /**
      * Contains backend logic for the Analytics feature.
@@ -10539,6 +10567,184 @@ namespace Automattic\WooCommerce\Admin\Features {
          * @return array
          */
         public function get_knowledge_base_posts()
+        {
+        }
+    }
+    /**
+     * Contains logic for the WooCommerce Navigation.
+     */
+    class Navigation
+    {
+        /**
+         * Class instance.
+         *
+         * @var Navigation instance
+         */
+        protected static $instance = null;
+        /**
+         * Array index of menu capability.
+         *
+         * @var int
+         */
+        const CAPABILITY = 1;
+        /**
+         * Array index of menu callback.
+         *
+         * @var int
+         */
+        const CALLBACK = 2;
+        /**
+         * Array index of menu callback.
+         *
+         * @var int
+         */
+        const SLUG = 3;
+        /**
+         * Array index of menu CSS class string.
+         *
+         * @var int
+         */
+        const CSS_CLASSES = 4;
+        /**
+         * Store top level categories.
+         *
+         * @var array
+         */
+        protected static $categories = array();
+        /**
+         * Store related menu items.
+         *
+         * @var array
+         */
+        protected static $menu_items = array();
+        /**
+         * Screen IDs of registered pages.
+         *
+         * @var array
+         */
+        protected static $screen_ids = array();
+        /**
+         * Registered post types.
+         *
+         * @var array
+         */
+        protected static $post_types = array();
+        /**
+         * Registered callbacks or URLs with migration boolean as key value pairs.
+         *
+         * @var array
+         */
+        protected static $callbacks = array();
+        /**
+         * Check if we're on a WooCommerce page
+         *
+         * @return bool
+         */
+        public function is_woocommerce_page()
+        {
+        }
+        /**
+         * Get class instance.
+         */
+        public static final function instance()
+        {
+        }
+        /**
+         * Constructor
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Add navigation classes to body.
+         *
+         * @param string $classes Classes.
+         * @return string
+         */
+        public function add_body_class($classes)
+        {
+        }
+        /**
+         * Add registered admin settings.
+         */
+        public function add_admin_settings()
+        {
+        }
+        /**
+         * Add the core menu items to the new navigation
+         */
+        public function add_core_menu_items()
+        {
+        }
+        /**
+         * Convert a WordPress menu callback to a URL.
+         *
+         * @param string $callback Menu callback.
+         * @return string
+         */
+        public static function get_callback_url($callback)
+        {
+        }
+        /**
+         * Adds a top level menu item to the navigation.
+         *
+         * @param string $title Menu title.
+         * @param string $capability WordPress capability.
+         * @param string $slug Menu slug.
+         * @param string $url URL or menu callback.
+         * @param string $icon Menu icon.
+         * @param int    $order Menu order.
+         * @param bool   $migrate Migrate the menu option and hide the old one.
+         */
+        public static function add_menu_category($title, $capability, $slug, $url = null, $icon = null, $order = null, $migrate = true)
+        {
+        }
+        /**
+         * Adds a child menu item to the navigation.
+         *
+         * @param string $parent_slug Parent item slug.
+         * @param string $title Menu title.
+         * @param string $capability WordPress capability.
+         * @param string $slug Menu slug.
+         * @param string $url URL or menu callback.
+         * @param string $icon Menu icon.
+         * @param int    $order Menu order.
+         * @param bool   $migrate Migrate the menu option and hide the old one.
+         */
+        public static function add_menu_item($parent_slug, $title, $capability, $slug, $url = null, $icon = null, $order = null, $migrate = true)
+        {
+        }
+        /**
+         * Get the parent menu item if one exists.
+         *
+         * @param string $url URL or callback.
+         * @return string|null
+         */
+        public static function get_parent_menu_item($url)
+        {
+        }
+        /**
+         * Hides all WP admin menus items and adds screen IDs to check for new items.
+         *
+         * @param array $menu Menu items.
+         * @return array
+         */
+        public static function migrate_menu_items($menu)
+        {
+        }
+        /**
+         * Adds a screen ID to the list and automatically finds the parent if none is given.
+         *
+         * @param string      $url URL or callback for page.
+         * @param string|null $parent Parent slug.
+         */
+        public static function add_screen_id($url, $parent = null)
+        {
+        }
+        /**
+         * Add the menu to the page output.
+         */
+        public function add_menu_settings()
         {
         }
     }
@@ -10727,15 +10933,6 @@ namespace Automattic\WooCommerce\Admin\Features {
         {
         }
         /**
-         * Preload data from API endpoints.
-         *
-         * @param array $endpoints Array of preloaded endpoints.
-         * @return array
-         */
-        public function add_preload_endpoints($endpoints)
-        {
-        }
-        /**
          * Returns a list of Stripe supported countries. This method can be removed once merged to core.
          *
          * @return array
@@ -10746,18 +10943,12 @@ namespace Automattic\WooCommerce\Admin\Features {
         /**
          * Gets an array of plugins that can be installed & activated via the onboarding wizard.
          *
+         * @param array $plugins Array of plugin slugs to be allowed.
+         *
          * @return array
          * @todo Handle edgecase of where installed plugins may have versioned folder names (i.e. `jetpack-master/jetpack.php`).
          */
-        public static function get_allowed_plugins()
-        {
-        }
-        /**
-         * Get a list of active plugins, relevent to the onboarding wizard.
-         *
-         * @return array
-         */
-        public static function get_active_plugins()
+        public static function get_onboarding_allowed_plugins($plugins)
         {
         }
         /**
@@ -10996,15 +11187,6 @@ namespace Automattic\WooCommerce\Admin\Features {
         {
         }
         /**
-         * Add the task list completion note after completing all tasks.
-         *
-         * @param mixed $old_value Old value.
-         * @param mixed $new_value New value.
-         */
-        public static function add_completion_note($old_value, $new_value)
-        {
-        }
-        /**
          * Records an event when all tasks are completed in the task list.
          *
          * @param mixed $old_value Old value.
@@ -11091,17 +11273,6 @@ namespace Automattic\WooCommerce\Admin\Features {
          * @param array    $args empty args.
          */
         public function meta_box($post, $args)
-        {
-        }
-        /**
-         * Return the settings for the component for wc-api to use. If onboarding
-         * is active, return its settings. Otherwise, loads "activePlugins" since
-         * that's the ones we need to get installation status for WCS and Jetpack.
-         *
-         * @param array $settings Component settings.
-         * @return array
-         */
-        public function component_settings($settings)
         {
         }
     }
@@ -11253,7 +11424,7 @@ namespace Automattic\WooCommerce\Admin {
          *
          * @var array
          */
-        protected static $db_updates = array('0.20.1' => array('wc_admin_update_0201_order_status_index', 'wc_admin_update_0201_db_version'), '0.23.0' => array('wc_admin_update_0230_rename_gross_total', 'wc_admin_update_0230_db_version'), '0.25.1' => array('wc_admin_update_0251_remove_unsnooze_action', 'wc_admin_update_0251_db_version'));
+        protected static $db_updates = array('0.20.1' => array('wc_admin_update_0201_order_status_index', 'wc_admin_update_0201_db_version'), '0.23.0' => array('wc_admin_update_0230_rename_gross_total', 'wc_admin_update_0230_db_version'), '0.25.1' => array('wc_admin_update_0251_remove_unsnooze_action', 'wc_admin_update_0251_db_version'), '1.1.0' => array('wc_admin_update_110_remove_facebook_note', 'wc_admin_update_110_db_version'));
         /**
          * Migrated option names mapping. New => old.
          *
@@ -11268,12 +11439,8 @@ namespace Automattic\WooCommerce\Admin {
         }
         /**
          * Migrate option values to their new keys/names.
-         *
-         * @param mixed  $default Default value for the option.
-         * @param string $new_option Option name.
-         * @return mixed Migrated option value.
          */
-        public static function handle_option_migration($default, $new_option)
+        public static function migrate_options()
         {
         }
         /**
@@ -11372,6 +11539,12 @@ namespace Automattic\WooCommerce\Admin {
          * Schedule cron events.
          */
         public static function create_events()
+        {
+        }
+        /**
+         * Delete obsolete notes.
+         */
+        protected static function delete_obsolete_notes()
         {
         }
         /**
@@ -11487,28 +11660,29 @@ namespace Automattic\WooCommerce\Admin {
         /**
          * Gets the URL to an asset file.
          *
-         * @param  string $file name.
+         * @param  string $file File name (without extension).
+         * @param  string $ext File extension.
          * @return string URL to asset.
          */
-        public static function get_url($file)
+        public static function get_url($file, $ext)
         {
         }
         /**
          * Gets the file modified time as a cache buster if we're in dev mode, or the plugin version otherwise.
          *
-         * @param string $file Local path to the file.
+         * @param string $ext File extension.
          * @return string The cache buster value to use for the given file.
          */
-        public static function get_file_version($file)
+        public static function get_file_version($ext)
         {
         }
         /**
          * Gets the path for the asset depending on file type.
          *
-         * @param  string $file name.
+         * @param  string $ext File extension.
          * @return string Folder path of asset.
          */
-        private static function get_path($file)
+        private static function get_path($ext)
         {
         }
         /**
@@ -11541,6 +11715,39 @@ namespace Automattic\WooCommerce\Admin {
          * Loads the required scripts on the correct pages.
          */
         public static function load_scripts()
+        {
+        }
+        /**
+         * Render a preload link tag for a dependency, optionally
+         * checked against a provided whitelist.
+         *
+         * See: https://macarthur.me/posts/preloading-javascript-in-wordpress
+         *
+         * @param WP_Dependency $dependency The WP_Dependency being preloaded.
+         * @param string        $type Dependency type - 'script' or 'style'.
+         * @param array         $whitelist Optional. List of allowed dependency handles.
+         */
+        public static function maybe_output_preload_link_tag($dependency, $type, $whitelist = array())
+        {
+        }
+        /**
+         * Output a preload link tag for dependencies (and their sub dependencies)
+         * with an optional whitelist.
+         *
+         * See: https://macarthur.me/posts/preloading-javascript-in-wordpress
+         *
+         * @param string $type Dependency type - 'script' or 'style'.
+         * @param array  $whitelist Optional. List of allowed dependency handles.
+         */
+        public static function output_header_preload_tags_for_type($type, $whitelist = array())
+        {
+        }
+        /**
+         * Output preload link tags for all enqueued stylesheets and scripts.
+         *
+         * See: https://macarthur.me/posts/preloading-javascript-in-wordpress
+         */
+        public static function output_header_preload_tags()
         {
         }
         /**
@@ -11583,6 +11790,13 @@ namespace Automattic\WooCommerce\Admin {
          * The initial contents here are meant as a place loader for when the PHP page initialy loads.
          */
         public static function embed_page_header()
+        {
+        }
+        /**
+         * Set up a div for the navigation menu.
+         * The initial contents here are meant as a place loader for when the PHP page initialy loads.
+         */
+        protected static function embed_navigation_menu()
         {
         }
         /**
@@ -12043,6 +12257,17 @@ namespace Automattic\WooCommerce\Admin\Notes {
         |
         */
         /**
+         * Returns all data for this object.
+         *
+         * Override \WC_Data::get_data() to avoid errantly including meta data
+         * from ID collisions with the posts table.
+         *
+         * @return array
+         */
+        public function get_data()
+        {
+        }
+        /**
          * Get note name.
          *
          * @param  string $context What the value is for. Valid values are 'view' and 'edit'.
@@ -12340,9 +12565,9 @@ namespace Automattic\WooCommerce\Admin\Notes {
         /**
          * Deletes admin notes with a given name.
          *
-         * @param string $name Name to search for.
+         * @param string|array $names Name(s) to search for.
          */
-        public static function delete_notes_with_name($name)
+        public static function delete_notes_with_name($names)
         {
         }
         /**
@@ -12396,62 +12621,6 @@ namespace Automattic\WooCommerce\Admin\Notes {
         }
     }
     /**
-     * WC_Admin_Notes_Facebook_Extension
-     */
-    class WC_Admin_Notes_Facebook_Extension
-    {
-        /**
-         * Note traits.
-         */
-        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
-        /**
-         * Name of the note for use in the database.
-         */
-        const NOTE_NAME = 'wc-admin-facebook-extension';
-        /**
-         * Attach hooks.
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Possibly add Facebook extension note.
-         */
-        public static function possibly_add_facebook_note()
-        {
-        }
-        /**
-         * Install Facebook extension when note is actioned.
-         *
-         * @param WC_Admin_Note $note Note being acted upon.
-         */
-        public function install_facebook_extension($note)
-        {
-        }
-    }
-    /**
-     * WC_Admin_Notes_Giving_Feedback_Notes
-     */
-    class WC_Admin_Notes_Giving_Feedback_Notes
-    {
-        /**
-         * Note traits.
-         */
-        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
-        /**
-         * Add notes for admin giving feedback.
-         */
-        public static function add_notes_for_admin_giving_feedback()
-        {
-        }
-        /**
-         * Possibly add a notice setting moved note.
-         */
-        protected static function possibly_add_admin_giving_feedback_note()
-        {
-        }
-    }
-    /**
      * WC_Admin_Notes_Historical_Data.
      */
     class WC_Admin_Notes_Historical_Data
@@ -12473,6 +12642,72 @@ namespace Automattic\WooCommerce\Admin\Notes {
          * Creates a note for regenerating historical data.
          */
         public static function add_note()
+        {
+        }
+    }
+    /**
+     * WC_Admin_Notes_Install_JP_And_WCS_Plugins
+     */
+    class WC_Admin_Notes_Install_JP_And_WCS_Plugins
+    {
+        const NOTE_NAME = 'wc-admin-install-jp-and-wcs-plugins';
+        /**
+         * Constructor.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Possibly add the Install Jetpack and WooCommerceServices plugins note.
+         *
+         * @param string $slug The slug of the plugin being installed.
+         */
+        public static function possibly_add_install_jp_and_wcs_note($slug)
+        {
+        }
+        /**
+         * Action the Install Jetpack and WooCommerce Services note, if any exists,
+         * and as long as both the Jetpack and WooCommerce Services plugins have been
+         * activated.
+         */
+        public static function action_note()
+        {
+        }
+        /**
+         * Install the Jetpack and WooCommerce Services plugins in response to the action
+         * being clicked in the admin note.
+         *
+         * @param WC_Admin_Note $note The note being actioned.
+         */
+        public function install_jp_and_wcs_plugins($note)
+        {
+        }
+        /**
+         * Installs and activates the specified plugin.
+         *
+         * @param string $plugin The plugin slug.
+         */
+        private function install_and_activate_plugin($plugin)
+        {
+        }
+    }
+    /**
+     * WC_Admin_Notes_Marketing
+     */
+    class WC_Admin_Notes_Marketing
+    {
+        /**
+         * Note traits.
+         */
+        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
+        /**
+         * Name of the note for use in the database.
+         */
+        const NOTE_NAME_INTRO = 'wc-admin-marketing-intro';
+        /**
+         * Maybe add a note introducing the marketing hub.
+         */
+        public static function possibly_add_note_intro()
         {
         }
     }
@@ -12522,27 +12757,10 @@ namespace Automattic\WooCommerce\Admin\Notes {
         }
     }
     /**
-     * WC_Admin_Notes_Onboarding.
-     */
-    class WC_Admin_Notes_Onboarding
-    {
-        const NOTE_NAME = 'wc-admin-task-list-complete';
-        /**
-         * Creates a note for task list completion.
-         */
-        public static function add_task_list_complete_note()
-        {
-        }
-    }
-    /**
      * WC_Admin_Notes_Onboarding_Email_Marketing
      */
     class WC_Admin_Notes_Onboarding_Email_Marketing
     {
-        /**
-         * Note traits.
-         */
-        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
         /**
          * Name of the note for use in the database.
          */
@@ -12551,6 +12769,19 @@ namespace Automattic\WooCommerce\Admin\Notes {
          * Possibly add email marketing note.
          */
         public static function possibly_add_onboarding_email_marketing_note()
+        {
+        }
+    }
+    /**
+     * WC_Admin_Notes_Onboarding_Payments.
+     */
+    class WC_Admin_Notes_Onboarding_Payments
+    {
+        const NOTE_NAME = 'wc-admin-onboarding-payments-reminder';
+        /**
+         * Creates a note to remind store owners to set up payments.
+         */
+        public static function possibly_add_onboarding_payments_note()
         {
         }
     }
@@ -12743,24 +12974,6 @@ namespace Automattic\WooCommerce\Admin\Notes {
         }
     }
     /**
-     * WC_Admin_Notes_Settings_Notes
-     */
-    class WC_Admin_Notes_Settings_Notes
-    {
-        /**
-         * Add notes for each setting that has moved.
-         */
-        public static function add_notes_for_settings_that_have_moved()
-        {
-        }
-        /**
-         * Possibly add a notice setting moved note.
-         */
-        protected static function possibly_add_notice_setting_moved_note()
-        {
-        }
-    }
-    /**
      * WC_Admin_Notes_Tracking_Opt_In
      */
     class WC_Admin_Notes_Tracking_Opt_In
@@ -12791,19 +13004,6 @@ namespace Automattic\WooCommerce\Admin\Notes {
          * @param WC_Admin_Note $note Note being acted upon.
          */
         public function opt_in_to_tracking($note)
-        {
-        }
-    }
-    /**
-     * WC_Admin_Notes_Welcome_Message.
-     */
-    class WC_Admin_Notes_Welcome_Message
-    {
-        const NOTE_NAME = 'wc-admin-welcome-note';
-        /**
-         * Creates a note for welcome message.
-         */
-        public static function add_welcome_note()
         {
         }
     }
@@ -13230,7 +13430,7 @@ namespace Automattic\WooCommerce\Admin\Composer {
          *
          * @var string
          */
-        const VERSION = '1.1.3';
+        const VERSION = '1.2.3';
         /**
          * Package active.
          *
@@ -22476,7 +22676,7 @@ namespace Automattic\WooCommerce\RestApi {
          *
          * @var string
          */
-        const VERSION = '1.0.7';
+        const VERSION = '1.0.8';
         /**
          * Init the package - load the REST API Server class.
          */

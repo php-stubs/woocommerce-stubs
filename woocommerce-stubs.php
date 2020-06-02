@@ -7595,7 +7595,7 @@ class WC_Admin_Notices
     /**
      * Notice about uploads directory begin unprotected.
      *
-     * @since 4.1.1
+     * @since 4.2.0
      */
     public static function uploads_directory_is_unprotected_notice()
     {
@@ -7637,7 +7637,7 @@ class WC_Admin_Notices
     /**
      * Check if uploads directory is protected.
      *
-     * @since 4.1.1
+     * @since 4.2.0
      * @return bool
      */
     protected static function is_uploads_directory_protected()
@@ -8108,7 +8108,7 @@ class WC_Admin_Settings
     /**
      * Output admin fields.
      *
-     * Loops though the woocommerce options array and outputs each field.
+     * Loops through the woocommerce options array and outputs each field.
      *
      * @param array[] $options Opens array to output.
      */
@@ -8129,7 +8129,7 @@ class WC_Admin_Settings
     /**
      * Save admin fields.
      *
-     * Loops though the woocommerce options array and outputs each field.
+     * Loops through the woocommerce options array and outputs each field.
      *
      * @param array $options Options array to output.
      * @param array $data    Optional. Data to use for saving. Defaults to $_POST.
@@ -9250,6 +9250,16 @@ class WC_Admin
     public function disable_webhook_post_export($args)
     {
     }
+    /**
+     * Include admin classes.
+     *
+     * @since 4.2.0
+     * @param string $classes Body classes string.
+     * @return string
+     */
+    public function include_admin_body_class($classes)
+    {
+    }
 }
 /**
  * WC_Helper_API Class
@@ -9315,6 +9325,17 @@ class WC_Helper_API
      * @return array The response object from wp_safe_remote_request().
      */
     public static function post($endpoint, $args = array())
+    {
+    }
+    /**
+     * Wrapper for self::request().
+     *
+     * @param string $endpoint The helper API endpoint to request.
+     * @param array  $args Arguments passed to wp_remote_request().
+     *
+     * @return array The response object from wp_safe_remote_request().
+     */
+    public static function put($endpoint, $args = array())
     {
     }
     /**
@@ -9793,14 +9814,6 @@ class WC_Helper
      * Various Helper-related admin notices.
      */
     public static function admin_notices()
-    {
-    }
-    /**
-     * Prompt a Helper connection if the user has WooCommerce.com extensions.
-     *
-     * @param string $screen_id Current screen ID.
-     */
-    private static function _prompt_helper_connect($screen_id)
     {
     }
     /**
@@ -24530,6 +24543,14 @@ class WC_Order extends \WC_Abstract_Order
     |
     */
     /**
+     * Get basic order data in array format.
+     *
+     * @return array
+     */
+    public function get_base_data()
+    {
+    }
+    /**
      * Get all class data in array format.
      *
      * @since 3.0.0
@@ -31776,7 +31797,7 @@ final class WooCommerce
      *
      * @var string
      */
-    public $version = '4.1.1';
+    public $version = '4.2.0';
     /**
      * The single instance of the class.
      *
@@ -43818,6 +43839,16 @@ class WC_Orders_Tracking
     {
     }
     /**
+     * Send a track event when on the Order Listing page, and search results are being displayed.
+     *
+     * @param array  $order_ids Array of order_ids that are matches for the search.
+     * @param string $term The string that was used in the search.
+     * @param array  $search_fields Fields that were used in the original search.
+     */
+    public function track_order_search($order_ids, $term, $search_fields)
+    {
+    }
+    /**
      * Send a Tracks event when the Orders page is viewed.
      */
     public function track_orders_view()
@@ -43865,6 +43896,18 @@ class WC_Products_Tracking
      * Init tracking.
      */
     public function init()
+    {
+    }
+    /**
+     * Send a Tracks event when the Products page is viewed.
+     */
+    public function track_products_view()
+    {
+    }
+    /**
+     * Send a Tracks event when the Products Categories and Tags page is viewed.
+     */
+    public function track_categories_and_tags_view()
     {
     }
     /**
@@ -45098,7 +45141,7 @@ function wc_create_page($slug, $option = '', $page_title = '', $page_content = '
 /**
  * Output admin fields.
  *
- * Loops though the woocommerce options array and outputs each field.
+ * Loops through the woocommerce options array and outputs each field.
  *
  * @param array $options Opens array to output.
  */
