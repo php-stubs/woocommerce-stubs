@@ -7405,7 +7405,7 @@ class WC_Admin_Notices
      *
      * @var array
      */
-    private static $core_notices = array('install' => 'install_notice', 'update' => 'update_notice', 'template_files' => 'template_file_check_notice', 'legacy_shipping' => 'legacy_shipping_notice', 'no_shipping_methods' => 'no_shipping_methods_notice', 'regenerating_thumbnails' => 'regenerating_thumbnails_notice', 'regenerating_lookup_table' => 'regenerating_lookup_table_notice', 'no_secure_connection' => 'secure_connection_notice', \WC_PHP_MIN_REQUIREMENTS_NOTICE => 'wp_php_min_requirements_notice', 'maxmind_license_key' => 'maxmind_missing_license_key_notice', 'redirect_download_method' => 'redirect_download_method_notice', 'uploads_directory_is_unprotected' => 'uploads_directory_is_unprotected_notice');
+    private static $core_notices = array('install' => 'install_notice', 'update' => 'update_notice', 'template_files' => 'template_file_check_notice', 'legacy_shipping' => 'legacy_shipping_notice', 'no_shipping_methods' => 'no_shipping_methods_notice', 'regenerating_thumbnails' => 'regenerating_thumbnails_notice', 'regenerating_lookup_table' => 'regenerating_lookup_table_notice', 'no_secure_connection' => 'secure_connection_notice', \WC_PHP_MIN_REQUIREMENTS_NOTICE => 'wp_php_min_requirements_notice', 'maxmind_license_key' => 'maxmind_missing_license_key_notice', 'redirect_download_method' => 'redirect_download_method_notice', 'uploads_directory_is_unprotected' => 'uploads_directory_is_unprotected_notice', 'base_tables_missing' => 'base_tables_missing_notice');
     /**
      * Constructor.
      */
@@ -7598,6 +7598,12 @@ class WC_Admin_Notices
      * @since 4.2.0
      */
     public static function uploads_directory_is_unprotected_notice()
+    {
+    }
+    /**
+     * Notice about base tables missing.
+     */
+    public static function base_tables_missing_notice()
     {
     }
     /**
@@ -8776,6 +8782,12 @@ class WC_Admin_Status
      * @since 3.0.0
      */
     private static function log_table_bulk_actions()
+    {
+    }
+    /**
+     * Prints table info if a base table is not present.
+     */
+    private static function output_tables_info()
     {
     }
     /**
@@ -11649,12 +11661,6 @@ class WC_Plugin_Updates
      */
     protected $major_untested_plugins = array();
     /**
-     * Array of plugins lacking testing with the minor version.
-     *
-     * @var array
-     */
-    protected $minor_untested_plugins = array();
-    /**
      * Common JS for initializing and managing thickbox-based modals.
      */
     protected function generic_modal_js()
@@ -11667,14 +11673,6 @@ class WC_Plugin_Updates
     |
     | Methods for getting messages.
     */
-    /**
-     * Get the inline warning notice for minor version updates.
-     *
-     * @return string
-     */
-    protected function get_extensions_inline_warning_minor()
-    {
-    }
     /**
      * Get the inline warning notice for major version updates.
      *
@@ -17239,6 +17237,19 @@ class WC_Comments
     public static function update_comment_type($comment_data)
     {
     }
+    /**
+     * Determines if a comment is of the default type.
+     *
+     * Prior to WordPress 5.5, '' was the default comment type.
+     * As of 5.5, the default type is 'comment'.
+     *
+     * @since 4.3.0
+     * @param string $comment_type Comment type.
+     * @return bool
+     */
+    private static function is_default_comment_type($comment_type)
+    {
+    }
 }
 /**
  * The WooCommerce countries class stores country/state data.
@@ -22006,6 +22017,25 @@ class WC_Install
     {
     }
     /**
+     * Check if all the base tables are present.
+     *
+     * @param bool $modify_notice Whether to modify notice based on if all tables are present.
+     * @param bool $execute       Whether to execute get_schema queries as well.
+     *
+     * @return array List of querues.
+     */
+    public static function verify_base_tables($modify_notice = \true, $execute = \false)
+    {
+    }
+    /**
+     * Check if the homepage should be enabled and set the appropriate option if thats the case.
+     *
+     * @since 4.3.0
+     */
+    private static function maybe_enable_homescreen()
+    {
+    }
+    /**
      * Reset any notices added to admin.
      *
      * @since 3.2.0
@@ -22124,6 +22154,11 @@ class WC_Install
     }
     /**
      * Set up the database tables which the plugin needs to function.
+     * WARNING: If you are modifying this method, make sure that its safe to call regardless of the state of database.
+     *
+     * This is called from `install` method and is executed in-sync when WC is installed or updated. This can also be called optionally from `verify_base_tables`.
+     *
+     * TODO: Add all crucial tables that we have created from workers in the past.
      *
      * Tables:
      *      woocommerce_attribute_taxonomies - Table for storing attribute taxonomies - these are user defined
@@ -31797,7 +31832,15 @@ final class WooCommerce
      *
      * @var string
      */
-    public $version = '4.2.2';
+    public $version = '4.3.0';
+    /**
+     * WooCommerce Schema version.
+     *
+     * @since 4.3 started with version string 430.
+     *
+     * @var string
+     */
+    public $db_version = '430';
     /**
      * The single instance of the class.
      *
@@ -35779,6 +35822,16 @@ class WC_Product_Data_Store_CPT extends \WC_Data_Store_WP implements \WC_Object_
      * @return string
      */
     protected function get_primary_key_for_lookup_table($table)
+    {
+    }
+    /**
+     * Returns query statement for getting current `_stock` of a product.
+     *
+     * @internal MAX function below is used to make sure result is a scalar.
+     * @param int $product_id Product ID.
+     * @return string|void Query statement.
+     */
+    public function get_query_for_stock($product_id)
     {
     }
 }
@@ -42876,7 +42929,7 @@ class WC_Shortcode_Products
     {
     }
     /**
-     * Set product as visible when quering for hidden products.
+     * Set product as visible when querying for hidden products.
      *
      * @since  3.2.0
      * @param  bool $visibility Product visibility.
@@ -46172,6 +46225,36 @@ function wc_update_order($args)
 {
 }
 /**
+ * Given a path, this will convert any of the subpaths into their corresponding tokens.
+ *
+ * @since 4.3.0
+ * @param string $path The absolute path to tokenize.
+ * @param array  $path_tokens An array keyed with the token, containing paths that should be replaced.
+ * @return string The tokenized path.
+ */
+function wc_tokenize_path($path, $path_tokens)
+{
+}
+/**
+ * Given a tokenized path, this will expand the tokens to their full path.
+ *
+ * @since 4.3.0
+ * @param string $path The absolute path to expand.
+ * @param array  $path_tokens An array keyed with the token, containing paths that should be expanded.
+ * @return string The absolute path.
+ */
+function wc_untokenize_path($path, $path_tokens)
+{
+}
+/**
+ * Fetches an array containing all of the configurable path constants to be used in tokenization.
+ *
+ * @return array The key is the define and the path is the constant.
+ */
+function wc_get_path_define_tokens()
+{
+}
+/**
  * Get template part (for templates like the shop-loop).
  *
  * WC_TEMPLATE_DEBUG_MODE will prevent overrides in themes from taking priority.
@@ -46223,6 +46306,24 @@ function wc_get_template_html($template_name, $args = array(), $template_path = 
  * @return string
  */
 function wc_locate_template($template_name, $template_path = '', $default_path = '')
+{
+}
+/**
+ * Add a template to the template cache.
+ *
+ * @since 4.3.0
+ * @param string $cache_key Object cache key.
+ * @param string $template Located template.
+ */
+function wc_set_template_cache($cache_key, $template)
+{
+}
+/**
+ * Clear the template cache.
+ *
+ * @since 4.3.0
+ */
+function wc_clear_template_cache()
 {
 }
 /**
@@ -46588,9 +46689,12 @@ function wc_postcode_location_matcher($postcode, $objects, $object_id_key, $obje
  *
  * @since  2.6.0
  * @param  bool $include_legacy Count legacy shipping methods too.
+ * @param  bool $enabled_only   Whether non-legacy shipping methods should be
+ *                              restricted to enabled ones. It doesn't affect
+ *                              legacy shipping methods. @since 4.3.0.
  * @return int
  */
-function wc_get_shipping_method_count($include_legacy = \false)
+function wc_get_shipping_method_count($include_legacy = \false, $enabled_only = \false)
 {
 }
 /**
@@ -50005,7 +50109,27 @@ function wc_increase_stock_levels($order_id)
  * @param integer    $exclude_order_id Order ID to exclude.
  * @return int
  */
-function wc_get_held_stock_quantity($product, $exclude_order_id = 0)
+function wc_get_held_stock_quantity(\WC_Product $product, $exclude_order_id = 0)
+{
+}
+/**
+ * Hold stock for an order.
+ *
+ * @throws ReserveStockException If reserve stock fails.
+ *
+ * @since 4.1.0
+ * @param \WC_Order|int $order Order ID or instance.
+ */
+function wc_reserve_stock_for_order($order)
+{
+}
+/**
+ * Release held stock for an order.
+ *
+ * @since 4.3.0
+ * @param \WC_Order|int $order Order ID or instance.
+ */
+function wc_release_stock_for_order($order)
 {
 }
 /**
