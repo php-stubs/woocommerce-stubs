@@ -1,4 +1,6 @@
 # https://docs.travis-ci.com/user/reference/overview/#linux
+os: linux
+
 dist: bionic
 
 language: php
@@ -8,11 +10,11 @@ cache:
     - "$HOME/.composer/cache"
 
 php:
-  # giacocorsiglia/stubs-generator does not support PHP 7.0
-  - "7.1"
-  - "7.2"
-  - "7.3"
   - "7.4"
+  - "7.3"
+  - "7.2"
+  - "7.1"
+  # giacocorsiglia/stubs-generator does not support PHP 7.0
 
 before_install:
   - |
@@ -22,9 +24,7 @@ before_install:
 
 install:
   - |
-    composer install --no-interaction --no-suggest
-#  - |
-#    composer run-script post-install-cmd
+    composer update --no-interaction --no-suggest
 
 before_script:
   - |
