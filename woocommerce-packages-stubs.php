@@ -40,6 +40,17 @@ namespace {
         {
         }
         /**
+         * Compatibility functions for WP 5.5, since custom types are not supported anymore.
+         * See @link https://core.trac.wordpress.org/changeset/48306
+         *
+         * @param string $method Optional. HTTP method of the request.
+         *
+         * @return array Endpoint arguments.
+         */
+        public function get_endpoint_args_for_item_schema($method = \WP_REST_Server::CREATABLE)
+        {
+        }
+        /**
          * Get normalized rest base.
          *
          * @return string

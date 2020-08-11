@@ -31832,7 +31832,7 @@ final class WooCommerce
      *
      * @var string
      */
-    public $version = '4.3.1';
+    public $version = '4.3.2';
     /**
      * WooCommerce Schema version.
      *
