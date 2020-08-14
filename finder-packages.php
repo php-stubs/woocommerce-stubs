@@ -12,16 +12,16 @@ return \StubsGenerator\Finder::create()
             ])
             // Uses WP-CLI.
             ->notPath('WP_CLI')
-            ->append(
-                \StubsGenerator\Finder::create()
-                    ->in(['source/woocommerce/packages/action-scheduler'])
-                    ->files()
-                    ->depth('< 1')
-                    ->name('functions.php')
-            )
             ->sortByName(true)
     )
-    // WC Admin.
+    ->append(
+        \StubsGenerator\Finder::create()
+            ->in(['source/woocommerce/packages/action-scheduler'])
+            ->files()
+            ->depth('< 1')
+            ->path('functions.php')
+    )
+    // WC Admin "includes".
     ->append(
         \StubsGenerator\Finder::create()
             ->in(['source/woocommerce/packages/woocommerce-admin/includes'])

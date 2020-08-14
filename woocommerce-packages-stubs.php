@@ -32507,12 +32507,6 @@ namespace {
     function as_get_datetime_object($date_string = \null, $timezone = 'UTC')
     {
     }
-    function action_scheduler_register_3_dot_1_dot_6()
-    {
-    }
-    function action_scheduler_initialize_3_dot_1_dot_6()
-    {
-    }
     /**
      * Returns core WC pages to connect to WC-Admin.
      *

@@ -2,7 +2,13 @@
 
 return \StubsGenerator\Finder::create()
     ->in('source/woocommerce/includes')
-    ->append(\StubsGenerator\Finder::create()->files()->depth('< 1')->name('woocommerce.php')->in(['source/woocommerce']))
+    ->append(
+        \StubsGenerator\Finder::create()
+            ->in(['source/woocommerce'])
+            ->files()
+            ->depth('< 1')
+            ->path('woocommerce.php')
+    )
     // Exclude woocommerce.com API as is uses the woocommerce-rest-api package.
     ->notPath('wccom-site/rest-api/endpoints')
     // Templates.
