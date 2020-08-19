@@ -1,11 +1,18 @@
 #!/usr/bin/env bash
+#
+# Generate WooCommerce stubs from all the latest versions.
+#
+
+# Watch current release on Packagist.
+# wget -qO- https://packagist.org/packages/woocommerce/woocommerce.json \
+# | jq '.package.versions[] | select(.version_normalized=="4.4.0.0")'
 
 set -e
 
 WC_JSON="$(wget -q -O- "https://packagist.org/packages/woocommerce/woocommerce.json")"
 
 # https://wordpress.org/plugins/woocommerce/advanced/
-for V in 3.5  3.6  3.7  3.8  3.9  4.0  4.1  4.2  4.3; do
+for V in 3.5  3.6  3.7  3.8  3.9  4.0  4.1  4.2  4.3  4.4; do
     # Find latest version
     printf -v JQ_FILTER '.package.versions[].version | select(test("^%s\\\\.%s\\\\.\\\\d+$"))' "${V%.*}" "${V#*.}"
     LATEST="$(jq -r "$JQ_FILTER" <<<"$WC_JSON" | sort -t "." -k 3 -g | tail -n 1)"

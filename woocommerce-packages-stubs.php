@@ -707,7 +707,6 @@ namespace Automattic\WooCommerce\Admin\API {
     /**
      * Coupons controller.
      *
-     * @package WooCommerce Admin/API
      * @extends WC_REST_Coupons_Controller
      */
     class Coupons extends \WC_REST_Coupons_Controller
@@ -921,7 +920,6 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Customers {
     /**
      * REST API Reports customers controller class.
      *
-     * @package WooCommerce/API
      * @extends WC_REST_Reports_Controller
      */
     class Controller extends \WC_REST_Reports_Controller implements \Automattic\WooCommerce\Admin\API\Reports\ExportableInterface
@@ -1027,7 +1025,6 @@ namespace Automattic\WooCommerce\Admin\API {
     /**
      * Customers controller.
      *
-     * @package WooCommerce Admin/API
      * @extends \Automattic\WooCommerce\Admin\API\Reports\Customers\Controller
      */
     class Customers extends \Automattic\WooCommerce\Admin\API\Reports\Customers\Controller
@@ -1154,7 +1151,6 @@ namespace Automattic\WooCommerce\Admin\API {
     /**
      * Data controller.
      *
-     * @package WooCommerce Admin/API
      * @extends WC_REST_Data_Controller
      */
     class Data extends \WC_REST_Data_Controller
@@ -1270,7 +1266,6 @@ namespace Automattic\WooCommerce\Admin\API {
     /**
      * REST API Data countries controller class.
      *
-     * @package WooCommerce Admin/API
      * @extends WC_REST_Data_Countries_Controller
      */
     class DataCountries extends \WC_REST_Data_Countries_Controller
@@ -1285,7 +1280,6 @@ namespace Automattic\WooCommerce\Admin\API {
     /**
      * Data Download IP controller.
      *
-     * @package WooCommerce Admin/API
      * @extends WC_REST_Data_Controller
      */
     class DataDownloadIPs extends \WC_REST_Data_Controller
@@ -1399,7 +1393,7 @@ namespace Automattic\WooCommerce\Admin\API {
         }
         /**
          * Add the currency symbol (in addition to currency code) to each Order
-         * object in REST API responses. For use in formatCurrency().
+         * object in REST API responses. For use in formatAmount().
          *
          * @param {WP_REST_Response} $response REST response object.
          * @returns {WP_REST_Response}
@@ -1411,7 +1405,6 @@ namespace Automattic\WooCommerce\Admin\API {
     /**
      * Leaderboards controller.
      *
-     * @package WooCommerce Admin/API
      * @extends WC_REST_Data_Controller
      */
     class Leaderboards extends \WC_REST_Data_Controller
@@ -1546,7 +1539,6 @@ namespace Automattic\WooCommerce\Admin\API {
     /**
      * Marketing Controller.
      *
-     * @package WooCommerce Admin/API
      * @extends WC_REST_Data_Controller
      */
     class Marketing extends \WC_REST_Data_Controller
@@ -1593,7 +1585,6 @@ namespace Automattic\WooCommerce\Admin\API {
     /**
      * Marketing Overview Controller.
      *
-     * @package WooCommerce Admin/API
      * @extends WC_REST_Data_Controller
      */
     class MarketingOverview extends \WC_REST_Data_Controller
@@ -1650,7 +1641,6 @@ namespace Automattic\WooCommerce\Admin\API {
     /**
      * REST API Admin Notes controller class.
      *
-     * @package WooCommerce/API
      * @extends WC_REST_CRUD_Controller
      */
     class Notes extends \WC_REST_CRUD_Controller
@@ -1821,7 +1811,6 @@ namespace Automattic\WooCommerce\Admin\API {
     /**
      * REST API Admin Note Action controller class.
      *
-     * @package WooCommerce/API
      * @extends WC_REST_CRUD_Controller
      */
     class NoteActions extends \Automattic\WooCommerce\Admin\API\Notes
@@ -1853,7 +1842,6 @@ namespace Automattic\WooCommerce\Admin\API {
     /**
      * Onboarding Profile controller.
      *
-     * @package WooCommerce Admin/API
      * @extends WC_REST_Data_Controller
      */
     class OnboardingProfile extends \WC_REST_Data_Controller
@@ -1959,7 +1947,6 @@ namespace Automattic\WooCommerce\Admin\API {
     /**
      * Onboarding Tasks Controller.
      *
-     * @package WooCommerce Admin/API
      * @extends WC_REST_Data_Controller
      */
     class OnboardingTasks extends \WC_REST_Data_Controller
@@ -2093,7 +2080,6 @@ namespace Automattic\WooCommerce\Admin\API {
     /**
      * Onboarding Themes Controller.
      *
-     * @package WooCommerce Admin/API
      * @extends WC_REST_Data_Controller
      */
     class OnboardingThemes extends \WC_REST_Data_Controller
@@ -2155,7 +2141,6 @@ namespace Automattic\WooCommerce\Admin\API {
     /**
      * Options Controller.
      *
-     * @package WooCommerce Admin/API
      * @extends WC_REST_Data_Controller
      */
     class Options extends \WC_REST_Data_Controller
@@ -2605,7 +2590,6 @@ namespace Automattic\WooCommerce\Admin\API {
     /**
      * Orders controller.
      *
-     * @package WooCommerce Admin/API
      * @extends WC_REST_Orders_Controller
      */
     class Orders extends \WC_REST_Orders_Controller
@@ -2646,7 +2630,6 @@ namespace Automattic\WooCommerce\Admin\API {
     /**
      * Plugins Controller.
      *
-     * @package WooCommerce Admin/API
      * @extends WC_REST_Data_Controller
      */
     class Plugins extends \WC_REST_Data_Controller
@@ -3151,7 +3134,6 @@ namespace Automattic\WooCommerce\Admin\API {
     /**
      * Product categories controller.
      *
-     * @package WooCommerce Admin/API
      * @extends WC_REST_Product_Categories_Controller
      */
     class ProductCategories extends \WC_REST_Product_Categories_Controller
@@ -3381,7 +3363,6 @@ namespace Automattic\WooCommerce\Admin\API {
     /**
      * Product reviews controller.
      *
-     * @package WooCommerce Admin/API
      * @extends WC_REST_Product_Reviews_Controller
      */
     class ProductReviews extends \WC_REST_Product_Reviews_Controller
@@ -3910,7 +3891,6 @@ namespace Automattic\WooCommerce\Admin\API {
     /**
      * Product variations controller.
      *
-     * @package WooCommerce Admin/API
      * @extends WC_REST_Product_Variations_Controller
      */
     class ProductVariations extends \WC_REST_Product_Variations_Controller
@@ -4055,7 +4035,6 @@ namespace Automattic\WooCommerce\Admin\API {
     /**
      * Products controller.
      *
-     * @package WooCommerce Admin/API
      * @extends WC_REST_Products_Controller
      */
     class Products extends \WC_REST_Products_Controller
@@ -4164,8 +4143,6 @@ namespace Automattic\WooCommerce\Admin\API {
 namespace Automattic\WooCommerce\Admin\API\Reports {
     /**
      * REST API Reports Cache class.
-     *
-     * @package WooCommerce Admin/API
      */
     class Cache
     {
@@ -4210,7 +4187,6 @@ namespace Automattic\WooCommerce\Admin\API\Reports {
     /**
      * REST API Reports controller class.
      *
-     * @package WooCommerce Admin/API
      * @extends WC_REST_Reports_Controller
      */
     class Controller extends \WC_REST_Reports_Controller
@@ -4309,7 +4285,6 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Categories {
     /**
      * REST API Reports categories controller class.
      *
-     * @package WooCommerce/API
      * @extends \Automattic\WooCommerce\Admin\API\Reports\Controller
      */
     class Controller extends \Automattic\WooCommerce\Admin\API\Reports\Controller implements \Automattic\WooCommerce\Admin\API\Reports\ExportableInterface
@@ -5254,7 +5229,6 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Coupons {
     /**
      * REST API Reports coupons controller class.
      *
-     * @package WooCommerce/API
      * @extends WC_REST_Reports_Controller
      */
     class Controller extends \WC_REST_Reports_Controller implements \Automattic\WooCommerce\Admin\API\Reports\ExportableInterface
@@ -5438,6 +5412,17 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Coupons {
         {
         }
         /**
+         * Get coupon ID for an order.
+         *
+         * Tries to get the ID from order item meta, then falls back to a query of published coupons.
+         *
+         * @param \WC_Order_Item_Coupon $coupon_item The coupon order item object.
+         * @return int Coupon ID on success, 0 on failure.
+         */
+        public static function get_coupon_id(\WC_Order_Item_Coupon $coupon_item)
+        {
+        }
+        /**
          * Create or update an an entry in the wc_order_coupon_lookup table for an order.
          *
          * @since 3.5.0
@@ -5453,15 +5438,6 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Coupons {
          * @param int $order_id Order ID.
          */
         public static function sync_on_order_delete($order_id)
-        {
-        }
-        /**
-         * Deletes the coupon lookup information when a coupon is deleted.
-         * This keeps data consistent if it gets resynced at any point.
-         *
-         * @param int $post_id Post ID.
-         */
-        public static function delete_coupon($post_id)
         {
         }
         /**
@@ -5508,7 +5484,6 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Coupons\Stats {
     /**
      * REST API Reports coupons stats controller class.
      *
-     * @package WooCommerce/API
      * @extends WC_REST_Reports_Controller
      */
     class Controller extends \WC_REST_Reports_Controller
@@ -6230,7 +6205,6 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Customers\Stats {
     /**
      * REST API Reports customers stats controller class.
      *
-     * @package WooCommerce/API
      * @extends WC_REST_Reports_Controller
      */
     class Controller extends \WC_REST_Reports_Controller
@@ -6358,7 +6332,6 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Downloads {
     /**
      * REST API Reports downloads controller class.
      *
-     * @package WooCommerce/API
      * @extends Automattic\WooCommerce\Admin\API\Reports\Controller
      */
     class Controller extends \Automattic\WooCommerce\Admin\API\Reports\Controller implements \Automattic\WooCommerce\Admin\API\Reports\ExportableInterface
@@ -6575,7 +6548,6 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Downloads\Files {
     /**
      * REST API Reports downloads files controller class.
      *
-     * @package WooCommerce/API
      * @extends WC_REST_Reports_Controller
      */
     class Controller extends \WC_REST_Reports_Controller
@@ -6622,7 +6594,6 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Downloads\Stats {
     /**
      * REST API Reports downloads stats controller class.
      *
-     * @package WooCommerce/API
      * @extends WC_REST_Reports_Controller
      */
     class Controller extends \WC_REST_Reports_Controller
@@ -6765,7 +6736,6 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Export {
     /**
      * Reports Export controller.
      *
-     * @package WooCommerce Admin/API
      * @extends \Automattic\WooCommerce\Admin\API\Reports\Controller
      */
     class Controller extends \Automattic\WooCommerce\Admin\API\Reports\Controller
@@ -6836,7 +6806,6 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Import {
     /**
      * Reports Imports controller.
      *
-     * @package WooCommerce Admin/API
      * @extends \Automattic\WooCommerce\Admin\API\Reports\Controller
      */
     class Controller extends \Automattic\WooCommerce\Admin\API\Reports\Controller
@@ -6954,7 +6923,6 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Orders {
     /**
      * REST API Reports orders controller class.
      *
-     * @package WooCommerce/API
      * @extends \Automattic\WooCommerce\Admin\API\Reports\Controller
      */
     class Controller extends \Automattic\WooCommerce\Admin\API\Reports\Controller implements \Automattic\WooCommerce\Admin\API\Reports\ExportableInterface
@@ -7201,7 +7169,6 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Orders\Stats {
     /**
      * REST API Reports orders stats controller class.
      *
-     * @package WooCommerce/API
      * @extends \Automattic\WooCommerce\Admin\API\Reports\Controller
      */
     class Controller extends \Automattic\WooCommerce\Admin\API\Reports\Controller
@@ -7289,7 +7256,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Orders\Stats {
          *
          * @var array
          */
-        protected $column_types = array('orders_count' => 'intval', 'num_items_sold' => 'intval', 'gross_sales' => 'floatval', 'total_sales' => 'floatval', 'coupons' => 'floatval', 'coupons_count' => 'intval', 'refunds' => 'floatval', 'taxes' => 'floatval', 'shipping' => 'floatval', 'net_revenue' => 'floatval', 'avg_items_per_order' => 'floatval', 'avg_order_value' => 'floatval', 'num_returning_customers' => 'intval', 'num_new_customers' => 'intval', 'products' => 'intval', 'segment_id' => 'intval');
+        protected $column_types = array('orders_count' => 'intval', 'num_items_sold' => 'intval', 'gross_sales' => 'floatval', 'total_sales' => 'floatval', 'coupons' => 'floatval', 'coupons_count' => 'intval', 'refunds' => 'floatval', 'taxes' => 'floatval', 'shipping' => 'floatval', 'net_revenue' => 'floatval', 'avg_items_per_order' => 'floatval', 'avg_order_value' => 'floatval', 'total_customers' => 'intval', 'products' => 'intval', 'segment_id' => 'intval');
         /**
          * Data store context used to pass to filters.
          *
@@ -7571,7 +7538,6 @@ namespace Automattic\WooCommerce\Admin\API\Reports\PerformanceIndicators {
     /**
      * REST API Reports Performance indicators controller class.
      *
-     * @package WooCommerce/API
      * @extends WC_REST_Reports_Controller
      */
     class Controller extends \WC_REST_Reports_Controller
@@ -7792,7 +7758,6 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Products {
     /**
      * REST API Reports products controller class.
      *
-     * @package WooCommerce/API
      * @extends WC_REST_Reports_Controller
      */
     class Controller extends \WC_REST_Reports_Controller implements \Automattic\WooCommerce\Admin\API\Reports\ExportableInterface
@@ -8058,7 +8023,6 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Products\Stats {
     /**
      * REST API Reports products stats controller class.
      *
-     * @package WooCommerce/API
      * @extends WC_REST_Reports_Controller
      */
     class Controller extends \WC_REST_Reports_Controller
@@ -8304,7 +8268,6 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Revenue\Stats {
     /**
      * REST API Reports revenue stats controller class.
      *
-     * @package WooCommerce/API
      * @extends WC_REST_Reports_Controller
      */
     class Controller extends \WC_REST_Reports_Controller implements \Automattic\WooCommerce\Admin\API\Reports\ExportableInterface
@@ -8403,7 +8366,6 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Stock {
     /**
      * REST API Reports stock controller class.
      *
-     * @package WooCommerce/API
      * @extends WC_REST_Reports_Controller
      */
     class Controller extends \WC_REST_Reports_Controller implements \Automattic\WooCommerce\Admin\API\Reports\ExportableInterface
@@ -8554,7 +8516,6 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Stock\Stats {
     /**
      * REST API Reports stock stats controller class.
      *
-     * @package WooCommerce/API
      * @extends WC_REST_Reports_Controller
      */
     class Controller extends \WC_REST_Reports_Controller
@@ -8666,7 +8627,6 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Taxes {
     /**
      * REST API Reports taxes controller class.
      *
-     * @package WooCommerce/API
      * @extends WC_REST_Reports_Controller
      */
     class Controller extends \WC_REST_Reports_Controller implements \Automattic\WooCommerce\Admin\API\Reports\ExportableInterface
@@ -8885,7 +8845,6 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Taxes\Stats {
     /**
      * REST API Reports taxes stats controller class.
      *
-     * @package WooCommerce/API
      * @extends WC_REST_Reports_Controller
      */
     class Controller extends \WC_REST_Reports_Controller
@@ -9363,7 +9322,6 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Variations {
     /**
      * REST API Reports products controller class.
      *
-     * @package WooCommerce/API
      * @extends WC_REST_Reports_Controller
      */
     class Controller extends \WC_REST_Reports_Controller implements \Automattic\WooCommerce\Admin\API\Reports\ExportableInterface
@@ -9838,7 +9796,6 @@ namespace Automattic\WooCommerce\Admin\API {
     /**
      * Setting Options controller.
      *
-     * @package WooCommerce Admin/API
      * @extends WC_REST_Setting_Options_Controller
      */
     class SettingOptions extends \WC_REST_Setting_Options_Controller
@@ -10071,7 +10028,6 @@ namespace Automattic\WooCommerce\Admin\API {
     /**
      * Taxes controller.
      *
-     * @package WooCommerce Admin/API
      * @extends WC_REST_Taxes_Controller
      */
     class Taxes extends \WC_REST_Taxes_Controller
@@ -10103,7 +10059,6 @@ namespace Automattic\WooCommerce\Admin\API {
     /**
      * Themes controller.
      *
-     * @package WooCommerce Admin/API
      * @extends WC_REST_Data_Controller
      */
     class Themes extends \WC_REST_Data_Controller
@@ -10476,14 +10431,6 @@ namespace Automattic\WooCommerce\Admin {
         {
         }
         /**
-         * Returns true if build file exists.
-         *
-         * @return bool
-         */
-        protected function check_build()
-        {
-        }
-        /**
          * Deactivates this plugin.
          */
         public function deactivate_self()
@@ -10493,12 +10440,6 @@ namespace Automattic\WooCommerce\Admin {
          * Notify users of the plugin requirements.
          */
         public function render_dependencies_notice()
-        {
-        }
-        /**
-         * Notify users that the plugin needs to be built.
-         */
-        public function render_build_notice()
         {
         }
         /**
@@ -10606,6 +10547,10 @@ namespace Automattic\WooCommerce\Admin\Features {
     class Analytics
     {
         /**
+         * Clear cache tool identifier.
+         */
+        const CACHE_TOOL_ID = 'clear_woocommerce_analytics_cache';
+        /**
          * Class instance.
          *
          * @var Analytics instance
@@ -10642,9 +10587,24 @@ namespace Automattic\WooCommerce\Admin\Features {
         {
         }
         /**
+         * Register the cache clearing tool on the WooCommerce > Status > Tools page.
+         *
+         * @param array $debug_tools Available debug tool registrations.
+         * @return array Filtered debug tool registrations.
+         */
+        public function register_cache_clear_tool($debug_tools)
+        {
+        }
+        /**
          * Registers report pages.
          */
         public function register_pages()
+        {
+        }
+        /**
+         * "Clear" analytics cache by invalidating it.
+         */
+        public function run_clear_cache_tool()
         {
         }
     }
@@ -10715,11 +10675,19 @@ namespace Automattic\WooCommerce\Admin\Features {
         public function update_link_structure()
         {
         }
+        /**
+         * Gets an array of plugins that can be installed & activated via the home screen.
+         *
+         * @param array $plugins Array of plugin slugs to be allowed.
+         *
+         * @return array
+         */
+        public static function get_homescreen_allowed_plugins($plugins)
+        {
+        }
     }
     /**
      * CouponsMovedTrait trait.
-     *
-     * @package Automattic\WooCommerce\Admin\Features
      */
     trait CouponsMovedTrait
     {
@@ -10944,184 +10912,6 @@ namespace Automattic\WooCommerce\Admin\Features {
         }
     }
     /**
-     * Contains logic for the WooCommerce Navigation.
-     */
-    class Navigation
-    {
-        /**
-         * Class instance.
-         *
-         * @var Navigation instance
-         */
-        protected static $instance = null;
-        /**
-         * Array index of menu capability.
-         *
-         * @var int
-         */
-        const CAPABILITY = 1;
-        /**
-         * Array index of menu callback.
-         *
-         * @var int
-         */
-        const CALLBACK = 2;
-        /**
-         * Array index of menu callback.
-         *
-         * @var int
-         */
-        const SLUG = 3;
-        /**
-         * Array index of menu CSS class string.
-         *
-         * @var int
-         */
-        const CSS_CLASSES = 4;
-        /**
-         * Store top level categories.
-         *
-         * @var array
-         */
-        protected static $categories = array();
-        /**
-         * Store related menu items.
-         *
-         * @var array
-         */
-        protected static $menu_items = array();
-        /**
-         * Screen IDs of registered pages.
-         *
-         * @var array
-         */
-        protected static $screen_ids = array();
-        /**
-         * Registered post types.
-         *
-         * @var array
-         */
-        protected static $post_types = array();
-        /**
-         * Registered callbacks or URLs with migration boolean as key value pairs.
-         *
-         * @var array
-         */
-        protected static $callbacks = array();
-        /**
-         * Check if we're on a WooCommerce page
-         *
-         * @return bool
-         */
-        public function is_woocommerce_page()
-        {
-        }
-        /**
-         * Get class instance.
-         */
-        public static final function instance()
-        {
-        }
-        /**
-         * Constructor
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Add navigation classes to body.
-         *
-         * @param string $classes Classes.
-         * @return string
-         */
-        public function add_body_class($classes)
-        {
-        }
-        /**
-         * Add registered admin settings.
-         */
-        public function add_admin_settings()
-        {
-        }
-        /**
-         * Add the core menu items to the new navigation
-         */
-        public function add_core_menu_items()
-        {
-        }
-        /**
-         * Convert a WordPress menu callback to a URL.
-         *
-         * @param string $callback Menu callback.
-         * @return string
-         */
-        public static function get_callback_url($callback)
-        {
-        }
-        /**
-         * Adds a top level menu item to the navigation.
-         *
-         * @param string $title Menu title.
-         * @param string $capability WordPress capability.
-         * @param string $slug Menu slug.
-         * @param string $url URL or menu callback.
-         * @param string $icon Menu icon.
-         * @param int    $order Menu order.
-         * @param bool   $migrate Migrate the menu option and hide the old one.
-         */
-        public static function add_menu_category($title, $capability, $slug, $url = null, $icon = null, $order = null, $migrate = true)
-        {
-        }
-        /**
-         * Adds a child menu item to the navigation.
-         *
-         * @param string $parent_slug Parent item slug.
-         * @param string $title Menu title.
-         * @param string $capability WordPress capability.
-         * @param string $slug Menu slug.
-         * @param string $url URL or menu callback.
-         * @param string $icon Menu icon.
-         * @param int    $order Menu order.
-         * @param bool   $migrate Migrate the menu option and hide the old one.
-         */
-        public static function add_menu_item($parent_slug, $title, $capability, $slug, $url = null, $icon = null, $order = null, $migrate = true)
-        {
-        }
-        /**
-         * Get the parent menu item if one exists.
-         *
-         * @param string $url URL or callback.
-         * @return string|null
-         */
-        public static function get_parent_menu_item($url)
-        {
-        }
-        /**
-         * Hides all WP admin menus items and adds screen IDs to check for new items.
-         *
-         * @param array $menu Menu items.
-         * @return array
-         */
-        public static function migrate_menu_items($menu)
-        {
-        }
-        /**
-         * Adds a screen ID to the list and automatically finds the parent if none is given.
-         *
-         * @param string      $url URL or callback for page.
-         * @param string|null $parent Parent slug.
-         */
-        public static function add_screen_id($url, $parent = null)
-        {
-        }
-        /**
-         * Add the menu to the page output.
-         */
-        public function add_menu_settings()
-        {
-        }
-    }
-    /**
      * Contains backend logic for the onboarding profile and checklist feature.
      */
     class Onboarding
@@ -11210,7 +11000,7 @@ namespace Automattic\WooCommerce\Admin\Features {
         {
         }
         /**
-         * Returns true if the profiler should be displayed (not completed).
+         * Returns true if the profiler should be displayed (not completed and not skipped).
          *
          * @return bool
          */
@@ -11340,7 +11130,7 @@ namespace Automattic\WooCommerce\Admin\Features {
          * @param array $plugins Array of plugin slugs to be allowed.
          *
          * @return array
-         * @todo Handle edgecase of where installed plugins may have versioned folder names (i.e. `jetpack-master/jetpack.php`).
+         * @todo Handle edgecase of where installed plugins may have versioned folder names (i.e. `jetpack-main/jetpack.php`).
          */
         public static function get_onboarding_allowed_plugins($plugins)
         {
@@ -11818,7 +11608,7 @@ namespace Automattic\WooCommerce\Admin {
          *
          * @var array
          */
-        protected static $db_updates = array('0.20.1' => array('wc_admin_update_0201_order_status_index', 'wc_admin_update_0201_db_version'), '0.23.0' => array('wc_admin_update_0230_rename_gross_total', 'wc_admin_update_0230_db_version'), '0.25.1' => array('wc_admin_update_0251_remove_unsnooze_action', 'wc_admin_update_0251_db_version'), '1.1.0' => array('wc_admin_update_110_remove_facebook_note', 'wc_admin_update_110_db_version'), '1.3.0' => array('wc_admin_update_130_remove_dismiss_action_from_tracking_opt_in_note', 'wc_admin_update_130_db_version'));
+        protected static $db_updates = array('0.20.1' => array('wc_admin_update_0201_order_status_index', 'wc_admin_update_0201_db_version'), '0.23.0' => array('wc_admin_update_0230_rename_gross_total', 'wc_admin_update_0230_db_version'), '0.25.1' => array('wc_admin_update_0251_remove_unsnooze_action', 'wc_admin_update_0251_db_version'), '1.1.0' => array('wc_admin_update_110_remove_facebook_note', 'wc_admin_update_110_db_version'), '1.3.0' => array('wc_admin_update_130_remove_dismiss_action_from_tracking_opt_in_note', 'wc_admin_update_130_db_version'), '1.4.0' => array('wc_admin_update_140_change_deactivate_plugin_note_type', 'wc_admin_update_140_db_version'));
         /**
          * Migrated option names mapping. New => old.
          *
@@ -12103,6 +11893,12 @@ namespace Automattic\WooCommerce\Admin {
         {
         }
         /**
+         * Registers the profiler page.
+         */
+        public static function register_profiler_page()
+        {
+        }
+        /**
          * Remove the menu item for the app entry point page.
          */
         public static function remove_app_entry_page_menu_item()
@@ -12115,6 +11911,47 @@ namespace Automattic\WooCommerce\Admin {
         {
         }
         /**
+         * Generate a filename to cache translations from JS chunks.
+         *
+         * @param string $domain Text domain.
+         * @param string $locale Locale being retrieved.
+         * @return string Filename.
+         */
+        public static function get_combined_translation_filename($domain, $locale)
+        {
+        }
+        /**
+         * Find and combine translation chunk files.
+         *
+         * Only targets files that aren't represented by a registered script (e.g. not passed to wp_register_script()).
+         *
+         * @param string $lang_dir Path to language files.
+         * @param string $domain Text domain.
+         * @param string $locale Locale being retrieved.
+         * @return array Combined translation chunk data.
+         */
+        public static function get_translation_chunk_data($lang_dir, $domain, $locale)
+        {
+        }
+        /**
+         * Load translation strings from language packs for dynamic imports.
+         *
+         * This function combines JSON translation data auto-extracted by GlotPress
+         * from Webpack-generated JS chunks into a single file that can be used in
+         * subsequent requests. This is necessary since the JS chunks are not known
+         * to WordPress via wp_register_script() and wp_set_script_translations().
+         *
+         * @param string $original_translations JSON encoded translations object.
+         * @param string $file File location for the script being translated.
+         * @param string $handle Script handle.
+         * @param string $domain Text domain.
+         *
+         * @return string JSON encoded translations object.
+         */
+        public static function load_script_translations($original_translations, $file, $handle, $domain)
+        {
+        }
+        /**
          * Loads the required scripts on the correct pages.
          */
         public static function load_scripts()
@@ -12122,27 +11959,27 @@ namespace Automattic\WooCommerce\Admin {
         }
         /**
          * Render a preload link tag for a dependency, optionally
-         * checked against a provided whitelist.
+         * checked against a provided allowlist.
          *
          * See: https://macarthur.me/posts/preloading-javascript-in-wordpress
          *
          * @param WP_Dependency $dependency The WP_Dependency being preloaded.
          * @param string        $type Dependency type - 'script' or 'style'.
-         * @param array         $whitelist Optional. List of allowed dependency handles.
+         * @param array         $allowlist Optional. List of allowed dependency handles.
          */
-        public static function maybe_output_preload_link_tag($dependency, $type, $whitelist = array())
+        public static function maybe_output_preload_link_tag($dependency, $type, $allowlist = array())
         {
         }
         /**
          * Output a preload link tag for dependencies (and their sub dependencies)
-         * with an optional whitelist.
+         * with an optional allowlist.
          *
          * See: https://macarthur.me/posts/preloading-javascript-in-wordpress
          *
          * @param string $type Dependency type - 'script' or 'style'.
-         * @param array  $whitelist Optional. List of allowed dependency handles.
+         * @param array  $allowlist Optional. List of allowed dependency handles.
          */
-        public static function output_header_preload_tags_for_type($type, $whitelist = array())
+        public static function output_header_preload_tags_for_type($type, $allowlist = array())
         {
         }
         /**
@@ -12193,13 +12030,6 @@ namespace Automattic\WooCommerce\Admin {
          * The initial contents here are meant as a place loader for when the PHP page initialy loads.
          */
         public static function embed_page_header()
-        {
-        }
-        /**
-         * Set up a div for the navigation menu.
-         * The initial contents here are meant as a place loader for when the PHP page initialy loads.
-         */
-        protected static function embed_navigation_menu()
         {
         }
         /**
@@ -12603,6 +12433,14 @@ namespace Automattic\WooCommerce\Admin\Notes {
         public static function add_note()
         {
         }
+        /**
+         * Possibly delete the note, if it exists in the database. Note that this
+         * is a hard delete, for where it doesn't make sense to soft delete or
+         * action the note.
+         */
+        public static function possibly_delete_note()
+        {
+        }
     }
     /**
      * WC_Admin_Note class.
@@ -12620,6 +12458,8 @@ namespace Automattic\WooCommerce\Admin\Notes {
         // used for presenting informational messages.
         const E_WC_ADMIN_NOTE_MARKETING = 'marketing';
         // used for adding marketing messages.
+        const E_WC_ADMIN_NOTE_SURVEY = 'survey';
+        // used for adding survey messages.
         // Note status codes.
         const E_WC_ADMIN_NOTE_PENDING = 'pending';
         // the note is pending - hidden but not actioned.
@@ -12975,13 +12815,14 @@ namespace Automattic\WooCommerce\Admin\Notes {
         /**
          * Add an action to the note
          *
-         * @param string  $name    Action name (not presented to user).
-         * @param string  $label   Action label (presented as button label).
-         * @param string  $url     Action URL, if navigation needed. Optional.
-         * @param string  $status  Status to transition parent Note to upon click. Defaults to 'actioned'.
-         * @param boolean $primary Whether or not this is the primary action. Defaults to false.
+         * @param string  $name           Action name (not presented to user).
+         * @param string  $label          Action label (presented as button label).
+         * @param string  $url            Action URL, if navigation needed. Optional.
+         * @param string  $status         Status to transition parent Note to upon click. Defaults to 'actioned'.
+         * @param boolean $primary        Whether or not this is the primary action. Defaults to false.
+         * @param string  $actioned_text The label to display after the note has been actioned but before it is dismissed in the UI.
          */
-        public function add_action($name, $label, $url = '', $status = self::E_WC_ADMIN_NOTE_ACTIONED, $primary = false)
+        public function add_action($name, $label, $url = '', $status = self::E_WC_ADMIN_NOTE_ACTIONED, $primary = false, $actioned_text = '')
         {
         }
         /**
@@ -13097,6 +12938,12 @@ namespace Automattic\WooCommerce\Admin\Notes {
         public static function possibly_delete_marketing_notes($old_value, $value)
         {
         }
+        /**
+         * Delete actioned survey notes.
+         */
+        public static function possibly_delete_survey_notes()
+        {
+        }
     }
     /**
      * WC_Admin_Notes_Choose_Niche.
@@ -13120,8 +12967,6 @@ namespace Automattic\WooCommerce\Admin\Notes {
     }
     /**
      * WC_Admin_Notes_Coupon_Page_Moved class.
-     *
-     * @package Automattic\WooCommerce\Admin\Notes
      */
     class WC_Admin_Notes_Coupon_Page_Moved
     {
@@ -13177,6 +13022,26 @@ namespace Automattic\WooCommerce\Admin\Notes {
          * Safe redirect to the coupon page to force page refresh.
          */
         public function redirect_to_coupons()
+        {
+        }
+    }
+    /**
+     * WC_Admin_Notes_Customize_Store_With_Blocks.
+     */
+    class WC_Admin_Notes_Customize_Store_With_Blocks
+    {
+        /**
+         * Note traits.
+         */
+        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
+        /**
+         * Name of the note for use in the database.
+         */
+        const NOTE_NAME = 'wc-admin-customize-store-with-blocks';
+        /**
+         * Get the note.
+         */
+        public static function get_note()
         {
         }
     }
@@ -13271,6 +13136,52 @@ namespace Automattic\WooCommerce\Admin\Notes {
          * Get the note.
          */
         public static function get_note()
+        {
+        }
+    }
+    /**
+     * WC_Admin_Notes_Facebook_Marketing_Expert
+     */
+    class WC_Admin_Notes_Facebook_Marketing_Expert
+    {
+        /**
+         * Note traits.
+         */
+        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
+        /**
+         * Name of the note for use in the database.
+         */
+        const NOTE_NAME = 'wc-admin-facebook-marketing-expert';
+        /**
+         * Name of plugin file.
+         */
+        const PLUGIN_FILE = 'facebook-for-woocommerce/facebook-for-woocommerce.php';
+        /**
+         * Possibly add note.
+         */
+        public static function possibly_add_note()
+        {
+        }
+        /**
+         * Get the note.
+         */
+        public static function get_note()
+        {
+        }
+        /**
+         * Determine if Facebook for WooCommerce is already active or installed
+         *
+         * @return bool
+         */
+        protected static function is_facebook_for_woocommerce_installed()
+        {
+        }
+        /**
+         * Determine the number of orders in the last month
+         *
+         * @return int
+         */
+        protected static function orders_last_month()
         {
         }
     }
@@ -13381,6 +13292,26 @@ namespace Automattic\WooCommerce\Admin\Notes {
         }
     }
     /**
+     * WC_Admin_Notes_Insight_First_Sale.
+     */
+    class WC_Admin_Notes_Insight_First_Sale
+    {
+        /**
+         * Note traits.
+         */
+        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
+        /**
+         * Name of the note for use in the database.
+         */
+        const NOTE_NAME = 'wc-admin-insight-first-sale';
+        /**
+         * Get the note.
+         */
+        public static function get_note()
+        {
+        }
+    }
+    /**
      * WC_Admin_Notes_Install_JP_And_WCS_Plugins
      */
     class WC_Admin_Notes_Install_JP_And_WCS_Plugins
@@ -13428,6 +13359,26 @@ namespace Automattic\WooCommerce\Admin\Notes {
          * @param string $plugin The plugin slug.
          */
         private function install_and_activate_plugin($plugin)
+        {
+        }
+    }
+    /**
+     * WC_Admin_Notes_Launch_Checklist
+     */
+    class WC_Admin_Notes_Launch_Checklist
+    {
+        /**
+         * Note traits.
+         */
+        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
+        /**
+         * Name of the note for use in the database.
+         */
+        const NOTE_NAME = 'wc-admin-launch-checklist';
+        /**
+         * Get the note.
+         */
+        public static function get_note()
         {
         }
     }
@@ -13846,6 +13797,49 @@ namespace Automattic\WooCommerce\Admin\Notes {
          * Name of the note for use in the database.
          */
         const NOTE_NAME = 'wc-admin-real-time-order-alerts';
+        /**
+         * Get the note.
+         */
+        public static function get_note()
+        {
+        }
+    }
+    /**
+     * WC_Admin_Notes_Set_Up_Additional_Payment_Types
+     */
+    class WC_Admin_Notes_Set_Up_Additional_Payment_Types
+    {
+        /**
+         * Note traits.
+         */
+        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
+        /**
+         * Name of the note for use in the database.
+         */
+        const NOTE_NAME = 'wc-admin-set-up-additional-payment-types';
+        /**
+         * Constructor.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Executes when the WooCommerce Payments plugin is activated. Possibly
+         * adds the note if it isn't already in the database and if it matches any
+         * criteria (see get_note()).
+         */
+        public static function on_activate_wcpay()
+        {
+        }
+        /**
+         * Executes when the WooCommerce Payments plugin is deactivated. Possibly
+         * hard-deletes the note if it is in the database. Hard-delete is used
+         * instead of soft-delete or actioning the note because we need to
+         * show the note if the plugin is activated again.
+         */
+        public static function on_deactivate_wcpay()
+        {
+        }
         /**
          * Get the note.
          */
@@ -14312,6 +14306,12 @@ namespace Automattic\WooCommerce\Admin\Overrides {
     class ThemeUpgraderSkin extends \Theme_Upgrader_Skin
     {
         /**
+         * Avoid undefined property error from \Theme_Upgrader::check_parent_theme_filter().
+         *
+         * @var array
+         */
+        public $api;
+        /**
          * Hide the skin header display.
          */
         public function header()
@@ -14327,6 +14327,7 @@ namespace Automattic\WooCommerce\Admin\Overrides {
          * Hide the skin feedback display.
          *
          * @param string $string String to display.
+         * @param mixed  ...$args Optional text replacements.
          */
         public function feedback($string, ...$args)
         {
@@ -14350,7 +14351,7 @@ namespace Automattic\WooCommerce\Admin\Composer {
          *
          * @var string
          */
-        const VERSION = '1.3.1';
+        const VERSION = '1.4.0';
         /**
          * Package active.
          *
@@ -14728,7 +14729,7 @@ namespace Automattic\WooCommerce\Admin\RemoteInboxNotifications {
      */
     class DataSourcePoller
     {
-        const DATA_SOURCES = array('https://woocommerce.com/wp-json/wccom//inbox-notifications/1.0/notifications.json');
+        const DATA_SOURCES = array('https://woocommerce.com/wp-json/wccom/inbox-notifications/1.0/notifications.json');
         /**
          * Reads the data sources for specs and persists those specs.
          *
@@ -14751,7 +14752,7 @@ namespace Automattic\WooCommerce\Admin\RemoteInboxNotifications {
          * Merge the specs.
          *
          * @param Array $specs_to_merge_in The specs to merge in to $specs.
-         * @param Array $specs             The master list of specs.
+         * @param Array $specs             The list of specs being merged into.
          */
         private static function merge_specs($specs_to_merge_in, &$specs)
         {
@@ -14859,6 +14860,35 @@ namespace Automattic\WooCommerce\Admin\RemoteInboxNotifications {
          * @return RuleProcessorInterface The matching processor for the specified rule type, or a FailRuleProcessor if no matching processor is found.
          */
         public static function get_processor($rule_type)
+        {
+        }
+    }
+    /**
+     * Rule processor that passes (or fails) when the site is on the eCommerce
+     * plan.
+     */
+    class IsEcommerceRuleProcessor implements \Automattic\WooCommerce\Admin\RemoteInboxNotifications\RuleProcessorInterface
+    {
+        /**
+         * Passes (or fails) based on whether the site is on the eCommerce plan or
+         * not.
+         *
+         * @param object $rule         The rule being processed by this rule processor.
+         * @param object $stored_state Stored state.
+         *
+         * @return bool The result of the operation.
+         */
+        public function process($rule, $stored_state)
+        {
+        }
+        /**
+         * Validate the rule.
+         *
+         * @param object $rule The rule to validate.
+         *
+         * @return bool Pass/fail.
+         */
+        public function validate($rule)
         {
         }
     }
@@ -15234,6 +15264,16 @@ namespace Automattic\WooCommerce\Admin\RemoteInboxNotifications {
          * Initialize the engine.
          */
         public static function init()
+        {
+        }
+        /**
+         * This is triggered when the profile option is updated and if the
+         * profiler is being completed, triggers a run of the engine.
+         *
+         * @param mixed $old_value Old value.
+         * @param mixed $new_value New value.
+         */
+        public static function update_profile_option($old_value, $new_value)
         {
         }
         /**
@@ -16401,23 +16441,11 @@ namespace Automattic\WooCommerce\Blocks {
         {
         }
         /**
-         * Registers a script according to `wp_register_script`, additionally loading the translations for the file.
-         *
-         * @since 2.0.0
-         *
-         * @param string $handle       Name of the script. Should be unique.
-         * @param string $src          Full URL of the script, or path of the script relative to the WordPress root directory.
-         * @param array  $dependencies Optional. An array of registered script handles this script depends on. Default empty array.
-         * @param bool   $has_i18n     Optional. Whether to add a script translation call to this file. Default 'true'.
-         */
-        protected static function register_script($handle, $src, $dependencies = [], $has_i18n = true)
-        {
-        }
-        /**
-         * Queues a block script.
+         * Queues a block script in the frontend.
          *
          * @since 2.3.0
          * @since 2.6.0 Changed $name to $script_name and added $handle argument.
+         * @since 2.9.0 Made it so scripts are not loaded in admin pages.
          *
          * @param string $script_name  Name of the script used to identify the file inside build folder.
          * @param string $handle       Optional. Provided if the handle should be different than the script name. `wc-` prefix automatically added.
@@ -16438,18 +16466,6 @@ namespace Automattic\WooCommerce\Blocks {
          *                       'all', 'print' and 'screen', or media queries like '(orientation: portrait)' and '(max-width: 640px)'.
          */
         protected static function register_style($handle, $src, $deps = [], $media = 'all')
-        {
-        }
-        /**
-         * Returns the appropriate asset path for loading either legacy builds or
-         * current builds.
-         *
-         * @param   string $filename  Filename for asset path (without extension).
-         * @param   string $type      File type (.css or .js).
-         *
-         * @return  string             The generated path.
-         */
-        protected static function get_block_asset_build_path($filename, $type = 'js')
         {
         }
     }
@@ -16517,15 +16533,17 @@ namespace Automattic\WooCommerce\Blocks\Assets {
         {
         }
         /**
-         * Queues a block script.
+         * Queues a block script in the frontend.
          *
          * @since 2.5.0
          * @since 2.6.0 Changed $name to $script_name and added $handle argument.
+         * @since 2.9.0 Made it so scripts are not loaded in admin pages.
          *
-         * @param string $script_name Name of the script used to identify the file inside build folder .
-         * @param string $handle      Provided if the handle should be different than the script name . `wc-` prefix automatically added .
+         * @param string $script_name  Name of the script used to identify the file inside build folder.
+         * @param string $handle       Optional. Provided if the handle should be different than the script name. `wc-` prefix automatically added.
+         * @param array  $dependencies Optional. An array of registered script handles this script depends on. Default empty array.
          */
-        public function register_block_script($script_name, $handle = '')
+        public function register_block_script($script_name, $handle = '', $dependencies = [])
         {
         }
         /**
@@ -16541,6 +16559,18 @@ namespace Automattic\WooCommerce\Blocks\Assets {
          *                             'all', 'print' and 'screen', or media queries like '(orientation: portrait)' and '(max-width: 640px)'.
          */
         public function register_style($handle, $relative_src, $deps = [], $media = 'all')
+        {
+        }
+        /**
+         * Returns the appropriate asset path for loading either legacy builds or
+         * current builds.
+         *
+         * @param   string $filename  Filename for asset path (without extension).
+         * @param   string $type      File type (.css or .js).
+         *
+         * @return  string             The generated path.
+         */
+        public function get_block_asset_build_path($filename, $type = 'js')
         {
         }
     }
@@ -17301,6 +17331,15 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
+         * Removes accents from an array of values, sorts by the values, then returns the original array values sorted.
+         *
+         * @param array $array Array of values to sort.
+         * @return array Sorted array.
+         */
+        protected function deep_sort_with_accents($array)
+        {
+        }
+        /**
          * Register/enqueue scripts used for this block.
          *
          * @param array $attributes  Any attributes that currently are available from the block.
@@ -17368,6 +17407,15 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          *                           not in the post content on editor load.
          */
         protected function enqueue_data(array $attributes = [])
+        {
+        }
+        /**
+         * Removes accents from an array of values, sorts by the values, then returns the original array values sorted.
+         *
+         * @param array $array Array of values to sort.
+         * @return array Sorted array.
+         */
+        protected function deep_sort_with_accents($array)
         {
         }
         /**
@@ -17644,6 +17692,15 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @return string Rendered block type output.
          */
         public function render($attributes = array(), $content = '')
+        {
+        }
+        /**
+         * Get the list of classes to apply to this block.
+         *
+         * @param array $attributes Block attributes. Default empty array.
+         * @return string space-separated list of classes.
+         */
+        protected function get_container_classes($attributes = array())
         {
         }
         /**
@@ -18541,6 +18598,22 @@ namespace Automattic\WooCommerce\Blocks\Payments\Integrations {
          */
         protected $name = '';
         /**
+         * Settings from the WP options table
+         *
+         * @var array
+         */
+        protected $settings = [];
+        /**
+         * Get a setting from the settings array if set.
+         *
+         * @param string $name Setting name.
+         * @param mixed  $default Value that is returned if the setting does not exist.
+         * @return mixed
+         */
+        protected function get_setting($name, $default = '')
+        {
+        }
+        /**
          * Returns the name of the payment method.
          */
         public function get_name()
@@ -18583,6 +18656,138 @@ namespace Automattic\WooCommerce\Blocks\Payments\Integrations {
         }
     }
     /**
+     * Bank Transfer (BACS) payment method integration
+     *
+     * @since 3.0.0
+     */
+    final class BankTransfer extends \Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodType
+    {
+        /**
+         * Payment method name/id/slug (matches id in WC_Gateway_BACS in core).
+         *
+         * @var string
+         */
+        protected $name = 'bacs';
+        /**
+         * An instance of the Asset Api
+         *
+         * @var Api
+         */
+        private $asset_api;
+        /**
+         * Constructor
+         *
+         * @param Api $asset_api An instance of Api.
+         */
+        public function __construct(\Automattic\WooCommerce\Blocks\Assets\Api $asset_api)
+        {
+        }
+        /**
+         * Initializes the payment method type.
+         */
+        public function initialize()
+        {
+        }
+        /**
+         * Returns if this payment method should be active. If false, the scripts will not be enqueued.
+         *
+         * @return boolean
+         */
+        public function is_active()
+        {
+        }
+        /**
+         * Returns an array of scripts/handles to be registered for this payment method.
+         *
+         * @return array
+         */
+        public function get_payment_method_script_handles()
+        {
+        }
+        /**
+         * Returns an array of key=>value pairs of data made available to the payment methods script.
+         *
+         * @return array
+         */
+        public function get_payment_method_data()
+        {
+        }
+    }
+    /**
+     * Cash on Delivery (COD) payment method integration
+     *
+     * @since 3.0.0
+     */
+    final class CashOnDelivery extends \Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodType
+    {
+        /**
+         * Payment method name/id/slug (matches id in WC_Gateway_COD in core).
+         *
+         * @var string
+         */
+        protected $name = 'cod';
+        /**
+         * An instance of the Asset Api
+         *
+         * @var Api
+         */
+        private $asset_api;
+        /**
+         * Constructor
+         *
+         * @param Api $asset_api An instance of Api.
+         */
+        public function __construct(\Automattic\WooCommerce\Blocks\Assets\Api $asset_api)
+        {
+        }
+        /**
+         * Initializes the payment method type.
+         */
+        public function initialize()
+        {
+        }
+        /**
+         * Returns if this payment method should be active. If false, the scripts will not be enqueued.
+         *
+         * @return boolean
+         */
+        public function is_active()
+        {
+        }
+        /**
+         * Return enable_for_virtual option.
+         *
+         * @return boolean True if store allows COD payment for orders containing only virtual products.
+         */
+        private function get_enable_for_virtual()
+        {
+        }
+        /**
+         * Return enable_for_methods option.
+         *
+         * @return array Array of shipping methods (string ids) that allow COD. (If empty, all support COD.)
+         */
+        private function get_enable_for_methods()
+        {
+        }
+        /**
+         * Returns an array of scripts/handles to be registered for this payment method.
+         *
+         * @return array
+         */
+        public function get_payment_method_script_handles()
+        {
+        }
+        /**
+         * Returns an array of key=>value pairs of data made available to the payment methods script.
+         *
+         * @return array
+         */
+        public function get_payment_method_data()
+        {
+        }
+    }
+    /**
      * Cheque payment method integration
      *
      * @since 2.6.0
@@ -18595,12 +18800,6 @@ namespace Automattic\WooCommerce\Blocks\Payments\Integrations {
          * @var string
          */
         protected $name = 'cheque';
-        /**
-         * Settings from the WP options table
-         *
-         * @var array
-         */
-        private $settings;
         /**
          * An instance of the Asset Api
          *
@@ -18660,12 +18859,6 @@ namespace Automattic\WooCommerce\Blocks\Payments\Integrations {
          */
         protected $name = 'paypal';
         /**
-         * Settings from the WP options table
-         *
-         * @var array
-         */
-        private $settings;
-        /**
          * An instance of the Asset Api
          *
          * @var Api
@@ -18723,12 +18916,6 @@ namespace Automattic\WooCommerce\Blocks\Payments\Integrations {
          * @var string
          */
         protected $name = 'stripe';
-        /**
-         * Stripe settings from the WP options table
-         *
-         * @var array
-         */
-        private $settings;
         /**
          * An instance of the Asset Api
          *
@@ -18832,7 +19019,7 @@ namespace Automattic\WooCommerce\Blocks\Payments\Integrations {
         /**
          * Return the inline cc option.
          *
-         * @return string A pixel value for the height (defaults to '64').
+         * @return boolean True if the inline CC form option is enabled.
          */
         private function get_inline_cc_form()
         {
@@ -20989,6 +21176,71 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Schemas {
         {
         }
         /**
+         * Get the quantity limit for an item in the cart.
+         *
+         * @param \WC_Product $product Product instance.
+         * @return int
+         */
+        protected function get_product_quantity_limit(\WC_Product $product)
+        {
+        }
+        /**
+         * Returns true if the given attribute is valid.
+         *
+         * @param mixed $attribute Object or variable to check.
+         * @return boolean
+         */
+        protected function filter_valid_attribute($attribute)
+        {
+        }
+        /**
+         * Returns true if the given attribute is valid and used for variations.
+         *
+         * @param mixed $attribute Object or variable to check.
+         * @return boolean
+         */
+        protected function filter_variation_attribute($attribute)
+        {
+        }
+        /**
+         * Get variation IDs and attributes from the DB.
+         *
+         * @param \WC_Product $product Product instance.
+         * @returns array
+         */
+        protected function get_variations(\WC_Product $product)
+        {
+        }
+        /**
+         * Get list of product attributes and attribute terms.
+         *
+         * @param \WC_Product $product Product instance.
+         * @return array
+         */
+        protected function get_attributes(\WC_Product $product)
+        {
+        }
+        /**
+         * Prepare an attribute term for the response.
+         *
+         * @param \WP_Term $term Term object.
+         * @return object
+         */
+        protected function prepare_product_attribute_taxonomy_value(\WP_Term $term)
+        {
+        }
+        /**
+         * Prepare an attribute term for the response.
+         *
+         * @param string $name Attribute term name.
+         * @param int    $id Attribute term ID.
+         * @param string $slug Attribute term slug.
+         * @return object
+         */
+        protected function prepare_product_attribute_value($name, $id = 0, $slug = '')
+        {
+        }
+        /**
          * Get an array of pricing data.
          *
          * @param \WC_Product $product Product instance.
@@ -21024,6 +21276,16 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Schemas {
          * @return object|null
          */
         protected function get_price_range(\WC_Product $product, $tax_display_mode = '')
+        {
+        }
+        /**
+         * Returns a list of terms assigned to the product.
+         *
+         * @param \WC_Product $product Product object.
+         * @param string      $taxonomy Taxonomy name.
+         * @return array Array of terms (id, name, slug).
+         */
+        protected function get_term_list(\WC_Product $product, $taxonomy = '')
         {
         }
     }
@@ -21069,15 +21331,6 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Schemas {
          * @return array
          */
         public function get_item_response($cart_item)
-        {
-        }
-        /**
-         * Get the quantity limit for an item in the cart.
-         *
-         * @param \WC_Product $product Product instance.
-         * @return int
-         */
-        protected function get_product_quantity_limit(\WC_Product $product)
         {
         }
         /**
@@ -27230,7 +27483,7 @@ namespace Automattic\WooCommerce\RestApi {
          *
          * @var string
          */
-        const VERSION = '1.0.10';
+        const VERSION = '1.0.15';
         /**
          * Init the package - load the REST API Server class.
          */

@@ -1285,7 +1285,7 @@ abstract class WC_Abstract_Legacy_Order extends \WC_Data
     }
     /**
      * Get a product (either product or variation).
-     * @deprecated Add deprecation notices in future release. Replaced with $item->get_product()
+     * @deprecated 4.4.0
      * @param object $item
      * @return WC_Product|bool
      */
@@ -1331,7 +1331,7 @@ abstract class WC_Abstract_Legacy_Order extends \WC_Data
      * has_meta function for order items. This is different to the WC_Data
      * version and should be removed in future versions.
      *
-     * @deprecated
+     * @deprecated 3.0
      *
      * @param int $order_item_id
      *
@@ -1622,8 +1622,8 @@ abstract class WC_Abstract_Order extends \WC_Abstract_Legacy_Order
     protected $object_type = 'order';
     /**
      * Get the order if ID is passed, otherwise the order is new and empty.
-     * This class should NOT be instantiated, but the get_order function or new WC_Order_Factory.
-     * should be used. It is possible, but the aforementioned are preferred and are the only.
+     * This class should NOT be instantiated, but the wc_get_order function or new WC_Order_Factory
+     * should be used. It is possible, but the aforementioned are preferred and are the only
      * methods that will be maintained going forward.
      *
      * @param  int|object|WC_Order $order Order to read.
@@ -4775,6 +4775,21 @@ class WC_Product extends \WC_Abstract_Legacy_Product
     public function save()
     {
     }
+    /**
+     * Delete the product, set its ID to 0, and return result.
+     *
+     * @param  bool $force_delete Should the product be deleted permanently.
+     * @return bool result
+     */
+    public function delete($force_delete = \false)
+    {
+    }
+    /**
+     * If this is a child product, queue its parent for syncing at the end of the request.
+     */
+    protected function maybe_defer_product_sync()
+    {
+    }
     /*
     |--------------------------------------------------------------------------
     | Conditionals
@@ -4849,6 +4864,14 @@ class WC_Product extends \WC_Abstract_Legacy_Product
      * @return bool
      */
     public function is_visible()
+    {
+    }
+    /**
+     * Returns whether or not the product is visible in the catalog (doesn't trigger filters).
+     *
+     * @return bool
+     */
+    protected function is_visible_core()
     {
     }
     /**
@@ -7730,7 +7753,7 @@ class WC_Admin_Pointers
     /**
      * Enqueue pointers and add script to page.
      *
-     * @param array $pointers
+     * @param array $pointers Pointers data.
      */
     public function enqueue_pointers($pointers)
     {
@@ -7927,7 +7950,7 @@ class WC_Admin_Post_Types
      * @param int   $product_id product identifier.
      * @param int   $variation_id optional product variation identifier.
      * @param array $downloadable_files newly set files.
-     * @deprecated and moved to post-data class.
+     * @deprecated 3.3.0 and moved to post-data class.
      */
     public function process_product_file_download_paths($product_id, $variation_id, $downloadable_files)
     {
@@ -7958,6 +7981,35 @@ class WC_Admin_Post_Types
      * @param WP_Post $post        The current post object.
      */
     public function add_display_post_states($post_states, $post)
+    {
+    }
+    /**
+     * Apply product type constraints to stock status.
+     *
+     * @param WC_Product  $product The product whose stock status will be adjusted.
+     * @param string|null $stock_status The stock status to use for adjustment, or null if no new stock status has been supplied in the request.
+     * @return WC_Product The supplied product, or the synced product if it was a variable product.
+     */
+    private function maybe_update_stock_status($product, $stock_status)
+    {
+    }
+    /**
+     * Set the new regular or sale price if requested.
+     *
+     * @param WC_Product $product The product to set the new price for.
+     * @param string     $price_type 'regular' or 'sale'.
+     * @return bool true if a new price has been set, false otherwise.
+     */
+    private function set_new_price($product, $price_type)
+    {
+    }
+    /**
+     * Get the current request data ($_REQUEST superglobal).
+     * This method is added to ease unit testing.
+     *
+     * @return array The $_REQUEST superglobal.
+     */
+    protected function request_data()
     {
     }
 }
@@ -9534,6 +9586,18 @@ class WC_Helper_Updater
     {
     }
     /**
+     * Get translations updates informations.
+     *
+     * Scans through all subscriptions for the connected user, as well
+     * as all Woo extensions without a subscription, and obtains update
+     * data for each product.
+     *
+     * @return array Update data {product_id => data}
+     */
+    public static function get_translations_update_data()
+    {
+    }
+    /**
      * Run an update check API call.
      *
      * The call is cached based on the payload (product ids, file ids). If
@@ -10949,7 +11013,7 @@ class WC_Admin_List_Table_Products extends \WC_Admin_List_Table
     /**
      * Search by SKU or ID for products.
      *
-     * @deprecated Logic moved to query_filters.
+     * @deprecated 4.4.0 Logic moved to query_filters.
      * @param string $where Where clause SQL.
      * @return string
      */
@@ -11577,9 +11641,9 @@ class WC_Notes_Run_Db_Update
      *  - actions are set up for the first 'Update database' notice, and
      *  - URL for note's action is equal to the given URL (to check for potential nonce update).
      *
-     * @param WC_Admin_Note   $note            Note to check.
-     * @param string          $update_url      URL to check the note against.
-     * @param array( string ) $current_actions List of actions to check for.
+     * @param WC_Admin_Note      $note            Note to check.
+     * @param string             $update_url      URL to check the note against.
+     * @param array<int, string> $current_actions List of actions to check for.
      * @return bool
      */
     private static function note_up_to_date($note, $update_url, $current_actions)
@@ -13451,6 +13515,19 @@ class WC_AJAX
     {
     }
     /**
+     * Add order item via AJAX. This is refactored for better unit testing.
+     *
+     * @param int          $order_id     ID of order to add items to.
+     * @param string|array $items        Existing items in order. Empty string if no items to add.
+     * @param array        $items_to_add Array of items to add.
+     *
+     * @return array     Fragments to render and notes HTML.
+     * @throws Exception When unable to add item.
+     */
+    private static function maybe_add_order_item($order_id, $items, $items_to_add)
+    {
+    }
+    /**
      * Add order fee via ajax.
      *
      * @throws Exception If order is invalid.
@@ -14074,7 +14151,7 @@ class WC_Legacy_API
     /**
      * Rest API Init.
      *
-     * @deprecated since 3.7.0 - REST API clases autoload.
+     * @deprecated 3.7.0 - REST API clases autoload.
      */
     public function rest_api_init()
     {
@@ -14082,7 +14159,7 @@ class WC_Legacy_API
     /**
      * Include REST API classes.
      *
-     * @deprecated since 3.7.0 - REST API clases autoload.
+     * @deprecated 3.7.0 - REST API clases autoload.
      */
     public function rest_api_includes()
     {
@@ -14090,7 +14167,7 @@ class WC_Legacy_API
     /**
      * Register REST API routes.
      *
-     * @deprecated since 3.7.0 - Not used.
+     * @deprecated 3.7.0
      */
     public function register_rest_routes()
     {
@@ -15447,6 +15524,8 @@ abstract class WC_Legacy_Cart
     /**
      * Magic getters.
      *
+     * If you add/remove cases here please update $legacy_keys in __isset accordingly.
+     *
      * @param string $name Property name.
      * @return mixed
      */
@@ -15527,7 +15606,7 @@ abstract class WC_Legacy_Cart
     /**
      * Function to apply discounts to a product and get the discounted price (before tax is applied).
      *
-     * @deprecated Calculation and coupon logic is handled in WC_Cart_Totals.
+     * @deprecated 3.2.0 Calculation and coupon logic is handled in WC_Cart_Totals.
      * @param mixed $values Cart item.
      * @param mixed $price Price of item.
      * @param bool  $add_totals Legacy.
@@ -15566,7 +15645,7 @@ abstract class WC_Legacy_Cart
     /**
      * Coupons enabled function. Filterable.
      *
-     * @deprecated 2.5.0 in favor to wc_coupons_enabled()
+     * @deprecated 2.5.0
      * @return bool
      */
     public function coupons_enabled()
@@ -15575,7 +15654,7 @@ abstract class WC_Legacy_Cart
     /**
      * Gets the total (product) discount amount - these are applied before tax.
      *
-     * @deprecated Order discounts (after tax) removed in 2.3 so multiple methods for discounts are no longer required.
+     * @deprecated 2.3.0 Order discounts (after tax) removed in 2.3 so multiple methods for discounts are no longer required.
      * @return mixed formatted price or false if there are none.
      */
     public function get_discounts_before_tax()
@@ -15584,7 +15663,7 @@ abstract class WC_Legacy_Cart
     /**
      * Get the total of all order discounts (after tax discounts).
      *
-     * @deprecated Order discounts (after tax) removed in 2.3.
+     * @deprecated 2.3.0 Order discounts (after tax) removed in 2.3.
      * @return int
      */
     public function get_order_discount_total()
@@ -15593,7 +15672,7 @@ abstract class WC_Legacy_Cart
     /**
      * Function to apply cart discounts after tax.
      *
-     * @deprecated Coupons can not be applied after tax.
+     * @deprecated 2.3.0 Coupons can not be applied after tax.
      * @param $values
      * @param $price
      */
@@ -15603,7 +15682,7 @@ abstract class WC_Legacy_Cart
     /**
      * Function to apply product discounts after tax.
      *
-     * @deprecated Coupons can not be applied after tax.
+     * @deprecated 2.3.0 Coupons can not be applied after tax.
      *
      * @param $values
      * @param $price
@@ -15614,7 +15693,7 @@ abstract class WC_Legacy_Cart
     /**
      * Gets the order discount amount - these are applied after tax.
      *
-     * @deprecated Coupons can not be applied after tax.
+     * @deprecated 2.3.0 Coupons can not be applied after tax.
      */
     public function get_discounts_after_tax()
     {
@@ -15643,12 +15722,6 @@ class WC_Cart extends \WC_Legacy_Cart
      * @var array
      */
     public $applied_coupons = array();
-    /**
-     * Are prices in the cart displayed inc or excl tax?
-     *
-     * @var string
-     */
-    public $tax_display_cart = 'incl';
     /**
      * This stores the chosen shipping methods for the cart item packages.
      *
@@ -16683,7 +16756,7 @@ class WC_Cart extends \WC_Legacy_Cart
      *
      * @return string
      */
-    private function is_tax_displayed()
+    public function get_tax_price_display_mode()
     {
     }
     /**
@@ -20535,7 +20608,7 @@ class WC_Download_Handler
     /**
      * Count download.
      *
-     * @deprecated unknown
+     * @deprecated 4.4.0
      * @param array $download_data Download data.
      */
     public static function count_download($download_data)
@@ -21937,7 +22010,7 @@ class WC_Install
      *
      * @var array
      */
-    private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_update_400_db_version'));
+    private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_update_400_db_version'), '4.4.0' => array('wc_update_440_insert_attribute_terms_for_variable_products', 'wc_update_440_db_version'));
     /**
      * Hook in tabs.
      */
@@ -23186,7 +23259,7 @@ class WC_Order_Item_Coupon extends \WC_Order_Item
     /**
      * OffsetGet for ArrayAccess/Backwards compatibility.
      *
-     * @deprecated Add deprecation notices in future release.
+     * @deprecated 4.4.0
      * @param string $offset Offset.
      * @return mixed
      */
@@ -23196,7 +23269,7 @@ class WC_Order_Item_Coupon extends \WC_Order_Item
     /**
      * OffsetSet for ArrayAccess/Backwards compatibility.
      *
-     * @deprecated Add deprecation notices in future release.
+     * @deprecated 4.4.0
      * @param string $offset Offset.
      * @param mixed  $value  Value.
      */
@@ -23387,7 +23460,6 @@ class WC_Order_Item_Fee extends \WC_Order_Item
     /**
      * OffsetGet for ArrayAccess/Backwards compatibility.
      *
-     * @deprecated Add deprecation notices in future release.
      * @param string $offset Offset.
      * @return mixed
      */
@@ -23397,7 +23469,7 @@ class WC_Order_Item_Fee extends \WC_Order_Item
     /**
      * OffsetSet for ArrayAccess/Backwards compatibility.
      *
-     * @deprecated Add deprecation notices in future release.
+     * @deprecated 4.4.0
      * @param string $offset Offset.
      * @param mixed  $value  Value.
      */
@@ -23742,7 +23814,6 @@ class WC_Order_Item_Product extends \WC_Order_Item
     /**
      * OffsetGet for ArrayAccess/Backwards compatibility.
      *
-     * @deprecated Add deprecation notices in future release.
      * @param string $offset Offset.
      * @return mixed
      */
@@ -23752,7 +23823,7 @@ class WC_Order_Item_Product extends \WC_Order_Item
     /**
      * OffsetSet for ArrayAccess/Backwards compatibility.
      *
-     * @deprecated Add deprecation notices in future release.
+     * @deprecated 4.4.0
      * @param string $offset Offset.
      * @param mixed  $value  Value.
      */
@@ -23965,7 +24036,6 @@ class WC_Order_Item_Shipping extends \WC_Order_Item
     /**
      * Offset get: for ArrayAccess/Backwards compatibility.
      *
-     * @deprecated Add deprecation notices in future release.
      * @param string $offset Key.
      * @return mixed
      */
@@ -23975,7 +24045,7 @@ class WC_Order_Item_Shipping extends \WC_Order_Item
     /**
      * Offset set: for ArrayAccess/Backwards compatibility.
      *
-     * @deprecated Add deprecation notices in future release.
+     * @deprecated 4.4.0
      * @param string $offset Key.
      * @param mixed  $value Value to set.
      */
@@ -24185,7 +24255,6 @@ class WC_Order_Item_Tax extends \WC_Order_Item
     /**
      * O for ArrayAccess/Backwards compatibility.
      *
-     * @deprecated Add deprecation notices in future release.
      * @param string $offset Offset.
      * @return mixed
      */
@@ -24195,7 +24264,7 @@ class WC_Order_Item_Tax extends \WC_Order_Item
     /**
      * OffsetSet for ArrayAccess/Backwards compatibility.
      *
-     * @deprecated Add deprecation notices in future release.
+     * @deprecated 4.4.0
      * @param string $offset Offset.
      * @param mixed  $value  Value.
      */
@@ -26152,6 +26221,16 @@ class WC_Post_Types
     {
     }
     /**
+     * Customize taxonomies update messages.
+     *
+     * @param array $messages The list of available messages.
+     * @since 4.4.0
+     * @return bool
+     */
+    public static function updated_term_messages($messages)
+    {
+    }
+    /**
      * Register our custom post statuses, used for order status.
      */
     public static function register_post_status()
@@ -27452,9 +27531,21 @@ class WC_Product_Variable extends \WC_Product
     /**
      * Get an array of available variations for the current product.
      *
-     * @return array
+     * @param string $return Optional. The format to return the results in. Can be 'array' to return an array of variation data or 'objects' for the product objects. Default 'array'.
+     *
+     * @return array[]|WC_Product_Variation[]
      */
-    public function get_available_variations()
+    public function get_available_variations($return = 'array')
+    {
+    }
+    /**
+     * Check if a given variation is currently available.
+     *
+     * @param WC_Product_Variation $variation Variation to check.
+     *
+     * @return bool True if the variation is available, false otherwise.
+     */
+    private function variation_is_available(\WC_Product_Variation $variation)
     {
     }
     /**
@@ -27593,6 +27684,43 @@ class WC_Product_Variable extends \WC_Product
     public function has_options()
     {
     }
+    /**
+     * Returns whether or not the product is visible in the catalog (doesn't trigger filters).
+     *
+     * @return bool
+     */
+    protected function is_visible_core()
+    {
+    }
+    /**
+     * Checks if a given variation matches the active attribute filters.
+     *
+     * @param WC_Product_Variation $variation The variation to check.
+     * @param array                $query_filters The active filters as an array of attribute_name => [term1, term2...].
+     *
+     * @return bool True if the variation matches the active attribute filters.
+     */
+    private function variation_matches_filters(\WC_Product_Variation $variation, array $query_filters)
+    {
+    }
+    /**
+     * What does is_visible_core in the parent class say?
+     * This method exists to ease unit testing.
+     *
+     * @return bool
+     */
+    protected function parent_is_visible_core()
+    {
+    }
+    /**
+     * Get an array of attributes and terms selected with the layered nav widget.
+     * This method exists to ease unit testing.
+     *
+     * @return array
+     */
+    protected function get_layered_nav_chosen_attributes()
+    {
+    }
     /*
     |--------------------------------------------------------------------------
     | Sync with child variations.
@@ -27697,11 +27825,12 @@ class WC_Product_Variation extends \WC_Product_Simple
     {
     }
     /**
-     * Get variation attribute values. Keys are prefixed with attribute_, as stored.
+     * Get variation attribute values. Keys are prefixed with attribute_, as stored, unless $with_prefix is false.
      *
-     * @return array of attributes and their values for this variation
+     * @param bool $with_prefix Whether keys should be prepended with attribute_ or not, default is true.
+     * @return array of attributes and their values for this variation.
      */
-    public function get_variation_attributes()
+    public function get_variation_attributes($with_prefix = \true)
     {
     }
     /**
@@ -27963,6 +28092,16 @@ class WC_Product_Variation extends \WC_Product_Simple
     protected function get_valid_tax_classes()
     {
     }
+    /**
+     * Delete variation, set the ID to 0, and return result.
+     *
+     * @since  4.4.0
+     * @param  bool $force_delete Should the variation be deleted permanently.
+     * @return bool result
+     */
+    public function delete($force_delete = \false)
+    {
+    }
 }
 /**
  * WC_Query Class.
@@ -27986,7 +28125,7 @@ class WC_Query
      *
      * @var array
      */
-    private static $_chosen_attributes;
+    private static $chosen_attributes;
     /**
      * Constructor for the query class. Hooks in methods.
      */
@@ -28087,6 +28226,26 @@ class WC_Query
     {
     }
     /**
+     * Handler for the 'the_posts' WP filter.
+     *
+     * @param array $posts Posts from WP Query.
+     *
+     * @return array
+     */
+    public function handle_get_posts($posts)
+    {
+    }
+    /**
+     * The 'adjust_posts_count' method that handles the 'found_posts' filter indirectly initializes
+     * the loop properties with a call to 'wc_setup_loop'. This includes setting 'total_pages' to
+     * '$GLOBALS['wp_query']->max_num_pages', which at that point has a value of zero.
+     * Thus we need to set the real value from the 'the_posts' filter, where $GLOBALS['wp_query']->max_num_pages'
+     * will aready have been initialized.
+     */
+    private function adjust_total_pages()
+    {
+    }
+    /**
      * Pre_get_posts above may adjust the main query to add WooCommerce logic. When this query is done, we need to ensure
      * all custom filters are removed.
      *
@@ -28096,6 +28255,39 @@ class WC_Query
      * @return array
      */
     public function remove_product_query_filters($posts)
+    {
+    }
+    /**
+     * When we are listing products and the request is filtering by attributes via layered nav plugin
+     * we need to adjust the total posts count to account for variable products having stock
+     * in some variations but not in others.
+     * We do that by just checking if each product is visible.
+     *
+     * We also cache the post visibility so that it isn't checked again when displaying the posts list.
+     *
+     * @since 4.4.0
+     * @param int      $count Original posts count, as supplied by the found_posts filter.
+     * @param WP_Query $query The current WP_Query object.
+     *
+     * @return int Adjusted posts count.
+     */
+    public function adjust_posts_count($count, $query)
+    {
+    }
+    /**
+     * Instance version of get_layered_nav_chosen_attributes, needed for unit tests.
+     *
+     * @return array
+     */
+    protected function get_layered_nav_chosen_attributes_inst()
+    {
+    }
+    /**
+     * Get the posts (or the ids of the posts) found in the current WP loop.
+     *
+     * @return array Array of posts or post ids.
+     */
+    protected function get_current_posts()
     {
     }
     /**
@@ -28276,7 +28468,6 @@ class WC_Query
     public function remove_add_to_cart_pagination($url)
     {
     }
-    // @codingStandardsIgnoreStart
     /**
      * Return a meta query for filtering by rating.
      *
@@ -28290,7 +28481,7 @@ class WC_Query
      * Returns a meta query to handle product visibility.
      *
      * @deprecated 3.0.0 Replaced with taxonomy.
-     * @param string $compare (default: 'IN')
+     * @param string $compare (default: 'IN').
      * @return array
      */
     public function visibility_meta_query($compare = 'IN')
@@ -28300,7 +28491,7 @@ class WC_Query
      * Returns a meta query to handle product stock status.
      *
      * @deprecated 3.0.0 Replaced with taxonomy.
-     * @param string $status (default: 'instock')
+     * @param string $status (default: 'instock').
      * @return array
      */
     public function stock_status_meta_query($status = 'instock')
@@ -28335,6 +28526,8 @@ class WC_Query
     /**
      * Search post excerpt.
      *
+     * @param string $where Where clause.
+     *
      * @deprecated 3.2.0 - Not needed anymore since WordPress 4.5.
      */
     public function search_post_excerpt($where = '')
@@ -28342,6 +28535,7 @@ class WC_Query
     }
     /**
      * Remove the posts_where filter.
+     *
      * @deprecated 3.2.0 - Nothing to remove anymore because search_post_excerpt() is deprecated.
      */
     public function remove_posts_where()
@@ -31832,7 +32026,7 @@ final class WooCommerce
      *
      * @var string
      */
-    public $version = '4.3.3';
+    public $version = '4.4.0';
     /**
      * WooCommerce Schema version.
      *
@@ -32250,6 +32444,59 @@ final class WooCommerce
      * @return boolean
      */
     public function is_wc_admin_active()
+    {
+    }
+    /**
+     * Call a user function. This should be used to execute any non-idempotent function, especially
+     * those in the `includes` directory or provided by WordPress.
+     *
+     * This method can be useful for unit tests, since functions called using this method
+     * can be easily mocked by using WC_Unit_Test_Case::register_legacy_proxy_function_mocks.
+     *
+     * @param string $function_name The function to execute.
+     * @param mixed  ...$parameters The parameters to pass to the function.
+     *
+     * @return mixed The result from the function.
+     *
+     * @since 4.4
+     */
+    public function call_function($function_name, ...$parameters)
+    {
+    }
+    /**
+     * Call a static method in a class. This should be used to execute any non-idempotent method in classes
+     * from the `includes` directory.
+     *
+     * This method can be useful for unit tests, since methods called using this method
+     * can be easily mocked by using WC_Unit_Test_Case::register_legacy_proxy_static_mocks.
+     *
+     * @param string $class_name The name of the class containing the method.
+     * @param string $method_name The name of the method.
+     * @param mixed  ...$parameters The parameters to pass to the method.
+     *
+     * @return mixed The result from the method.
+     *
+     * @since 4.4
+     */
+    public function call_static($class_name, $method_name, ...$parameters)
+    {
+    }
+    /**
+     * Gets an instance of a given legacy class.
+     * This must not be used to get instances of classes in the `src` directory.
+     *
+     * This method can be useful for unit tests, since objects obtained using this method
+     * can be easily mocked by using WC_Unit_Test_Case::register_legacy_proxy_class_mocks.
+     *
+     * @param string $class_name The name of the class to get an instance for.
+     * @param mixed  ...$args Parameters to be passed to the class constructor or to the appropriate internal 'get_instance_of_' method.
+     *
+     * @return object The instance of the class.
+     * @throws \Exception The requested class belongs to the `src` directory, or there was an error creating an instance of the class.
+     *
+     * @since 4.4
+     */
+    public function get_instance_of(string $class_name, ...$args)
     {
     }
 }
@@ -33099,6 +33346,16 @@ abstract class Abstract_WC_Order_Data_Store_CPT extends \WC_Data_Store_WP implem
      * @return string
      */
     protected function get_post_title()
+    {
+    }
+    /**
+     * Get order key.
+     *
+     * @since 4.3.0
+     * @param WC_order $order Order object.
+     * @return string
+     */
+    protected function get_order_key($order)
     {
     }
     /**
@@ -34257,6 +34514,16 @@ class WC_Order_Data_Store_CPT extends \Abstract_WC_Order_Data_Store_CPT implemen
      * @return string
      */
     protected function get_post_excerpt($order)
+    {
+    }
+    /**
+     * Get order key.
+     *
+     * @since 4.3.0
+     * @param WC_order $order Order object.
+     * @return string
+     */
+    protected function get_order_key($order)
     {
     }
     /**
@@ -40559,7 +40826,7 @@ class WC_Product_CSV_Importer extends \WC_Product_Importer
      * Just skip current field.
      *
      * By default is applied wc_clean() to all not listed fields
-     * in self::get_formating_callback(), use this method to skip any formating.
+     * in self::get_formatting_callback(), use this method to skip any formatting.
      *
      * @param string $value Field value.
      *
@@ -40612,11 +40879,21 @@ class WC_Product_CSV_Importer extends \WC_Product_Importer
     {
     }
     /**
-     * Get formatting callback.
+     * Deprecated get formatting callback method.
      *
+     * @deprecated 4.3.0
      * @return array
      */
     protected function get_formating_callback()
+    {
+    }
+    /**
+     * Get formatting callback.
+     *
+     * @since 4.3.0
+     * @return array
+     */
+    protected function get_formatting_callback()
     {
     }
     /**
@@ -44792,6 +45069,58 @@ class WC_Widget_Layered_Nav extends \WC_Widget
     {
     }
     /**
+     * Wrapper for WC_Query::get_main_tax_query() to ease unit testing.
+     *
+     * @since 4.4.0
+     * @return array
+     */
+    protected function get_main_tax_query()
+    {
+    }
+    /**
+     * Wrapper for WC_Query::get_main_search_query_sql() to ease unit testing.
+     *
+     * @since 4.4.0
+     * @return string
+     */
+    protected function get_main_search_query_sql()
+    {
+    }
+    /**
+     * Wrapper for WC_Query::get_main_search_queryget_main_meta_query to ease unit testing.
+     *
+     * @since 4.4.0
+     * @return array
+     */
+    protected function get_main_meta_query()
+    {
+    }
+    /**
+     * Get a tax query SQL for a given set of taxonomy, terms and operator.
+     * Uses an intermediate WP_Tax_Query object.
+     *
+     * @since 4.4.0
+     * @param string $taxonomy Taxonomy name.
+     * @param array  $terms Terms to include in the query.
+     * @param string $operator Query operator, as supported by WP_Tax_Query; e.g. "NOT IN".
+     *
+     * @return array
+     */
+    private function get_extra_tax_query_sql($taxonomy, $terms, $operator)
+    {
+    }
+    /**
+     * Convert a tax query array to SQL using an intermediate WP_Tax_Query object.
+     *
+     * @since 4.4.0
+     * @param array $query Query array in the same format accepted by WP_Tax_Query constructor.
+     *
+     * @return array Query SQL as returned by WP_Tax_Query->get_sql.
+     */
+    private function convert_tax_query_to_sql($query)
+    {
+    }
+    /**
      * Show list based layered nav.
      *
      * @param  array  $terms Terms.
@@ -45258,6 +45587,18 @@ function wc_render_action_buttons($actions)
  * @param WC_Product $product_object Product object.
  */
 function wc_render_invalid_variation_notice($product_object)
+{
+}
+/**
+ * Get current admin page URL.
+ *
+ * Returns an empty string if it cannot generate a URL.
+ *
+ * @internal
+ * @since 4.4.0
+ * @return string
+ */
+function wc_get_current_admin_url()
 {
 }
 /**
@@ -47793,8 +48134,7 @@ function woocommerce_track_product_view()
 {
 }
 /**
- * @since 2.3
- * @deprecated has no replacement
+ * @deprecated 2.3 has no replacement
  */
 function woocommerce_compile_less_styles()
 {
@@ -47802,7 +48142,7 @@ function woocommerce_compile_less_styles()
 /**
  * woocommerce_calc_shipping was an option used to determine if shipping was enabled prior to version 2.6.0. This has since been replaced with wc_shipping_enabled() function and
  * the woocommerce_ship_to_countries setting.
- * @since 2.6.0
+ * @deprecated 2.6.0
  * @return string
  */
 function woocommerce_calc_shipping_backwards_compatibility($value)
@@ -48899,12 +49239,13 @@ function wc_get_order_status_name($status)
 {
 }
 /**
- * Generate an order key.
+ * Generate an order key with prefix.
  *
  * @since 3.5.4
+ * @param string $key Order key without a prefix. By default generates a 13 digit secret.
  * @return string The order key.
  */
-function wc_generate_order_key()
+function wc_generate_order_key($key = '')
 {
 }
 /**
@@ -50049,8 +50390,8 @@ function wc_update_product_stock($product, $stock_quantity = \null, $operation =
 /**
  * Update a product's stock status.
  *
- * @param  int $product_id Product ID.
- * @param  int $status     Status.
+ * @param int    $product_id Product ID.
+ * @param string $status     Status.
  */
 function wc_update_product_stock_status($product_id, $status)
 {
@@ -50228,6 +50569,27 @@ function wc_get_loop_prop($prop, $default = '')
  * @param string $value Value to set.
  */
 function wc_set_loop_prop($prop, $value = '')
+{
+}
+/**
+ * Set the current visbility for a product in the woocommerce_loop global.
+ *
+ * @since 4.4.0
+ * @param int  $product_id Product it to cache visbiility for.
+ * @param bool $value The poduct visibility value to cache.
+ */
+function wc_set_loop_product_visibility($product_id, $value)
+{
+}
+/**
+ * Gets the cached current visibility for a product from the woocommerce_loop global.
+ *
+ * @since 4.4.0
+ * @param int $product_id Product id to get the cached visibility for.
+ *
+ * @return bool|null The cached product visibility, or null if on visibility has been cached for that product.
+ */
+function wc_get_loop_product_visibility($product_id)
 {
 }
 /**
@@ -52190,6 +52552,20 @@ function wc_update_400_db_version()
 {
 }
 /**
+ * Register attributes as terms for variable products, in increments of 100 products.
+ *
+ * @return bool true if there are more products to process.
+ */
+function wc_update_440_insert_attribute_terms_for_variable_products()
+{
+}
+/**
+ * Update DB version.
+ */
+function wc_update_440_db_version()
+{
+}
+/**
  * Prevent any user who cannot 'edit_posts' (subscribers, customers etc) from seeing the admin bar.
  *
  * Note: get_option( 'woocommerce_lock_down_admin', true ) is a deprecated option here for backwards compatibility. Defaults to true.
@@ -52510,6 +52886,14 @@ function wc_translate_user_roles($translation, $text, $context, $domain)
 {
 }
 /**
+ * Process the web hooks at the end of the request.
+ *
+ * @since 4.4.0
+ */
+function wc_webhook_execute_queue()
+{
+}
+/**
  * Process webhook delivery.
  *
  * @since 3.3.0
@@ -52609,6 +52993,15 @@ function wc_register_widgets()
  * @return WooCommerce
  */
 function WC()
+{
+}
+/**
+ * Returns the WooCommerce PSR11-compatible object container.
+ * Code in the `includes` directory should use the container to get instances of classes in the `src` directory.
+ *
+ * @return \Psr\Container\ContainerInterface The WooCommerce PSR11 container.
+ */
+function wc_get_container() : \Psr\Container\ContainerInterface
 {
 }
 define('WC_VERSION', '0.0.0');
