@@ -27,7 +27,7 @@ return \StubsGenerator\Finder::create()
             ->in(['source/woocommerce/packages/woocommerce-admin/includes'])
             // Email templates.
             ->notPath('emails')
-            // Update functions for internal use.
+            // Update functions.
             ->notPath('wc-admin-update-functions.php')
             ->sortByName(true)
     )

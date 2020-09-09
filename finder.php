@@ -26,5 +26,7 @@ return \StubsGenerator\Finder::create()
     // Legacy WooCommerce API.
     ->notPath('api/legacy')
     ->notPath('legacy/api')
+    // Update functions.
+    ->notPath('wc-update-functions.php')
     ->sortByName()
 ;
