@@ -27685,43 +27685,6 @@ namespace {
         public function has_options()
         {
         }
-        /**
-         * Returns whether or not the product is visible in the catalog (doesn't trigger filters).
-         *
-         * @return bool
-         */
-        protected function is_visible_core()
-        {
-        }
-        /**
-         * Checks if a given variation matches the active attribute filters.
-         *
-         * @param WC_Product_Variation $variation The variation to check.
-         * @param array                $query_filters The active filters as an array of attribute_name => [term1, term2...].
-         *
-         * @return bool True if the variation matches the active attribute filters.
-         */
-        private function variation_matches_filters(\WC_Product_Variation $variation, array $query_filters)
-        {
-        }
-        /**
-         * What does is_visible_core in the parent class say?
-         * This method exists to ease unit testing.
-         *
-         * @return bool
-         */
-        protected function parent_is_visible_core()
-        {
-        }
-        /**
-         * Get an array of attributes and terms selected with the layered nav widget.
-         * This method exists to ease unit testing.
-         *
-         * @return array
-         */
-        protected function get_layered_nav_chosen_attributes()
-        {
-        }
         /*
         |--------------------------------------------------------------------------
         | Sync with child variations.
@@ -28238,16 +28201,6 @@ namespace {
         {
         }
         /**
-         * The 'adjust_posts_count' method that handles the 'found_posts' filter indirectly initializes
-         * the loop properties with a call to 'wc_setup_loop'. This includes setting 'total_pages' to
-         * '$GLOBALS['wp_query']->max_num_pages', which at that point has a value of zero.
-         * Thus we need to set the real value from the 'the_posts' filter, where $GLOBALS['wp_query']->max_num_pages'
-         * will aready have been initialized.
-         */
-        private function adjust_total_pages()
-        {
-        }
-        /**
          * Pre_get_posts above may adjust the main query to add WooCommerce logic. When this query is done, we need to ensure
          * all custom filters are removed.
          *
@@ -28260,12 +28213,9 @@ namespace {
         {
         }
         /**
-         * When we are listing products and the request is filtering by attributes via layered nav plugin
-         * we need to adjust the total posts count to account for variable products having stock
-         * in some variations but not in others.
-         * We do that by just checking if each product is visible.
-         *
-         * We also cache the post visibility so that it isn't checked again when displaying the posts list.
+         * This function used to be hooked to found_posts and adjust the posts count when the filtering by attribute
+         * widget was used and variable products were present. Now it isn't hooked anymore and does nothing but return
+         * the input unchanged, since the pull request in which it was introduced has been reverted.
          *
          * @since 4.4.0
          * @param int      $count Original posts count, as supplied by the found_posts filter.
@@ -32028,7 +31978,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '4.5.1';
+        public $version = '4.5.2';
         /**
          * WooCommerce Schema version.
          *
@@ -52919,17 +52869,6 @@ namespace {
         {
         }
         /**
-         * Get the count of terms for products, using a set of SQL queries that are return pairs of product id - term id.
-         *
-         * @param string $main_query_sql The SQL query to use in order to count products with concrete values for attributes, must return a "product_id" column and a "terms_count_id" column.
-         * @param string $query_sql_for_attributes_with_any_value The SQL query to use in order to count products with "Any" values for attributes, must return a "product_id" column and a "terms_count_id" column.
-         *
-         * @return array An array where the keys are term ids, and the values are term counts.
-         */
-        private function get_term_product_counts_from_queries($main_query_sql, $query_sql_for_attributes_with_any_value)
-        {
-        }
-        /**
          * Wrapper for WC_Query::get_main_tax_query() to ease unit testing.
          *
          * @since 4.4.0
@@ -52954,31 +52893,6 @@ namespace {
          * @return array
          */
         protected function get_main_meta_query()
-        {
-        }
-        /**
-         * Get a tax query SQL for a given set of taxonomy, terms and operator.
-         * Uses an intermediate WP_Tax_Query object.
-         *
-         * @since 4.4.0
-         * @param string $taxonomy Taxonomy name.
-         * @param array  $terms Terms to include in the query.
-         * @param string $operator Query operator, as supported by WP_Tax_Query; e.g. "NOT IN".
-         *
-         * @return array
-         */
-        private function get_extra_tax_query_sql($taxonomy, $terms, $operator)
-        {
-        }
-        /**
-         * Convert a tax query array to SQL using an intermediate WP_Tax_Query object.
-         *
-         * @since 4.4.0
-         * @param array $query Query array in the same format accepted by WP_Tax_Query constructor.
-         *
-         * @return array Query SQL as returned by WP_Tax_Query->get_sql.
-         */
-        private function convert_tax_query_to_sql($query)
         {
         }
         /**
