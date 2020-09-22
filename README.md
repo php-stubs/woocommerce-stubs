@@ -31,7 +31,7 @@ Include all stubs in PHPStan configuration file.
 
 ```yaml
 parameters:
-    autoload_files:
+    bootstrapFiles:
         - %rootDir%/../../php-stubs/wordpress-stubs/wordpress-stubs.php
         - %rootDir%/../../php-stubs/woocommerce-stubs/woocommerce-stubs.php
         #- %rootDir%/../../php-stubs/woocommerce-stubs/woocommerce-packages-stubs.php
