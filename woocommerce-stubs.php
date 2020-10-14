@@ -7429,7 +7429,7 @@ namespace {
          *
          * @var array
          */
-        private static $core_notices = array('install' => 'install_notice', 'update' => 'update_notice', 'template_files' => 'template_file_check_notice', 'legacy_shipping' => 'legacy_shipping_notice', 'no_shipping_methods' => 'no_shipping_methods_notice', 'regenerating_thumbnails' => 'regenerating_thumbnails_notice', 'regenerating_lookup_table' => 'regenerating_lookup_table_notice', 'no_secure_connection' => 'secure_connection_notice', \WC_PHP_MIN_REQUIREMENTS_NOTICE => 'wp_php_min_requirements_notice', 'maxmind_license_key' => 'maxmind_missing_license_key_notice', 'redirect_download_method' => 'redirect_download_method_notice', 'uploads_directory_is_unprotected' => 'uploads_directory_is_unprotected_notice', 'base_tables_missing' => 'base_tables_missing_notice');
+        private static $core_notices = array('update' => 'update_notice', 'template_files' => 'template_file_check_notice', 'legacy_shipping' => 'legacy_shipping_notice', 'no_shipping_methods' => 'no_shipping_methods_notice', 'regenerating_thumbnails' => 'regenerating_thumbnails_notice', 'regenerating_lookup_table' => 'regenerating_lookup_table_notice', 'no_secure_connection' => 'secure_connection_notice', \WC_PHP_MIN_REQUIREMENTS_NOTICE => 'wp_php_min_requirements_notice', 'maxmind_license_key' => 'maxmind_missing_license_key_notice', 'redirect_download_method' => 'redirect_download_method_notice', 'uploads_directory_is_unprotected' => 'uploads_directory_is_unprotected_notice', 'base_tables_missing' => 'base_tables_missing_notice');
         /**
          * Constructor.
          */
@@ -7525,6 +7525,8 @@ namespace {
         }
         /**
          * If we have just installed, show a message with the install pages button.
+         *
+         * @deprecated 4.6.0
          */
         public static function install_notice()
         {
@@ -8243,12 +8245,16 @@ namespace {
         private $wc_admin_plugin_minimum_wordpress_version = '5.3';
         /**
          * Hook in tabs.
+         *
+         * @deprecated 4.6.0
          */
         public function __construct()
         {
         }
         /**
          * Add admin menus/screens.
+         *
+         * @deprecated 4.6.0
          */
         public function admin_menus()
         {
@@ -8257,6 +8263,7 @@ namespace {
          * The theme "extra" should only be shown if the current user can modify themes
          * and the store doesn't already have a WooCommerce theme.
          *
+         * @deprecated 4.6.0
          * @return boolean
          */
         protected function should_show_theme()
@@ -8265,6 +8272,8 @@ namespace {
         /**
          * The "automated tax" extra should only be shown if the current user can
          * install plugins and the store is in a supported country.
+         *
+         * @deprecated 4.6.0
          */
         protected function should_show_automated_tax()
         {
@@ -8273,6 +8282,7 @@ namespace {
          * Should we show the MailChimp install option?
          * True only if the user can install plugins.
          *
+         * @deprecated 4.6.0
          * @return boolean
          */
         protected function should_show_mailchimp()
@@ -8283,6 +8293,7 @@ namespace {
          * True only if the user can install plugins,
          * and up until the end date of the recommendation.
          *
+         * @deprecated 4.6.0
          * @return boolean
          */
         protected function should_show_facebook()
@@ -8292,6 +8303,7 @@ namespace {
          * Is the WooCommerce Admin actively included in the WooCommerce core?
          * Based on presence of a basic WC Admin function.
          *
+         * @deprecated 4.6.0
          * @return boolean
          */
         protected function is_wc_admin_active()
@@ -8304,6 +8316,7 @@ namespace {
          *
          * @see WC_Admin_Setup_Wizard::$wc_admin_plugin_minimum_wordpress_version
          *
+         * @deprecated 4.6.0
          * @return boolean
          */
         protected function should_show_wc_admin()
@@ -8312,6 +8325,7 @@ namespace {
         /**
          * Should we show the new WooCommerce Admin onboarding experience?
          *
+         * @deprecated 4.6.0
          * @return boolean
          */
         protected function should_show_wc_admin_onboarding()
@@ -8321,6 +8335,7 @@ namespace {
          * Should we display the 'Recommended' step?
          * True if at least one of the recommendations will be displayed.
          *
+         * @deprecated 4.6.0
          * @return boolean
          */
         protected function should_show_recommended_step()
@@ -8330,21 +8345,16 @@ namespace {
          * Register/enqueue scripts and styles for the Setup Wizard.
          *
          * Hooked onto 'admin_enqueue_scripts'.
+         *
+         * @deprecated 4.6.0
          */
         public function enqueue_scripts()
         {
         }
         /**
-         * Helper method to get postcode configurations from `WC()->countries->get_country_locale()`.
-         * We don't use `wp_list_pluck` because it will throw notices when postcode configuration is not defined for a country.
-         *
-         * @return array
-         */
-        private function get_postcodes()
-        {
-        }
-        /**
          * Show the setup wizard.
+         *
+         * @deprecated 4.6.0
          */
         public function setup_wizard()
         {
@@ -8356,6 +8366,8 @@ namespace {
          * @return string       URL for next step if a next step exists.
          *                      Admin URL if it's the last step.
          *                      Empty string on failure.
+         *
+         * @deprecated 4.6.0
          * @since 3.0.0
          */
         public function get_next_step_link($step = '')
@@ -8363,44 +8375,50 @@ namespace {
         }
         /**
          * Setup Wizard Header.
+         *
+         * @deprecated 4.6.0
          */
         public function setup_wizard_header()
         {
         }
         /**
          * Setup Wizard Footer.
+         *
+         * @deprecated 4.6.0
          */
         public function setup_wizard_footer()
         {
         }
         /**
          * Output the steps.
+         *
+         * @deprecated 4.6.0
          */
         public function setup_wizard_steps()
         {
         }
         /**
          * Output the content for the current step.
+         *
+         * @deprecated 4.6.0
          */
         public function setup_wizard_content()
         {
         }
         /**
          * Display's a prompt for users to try out the new improved WooCommerce onboarding experience in WooCommerce Admin.
+         *
+         * @deprecated 4.6.0
          */
         public function wc_setup_new_onboarding()
         {
         }
         /**
          * Installs WooCommerce admin and redirects to the new onboarding experience.
+         *
+         * @deprecated 4.6.0
          */
         public function wc_setup_new_onboarding_save()
-        {
-        }
-        /**
-         * Redirects to the onboarding wizard in WooCommerce Admin.
-         */
-        private function wc_setup_redirect_to_wc_admin_onboarding()
         {
         }
         /**
@@ -8412,12 +8430,16 @@ namespace {
         }
         /**
          * Template for the usage tracking modal.
+         *
+         * @deprecated 4.6.0
          */
         public function tracking_modal()
         {
         }
         /**
          * Save initial store settings.
+         *
+         * @deprecated 4.6.0
          */
         public function wc_setup_store_setup_save()
         {
@@ -8435,6 +8457,8 @@ namespace {
          *
          * @see WC_Admin_Setup_Wizard::install_plugin
          * @see WC_Admin_Setup_Wizard::install_theme
+         *
+         * @deprecated 4.6.0
          */
         public function run_deferred_actions()
         {
@@ -8444,6 +8468,8 @@ namespace {
          *
          * @param string $plugin_id  Plugin id used for background install.
          * @param array  $plugin_info Plugin info array containing name and repo-slug, and optionally file if different from [repo-slug].php.
+         *
+         * @deprecated 4.6.0
          */
         protected function install_plugin($plugin_id, $plugin_info)
         {
@@ -8452,18 +8478,24 @@ namespace {
          * Helper method to queue the background install of a theme.
          *
          * @param string $theme_id  Theme id used for background install.
+         *
+         * @deprecated 4.6.0
          */
         protected function install_theme($theme_id)
         {
         }
         /**
          * Helper method to install Jetpack.
+         *
+         * @deprecated 4.6.0
          */
         protected function install_jetpack()
         {
         }
         /**
          * Helper method to install WooCommerce Services and its Jetpack dependency.
+         *
+         * @deprecated 4.6.0
          */
         protected function install_woocommerce_services()
         {
@@ -8471,6 +8503,7 @@ namespace {
         /**
          * Retrieve info for missing WooCommerce Services and/or Jetpack plugin.
          *
+         * @deprecated 4.6.0
          * @return array
          */
         protected function get_wcs_requisite_plugins()
@@ -8478,6 +8511,8 @@ namespace {
         }
         /**
          * Plugin install info message markup with heading.
+         *
+         * @deprecated 4.6.0
          */
         public function plugin_install_info()
         {
@@ -8487,6 +8522,8 @@ namespace {
          *
          * @param string $country_code Country code.
          * @param string $currency_code Currency code.
+         *
+         * @deprecated 4.6.0
          * @return array
          */
         protected function get_wizard_shipping_methods($country_code, $currency_code)
@@ -8498,6 +8535,8 @@ namespace {
          * @param string $country_code Country code.
          * @param string $currency_code Currency code.
          * @param string $input_prefix Input prefix.
+         *
+         * @deprecated 4.6.0
          */
         protected function shipping_method_selection_form($country_code, $currency_code, $input_prefix)
         {
@@ -8505,6 +8544,7 @@ namespace {
         /**
          * Render a product weight unit dropdown.
          *
+         * @deprecated 4.6.0
          * @return string
          */
         protected function get_product_weight_selection()
@@ -8513,6 +8553,7 @@ namespace {
         /**
          * Render a product dimension unit dropdown.
          *
+         * @deprecated 4.6.0
          * @return string
          */
         protected function get_product_dimension_selection()
@@ -8520,12 +8561,16 @@ namespace {
         }
         /**
          * Shipping.
+         *
+         * @deprecated 4.6.0
          */
         public function wc_setup_shipping()
         {
         }
         /**
          * Save shipping options.
+         *
+         * @deprecated 4.6.0
          */
         public function wc_setup_shipping_save()
         {
@@ -8535,6 +8580,8 @@ namespace {
          * https://stripe.com/global .
          *
          * @param string $country_code Country code.
+         *
+         * @deprecated 4.6.0
          */
         protected function is_stripe_supported_country($country_code)
         {
@@ -8544,6 +8591,8 @@ namespace {
          *
          * @param string $currency Currency code.
          * @return boolean
+         *
+         * @deprecated 4.6.0
          */
         protected function is_paypal_supported_currency($currency)
         {
@@ -8552,6 +8601,8 @@ namespace {
          * Is Klarna Checkout country supported.
          *
          * @param string $country_code Country code.
+         *
+         * @deprecated 4.6.0
          */
         protected function is_klarna_checkout_supported_country($country_code)
         {
@@ -8560,6 +8611,8 @@ namespace {
          * Is Klarna Payments country supported.
          *
          * @param string $country_code Country code.
+         *
+         * @deprecated 4.6.0
          */
         protected function is_klarna_payments_supported_country($country_code)
         {
@@ -8568,6 +8621,8 @@ namespace {
          * Is Square country supported
          *
          * @param string $country_code Country code.
+         *
+         * @deprecated 4.6.0
          */
         protected function is_square_supported_country($country_code)
         {
@@ -8576,6 +8631,8 @@ namespace {
          * Is eWAY Payments country supported
          *
          * @param string $country_code Country code.
+         *
+         * @deprecated 4.6.0
          */
         protected function is_eway_payments_supported_country($country_code)
         {
@@ -8584,6 +8641,8 @@ namespace {
          * Is ShipStation country supported
          *
          * @param string $country_code Country code.
+         *
+         * @deprecated 4.6.0
          */
         protected function is_shipstation_supported_country($country_code)
         {
@@ -8592,6 +8651,8 @@ namespace {
          * Is WooCommerce Services shipping label country supported
          *
          * @param string $country_code Country code.
+         *
+         * @deprecated 4.6.0
          */
         protected function is_wcs_shipping_labels_supported_country($country_code)
         {
@@ -8599,6 +8660,7 @@ namespace {
         /**
          * Helper method to retrieve the current user's email address.
          *
+         * @deprecated 4.6.0
          * @return string Email address
          */
         protected function get_current_user_email()
@@ -8607,6 +8669,7 @@ namespace {
         /**
          * Array of all possible "in cart" gateways that can be offered.
          *
+         * @deprecated 4.6.0
          * @return array
          */
         protected function get_wizard_available_in_cart_payment_gateways()
@@ -8615,6 +8678,7 @@ namespace {
         /**
          * Simple array of "in cart" gateways to show in wizard.
          *
+         * @deprecated 4.6.0
          * @return array
          */
         public function get_wizard_in_cart_payment_gateways()
@@ -8623,6 +8687,7 @@ namespace {
         /**
          * Simple array of "manual" gateways to show in wizard.
          *
+         * @deprecated 4.6.0
          * @return array
          */
         public function get_wizard_manual_payment_gateways()
@@ -8633,6 +8698,8 @@ namespace {
          *
          * @param int   $item_id Item ID.
          * @param array $item_info Item info array.
+         *
+         * @deprecated 4.6.0
          */
         public function display_service_item($item_id, $item_info)
         {
@@ -8641,6 +8708,8 @@ namespace {
          * Is it a featured service?
          *
          * @param array $service Service info array.
+         *
+         * @deprecated 4.6.0
          * @return boolean
          */
         public function is_featured_service($service)
@@ -8650,6 +8719,8 @@ namespace {
          * Is this a non featured service?
          *
          * @param array $service Service info array.
+         *
+         * @deprecated 4.6.0
          * @return boolean
          */
         public function is_not_featured_service($service)
@@ -8657,12 +8728,16 @@ namespace {
         }
         /**
          * Payment Step.
+         *
+         * @deprecated 4.6.0
          */
         public function wc_setup_payment()
         {
         }
         /**
          * Payment Step save.
+         *
+         * @deprecated 4.6.0
          */
         public function wc_setup_payment_save()
         {
@@ -8672,12 +8747,16 @@ namespace {
         }
         /**
          * Recommended step
+         *
+         * @deprecated 4.6.0
          */
         public function wc_setup_recommended()
         {
         }
         /**
          * Recommended step save.
+         *
+         * @deprecated 4.6.0
          */
         public function wc_setup_recommended_save()
         {
@@ -8688,21 +8767,39 @@ namespace {
         protected function wc_setup_activate_actions()
         {
         }
+        /**
+         *
+         * @deprecated 4.6.0
+         */
         protected function wc_setup_activate_get_feature_list()
         {
         }
+        /**
+         *
+         * @deprecated 4.6.0
+         */
         protected function wc_setup_activate_get_feature_list_str()
         {
         }
         /**
          * Activate step.
+         *
+         * @deprecated 4.6.0
          */
         public function wc_setup_activate()
         {
         }
+        /**
+         *
+         * @deprecated 4.6.0
+         */
         protected function get_all_activate_errors()
         {
         }
+        /**
+         *
+         * @deprecated 4.6.0
+         */
         protected function get_activate_error_message($code = '')
         {
         }
@@ -8710,12 +8807,16 @@ namespace {
          * Activate step save.
          *
          * Install, activate, and launch connection flow for Jetpack.
+         *
+         * @deprecated 4.6.0
          */
         public function wc_setup_activate_save()
         {
         }
         /**
          * Final step.
+         *
+         * @deprecated 4.6.0
          */
         public function wc_setup_ready()
         {
@@ -9268,7 +9369,7 @@ namespace {
         /**
          * Handle redirects to setup/welcome page after install and updates.
          *
-         * For setup wizard, transient must be present, the user must have access rights, and we must ignore the network/bulk plugin updaters.
+         * The user must have access rights, and we must ignore the network/bulk plugin updaters.
          */
         public function admin_redirects()
         {
@@ -22102,14 +22203,6 @@ namespace {
         {
         }
         /**
-         * Check if the homepage should be enabled and set the appropriate option if thats the case.
-         *
-         * @since 4.3.0
-         */
-        private static function maybe_enable_homescreen()
-        {
-        }
-        /**
          * Reset any notices added to admin.
          *
          * @since 3.2.0
@@ -22146,11 +22239,11 @@ namespace {
         {
         }
         /**
-         * See if we need the wizard or not.
+         * See if we need to set redirect transients for activation or not.
          *
-         * @since 3.2.0
+         * @since 4.6.0
          */
-        private static function maybe_enable_setup_wizard()
+        private static function maybe_set_activation_transients()
         {
         }
         /**
@@ -22204,6 +22297,12 @@ namespace {
          * Create cron jobs (clear them first).
          */
         private static function create_cron_jobs()
+        {
+        }
+        /**
+         * Create pages on installation.
+         */
+        public static function maybe_create_pages()
         {
         }
         /**
@@ -22303,7 +22402,7 @@ namespace {
          *
          * @return array
          */
-        private static function get_core_capabilities()
+        public static function get_core_capabilities()
         {
         }
         /**
@@ -28081,7 +28180,7 @@ namespace {
         /**
          * Reference to the main product query on the page.
          *
-         * @var array
+         * @var WP_Query
          */
         private static $product_query;
         /**
@@ -28299,7 +28398,7 @@ namespace {
          * @since 3.6.0
          *
          * @param array    $args Query args.
-         * @param WC_Query $wp_query WC_Query object.
+         * @param WP_Query $wp_query WP_Query object.
          *
          * @return array
          */
@@ -28376,7 +28475,7 @@ namespace {
         /**
          * Get the main query which product queries ran against.
          *
-         * @return array
+         * @return WP_Query
          */
         public static function get_main_query()
         {
@@ -31978,7 +32077,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '4.5.2';
+        public $version = '4.6.0';
         /**
          * WooCommerce Schema version.
          *
@@ -42097,7 +42196,7 @@ namespace {
     /**
      * Abstract Rest Controller Class
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends  WP_REST_Controller
      * @version  2.6.0
      */
@@ -42290,7 +42389,7 @@ namespace {
     /**
      * WC_REST_Posts_Controller
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @version  2.6.0
      */
     abstract class WC_REST_Posts_Controller extends \WC_REST_Controller
@@ -42488,7 +42587,7 @@ namespace {
     /**
      * REST API Coupons controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Posts_Controller
      */
     class WC_REST_Coupons_V1_Controller extends \WC_REST_Posts_Controller
@@ -42608,7 +42707,7 @@ namespace {
     /**
      * REST API Customers controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Controller
      */
     class WC_REST_Customer_Downloads_V1_Controller extends \WC_REST_Controller
@@ -42689,7 +42788,7 @@ namespace {
     /**
      * REST API Customers controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Controller
      */
     class WC_REST_Customers_V1_Controller extends \WC_REST_Controller
@@ -42871,7 +42970,7 @@ namespace {
     /**
      * REST API Order Notes controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Controller
      */
     class WC_REST_Order_Notes_V1_Controller extends \WC_REST_Controller
@@ -43014,7 +43113,7 @@ namespace {
     /**
      * REST API Orders controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Posts_Controller
      */
     class WC_REST_Orders_V1_Controller extends \WC_REST_Posts_Controller
@@ -43278,7 +43377,7 @@ namespace {
     /**
      * REST API Order Refunds controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Orders_V1_Controller
      */
     class WC_REST_Order_Refunds_V1_Controller extends \WC_REST_Orders_V1_Controller
@@ -43570,7 +43669,7 @@ namespace {
     /**
      * REST API Product Attribute Terms controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Terms_Controller
      */
     class WC_REST_Product_Attribute_Terms_V1_Controller extends \WC_REST_Terms_Controller
@@ -43625,7 +43724,7 @@ namespace {
     /**
      * REST API Product Attributes controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Controller
      */
     class WC_REST_Product_Attributes_V1_Controller extends \WC_REST_Controller
@@ -43831,7 +43930,7 @@ namespace {
     /**
      * REST API Product Categories controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Terms_Controller
      */
     class WC_REST_Product_Categories_V1_Controller extends \WC_REST_Terms_Controller
@@ -43886,7 +43985,7 @@ namespace {
     /**
      * REST API Product Reviews Controller Class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Controller
      */
     class WC_REST_Product_Reviews_V1_Controller extends \WC_REST_Controller
@@ -44050,7 +44149,7 @@ namespace {
     /**
      * REST API Product Shipping Classes controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Terms_Controller
      */
     class WC_REST_Product_Shipping_Classes_V1_Controller extends \WC_REST_Terms_Controller
@@ -44095,7 +44194,7 @@ namespace {
     /**
      * REST API Product Tags controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Terms_Controller
      */
     class WC_REST_Product_Tags_V1_Controller extends \WC_REST_Terms_Controller
@@ -44140,7 +44239,7 @@ namespace {
     /**
      * REST API Products controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Posts_Controller
      */
     class WC_REST_Products_V1_Controller extends \WC_REST_Posts_Controller
@@ -44507,7 +44606,7 @@ namespace {
     /**
      * REST API Report Sales controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Controller
      */
     class WC_REST_Report_Sales_V1_Controller extends \WC_REST_Controller
@@ -44592,7 +44691,7 @@ namespace {
     /**
      * REST API Report Top Sellers controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Report_Sales_V1_Controller
      */
     class WC_REST_Report_Top_Sellers_V1_Controller extends \WC_REST_Report_Sales_V1_Controller
@@ -44640,7 +44739,7 @@ namespace {
     /**
      * REST API Reports controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Controller
      */
     class WC_REST_Reports_V1_Controller extends \WC_REST_Controller
@@ -44720,7 +44819,7 @@ namespace {
     /**
      * REST API Tax Classes controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Controller
      */
     class WC_REST_Tax_Classes_V1_Controller extends \WC_REST_Controller
@@ -44837,7 +44936,7 @@ namespace {
     /**
      * REST API Taxes controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Controller
      */
     class WC_REST_Taxes_V1_Controller extends \WC_REST_Controller
@@ -45013,7 +45112,7 @@ namespace {
      * REST API Webhook Deliveries controller class.
      *
      * @deprecated 3.3.0 Webhooks deliveries logs now uses logging system.
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Controller
      */
     class WC_REST_Webhook_Deliveries_V1_Controller extends \WC_REST_Controller
@@ -45112,7 +45211,7 @@ namespace {
     /**
      * REST API Webhooks controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Controller
      */
     class WC_REST_Webhooks_V1_Controller extends \WC_REST_Controller
@@ -45482,7 +45581,7 @@ namespace {
     /**
      * REST API Coupons controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_CRUD_Controller
      */
     class WC_REST_Coupons_V2_Controller extends \WC_REST_CRUD_Controller
@@ -45591,7 +45690,7 @@ namespace {
     /**
      * REST API Customers controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Customer_Downloads_V1_Controller
      */
     class WC_REST_Customer_Downloads_V2_Controller extends \WC_REST_Customer_Downloads_V1_Controller
@@ -45624,7 +45723,7 @@ namespace {
     /**
      * REST API Customers controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Customers_V1_Controller
      */
     class WC_REST_Customers_V2_Controller extends \WC_REST_Customers_V1_Controller
@@ -45676,7 +45775,7 @@ namespace {
     /**
      * REST API Orders controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_CRUD_Controller
      */
     class WC_REST_Orders_V2_Controller extends \WC_REST_CRUD_Controller
@@ -45957,7 +46056,7 @@ namespace {
     /**
      * REST API Network Orders controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Orders_V2_Controller
      */
     class WC_REST_Network_Orders_V2_Controller extends \WC_REST_Orders_V2_Controller
@@ -46016,7 +46115,7 @@ namespace {
     /**
      * REST API Order Notes controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Order_Notes_V1_Controller
      */
     class WC_REST_Order_Notes_V2_Controller extends \WC_REST_Order_Notes_V1_Controller
@@ -46067,7 +46166,7 @@ namespace {
     /**
      * REST API Order Refunds controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Orders_V2_Controller
      */
     class WC_REST_Order_Refunds_V2_Controller extends \WC_REST_Orders_V2_Controller
@@ -46203,7 +46302,7 @@ namespace {
     /**
      * Paymenga gateways controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Controller
      */
     class WC_REST_Payment_Gateways_V2_Controller extends \WC_REST_Controller
@@ -46339,7 +46438,7 @@ namespace {
     /**
      * REST API Product Attribute Terms controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Product_Attribute_Terms_V1_Controller
      */
     class WC_REST_Product_Attribute_Terms_V2_Controller extends \WC_REST_Product_Attribute_Terms_V1_Controller
@@ -46354,7 +46453,7 @@ namespace {
     /**
      * REST API Product Attributes controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Product_Attributes_V1_Controller
      */
     class WC_REST_Product_Attributes_V2_Controller extends \WC_REST_Product_Attributes_V1_Controller
@@ -46369,7 +46468,7 @@ namespace {
     /**
      * REST API Product Categories controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Product_Categories_V1_Controller
      */
     class WC_REST_Product_Categories_V2_Controller extends \WC_REST_Product_Categories_V1_Controller
@@ -46402,7 +46501,7 @@ namespace {
     /**
      * REST API Product Reviews Controller Class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Product_Reviews_V1_Controller
      */
     class WC_REST_Product_Reviews_V2_Controller extends \WC_REST_Product_Reviews_V1_Controller
@@ -46466,7 +46565,7 @@ namespace {
     /**
      * REST API Product Shipping Classes controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Product_Shipping_Classes_V1_Controller
      */
     class WC_REST_Product_Shipping_Classes_V2_Controller extends \WC_REST_Product_Shipping_Classes_V1_Controller
@@ -46481,7 +46580,7 @@ namespace {
     /**
      * REST API Product Tags controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Product_Tags_V1_Controller
      */
     class WC_REST_Product_Tags_V2_Controller extends \WC_REST_Product_Tags_V1_Controller
@@ -46496,7 +46595,7 @@ namespace {
     /**
      * REST API Products controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_CRUD_Controller
      */
     class WC_REST_Products_V2_Controller extends \WC_REST_CRUD_Controller
@@ -46787,7 +46886,7 @@ namespace {
     /**
      * REST API variations controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Products_V2_Controller
      */
     class WC_REST_Product_Variations_V2_Controller extends \WC_REST_Products_V2_Controller
@@ -46916,7 +47015,7 @@ namespace {
     /**
      * REST API Report Sales controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Report_Sales_V1_Controller
      */
     class WC_REST_Report_Sales_V2_Controller extends \WC_REST_Report_Sales_V1_Controller
@@ -46931,7 +47030,7 @@ namespace {
     /**
      * REST API Report Top Sellers controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Report_Top_Sellers_V1_Controller
      */
     class WC_REST_Report_Top_Sellers_V2_Controller extends \WC_REST_Report_Top_Sellers_V1_Controller
@@ -46946,7 +47045,7 @@ namespace {
     /**
      * REST API Reports controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Reports_V1_Controller
      */
     class WC_REST_Reports_V2_Controller extends \WC_REST_Reports_V1_Controller
@@ -46961,7 +47060,7 @@ namespace {
     /**
      * REST API Setting Options controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Controller
      */
     class WC_REST_Setting_Options_V2_Controller extends \WC_REST_Controller
@@ -47154,7 +47253,7 @@ namespace {
     /**
      * REST API Settings controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Controller
      */
     class WC_REST_Settings_V2_Controller extends \WC_REST_Controller
@@ -47262,7 +47361,7 @@ namespace {
     /**
      * Shipping methods controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Controller
      */
     class WC_REST_Shipping_Methods_V2_Controller extends \WC_REST_Controller
@@ -47361,7 +47460,7 @@ namespace {
     /**
      * REST API Shipping Zones base class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Controller
      */
     abstract class WC_REST_Shipping_Zones_Controller_Base extends \WC_REST_Controller
@@ -47427,7 +47526,7 @@ namespace {
     /**
      * REST API Shipping Zone Locations class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Shipping_Zones_Controller_Base
      */
     class WC_REST_Shipping_Zone_Locations_V2_Controller extends \WC_REST_Shipping_Zones_Controller_Base
@@ -47487,7 +47586,7 @@ namespace {
     /**
      * REST API Shipping Zone Methods class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Shipping_Zones_Controller_Base
      */
     class WC_REST_Shipping_Zone_Methods_V2_Controller extends \WC_REST_Shipping_Zones_Controller_Base
@@ -47597,7 +47696,7 @@ namespace {
     /**
      * REST API Shipping Zones class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Shipping_Zones_Controller_Base
      */
     class WC_REST_Shipping_Zones_V2_Controller extends \WC_REST_Shipping_Zones_Controller_Base
@@ -47684,7 +47783,7 @@ namespace {
     /**
      * System status tools controller.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Controller
      */
     class WC_REST_System_Status_Tools_V2_Controller extends \WC_REST_Controller
@@ -47818,7 +47917,7 @@ namespace {
     /**
      * System status controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Controller
      */
     class WC_REST_System_Status_V2_Controller extends \WC_REST_Controller
@@ -48036,7 +48135,7 @@ namespace {
     /**
      * REST API Tax Classes controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Tax_Classes_V1_Controller
      */
     class WC_REST_Tax_Classes_V2_Controller extends \WC_REST_Tax_Classes_V1_Controller
@@ -48051,7 +48150,7 @@ namespace {
     /**
      * REST API Taxes controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Taxes_V1_Controller
      */
     class WC_REST_Taxes_V2_Controller extends \WC_REST_Taxes_V1_Controller
@@ -48067,7 +48166,7 @@ namespace {
      * REST API Webhook Deliveries controller class.
      *
      * @deprecated 3.3.0 Webhooks deliveries logs now uses logging system.
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Webhook_Deliveries_V1_Controller
      */
     class WC_REST_Webhook_Deliveries_V2_Controller extends \WC_REST_Webhook_Deliveries_V1_Controller
@@ -48100,7 +48199,7 @@ namespace {
     /**
      * REST API Webhooks controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Webhooks_V1_Controller
      */
     class WC_REST_Webhooks_V2_Controller extends \WC_REST_Webhooks_V1_Controller
@@ -48142,7 +48241,7 @@ namespace {
     /**
      * REST API Coupons controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Coupons_V2_Controller
      */
     class WC_REST_Coupons_Controller extends \WC_REST_Coupons_V2_Controller
@@ -48157,7 +48256,7 @@ namespace {
     /**
      * REST API Customers controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Customer_Downloads_V2_Controller
      */
     class WC_REST_Customer_Downloads_Controller extends \WC_REST_Customer_Downloads_V2_Controller
@@ -48172,7 +48271,7 @@ namespace {
     /**
      * REST API Customers controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Customers_V2_Controller
      */
     class WC_REST_Customers_Controller extends \WC_REST_Customers_V2_Controller
@@ -48206,7 +48305,7 @@ namespace {
     /**
      * REST API Data controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Controller
      */
     class WC_REST_Data_Controller extends \WC_REST_Controller
@@ -48291,7 +48390,7 @@ namespace {
     /**
      * REST API Data continents controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Controller
      */
     class WC_REST_Data_Continents_Controller extends \WC_REST_Data_Controller
@@ -48380,7 +48479,7 @@ namespace {
     /**
      * REST API Data countries controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Controller
      */
     class WC_REST_Data_Countries_Controller extends \WC_REST_Data_Controller
@@ -48468,7 +48567,7 @@ namespace {
     /**
      * REST API Data Currencies controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      */
     class WC_REST_Data_Currencies_Controller extends \WC_REST_Data_Controller
     {
@@ -48558,7 +48657,7 @@ namespace {
     /**
      * REST API Network Orders controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Network_Orders_V2_Controller
      */
     class WC_REST_Network_Orders_Controller extends \WC_REST_Network_Orders_V2_Controller
@@ -48573,7 +48672,7 @@ namespace {
     /**
      * REST API Order Notes controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Order_Notes_V2_Controller
      */
     class WC_REST_Order_Notes_Controller extends \WC_REST_Order_Notes_V2_Controller
@@ -48615,7 +48714,7 @@ namespace {
     /**
      * REST API Order Refunds controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Order_Refunds_V2_Controller
      */
     class WC_REST_Order_Refunds_Controller extends \WC_REST_Order_Refunds_V2_Controller
@@ -48641,7 +48740,7 @@ namespace {
     /**
      * REST API Orders controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Orders_V2_Controller
      */
     class WC_REST_Orders_Controller extends \WC_REST_Orders_V2_Controller
@@ -48716,7 +48815,7 @@ namespace {
     /**
      * Paymenga gateways controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Payment_Gateways_V2_Controller
      */
     class WC_REST_Payment_Gateways_Controller extends \WC_REST_Payment_Gateways_V2_Controller
@@ -48759,7 +48858,7 @@ namespace {
     /**
      * REST API Product Attribute Terms controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Product_Attribute_Terms_V2_Controller
      */
     class WC_REST_Product_Attribute_Terms_Controller extends \WC_REST_Product_Attribute_Terms_V2_Controller
@@ -48774,7 +48873,7 @@ namespace {
     /**
      * REST API Product Attributes controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Product_Attributes_V2_Controller
      */
     class WC_REST_Product_Attributes_Controller extends \WC_REST_Product_Attributes_V2_Controller
@@ -48789,7 +48888,7 @@ namespace {
     /**
      * REST API Product Categories controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Product_Categories_V2_Controller
      */
     class WC_REST_Product_Categories_Controller extends \WC_REST_Product_Categories_V2_Controller
@@ -48834,7 +48933,7 @@ namespace {
     /**
      * REST API Product Reviews Controller Class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Controller
      */
     class WC_REST_Product_Reviews_Controller extends \WC_REST_Controller
@@ -49045,7 +49144,7 @@ namespace {
     /**
      * REST API Product Shipping Classes controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Product_Shipping_Classes_V2_Controller
      */
     class WC_REST_Product_Shipping_Classes_Controller extends \WC_REST_Product_Shipping_Classes_V2_Controller
@@ -49060,7 +49159,7 @@ namespace {
     /**
      * REST API Product Tags controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Product_Tags_V2_Controller
      */
     class WC_REST_Product_Tags_Controller extends \WC_REST_Product_Tags_V2_Controller
@@ -49075,7 +49174,7 @@ namespace {
     /**
      * REST API variations controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Product_Variations_V2_Controller
      */
     class WC_REST_Product_Variations_Controller extends \WC_REST_Product_Variations_V2_Controller
@@ -49156,7 +49255,7 @@ namespace {
     /**
      * REST API Products controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Products_V2_Controller
      */
     class WC_REST_Products_Controller extends \WC_REST_Products_V2_Controller
@@ -49238,7 +49337,7 @@ namespace {
     /**
      * REST API Reports controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Reports_V2_Controller
      */
     class WC_REST_Reports_Controller extends \WC_REST_Reports_V2_Controller
@@ -49262,7 +49361,7 @@ namespace {
     /**
      * REST API Reports Coupons Totals controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Reports_Controller
      */
     class WC_REST_Report_Coupons_Totals_Controller extends \WC_REST_Reports_Controller
@@ -49310,7 +49409,7 @@ namespace {
     /**
      * REST API Reports Customers Totals controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Reports_Controller
      */
     class WC_REST_Report_Customers_Totals_Controller extends \WC_REST_Reports_Controller
@@ -49358,7 +49457,7 @@ namespace {
     /**
      * REST API Reports Orders Totals controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Reports_Controller
      */
     class WC_REST_Report_Orders_Totals_Controller extends \WC_REST_Reports_Controller
@@ -49406,7 +49505,7 @@ namespace {
     /**
      * REST API Reports Products Totals controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Reports_Controller
      */
     class WC_REST_Report_Products_Totals_Controller extends \WC_REST_Reports_Controller
@@ -49454,7 +49553,7 @@ namespace {
     /**
      * REST API Reports Reviews Totals controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Reports_Controller
      */
     class WC_REST_Report_Reviews_Totals_Controller extends \WC_REST_Reports_Controller
@@ -49502,7 +49601,7 @@ namespace {
     /**
      * REST API Report Sales controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Report_Sales_V2_Controller
      */
     class WC_REST_Report_Sales_Controller extends \WC_REST_Report_Sales_V2_Controller
@@ -49517,7 +49616,7 @@ namespace {
     /**
      * REST API Report Top Sellers controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Report_Top_Sellers_V2_Controller
      */
     class WC_REST_Report_Top_Sellers_Controller extends \WC_REST_Report_Top_Sellers_V2_Controller
@@ -49532,7 +49631,7 @@ namespace {
     /**
      * REST API Setting Options controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Setting_Options_V2_Controller
      */
     class WC_REST_Setting_Options_Controller extends \WC_REST_Setting_Options_V2_Controller
@@ -49592,7 +49691,7 @@ namespace {
     /**
      * REST API Settings controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Settings_V2_Controller
      */
     class WC_REST_Settings_Controller extends \WC_REST_Settings_V2_Controller
@@ -49640,7 +49739,7 @@ namespace {
     /**
      * Shipping methods controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Shipping_Methods_V2_Controller
      */
     class WC_REST_Shipping_Methods_Controller extends \WC_REST_Shipping_Methods_V2_Controller
@@ -49655,7 +49754,7 @@ namespace {
     /**
      * REST API Shipping Zone Locations class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Shipping_Zone_Locations_V2_Controller
      */
     class WC_REST_Shipping_Zone_Locations_Controller extends \WC_REST_Shipping_Zone_Locations_V2_Controller
@@ -49670,7 +49769,7 @@ namespace {
     /**
      * REST API Shipping Zone Methods class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Shipping_Zone_Methods_V2_Controller
      */
     class WC_REST_Shipping_Zone_Methods_Controller extends \WC_REST_Shipping_Zone_Methods_V2_Controller
@@ -49685,7 +49784,7 @@ namespace {
     /**
      * REST API Shipping Zones class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Shipping_Zones_V2_Controller
      */
     class WC_REST_Shipping_Zones_Controller extends \WC_REST_Shipping_Zones_V2_Controller
@@ -49700,7 +49799,7 @@ namespace {
     /**
      * System status controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_System_Status_V2_Controller
      */
     class WC_REST_System_Status_Controller extends \WC_REST_System_Status_V2_Controller
@@ -49715,7 +49814,7 @@ namespace {
     /**
      * System status tools controller.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_System_Status_Tools_V2_Controller
      */
     class WC_REST_System_Status_Tools_Controller extends \WC_REST_System_Status_Tools_V2_Controller
@@ -49730,7 +49829,7 @@ namespace {
     /**
      * REST API Tax Classes controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Tax_Classes_V2_Controller
      */
     class WC_REST_Tax_Classes_Controller extends \WC_REST_Tax_Classes_V2_Controller
@@ -49745,7 +49844,7 @@ namespace {
     /**
      * REST API Taxes controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Taxes_V2_Controller
      */
     class WC_REST_Taxes_Controller extends \WC_REST_Taxes_V2_Controller
@@ -49760,7 +49859,7 @@ namespace {
     /**
      * REST API Webhooks controller class.
      *
-     * @package Automattic/WooCommerce/RestApi
+     * @package WooCommerce\RestApi
      * @extends WC_REST_Webhooks_V2_Controller
      */
     class WC_REST_Webhooks_Controller extends \WC_REST_Webhooks_V2_Controller
@@ -51019,7 +51118,7 @@ namespace {
          * Get wrapper classes.
          *
          * @since  3.2.0
-         * @param  array $columns Number of columns.
+         * @param  int $columns Number of columns.
          * @return array
          */
         protected function get_wrapper_classes($columns)
@@ -51692,6 +51791,8 @@ namespace {
         private $steps = array();
         /**
          * Init tracking.
+         *
+         * @deprecated 4.6.0
          */
         public function init()
         {
@@ -51699,6 +51800,7 @@ namespace {
         /**
          * Get the name of the current step.
          *
+         * @deprecated 4.6.0
          * @return string
          */
         public function get_current_step()
@@ -51706,14 +51808,18 @@ namespace {
         }
         /**
          * Add footer scripts to OBW via woocommerce_setup_footer
+         *
+         * @deprecated 4.6.0
          */
         public function add_footer_scripts()
         {
         }
         /**
          * Dequeue unwanted scripts from OBW footer.
+         *
+         * @deprecated 4.6.0
          */
-        public function dequeue_non_whitelisted_scripts()
+        public function dequeue_non_allowed_scripts()
         {
         }
         /**
@@ -51721,19 +51827,24 @@ namespace {
          *
          * @param string $option Option name.
          * @param string $value  Option value.
-         * @return void
+         *
+         * @deprecated 4.6.0
          */
         public function track_start($option, $value)
         {
         }
         /**
          * Track the marketing form on submit.
+         *
+         * @deprecated 4.6.0
          */
         public function track_ready_next_steps()
         {
         }
         /**
          * Track various events when a step is saved.
+         *
+         * @deprecated 4.6.0
          */
         public function add_step_save_events()
         {
@@ -51741,7 +51852,7 @@ namespace {
         /**
          * Track store setup and store properties on save.
          *
-         * @return void
+         * @deprecated 4.6.0
          */
         public function track_store_setup()
         {
@@ -51749,7 +51860,7 @@ namespace {
         /**
          * Track payment gateways selected.
          *
-         * @return void
+         * @deprecated 4.6.0
          */
         public function track_payments()
         {
@@ -51757,7 +51868,7 @@ namespace {
         /**
          * Track shipping units and whether or not labels are set.
          *
-         * @return void
+         * @deprecated 4.6.0
          */
         public function track_shipping()
         {
@@ -51765,7 +51876,7 @@ namespace {
         /**
          * Track recommended plugins selected for install.
          *
-         * @return void
+         * @deprecated 4.6.0
          */
         public function track_recommended()
         {
@@ -51773,7 +51884,7 @@ namespace {
         /**
          * Tracks when Jetpack is activated through the OBW.
          *
-         * @return void
+         * @deprecated 4.6.0
          */
         public function track_jetpack_activate()
         {
@@ -51781,7 +51892,7 @@ namespace {
         /**
          * Tracks when last next_steps screen is viewed in the OBW.
          *
-         * @return void
+         * @deprecated 4.6.0
          */
         public function track_next_steps()
         {
@@ -51789,7 +51900,7 @@ namespace {
         /**
          * Track skipped steps.
          *
-         * @return void
+         * @deprecated 4.6.0
          */
         public function track_skip_step()
         {
@@ -51798,6 +51909,8 @@ namespace {
          * Set the OBW steps inside this class instance.
          *
          * @param array $steps Array of OBW steps.
+         *
+         * @deprecated 4.6.0
          */
         public function set_obw_steps($steps)
         {
@@ -52084,11 +52197,11 @@ namespace {
     class WC_Settings_Tracking
     {
         /**
-         * Whitelisted WooCommerce settings to potentially track updates for.
+         * List of allowed WooCommerce settings to potentially track updates for.
          *
          * @var array
          */
-        protected $whitelist = array();
+        protected $allowed_options = array();
         /**
          * WooCommerce settings that have been updated (and will be tracked).
          *
@@ -52102,16 +52215,16 @@ namespace {
         {
         }
         /**
-         * Add a WooCommerce option name to our whitelist and attach
+         * Add a WooCommerce option name to our allowed options list and attach
          * the `update_option` hook. Rather than inspecting every updated
          * option and pattern matching for "woocommerce", just build a dynamic
-         * whitelist for WooCommerce options that might get updated.
+         * list for WooCommerce options that might get updated.
          *
          * See `woocommerce_update_option` hook.
          *
          * @param array $option WooCommerce option (config) that might get updated.
          */
-        public function add_option_to_whitelist($option)
+        public function add_option_to_list($option)
         {
         }
         /**
@@ -54887,6 +55000,20 @@ namespace {
     {
     }
     /**
+     * Sort array according to current locale rules and maintaining index association.
+     * By default tries to use Collator from PHP Internationalization Functions if available.
+     * If PHP Collator class doesn't exists it fallback to removing accepts from a array
+     * and by sorting with `uasort( $data, 'strcmp' )` giving support for ASCII values.
+     *
+     * @since 4.6.0
+     * @param array  $data   List of values to sort.
+     * @param string $locale Locale.
+     * @return array
+     */
+    function wc_asort_by_locale(&$data, $locale = '')
+    {
+    }
+    /**
      * Get rounding mode for internal tax calculations.
      *
      * @since 3.2.4
@@ -54973,8 +55100,8 @@ namespace {
     /**
      * Prints human-readable information about a variable.
      *
-     * Some server environments blacklist some debugging functions. This function provides a safe way to
-     * turn an expression into a printable, readable form without calling blacklisted functions.
+     * Some server environments block some debugging functions. This function provides a safe way to
+     * turn an expression into a printable, readable form without calling blocked functions.
      *
      * @since 3.0
      *
@@ -55273,7 +55400,7 @@ namespace {
     {
     }
     /**
-     * Get coupon code by ID.
+     * Get coupon ID by code.
      *
      * @since 3.0.0
      * @param string $code    Coupon code.
@@ -56060,7 +56187,7 @@ namespace {
      * Converts a string (e.g. 'yes' or 'no') to a bool.
      *
      * @since 3.0.0
-     * @param string $string String to convert.
+     * @param string|bool $string String to convert. If a bool is passed it will be returned as-is.
      * @return bool
      */
     function wc_string_to_bool($string)
@@ -56070,7 +56197,7 @@ namespace {
      * Converts a bool to a 'yes' or 'no'.
      *
      * @since 3.0.0
-     * @param bool $bool String to convert.
+     * @param bool|string $bool Bool to convert. If a string is passed it will first be converted to a bool.
      * @return string
      */
     function wc_bool_to_string($bool)
