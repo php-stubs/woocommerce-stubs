@@ -8101,6 +8101,16 @@ namespace Automattic\WooCommerce\Admin\Features {
         {
         }
         /**
+         * Test whether the context of execution comes from async action scheduler.
+         * Note: this is a polyfill for wc_is_running_from_async_action_scheduler()
+         *       which was introduced in WC 4.0.
+         *
+         * @return bool
+         */
+        public static function is_running_from_async_action_scheduler()
+        {
+        }
+        /**
          * Handle redirects to setup/welcome page after install and updates.
          *
          * For setup wizard, transient must be present, the user must have access rights, and we must ignore the network/bulk plugin updaters.
@@ -11711,7 +11721,7 @@ namespace Automattic\WooCommerce\Admin\Composer {
          *
          * @var string
          */
-        const VERSION = '1.6.1';
+        const VERSION = '1.6.2';
         /**
          * Package active.
          *
