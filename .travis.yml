@@ -1,9 +1,9 @@
-# https://docs.travis-ci.com/user/reference/overview/#linux
-os: linux
+# TravisCI configuration for php-stubs/woocommerce-stubs
 
-dist: bionic
-
-language: php
+language: "php"
+os:
+  - "linux"
+dist: "bionic"
 
 cache:
   directories:
@@ -17,27 +17,20 @@ php:
   # giacocorsiglia/stubs-generator does not support PHP 7.0
 
 before_install:
-  - |
-    phpenv config-rm xdebug.ini
-  - |
-    composer validate --strict
+  - "phpenv config-rm xdebug.ini"
+  - "composer self-update --1"
+  - "composer validate --strict"
 
 install:
-  - |
-    composer update --no-interaction --no-suggest
+  - "composer update --no-interaction --no-suggest"
 
 before_script:
-  - |
-    cat ./source/woocommerce/woocommerce.php
+  - "cat ./source/woocommerce/woocommerce.php"
 
 script:
-  - |
-    bash -x ./generate.sh
-  - |
-    php -l woocommerce-stubs.php
-  - |
-    php -l woocommerce-packages-stubs.php
-  - |
-    git diff --exit-code
+  - "bash -x ./generate.sh"
+  - "php -l woocommerce-stubs.php"
+  - "php -l woocommerce-packages-stubs.php"
+  - "git diff --exit-code"
   - |
     php -r 'require "vendor/php-stubs/wordpress-stubs/wordpress-stubs.php"; require "woocommerce-stubs.php"; require "woocommerce-packages-stubs.php";'
