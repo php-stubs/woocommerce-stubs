@@ -9062,7 +9062,7 @@ namespace {
          * @param object $term Term object.
          * @return array
          */
-        public function product_cat_row_actions($actions = array(), $term)
+        public function product_cat_row_actions($actions, $term)
         {
         }
         /**
@@ -15476,7 +15476,7 @@ namespace {
          * @param string $key Total name you want to set.
          * @param int    $total Total to set.
          */
-        protected function set_total($key = 'total', $total)
+        protected function set_total($key, $total)
         {
         }
         /**
@@ -19677,7 +19677,7 @@ namespace {
          * @param string $address Name of address to set. billing or shipping.
          * @param mixed  $value   Value of the prop.
          */
-        protected function set_address_prop($prop, $address = 'billing', $value)
+        protected function set_address_prop($prop, $address, $value)
         {
         }
         /**
@@ -25185,7 +25185,7 @@ namespace {
          * @param string $address Name of address to set. billing or shipping.
          * @param mixed  $value Value of the prop.
          */
-        protected function set_address_prop($prop, $address = 'billing', $value)
+        protected function set_address_prop($prop, $address, $value)
         {
         }
         /**
@@ -28210,10 +28210,14 @@ namespace {
         /**
          * Get page title for an endpoint.
          *
-         * @param  string $endpoint Endpoint key.
-         * @return string
+         * @param string $endpoint Endpoint key.
+         * @param string $action Optional action or variation within the endpoint.
+         *
+         * @since 2.3.0
+         * @since 4.6.0 Added $action parameter.
+         * @return string The page title.
          */
-        public function get_endpoint_title($endpoint)
+        public function get_endpoint_title($endpoint, $action = '')
         {
         }
         /**
@@ -28982,6 +28986,20 @@ namespace {
          * @return int|false
          */
         public function authenticate($user_id)
+        {
+        }
+        /**
+         * Authenticate the user if authentication wasn't performed during the
+         * determine_current_user action.
+         *
+         * Necessary in cases where wp_get_current_user() is called before WooCommerce is loaded.
+         *
+         * @see https://github.com/woocommerce/woocommerce/issues/26847
+         *
+         * @param WP_Error|null|bool $error Error data.
+         * @return WP_Error|null|bool
+         */
+        public function authentication_fallback($error)
         {
         }
         /**
@@ -30005,7 +30023,7 @@ namespace {
         }
         /**
          * Loads all shipping methods which are hooked in.
-         * If a $package is passed some methods may add themselves conditionally and zones will be used.
+         * If a $package is passed, some methods may add themselves conditionally and zones will be used.
          *
          * @param array $package Package information.
          * @return WC_Shipping_Method[]
@@ -31695,8 +31713,8 @@ namespace {
         {
         }
         /**
-         * Generate a base64-encoded HMAC-SHA256 signature of the payload body so the.
-         * recipient can verify the authenticity of the webhook. Note that the signature.
+         * Generate a base64-encoded HMAC-SHA256 signature of the payload body so the
+         * recipient can verify the authenticity of the webhook. Note that the signature
          * is calculated after the body has already been encoded (JSON by default).
          *
          * @since  2.2.0
@@ -32077,7 +32095,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '4.6.2';
+        public $version = '4.7.0';
         /**
          * WooCommerce Schema version.
          *
@@ -32501,6 +32519,59 @@ namespace {
          * @return boolean
          */
         public function is_wc_admin_active()
+        {
+        }
+        /**
+         * Call a user function. This should be used to execute any non-idempotent function, especially
+         * those in the `includes` directory or provided by WordPress.
+         *
+         * This method can be useful for unit tests, since functions called using this method
+         * can be easily mocked by using WC_Unit_Test_Case::register_legacy_proxy_function_mocks.
+         *
+         * @param string $function_name The function to execute.
+         * @param mixed  ...$parameters The parameters to pass to the function.
+         *
+         * @return mixed The result from the function.
+         *
+         * @since 4.4
+         */
+        public function call_function($function_name, ...$parameters)
+        {
+        }
+        /**
+         * Call a static method in a class. This should be used to execute any non-idempotent method in classes
+         * from the `includes` directory.
+         *
+         * This method can be useful for unit tests, since methods called using this method
+         * can be easily mocked by using WC_Unit_Test_Case::register_legacy_proxy_static_mocks.
+         *
+         * @param string $class_name The name of the class containing the method.
+         * @param string $method_name The name of the method.
+         * @param mixed  ...$parameters The parameters to pass to the method.
+         *
+         * @return mixed The result from the method.
+         *
+         * @since 4.4
+         */
+        public function call_static($class_name, $method_name, ...$parameters)
+        {
+        }
+        /**
+         * Gets an instance of a given legacy class.
+         * This must not be used to get instances of classes in the `src` directory.
+         *
+         * This method can be useful for unit tests, since objects obtained using this method
+         * can be easily mocked by using WC_Unit_Test_Case::register_legacy_proxy_class_mocks.
+         *
+         * @param string $class_name The name of the class to get an instance for.
+         * @param mixed  ...$args Parameters to be passed to the class constructor or to the appropriate internal 'get_instance_of_' method.
+         *
+         * @return object The instance of the class.
+         * @throws \Exception The requested class belongs to the `src` directory, or there was an error creating an instance of the class.
+         *
+         * @since 4.4
+         */
+        public function get_instance_of(string $class_name, ...$args)
         {
         }
     }
@@ -44874,7 +44945,7 @@ namespace {
         /**
          * Get all tax classes.
          *
-         * @param WP_REST_Request $request
+         * @param  WP_REST_Request $request Full details about the request.
          * @return array
          */
         public function get_items($request)
@@ -44901,8 +44972,8 @@ namespace {
         /**
          * Prepare a single tax class output for response.
          *
-         * @param array $tax_class Tax class data.
-         * @param WP_REST_Request $request Request object.
+         * @param array           $tax_class Tax class data.
+         * @param WP_REST_Request $request Full details about the request.
          * @return WP_REST_Response $response Response data.
          */
         public function prepare_item_for_response($tax_class, $request)
@@ -45836,6 +45907,19 @@ namespace {
         {
         }
         /**
+         * Merge the `$formatted_meta_data` `display_key` and `display_value` attribute values into the corresponding
+         * {@link WC_Meta_Data}. Returns the merged array.
+         *
+         * @param WC_Meta_Data $meta_item           An object from {@link WC_Order_Item::get_meta_data()}.
+         * @param array        $formatted_meta_data An object result from {@link WC_Order_Item::get_formatted_meta_data}.
+         * The keys are the IDs of {@link WC_Meta_Data}.
+         *
+         * @return array
+         */
+        private function merge_meta_item_with_formatted_meta_display_attributes($meta_item, $formatted_meta_data)
+        {
+        }
+        /**
          * Get formatted item data.
          *
          * @since  3.0.0
@@ -45921,8 +46005,8 @@ namespace {
          * Gets the product ID from the SKU or posted ID.
          *
          * @throws WC_REST_Exception When SKU or ID is not valid.
-         * @param array           $posted Request data.
-         * @param string          $action 'create' to add line item or 'update' to update it.
+         * @param array  $posted Request data.
+         * @param string $action 'create' to add line item or 'update' to update it.
          * @return int
          */
         protected function get_product_id($posted, $action = 'create')
@@ -48146,6 +48230,21 @@ namespace {
          * @var string
          */
         protected $namespace = 'wc/v2';
+        /**
+         * Register the routes for tax classes.
+         */
+        public function register_routes()
+        {
+        }
+        /**
+         * Get one tax class.
+         *
+         * @param WP_REST_Request $request Request object.
+         * @return array
+         */
+        public function get_item($request)
+        {
+        }
     }
     /**
      * REST API Taxes controller class.
@@ -48423,7 +48522,7 @@ namespace {
          * @param  WP_REST_Request $request        Request data.
          * @return array|mixed Response data, ready for insertion into collection data.
          */
-        public function get_continent($continent_code = \false, $request)
+        public function get_continent($continent_code, $request)
         {
         }
         /**
@@ -48511,7 +48610,7 @@ namespace {
          * @param  WP_REST_Request $request      Request data.
          * @return array|mixed Response data, ready for insertion into collection data.
          */
-        public function get_country($country_code = \false, $request)
+        public function get_country($country_code, $request)
         {
         }
         /**
@@ -48596,7 +48695,7 @@ namespace {
          * @param  WP_REST_Request $request Request data.
          * @return array|mixed Response data, ready for insertion into collection data.
          */
-        public function get_currency($code = \false, $request)
+        public function get_currency($code, $request)
         {
         }
         /**
@@ -49961,7 +50060,7 @@ namespace Automattic\WooCommerce\RestApi\Utilities {
         /**
          * Prevent unserializing.
          */
-        private function __wakeup()
+        public final function __wakeup()
         {
         }
     }
@@ -52320,7 +52419,7 @@ namespace {
          * @param string $output            Passed by reference. Used to append additional content.
          * @return null Null on failure with no changes to parameters.
          */
-        public function display_element($element, &$children_elements, $max_depth, $depth = 0, $args, &$output)
+        public function display_element($element, &$children_elements, $max_depth, $depth, $args, &$output)
         {
         }
     }
@@ -52416,7 +52515,7 @@ namespace {
          * @param string $output            Passed by reference. Used to append additional content.
          * @return null Null on failure with no changes to parameters.
          */
-        public function display_element($element, &$children_elements, $max_depth, $depth = 0, $args, &$output)
+        public function display_element($element, &$children_elements, $max_depth, $depth, $args, &$output)
         {
         }
     }

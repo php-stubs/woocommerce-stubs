@@ -11317,11 +11317,17 @@ namespace Automattic\WooCommerce\Admin\Notes {
         {
         }
         /**
-         * Install WooCommerce Payments when note is actioned.
+         * Install and activate WooCommerce Payments.
          *
-         * @param WC_Admin_Note $note Note being acted upon.
+         * @return boolean Whether the plugin was successfully activated.
          */
-        public function install($note)
+        public function install_and_activate_wcpay()
+        {
+        }
+        /**
+         * Install & activate WooCommerce Payments plugin, and redirect to setup.
+         */
+        public function install_on_action()
         {
         }
     }
@@ -11721,7 +11727,7 @@ namespace Automattic\WooCommerce\Admin\Composer {
          *
          * @var string
          */
-        const VERSION = '1.6.2';
+        const VERSION = '1.6.3';
         /**
          * Package active.
          *
@@ -15633,6 +15639,108 @@ namespace Automattic\WooCommerce\Blocks\Domain {
 }
 namespace Automattic\WooCommerce\Blocks\Domain\Services {
     /**
+     * Service class implementing new create account behaviour for order processing.
+     */
+    class CreateAccount
+    {
+        /**
+         * Reference to the Package instance
+         *
+         * @var Package
+         */
+        private $package;
+        /**
+         * Constructor.
+         *
+         * @param Package $package An instance of (Woo Blocks) Package.
+         */
+        public function __construct(\Automattic\WooCommerce\Blocks\Domain\Package $package)
+        {
+        }
+        /**
+         * Single method for feature gating logic. Used to gate all non-private methods.
+         *
+         * @return True if Checkout sign-up feature should be made available.
+         */
+        private static function is_feature_enabled()
+        {
+        }
+        /**
+         * Init - register handlers for WooCommerce core email hooks.
+         */
+        public function init()
+        {
+        }
+        /**
+         * Trigger new account email.
+         * This is intended as a replacement to WC_Emails::customer_new_account(),
+         * with a set password link instead of emailing the new password in email
+         * content.
+         *
+         * @param int   $customer_id       The ID of the new customer account.
+         * @param array $new_customer_data Assoc array of data for the new account.
+         */
+        public function customer_new_account($customer_id = 0, array $new_customer_data = array())
+        {
+        }
+        /**
+         * Create a user account for specified order and request (if necessary).
+         * If a new account is created:
+         * - The order is associated with the account.
+         * - The user is logged in.
+         *
+         * @param \WC_Order        $order   The order currently being processed.
+         * @param \WP_REST_Request $request The current request object being handled.
+         *
+         * @throws Exception On error.
+         * @return int The new user id, or 0 if no user was created.
+         */
+        public function from_order_request(\WC_Order $order, \WP_REST_Request $request)
+        {
+        }
+        /**
+         * Check request options and store (shop) config to determine if a user account
+         * should be created as part of order processing.
+         *
+         * @param \WP_REST_Request $request The current request object being handled.
+         *
+         * @return boolean True if a new user account should be created.
+         */
+        protected function should_create_customer_account(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Convert an account creation error to an exception.
+         *
+         * @param \WP_Error $error An error object.
+         *
+         * @return Exception.
+         */
+        private function map_create_account_error(\WP_Error $error)
+        {
+        }
+        /**
+         * Create a new account for a customer (using a new blocks-specific PHP API).
+         *
+         * The account is created with a generated username. The customer is sent
+         * an email notifying them about the account and containing a link to set
+         * their (initial) password.
+         *
+         * Intended as a replacement for wc_create_new_customer in WC core.
+         *
+         * @throws \Exception If an error is encountered when creating the user account.
+         *
+         * @param string $user_email The email address to use for the new account.
+         * @param string $first_name The first name to use for the new account.
+         * @param string $last_name  The last name to use for the new account.
+         *
+         * @return int User id if successful
+         */
+        private function create_customer_account($user_email, $first_name, $last_name)
+        {
+        }
+    }
+    /**
      * Service class for adding DraftOrder functionality to WooCommerce core.
      *
      * Sets up all logic related to the Checkout Draft Orders service
@@ -15759,6 +15867,106 @@ namespace Automattic\WooCommerce\Blocks\Domain\Services {
          * @throws Exception If any assertions fail, an exception is thrown.
          */
         private function assert_order_results($order_results, $expected_batch_size)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Blocks\Domain\Services\Email {
+    /**
+     * Customer New Account.
+     *
+     * An email sent to the customer when they create an account.
+     * This is intended as a replacement to WC_Email_Customer_New_Account(),
+     * with a set password link instead of emailing the new password in email
+     * content.
+     *
+     * @extends     WC_Email
+     */
+    class CustomerNewAccount extends \WC_Email
+    {
+        /**
+         * User login name.
+         *
+         * @var string
+         */
+        public $user_login;
+        /**
+         * User email.
+         *
+         * @var string
+         */
+        public $user_email;
+        /**
+         * Magic link to set initial password.
+         *
+         * @var string
+         */
+        public $set_password_url;
+        /**
+         * Override (force) default template path
+         *
+         * @var string
+         */
+        public $default_template_path;
+        /**
+         * Constructor.
+         *
+         * @param Package $package An instance of (Woo Blocks) Package.
+         */
+        public function __construct(\Automattic\WooCommerce\Blocks\Domain\Package $package)
+        {
+        }
+        /**
+         * Get email subject.
+         *
+         * @since  3.1.0
+         * @return string
+         */
+        public function get_default_subject()
+        {
+        }
+        /**
+         * Get email heading.
+         *
+         * @since  3.1.0
+         * @return string
+         */
+        public function get_default_heading()
+        {
+        }
+        /**
+         * Trigger.
+         *
+         * @param int    $user_id User ID.
+         * @param string $user_pass User password.
+         * @param bool   $password_generated Whether the password was generated automatically or not.
+         */
+        public function trigger($user_id, $user_pass = '', $password_generated = false)
+        {
+        }
+        /**
+         * Get content html.
+         *
+         * @return string
+         */
+        public function get_content_html()
+        {
+        }
+        /**
+         * Get content plain.
+         *
+         * @return string
+         */
+        public function get_content_plain()
+        {
+        }
+        /**
+         * Default content to show below main email content.
+         *
+         * @since 3.7.0
+         * @return string
+         */
+        public function get_default_additional_content()
         {
         }
     }
@@ -17895,6 +18103,16 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
          * @return \WC_Order Order object.
          */
         protected function create_or_update_draft_order()
+        {
+        }
+        /**
+         * Convert an account creation error to a Store API error.
+         *
+         * @param \Exception $error Caught exception.
+         *
+         * @throws RouteException API error object with error details.
+         */
+        private function handle_error(\Exception $error)
         {
         }
         /**
