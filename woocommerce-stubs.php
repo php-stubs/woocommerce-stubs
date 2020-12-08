@@ -6357,6 +6357,14 @@ namespace {
         {
         }
         /**
+         * Handles the outputting of the WooCommerce Pay banner block.
+         *
+         * @param object $block Block data.
+         */
+        public static function output_wcpay_banner_block($block = array())
+        {
+        }
+        /**
          * Handles the outputting of featured sections
          *
          * @param array $sections Section data.
@@ -6402,6 +6410,14 @@ namespace {
          * Install WooCommerce Services from Extensions screens.
          */
         public static function install_woocommerce_services_addon()
+        {
+        }
+        /**
+         * Install WooCommerce Payments from the Extensions screens.
+         *
+         * @return void
+         */
+        public static function install_woocommerce_payments_addon()
         {
         }
         /**
@@ -11743,7 +11759,7 @@ namespace {
          *  - actions are set up for the first 'Update database' notice, and
          *  - URL for note's action is equal to the given URL (to check for potential nonce update).
          *
-         * @param WC_Admin_Note      $note            Note to check.
+         * @param Note               $note            Note to check.
          * @param string             $update_url      URL to check the note against.
          * @param array<int, string> $current_actions List of actions to check for.
          * @return bool
@@ -15304,7 +15320,7 @@ namespace {
         {
         }
         /**
-         * Run all calculations methods on the given items in sequence.
+         * Run all calculation methods on the given items in sequence.
          *
          * @since 3.2.0
          */
@@ -16332,7 +16348,7 @@ namespace {
          * Get weight of items in the cart.
          *
          * @since 2.5.0
-         * @return int
+         * @return float
          */
         public function get_cart_contents_weight()
         {
@@ -21482,7 +21498,7 @@ namespace {
         {
         }
         /**
-         * Register all WC sty;es.
+         * Register all WC styles.
          */
         private static function register_styles()
         {
@@ -27542,7 +27558,7 @@ namespace {
          * Note: Variable prices do not show suffixes like other product types. This
          * is due to some things like tax classes being set at variation level which
          * could differ from the parent price. The only way to show accurate prices
-         * would be to load the variation and get IT's price, which adds extra
+         * would be to load the variation and get it's price, which adds extra
          * overhead and still has edge cases where the values would be inaccurate.
          *
          * Additionally, ranges of prices no longer show 'striked out' sale prices
@@ -27676,7 +27692,7 @@ namespace {
          * Sets an array of children for the product.
          *
          * @since 3.0.0
-         * @param array $children Childre products.
+         * @param array $children Children products.
          */
         public function set_children($children)
         {
@@ -27811,9 +27827,9 @@ namespace {
         {
         }
         /**
-         * Sort an associativate array of $variation_id => $price pairs in order of min and max prices.
+         * Sort an associative array of $variation_id => $price pairs in order of min and max prices.
          *
-         * @param array $prices Associativate array of $variation_id => $price pairs.
+         * @param array $prices associative array of $variation_id => $price pairs.
          * @return array
          */
         protected function sort_variation_prices($prices)
@@ -27970,7 +27986,7 @@ namespace {
         /**
          * Returns the tax class.
          *
-         * Does not use get_prop so it can handle 'parent' Inheritance correctly.
+         * Does not use get_prop so it can handle 'parent' inheritance correctly.
          *
          * @param  string $context view, edit, or unfiltered.
          * @return string
@@ -32095,7 +32111,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '4.7.1';
+        public $version = '4.8.0';
         /**
          * WooCommerce Schema version.
          *
@@ -33324,6 +33340,17 @@ namespace {
          * @param string $table Lookup table name.
          */
         public function delete_from_lookup_table($id, $table)
+        {
+        }
+        /**
+         * Converts a WP post date string into a timestamp.
+         *
+         * @since 4.8.0
+         *
+         * @param  string $time_string The WP post date string.
+         * @return int|null The date string converted to a timestamp or null.
+         */
+        protected function string_to_timestamp($time_string)
         {
         }
     }
@@ -51519,6 +51546,45 @@ namespace {
          * Close wrappers.
          */
         public static function output_content_wrapper_end()
+        {
+        }
+    }
+    /**
+     * WC_Twenty_Twenty_One class.
+     */
+    class WC_Twenty_Twenty_One
+    {
+        /**
+         * Theme init.
+         */
+        public static function init()
+        {
+        }
+        /**
+         * Open the Twenty Twenty One wrapper.
+         */
+        public static function output_content_wrapper()
+        {
+        }
+        /**
+         * Close the Twenty Twenty One wrapper.
+         */
+        public static function output_content_wrapper_end()
+        {
+        }
+        /**
+         * Enqueue CSS for this theme.
+         *
+         * @param  array $styles Array of registered styles.
+         * @return array
+         */
+        public static function enqueue_styles($styles)
+        {
+        }
+        /**
+         * Enqueue the wp-admin CSS overrides for this theme.
+         */
+        public static function enqueue_admin_styles()
         {
         }
     }

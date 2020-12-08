@@ -736,8 +736,9 @@ namespace Automattic\WooCommerce\Admin\API {
         /**
          * Prepare note data.
          *
-         * @param WC_Admin_Note   $note     Note data.
+         * @param Note            $note     Note data.
          * @param WP_REST_Request $request  Request object.
+         *
          * @return WP_REST_Response $response Response data.
          */
         public function prepare_note_data_for_response($note, $request)
@@ -1519,6 +1520,12 @@ namespace Automattic\WooCommerce\Admin\API {
          * @var string
          */
         protected $namespace = 'wc-analytics';
+        /**
+         * Register the routes for products.
+         */
+        public function register_routes()
+        {
+        }
         /**
          * Get the query params for collections.
          *
@@ -2464,6 +2471,24 @@ namespace Automattic\WooCommerce\Admin\API\Reports {
          * @return string
          */
         protected function get_included_variations($query_args)
+        {
+        }
+        /**
+         * Returns comma separated ids of excluded variations, based on query arguments from the user.
+         *
+         * @param array $query_args Parameters supplied by the user.
+         * @return string
+         */
+        protected function get_excluded_variations($query_args)
+        {
+        }
+        /**
+         * Returns an array of ids of disallowed products, based on query arguments from the user.
+         *
+         * @param array $query_args Parameters supplied by the user.
+         * @return array
+         */
+        protected function get_excluded_products_array($query_args)
         {
         }
         /**
@@ -3628,6 +3653,18 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Customers {
         {
         }
         /**
+         * Sync customers data after an order was deleted.
+         *
+         * When an order is deleted, the customer record is deleted from the
+         * table if the customer has no other orders.
+         *
+         * @param int $order_id Order ID.
+         * @param int $customer_id Customer ID.
+         */
+        public static function sync_on_order_delete($order_id, $customer_id)
+        {
+        }
+        /**
          * Maps ordering specified by the user to columns in the database/fields in the data.
          *
          * @param string $order_by Sorting criterion.
@@ -3705,6 +3742,15 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Customers {
          * @return array Orders.
          */
         public static function get_oldest_orders($customer_id)
+        {
+        }
+        /**
+         * Retrieve the amount of orders made by a customer.
+         *
+         * @param int $customer_id Customer ID.
+         * @return int|null Amount of orders for customer or null on failure.
+         */
+        public static function get_order_count($customer_id)
         {
         }
         /**
@@ -5349,7 +5395,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Products {
          *
          * @var array
          */
-        protected $param_mapping = array('products' => 'product_includes');
+        protected $param_mapping = array('categories' => 'category_includes', 'products' => 'product_includes', 'variations' => 'variation_includes');
         /**
          * Get items.
          *
@@ -5614,7 +5660,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Products\Stats {
          *
          * @var array
          */
-        protected $param_mapping = array('products' => 'product_includes');
+        protected $param_mapping = array('categories' => 'category_includes', 'products' => 'product_includes', 'variations' => 'variation_includes');
         /**
          * Constructor.
          */
@@ -6894,7 +6940,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Variations {
      *
      * @extends WC_REST_Reports_Controller
      */
-    class Controller extends \WC_REST_Reports_Controller implements \Automattic\WooCommerce\Admin\API\Reports\ExportableInterface
+    class Controller extends \Automattic\WooCommerce\Admin\API\Reports\Controller implements \Automattic\WooCommerce\Admin\API\Reports\ExportableInterface
     {
         /**
          * Exportable traits.
@@ -6917,7 +6963,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Variations {
          *
          * @var array
          */
-        protected $param_mapping = array('products' => 'product_includes');
+        protected $param_mapping = array('variations' => 'variation_includes');
         /**
          * Get items.
          *
@@ -7103,6 +7149,227 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Variations {
          * @return array
          */
         public function get_data()
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Admin\API\Reports\Variations\Stats {
+    /**
+     * REST API Reports variations stats controller class.
+     *
+     * @extends WC_REST_Reports_Controller
+     */
+    class Controller extends \WC_REST_Reports_Controller
+    {
+        /**
+         * Endpoint namespace.
+         *
+         * @var string
+         */
+        protected $namespace = 'wc-analytics';
+        /**
+         * Route base.
+         *
+         * @var string
+         */
+        protected $rest_base = 'reports/variations/stats';
+        /**
+         * Mapping between external parameter name and name used in query class.
+         *
+         * @var array
+         */
+        protected $param_mapping = array('variations' => 'variation_includes');
+        /**
+         * Constructor.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Get all reports.
+         *
+         * @param WP_REST_Request $request Request data.
+         * @return array|WP_Error
+         */
+        public function get_items($request)
+        {
+        }
+        /**
+         * Prepare a report object for serialization.
+         *
+         * @param Array           $report  Report data.
+         * @param WP_REST_Request $request Request object.
+         * @return WP_REST_Response
+         */
+        public function prepare_item_for_response($report, $request)
+        {
+        }
+        /**
+         * Get the Report's schema, conforming to JSON Schema.
+         *
+         * @return array
+         */
+        public function get_item_schema()
+        {
+        }
+        /**
+         * Set the default results to 0 if API returns an empty array
+         *
+         * @param Mixed $results Report data.
+         * @return object
+         */
+        public function set_default_report_data($results)
+        {
+        }
+        /**
+         * Get the query params for collections.
+         *
+         * @return array
+         */
+        public function get_collection_params()
+        {
+        }
+    }
+    /**
+     * API\Reports\Variations\Stats\DataStore.
+     */
+    class DataStore extends \Automattic\WooCommerce\Admin\API\Reports\Variations\DataStore implements \Automattic\WooCommerce\Admin\API\Reports\DataStoreInterface
+    {
+        /**
+         * Mapping columns to data type to return correct response types.
+         *
+         * @var array
+         */
+        protected $column_types = array('items_sold' => 'intval', 'net_revenue' => 'floatval', 'orders_count' => 'intval', 'variations_count' => 'intval');
+        /**
+         * Data store context used to pass to filters.
+         *
+         * @var string
+         */
+        protected $context = 'variatons_stats';
+        /**
+         * Assign report columns once full table name has been assigned.
+         */
+        protected function assign_report_columns()
+        {
+        }
+        /**
+         * Updates the database query with parameters used for Products Stats report: categories and order status.
+         *
+         * @param array $query_args       Query arguments supplied by the user.
+         */
+        protected function update_sql_query_params($query_args)
+        {
+        }
+        /**
+         * Returns the report data based on parameters supplied by the user.
+         *
+         * @since 3.5.0
+         * @param array $query_args  Query parameters.
+         * @return stdClass|WP_Error Data.
+         */
+        public function get_data($query_args)
+        {
+        }
+        /**
+         * Normalizes order_by clause to match to SQL query.
+         *
+         * @param string $order_by Order by option requeste by user.
+         * @return string
+         */
+        protected function normalize_order_by($order_by)
+        {
+        }
+        /**
+         * Initialize query objects.
+         */
+        protected function initialize_queries()
+        {
+        }
+    }
+    /**
+     * API\Reports\Variations\Stats\Query
+     */
+    class Query extends \Automattic\WooCommerce\Admin\API\Reports\Query
+    {
+        /**
+         * Valid fields for Products report.
+         *
+         * @return array
+         */
+        protected function get_default_query_vars()
+        {
+        }
+        /**
+         * Get variations data based on the current query vars.
+         *
+         * @return array
+         */
+        public function get_data()
+        {
+        }
+    }
+    /**
+     * Date & time interval and numeric range handling class for Reporting API.
+     */
+    class Segmenter extends \Automattic\WooCommerce\Admin\API\Reports\Segmenter
+    {
+        /**
+         * Returns column => query mapping to be used for product-related product-level segmenting query
+         * (e.g. products sold, revenue from product X when segmenting by category).
+         *
+         * @param string $products_table Name of SQL table containing the product-level segmenting info.
+         *
+         * @return array Column => SELECT query mapping.
+         */
+        protected function get_segment_selections_product_level($products_table)
+        {
+        }
+        /**
+         * Calculate segments for totals where the segmenting property is bound to product (e.g. category, product_id, variation_id).
+         *
+         * @param array  $segmenting_selections SELECT part of segmenting SQL query--one for 'product_level' and one for 'order_level'.
+         * @param string $segmenting_from FROM part of segmenting SQL query.
+         * @param string $segmenting_where WHERE part of segmenting SQL query.
+         * @param string $segmenting_groupby GROUP BY part of segmenting SQL query.
+         * @param string $segmenting_dimension_name Name of the segmenting dimension.
+         * @param string $table_name Name of SQL table which is the stats table for orders.
+         * @param array  $totals_query Array of SQL clauses for totals query.
+         * @param string $unique_orders_table Name of temporary SQL table that holds unique orders.
+         *
+         * @return array
+         */
+        protected function get_product_related_totals_segments($segmenting_selections, $segmenting_from, $segmenting_where, $segmenting_groupby, $segmenting_dimension_name, $table_name, $totals_query, $unique_orders_table)
+        {
+        }
+        /**
+         * Calculate segments for intervals where the segmenting property is bound to product (e.g. category, product_id, variation_id).
+         *
+         * @param array  $segmenting_selections SELECT part of segmenting SQL query--one for 'product_level' and one for 'order_level'.
+         * @param string $segmenting_from FROM part of segmenting SQL query.
+         * @param string $segmenting_where WHERE part of segmenting SQL query.
+         * @param string $segmenting_groupby GROUP BY part of segmenting SQL query.
+         * @param string $segmenting_dimension_name Name of the segmenting dimension.
+         * @param string $table_name Name of SQL table which is the stats table for orders.
+         * @param array  $intervals_query Array of SQL clauses for intervals query.
+         * @param string $unique_orders_table Name of temporary SQL table that holds unique orders.
+         *
+         * @return array
+         */
+        protected function get_product_related_intervals_segments($segmenting_selections, $segmenting_from, $segmenting_where, $segmenting_groupby, $segmenting_dimension_name, $table_name, $intervals_query, $unique_orders_table)
+        {
+        }
+        /**
+         * Return array of segments formatted for REST response.
+         *
+         * @param string $type Type of segments to return--'totals' or 'intervals'.
+         * @param array  $query_params SQL query parameter array.
+         * @param string $table_name Name of main SQL table for the data store (used as basis for JOINS).
+         *
+         * @return array
+         * @throws \Automattic\WooCommerce\Admin\API\Reports\ParameterException In case of segmenting by variations, when no parent product is specified.
+         */
+        protected function get_segments($type, $query_params, $table_name)
         {
         }
     }
@@ -7363,6 +7630,78 @@ namespace Automattic\WooCommerce\Admin {
         }
     }
 }
+namespace Automattic\WooCommerce\Admin\Composer {
+    /**
+     * Main package class.
+     */
+    class Package
+    {
+        /**
+         * Version.
+         *
+         * @var string
+         */
+        const VERSION = '1.7.3';
+        /**
+         * Package active.
+         *
+         * @var bool
+         */
+        private static $package_active = false;
+        /**
+         * Active version
+         *
+         * @var bool
+         */
+        private static $active_version = null;
+        /**
+         * Init the package.
+         *
+         * Only initialize for WP 5.3 or greater.
+         */
+        public static function init()
+        {
+        }
+        /**
+         * Return the version of the package.
+         *
+         * @return string
+         */
+        public static function get_version()
+        {
+        }
+        /**
+         * Return the active version of WC Admin.
+         *
+         * @return string
+         */
+        public static function get_active_version()
+        {
+        }
+        /**
+         * Return whether the package is active.
+         *
+         * @return bool
+         */
+        public static function is_package_active()
+        {
+        }
+        /**
+         * Return the path to the package.
+         *
+         * @return string
+         */
+        public static function get_path()
+        {
+        }
+        /**
+         * Add deactivation hook for versions of the plugin that don't have the deactivation note.
+         */
+        public static function on_deactivation()
+        {
+        }
+    }
+}
 namespace Automattic\WooCommerce\Admin\DateTimeProvider {
     /**
      * DateTime Provider Interface.
@@ -7394,8 +7733,53 @@ namespace Automattic\WooCommerce\Admin\DateTimeProvider {
     }
 }
 namespace Automattic\WooCommerce\Admin {
+    // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
     /**
-     * WC_Admin_Events Class.
+     * A facade to allow deprecating an entire class.
+     */
+    class DeprecatedClassFacade
+    {
+        /**
+         * The instance that this facade covers over.
+         *
+         * @var object
+         */
+        protected $instance;
+        /**
+         * Constructor.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Log a deprecation to the error log.
+         *
+         * @param string $function The name of the deprecated function being called.
+         */
+        private static function log_deprecation($function)
+        {
+        }
+        /**
+         * Executes when calling any function on an instance of this class.
+         *
+         * @param string $name      The name of the function being called.
+         * @param array  $arguments An array of the arguments to the function call.
+         */
+        public function __call($name, $arguments)
+        {
+        }
+        /**
+         * Executes when calling any static function on this class.
+         *
+         * @param string $name      The name of the function being called.
+         * @param array  $arguments An array of the arguments to the function call.
+         */
+        public static function __callStatic($name, $arguments)
+        {
+        }
+    }
+    /**
+     * Events Class.
      */
     class Events
     {
@@ -7430,7 +7814,7 @@ namespace Automattic\WooCommerce\Admin {
         /**
          * Daily events to run.
          *
-         * Note: WC_Admin_Notes_Order_Milestones::other_milestones is hooked to this as well.
+         * Note: Order_Milestones::other_milestones is hooked to this as well.
          */
         public function do_wc_admin_daily()
         {
@@ -7565,12 +7949,6 @@ namespace Automattic\WooCommerce\Admin {
         {
         }
         /**
-         * Adds a menu item for the wc-admin devdocs.
-         */
-        public function register_devdocs_page()
-        {
-        }
-        /**
          * Define constant if not already set.
          *
          * @param string      $name  Constant name.
@@ -7588,7 +7966,7 @@ namespace Automattic\WooCommerce\Admin {
         /**
          * Prevent unserializing.
          */
-        private function __wakeup()
+        public function __wakeup()
         {
         }
     }
@@ -7716,6 +8094,12 @@ namespace Automattic\WooCommerce\Admin\Features {
         {
         }
         /**
+         * Get report pages.
+         */
+        public static function get_report_pages()
+        {
+        }
+        /**
          * "Clear" analytics cache by invalidating it.
          */
         public function run_clear_cache_tool()
@@ -7765,29 +8149,6 @@ namespace Automattic\WooCommerce\Admin\Features {
          * @return array
          */
         public function add_user_data_fields($user_data_fields)
-        {
-        }
-        /**
-         * Registers home page.
-         */
-        public function register_page()
-        {
-        }
-        /**
-         * Update the WooCommerce menu structure to make our main dashboard/handler
-         * the top level link for 'WooCommerce'.
-         */
-        public function update_link_structure()
-        {
-        }
-        /**
-         * Gets an array of plugins that can be installed & activated via the home screen.
-         *
-         * @param array $plugins Array of plugin slugs to be allowed.
-         *
-         * @return array
-         */
-        public static function get_homescreen_allowed_plugins($plugins)
         {
         }
     }
@@ -7921,6 +8282,173 @@ namespace Automattic\WooCommerce\Admin\Features {
         }
     }
     /**
+     * Triggers customer effort score on several different actions.
+     */
+    class CustomerEffortScoreTracks
+    {
+        /**
+         * Option name for the CES Tracks queue.
+         */
+        const CES_TRACKS_QUEUE_OPTION_NAME = 'woocommerce_ces_tracks_queue';
+        /**
+         * Option name for the clear CES Tracks queue for page.
+         */
+        const CLEAR_CES_TRACKS_QUEUE_FOR_PAGE_OPTION_NAME = 'woocommerce_clear_ces_tracks_queue_for_page';
+        /**
+         * Option name for the set of actions that have been shown.
+         */
+        const SHOWN_FOR_ACTIONS_OPTION_NAME = 'woocommerce_ces_shown_for_actions';
+        /**
+         * Action name for product add/publish.
+         */
+        const PRODUCT_ADD_PUBLISH_ACTION_NAME = 'product_add_publish';
+        /**
+         * Action name for product update.
+         */
+        const PRODUCT_UPDATE_ACTION_NAME = 'product_update';
+        /**
+         * Constructor. Sets up filters to hook into WooCommerce.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Hook into the post status lifecycle, only interested in products that
+         * are either being added or edited.
+         *
+         * @param string $new_status The new status.
+         * @param string $old_status The old status.
+         * @param Post   $post       The post.
+         */
+        public function run_on_transition_post_status($new_status, $old_status, $post)
+        {
+        }
+        /**
+         * Get the current published product count.
+         *
+         * @return integer The current published product count.
+         */
+        private function get_product_count()
+        {
+        }
+        /**
+         * Return whether the action has already been shown.
+         *
+         * @param string $action The action to check.
+         *
+         * @return bool Whether the action has already been shown.
+         */
+        private function has_been_shown($action)
+        {
+        }
+        /**
+         * Enqueue the item to the CES tracks queue.
+         *
+         * @param object $item The item to enqueue.
+         */
+        private function enqueue_to_ces_tracks($item)
+        {
+        }
+        /**
+         * Enqueue the CES survey trigger for a new product.
+         */
+        private function enqueue_ces_survey_for_new_product()
+        {
+        }
+        /**
+         * Enqueue the CES survey trigger for an existing product.
+         */
+        private function enqueue_ces_survey_for_edited_product()
+        {
+        }
+        /**
+         * Maybe clear the CES tracks queue, executed on every page load. If the
+         * clear option is set it clears the queue. In practice, this executes a
+         * page load after the queued CES tracks are displayed on the client, which
+         * sets the clear option.
+         */
+        public function maybe_clear_ces_tracks_queue()
+        {
+        }
+    }
+    /**
+     * Contains backend logic for the homescreen feature.
+     */
+    class Homescreen
+    {
+        /**
+         * Menu slug.
+         */
+        const MENU_SLUG = 'wc-admin';
+        /**
+         * Class instance.
+         *
+         * @var Homescreen instance
+         */
+        protected static $instance = null;
+        /**
+         * Get class instance.
+         */
+        public static function get_instance()
+        {
+        }
+        /**
+         * Hook into WooCommerce.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Adds fields so that we can store performance indicators, row settings, and chart type settings for users.
+         *
+         * @param array $user_data_fields User data fields.
+         * @return array
+         */
+        public function add_user_data_fields($user_data_fields)
+        {
+        }
+        /**
+         * Registers home page.
+         */
+        public function register_page()
+        {
+        }
+        /**
+         * Update the WooCommerce menu structure to make our main dashboard/handler
+         * the top level link for 'WooCommerce'.
+         */
+        public function update_link_structure()
+        {
+        }
+        /**
+         * Gets an array of plugins that can be installed & activated via the home screen.
+         *
+         * @param array $plugins Array of plugin slugs to be allowed.
+         *
+         * @return array
+         */
+        public static function get_homescreen_allowed_plugins($plugins)
+        {
+        }
+        /**
+         * Preload options to prime state of the application.
+         *
+         * @param array $options Array of options to preload.
+         * @return array
+         */
+        public function preload_options($options)
+        {
+        }
+        /**
+         * Add data to the shared component settings.
+         *
+         * @param array $settings Shared component settings.
+         */
+        public function component_settings($settings)
+        {
+        }
+    }
+    /**
      * Contains backend logic for the Marketing feature.
      */
     class Marketing
@@ -8049,6 +8577,443 @@ namespace Automattic\WooCommerce\Admin\Features {
         {
         }
     }
+}
+namespace Automattic\WooCommerce\Admin\Features\Navigation {
+    /**
+     * CoreMenu class. Handles registering Core menu items.
+     */
+    class CoreMenu
+    {
+        /**
+         * Class instance.
+         *
+         * @var Menu instance
+         */
+        protected static $instance = null;
+        /**
+         * Get class instance.
+         */
+        public static final function instance()
+        {
+        }
+        /**
+         * Init.
+         */
+        public function init()
+        {
+        }
+        /**
+         * Add registered admin settings as menu items.
+         */
+        public static function get_setting_items()
+        {
+        }
+        /**
+         * Get all menu categories.
+         *
+         * @return array
+         */
+        public static function get_categories()
+        {
+        }
+        /**
+         * Get all menu items.
+         *
+         * @return array
+         */
+        public static function get_items()
+        {
+        }
+        /**
+         * Register all core post types.
+         */
+        public function register_post_types()
+        {
+        }
+        /**
+         * Get items excluded from WooCommerce menu migration.
+         *
+         * @return array
+         */
+        public static function get_excluded_items()
+        {
+        }
+    }
+    /**
+     * Contains logic for the Navigation
+     */
+    class Init
+    {
+        /**
+         * Hook into WooCommerce.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Overwrites the allowed features array using a local `feature-config.php` file.
+         *
+         * @param array $features Array of feature slugs.
+         */
+        public function maybe_remove_nav_feature($features)
+        {
+        }
+        /**
+         * Preload options to prime state of the application.
+         *
+         * @param array $options Array of options to preload.
+         * @return array
+         */
+        public function preload_options($options)
+        {
+        }
+        /**
+         * Set up a div for the navigation.
+         * The initial contents here are meant as a place loader for when the PHP page initialy loads.
+         */
+        public static function embed_navigation()
+        {
+        }
+        /**
+         * Enqueue scripts on non-WooCommerce pages.
+         */
+        public function maybe_enqueue_scripts()
+        {
+        }
+        /**
+         * Reloads the page when the option is toggled to make sure all nav features are loaded.
+         *
+         * @param string $old_value Old value.
+         * @param string $value     New value.
+         */
+        public static function reload_page_on_toggle($old_value, $value)
+        {
+        }
+    }
+    /**
+     * Contains logic for the WooCommerce Navigation menu.
+     */
+    class Menu
+    {
+        /**
+         * Class instance.
+         *
+         * @var Menu instance
+         */
+        protected static $instance = null;
+        /**
+         * Array index of menu capability.
+         *
+         * @var int
+         */
+        const CAPABILITY = 1;
+        /**
+         * Array index of menu callback.
+         *
+         * @var int
+         */
+        const CALLBACK = 2;
+        /**
+         * Array index of menu callback.
+         *
+         * @var int
+         */
+        const SLUG = 3;
+        /**
+         * Array index of menu CSS class string.
+         *
+         * @var int
+         */
+        const CSS_CLASSES = 4;
+        /**
+         * Default parent menu
+         *
+         * @var string
+         */
+        const DEFAULT_PARENT = 'settings';
+        /**
+         * Store menu items.
+         *
+         * @var array
+         */
+        protected static $menu_items = array();
+        /**
+         * Registered callbacks or URLs with migration boolean as key value pairs.
+         *
+         * @var array
+         */
+        protected static $callbacks = array();
+        /**
+         * Get class instance.
+         */
+        public static final function instance()
+        {
+        }
+        /**
+         * Init.
+         */
+        public function init()
+        {
+        }
+        /**
+         * Convert a WordPress menu callback to a URL.
+         *
+         * @param string $callback Menu callback.
+         * @return string
+         */
+        public static function get_callback_url($callback)
+        {
+        }
+        /**
+         * Get the parent key if one exists.
+         *
+         * @param string $callback Callback or URL.
+         * @return string|null
+         */
+        public static function get_parent_key($callback)
+        {
+        }
+        /**
+         * Adds a top level menu item to the navigation.
+         *
+         * @param array $args Array containing the necessary arguments.
+         *    $args = array(
+         *      'id'         => (string) The unique ID of the menu item. Required.
+         *      'title'      => (string) Title of the menu item. Required.
+         *      'capability' => (string) Capability to view this menu item.
+         *      'url'        => (string) URL or callback to be used. Required.
+         *      'order'      => (int) Menu item order.
+         *      'migrate'    => (bool) Whether or not to hide the item in the wp admin menu.
+         *      'menuId'     => (string) The ID of the menu to add the category to.
+         *    ).
+         */
+        private static function add_category($args)
+        {
+        }
+        /**
+         * Adds a child menu item to the navigation.
+         *
+         * @param array $args Array containing the necessary arguments.
+         *    $args = array(
+         *      'id'         => (string) The unique ID of the menu item. Required.
+         *      'title'      => (string) Title of the menu item. Required.
+         *      'parent'     => (string) Parent menu item ID.
+         *      'capability' => (string) Capability to view this menu item.
+         *      'url'        => (string) URL or callback to be used. Required.
+         *      'order'      => (int) Menu item order.
+         *      'migrate'    => (bool) Whether or not to hide the item in the wp admin menu.
+         *      'menuId'     => (string) The ID of the menu to add the item to.
+         *    ).
+         */
+        private static function add_item($args)
+        {
+        }
+        /**
+         * Adds a plugin item.
+         *
+         * @param array $args Array containing the necessary arguments.
+         *    $args = array(
+         *      'id'         => (string) The unique ID of the menu item. Required.
+         *      'title'      => (string) Title of the menu item. Required.
+         *      'parent'     => (string) Parent menu item ID.
+         *      'capability' => (string) Capability to view this menu item.
+         *      'url'        => (string) URL or callback to be used. Required.
+         *      'migrate'    => (bool) Whether or not to hide the item in the wp admin menu.
+         *      'menuId'     => (string) The ID of the menu to add the item to.
+         *      'order'      => (int) Menu item order.
+         *    ).
+         */
+        public static function add_plugin_item($args)
+        {
+        }
+        /**
+         * Adds a plugin category.
+         *
+         * @param array $args Array containing the necessary arguments.
+         *    $args = array(
+         *      'id'         => (string) The unique ID of the menu item. Required.
+         *      'title'      => (string) Title of the menu item. Required.
+         *      'capability' => (string) Capability to view this menu item.
+         *      'url'        => (string) URL or callback to be used. Required.
+         *      'migrate'    => (bool) Whether or not to hide the item in the wp admin menu.
+         *      'menuId'     => (string) The ID of the menu to add the category to.
+         *      'order'      => (int) Menu item order.
+         *    ).
+         */
+        public static function add_plugin_category($args)
+        {
+        }
+        /**
+         * Adds a post type as a menu category.
+         *
+         * @param string $post_type Post type.
+         * @param array  $args Array of menu item args.
+         */
+        public static function add_post_type_category($post_type, $args = array())
+        {
+        }
+        /**
+         * Get menu item templates for a given post type.
+         *
+         * @param string $post_type Post type to add.
+         * @param array  $menu_args Arguments merged with the returned menu items.
+         * @return array
+         */
+        public static function get_post_type_items($post_type, $menu_args = array())
+        {
+        }
+        /**
+         * Add core menu items.
+         */
+        public function add_core_items()
+        {
+        }
+        /**
+         * Migrate any remaining WooCommerce child items.
+         *
+         * @param array $menu Menu items.
+         * @return array
+         */
+        public function migrate_core_child_items($menu)
+        {
+        }
+        /**
+         * Hides all WP admin menus items and adds screen IDs to check for new items.
+         *
+         * @param array $menu Menu items.
+         * @return array
+         */
+        public static function migrate_menu_items($menu)
+        {
+        }
+        /**
+         * Get registered menu items.
+         *
+         * @return array
+         */
+        public static function get_items()
+        {
+        }
+        /**
+         * Get registered callbacks.
+         *
+         * @return array
+         */
+        public static function get_callbacks()
+        {
+        }
+        /**
+         * Gets the menu item data for use in the client.
+         *
+         * @return array
+         */
+        public static function get_prepared_menu_item_data()
+        {
+        }
+        /**
+         * Add the menu to the page output.
+         *
+         * @param array $menu Menu items.
+         * @return array
+         */
+        public function enqueue_data($menu)
+        {
+        }
+    }
+    /**
+     * Contains logic for the WooCommerce Navigation menu.
+     */
+    class Screen
+    {
+        /**
+         * Class instance.
+         *
+         * @var Menu instance
+         */
+        protected static $instance = null;
+        /**
+         * Screen IDs of registered pages.
+         *
+         * @var array
+         */
+        protected static $screen_ids = array();
+        /**
+         * Registered post types.
+         *
+         * @var array
+         */
+        protected static $post_types = array();
+        /**
+         * Get class instance.
+         */
+        public static final function instance()
+        {
+        }
+        /**
+         * Init.
+         */
+        public function init()
+        {
+        }
+        /**
+         * Returns an array of filtered screen ids.
+         */
+        public static function get_screen_ids()
+        {
+        }
+        /**
+         * Returns an array of registered post types.
+         */
+        public static function get_post_types()
+        {
+        }
+        /**
+         * Check if we're on a WooCommerce page
+         *
+         * @return bool
+         */
+        public static function is_woocommerce_page()
+        {
+        }
+        /**
+         * Add navigation classes to body.
+         *
+         * @param string $classes Classes.
+         * @return string
+         */
+        public function add_body_class($classes)
+        {
+        }
+        /**
+         * Adds a screen ID to the list of screens that use the navigtion.
+         * Finds the parent if none is given to grab the correct screen ID.
+         *
+         * @param string      $callback Callback or URL for page.
+         * @param string|null $parent   Parent screen ID.
+         */
+        public static function add_screen($callback, $parent = null)
+        {
+        }
+        /**
+         * Get the plugin page slug.
+         *
+         * @param string $callback Callback.
+         * @return string
+         */
+        public static function get_plugin_page($callback)
+        {
+        }
+        /**
+         * Register post type for use in WooCommerce Navigation screens.
+         *
+         * @param string $post_type Post type to add.
+         */
+        public static function register_post_type($post_type)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Admin\Features {
     /**
      * Contains backend logic for the onboarding profile and checklist feature.
      */
@@ -8841,7 +9806,7 @@ namespace Automattic\WooCommerce\Admin {
          *
          * @var array
          */
-        protected static $db_updates = array('0.20.1' => array('wc_admin_update_0201_order_status_index', 'wc_admin_update_0201_db_version'), '0.23.0' => array('wc_admin_update_0230_rename_gross_total', 'wc_admin_update_0230_db_version'), '0.25.1' => array('wc_admin_update_0251_remove_unsnooze_action', 'wc_admin_update_0251_db_version'), '1.1.0' => array('wc_admin_update_110_remove_facebook_note', 'wc_admin_update_110_db_version'), '1.3.0' => array('wc_admin_update_130_remove_dismiss_action_from_tracking_opt_in_note', 'wc_admin_update_130_db_version'), '1.4.0' => array('wc_admin_update_140_change_deactivate_plugin_note_type', 'wc_admin_update_140_db_version'), '1.6.0' => array('wc_admin_update_160_remove_facebook_note', 'wc_admin_update_160_db_version'));
+        protected static $db_updates = array('0.20.1' => array('wc_admin_update_0201_order_status_index', 'wc_admin_update_0201_db_version'), '0.23.0' => array('wc_admin_update_0230_rename_gross_total', 'wc_admin_update_0230_db_version'), '0.25.1' => array('wc_admin_update_0251_remove_unsnooze_action', 'wc_admin_update_0251_db_version'), '1.1.0' => array('wc_admin_update_110_remove_facebook_note', 'wc_admin_update_110_db_version'), '1.3.0' => array('wc_admin_update_130_remove_dismiss_action_from_tracking_opt_in_note', 'wc_admin_update_130_db_version'), '1.4.0' => array('wc_admin_update_140_change_deactivate_plugin_note_type', 'wc_admin_update_140_db_version'), '1.6.0' => array('wc_admin_update_160_remove_facebook_note', 'wc_admin_update_160_db_version'), '1.7.0' => array('wc_admin_update_170_homescreen_layout', 'wc_admin_update_170_db_version'));
         /**
          * Migrated option names mapping. New => old.
          *
@@ -9026,12 +9991,6 @@ namespace Automattic\WooCommerce\Admin {
         {
         }
         /**
-         * Returns true if WooCommerce Admin is currently running in a development environment.
-         */
-        public static function is_dev()
-        {
-        }
-        /**
          * Gets a build configured array of enabled WooCommerce Admin features/sections.
          *
          * @return array Enabled Woocommerce Admin features/sections.
@@ -9105,6 +10064,25 @@ namespace Automattic\WooCommerce\Admin {
          * Class loader for enabled WooCommerce Admin features/sections.
          */
         public static function load_features()
+        {
+        }
+        /**
+         * Adds the Features section to the advanced tab of WooCommerce Settings
+         *
+         * @param array $sections Sections.
+         * @return array
+         */
+        public static function add_features_section($sections)
+        {
+        }
+        /**
+         * Adds the Features settings.
+         *
+         * @param array  $settings Settings.
+         * @param string $current_section Current section slug.
+         * @return array
+         */
+        public static function add_features_settings($settings, $current_section)
         {
         }
         /**
@@ -9253,7 +10231,7 @@ namespace Automattic\WooCommerce\Admin {
          *
          * @param array $section Section to create breadcrumb from.
          */
-        private static function output_breadcrumbs($section)
+        private static function output_heading($section)
         {
         }
         /**
@@ -9593,9 +10571,31 @@ namespace Automattic\WooCommerce\Admin\Notes {
         }
     }
     /**
+     * Choose_Niche.
+     */
+    class ChooseNiche
+    {
+        /**
+         * Note traits.
+         */
+        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
+        /**
+         * Name of the note for use in the database.
+         */
+        const NOTE_NAME = 'wc-admin-choose-niche';
+        /**
+         * Get the note.
+         *
+         * @return Note
+         */
+        public static function get_note()
+        {
+        }
+    }
+    /**
      * ConfirmTaxSettings.
      */
-    class Confirm_Tax_Settings
+    class ConfirmTaxSettings
     {
         /**
          * Note traits.
@@ -9615,6 +10615,88 @@ namespace Automattic\WooCommerce\Admin\Notes {
         }
     }
     /**
+     * Coupon_Page_Moved class.
+     */
+    class CouponPageMoved
+    {
+        use \Automattic\WooCommerce\Admin\Notes\NoteTraits, \Automattic\WooCommerce\Admin\Features\CouponsMovedTrait;
+        const NOTE_NAME = 'wc-admin-coupon-page-moved';
+        /**
+         * Initialize our hooks.
+         */
+        public function init()
+        {
+        }
+        /**
+         * Checks if a note can and should be added.
+         *
+         * @return bool
+         */
+        public static function can_be_added()
+        {
+        }
+        /**
+         * Get the note object for this class.
+         *
+         * @return Note
+         */
+        public static function get_note()
+        {
+        }
+        /**
+         * Find notes that have not been actioned.
+         *
+         * @return bool
+         */
+        protected static function has_unactioned_note()
+        {
+        }
+        /**
+         * Whether any notes have been dismissed by the user previously.
+         *
+         * @return bool
+         */
+        protected static function has_dismissed_note()
+        {
+        }
+        /**
+         * Get the data store object.
+         *
+         * @return DataStore The data store object.
+         */
+        protected static function get_data_store()
+        {
+        }
+        /**
+         * Safe redirect to the coupon page to force page refresh.
+         */
+        public function redirect_to_coupons()
+        {
+        }
+    }
+    /**
+     * Customize_Store_With_Blocks.
+     */
+    class CustomizeStoreWithBlocks
+    {
+        /**
+         * Note traits.
+         */
+        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
+        /**
+         * Name of the note for use in the database.
+         */
+        const NOTE_NAME = 'wc-admin-customize-store-with-blocks';
+        /**
+         * Get the note.
+         *
+         * @return Note
+         */
+        public static function get_note()
+        {
+        }
+    }
+    /**
      * WC Admin Note Data Store (Custom Tables)
      */
     class DataStore extends \WC_Data_Store_WP implements \WC_Object_Data_Store_Interface
@@ -9622,7 +10704,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
         /**
          * Method to create a new note in the database.
          *
-         * @param WC_Admin_Note $note Admin note.
+         * @param Note $note Admin note.
          */
         public function create(&$note)
         {
@@ -9630,7 +10712,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
         /**
          * Method to read a note.
          *
-         * @param WC_Admin_Note $note Admin note.
+         * @param Note $note Admin note.
          * @throws \Exception Throws exception when invalid data is found.
          */
         public function read(&$note)
@@ -9639,7 +10721,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
         /**
          * Updates a note in the database.
          *
-         * @param WC_Admin_Note $note Admin note.
+         * @param Note $note Admin note.
          */
         public function update(&$note)
         {
@@ -9647,8 +10729,8 @@ namespace Automattic\WooCommerce\Admin\Notes {
         /**
          * Deletes a note from the database.
          *
-         * @param WC_Admin_Note $note Admin note.
-         * @param array         $args Array of args to pass to the delete method (not used).
+         * @param Note  $note Admin note.
+         * @param array $args Array of args to pass to the delete method (not used).
          */
         public function delete(&$note, $args = array())
         {
@@ -9656,7 +10738,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
         /**
          * Read actions from the database.
          *
-         * @param WC_Admin_Note $note Admin note.
+         * @param Note $note Admin note.
          */
         private function read_actions(&$note)
         {
@@ -9665,7 +10747,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
          * Save actions to the database.
          * This function clears old actions, then re-inserts new if any changes are found.
          *
-         * @param WC_Admin_Note $note Note object.
+         * @param Note $note Note object.
          *
          * @return bool|void
          */
@@ -9711,9 +10793,1361 @@ namespace Automattic\WooCommerce\Admin\Notes {
         }
     }
     /**
-     * WC_Admin_Note class.
+     * Deactivate_Plugin.
      */
-    class WC_Admin_Note extends \WC_Data
+    class DeactivatePlugin
+    {
+        /**
+         * Note traits.
+         */
+        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
+        /**
+         * Name of the note for use in the database.
+         */
+        const NOTE_NAME = 'wc-admin-deactivate-plugin';
+        /**
+         * Attach hooks.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Get the note.
+         *
+         * @return Note
+         */
+        public static function get_note()
+        {
+        }
+        /**
+         * Delete the note if the version is higher than the included.
+         */
+        public static function delete_note()
+        {
+        }
+        /**
+         * Deactivate feature plugin.
+         */
+        public function deactivate_feature_plugin()
+        {
+        }
+    }
+    // phpcs:disable Generic.Files.OneObjectStructurePerFile.MultipleFound
+    /**
+     * WC_Admin_Note.
+     *
+     * @deprecated since 1.7.0, use Note
+     */
+    class WC_Admin_Note extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        // These constants must be redeclared as to not break plugins that use them.
+        const E_WC_ADMIN_NOTE_ERROR = \Automattic\WooCommerce\Admin\Notes\Note::E_WC_ADMIN_NOTE_ERROR;
+        const E_WC_ADMIN_NOTE_WARNING = \Automattic\WooCommerce\Admin\Notes\Note::E_WC_ADMIN_NOTE_WARNING;
+        const E_WC_ADMIN_NOTE_UPDATE = \Automattic\WooCommerce\Admin\Notes\Note::E_WC_ADMIN_NOTE_UPDATE;
+        const E_WC_ADMIN_NOTE_INFORMATIONAL = \Automattic\WooCommerce\Admin\Notes\Note::E_WC_ADMIN_NOTE_INFORMATIONAL;
+        const E_WC_ADMIN_NOTE_MARKETING = \Automattic\WooCommerce\Admin\Notes\Note::E_WC_ADMIN_NOTE_MARKETING;
+        const E_WC_ADMIN_NOTE_SURVEY = \Automattic\WooCommerce\Admin\Notes\Note::E_WC_ADMIN_NOTE_SURVEY;
+        const E_WC_ADMIN_NOTE_PENDING = \Automattic\WooCommerce\Admin\Notes\Note::E_WC_ADMIN_NOTE_PENDING;
+        const E_WC_ADMIN_NOTE_UNACTIONED = \Automattic\WooCommerce\Admin\Notes\Note::E_WC_ADMIN_NOTE_UNACTIONED;
+        const E_WC_ADMIN_NOTE_ACTIONED = \Automattic\WooCommerce\Admin\Notes\Note::E_WC_ADMIN_NOTE_ACTIONED;
+        const E_WC_ADMIN_NOTE_SNOOZED = \Automattic\WooCommerce\Admin\Notes\Note::E_WC_ADMIN_NOTE_SNOOZED;
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\Note';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+        /**
+         * Note constructor. Loads note data.
+         *
+         * @param mixed $data Note data, object, or ID.
+         */
+        public function __construct($data = '')
+        {
+        }
+    }
+    /**
+     * WC_Admin_Notes.
+     *
+     * @deprecated since 1.7.0, use Notes
+     */
+    class WC_Admin_Notes extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\Notes';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+    }
+    /**
+     * WC_Admin_Notes_Choose_Niche.
+     *
+     * @deprecated since 1.7.0, use ChooseNiche
+     */
+    class WC_Admin_Notes_Choose_Niche extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\ChooseNiche';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+    }
+    /**
+     * WC_Admin_Notes_Coupon_Page_Moved.
+     *
+     * @deprecated since 1.7.0, use CouponPageMoved
+     */
+    class WC_Admin_Notes_Coupon_Page_Moved extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\CouponPageMoved';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+    }
+    /**
+     * WC_Admin_Notes_Customize_Store_With_Blocks.
+     *
+     * @deprecated since 1.7.0, use CustomizeStoreWithBlocks
+     */
+    class WC_Admin_Notes_Customize_Store_With_Blocks extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\CustomizeStoreWithBlocks';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+    }
+    /**
+     * WC_Admin_Notes_Deactivate_Plugin.
+     *
+     * @deprecated since 1.7.0, use DeactivatePlugin
+     */
+    class WC_Admin_Notes_Deactivate_Plugin extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\DeactivatePlugin';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+    }
+    /**
+     * WC_Admin_Notes_Draw_Attention.
+     *
+     * @deprecated since 1.7.0, use DrawAttention
+     */
+    class WC_Admin_Notes_Draw_Attention extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\DrawAttention';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+    }
+    /**
+     * WC_Admin_Notes_Edit_Products_On_The_Move.
+     *
+     * @deprecated since 1.7.0, use EditProductsOnTheMove
+     */
+    class WC_Admin_Notes_Edit_Products_On_The_Move extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\EditProductsOnTheMove';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+    }
+    /**
+     * WC_Admin_Notes_EU_VAT_Number.
+     *
+     * @deprecated since 1.7.0, use EUVATNumber
+     */
+    class WC_Admin_Notes_EU_VAT_Number extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\EUVATNumber';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+    }
+    /**
+     * WC_Admin_Notes_Facebook_Marketing_Expert.
+     *
+     * @deprecated since 1.7.0, use FacebookMarketingExpert
+     */
+    class WC_Admin_Notes_Facebook_Marketing_Expert extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\FacebookMarketingExpert';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+    }
+    /**
+     * WC_Admin_Notes_First_Product.
+     *
+     * @deprecated since 1.7.0, use FirstProduct
+     */
+    class WC_Admin_Notes_First_Product extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\FirstProduct';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+    }
+    /**
+     * WC_Admin_Notes_Giving_Feedback_Notes.
+     *
+     * @deprecated since 1.7.0, use GivingFeedbackNotes
+     */
+    class WC_Admin_Notes_Giving_Feedback_Notes extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\GivingFeedbackNotes';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+    }
+    /**
+     * WC_Admin_Notes_Historical_Data.
+     *
+     * @deprecated since 1.7.0, use HistoricalData
+     */
+    class WC_Admin_Notes_Historical_Data extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\HistoricalData';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+    }
+    /**
+     * WC_Admin_Notes_Home_Screen_Feedback.
+     *
+     * @deprecated since 1.7.0, use HomeScreenFeedback
+     */
+    class WC_Admin_Notes_Home_Screen_Feedback extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\HomeScreenFeedback';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+    }
+    /**
+     * WC_Admin_Notes_Insight_First_Sale.
+     *
+     * @deprecated since 1.7.0, use InsightFirstSale
+     */
+    class WC_Admin_Notes_Insight_First_Sale extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\InsightFirstSale';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+    }
+    /**
+     * WC_Admin_Notes_Install_JP_And_WCS_Plugins.
+     *
+     * @deprecated since 1.7.0, use InstallJPAndWCSPlugins
+     */
+    class WC_Admin_Notes_Install_JP_And_WCS_Plugins extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\InstallJPAndWCSPlugins';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+    }
+    /**
+     * WC_Admin_Notes_Launch_Checklist.
+     *
+     * @deprecated since 1.7.0, use LaunchChecklist
+     */
+    class WC_Admin_Notes_Launch_Checklist extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\LaunchChecklist';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+    }
+    /**
+     * WC_Admin_Notes_Marketing.
+     *
+     * @deprecated since 1.7.0, use Marketing
+     */
+    class WC_Admin_Notes_Marketing extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\Marketing';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+    }
+    /**
+     * WC_Admin_Notes_Migrate_From_Shopify.
+     *
+     * @deprecated since 1.7.0, use MigrateFromShopify
+     */
+    class WC_Admin_Notes_Migrate_From_Shopify extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\MigrateFromShopify';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+    }
+    /**
+     * WC_Admin_Notes_Mobile_App.
+     *
+     * @deprecated since 1.7.0, use MobileApp
+     */
+    class WC_Admin_Notes_Mobile_App extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\MobileApp';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+    }
+    /**
+     * WC_Admin_Notes_Need_Some_Inspiration.
+     *
+     * @deprecated since 1.7.0, use NeedSomeInspiration
+     */
+    class WC_Admin_Notes_Need_Some_Inspiration extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\NeedSomeInspiration';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+    }
+    /**
+     * WC_Admin_Notes_New_Sales_Record.
+     *
+     * @deprecated since 1.7.0, use NewSalesRecord
+     */
+    class WC_Admin_Notes_New_Sales_Record extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\NewSalesRecord';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+    }
+    /**
+     * WC_Admin_Notes_Onboarding_Email_Marketing.
+     *
+     * @deprecated since 1.7.0, use OnboardingEmailMarketing
+     */
+    class WC_Admin_Notes_Onboarding_Email_Marketing extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\OnboardingEmailMarketing';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+    }
+    /**
+     * WC_Admin_Notes_Onboarding_Payments.
+     *
+     * @deprecated since 1.7.0, use OnboardingPayments
+     */
+    class WC_Admin_Notes_Onboarding_Payments extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\OnboardingPayments';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+    }
+    /**
+     * WC_Admin_Notes_Online_Clothing_Store.
+     *
+     * @deprecated since 1.7.0, use OnlineClothingStore
+     */
+    class WC_Admin_Notes_Online_Clothing_Store extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\OnlineClothingStore';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+    }
+    /**
+     * WC_Admin_Notes_Order_Milestones.
+     *
+     * @deprecated since 1.7.0, use OrderMilestones
+     */
+    class WC_Admin_Notes_Order_Milestones extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\OrderMilestones';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+    }
+    /**
+     * WC_Admin_Notes_Performance_On_Mobile.
+     *
+     * @deprecated since 1.7.0, use PerformanceOnMobile
+     */
+    class WC_Admin_Notes_Performance_On_Mobile extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\PerformanceOnMobile';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+    }
+    /**
+     * WC_Admin_Notes_Personalize_Store.
+     *
+     * @deprecated since 1.7.0, use PersonalizeStore
+     */
+    class WC_Admin_Notes_Personalize_Store extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\PersonalizeStore';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+    }
+    /**
+     * WC_Admin_Notes_Real_Time_Order_Alerts.
+     *
+     * @deprecated since 1.7.0, use RealTimeOrderAlerts
+     */
+    class WC_Admin_Notes_Real_Time_Order_Alerts extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\RealTimeOrderAlerts';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+    }
+    /**
+     * WC_Admin_Notes_Review_Shipping_Settings.
+     *
+     * @deprecated since 1.7.0, use ReviewShippingSettings
+     */
+    class WC_Admin_Notes_Review_Shipping_Settings extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\ReviewShippingSettings';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+    }
+    /**
+     * WC_Admin_Notes_Selling_Online_Courses.
+     *
+     * @deprecated since 1.7.0, use SellingOnlineCourses
+     */
+    class WC_Admin_Notes_Selling_Online_Courses extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\SellingOnlineCourses';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+    }
+    /**
+     * WC_Admin_Notes_Set_Up_Additional_Payment_Types.
+     *
+     * @deprecated since 1.7.0, use SetUpAdditionalPaymentTypes
+     */
+    class WC_Admin_Notes_Set_Up_Additional_Payment_Types extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\SetUpAdditionalPaymentTypes';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+    }
+    /**
+     * WC_Admin_Notes_Start_Dropshipping_Business.
+     *
+     * @deprecated since 1.7.0, use StartDropshippingBusiness
+     */
+    class WC_Admin_Notes_Start_Dropshipping_Business extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\StartDropshippingBusiness';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+    }
+    /**
+     * WC_Admin_Notes_Test_Checkout.
+     *
+     * @deprecated since 1.7.0, use TestCheckout
+     */
+    class WC_Admin_Notes_Test_Checkout extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\TestCheckout';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+    }
+    /**
+     * WC_Admin_Notes_Tracking_Opt_In.
+     *
+     * @deprecated since 1.7.0, use TrackingOptIn
+     */
+    class WC_Admin_Notes_Tracking_Opt_In extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\TrackingOptIn';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+    }
+    /**
+     * WC_Admin_Notes_Woo_Subscriptions_Notes.
+     *
+     * @deprecated since 1.7.0, use WooSubscriptionsNotes
+     */
+    class WC_Admin_Notes_Woo_Subscriptions_Notes extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\WooSubscriptionsNotes';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+    }
+    /**
+     * WC_Admin_Notes_WooCommerce_Payments.
+     *
+     * @deprecated since 1.7.0, use WooCommercePayments
+     */
+    class WC_Admin_Notes_WooCommerce_Payments extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\WooCommercePayments';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+    }
+    /**
+     * WC_Admin_Notes_WooCommerce_Subscriptions.
+     *
+     * @deprecated since 1.7.0, use WooCommerceSubscriptions
+     */
+    class WC_Admin_Notes_WooCommerce_Subscriptions extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
+    {
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\WooCommerceSubscriptions';
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '1.7.0';
+    }
+    /**
+     * Draw_Attention
+     */
+    class DrawAttention
+    {
+        /**
+         * Note traits.
+         */
+        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
+        /**
+         * Name of the note for use in the database.
+         */
+        const NOTE_NAME = 'wc-admin-draw-attention';
+        /**
+         * Constructor.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Check to see if profiler options match before possibly adding note.
+         *
+         * @param object $old_value The old option value.
+         * @param object $value     The new option value.
+         * @param string $option    The name of the option.
+         */
+        public static function check_onboarding_profile($old_value, $value, $option)
+        {
+        }
+        /**
+         * Get the note.
+         *
+         * @return Note
+         */
+        public static function get_note()
+        {
+        }
+    }
+    /**
+     * EU_VAT_Number
+     */
+    class EUVATNumber
+    {
+        /**
+         * Note traits.
+         */
+        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
+        /**
+         * Name of the note for use in the database.
+         */
+        const NOTE_NAME = 'wc-admin-eu-vat-number';
+        /**
+         * Get the note.
+         *
+         * @return Note
+         */
+        public static function get_note()
+        {
+        }
+    }
+    /**
+     * Edit_Products_On_The_Move
+     */
+    class EditProductsOnTheMove
+    {
+        /**
+         * Note traits.
+         */
+        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
+        /**
+         * Name of the note for use in the database.
+         */
+        const NOTE_NAME = 'wc-admin-edit-products-on-the-move';
+        /**
+         * Get the note.
+         *
+         * @return Note
+         */
+        public static function get_note()
+        {
+        }
+    }
+    /**
+     * First_Product.
+     */
+    class FirstProduct
+    {
+        /**
+         * Note traits.
+         */
+        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
+        /**
+         * Name of the note for use in the database.
+         */
+        const NOTE_NAME = 'wc-admin-first-product';
+        /**
+         * Get the note.
+         *
+         * @return Note
+         */
+        public static function get_note()
+        {
+        }
+    }
+    /**
+     * Giving_Feedback_Notes
+     */
+    class GivingFeedbackNotes
+    {
+        /**
+         * Note traits.
+         */
+        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
+        /**
+         * Name of the note for use in the database.
+         */
+        const NOTE_NAME = 'wc-admin-store-notice-giving-feedback-2';
+        /**
+         * Get the note.
+         *
+         * @return Note
+         */
+        protected static function get_note()
+        {
+        }
+    }
+    /**
+     * WC_Admin_Notes_Google_Ads_And_Marketing
+     */
+    class GoogleAdsAndMarketing
+    {
+        /**
+         * Note traits.
+         */
+        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
+        /**
+         * Name of the note for use in the database.
+         */
+        const NOTE_NAME = 'wc-admin-google-ads-and-marketing';
+        /**
+         * Name of plugin file.
+         */
+        const PLUGIN_FILE = 'kliken-marketing-for-google/kliken-marketing-for-google.php';
+        /**
+         * Possibly add note.
+         */
+        public static function possibly_add_note()
+        {
+        }
+        /**
+         * Get the note.
+         *
+         * @return Note
+         */
+        public static function get_note()
+        {
+        }
+        /**
+         * Determine if Google Ads and Marketing is already active or installed
+         *
+         * @return bool
+         */
+        protected static function is_google_ads_and_marketing_installed()
+        {
+        }
+        /**
+         * Determine the number of orders in the last month
+         *
+         * @return int
+         */
+        protected static function orders_last_month()
+        {
+        }
+    }
+    /**
+     * Historical_Data.
+     */
+    class HistoricalData
+    {
+        /**
+         * Note traits.
+         */
+        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
+        /**
+         * Name of the note for use in the database.
+         */
+        const NOTE_NAME = 'wc-admin-historical-data';
+        /**
+         * Attach hooks.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Update status of note to actioned on data import trigger.
+         */
+        public static function update_status_to_actioned()
+        {
+        }
+        /**
+         * Get the note.
+         *
+         * @return Note
+         */
+        public static function get_note()
+        {
+        }
+    }
+    /**
+     * Home_Screen_Feedback.
+     */
+    class HomeScreenFeedback
+    {
+        /**
+         * Note traits.
+         */
+        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
+        /**
+         * Name of the note for use in the database.
+         */
+        const NOTE_NAME = 'wc-admin-home-screen-feedback';
+        const HOMESCREEN_ACCESSED_OPTION_NAME = 'wc_admin_note_home_screen_feedback_homescreen_accessed';
+        /**
+         * Constructor.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Watch for the homescreen being accessed (by checking to see if it's
+         * enabled) and set a time stamp for when it is.
+         */
+        public function on_init()
+        {
+        }
+        /**
+         * Get the note.
+         *
+         * @return Note
+         */
+        public static function get_note()
+        {
+        }
+    }
+    /**
+     * Insight_First_Sale.
+     */
+    class InsightFirstSale
+    {
+        /**
+         * Note traits.
+         */
+        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
+        /**
+         * Name of the note for use in the database.
+         */
+        const NOTE_NAME = 'wc-admin-insight-first-sale';
+        /**
+         * Get the note.
+         *
+         * @return Note
+         */
+        public static function get_note()
+        {
+        }
+    }
+    /**
+     * Install_JP_And_WCS_Plugins
+     */
+    class InstallJPAndWCSPlugins
+    {
+        /**
+         * Note traits.
+         */
+        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
+        /**
+         * Name of the note for use in the database.
+         */
+        const NOTE_NAME = 'wc-admin-install-jp-and-wcs-plugins';
+        /**
+         * Constructor.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Get the note.
+         *
+         * @return Note
+         */
+        public static function get_note()
+        {
+        }
+        /**
+         * Action the Install Jetpack and WooCommerce Shipping & Tax note, if any exists,
+         * and as long as both the Jetpack and WooCommerce Shipping & Tax plugins have been
+         * activated.
+         */
+        public static function action_note()
+        {
+        }
+        /**
+         * Install the Jetpack and WooCommerce Shipping & Tax plugins in response to the action
+         * being clicked in the admin note.
+         *
+         * @param Note $note The note being actioned.
+         */
+        public function install_jp_and_wcs_plugins($note)
+        {
+        }
+        /**
+         * Installs and activates the specified plugin.
+         *
+         * @param string $plugin The plugin slug.
+         */
+        private function install_and_activate_plugin($plugin)
+        {
+        }
+    }
+    /**
+     * Launch_Checklist
+     */
+    class LaunchChecklist
+    {
+        /**
+         * Note traits.
+         */
+        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
+        /**
+         * Name of the note for use in the database.
+         */
+        const NOTE_NAME = 'wc-admin-launch-checklist';
+        /**
+         * Get the note.
+         *
+         * @return Note
+         */
+        public static function get_note()
+        {
+        }
+    }
+    /**
+     * Manage_Orders_On_The_Go
+     */
+    class ManageOrdersOnTheGo
+    {
+        /**
+         * Note traits.
+         */
+        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
+        /**
+         * Name of the note for use in the database.
+         */
+        const NOTE_NAME = 'wc-admin-manage-orders-on-the-go';
+        /**
+         * Get the note.
+         *
+         * @return Note|null
+         */
+        public static function get_note()
+        {
+        }
+    }
+    /**
+     * Marketing
+     */
+    class Marketing
+    {
+        /**
+         * Note traits.
+         */
+        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
+        /**
+         * Name of the note for use in the database.
+         */
+        const NOTE_NAME = 'wc-admin-marketing-intro';
+        /**
+         * Get the note.
+         *
+         * @return Note
+         */
+        public static function get_note()
+        {
+        }
+    }
+    /**
+     * Migrate_From_Shopify.
+     */
+    class MigrateFromShopify
+    {
+        /**
+         * Note traits.
+         */
+        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
+        /**
+         * Name of the note for use in the database.
+         */
+        const NOTE_NAME = 'wc-admin-migrate-from-shopify';
+        /**
+         * Get the note.
+         *
+         * @return Note
+         */
+        public static function get_note()
+        {
+        }
+    }
+    /**
+     * Mobile_App
+     */
+    class MobileApp
+    {
+        /**
+         * Note traits.
+         */
+        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
+        /**
+         * Name of the note for use in the database.
+         */
+        const NOTE_NAME = 'wc-admin-mobile-app';
+        /**
+         * Get the note.
+         *
+         * @return Note
+         */
+        public static function get_note()
+        {
+        }
+    }
+    /**
+     * NavigationFeedback
+     */
+    class NavigationFeedback
+    {
+        /**
+         * Note traits.
+         */
+        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
+        /**
+         * Name of the note for use in the database.
+         */
+        const NOTE_NAME = 'wc-admin-navigation-feedback';
+        /**
+         * Get the note.
+         *
+         * @return Note
+         */
+        public static function get_note()
+        {
+        }
+    }
+    /**
+     * NavigationFeedbackFollowUp
+     */
+    class NavigationFeedbackFollowUp
+    {
+        /**
+         * Note traits.
+         */
+        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
+        /**
+         * Name of the note for use in the database.
+         */
+        const NOTE_NAME = 'wc-admin-navigation-feedback-follow-up';
+        /**
+         * Get the note.
+         *
+         * @return Note
+         */
+        public static function get_note()
+        {
+        }
+    }
+    /**
+     * Need_Some_Inspiration.
+     */
+    class NeedSomeInspiration
+    {
+        /**
+         * Note traits.
+         */
+        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
+        /**
+         * Name of the note for use in the database.
+         */
+        const NOTE_NAME = 'wc-admin-need-some-inspiration';
+        /**
+         * Get the note.
+         *
+         * @return Note
+         */
+        public static function get_note()
+        {
+        }
+    }
+    /**
+     * New_Sales_Record
+     */
+    class NewSalesRecord
+    {
+        /**
+         * Note traits.
+         */
+        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
+        /**
+         * Name of the note for use in the database.
+         */
+        const NOTE_NAME = 'wc-admin-new-sales-record';
+        /**
+         * Option name for the sales record date in ISO 8601 (YYYY-MM-DD) date.
+         */
+        const RECORD_DATE_OPTION_KEY = 'woocommerce_sales_record_date';
+        /**
+         * Option name for the sales record amount.
+         */
+        const RECORD_AMOUNT_OPTION_KEY = 'woocommerce_sales_record_amount';
+        /**
+         * Returns the total of yesterday's sales.
+         *
+         * @param string $date Date for sales to sum (i.e. YYYY-MM-DD).
+         * @return floatval
+         */
+        public static function sum_sales_for_date($date)
+        {
+        }
+        /**
+         * Possibly add a sales record note.
+         */
+        public static function possibly_add_note()
+        {
+        }
+    }
+    /**
+     * Note class.
+     */
+    class Note extends \WC_Data
     {
         // Note types.
         const E_WC_ADMIN_NOTE_ERROR = 'error';
@@ -10105,7 +12539,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
     /**
      * Admin Notes class.
      */
-    class WC_Admin_Notes
+    class Notes
     {
         /**
          * Hook used for recurring "unsnooze" action.
@@ -10131,7 +12565,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
          * Get admin note using it's ID
          *
          * @param int $note_id Note ID.
-         * @return WC_Admin_Note|bool
+         * @return Note|bool
          */
         public static function get_note($note_id)
         {
@@ -10157,8 +12591,8 @@ namespace Automattic\WooCommerce\Admin\Notes {
         /**
          * Update a note.
          *
-         * @param WC_Admin_Note $note The note that will be updated.
-         * @param array         $requested_updates a list of requested updates.
+         * @param Note  $note              The note that will be updated.
+         * @param array $requested_updates a list of requested updates.
          */
         public static function update_note($note, $requested_updates)
         {
@@ -10166,7 +12600,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
         /**
          * Soft delete of a note.
          *
-         * @param WC_Admin_Note $note The note that will be deleted.
+         * @param Note $note The note that will be deleted.
          */
         public static function delete_note($note)
         {
@@ -10212,585 +12646,20 @@ namespace Automattic\WooCommerce\Admin\Notes {
         public static function possibly_delete_survey_notes()
         {
         }
-    }
-    /**
-     * WC_Admin_Notes_Choose_Niche.
-     */
-    class WC_Admin_Notes_Choose_Niche
-    {
         /**
-         * Note traits.
-         */
-        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
-        /**
-         * Name of the note for use in the database.
-         */
-        const NOTE_NAME = 'wc-admin-choose-niche';
-        /**
-         * Get the note.
-         */
-        public static function get_note()
-        {
-        }
-    }
-    /**
-     * WC_Admin_Notes_Coupon_Page_Moved class.
-     */
-    class WC_Admin_Notes_Coupon_Page_Moved
-    {
-        use \Automattic\WooCommerce\Admin\Notes\NoteTraits, \Automattic\WooCommerce\Admin\Features\CouponsMovedTrait;
-        const NOTE_NAME = 'wc-admin-coupon-page-moved';
-        /**
-         * Initialize our hooks.
-         */
-        public function init()
-        {
-        }
-        /**
-         * Checks if a note can and should be added.
+         * Get the status of a given note by name.
          *
-         * @return bool
+         * @param string $note_name Name of the note.
+         * @return string|bool The note status.
          */
-        public static function can_be_added()
-        {
-        }
-        /**
-         * Get the note object for this class.
-         *
-         * @return WC_Admin_Note
-         */
-        public static function get_note()
-        {
-        }
-        /**
-         * Find notes that have not been actioned.
-         *
-         * @return bool
-         */
-        protected static function has_unactioned_note()
-        {
-        }
-        /**
-         * Whether any notes have been dismissed by the user previously.
-         *
-         * @return bool
-         */
-        protected static function has_dismissed_note()
-        {
-        }
-        /**
-         * Get the data store object.
-         *
-         * @return DataStore The data store object.
-         */
-        protected static function get_data_store()
-        {
-        }
-        /**
-         * Safe redirect to the coupon page to force page refresh.
-         */
-        public function redirect_to_coupons()
+        public static function get_note_status($note_name)
         {
         }
     }
     /**
-     * WC_Admin_Notes_Customize_Store_With_Blocks.
+     * Onboarding_Email_Marketing
      */
-    class WC_Admin_Notes_Customize_Store_With_Blocks
-    {
-        /**
-         * Note traits.
-         */
-        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
-        /**
-         * Name of the note for use in the database.
-         */
-        const NOTE_NAME = 'wc-admin-customize-store-with-blocks';
-        /**
-         * Get the note.
-         */
-        public static function get_note()
-        {
-        }
-    }
-    /**
-     * WC_Admin_Notes_Deactivate_Plugin.
-     */
-    class WC_Admin_Notes_Deactivate_Plugin
-    {
-        /**
-         * Note traits.
-         */
-        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
-        /**
-         * Name of the note for use in the database.
-         */
-        const NOTE_NAME = 'wc-admin-deactivate-plugin';
-        /**
-         * Attach hooks.
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Get the note.
-         */
-        public static function get_note()
-        {
-        }
-        /**
-         * Delete the note if the version is higher than the included.
-         */
-        public static function delete_note()
-        {
-        }
-        /**
-         * Deactivate feature plugin.
-         */
-        public function deactivate_feature_plugin()
-        {
-        }
-    }
-    /**
-     * WC_Admin_Notes_Draw_Attention
-     */
-    class WC_Admin_Notes_Draw_Attention
-    {
-        /**
-         * Note traits.
-         */
-        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
-        /**
-         * Name of the note for use in the database.
-         */
-        const NOTE_NAME = 'wc-admin-draw-attention';
-        /**
-         * Constructor.
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Check to see if profiler options match before possibly adding note.
-         *
-         * @param object $old_value The old option value.
-         * @param object $value     The new option value.
-         * @param string $option    The name of the option.
-         */
-        public static function check_onboarding_profile($old_value, $value, $option)
-        {
-        }
-        /**
-         * Get the note.
-         */
-        public static function get_note()
-        {
-        }
-    }
-    /**
-     * WC_Admin_Notes_EU_VAT_Number
-     */
-    class WC_Admin_Notes_EU_VAT_Number
-    {
-        /**
-         * Note traits.
-         */
-        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
-        /**
-         * Name of the note for use in the database.
-         */
-        const NOTE_NAME = 'wc-admin-eu-vat-number';
-        /**
-         * Get the note.
-         */
-        public static function get_note()
-        {
-        }
-    }
-    /**
-     * WC_Admin_Notes_Edit_Products_On_The_Move
-     */
-    class WC_Admin_Notes_Edit_Products_On_The_Move
-    {
-        /**
-         * Note traits.
-         */
-        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
-        /**
-         * Name of the note for use in the database.
-         */
-        const NOTE_NAME = 'wc-admin-edit-products-on-the-move';
-        /**
-         * Get the note.
-         */
-        public static function get_note()
-        {
-        }
-    }
-    /**
-     * WC_Admin_Notes_First_Product.
-     */
-    class WC_Admin_Notes_First_Product
-    {
-        /**
-         * Note traits.
-         */
-        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
-        /**
-         * Name of the note for use in the database.
-         */
-        const NOTE_NAME = 'wc-admin-first-product';
-        /**
-         * Get the note.
-         */
-        public static function get_note()
-        {
-        }
-    }
-    /**
-     * WC_Admin_Notes_Giving_Feedback_Notes
-     */
-    class WC_Admin_Notes_Giving_Feedback_Notes
-    {
-        /**
-         * Note traits.
-         */
-        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
-        /**
-         * Name of the note for use in the database.
-         */
-        const NOTE_NAME = 'wc-admin-store-notice-giving-feedback-2';
-        /**
-         * Get the note.
-         */
-        protected static function get_note()
-        {
-        }
-    }
-    /**
-     * WC_Admin_Notes_Google_Ads_And_Marketing
-     */
-    class WC_Admin_Notes_Google_Ads_And_Marketing
-    {
-        /**
-         * Note traits.
-         */
-        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
-        /**
-         * Name of the note for use in the database.
-         */
-        const NOTE_NAME = 'wc-admin-google-ads-and-marketing';
-        /**
-         * Name of plugin file.
-         */
-        const PLUGIN_FILE = 'kliken-marketing-for-google/kliken-marketing-for-google.php';
-        /**
-         * Possibly add note.
-         */
-        public static function possibly_add_note()
-        {
-        }
-        /**
-         * Get the note.
-         */
-        public static function get_note()
-        {
-        }
-        /**
-         * Determine if Google Ads and Marketing is already active or installed
-         *
-         * @return bool
-         */
-        protected static function is_google_ads_and_marketing_installed()
-        {
-        }
-        /**
-         * Determine the number of orders in the last month
-         *
-         * @return int
-         */
-        protected static function orders_last_month()
-        {
-        }
-    }
-    /**
-     * WC_Admin_Notes_Historical_Data.
-     */
-    class WC_Admin_Notes_Historical_Data
-    {
-        /**
-         * Note traits.
-         */
-        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
-        /**
-         * Name of the note for use in the database.
-         */
-        const NOTE_NAME = 'wc-admin-historical-data';
-        /**
-         * Attach hooks.
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Update status of note to actioned on data import trigger.
-         */
-        public static function update_status_to_actioned()
-        {
-        }
-        /**
-         * Get the note.
-         */
-        public static function get_note()
-        {
-        }
-    }
-    /**
-     * WC_Admin_Notes_Home_Screen_Feedback.
-     */
-    class WC_Admin_Notes_Home_Screen_Feedback
-    {
-        /**
-         * Note traits.
-         */
-        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
-        /**
-         * Name of the note for use in the database.
-         */
-        const NOTE_NAME = 'wc-admin-home-screen-feedback';
-        const HOMESCREEN_ACCESSED_OPTION_NAME = 'wc_admin_note_home_screen_feedback_homescreen_accessed';
-        /**
-         * Constructor.
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Watch for the homescreen being accessed (by checking to see if it's
-         * enabled) and set a time stamp for when it is.
-         */
-        public function on_init()
-        {
-        }
-        /**
-         * Get the note.
-         */
-        public static function get_note()
-        {
-        }
-    }
-    /**
-     * WC_Admin_Notes_Insight_First_Sale.
-     */
-    class WC_Admin_Notes_Insight_First_Sale
-    {
-        /**
-         * Note traits.
-         */
-        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
-        /**
-         * Name of the note for use in the database.
-         */
-        const NOTE_NAME = 'wc-admin-insight-first-sale';
-        /**
-         * Get the note.
-         */
-        public static function get_note()
-        {
-        }
-    }
-    /**
-     * WC_Admin_Notes_Install_JP_And_WCS_Plugins
-     */
-    class WC_Admin_Notes_Install_JP_And_WCS_Plugins
-    {
-        /**
-         * Note traits.
-         */
-        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
-        /**
-         * Name of the note for use in the database.
-         */
-        const NOTE_NAME = 'wc-admin-install-jp-and-wcs-plugins';
-        /**
-         * Constructor.
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Get the note.
-         */
-        public static function get_note()
-        {
-        }
-        /**
-         * Action the Install Jetpack and WooCommerce Shipping & Tax note, if any exists,
-         * and as long as both the Jetpack and WooCommerce Shipping & Tax plugins have been
-         * activated.
-         */
-        public static function action_note()
-        {
-        }
-        /**
-         * Install the Jetpack and WooCommerce Shipping & Tax plugins in response to the action
-         * being clicked in the admin note.
-         *
-         * @param WC_Admin_Note $note The note being actioned.
-         */
-        public function install_jp_and_wcs_plugins($note)
-        {
-        }
-        /**
-         * Installs and activates the specified plugin.
-         *
-         * @param string $plugin The plugin slug.
-         */
-        private function install_and_activate_plugin($plugin)
-        {
-        }
-    }
-    /**
-     * WC_Admin_Notes_Launch_Checklist
-     */
-    class WC_Admin_Notes_Launch_Checklist
-    {
-        /**
-         * Note traits.
-         */
-        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
-        /**
-         * Name of the note for use in the database.
-         */
-        const NOTE_NAME = 'wc-admin-launch-checklist';
-        /**
-         * Get the note.
-         */
-        public static function get_note()
-        {
-        }
-    }
-    /**
-     * WC_Admin_Notes_Marketing
-     */
-    class WC_Admin_Notes_Marketing
-    {
-        /**
-         * Note traits.
-         */
-        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
-        /**
-         * Name of the note for use in the database.
-         */
-        const NOTE_NAME = 'wc-admin-marketing-intro';
-        /**
-         * Get the note.
-         */
-        public static function get_note()
-        {
-        }
-    }
-    /**
-     * WC_Admin_Notes_Migrate_From_Shopify.
-     */
-    class WC_Admin_Notes_Migrate_From_Shopify
-    {
-        /**
-         * Note traits.
-         */
-        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
-        /**
-         * Name of the note for use in the database.
-         */
-        const NOTE_NAME = 'wc-admin-migrate-from-shopify';
-        /**
-         * Get the note.
-         */
-        public static function get_note()
-        {
-        }
-    }
-    /**
-     * WC_Admin_Notes_Mobile_App
-     */
-    class WC_Admin_Notes_Mobile_App
-    {
-        /**
-         * Note traits.
-         */
-        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
-        /**
-         * Name of the note for use in the database.
-         */
-        const NOTE_NAME = 'wc-admin-mobile-app';
-        /**
-         * Get the note.
-         */
-        public static function get_note()
-        {
-        }
-    }
-    /**
-     * WC_Admin_Notes_Need_Some_Inspiration.
-     */
-    class WC_Admin_Notes_Need_Some_Inspiration
-    {
-        /**
-         * Note traits.
-         */
-        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
-        /**
-         * Name of the note for use in the database.
-         */
-        const NOTE_NAME = 'wc-admin-need-some-inspiration';
-        /**
-         * Get the note.
-         */
-        public static function get_note()
-        {
-        }
-    }
-    /**
-     * WC_Admin_Notes_New_Sales_Record
-     */
-    class WC_Admin_Notes_New_Sales_Record
-    {
-        /**
-         * Note traits.
-         */
-        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
-        /**
-         * Name of the note for use in the database.
-         */
-        const NOTE_NAME = 'wc-admin-new-sales-record';
-        /**
-         * Option name for the sales record date in ISO 8601 (YYYY-MM-DD) date.
-         */
-        const RECORD_DATE_OPTION_KEY = 'woocommerce_sales_record_date';
-        /**
-         * Option name for the sales record amount.
-         */
-        const RECORD_AMOUNT_OPTION_KEY = 'woocommerce_sales_record_amount';
-        /**
-         * Returns the total of yesterday's sales.
-         *
-         * @param string $date Date for sales to sum (i.e. YYYY-MM-DD).
-         * @return floatval
-         */
-        public static function sum_sales_for_date($date)
-        {
-        }
-        /**
-         * Possibly add a sales record note.
-         */
-        public static function possibly_add_note()
-        {
-        }
-    }
-    /**
-     * WC_Admin_Notes_Onboarding_Email_Marketing
-     */
-    class WC_Admin_Notes_Onboarding_Email_Marketing
+    class OnboardingEmailMarketing
     {
         /**
          * Note traits.
@@ -10802,15 +12671,17 @@ namespace Automattic\WooCommerce\Admin\Notes {
         const NOTE_NAME = 'wc-admin-onboarding-email-marketing';
         /**
          * Get the note.
+         *
+         * @return Note
          */
         public static function get_note()
         {
         }
     }
     /**
-     * WC_Admin_Notes_Onboarding_Payments.
+     * Onboarding_Payments.
      */
-    class WC_Admin_Notes_Onboarding_Payments
+    class OnboardingPayments
     {
         /**
          * Note traits.
@@ -10822,50 +12693,17 @@ namespace Automattic\WooCommerce\Admin\Notes {
         const NOTE_NAME = 'wc-admin-onboarding-payments-reminder';
         /**
          * Get the note.
-         */
-        public static function get_note()
-        {
-        }
-    }
-    /**
-     * WC_Admin_Notes_Onboarding_Profiler.
-     */
-    class WC_Admin_Notes_Onboarding_Profiler
-    {
-        /**
-         * Note traits.
-         */
-        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
-        /**
-         * Name of the note for use in the database.
-         */
-        const NOTE_NAME = 'wc-admin-onboarding-profiler-reminder';
-        /**
-         * Attach hooks.
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Get the note.
-         */
-        public static function get_note()
-        {
-        }
-        /**
-         * Updates the note status when the profiler is completed.
          *
-         * @param mixed $old_value Old value.
-         * @param mixed $new_value New value.
+         * @return Note
          */
-        public static function update_status_on_complete($old_value, $new_value)
+        public static function get_note()
         {
         }
     }
     /**
-     * WC_Admin_Notes_Online_Clothing_Store.
+     * Online_Clothing_Store.
      */
-    class WC_Admin_Notes_Online_Clothing_Store
+    class OnlineClothingStore
     {
         /**
          * Note traits.
@@ -10887,15 +12725,17 @@ namespace Automattic\WooCommerce\Admin\Notes {
         }
         /**
          * Get the note.
+         *
+         * @return Note
          */
         public static function get_note()
         {
         }
     }
     /**
-     * WC_Admin_Notes_Order_Milestones
+     * Order_Milestones
      */
-    class WC_Admin_Notes_Order_Milestones
+    class OrderMilestones
     {
         /**
          * Name of the "other milestones" note.
@@ -11033,9 +12873,9 @@ namespace Automattic\WooCommerce\Admin\Notes {
         }
     }
     /**
-     * WC_Admin_Notes_Performance_On_Mobile
+     * Performance_On_Mobile
      */
-    class WC_Admin_Notes_Performance_On_Mobile
+    class PerformanceOnMobile
     {
         /**
          * Note traits.
@@ -11047,15 +12887,17 @@ namespace Automattic\WooCommerce\Admin\Notes {
         const NOTE_NAME = 'wc-admin-performance-on-mobile';
         /**
          * Get the note.
+         *
+         * @return Note
          */
         public static function get_note()
         {
         }
     }
     /**
-     * WC_Admin_Notes_Personalize_Store
+     * Personalize_Store
      */
-    class WC_Admin_Notes_Personalize_Store
+    class PersonalizeStore
     {
         /**
          * Note traits.
@@ -11067,15 +12909,17 @@ namespace Automattic\WooCommerce\Admin\Notes {
         const NOTE_NAME = 'wc-admin-personalize-store';
         /**
          * Get the note.
+         *
+         * @return Note
          */
         public static function get_note()
         {
         }
     }
     /**
-     * WC_Admin_Notes_Real_Time_Order_Alerts
+     * Real_Time_Order_Alerts
      */
-    class WC_Admin_Notes_Real_Time_Order_Alerts
+    class RealTimeOrderAlerts
     {
         /**
          * Note traits.
@@ -11087,31 +12931,33 @@ namespace Automattic\WooCommerce\Admin\Notes {
         const NOTE_NAME = 'wc-admin-real-time-order-alerts';
         /**
          * Get the note.
+         *
+         * @return Note
          */
         public static function get_note()
         {
         }
     }
     /**
-     * WC_Admin_Notes_Review_Shipping_Settings
+     * Review_Shipping_Settings
      */
-    class WC_Admin_Notes_Review_Shipping_Settings
+    class ReviewShippingSettings
     {
         use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
         const NOTE_NAME = 'wc-admin-review-shipping-settings';
         /**
          * Get the note.
          *
-         * @return WC_Admin_Note
+         * @return Note
          */
         public static function get_note()
         {
         }
     }
     /**
-     * WC_Admin_Notes_Selling_Online_Courses
+     * Selling_Online_Courses
      */
-    class WC_Admin_Notes_Selling_Online_Courses
+    class SellingOnlineCourses
     {
         /**
          * Note traits.
@@ -11139,15 +12985,17 @@ namespace Automattic\WooCommerce\Admin\Notes {
         }
         /**
          * Get the note.
+         *
+         * @return Note
          */
         public static function get_note()
         {
         }
     }
     /**
-     * WC_Admin_Notes_Set_Up_Additional_Payment_Types
+     * Set_Up_Additional_Payment_Types
      */
-    class WC_Admin_Notes_Set_Up_Additional_Payment_Types
+    class SetUpAdditionalPaymentTypes
     {
         /**
          * Note traits.
@@ -11164,9 +13012,10 @@ namespace Automattic\WooCommerce\Admin\Notes {
         {
         }
         /**
-         * Executes when the WooCommerce Payments plugin is activated. Possibly
-         * adds the note if it isn't already in the database and if it matches any
-         * criteria (see get_note()).
+         * Executes when the WooCommerce Payments plugin is activated. It does nothing
+         * if WooCommerce Payments plugin is not included in onboarding business extensions,
+         * otherwise it possibly adds the note if it isn't already in the database and if
+         * it matches any criteria (see get_note()).
          */
         public static function on_activate_wcpay()
         {
@@ -11182,15 +13031,17 @@ namespace Automattic\WooCommerce\Admin\Notes {
         }
         /**
          * Get the note.
+         *
+         * @return Note
          */
         public static function get_note()
         {
         }
     }
     /**
-     * WC_Admin_Notes_Start_Dropshipping_Business.
+     * Start_Dropshipping_Business.
      */
-    class WC_Admin_Notes_Start_Dropshipping_Business
+    class StartDropshippingBusiness
     {
         /**
          * Note traits.
@@ -11202,15 +13053,17 @@ namespace Automattic\WooCommerce\Admin\Notes {
         const NOTE_NAME = 'wc-admin-start-dropshipping-business';
         /**
          * Get the note.
+         *
+         * @return Note|null
          */
         public static function get_note()
         {
         }
     }
     /**
-     * WC_Admin_Notes_Test_Checkout
+     * Test_Checkout
      */
-    class WC_Admin_Notes_Test_Checkout
+    class TestCheckout
     {
         /**
          * Note traits.
@@ -11232,15 +13085,17 @@ namespace Automattic\WooCommerce\Admin\Notes {
         }
         /**
          * Get the note.
+         *
+         * @return Note|null
          */
         public static function get_note()
         {
         }
     }
     /**
-     * WC_Admin_Notes_Tracking_Opt_In
+     * Tracking_Opt_In
      */
-    class WC_Admin_Notes_Tracking_Opt_In
+    class TrackingOptIn
     {
         /**
          * Note traits.
@@ -11258,6 +13113,8 @@ namespace Automattic\WooCommerce\Admin\Notes {
         }
         /**
          * Get the note.
+         *
+         * @return Note|null
          */
         public static function get_note()
         {
@@ -11265,16 +13122,16 @@ namespace Automattic\WooCommerce\Admin\Notes {
         /**
          * Opt in to usage tracking when note is actioned.
          *
-         * @param WC_Admin_Note $note Note being acted upon.
+         * @param Note $note Note being acted upon.
          */
         public function opt_in_to_tracking($note)
         {
         }
     }
     /**
-     * WC_Admin_Notes_WooCommerce_Payments
+     * WooCommerce_Payments
      */
-    class WC_Admin_Notes_WooCommerce_Payments
+    class WooCommercePayments
     {
         /**
          * Note traits.
@@ -11306,6 +13163,8 @@ namespace Automattic\WooCommerce\Admin\Notes {
         }
         /**
          * Add a note about WooCommerce Payments.
+         *
+         * @return Note
          */
         public static function get_note()
         {
@@ -11321,7 +13180,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @return boolean Whether the plugin was successfully activated.
          */
-        public function install_and_activate_wcpay()
+        private function install_and_activate_wcpay()
         {
         }
         /**
@@ -11332,9 +13191,9 @@ namespace Automattic\WooCommerce\Admin\Notes {
         }
     }
     /**
-     * WC_Admin_Notes_WooCommerce_Subscriptions.
+     * WooCommerce_Subscriptions.
      */
-    class WC_Admin_Notes_WooCommerce_Subscriptions
+    class WooCommerceSubscriptions
     {
         /**
          * Note traits.
@@ -11346,15 +13205,17 @@ namespace Automattic\WooCommerce\Admin\Notes {
         const NOTE_NAME = 'wc-admin-woocommerce-subscriptions';
         /**
          * Get the note.
+         *
+         * @return Note|null
          */
         public static function get_note()
         {
         }
     }
     /**
-     * WC_Admin_Notes_Woo_Subscriptions_Notes
+     * Woo_Subscriptions_Notes
      */
-    class WC_Admin_Notes_Woo_Subscriptions_Notes
+    class WooSubscriptionsNotes
     {
         const LAST_REFRESH_OPTION_KEY = 'woocommerce_admin-wc-helper-last-refresh';
         const CONNECTION_NOTE_NAME = 'wc-admin-wc-helper-connection';
@@ -11435,7 +13296,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
         /**
          * Gets the product_id (if any) associated with a note.
          *
-         * @param WC_Admin_Note $note The note object to interrogate.
+         * @param Note $note The note object to interrogate.
          * @return int|false
          */
         public function get_product_id_from_subscription_note(&$note)
@@ -11451,7 +13312,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
          * Finds a note for a given product ID, if the note exists at all.
          *
          * @param int $product_id The product ID to search for.
-         * @return WC_Admin_Note|false
+         * @return Note|false
          */
         public function find_note_for_product_id($product_id)
         {
@@ -11716,78 +13577,6 @@ namespace Automattic\WooCommerce\Admin\Overrides {
         }
     }
 }
-namespace Automattic\WooCommerce\Admin\Composer {
-    /**
-     * Main package class.
-     */
-    class Package
-    {
-        /**
-         * Version.
-         *
-         * @var string
-         */
-        const VERSION = '1.6.3';
-        /**
-         * Package active.
-         *
-         * @var bool
-         */
-        private static $package_active = false;
-        /**
-         * Active version
-         *
-         * @var bool
-         */
-        private static $active_version = null;
-        /**
-         * Init the package.
-         *
-         * Only initialize for WP 5.3 or greater.
-         */
-        public static function init()
-        {
-        }
-        /**
-         * Return the version of the package.
-         *
-         * @return string
-         */
-        public static function get_version()
-        {
-        }
-        /**
-         * Return the active version of WC Admin.
-         *
-         * @return string
-         */
-        public static function get_active_version()
-        {
-        }
-        /**
-         * Return whether the package is active.
-         *
-         * @return bool
-         */
-        public static function is_package_active()
-        {
-        }
-        /**
-         * Return the path to the package.
-         *
-         * @return string
-         */
-        public static function get_path()
-        {
-        }
-        /**
-         * Add deactivation hook for versions of the plugin that don't have the deactivation note.
-         */
-        public static function on_deactivation()
-        {
-        }
-    }
-}
 namespace Automattic\WooCommerce\Admin {
     /**
      * PageController
@@ -11918,9 +13707,18 @@ namespace Automattic\WooCommerce\Admin {
          *   @type string      capability   Capability needed to access the page.
          *   @type string      icon         Icon. Dashicons helper class, base64-encoded SVG, or 'none'.
          *   @type int         position     Menu item position.
+         *   @type int         order        Navigation item order.
          * }
          */
         public function register_page($options)
+        {
+        }
+        /**
+         * Get registered pages.
+         *
+         * @return array
+         */
+        public function get_pages()
         {
         }
         /**
@@ -12083,6 +13881,85 @@ namespace Automattic\WooCommerce\Admin\PluginsProvider {
 }
 namespace Automattic\WooCommerce\Admin\RemoteInboxNotifications {
     /**
+     * Rule processor interface
+     */
+    interface RuleProcessorInterface
+    {
+        /**
+         * Processes a rule, returning the boolean result of the processing.
+         *
+         * @param object $rule         The rule to process.
+         * @param object $stored_state Stored state.
+         *
+         * @return bool The result of the processing.
+         */
+        public function process($rule, $stored_state);
+        /**
+         * Validates the rule.
+         *
+         * @param object $rule The rule to validate.
+         *
+         * @return bool Pass/fail.
+         */
+        public function validate($rule);
+    }
+    /**
+     * Rule processor that performs a comparison operation against the base
+     * location - country.
+     */
+    class BaseLocationCountryRuleProcessor implements \Automattic\WooCommerce\Admin\RemoteInboxNotifications\RuleProcessorInterface
+    {
+        /**
+         * Performs a comparison operation against the base location - country.
+         *
+         * @param object $rule         The specific rule being processed by this rule processor.
+         * @param object $stored_state Stored state.
+         *
+         * @return bool The result of the operation.
+         */
+        public function process($rule, $stored_state)
+        {
+        }
+        /**
+         * Validates the rule.
+         *
+         * @param object $rule The rule to validate.
+         *
+         * @return bool Pass/fail.
+         */
+        public function validate($rule)
+        {
+        }
+    }
+    /**
+     * Rule processor that performs a comparison operation against the base
+     * location - state.
+     */
+    class BaseLocationStateRuleProcessor implements \Automattic\WooCommerce\Admin\RemoteInboxNotifications\RuleProcessorInterface
+    {
+        /**
+         * Performs a comparison operation against the base location - state.
+         *
+         * @param object $rule         The specific rule being processed by this rule processor.
+         * @param object $stored_state Stored state.
+         *
+         * @return bool The result of the operation.
+         */
+        public function process($rule, $stored_state)
+        {
+        }
+        /**
+         * Validates the rule.
+         *
+         * @param object $rule The rule to validate.
+         *
+         * @return bool Pass/fail.
+         */
+        public function validate($rule)
+        {
+        }
+    }
+    /**
      * Compare two operands using the specified operation.
      */
     class ComparisonOperation
@@ -12189,29 +14066,6 @@ namespace Automattic\WooCommerce\Admin\RemoteInboxNotifications {
         public static function evaluate($spec, $current_status, $stored_state, $rule_evaluator)
         {
         }
-    }
-    /**
-     * Rule processor interface
-     */
-    interface RuleProcessorInterface
-    {
-        /**
-         * Processes a rule, returning the boolean result of the processing.
-         *
-         * @param object $rule         The rule to process.
-         * @param object $stored_state Stored state.
-         *
-         * @return bool The result of the processing.
-         */
-        public function process($rule, $stored_state);
-        /**
-         * Validates the rule.
-         *
-         * @param object $rule The rule to validate.
-         *
-         * @return bool Pass/fail.
-         */
-        public function validate($rule);
     }
     /**
      * Rule processor that fails.
@@ -12321,6 +14175,33 @@ namespace Automattic\WooCommerce\Admin\RemoteInboxNotifications {
         }
     }
     /**
+     * Rule processor that compares against the status of another note.
+     */
+    class NoteStatusRuleProcessor implements \Automattic\WooCommerce\Admin\RemoteInboxNotifications\RuleProcessorInterface
+    {
+        /**
+         * Compare against the status of another note.
+         *
+         * @param object $rule         The rule being processed by this rule processor.
+         * @param object $stored_state Stored state.
+         *
+         * @return bool The result of the operation.
+         */
+        public function process($rule, $stored_state)
+        {
+        }
+        /**
+         * Validates the rule.
+         *
+         * @param object $rule The rule to validate.
+         *
+         * @return bool Pass/fail.
+         */
+        public function validate($rule)
+        {
+        }
+    }
+    /**
      * Rule processor that performs a comparison operation against a value in the
      * onboarding profile.
      */
@@ -12331,6 +14212,33 @@ namespace Automattic\WooCommerce\Admin\RemoteInboxNotifications {
          * profile.
          *
          * @param object $rule         The rule being processed by this rule processor.
+         * @param object $stored_state Stored state.
+         *
+         * @return bool The result of the operation.
+         */
+        public function process($rule, $stored_state)
+        {
+        }
+        /**
+         * Validates the rule.
+         *
+         * @param object $rule The rule to validate.
+         *
+         * @return bool Pass/fail.
+         */
+        public function validate($rule)
+        {
+        }
+    }
+    /**
+     * Rule processor that performs a comparison operation against an option value.
+     */
+    class OptionRuleProcessor implements \Automattic\WooCommerce\Admin\RemoteInboxNotifications\RuleProcessorInterface
+    {
+        /**
+         * Performs a comparison operation against the option value.
+         *
+         * @param object $rule         The specific rule being processed by this rule processor.
          * @param object $stored_state Stored state.
          *
          * @return bool The result of the operation.
@@ -15684,18 +17592,16 @@ namespace Automattic\WooCommerce\Blocks\Domain\Services {
         {
         }
         /**
-         * Create a user account for specified order and request (if necessary).
+         * Create a user account for specified request (if necessary).
          * If a new account is created:
-         * - The order is associated with the account.
          * - The user is logged in.
          *
-         * @param \WC_Order        $order   The order currently being processed.
          * @param \WP_REST_Request $request The current request object being handled.
          *
          * @throws Exception On error.
          * @return int The new user id, or 0 if no user was created.
          */
-        public function from_order_request(\WC_Order $order, \WP_REST_Request $request)
+        public function from_order_request(\WP_REST_Request $request)
         {
         }
         /**
