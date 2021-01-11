@@ -305,6 +305,40 @@ namespace {
         {
         }
         /**
+         * Helper method to compute meta cache key. Different from WP Meta cache key in that meta data cached using this key also contains meta_id column.
+         *
+         * @since 4.7.0
+         *
+         * @return string
+         */
+        public function get_meta_cache_key()
+        {
+        }
+        /**
+         * Generate cache key from id and group.
+         *
+         * @since 4.7.0
+         *
+         * @param int|string $id          Object ID.
+         * @param string     $cache_group Group name use to store cache. Whole group cache can be invalidated in one go.
+         *
+         * @return string Meta cache key.
+         */
+        public static function generate_meta_cache_key($id, $cache_group)
+        {
+        }
+        /**
+         * Prime caches for raw meta data. This includes meta_id column as well, which is not included by default in WP meta data.
+         *
+         * @since 4.7.0
+         *
+         * @param array  $raw_meta_data_collection Array of objects of { object_id => array( meta_row_1, meta_row_2, ... }.
+         * @param string $cache_group              Name of cache group.
+         */
+        public static function prime_raw_meta_data_cache($raw_meta_data_collection, $cache_group)
+        {
+        }
+        /**
          * Read Meta Data from the database. Ignore any internal properties.
          * Uses it's own caches because get_metadata does not provide meta_ids.
          *
@@ -2768,7 +2802,7 @@ namespace {
         /**
          * Get the return url (thank you page).
          *
-         * @param WC_Order $order Order object.
+         * @param WC_Order|null $order Order object.
          * @return string
          */
         public function get_return_url($order = \null)
@@ -2871,9 +2905,9 @@ namespace {
          * If the gateway declares 'refunds' support, this will allow it to refund.
          * a passed in amount.
          *
-         * @param  int    $order_id Order ID.
-         * @param  float  $amount Refund amount.
-         * @param  string $reason Refund reason.
+         * @param  int        $order_id Order ID.
+         * @param  float|null $amount Refund amount.
+         * @param  string     $reason Refund reason.
          * @return boolean True or false based on success, or a WP_Error object.
          */
         public function process_refund($order_id, $amount = \null, $reason = '')
@@ -12184,8 +12218,6 @@ namespace {
     /**
      * WC_Report_Coupon_Usage
      *
-     * @author      WooThemes
-     * @category    Admin
      * @package     WooCommerce\Admin\Reports
      * @version     2.1.0
      */
@@ -17867,6 +17899,8 @@ namespace {
         const E_WC_COUPON_MAX_SPEND_LIMIT_MET = 112;
         const E_WC_COUPON_EXCLUDED_PRODUCTS = 113;
         const E_WC_COUPON_EXCLUDED_CATEGORIES = 114;
+        const E_WC_COUPON_USAGE_LIMIT_COUPON_STUCK = 115;
+        const E_WC_COUPON_USAGE_LIMIT_COUPON_STUCK_GUEST = 116;
         const WC_COUPON_SUCCESS = 200;
         const WC_COUPON_REMOVED = 201;
         /**
@@ -20989,15 +21023,18 @@ namespace {
         /**
          * Get the email header.
          *
-         * @param mixed $email_heading Heading for the email.
+         * @param mixed    $email_heading Heading for the email.
+         * @param WC_Email $email         Email object for the email.
          */
-        public function email_header($email_heading)
+        public function email_header($email_heading, $email)
         {
         }
         /**
          * Get the email footer.
+         *
+         * @param WC_Email $email Email object for the email.
          */
-        public function email_footer()
+        public function email_footer($email)
         {
         }
         /**
@@ -22168,10 +22205,11 @@ namespace {
         /**
          * Run an update callback when triggered by ActionScheduler.
          *
+         * @param string $update_callback Callback name.
+         *
          * @since 3.6.0
-         * @param string $callback Callback name.
          */
-        public static function run_update_callback($callback)
+        public static function run_update_callback($update_callback)
         {
         }
         /**
@@ -32111,7 +32149,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '4.8.0';
+        public $version = '4.9.0';
         /**
          * WooCommerce Schema version.
          *
@@ -33151,6 +33189,19 @@ namespace {
         {
         }
         /**
+         * Helper method to filter internal meta keys from all meta data rows for the object.
+         *
+         * @since 4.7.0
+         *
+         * @param WC_Data $object        WC_Data object.
+         * @param array   $raw_meta_data Array of std object of meta data to be filtered.
+         *
+         * @return mixed|void
+         */
+        public function filter_raw_meta_data(&$object, $raw_meta_data)
+        {
+        }
+        /**
          * Deletes meta based on meta ID.
          *
          * @since  3.0.0
@@ -33390,7 +33441,7 @@ namespace {
         /**
          * Method to read an order from the database.
          *
-         * @param WC_Data $order Order object.
+         * @param WC_Order $order Order object.
          *
          * @throws Exception If passed order is invalid.
          */
@@ -34034,7 +34085,7 @@ namespace {
          * @since 3.0.0
          * @var array
          */
-        protected $internal_meta_keys = array('locale', 'billing_postcode', 'billing_city', 'billing_address_1', 'billing_address_2', 'billing_state', 'billing_country', 'shipping_postcode', 'shipping_city', 'shipping_address_1', 'shipping_address_2', 'shipping_state', 'shipping_country', 'paying_customer', 'last_update', 'first_name', 'last_name', 'display_name', 'show_admin_bar_front', 'use_ssl', 'admin_color', 'rich_editing', 'comment_shortcuts', 'dismissed_wp_pointers', 'show_welcome_panel', 'session_tokens', 'nickname', 'description', 'billing_first_name', 'billing_last_name', 'billing_company', 'billing_phone', 'billing_email', 'shipping_first_name', 'shipping_last_name', 'shipping_company', 'wptests_capabilities', 'wptests_user_level', 'syntax_highlighting', '_order_count', '_money_spent', '_woocommerce_tracks_anon_id');
+        protected $internal_meta_keys = array('locale', 'billing_postcode', 'billing_city', 'billing_address_1', 'billing_address_2', 'billing_state', 'billing_country', 'shipping_postcode', 'shipping_city', 'shipping_address_1', 'shipping_address_2', 'shipping_state', 'shipping_country', 'paying_customer', 'last_update', 'first_name', 'last_name', 'display_name', 'show_admin_bar_front', 'use_ssl', 'admin_color', 'rich_editing', 'comment_shortcuts', 'dismissed_wp_pointers', 'show_welcome_panel', 'session_tokens', 'nickname', 'description', 'billing_first_name', 'billing_last_name', 'billing_company', 'billing_phone', 'billing_email', 'shipping_first_name', 'shipping_last_name', 'shipping_company', 'wptests_capabilities', 'wptests_user_level', 'syntax_highlighting', '_order_count', '_money_spent', '_last_order', '_woocommerce_tracks_anon_id');
         /**
          * Internal meta type used to store user data.
          *
@@ -34835,10 +34886,11 @@ namespace {
          * Get the order type based on Order ID.
          *
          * @since 3.0.0
-         * @param int $order_id Order ID.
+         * @param int|WP_Post $order Order | Order id.
+         *
          * @return string
          */
-        public function get_order_type($order_id)
+        public function get_order_type($order)
         {
         }
         /**
@@ -34861,6 +34913,48 @@ namespace {
          * @return array|object
          */
         public function query($query_vars)
+        {
+        }
+        /**
+         * Compile order response and set caches as needed for order ids.
+         *
+         * @param array    $order_ids  List of order IDS to compile.
+         * @param array    $query_vars Original query arguments.
+         * @param WP_Query $query      Query object.
+         *
+         * @return array Orders.
+         */
+        private function compile_orders($order_ids, $query_vars, $query)
+        {
+        }
+        /**
+         * Prime refund cache for orders.
+         *
+         * @param array $order_ids  Order Ids to prime cache for.
+         * @param array $query_vars Query vars for the query.
+         */
+        private function prime_refund_caches_for_order($order_ids, $query_vars)
+        {
+        }
+        /**
+         * Prime following caches:
+         *  1. item-$order_item_id   For individual items.
+         *  2. order-items-$order-id For fetching items associated with an order.
+         *  3. order-item meta.
+         *
+         * @param array $order_ids  Order Ids to prime cache for.
+         * @param array $query_vars Query vars for the query.
+         */
+        private function prime_order_item_caches_for_orders($order_ids, $query_vars)
+        {
+        }
+        /**
+         * Prime cache for raw meta data for orders in bulk. Difference between this and WP built-in metadata is that this method also fetches `meta_id` field which we use and cache it.
+         *
+         * @param array $order_ids  Order Ids to prime cache for.
+         * @param array $query_vars Query vars for the query.
+         */
+        private function prime_raw_meta_cache_for_orders($order_ids, $query_vars)
         {
         }
         /**
@@ -42313,6 +42407,18 @@ namespace {
          */
         protected $rest_base = '';
         /**
+         * Used to cache computed return fields.
+         *
+         * @var null|array
+         */
+        private $_fields = \null;
+        /**
+         * Used to verify if cached fields are for correct request object.
+         *
+         * @var null|WP_REST_Request
+         */
+        private $_request = \null;
+        /**
          * Add the schema from additional fields to an schema array.
          *
          * The type of object is inferred from the passed schema.
@@ -45658,6 +45764,17 @@ namespace {
         {
         }
         /**
+         * Get fields for an object if getter is defined.
+         *
+         * @param object $object  Object we are fetching response for.
+         * @param string $context Context of the request. Can be `view` or `edit`.
+         * @param array  $fields  List of fields to fetch.
+         * @return array Data fetched from getters.
+         */
+        public function fetch_fields_using_getters($object, $context, $fields)
+        {
+        }
+        /**
          * Prepare links for the request.
          *
          * @param WC_Data         $object  Object data.
@@ -45949,11 +46066,12 @@ namespace {
         /**
          * Get formatted item data.
          *
-         * @since  3.0.0
-         * @param  WC_Data $object WC_Data instance.
+         * @since 3.0.0
+         * @param WC_Order $order WC_Data instance.
+         *
          * @return array
          */
-        protected function get_formatted_item_data($object)
+        protected function get_formatted_item_data($order)
         {
         }
         /**
@@ -46867,11 +46985,43 @@ namespace {
         {
         }
         /**
+         * Fetch price HTML.
+         *
+         * @param WC_Product $product Product object.
+         * @param string     $context Context of request, can be `view` or `edit`.
+         *
+         * @return string
+         */
+        protected function api_get_price_html($product, $context)
+        {
+        }
+        /**
+         * Fetch related IDs.
+         *
+         * @param WC_Product $product Product object.
+         * @param string     $context Context of request, can be `view` or `edit`.
+         *
+         * @return array
+         */
+        protected function api_get_related_ids($product, $context)
+        {
+        }
+        /**
+         * Fetch meta data.
+         *
+         * @param WC_Product $product Product object.
+         * @param string     $context Context of request, can be `view` or `edit`.
+         *
+         * @return array
+         */
+        protected function api_get_meta_data($product, $context)
+        {
+        }
+        /**
          * Get product data.
          *
          * @param WC_Product $product Product instance.
-         * @param string     $context Request context.
-         *                            Options: 'view' and 'edit'.
+         * @param string     $context Request context. Options: 'view' and 'edit'.
          *
          * @return array
          */
@@ -46884,7 +47034,7 @@ namespace {
          * @param WC_Data         $object  Object data.
          * @param WP_REST_Request $request Request object.
          *
-         * @return array                   Links for the given post.
+         * @return array Links for the given post.
          */
         protected function prepare_links($object, $request)
         {
@@ -49452,8 +49602,8 @@ namespace {
          * Get product data.
          *
          * @param WC_Product $product Product instance.
-         * @param string     $context Request context.
-         *                            Options: 'view' and 'edit'.
+         * @param string     $context Request context. Options: 'view' and 'edit'.
+         *
          * @return array
          */
         protected function get_product_data($product, $context = 'view')
@@ -55509,6 +55659,18 @@ namespace {
     {
     }
     /**
+     * Polyfill for wp_cache_get_multiple for WP versions before 5.5.
+     *
+     * @param array  $keys   Array of keys to get from group.
+     * @param string $group  Optional. Where the cache contents are grouped. Default empty.
+     * @param bool   $force  Optional. Whether to force an update of the local cache from the persistent
+     *                            cache. Default false.
+     * @return array|bool Array of values.
+     */
+    function wc_cache_get_multiple($keys, $group = '', $force = \false)
+    {
+    }
+    /**
      * Get coupon types.
      *
      * @return array
@@ -57253,7 +57415,7 @@ namespace {
      *
      * @since  2.2
      *
-     * @param  mixed $the_order Post object or post ID of the order.
+     * @param mixed $the_order       Post object or post ID of the order.
      *
      * @return bool|WC_Order|WC_Order_Refund
      */
@@ -60471,6 +60633,7 @@ namespace {
      * Returns the WooCommerce PSR11-compatible object container.
      * Code in the `includes` directory should use the container to get instances of classes in the `src` directory.
      *
+     * @since  4.4.0
      * @return \Psr\Container\ContainerInterface The WooCommerce PSR11 container.
      */
     function wc_get_container() : \Psr\Container\ContainerInterface

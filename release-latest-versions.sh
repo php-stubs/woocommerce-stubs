@@ -13,7 +13,7 @@ WC_JSON="$(wget -q -O- "https://packagist.org/packages/woocommerce/woocommerce.j
 
 # https://wordpress.org/plugins/woocommerce/advanced/
 for V in                     3.5 3.6 3.7 3.8 3.9 \
-         4.0 4.1 4.2 4.3 4.4 4.5 4.6     4.8; do
+         4.0 4.1 4.2 4.3 4.4 4.5 4.6     4.8 4.9; do
     # Find latest version
     printf -v JQ_FILTER '.package.versions[].version | select(test("^%s\\\\.%s\\\\.\\\\d+$"))' "${V%.*}" "${V#*.}"
     LATEST="$(jq -r "$JQ_FILTER" <<<"$WC_JSON" | sort -t "." -k 3 -g | tail -n 1)"
@@ -29,6 +29,8 @@ for V in                     3.5 3.6 3.7 3.8 3.9 \
         continue;
     fi
 
+    # Clean up source/ directory
+    git status --ignored --short -- source/ | sed -n -e 's#^!! ##p' | xargs --no-run-if-empty -- rm -rf
     # Get new version
     printf -v SED_EXP 's#\\("woocommerce/woocommerce"\\): "[0-9]\\+\\.[0-9]\\+\\.[0-9]\\+"#\\1: "%s"#' "$LATEST"
     sed -i -e "$SED_EXP" source/composer.json
