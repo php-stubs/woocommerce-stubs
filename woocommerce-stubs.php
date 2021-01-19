@@ -21023,18 +21023,15 @@ namespace {
         /**
          * Get the email header.
          *
-         * @param mixed    $email_heading Heading for the email.
-         * @param WC_Email $email         Email object for the email.
+         * @param mixed $email_heading Heading for the email.
          */
-        public function email_header($email_heading, $email)
+        public function email_header($email_heading)
         {
         }
         /**
          * Get the email footer.
-         *
-         * @param WC_Email $email Email object for the email.
          */
-        public function email_footer($email)
+        public function email_footer()
         {
         }
         /**
@@ -32149,7 +32146,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '4.9.0';
+        public $version = '4.9.1';
         /**
          * WooCommerce Schema version.
          *
