@@ -2303,7 +2303,6 @@ namespace {
          * @param  int        $qty Quantity to add.
          * @param  array      $args Args for the added product.
          * @return int
-         * @throws WC_Data_Exception Exception thrown if the item cannot be added to the cart.
          */
         public function add_product($product, $qty = 1, $args = array())
         {
@@ -17431,6 +17430,18 @@ namespace {
         {
         }
         /**
+         * Utility function for getting review counts for multiple products in one query. This is not cached.
+         *
+         * @since 5.0.0
+         *
+         * @param array $product_ids Array of product IDs.
+         *
+         * @return array
+         */
+        public static function get_review_counts_for_product_ids($product_ids)
+        {
+        }
+        /**
          * Get product review count for a product (not replies). Please note this is not cached.
          *
          * @since 3.0.0
@@ -22162,7 +22173,7 @@ namespace {
          *
          * @var array
          */
-        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_update_400_db_version'), '4.4.0' => array('wc_update_440_insert_attribute_terms_for_variable_products', 'wc_update_440_db_version'), '4.5.0' => array('wc_update_450_sanitize_coupons_code', 'wc_update_450_db_version'));
+        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_update_400_db_version'), '4.4.0' => array('wc_update_440_insert_attribute_terms_for_variable_products', 'wc_update_440_db_version'), '4.5.0' => array('wc_update_450_sanitize_coupons_code', 'wc_update_450_db_version'), '5.0.0' => array('wc_update_500_fix_product_review_count', 'wc_update_500_db_version'));
         /**
          * Hook in tabs.
          */
@@ -26163,6 +26174,7 @@ namespace {
          * Handle type changes.
          *
          * @since 3.0.0
+         *
          * @param WC_Product $product Product data.
          * @param string     $from    Origin type.
          * @param string     $to      New type.
@@ -26308,6 +26320,17 @@ namespace {
          * @param bool   $append    Are we appending or setting terms.
          */
         public static function force_default_term($object_id, $terms, $tt_ids, $taxonomy, $append)
+        {
+        }
+        /**
+         * Ensure statuses are correctly reassigned when restoring orders and products.
+         *
+         * @param string $new_status      The new status of the post being restored.
+         * @param int    $post_id         The ID of the post being restored.
+         * @param string $previous_status The status of the post at the point where it was trashed.
+         * @return string
+         */
+        public static function wp_untrash_post_status($new_status, $post_id, $previous_status)
         {
         }
         /**
@@ -32146,7 +32169,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '4.9.2';
+        public $version = '5.0.0';
         /**
          * WooCommerce Schema version.
          *
@@ -33840,7 +33863,7 @@ namespace {
          *
          * @since 3.0.0
          * @param WC_Coupon $coupon Coupon object.
-         * @param id        $user_id User ID.
+         * @param int       $user_id User ID.
          * @return int
          */
         public function get_usage_by_user_id(&$coupon, $user_id)
@@ -34265,11 +34288,44 @@ namespace {
     class WC_Customer_Download_Data_Store implements \WC_Customer_Download_Data_Store_Interface
     {
         /**
+         * Names of the database fields for the download permissions table.
+         */
+        const DOWNLOAD_PERMISSION_DB_FIELDS = array('download_id', 'product_id', 'user_id', 'user_email', 'order_id', 'order_key', 'downloads_remaining', 'access_granted', 'download_count', 'access_expires');
+        /**
+         * Create download permission for a user, from an array of data.
+         *
+         * @param array $data Data to create the permission for.
+         * @returns int The database id of the created permission, or false if the permission creation failed.
+         */
+        public function create_from_data($data)
+        {
+        }
+        /**
          * Create download permission for a user.
          *
          * @param WC_Customer_Download $download WC_Customer_Download object.
          */
         public function create(&$download)
+        {
+        }
+        /**
+         * Create download permission for a user, from an array of data.
+         * Assumes that all the keys in the passed data are valid.
+         *
+         * @param array $data Data to create the permission for.
+         * @return int The database id of the created permission, or false if the permission creation failed.
+         */
+        private function insert_new_download_permission($data)
+        {
+        }
+        /**
+         * Adjust a date value to be inserted in the database.
+         *
+         * @param mixed $date The date value. Can be a WC_DateTime, a timestamp, or anything else that "date" recognizes.
+         * @return string The date converted to 'Y-m-d' format.
+         * @throws Exception The passed value can't be converted to a date.
+         */
+        private function adjust_date_for_db($date)
         {
         }
         /**
@@ -35619,7 +35675,7 @@ namespace {
          * Should contain the fields token_id, gateway_id, token, user_id, type, is_default.
          *
          * @since 3.0.0
-         * @param id $token_id Token ID.
+         * @param int $token_id Token ID.
          * @return object
          */
         public function get_token_by_id($token_id)
@@ -35629,7 +35685,7 @@ namespace {
          * Returns metadata for a specific payment token.
          *
          * @since 3.0.0
-         * @param id $token_id Token ID.
+         * @param int $token_id Token ID.
          * @return array
          */
         public function get_metadata($token_id)
@@ -35639,7 +35695,7 @@ namespace {
          * Get a token's type by ID.
          *
          * @since 3.0.0
-         * @param id $token_id Token ID.
+         * @param int $token_id Token ID.
          * @return string
          */
         public function get_token_type_by_id($token_id)
@@ -35652,7 +35708,7 @@ namespace {
          *
          * @since 3.0.0
          *
-         * @param id   $token_id Token ID.
+         * @param int  $token_id Token ID.
          * @param bool $status Whether given payment token is the default payment token or not.
          *
          * @return void
@@ -58251,7 +58307,7 @@ namespace {
      * @since  3.0.0
      * @param  WC_Product $product WC_Product object.
      * @param  array      $args Optional arguments to pass product quantity and price.
-     * @return float
+     * @return float|string Price with tax included, or an empty string if price calculation failed.
      */
     function wc_get_price_including_tax($product, $args = array())
     {
@@ -58262,7 +58318,7 @@ namespace {
      * @since  3.0.0
      * @param  WC_Product $product WC_Product object.
      * @param  array      $args Optional arguments to pass product quantity and price.
-     * @return float
+     * @return float|string Price with tax excluded, or an empty string if price calculation failed.
      */
     function wc_get_price_excluding_tax($product, $args = array())
     {
@@ -59901,9 +59957,21 @@ namespace {
     /**
      * Disable search engines indexing core, dynamic, cart/checkout pages.
      *
+     * @todo Deprecated this function after dropping support for WP 5.6.
      * @since 3.2.0
      */
     function wc_page_noindex()
+    {
+    }
+    /**
+     * Disable search engines indexing core, dynamic, cart/checkout pages.
+     * Uses "wp_robots" filter introduced in WP 5.7.
+     *
+     * @since 5.0.0
+     * @param array $robots Associative array of robots directives.
+     * @return array Filtered robots directives.
+     */
+    function wc_page_no_robots($robots)
     {
     }
     /**
