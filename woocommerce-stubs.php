@@ -11920,7 +11920,7 @@ namespace {
          * with the $new_version.
          *
          * @param string $new_version WooCommerce version to test against.
-         * @param string $release 'major' or 'minor'.
+         * @param string $release 'major', 'minor', or 'none'.
          * @return array of plugin info arrays
          */
         public function get_untested_plugins($new_version, $release)
@@ -32146,7 +32146,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '4.9.1';
+        public $version = '4.9.2';
         /**
          * WooCommerce Schema version.
          *

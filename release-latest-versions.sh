@@ -13,7 +13,8 @@ WC_JSON="$(wget -q -O- "https://packagist.org/packages/woocommerce/woocommerce.j
 
 # https://wordpress.org/plugins/woocommerce/advanced/
 for V in                     3.5 3.6 3.7 3.8 3.9 \
-         4.0 4.1 4.2 4.3 4.4 4.5 4.6     4.8 4.9; do
+         4.0 4.1 4.2 4.3 4.4 4.5 4.6     4.8 4.9 \
+         5.0; do
     # Find latest version
     printf -v JQ_FILTER '.package.versions[].version | select(test("^%s\\\\.%s\\\\.\\\\d+$"))' "${V%.*}" "${V#*.}"
     LATEST="$(jq -r "$JQ_FILTER" <<<"$WC_JSON" | sort -t "." -k 3 -g | tail -n 1)"
@@ -34,6 +35,8 @@ for V in                     3.5 3.6 3.7 3.8 3.9 \
     # Get new version
     printf -v SED_EXP 's#\\("woocommerce/woocommerce"\\): "[0-9]\\+\\.[0-9]\\+\\.[0-9]\\+"#\\1: "%s"#' "$LATEST"
     sed -i -e "$SED_EXP" source/composer.json
+    composer run-script post-install-cmd
+    # FIXME https://github.com/woocommerce/woocommerce/issues/29078#issuecomment-777706511
     composer run-script post-install-cmd
 
 
