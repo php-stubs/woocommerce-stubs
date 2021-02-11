@@ -23,6 +23,8 @@ before_install:
 
 install:
   - "composer update --no-interaction --no-suggest"
+  # Reinstall sub-packages into /packages/
+  - "composer update --no-interaction --no-suggest"
 
 before_script:
   - "cat ./source/woocommerce/woocommerce.php"
