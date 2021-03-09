@@ -2371,6 +2371,18 @@ namespace {
         {
         }
         /**
+         * Get tax rates for an order. Use order's shipping or billing address, defaults to base location.
+         *
+         * @param string $tax_class     Tax class to get rates for.
+         * @param array  $location_args Location to compute rates for. Should be in form: array( country, state, postcode, city).
+         * @param object $customer      Only used to maintain backward compatibility for filter `woocommerce-matched_rates`.
+         *
+         * @return mixed|void Tax rates.
+         */
+        protected function get_tax_rates($tax_class, $location_args = array(), $customer = \null)
+        {
+        }
+        /**
          * Calculate taxes for all line items and shipping, and store the totals and tax rows.
          *
          * If by default the taxes are based on the shipping address and the current order doesn't
@@ -6989,6 +7001,15 @@ namespace {
         public function do_ajax_product_export()
         {
         }
+        /**
+         * Gets the product types that can be exported.
+         *
+         * @since 5.1.0
+         * @return array The product types keys and labels.
+         */
+        public static function get_product_types()
+        {
+        }
     }
     /**
      * WC_Admin_Help Class.
@@ -7483,6 +7504,15 @@ namespace {
          * Constructor.
          */
         public static function init()
+        {
+        }
+        /**
+         * Parses query to create nonces when available.
+         *
+         * @param object $response The WP_REST_Response we're working with.
+         * @return object $response The prepared WP_REST_Response object.
+         */
+        public static function prepare_note_with_nonce($response)
         {
         }
         /**
@@ -13465,6 +13495,42 @@ namespace {
         }
     }
     /**
+     * Blocks Utility class.
+     */
+    class WC_Blocks_Utils
+    {
+        /**
+         * Get blocks from a woocommerce page.
+         *
+         * @param string $woo_page_name A woocommerce page e.g. `checkout` or `cart`.
+         * @return array Array of blocks as returned by parse_blocks().
+         */
+        private static function get_all_blocks_from_page($woo_page_name)
+        {
+        }
+        /**
+         * Get all instances of the specified block on a specific woo page
+         * (e.g. `cart` or `checkout` page).
+         *
+         * @param string $block_name The name (id) of a block, e.g. `woocommerce/cart`.
+         * @param string $woo_page_name The woo page to search, e.g. `cart`.
+         * @return array Array of blocks as returned by parse_blocks().
+         */
+        public static function get_blocks_from_page($block_name, $woo_page_name)
+        {
+        }
+        /**
+         * Check if a given page contains a particular block.
+         *
+         * @param int|WP_Post $page Page post ID or post object.
+         * @param string      $block_name The name (id) of a block, e.g. `woocommerce/cart`.
+         * @return bool Boolean value if the page contains the block or not. Null in case the page does not exist.
+         */
+        public static function has_block_in_page($page, $block_name)
+        {
+        }
+    }
+    /**
      * WC_Ajax class.
      */
     class WC_AJAX
@@ -15593,11 +15659,11 @@ namespace {
         /**
          * Subtotals are costs before discounts.
          *
-         * To prevent rounding issues we need to work with the inclusive price where possible.
-         * otherwise we'll see errors such as when working with a 9.99 inc price, 20% VAT which would.
+         * To prevent rounding issues we need to work with the inclusive price where possible
+         * otherwise we'll see errors such as when working with a 9.99 inc price, 20% VAT which would
          * be 8.325 leading to totals being 1p off.
          *
-         * Pre tax coupons come off the price the customer thinks they are paying - tax is calculated.
+         * Pre tax coupons come off the price the customer thinks they are paying - tax is calculated
          * afterwards.
          *
          * e.g. $100 bike with $10 coupon = customer pays $90 and tax worked backwards from that.
@@ -15995,7 +16061,7 @@ namespace {
         {
         }
         /**
-         * Get subtotal.
+         * Get subtotal_tax.
          *
          * @since 3.2.0
          * @return float
@@ -17517,6 +17583,16 @@ namespace {
          * @return array
          */
         public function get_countries()
+        {
+        }
+        /**
+         * Check if a given code represents a valid ISO 3166-1 alpha-2 code for a country known to us.
+         *
+         * @since 5.1.0
+         * @param string $country_code The country code to check as a ISO 3166-1 alpha-2 code.
+         * @return bool True if the country is known to us, false otherwise.
+         */
+        public function country_exists($country_code)
         {
         }
         /**
@@ -26016,7 +26092,7 @@ namespace {
          * Gets valid tokens from the database based on user defined criteria.
          *
          * @since  2.6.0
-         * @param  array $args Query argyments {
+         * @param  array $args Query arguments {
          *     Array of query parameters.
          *
          *     @type string $token_id   Token ID.
@@ -30718,6 +30794,18 @@ namespace {
         {
         }
         /**
+         * Get's an arrau of matching rates from location and tax class. $customer parameter is used to preserve backward compatibility for filter.
+         *
+         * @param string $tax_class Tax class to get rates for.
+         * @param array  $location  Location to compute rates for. Should be in form: array( country, state, postcode, city).
+         * @param object $customer  Only used to maintain backward compatibility for filter `woocommerce-matched_rates`.
+         *
+         * @return mixed|void Tax rates.
+         */
+        public static function get_rates_from_location($tax_class, $location, $customer = \null)
+        {
+        }
+        /**
          * Get's an array of matching rates for the shop's base country.
          *
          * @param string $tax_class Tax Class.
@@ -30806,7 +30894,7 @@ namespace {
          * @since 3.7.0
          * @return array Array of tax class objects consisting of tax_rate_class_id, name, and slug.
          */
-        protected static function get_tax_rate_classes()
+        public static function get_tax_rate_classes()
         {
         }
         /**
@@ -31362,15 +31450,7 @@ namespace {
         {
         }
         /**
-         * Get order counts
-         *
-         * @return array
-         */
-        private static function get_order_counts()
-        {
-        }
-        /**
-         * Combine all order data.
+         * Get all order data.
          *
          * @return array
          */
@@ -31436,17 +31516,10 @@ namespace {
         /**
          * Get order totals
          *
+         * @deprecated 5.1.0 Logic moved to get_orders.
          * @return array
          */
         public static function get_order_totals()
-        {
-        }
-        /**
-         * Get last order date
-         *
-         * @return string
-         */
-        private static function get_order_dates()
         {
         }
         /**
@@ -31457,26 +31530,6 @@ namespace {
          * @return string 'Yes' if post contains $text (otherwise 'No').
          */
         public static function post_contains_text($post_id, $text)
-        {
-        }
-        /**
-         * Get blocks from a woocommerce page.
-         *
-         * @param string $woo_page_name A woocommerce page e.g. `checkout` or `cart`.
-         * @return array Array of blocks as returned by parse_blocks().
-         */
-        private static function get_all_blocks_from_page($woo_page_name)
-        {
-        }
-        /**
-         * Get all instances of the specified block on a specific woo page
-         * (e.g. `cart` or `checkout` page).
-         *
-         * @param string $block_name The name (id) of a block, e.g. `woocommerce/cart`.
-         * @param string $woo_page_name The woo page to search, e.g. `cart`.
-         * @return array Array of blocks as returned by parse_blocks().
-         */
-        private static function get_blocks_from_page($block_name, $woo_page_name)
         {
         }
         /**
@@ -32169,7 +32222,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '5.0.0';
+        public $version = '5.1.0';
         /**
          * WooCommerce Schema version.
          *
@@ -33044,6 +33097,22 @@ namespace {
          * @return string
          */
         public function sanitize_checkout_field_display($value)
+        {
+        }
+        /**
+         * Whether or not a page has been chose for the privacy policy.
+         *
+         * @return bool
+         */
+        public function has_privacy_policy_page_id()
+        {
+        }
+        /**
+         * Whether or not a page has been chose for the terms and conditions.
+         *
+         * @return bool
+         */
+        public function has_terms_and_conditions_page_id()
         {
         }
     }
@@ -48420,7 +48489,7 @@ namespace {
         }
         /**
          * Returns a mini-report on WC pages and if they are configured correctly:
-         * Present, visible, and including the correct shortcode.
+         * Present, visible, and including the correct shortcode or block.
          *
          * @return array
          */
@@ -58210,7 +58279,7 @@ namespace {
     {
     }
     /**
-     * Get attibutes/data for an individual variation from the database and maintain it's integrity.
+     * Get attributes/data for an individual variation from the database and maintain it's integrity.
      *
      * @since  2.4.0
      * @param  int $variation_id Variation ID.
