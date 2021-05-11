@@ -11210,7 +11210,7 @@ namespace {
         {
         }
         /**
-         * Render columm: thumb.
+         * Render column: thumb.
          */
         protected function render_thumb_column()
         {
@@ -11222,37 +11222,37 @@ namespace {
         {
         }
         /**
-         * Render columm: sku.
+         * Render column: sku.
          */
         protected function render_sku_column()
         {
         }
         /**
-         * Render columm: price.
+         * Render column: price.
          */
         protected function render_price_column()
         {
         }
         /**
-         * Render columm: product_cat.
+         * Render column: product_cat.
          */
         protected function render_product_cat_column()
         {
         }
         /**
-         * Render columm: product_tag.
+         * Render column: product_tag.
          */
         protected function render_product_tag_column()
         {
         }
         /**
-         * Render columm: featured.
+         * Render column: featured.
          */
         protected function render_featured_column()
         {
         }
         /**
-         * Render columm: is_in_stock.
+         * Render column: is_in_stock.
          */
         protected function render_is_in_stock_column()
         {
@@ -13968,6 +13968,12 @@ namespace {
          * Search for categories and return json.
          */
         public static function json_search_categories()
+        {
+        }
+        /**
+         * Ajax request handling for page searching.
+         */
+        public static function json_search_pages()
         {
         }
         /**
@@ -19430,6 +19436,19 @@ namespace {
          * @return bool
          */
         public function has_calculated_shipping()
+        {
+        }
+        /**
+         * Indicates if the customer has a non-empty shipping address.
+         *
+         * Note that this does not indicate if the customer's shipping address
+         * is complete, only that one or more fields are populated.
+         *
+         * @since 5.3.0
+         *
+         * @return bool
+         */
+        public function has_shipping_address()
         {
         }
         /**
@@ -29609,6 +29628,16 @@ namespace {
         {
         }
         /**
+         * Get session unique ID for requests if session is initialized or user ID if logged in.
+         * Introduced to help with unit tests.
+         *
+         * @since 5.3.0
+         * @return string
+         */
+        public function get_customer_unique_id()
+        {
+        }
+        /**
          * Get the session cookie, if set. Otherwise return false.
          *
          * Session cookies without a customer ID are invalid.
@@ -29657,10 +29686,23 @@ namespace {
         /**
          * When a user is logged out, ensure they have a unique nonce by using the customer/session ID.
          *
+         * @deprecated 5.3.0
          * @param int $uid User ID.
-         * @return string
+         * @return int|string
          */
         public function nonce_user_logged_out($uid)
+        {
+        }
+        /**
+         * When a user is logged out, ensure they have a unique nonce to manage cart and more using the customer/session ID.
+         * This filter runs everything `wp_verify_nonce()` and `wp_create_nonce()` gets called.
+         *
+         * @since 5.3.0
+         * @param int    $uid    User ID.
+         * @param string $action The nonce action.
+         * @return int|string
+         */
+        public function maybe_update_nonce_user_logged_out($uid, $action)
         {
         }
         /**
@@ -32370,7 +32412,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '5.2.2';
+        public $version = '5.3.0';
         /**
          * WooCommerce Schema version.
          *
@@ -45516,7 +45558,7 @@ namespace {
          * Take tax data from the request and return the updated or newly created rate.
          *
          * @param WP_REST_Request $request Full details about the request.
-         * @param stdClass|null $current Existing tax object.
+         * @param stdClass|null   $current Existing tax object.
          * @return object
          */
         protected function create_or_update_tax($request, $current = \null)
@@ -45561,8 +45603,9 @@ namespace {
         /**
          * Prepare a single tax output for response.
          *
-         * @param stdClass $tax Tax object.
+         * @param stdClass        $tax     Tax object.
          * @param WP_REST_Request $request Request object.
+         *
          * @return WP_REST_Response $response Response data.
          */
         public function prepare_item_for_response($tax, $request)
@@ -45575,6 +45618,17 @@ namespace {
          * @return array Links for the given tax.
          */
         protected function prepare_links($tax)
+        {
+        }
+        /**
+         * Add tax rate locales to the response array.
+         *
+         * @param array    $data Response data.
+         * @param stdClass $tax  Tax object.
+         *
+         * @return array
+         */
+        protected function add_tax_rate_locales($data, $tax)
         {
         }
         /**
@@ -50429,6 +50483,52 @@ namespace {
          * @var string
          */
         protected $namespace = 'wc/v3';
+        /**
+         * Add tax rate locales to the response array.
+         *
+         * @param array    $data Response data.
+         * @param stdClass $tax  Tax object.
+         *
+         * @return array
+         */
+        protected function add_tax_rate_locales($data, $tax)
+        {
+        }
+        /**
+         * Get the taxes schema, conforming to JSON Schema.
+         *
+         * @return array
+         */
+        public function get_item_schema()
+        {
+        }
+        /**
+         * Create a single tax.
+         *
+         * @param WP_REST_Request $request Full details about the request.
+         * @return WP_Error|WP_REST_Response The response, or an error.
+         */
+        public function create_item($request)
+        {
+        }
+        /**
+         * Update a single tax.
+         *
+         * @param WP_REST_Request $request Full details about the request.
+         * @return WP_Error|WP_REST_Response The response, or an error.
+         */
+        public function update_item($request)
+        {
+        }
+        /**
+         * Convert array "cities" and "postcodes" parameters
+         * into semicolon-separated strings "city" and "postcode".
+         *
+         * @param WP_REST_Request $request The request to adjust.
+         */
+        private function adjust_cities_and_postcodes(&$request)
+        {
+        }
     }
     /**
      * REST API Webhooks controller class.
@@ -51518,7 +51618,7 @@ namespace {
          * Get shortcode type.
          *
          * @since  3.2.0
-         * @return array
+         * @return string
          */
         public function get_type()
         {
@@ -57853,9 +57953,10 @@ namespace {
      * @param  int|WC_Product $product     Product instance or ID.
      * @param  WC_Order       $order       Order data.
      * @param  int            $qty         Quantity purchased.
+     * @param  WC_Order_Item  $item        Item of the order.
      * @return int|bool insert id or false on failure.
      */
-    function wc_downloadable_file_permission($download_id, $product, $order, $qty = 1)
+    function wc_downloadable_file_permission($download_id, $product, $order, $qty = 1, $item = \null)
     {
     }
     /**

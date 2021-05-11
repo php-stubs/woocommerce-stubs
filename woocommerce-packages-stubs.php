@@ -9730,6 +9730,15 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Orders {
         {
         }
         /**
+         * Get customer name column export value.
+         *
+         * @param array $customer Customer from report row.
+         * @return string
+         */
+        protected function get_customer_name($customer)
+        {
+        }
+        /**
          * Get products column export value.
          *
          * @param array $products Products from report row.
@@ -9833,6 +9842,15 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Orders {
          * @param array $query_args  Query parameters.
          */
         protected function include_extended_info(&$orders_data, $query_args)
+        {
+        }
+        /**
+         * Returns oreders that have a parent id
+         *
+         * @param array $orders Orders array.
+         * @return array
+         */
+        protected function get_orders_with_parent_id($orders)
         {
         }
         /**
@@ -12762,7 +12780,7 @@ namespace Automattic\WooCommerce\Admin\Composer {
          *
          * @var string
          */
-        const VERSION = '2.1.5';
+        const VERSION = '2.2.6';
         /**
          * Package active.
          *
@@ -13431,6 +13449,26 @@ namespace Automattic\WooCommerce\Admin\Features {
          */
         const SETTINGS_CHANGE_ACTION_NAME = 'settings_change';
         /**
+         * Action name for add product categories.
+         */
+        const ADD_PRODUCT_CATEGORIES_ACTION_NAME = 'add_product_categories';
+        /**
+         * Action name for add product tags.
+         */
+        const ADD_PRODUCT_TAGS_ACTION_NAME = 'add_product_tags';
+        /*
+         * Action name for add product attributes.
+         */
+        const ADD_PRODUCT_ATTRIBUTES_ACTION_NAME = 'add_product_attributes';
+        /**
+         * Action name for import products.
+         */
+        const IMPORT_PRODUCTS_ACTION_NAME = 'import_products';
+        /**
+         * Action name for search.
+         */
+        const SEARCH_ACTION_NAME = 'ces_search';
+        /**
          * Label for the snackbar that appears when a user submits the survey.
          *
          * @var string
@@ -13446,6 +13484,23 @@ namespace Automattic\WooCommerce\Admin\Features {
          * Add actions that require woocommerce_allow_tracking.
          */
         private function enable_survey_enqueing_if_tracking_is_enabled()
+        {
+        }
+        /**
+         * Returns a generated script for tracking tags added on edit-tags.php page.
+         * CES survey is triggered via direct access to wc/customer-effort-score store
+         * via wp.data.dispatch method.
+         *
+         * Due to lack of options to directly hook ourselves into the ajax post request
+         * initiated by edit-tags.php page, we infer a successful request by observing
+         * an increase of the number of rows in tags table
+         *
+         * @param string $action Action name for the survey.
+         * @param string $label Label for the snackbar.
+         *
+         * @return string Generated JavaScript to append to page.
+         */
+        private function get_script_track_edit_php($action, $label)
         {
         }
         /**
@@ -13483,6 +13538,16 @@ namespace Automattic\WooCommerce\Admin\Features {
         {
         }
         /**
+         * Enqueue the CES survey on using search dynamically.
+         *
+         * @param string $search_area Search area such as "product" or "shop_order".
+         * @param string $page_now Value of window.pagenow.
+         * @param string $admin_page Value of window.adminpage.
+         */
+        public function enqueue_ces_survey_for_search($search_area, $page_now, $admin_page)
+        {
+        }
+        /**
          * Maybe clear the CES tracks queue, executed on every page load. If the
          * clear option is set it clears the queue. In practice, this executes a
          * page load after the queued CES tracks are displayed on the client, which
@@ -13492,9 +13557,39 @@ namespace Automattic\WooCommerce\Admin\Features {
         {
         }
         /**
+         * Appends a script to footer to trigger CES on adding product categories.
+         */
+        public function add_script_track_product_categories()
+        {
+        }
+        /**
+         * Appends a script to footer to trigger CES on adding product tags.
+         */
+        public function add_script_track_product_tags()
+        {
+        }
+        /**
+         * Maybe enqueue the CES survey on product import, if step is done.
+         */
+        public function run_on_product_import()
+        {
+        }
+        /**
          * Enqueue the CES survey trigger for setting changes.
          */
         public function run_on_update_options()
+        {
+        }
+        /**
+         * Enqueue the CES survey on adding new product attributes.
+         */
+        public function run_on_add_product_attributes()
+        {
+        }
+        /**
+         * Determine on initiating CES survey on searching for product or orders.
+         */
+        public function run_on_load_edit_php()
         {
         }
     }
@@ -13568,6 +13663,15 @@ namespace Automattic\WooCommerce\Admin\Features {
          * @return bool
          */
         public static function is_enabled($feature)
+        {
+        }
+        /**
+         * Enable a toggleable beta feature.
+         *
+         * @param string $feature Feature name.
+         * @return bool
+         */
+        public static function enable($feature)
         {
         }
         /**
@@ -13884,6 +13988,22 @@ namespace Automattic\WooCommerce\Admin\Features\Navigation {
         {
         }
         /**
+         * Get items for tools category.
+         *
+         * @returna array
+         */
+        public static function get_tool_items()
+        {
+        }
+        /**
+         * Get legacy report items.
+         *
+         * @return array
+         */
+        public static function get_legacy_report_items()
+        {
+        }
+        /**
          * Register all core post types.
          */
         public function register_post_types()
@@ -13988,14 +14108,6 @@ namespace Automattic\WooCommerce\Admin\Features\Navigation {
          * Determine if sufficient versions are present to support Navigation feature
          */
         public function is_nav_compatible()
-        {
-        }
-        /**
-         * Overwrites the allowed features array using a local `feature-config.php` file.
-         *
-         * @param array $features Array of feature slugs.
-         */
-        public function maybe_remove_nav_feature($features)
         {
         }
         /**
@@ -14619,6 +14731,8 @@ namespace Automattic\WooCommerce\Admin\Features {
          * Check if theme has declared support for WooCommerce.
          *
          * @param WP_Theme $theme Theme to check.
+         * @link https://developer.woocommerce.com/2017/12/09/wc-3-3-will-look-great-on-all-the-themes/
+         * @deprecated 2.2.0
          * @return bool
          */
         public static function has_woocommerce_support($theme)
@@ -14793,6 +14907,20 @@ namespace Automattic\WooCommerce\Admin\Features {
          * See https://github.com/woocommerce/woocommerce/blob/1ca791f8f2325fe2ee0947b9c47e6a4627366374/includes/class-wc-install.php#L341
          */
         public static function maybe_mark_complete()
+        {
+        }
+        /**
+         * Ensure that Jetpack gets installed and activated ahead of WooCommerce Payments
+         * if both are being installed/activated at the same time.
+         *
+         * See: https://github.com/Automattic/woocommerce-payments/issues/1663
+         * See: https://github.com/Automattic/jetpack/issues/19624
+         *
+         * @param array $plugins A list of plugins to install or activate.
+         *
+         * @return array
+         */
+        public static function activate_and_install_jetpack_ahead_of_wcpay($plugins)
         {
         }
     }
@@ -15426,6 +15554,13 @@ namespace Automattic\WooCommerce\Admin {
         {
         }
         /**
+         * Verifies which plugin version is being used. If WooCommerce Admin is installed and activated but not in use
+         * it will show a warning.
+         */
+        public static function is_using_installed_wc_admin_plugin()
+        {
+        }
+        /**
          * Run when plugin is activated (can be WooCommerce or WooCommerce Admin).
          *
          * @param string $filename Activated plugin filename.
@@ -15473,7 +15608,7 @@ namespace Automattic\WooCommerce\Admin {
          * @param  string $feature Feature slug.
          * @return bool Returns true if the feature is enabled.
          *
-         * @deprecated since 1.9.0, use Features::exists( $feature )
+         * @deprecated since 1.9.0, use Features::is_enabled( $feature )
          */
         public static function is_feature_enabled($feature)
         {
@@ -15495,6 +15630,18 @@ namespace Automattic\WooCommerce\Admin {
          * @return string URL to asset.
          */
         public static function get_url($file, $ext)
+        {
+        }
+        /**
+         * Gets a script asset registry filename. The asset registry lists dependencies for the given script.
+         *
+         * @param  string $script_path_name Path to where the script asset registry is contained.
+         * @param  string $file File name (without extension).
+         * @return string complete asset filename.
+         *
+         * @throws Exception Throws an exception when a readable asset registry file cannot be found.
+         */
+        public static function get_script_asset_filename($script_path_name, $file)
         {
         }
         /**
@@ -17648,12 +17795,22 @@ namespace Automattic\WooCommerce\Admin\Notes\MerchantEmailNotifications {
         {
         }
         /**
-         * Get email addresses by role to notify.
+         * Get the preferred name for user. First choice is
+         * the user's first name, and then display_name.
+         *
+         * @param WP_User $user Recipient to send the note to.
+         * @return string User's name.
+         */
+        public static function get_merchant_preferred_name($user)
+        {
+        }
+        /**
+         * Get users by role to notify.
          *
          * @param object $note The note to send.
          * @return array Emails to notify
          */
-        public static function get_notification_email_addresses($note)
+        public static function get_notification_recipients($note)
         {
         }
     }
@@ -17758,9 +17915,10 @@ namespace Automattic\WooCommerce\Admin\Notes\MerchantEmailNotifications {
         /**
          * Trigger the sending of this email.
          *
-         * @param string $email Email to send the note.
+         * @param string $user_email Email to send the note.
+         * @param string $user_name User's name.
          */
-        public function trigger($email)
+        public function trigger($user_email, $user_name)
         {
         }
     }
@@ -17851,6 +18009,43 @@ namespace Automattic\WooCommerce\Admin\Notes {
          * @return Note
          */
         public static function get_note()
+        {
+        }
+    }
+    /**
+     * Navigation Nudge.
+     */
+    class NavigationNudge
+    {
+        /**
+         * Note traits.
+         */
+        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
+        /**
+         * Name of the note for use in the database.
+         */
+        const NOTE_NAME = 'wc-admin-navigation-nudge';
+        /**
+         * Attach hooks.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Get the note.
+         *
+         * @return Note
+         */
+        public static function get_note()
+        {
+        }
+        /**
+         * Actions the note when the option is toggled.
+         *
+         * @param string $old_value Old value.
+         * @param string $value     New value.
+         */
+        public static function action_note($old_value, $value)
         {
         }
     }
@@ -20374,6 +20569,7 @@ namespace Automattic\WooCommerce\Admin\RemoteInboxNotifications {
     {
         const SPECS_OPTION_NAME = 'wc_remote_inbox_notifications_specs';
         const STORED_STATE_OPTION_NAME = 'wc_remote_inbox_notifications_stored_state';
+        const WCA_UPDATED_OPTION_NAME = 'wc_remote_inbox_notifications_wca_updated';
         /**
          * Initialize the engine.
          */
@@ -20402,6 +20598,14 @@ namespace Automattic\WooCommerce\Admin\RemoteInboxNotifications {
          * Go through the specs and run them.
          */
         public static function run()
+        {
+        }
+        /**
+         * Set an option indicating that WooCommerce Admin has just been updated,
+         * run the specs, then clear that option. This lets the
+         * WooCommerceAdminUpdatedRuleProcessor trigger on WCA update.
+         */
+        public static function run_on_woocommerce_admin_updated()
         {
         }
         /**
@@ -20618,6 +20822,33 @@ namespace Automattic\WooCommerce\Admin\RemoteInboxNotifications {
          * @param object $stored_state Stored state.
          *
          * @return bool The result of the operation.
+         */
+        public function process($rule, $stored_state)
+        {
+        }
+        /**
+         * Validates the rule.
+         *
+         * @param object $rule The rule to validate.
+         *
+         * @return bool Pass/fail.
+         */
+        public function validate($rule)
+        {
+        }
+    }
+    /**
+     * Rule processor for sending when WooCommerce Admin has been updated.
+     */
+    class WooCommerceAdminUpdatedRuleProcessor implements \Automattic\WooCommerce\Admin\RemoteInboxNotifications\RuleProcessorInterface
+    {
+        /**
+         * Process the rule.
+         *
+         * @param object $rule         The specific rule being processed by this rule processor.
+         * @param object $stored_state Stored state.
+         *
+         * @return bool Whether the rule passes or not.
          */
         public function process($rule, $stored_state)
         {
@@ -21542,8 +21773,7 @@ namespace Automattic\WooCommerce\Blocks {
          * Register block scripts & styles.
          *
          * @since 2.5.0
-         * Moved data related enqueuing to new AssetDataRegistry class
-         * as part of ongoing refactoring.
+         * Moved data related enqueuing to new AssetDataRegistry class as part of ongoing refactoring.
          */
         public static function register_assets()
         {
@@ -21652,6 +21882,12 @@ namespace Automattic\WooCommerce\Blocks\Assets {
     class Api
     {
         /**
+         * Stores inline scripts already enqueued.
+         *
+         * @var array
+         */
+        private $inline_scripts = [];
+        /**
          * Reference to the Package instance
          *
          * @var Package
@@ -21747,6 +21983,15 @@ namespace Automattic\WooCommerce\Blocks\Assets {
          * @return  string             The generated path.
          */
         public function get_block_asset_build_path($filename, $type = 'js')
+        {
+        }
+        /**
+         * Adds an inline script, once.
+         *
+         * @param string $handle Script handle.
+         * @param string $script Script contents.
+         */
+        public function add_inline_script($handle, $script)
         {
         }
     }
@@ -22384,10 +22629,10 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         /**
          * Render a single products.
          *
-         * @param int $id Product ID.
+         * @param \WC_Product $product Product object.
          * @return string Rendered product output.
          */
-        protected function render_product($id)
+        protected function render_product($product)
         {
         }
         /**
@@ -23180,6 +23425,16 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @return null
          */
         protected function get_block_type_script($key = null)
+        {
+        }
+        /**
+         * Render the block.
+         *
+         * @param array  $attributes Block attributes.
+         * @param string $content    Block content.
+         * @return string Rendered block type output.
+         */
+        protected function render($attributes, $content)
         {
         }
     }
@@ -24084,6 +24339,63 @@ namespace Automattic\WooCommerce\Blocks\Domain\Services {
          * @return boolean
          */
         public function is_test_environment()
+        {
+        }
+    }
+    /**
+     * Service class to integrate Blocks with the Google Analytics extension,
+     */
+    class GoogleAnalytics
+    {
+        /**
+         * Instance of the asset API.
+         *
+         * @var AssetApi
+         */
+        protected $asset_api;
+        /**
+         * Constructor.
+         *
+         * @param AssetApi $asset_api Instance of the asset API.
+         */
+        public function __construct(\Automattic\WooCommerce\Blocks\Assets\Api $asset_api)
+        {
+        }
+        /**
+         * Hook into WP.
+         */
+        protected function init()
+        {
+        }
+        /**
+         * Register scripts.
+         */
+        public function register_assets()
+        {
+        }
+        /**
+         * Enqueue the Google Tag Manager script if prerequisites are met.
+         */
+        public function enqueue_scripts()
+        {
+        }
+        /**
+         * Get settings from the GA integration extension.
+         *
+         * @return array
+         */
+        private function get_google_analytics_settings()
+        {
+        }
+        /**
+         * Add async to script tags with defined handles.
+         *
+         * @param string $tag HTML for the script tag.
+         * @param string $handle Handle of script.
+         * @param string $src Src of script.
+         * @return string
+         */
+        public function async_script_loader_tags($tag, $handle, $src)
         {
         }
     }
