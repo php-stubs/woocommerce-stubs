@@ -6410,6 +6410,14 @@ namespace {
         {
         }
         /**
+         * Handles the output of a full-width block.
+         *
+         * @param array $section Section data.
+         */
+        public static function output_promotion_block($section)
+        {
+        }
+        /**
          * Handles the outputting of featured sections
          *
          * @param array $sections Section data.
@@ -7614,6 +7622,7 @@ namespace {
         /**
          * Parses query to create nonces when available.
          *
+         * @deprecated 5.4.0
          * @param object $response The WP_REST_Response we're working with.
          * @return object $response The prepared WP_REST_Response object.
          */
@@ -12741,8 +12750,6 @@ namespace {
     /**
      * WC_Report_Sales_By_Category
      *
-     * @author      WooThemes
-     * @category    Admin
      * @package     WooCommerce\Admin\Reports
      * @version     2.1.0
      */
@@ -31640,11 +31647,44 @@ namespace {
         {
         }
         /**
-         * Get all order data.
+         * Get order counts.
+         *
+         * @return array
+         */
+        private static function get_order_counts()
+        {
+        }
+        /**
+         * Combine all order data.
          *
          * @return array
          */
         private static function get_orders()
+        {
+        }
+        /**
+         * Get order totals.
+         *
+         * @since 5.4.0
+         * @return array
+         */
+        private static function get_order_totals()
+        {
+        }
+        /**
+         * Get last order date.
+         *
+         * @return string
+         */
+        private static function get_order_dates()
+        {
+        }
+        /**
+         * Get order details by gateway.
+         *
+         * @return array
+         */
+        private static function get_orders_by_gateway()
         {
         }
         /**
@@ -31701,15 +31741,6 @@ namespace {
          * @return array
          */
         private static function get_admin_user_agents()
-        {
-        }
-        /**
-         * Get order totals
-         *
-         * @deprecated 5.1.0 Logic moved to get_orders.
-         * @return array
-         */
-        public static function get_order_totals()
         {
         }
         /**
@@ -32412,7 +32443,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '5.3.0';
+        public $version = '5.4.0';
         /**
          * WooCommerce Schema version.
          *
@@ -32550,6 +32581,14 @@ namespace {
          * @since 2.3
          */
         private function init_hooks()
+        {
+        }
+        /**
+         * Add woocommerce_inbox_variant for the Remote Inbox Notification.
+         *
+         * P2 post can be found at https://wp.me/paJDYF-1uJ.
+         */
+        public function add_woocommerce_inbox_variant()
         {
         }
         /**
@@ -48508,6 +48547,16 @@ namespace {
          * @return array
          */
         public function execute_tool($tool)
+        {
+        }
+        /**
+         * Get a printable name for a callback.
+         *
+         * @param mixed  $callback The callback to get a name for.
+         * @param string $default The default name, to be returned when the callback is an inline function.
+         * @return string A printable name for the callback.
+         */
+        private function get_printable_callback_name($callback, $default)
         {
         }
     }
