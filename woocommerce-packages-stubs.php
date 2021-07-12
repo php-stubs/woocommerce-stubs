@@ -786,7 +786,7 @@ namespace {
         /**
          * Makes translation easier, it basically just wraps
          * `_x` with some default (the package name).
-         * 
+         *
          * @deprecated 3.0.0
          */
         protected function translate($text, $context = '')
@@ -2916,6 +2916,15 @@ namespace {
      */
     class ActionScheduler_DBStore extends \ActionScheduler_Store
     {
+        /**
+         * Used to share information about the before_date property of claims internally.
+         *
+         * This is used in preference to passing the same information as a method param
+         * for backwards-compatibility reasons.
+         *
+         * @var DateTime|null
+         */
+        private $claim_before_date = \null;
         /** @var int */
         protected static $max_args_length = 8000;
         /** @var int */
@@ -3170,8 +3179,6 @@ namespace {
         }
         /**
          * Retrieve the action IDs of action in a claim.
-         *
-         * @param string $claim_id Claim ID.
          *
          * @return int[]
          */
@@ -3609,6 +3616,15 @@ namespace {
         const GROUP_TAXONOMY = 'action-group';
         const SCHEDULE_META_KEY = '_action_manager_schedule';
         const DEPENDENCIES_MET = 'as-post-store-dependencies-met';
+        /**
+         * Used to share information about the before_date property of claims internally.
+         *
+         * This is used in preference to passing the same information as a method param
+         * for backwards-compatibility reasons.
+         *
+         * @var DateTime|null
+         */
+        private $claim_before_date = \null;
         /** @var DateTimeZone */
         protected $local_timezone = \NULL;
         public function save_action(\ActionScheduler_Action $action, \DateTime $scheduled_date = \NULL)
@@ -4821,7 +4837,7 @@ namespace {
         /**
          * @var int Increment this value to trigger a schema update.
          */
-        protected $schema_version = 3;
+        protected $schema_version = 4;
         public function __construct()
         {
         }
@@ -5804,6 +5820,96 @@ namespace Automattic\WooCommerce\Admin\API {
          * @return WP_REST_Request|WP_Error
          */
         public function trigger_note_action($request)
+        {
+        }
+    }
+    /**
+     * Onboarding Payments Controller.
+     *
+     * @extends WC_REST_Data_Controller
+     */
+    class OnboardingFreeExtensions extends \WC_REST_Data_Controller
+    {
+        /**
+         * Endpoint namespace.
+         *
+         * @var string
+         */
+        protected $namespace = 'wc-admin';
+        /**
+         * Route base.
+         *
+         * @var string
+         */
+        protected $rest_base = 'onboarding/free-extensions';
+        /**
+         * Register routes.
+         */
+        public function register_routes()
+        {
+        }
+        /**
+         * Check whether a given request has permission to read onboarding profile data.
+         *
+         * @param  WP_REST_Request $request Full details about the request.
+         * @return WP_Error|boolean
+         */
+        public function get_items_permissions_check($request)
+        {
+        }
+        /**
+         * Return available payment methods.
+         *
+         * @param \WP_REST_Request $request Request data.
+         *
+         * @return \WP_Error|\WP_REST_Response
+         */
+        public function get_available_extensions($request)
+        {
+        }
+    }
+    /**
+     * Onboarding Payments Controller.
+     *
+     * @extends WC_REST_Data_Controller
+     */
+    class OnboardingPayments extends \WC_REST_Data_Controller
+    {
+        /**
+         * Endpoint namespace.
+         *
+         * @var string
+         */
+        protected $namespace = 'wc-admin';
+        /**
+         * Route base.
+         *
+         * @var string
+         */
+        protected $rest_base = 'onboarding/payments';
+        /**
+         * Register routes.
+         */
+        public function register_routes()
+        {
+        }
+        /**
+         * Check whether a given request has permission to read onboarding profile data.
+         *
+         * @param  WP_REST_Request $request Full details about the request.
+         * @return WP_Error|boolean
+         */
+        public function get_items_permissions_check($request)
+        {
+        }
+        /**
+         * Return available payment methods.
+         *
+         * @param \WP_REST_Request $request Request data.
+         *
+         * @return \WP_Error|\WP_REST_Response
+         */
+        public function get_available_methods($request)
         {
         }
     }
@@ -12783,7 +12889,7 @@ namespace Automattic\WooCommerce\Admin\Composer {
          *
          * @var string
          */
-        const VERSION = '2.3.1';
+        const VERSION = '2.4.1';
         /**
          * Package active.
          *
@@ -14747,11 +14853,11 @@ namespace Automattic\WooCommerce\Admin\Features {
         {
         }
         /**
-         * Determine if the current page is home or setup wizard.
+         * Determine if the current page is one of the WC Admin pages.
          *
          * @return bool
          */
-        protected function is_home_or_setup_wizard_page()
+        protected function is_wc_pages()
         {
         }
         /**
@@ -15041,7 +15147,7 @@ namespace Automattic\WooCommerce\Admin\Features {
          *
          * @return array
          */
-        private static function get_stripe_supported_countries()
+        public static function get_stripe_supported_countries()
         {
         }
         /**
@@ -15078,6 +15184,333 @@ namespace Automattic\WooCommerce\Admin\Features {
         {
         }
     }
+}
+namespace Automattic\WooCommerce\Admin\Features\PaymentGatewaySuggestions {
+    /**
+     * Specs data source poller class.
+     * This handles polling specs from JSON endpoints.
+     */
+    class DataSourcePoller
+    {
+        const DATA_SOURCES = array('https://woocommerce.com/wp-json/wccom/payment-methods/1.0/methods.json');
+        /**
+         * The logger instance.
+         *
+         * @var WC_Logger|null
+         */
+        protected static $logger = null;
+        /**
+         * Get the logger instance.
+         *
+         * @return WC_Logger
+         */
+        private static function get_logger()
+        {
+        }
+        /**
+         * Reads the data sources for specs and persists those specs.
+         *
+         * @return bool Whether any specs were read.
+         */
+        public static function read_specs_from_data_sources()
+        {
+        }
+        /**
+         * Read a single data source and return the read specs
+         *
+         * @param string $url The URL to read the specs from.
+         *
+         * @return array The specs that have been read from the data source.
+         */
+        private static function read_data_source($url)
+        {
+        }
+        /**
+         * Merge the specs.
+         *
+         * @param Array  $specs_to_merge_in The specs to merge in to $specs.
+         * @param Array  $specs             The list of specs being merged into.
+         * @param string $url               The url of the feed being merged in (for error reporting).
+         */
+        private static function merge_specs($specs_to_merge_in, &$specs, $url)
+        {
+        }
+        /**
+         * Validate the spec.
+         *
+         * @param object $spec The spec to validate.
+         * @param string $url  The url of the feed that provided the spec.
+         *
+         * @return bool The result of the validation.
+         */
+        private static function validate_spec($spec, $url)
+        {
+        }
+    }
+    /**
+     * Default Payment Gateways
+     */
+    class DefaultPaymentGateways
+    {
+        /**
+         * Get default specs.
+         *
+         * @return array Default specs.
+         */
+        public static function get_all()
+        {
+        }
+        /**
+         * Get array of countries supported by WCPay depending on feature flag.
+         *
+         * @return array Array of countries.
+         */
+        public static function get_wcpay_countries()
+        {
+        }
+        /**
+         * Get rules that match the store base location to one of the provided countries.
+         *
+         * @param array $countries Array of countries to match.
+         * @return object Rules to match.
+         */
+        public static function get_rules_for_countries($countries)
+        {
+        }
+        /**
+         * Get rules that match the store's selling venues.
+         *
+         * @param array $selling_venues Array of venues to match.
+         * @return object Rules to match.
+         */
+        public static function get_rules_for_selling_venues($selling_venues)
+        {
+        }
+        /**
+         * Get default rules for CBD based on given argument.
+         *
+         * @param bool $should_have Whether or not the store should have CBD as an industry (true) or not (false).
+         * @return array Rules to match.
+         */
+        public static function get_rules_for_cbd($should_have)
+        {
+        }
+    }
+    /**
+     * Evaluates the spec and returns the evaluated method.
+     */
+    class EvaluateMethod
+    {
+        /**
+         * Evaluates the spec and returns the method.
+         *
+         * @param array $spec The method to evaluate.
+         * @return array The evaluated method.
+         */
+        public static function evaluate($spec)
+        {
+        }
+    }
+    /**
+     * Remote Payment Methods engine.
+     * This goes through the specs and gets eligible payment gateways.
+     */
+    class Init
+    {
+        const SPECS_TRANSIENT_NAME = 'woocommerce_admin_payment_gateway_suggestions_specs';
+        /**
+         * Constructor.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Go through the specs and run them.
+         */
+        public static function get_methods()
+        {
+        }
+        /**
+         * Delete the specs transient.
+         */
+        public static function delete_specs_transient()
+        {
+        }
+        /**
+         * Get specs or fetch remotely if they don't exist.
+         */
+        public static function get_specs()
+        {
+        }
+        /**
+         * Localize the provided method.
+         *
+         * @param array $specs The specs to localize.
+         * @return array Localized specs.
+         */
+        public static function localize($specs)
+        {
+        }
+    }
+    /**
+     * PaymentGateway class
+     */
+    class PaymentGatewaysController
+    {
+        /**
+         * Initialize payment gateway changes.
+         */
+        public static function init()
+        {
+        }
+        /**
+         * Add necessary fields to REST API response.
+         *
+         * @param  WP_REST_Response   $response   Response data.
+         * @param  WC_Payment_Gateway $gateway    Payment gateway object.
+         * @param  WP_REST_Request    $request    Request object.
+         * @return WP_REST_Response
+         */
+        public static function extend_response($response, $gateway, $request)
+        {
+        }
+        /**
+         * Get payment gateway scripts for post-install.
+         *
+         * @param  WC_Payment_Gateway $gateway Payment gateway object.
+         * @return array Install scripts.
+         */
+        public static function get_post_install_scripts($gateway)
+        {
+        }
+        /**
+         * Call an action after a gating has been successfully returned.
+         */
+        public static function possibly_do_connection_return_action()
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Admin\Features\RemoteFreeExtensions {
+    /**
+     * Specs data source poller class.
+     * This handles polling specs from JSON endpoints.
+     */
+    class DataSourcePoller
+    {
+        const DATA_SOURCES = array('https://woocommerce.com/wp-json/wccom/obw-free-extensions/1.0/extensions.json');
+        /**
+         * The logger instance.
+         *
+         * @var WC_Logger|null
+         */
+        protected static $logger = null;
+        /**
+         * Get the logger instance.
+         *
+         * @return WC_Logger
+         */
+        private static function get_logger()
+        {
+        }
+        /**
+         * Reads the data sources for specs and persists those specs.
+         *
+         * @return bool Whether any specs were read.
+         */
+        public static function read_specs_from_data_sources()
+        {
+        }
+        /**
+         * Read a single data source and return the read specs
+         *
+         * @param string $url The URL to read the specs from.
+         *
+         * @return array The specs that have been read from the data source.
+         */
+        private static function read_data_source($url)
+        {
+        }
+        /**
+         * Merge the specs.
+         *
+         * @param Array  $specs_to_merge_in The specs to merge in to $specs.
+         * @param Array  $specs             The list of specs being merged into.
+         * @param string $url               The url of the feed being merged in (for error reporting).
+         */
+        private static function merge_specs($specs_to_merge_in, &$specs, $url)
+        {
+        }
+        /**
+         * Validate the spec.
+         *
+         * @param object $spec The spec to validate.
+         * @param string $url  The url of the feed that provided the spec.
+         *
+         * @return bool The result of the validation.
+         */
+        private static function validate_spec($spec, $url)
+        {
+        }
+    }
+    /**
+     * Evaluates the spec and returns the evaluated method.
+     */
+    class EvaluateExtension
+    {
+        /**
+         * Evaluates the spec and returns the extension.
+         *
+         * @param array $spec The extension section to evaluate.
+         * @return array The evaluated extension section.
+         */
+        public static function evaluate($spec)
+        {
+        }
+    }
+    /**
+     * Remote Payment Methods engine.
+     * This goes through the specs and gets eligible payment methods.
+     */
+    class Init
+    {
+        const SPECS_TRANSIENT_NAME = 'woocommerce_admin_remote_free_extensions_specs';
+        /**
+         * Constructor.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Go through the specs and run them.
+         */
+        public static function get_extensions()
+        {
+        }
+        /**
+         * Delete the specs transient.
+         */
+        public static function delete_specs_transient()
+        {
+        }
+        /**
+         * Get specs or fetch remotely if they don't exist.
+         */
+        public static function get_specs()
+        {
+        }
+        /**
+         * Localize the provided method.
+         *
+         * @param array $specs The specs to localize.
+         * @return array Localized specs.
+         */
+        public static function localize($specs)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Admin\Features {
     /**
      * Contains backend logic for the Settings feature.
      */
@@ -15337,6 +15770,81 @@ namespace Automattic\WooCommerce\Admin\Features {
         {
         }
     }
+    /**
+     * Shows print shipping label banner on edit order page.
+     */
+    class TransientNotices
+    {
+        /**
+         * Option name for the queue.
+         */
+        const QUEUE_OPTION = 'woocommerce_admin_transient_notices_queue';
+        /**
+         * Constructor
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Get all notices in the queue.
+         *
+         * @return array
+         */
+        public static function get_queue()
+        {
+        }
+        /**
+         * Get all notices in the queue by a given user ID.
+         *
+         * @param int $user_id User ID.
+         * @return array
+         */
+        public static function get_queue_by_user($user_id)
+        {
+        }
+        /**
+         * Get a notice by ID.
+         *
+         * @param array $notice_id Notice of ID to get.
+         * @return array|null
+         */
+        public static function get($notice_id)
+        {
+        }
+        /**
+         * Add a notice to be shown.
+         *
+         * @param array $notice Notice.
+         *    $notice = array(
+         *      'id'      => (string) Unique ID for the notice. Required.
+         *      'user_id' => (int|null) User ID to show the notice to.
+         *      'status'  => (string) info|error|success
+         *      'content' => (string) Content to be shown for the notice. Required.
+         *      'options' => (array) Array of options to be passed to the notice component.
+         *       See https://developer.wordpress.org/block-editor/reference-guides/data/data-core-notices/#createNotice for available options.
+         *    ).
+         */
+        public static function add($notice)
+        {
+        }
+        /**
+         * Remove a notice by ID.
+         *
+         * @param array $notice_id Notice of ID to remove.
+         */
+        public static function remove($notice_id)
+        {
+        }
+        /**
+         * Preload options to prime state of the application.
+         *
+         * @param array $options Array of options to preload.
+         * @return array
+         */
+        public function preload_options($options)
+        {
+        }
+    }
 }
 namespace Automattic\WooCommerce\Admin {
     /**
@@ -15513,6 +16021,12 @@ namespace Automattic\WooCommerce\Admin {
          */
         protected static $required_capability = null;
         /**
+         * An array of dependencies that have been preloaded (to avoid duplicates).
+         *
+         * @var array
+         */
+        protected $preloaded_dependencies = array('script' => array(), 'style' => array());
+        /**
          * Get class instance.
          */
         public static function get_instance()
@@ -15611,7 +16125,7 @@ namespace Automattic\WooCommerce\Admin {
          * @param  string $file File name (without extension).
          * @return string complete asset filename.
          *
-         * @throws Exception Throws an exception when a readable asset registry file cannot be found.
+         * @throws \Exception Throws an exception when a readable asset registry file cannot be found.
          */
         public static function get_script_asset_filename($script_path_name, $file)
         {
@@ -15735,7 +16249,7 @@ namespace Automattic\WooCommerce\Admin {
         /**
          * Loads the required scripts on the correct pages.
          */
-        public static function load_scripts()
+        public function load_scripts()
         {
         }
         /**
@@ -15748,7 +16262,7 @@ namespace Automattic\WooCommerce\Admin {
          * @param string        $type Dependency type - 'script' or 'style'.
          * @param array         $allowlist Optional. List of allowed dependency handles.
          */
-        public static function maybe_output_preload_link_tag($dependency, $type, $allowlist = array())
+        public function maybe_output_preload_link_tag($dependency, $type, $allowlist = array())
         {
         }
         /**
@@ -15760,7 +16274,7 @@ namespace Automattic\WooCommerce\Admin {
          * @param string $type Dependency type - 'script' or 'style'.
          * @param array  $allowlist Optional. List of allowed dependency handles.
          */
-        public static function output_header_preload_tags_for_type($type, $allowlist = array())
+        public function output_header_preload_tags_for_type($type, $allowlist = array())
         {
         }
         /**
@@ -15768,7 +16282,7 @@ namespace Automattic\WooCommerce\Admin {
          *
          * See: https://macarthur.me/posts/preloading-javascript-in-wordpress
          */
-        public static function output_header_preload_tags()
+        public function output_header_preload_tags()
         {
         }
         /**
@@ -16096,11 +16610,22 @@ namespace Automattic\WooCommerce\Admin\Notes {
          * @param int $seconds Time in seconds to check.
          * @return bool Whether or not WooCommerce admin has been active for $seconds.
          */
-        public static function wc_admin_active_for($seconds)
+        private static function wc_admin_active_for($seconds)
+        {
+        }
+        /**
+         * Test if WooCommerce Admin has been active within a pre-defined range.
+         *
+         * @param string $range range available in WC_ADMIN_STORE_AGE_RANGES.
+         * @return bool Whether or not WooCommerce admin has been active within the range.
+         */
+        private static function is_wc_admin_active_in_date_range($range)
         {
         }
         /**
          * Check if the note has been previously added.
+         *
+         * @throws NotesUnavailableException Throws exception when notes are unavailable.
          */
         public static function note_exists()
         {
@@ -16109,18 +16634,23 @@ namespace Automattic\WooCommerce\Admin\Notes {
          * Checks if a note can and should be added.
          *
          * @return bool
+         * @throws NotesUnavailableException Throws exception when notes are unavailable.
          */
         public static function can_be_added()
         {
         }
         /**
          * Add the note if it passes predefined conditions.
+         *
+         * @throws NotesUnavailableException Throws exception when notes are unavailable.
          */
         public static function possibly_add_note()
         {
         }
         /**
          * Alias this method for backwards compatibility.
+         *
+         * @throws NotesUnavailableException Throws exception when notes are unavailable.
          */
         public static function add_note()
         {
@@ -16129,6 +16659,8 @@ namespace Automattic\WooCommerce\Admin\Notes {
          * Possibly delete the note, if it exists in the database. Note that this
          * is a hard delete, for where it doesn't make sense to soft delete or
          * action the note.
+         *
+         * @throws NotesUnavailableException Throws exception when notes are unavailable.
          */
         public static function possibly_delete_note()
         {
@@ -16137,6 +16669,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
          * Get if the note has been actioned.
          *
          * @return bool
+         * @throws NotesUnavailableException Throws exception when notes are unavailable.
          */
         public static function has_note_been_actioned()
         {
@@ -16435,6 +16968,17 @@ namespace Automattic\WooCommerce\Admin\Notes {
          * @return array An array of objects containing a note id.
          */
         public function get_notes_count($type = array(), $status = array())
+        {
+        }
+        /**
+         * Parses the query arguments passed in as arrays and escapes the values.
+         *
+         * @param array      $args the query arguments.
+         * @param string     $key the key of the specific argument.
+         * @param array|null $allowed_types optional allowed_types if only a specific set is allowed.
+         * @return array the escaped array of argument values.
+         */
+        private function get_escaped_arguments_array_by_key($args = array(), $key = '', $allowed_types = null)
         {
         }
         /**
@@ -17684,6 +18228,46 @@ namespace Automattic\WooCommerce\Admin\Notes {
         {
         }
     }
+    /**
+     * Suggest Jetpack Backup to Woo users.
+     *
+     * Note: This should probably live in the Jetpack plugin in the future.
+     *
+     * @see  https://developer.woocommerce.com/2020/10/16/using-the-admin-notes-inbox-in-woocommerce/
+     */
+    class MarketingJetpack
+    {
+        // Shared Note Traits.
+        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
+        /**
+         * Name of the note for use in the database.
+         */
+        const NOTE_NAME = 'wc-admin-marketing-jetpack-backup';
+        /**
+         * Product IDs that include Backup.
+         */
+        const BACKUP_IDS = [2010, 2011, 2012, 2013, 2014, 2015, 2100, 2101, 2102, 2103, 2005, 2006, 2000, 2003, 2001, 2004];
+        /**
+         * Maybe add a note on Jetpack Backups for Jetpack sites older than a week without Backups.
+         */
+        public static function possibly_add_note()
+        {
+        }
+        /**
+         * Get the note.
+         */
+        public static function get_note()
+        {
+        }
+        /**
+         * Check if this blog already has a Jetpack Backups product.
+         *
+         * @return boolean  Whether or not this blog has backups.
+         */
+        protected static function has_backups()
+        {
+        }
+    }
 }
 namespace Automattic\WooCommerce\Admin\Notes\MerchantEmailNotifications {
     /**
@@ -18617,6 +19201,25 @@ namespace Automattic\WooCommerce\Admin\Notes {
         public static function get_screen_name()
         {
         }
+        /**
+         * Loads the data store.
+         *
+         * If the "admin-note" data store is unavailable, attempts to load it
+         * will result in an exception.
+         * This method catches that exception and throws a custom one instead.
+         *
+         * @return \WC_Data_Store The "admin-note" data store.
+         * @throws NotesUnavailableException Throws exception if data store loading fails.
+         */
+        public static function load_data_store()
+        {
+        }
+    }
+    /**
+     * Notes\NotesUnavailableException class.
+     */
+    class NotesUnavailableException extends \WC_Data_Exception
+    {
     }
     /**
      * Onboarding_Email_Marketing
@@ -19820,10 +20423,6 @@ namespace Automattic\WooCommerce\Admin {
     class PluginsInstaller
     {
         /**
-         * Message option name.
-         */
-        const MESSAGE_OPTION = 'woocommerce_admin_plugin_installer_message';
-        /**
          * Constructor
          */
         public static function init()
@@ -19838,16 +20437,11 @@ namespace Automattic\WooCommerce\Admin {
         /**
          * Display the results of installation and activation on the page.
          *
-         * @param array $install_result Result of installation.
-         * @param array $activate_result Result of activation.
+         * @param string $plugins Comma separated list of plugins.
+         * @param array  $install_result Result of installation.
+         * @param array  $activate_result Result of activation.
          */
-        public static function cache_results($install_result, $activate_result)
-        {
-        }
-        /**
-         * Display the results of installation and activation on the page.
-         */
-        public static function display_message()
+        public static function cache_results($plugins, $install_result, $activate_result)
         {
         }
         /**
@@ -20652,6 +21246,14 @@ namespace Automattic\WooCommerce\Admin\RemoteInboxNotifications {
         {
         }
         /**
+         * An init hook is used here so that StoredStateSetupForProducts can set
+         * up a hook that gets triggered by action-scheduler - this is needed
+         * because the admin_init hook doesn't get triggered by WP Cron.
+         */
+        public static function on_init()
+        {
+        }
+        /**
          * Go through the specs and run them.
          */
         public static function run()
@@ -20713,11 +21315,11 @@ namespace Automattic\WooCommerce\Admin\RemoteInboxNotifications {
          * rule evaluates to false.
          *
          * @param array|object $rules        The rule or rules being processed.
-         * @param object       $stored_state Stored state.
+         * @param object|null  $stored_state Stored state.
          *
          * @return bool The result of the operation.
          */
-        public function evaluate($rules, $stored_state)
+        public function evaluate($rules, $stored_state = null)
         {
         }
     }
@@ -20801,10 +21403,25 @@ namespace Automattic\WooCommerce\Admin\RemoteInboxNotifications {
      */
     class StoredStateSetupForProducts
     {
+        const ASYNC_RUN_REMOTE_NOTIFICATIONS_ACTION_NAME = 'woocommerce_admin/stored_state_setup_for_products/async/run_remote_notifications';
         /**
-         * Initialize the class
+         * Initialize the class via the admin_init hook.
+         */
+        public static function admin_init()
+        {
+        }
+        /**
+         * Initialize the class via the init hook.
          */
         public static function init()
+        {
+        }
+        /**
+         * Run the remote notifications engine. This is triggered by
+         * action-scheduler after a product is added. It also cleans up from
+         * setting the product count increment.
+         */
+        public static function run_remote_notifications()
         {
         }
         /**
@@ -20842,7 +21459,307 @@ namespace Automattic\WooCommerce\Admin\RemoteInboxNotifications {
         public static function run_on_transition_post_status($new_status, $old_status, $post)
         {
         }
+        /**
+         * Enqueues an async action (using action-scheduler) to run remote
+         * notifications.
+         */
+        private static function enqueue_async_run_remote_notifications()
+        {
+        }
     }
+    /**
+     * An interface to define a transformer.
+     *
+     * Interface TransformerInterface
+     *
+     * @package Automattic\WooCommerce\Admin\RemoteInboxNotifications
+     */
+    interface TransformerInterface
+    {
+        /**
+         * Transform given value to a different value.
+         *
+         * @param mixed         $value a value to transform.
+         * @param stdClass|null $arguments arguments.
+         * @param string|null   $default default value.
+         *
+         * @return mixed|null
+         */
+        public function transform($value, \stdClass $arguments = null, $default = null);
+        /**
+         * Validate Transformer arguments.
+         *
+         * @param stdClass|null $arguments arguments to validate.
+         *
+         * @return mixed
+         */
+        public function validate(\stdClass $arguments = null);
+    }
+    /**
+     * A simple service class for the Transformer classes.
+     *
+     * Class TransformerService
+     *
+     * @package Automattic\WooCommerce\Admin\RemoteInboxNotifications
+     */
+    class TransformerService
+    {
+        /**
+         * Create a transformer object by name.
+         *
+         * @param string $name name of the transformer.
+         *
+         * @return TransformerInterface|null
+         */
+        public static function create_transformer($name)
+        {
+        }
+        /**
+         * Apply transformers to the given value.
+         *
+         * @param mixed  $target_value a value to transform.
+         * @param array  $transformer_configs transform configuration.
+         * @param string $default default value.
+         *
+         * @throws InvalidArgumentException Throws when one of the requried arguments is missing.
+         * @return mixed|null
+         */
+        public static function apply($target_value, array $transformer_configs, $default)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Admin\RemoteInboxNotifications\Transformers {
+    /**
+     * Search array value by one of its key.
+     *
+     * @package Automattic\WooCommerce\Admin\RemoteInboxNotifications\Transformers
+     */
+    class ArrayColumn implements \Automattic\WooCommerce\Admin\RemoteInboxNotifications\TransformerInterface
+    {
+        /**
+         * Search array value by one of its key.
+         *
+         * @param mixed         $value a value to transform.
+         * @param stdClass|null $arguments required arguments 'key'.
+         * @param string|null   $default default value.
+         *
+         * @throws InvalidArgumentException Throws when the required argument 'key' is missing.
+         *
+         * @return mixed
+         */
+        public function transform($value, \stdClass $arguments = null, $default = null)
+        {
+        }
+        /**
+         * Validate Transformer arguments.
+         *
+         * @param stdClass|null $arguments arguments to validate.
+         *
+         * @return mixed
+         */
+        public function validate(\stdClass $arguments = null)
+        {
+        }
+    }
+    /**
+     * Flatten nested array.
+     *
+     * @package Automattic\WooCommerce\Admin\RemoteInboxNotifications\Transformers
+     */
+    class ArrayFlatten implements \Automattic\WooCommerce\Admin\RemoteInboxNotifications\TransformerInterface
+    {
+        /**
+         * Search a given value in the array.
+         *
+         * @param mixed         $value a value to transform.
+         * @param stdClass|null $arguments arguments.
+         * @param string|null   $default default value.
+         *
+         * @return mixed|null
+         */
+        public function transform($value, \stdClass $arguments = null, $default = null)
+        {
+        }
+        /**
+         * Validate Transformer arguments.
+         *
+         * @param stdClass|null $arguments arguments to validate.
+         *
+         * @return mixed
+         */
+        public function validate(\stdClass $arguments = null)
+        {
+        }
+    }
+    /**
+     * Search array value by one of its key.
+     *
+     * @package Automattic\WooCommerce\Admin\RemoteInboxNotifications\Transformers
+     */
+    class ArrayKeys implements \Automattic\WooCommerce\Admin\RemoteInboxNotifications\TransformerInterface
+    {
+        /**
+         * Search array value by one of its key.
+         *
+         * @param mixed         $value a value to transform.
+         * @param stdClass|null $arguments arguments.
+         * @param string|null   $default default value.
+         *
+         * @return mixed
+         */
+        public function transform($value, \stdClass $arguments = null, $default = null)
+        {
+        }
+        /**
+         * Validate Transformer arguments.
+         *
+         * @param stdClass|null $arguments arguments to validate.
+         *
+         * @return mixed
+         */
+        public function validate(\stdClass $arguments = null)
+        {
+        }
+    }
+    /**
+     * Searches a given a given value in the array.
+     *
+     * @package Automattic\WooCommerce\Admin\RemoteInboxNotifications\Transformers
+     */
+    class ArraySearch implements \Automattic\WooCommerce\Admin\RemoteInboxNotifications\TransformerInterface
+    {
+        /**
+         * Search a given value in the array.
+         *
+         * @param mixed         $value a value to transform.
+         * @param stdClass|null $arguments required argument 'value'.
+         * @param string|null   $default default value.
+         *
+         * @throws InvalidArgumentException Throws when the required 'value' is missing.
+         *
+         * @return mixed|null
+         */
+        public function transform($value, \stdClass $arguments = null, $default = null)
+        {
+        }
+        /**
+         * Validate Transformer arguments.
+         *
+         * @param stdClass|null $arguments arguments to validate.
+         *
+         * @return mixed
+         */
+        public function validate(\stdClass $arguments = null)
+        {
+        }
+    }
+    /**
+     * Search array value by one of its key.
+     *
+     * @package Automattic\WooCommerce\Admin\RemoteInboxNotifications\Transformers
+     */
+    class ArrayValues implements \Automattic\WooCommerce\Admin\RemoteInboxNotifications\TransformerInterface
+    {
+        /**
+         * Search array value by one of its key.
+         *
+         * @param mixed         $value a value to transform.
+         * @param stdClass|null $arguments arguments.
+         * @param string|null   $default default value.
+         *
+         * @return mixed
+         */
+        public function transform($value, \stdClass $arguments = null, $default = null)
+        {
+        }
+        /**
+         * Validate Transformer arguments.
+         *
+         * @param stdClass|null $arguments arguments to validate.
+         *
+         * @return mixed
+         */
+        public function validate(\stdClass $arguments = null)
+        {
+        }
+    }
+    /**
+     * Count elements in Array.
+     *
+     * @package Automattic\WooCommerce\Admin\RemoteInboxNotifications\Transformers
+     */
+    class Count implements \Automattic\WooCommerce\Admin\RemoteInboxNotifications\TransformerInterface
+    {
+        /**
+         *  Count elements in Array.
+         *
+         * @param array         $value an array to count.
+         * @param stdClass|null $arguments arguments.
+         * @param string|null   $default default value.
+         *
+         * @return number
+         */
+        public function transform($value, \stdClass $arguments = null, $default = null)
+        {
+        }
+        /**
+         * Validate Transformer arguments.
+         *
+         * @param stdClass|null $arguments arguments to validate.
+         *
+         * @return mixed
+         */
+        public function validate(\stdClass $arguments = null)
+        {
+        }
+    }
+    /**
+     * Find an array value by dot notation.
+     *
+     * @package Automattic\WooCommerce\Admin\RemoteInboxNotifications\Transformers
+     */
+    class DotNotation implements \Automattic\WooCommerce\Admin\RemoteInboxNotifications\TransformerInterface
+    {
+        /**
+         * Find given path from the given value.
+         *
+         * @param mixed         $value a value to transform.
+         * @param stdClass|null $arguments required argument 'path'.
+         * @param string|null   $default default value.
+         *
+         * @throws InvalidArgumentException Throws when the required 'path' is missing.
+         *
+         * @return mixed
+         */
+        public function transform($value, \stdClass $arguments = null, $default = null)
+        {
+        }
+        /**
+         * Find the given $path in $array by dot notation.
+         *
+         * @param array  $array an array to search in.
+         * @param string $path a path in the given array.
+         * @param null   $default default value to return if $path was not found.
+         *
+         * @return mixed|null
+         */
+        public function get($array, $path, $default = null)
+        {
+        }
+        /**
+         * Validate Transformer arguments.
+         *
+         * @param stdClass|null $arguments arguments to validate.
+         *
+         * @return mixed
+         */
+        public function validate(\stdClass $arguments = null)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Admin\RemoteInboxNotifications {
     /**
      * WCAdminActiveForProvider class
      */
@@ -21826,6 +22743,7 @@ namespace Automattic\WooCommerce\Admin {
          * WC Admin timestamp option name.
          */
         const WC_ADMIN_TIMESTAMP_OPTION = 'woocommerce_admin_install_timestamp';
+        const WC_ADMIN_STORE_AGE_RANGES = array('week-1' => array('start' => 0, 'end' => WEEK_IN_SECONDS), 'week-1-4' => array('start' => WEEK_IN_SECONDS, 'end' => WEEK_IN_SECONDS * 4), 'month-1-3' => array('start' => MONTH_IN_SECONDS, 'end' => MONTH_IN_SECONDS * 3), 'month-3-6' => array('start' => MONTH_IN_SECONDS * 3, 'end' => MONTH_IN_SECONDS * 6), 'month-6+' => array('start' => MONTH_IN_SECONDS * 6));
         /**
          * Get the number of seconds that the store has been active.
          *
@@ -21841,6 +22759,16 @@ namespace Automattic\WooCommerce\Admin {
          * @return bool Whether or not WooCommerce admin has been active for $seconds.
          */
         public static function is_wc_admin_active_for($seconds)
+        {
+        }
+        /**
+         * Test if WooCommerce Admin has been active within a pre-defined range.
+         *
+         * @param string $range range available in WC_ADMIN_STORE_AGE_RANGES.
+         * @throws \InvalidArgumentException Throws exception when invalid $range is passed in.
+         * @return bool Whether or not WooCommerce admin has been active within the range.
+         */
+        public static function is_wc_admin_active_in_date_range($range)
         {
         }
     }
@@ -22313,6 +23241,12 @@ namespace Automattic\WooCommerce\Blocks {
          *                       'all', 'print' and 'screen', or media queries like '(orientation: portrait)' and '(max-width: 640px)'.
          */
         protected function register_style($handle, $src, $deps = [], $media = 'all')
+        {
+        }
+        /**
+         * Update block style dependencies after they have been registered.
+         */
+        public function update_block_style_dependencies()
         {
         }
     }
@@ -23846,6 +24780,16 @@ namespace Automattic\WooCommerce\Blocks {
          * Adds a redirect field to the login form so blocks can redirect users after login.
          */
         public function redirect_to_field()
+        {
+        }
+        /**
+         * Hide legacy widgets with a feature complete block equivalent in the inserter
+         * and prevent them from showing as an option in the Legacy Widget block.
+         *
+         * @param array $widget_types An array of widgets hidden in core.
+         * @return array $widget_types An array inluding the WooCommerce widgets to hide.
+         */
+        public function hide_legacy_widgets_with_block_equivalent($widget_types)
         {
         }
         /**
@@ -27099,6 +28043,14 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
         protected function get_route_post_response(\WP_REST_Request $request)
         {
         }
+        /**
+         * If there is a draft order, update customer data there also.
+         *
+         * @return void
+         */
+        protected function maybe_update_order()
+        {
+        }
     }
     /**
      * CartUpdateItem class.
@@ -27332,19 +28284,20 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
          * For orders which do not require payment, just update status.
          *
          * @param WP_REST_Request $request Request object.
-         * @return PaymentResult
+         * @param PaymentResult   $payment_result Payment result object.
          */
-        private function process_without_payment(\WP_REST_Request $request)
+        private function process_without_payment(\WP_REST_Request $request, \Automattic\WooCommerce\Blocks\Payments\PaymentResult $payment_result)
         {
         }
         /**
          * Fires an action hook instructing active payment gateways to process the payment for an order and provide a result.
          *
          * @throws RouteException On error.
+         *
          * @param WP_REST_Request $request Request object.
-         * @return PaymentResult
+         * @param PaymentResult   $payment_result Payment result object.
          */
-        private function process_payment(\WP_REST_Request $request)
+        private function process_payment(\WP_REST_Request $request, \Automattic\WooCommerce\Blocks\Payments\PaymentResult $payment_result)
         {
         }
         /**
@@ -30414,7 +31367,7 @@ namespace {
      *        'claimed' => NULL - TRUE to find claimed actions, FALSE to find unclaimed actions, a string to find a specific claim ID
      *        'per_page' => 5 - Number of results to return
      *        'offset' => 0
-     *        'orderby' => 'date' - accepted values are 'hook', 'group', 'modified', or 'date'
+     *        'orderby' => 'date' - accepted values are 'hook', 'group', 'modified', 'date' or 'none'
      *        'order' => 'ASC'
      *
      * @param string $return_format OBJECT, ARRAY_A, or ids.

@@ -1086,6 +1086,12 @@ namespace {
         }
     }
     /**
+     * Log Handler Interface
+     *
+     * @version 3.3.0
+     * @package WooCommerce\Interface
+     */
+    /**
      * WC Log Handler Interface
      *
      * Functions that must be defined to correctly fulfill log handler API.
@@ -7595,6 +7601,16 @@ namespace {
         public function save_meta_boxes($post_id, $post)
         {
         }
+        /**
+         * Remove block-based templates from the list of available templates for products.
+         *
+         * @param string[] $templates Array of template header names keyed by the template file name.
+         *
+         * @return string[] Templates array excluding block-based templates.
+         */
+        public function remove_block_templates($templates)
+        {
+        }
     }
     /**
      * WC_Admin_Notices Class.
@@ -11468,7 +11484,7 @@ namespace {
         {
         }
         /**
-         * Render additional panels in the proudct data metabox.
+         * Render additional panels in the product data metabox.
          */
         public static function product_data_panels()
         {
@@ -13098,7 +13114,7 @@ namespace {
         /**
          * Add this page to settings.
          *
-         * @param array $pages The pages array to add this page to.
+         * @param array $pages The setings array where we'll add ourselves.
          *
          * @return mixed
          */
@@ -13106,19 +13122,83 @@ namespace {
         {
         }
         /**
-         * Get settings array.
+         * Get settings array for the default section.
          *
-         * @return array
+         * External settings classes (registered via 'woocommerce_get_settings_pages' filter)
+         * might have redefined this method as "get_settings($section_id='')", thus we need
+         * to use this method internally instead of 'get_settings_for_section' to register settings
+         * and render settings pages.
+         *
+         * *But* we can't just redefine the method as "get_settings($section_id='')" here, since this
+         * will break on PHP 8 if any external setting class have it as 'get_settings()'.
+         *
+         * Thus we leave the method signature as is and use 'func_get_arg' to get the setting id
+         * if it's supplied, and we use this method internally; but it's deprecated and should
+         * otherwise never be used.
+         *
+         * @deprecated 5.4.0 Use 'get_settings_for_section' (passing an empty string for default section)
+         *
+         * @return array Settings array, each item being an associative array representing a setting.
          */
         public function get_settings()
         {
         }
         /**
-         * Get sections.
+         * Get settings array.
+         *
+         * The strategy for getting the settings is as follows:
+         *
+         * - If a method named 'get_settings_for_{section_id}_section' exists in the class
+         *   it will be invoked (for the default '' section, the method name is 'get_settings_for_default_section').
+         *   Derived classes can implement these methods as required.
+         *
+         * - Otherwise, 'get_settings_for_section_core' will be invoked. Derived classes can override it
+         *   as an alternative to implementing 'get_settings_for_{section_id}_section' methods.
+         *
+         * @param string $section_id The id of the section to return settings for, an empty string for the default section.
+         *
+         * @return array Settings array, each item being an associative array representing a setting.
+         */
+        public final function get_settings_for_section($section_id)
+        {
+        }
+        /**
+         * Get the settings for a given section.
+         * This method is invoked from 'get_settings_for_section' when no 'get_settings_for_{current_section}_section'
+         * method exists in the class.
+         *
+         * When overriding, note that the 'woocommerce_get_settings_' filter must NOT be triggered,
+         * as this is already done by 'get_settings_for_section'.
+         *
+         * @param string $section_id The section name to get the settings for.
+         *
+         * @return array Settings array, each item being an associative array representing a setting.
+         */
+        protected function get_settings_for_section_core($section_id)
+        {
+        }
+        /**
+         * Get all sections for this page, both the own ones and the ones defined via filters.
          *
          * @return array
          */
         public function get_sections()
+        {
+        }
+        /**
+         * Get own sections for this page.
+         * Derived classes should override this method if they define sections.
+         * There should always be one default section with an empty string as identifier.
+         *
+         * Example:
+         * return array(
+         *   ''        => __( 'General', 'woocommerce' ),
+         *   'foobars' => __( 'Foos & Bars', 'woocommerce' ),
+         * );
+         *
+         * @return array An associative array where keys are section identifiers and the values are translated section names.
+         */
+        protected function get_own_sections()
         {
         }
         /**
@@ -13128,15 +13208,29 @@ namespace {
         {
         }
         /**
-         * Output the settings.
+         * Output the HTML for the settings.
          */
         public function output()
         {
         }
         /**
-         * Save settings.
+         * Save settings and trigger the 'woocommerce_update_options_'.id action.
          */
         public function save()
+        {
+        }
+        /**
+         * Save settings for current section.
+         */
+        protected function save_settings_for_current_section()
+        {
+        }
+        /**
+         * Trigger the 'woocommerce_update_options_'.id action.
+         *
+         * @param string $section_id Section to trigger the action for, or null for current section.
+         */
+        protected function do_update_options_action($section_id = \null)
         {
         }
     }
@@ -13156,7 +13250,7 @@ namespace {
          *
          * @return array
          */
-        public function get_settings()
+        protected function get_settings_for_default_section()
         {
         }
     }
@@ -13172,21 +13266,35 @@ namespace {
         {
         }
         /**
-         * Get sections.
+         * Get own sections.
          *
          * @return array
          */
-        public function get_sections()
+        protected function get_own_sections()
         {
         }
         /**
-         * Get settings array.
-         *
-         * @param string $current_section Current section slug.
+         * Get settings for the default section.
          *
          * @return array
          */
-        public function get_settings($current_section = '')
+        protected function get_settings_for_default_section()
+        {
+        }
+        /**
+         * Get settings for the WooCommerce.com section.
+         *
+         * @return array
+         */
+        protected function get_settings_for_woocommerce_com_section()
+        {
+        }
+        /**
+         * Get settings for the legacy API section.
+         *
+         * @return array
+         */
+        protected function get_settings_for_legacy_api_section()
         {
         }
         /**
@@ -13220,11 +13328,11 @@ namespace {
         {
         }
     }
+    // phpcs:disable Generic.Files.OneObjectStructurePerFile.MultipleFound, Generic.Commenting.Todo.CommentFound
     /**
      * WC_Settings_Rest_API class.
      *
      * @deprecated 3.4 in favour of WC_Settings_Advanced.
-     * @todo remove in 4.0.
      */
     class WC_Settings_Rest_API extends \WC_Settings_Advanced
     {
@@ -13241,11 +13349,11 @@ namespace {
         {
         }
         /**
-         * Get sections.
+         * Get own sections.
          *
          * @return array
          */
-        public function get_sections()
+        protected function get_own_sections()
         {
         }
         /**
@@ -13253,13 +13361,22 @@ namespace {
          *
          * @return array
          */
-        public function get_settings()
+        protected function get_settings_for_default_section()
         {
         }
         /**
          * Output the settings.
          */
         public function output()
+        {
+        }
+        /**
+         * Run the 'admin_options' method on a given email.
+         * This method exists to easy unit testing.
+         *
+         * @param object $email The email object to run the method on.
+         */
+        protected function run_email_admin_options($email)
         {
         }
         /**
@@ -13287,11 +13404,11 @@ namespace {
         {
         }
         /**
-         * Get settings array.
+         * Get settings or the default section.
          *
          * @return array
          */
-        public function get_settings()
+        protected function get_settings_for_default_section()
         {
         }
         /**
@@ -13303,18 +13420,6 @@ namespace {
          * @param string $desc (default: '') Description for input.
          */
         public function color_picker($name, $id, $value, $desc = '')
-        {
-        }
-        /**
-         * Output the settings.
-         */
-        public function output()
-        {
-        }
-        /**
-         * Save settings.
-         */
-        public function save()
         {
         }
     }
@@ -13330,11 +13435,29 @@ namespace {
         {
         }
         /**
-         * Get sections.
+         * Get own sections.
          *
          * @return array
          */
-        public function get_sections()
+        protected function get_own_sections()
+        {
+        }
+        /**
+         * Is WC_INSTALLING constant defined?
+         * This method exists to ease unit testing.
+         *
+         * @return bool True is the WC_INSTALLING constant is defined.
+         */
+        protected function wc_is_installing()
+        {
+        }
+        /**
+         * Get the currently available integrations.
+         * This method exists to ease unit testing.
+         *
+         * @return array Currently available integrations.
+         */
+        protected function get_integrations()
         {
         }
         /**
@@ -13356,26 +13479,34 @@ namespace {
         {
         }
         /**
-         * Get sections.
+         * Get own sections.
          *
          * @return array
          */
-        public function get_sections()
+        protected function get_own_sections()
         {
         }
         /**
          * Get settings array.
          *
-         * @param string $current_section Section being shown.
          * @return array
          */
-        public function get_settings($current_section = '')
+        protected function get_settings_for_default_section()
         {
         }
         /**
          * Output the settings.
          */
         public function output()
+        {
+        }
+        /**
+         * Run the 'admin_options' method on a given gateway.
+         * This method exists to easy unit testing.
+         *
+         * @param object $gateway The gateway object to run the method on.
+         */
+        protected function run_gateway_admin_options($gateway)
         {
         }
         /**
@@ -13403,32 +13534,41 @@ namespace {
         {
         }
         /**
-         * Get sections.
+         * Get own sections.
          *
          * @return array
          */
-        public function get_sections()
+        protected function get_own_sections()
         {
         }
         /**
-         * Output the settings.
+         * Get settings for the detault section.
+         *
+         * @return array
          */
-        public function output()
+        protected function get_settings_for_default_section()
         {
         }
         /**
-         * Save settings.
+         * Get settings for the inventory section.
+         *
+         * @return array
+         */
+        protected function get_settings_for_inventory_section()
+        {
+        }
+        /**
+         * Get settings for the downloadable section.
+         *
+         * @return array
+         */
+        protected function get_settings_for_downloadable_section()
+        {
+        }
+        /**
+         * Save settings and trigger the 'woocommerce_update_options_'.id action.
          */
         public function save()
-        {
-        }
-        /**
-         * Get settings array.
-         *
-         * @param string $current_section Current section name.
-         * @return array
-         */
-        public function get_settings($current_section = '')
         {
         }
     }
@@ -13453,20 +13593,48 @@ namespace {
         {
         }
         /**
-         * Get sections.
+         * Get own sections.
          *
          * @return array
          */
-        public function get_sections()
+        protected function get_own_sections()
         {
         }
         /**
-         * Get settings array.
+         * Is WC_INSTALLING constant defined?
+         * This method exists to ease unit testing.
          *
-         * @param string $current_section Current section.
+         * @return bool True is the WC_INSTALLING constant is defined.
+         */
+        protected function wc_is_installing()
+        {
+        }
+        /**
+         * Get the currently available shipping methods.
+         * This method exists to ease unit testing.
+         *
+         * @return array Currently available shipping methods.
+         */
+        protected function get_shipping_methods()
+        {
+        }
+        /**
+         * Get settings for the default section.
+         *
+         * The original implementation of 'get_settings' was returning the settings for the "Options" section
+         * when the supplied value for $current_section was ''.
+         *
          * @return array
          */
-        public function get_settings($current_section = '')
+        protected function get_settings_for_default_section()
+        {
+        }
+        /**
+         * Get settings for the options section.
+         *
+         * @return array
+         */
+        protected function get_settings_for_options_section()
         {
         }
         /**
@@ -13537,20 +13705,19 @@ namespace {
         {
         }
         /**
-         * Get sections.
+         * Get own sections.
          *
          * @return array
          */
-        public function get_sections()
+        protected function get_own_sections()
         {
         }
         /**
          * Get settings array.
          *
-         * @param string $current_section Current section being shown.
          * @return array
          */
-        public function get_settings($current_section = '')
+        public function get_settings_for_default_section()
         {
         }
         /**
@@ -22792,6 +22959,14 @@ namespace {
         public static function theme_background_installer($theme_slug)
         {
         }
+        /**
+         * Sets whether PayPal Standard will be loaded on install.
+         *
+         * @since 5.5.0
+         */
+        private static function set_paypal_standard_load_eligibility()
+        {
+        }
     }
     /**
      * Integrations class.
@@ -22899,6 +23074,12 @@ namespace {
         {
         }
     }
+    /**
+     * Logger Interface
+     *
+     * @version 3.0.0
+     * @package WooCommerce\Interface
+     */
     /**
      * WC Logger Interface
      *
@@ -26248,6 +26429,15 @@ namespace {
         public function process_admin_options()
         {
         }
+        /**
+         * Determines if PayPal Standard should be loaded.
+         *
+         * @since 5.5.0
+         * @return bool Whether PayPal Standard should be loaded or not.
+         */
+        protected function should_load_paypal_standard()
+        {
+        }
     }
     /**
      * Payment tokens class.
@@ -28514,9 +28704,21 @@ namespace {
          */
         private static $chosen_attributes;
         /**
+         * The instance of the class that helps filtering with the product attributes lookup table.
+         *
+         * @var Filterer
+         */
+        private $filterer;
+        /**
          * Constructor for the query class. Hooks in methods.
          */
         public function __construct()
+        {
+        }
+        /**
+         * Reset the chosen attributes so that get_layered_nav_chosen_attributes will get them from the query again.
+         */
+        public static function reset_chosen_attributes()
         {
         }
         /**
@@ -28696,6 +28898,16 @@ namespace {
          * @param WP_Query $q Query instance.
          */
         public function product_query($q)
+        {
+        }
+        /**
+         * Add extra clauses to the product query.
+         *
+         * @param array    $args Product query clauses.
+         * @param WP_Query $wp_query The current product query.
+         * @return array The updated product query clauses array.
+         */
+        private function product_query_post_clauses($args, $wp_query)
         {
         }
         /**
@@ -31366,9 +31578,22 @@ namespace {
         {
         }
         /**
-         * Get the default filename for a template.
+         * Checks whether a block template with that name exists.
+         *
+         * @since  5.5.0
+         * @param string $template_name Template to check.
+         * @return boolean
+         */
+        private static function has_block_template($template_name)
+        {
+        }
+        /**
+         * Get the default filename for a template except if a block template with
+         * the same name exists.
          *
          * @since  3.0.0
+         * @since  5.5.0 If a block template with the same name exists, return an
+         * empty string.
          * @return string
          */
         private static function get_template_loader_default_file()
@@ -31587,7 +31812,7 @@ namespace {
          *
          * @return array
          */
-        private static function get_tracking_data()
+        public static function get_tracking_data()
         {
         }
         /**
@@ -32443,7 +32668,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '5.4.1';
+        public $version = '5.5.0';
         /**
          * WooCommerce Schema version.
          *
@@ -33194,6 +33419,42 @@ namespace {
         }
     }
     /**
+     * Allows access to tracker snapshot for transparency and debugging.
+     *
+     * @since 5.5.0
+     * @package WooCommerce
+     */
+    class WC_CLI_Tracker_Command
+    {
+        /**
+         * Registers a command for showing WooCommerce Tracker snapshot data.
+         */
+        public static function register_commands()
+        {
+        }
+        /**
+         * Dump tracker snapshot data to screen.
+         *
+         * ## EXAMPLES
+         *
+         * wp wc tracker snapshot --format=yaml
+         * wp wc tracker snapshot --format=json
+         *
+         * ## OPTIONS
+         *
+         * [--format=<format>]
+         * : Render output in a particular format, see WP_CLI\Formatter for details.
+         *
+         * @see \WP_CLI\Formatter
+         * @see WC_Tracker::get_tracking_data()
+         * @param array $args WP-CLI positional arguments.
+         * @param array $assoc_args WP-CLI associative arguments.
+         */
+        public static function show_tracker_snapshot($args, $assoc_args)
+        {
+        }
+    }
+    /**
      * Allows updates via CLI.
      *
      * @version 3.0.0
@@ -33267,6 +33528,15 @@ namespace {
          * Scripts to improve our form.
          */
         public function add_scripts()
+        {
+        }
+        /**
+         * For FSE themes add a "Customize WooCommerce" link to the Appearance menu.
+         *
+         * FSE themes hide the "Customize" link in the Appearance menu. In WooCommerce we have several options that can currently
+         * only be edited via the Customizer. For now, we are thus adding a new link for WooCommerce specific Customizer options.
+         */
+        public function add_fse_customize_link()
         {
         }
         /**
@@ -33346,6 +33616,12 @@ namespace {
         }
     }
     /**
+     * Object Data Store Interface
+     *
+     * @version 3.0.0
+     * @package WooCommerce\Interface
+     */
+    /**
      * WC Data Store Interface
      *
      * @version  3.0.0
@@ -33409,6 +33685,12 @@ namespace {
          */
         public function update_meta(&$data, $meta);
     }
+    /**
+     * Order Data Store Interface
+     *
+     * @version 3.0.0
+     * @package WooCommerce\Interfaces
+     */
     /**
      * WC Order Data Store Interface
      *
@@ -33978,6 +34260,12 @@ namespace {
         }
     }
     /**
+     * Coupon Data Store Interface
+     *
+     * @version 3.0.0
+     * @package WooCommerce\Interfaces
+     */
+    /**
      * WC Coupon Data Store Interface
      *
      * Functions that must be defined by coupon store classes.
@@ -34264,6 +34552,12 @@ namespace {
         }
     }
     /**
+     * Customer Data Store Interface
+     *
+     * @version 3.0.0
+     * @package WooCommerce\Interface
+     */
+    /**
      * WC Customer Data Store Interface
      *
      * Functions that must be defined by customer store classes.
@@ -34523,6 +34817,12 @@ namespace {
         }
     }
     /**
+     * Customer Download Data Store Interface
+     *
+     * @version 3.0.0
+     * @package WooCommerce\Interface
+     */
+    /**
      * WC Customer Download Data Store Interface.
      *
      * @version  3.0.0
@@ -34748,6 +35048,12 @@ namespace {
         }
     }
     /**
+     * Customer Download Log Data Store Interface
+     *
+     * @version 3.3.0
+     * @package WooCommerce\Interface
+     */
+    /**
      * WC Customer Download Log Data Store Interface.
      *
      * @version  3.3.0
@@ -34846,6 +35152,12 @@ namespace {
         {
         }
     }
+    /**
+     * Order Data Store Interface
+     *
+     * @version 3.0.0
+     * @package WooCommerce\Interface
+     */
     /**
      * WC Order Data Store Interface
      *
@@ -35321,6 +35633,12 @@ namespace {
         }
     }
     /**
+     * Order Item Type Data Store Interface
+     *
+     * @version 3.0.0
+     * @package WooCommerce\Interface
+     */
+    /**
      * WC Order Item Data Store Interface
      *
      * Functions that must be defined by order item store classes.
@@ -35371,6 +35689,12 @@ namespace {
         {
         }
     }
+    /**
+     * Order Item Data Store Interface
+     *
+     * @version 3.0.0
+     * @package WooCommerce\Interface
+     */
     /**
      * WC Order Item Data Store Interface
      *
@@ -35610,6 +35934,12 @@ namespace {
         }
     }
     /**
+     * Order Item Product Data Store Interface
+     *
+     * @version 3.0.0
+     * @package WooCommerce\Interface
+     */
+    /**
      * WC Order Item Data Store Interface
      *
      * Functions that must be defined by order item store classes.
@@ -35741,6 +36071,12 @@ namespace {
         }
     }
     /**
+     * Order Refund Data Store Interface
+     *
+     * @version 3.0.0
+     * @package WooCommerce\Interface
+     */
+    /**
      * WC Order Refund Data Store Interface
      *
      * Functions that must be defined by order store classes.
@@ -35801,6 +36137,12 @@ namespace {
         {
         }
     }
+    /**
+     * Payment Token Data Store Interface
+     *
+     * @version 3.0.0
+     * @package WooCommerce\Interface
+     */
     /**
      * WC Payment Token Data Store Interface
      *
@@ -36015,6 +36357,12 @@ namespace {
         {
         }
     }
+    /**
+     * Product Data Store Interface
+     *
+     * @version 3.0.0
+     * @package WooCommerce\Interface
+     */
     /**
      * WC Product Data Store Interface
      *
@@ -36694,6 +37042,12 @@ namespace {
         }
     }
     /**
+     * Product Variable Data Store Interface
+     *
+     * @version 3.0.0
+     * @package WooCommerce\Interface
+     */
+    /**
      * WC Product Variable Data Store Interface
      *
      * Functions that must be defined by product variable store classes.
@@ -37097,6 +37451,12 @@ namespace {
         }
     }
     /**
+     * Shipping Zone Data Store Interface
+     *
+     * @version 3.0.0
+     * @package WooCommerce\Interface
+     */
+    /**
      * WC Shipping Zone Data Store Interface.
      *
      * Functions that must be defined by shipping zone store classes.
@@ -37312,6 +37672,12 @@ namespace {
         {
         }
     }
+    /**
+     * Webhook Data Store Interface
+     *
+     * @version  3.2.0
+     * @package  WooCommerce\Interface
+     */
     /**
      * WooCommerce Webhook data store interface.
      */
@@ -40228,6 +40594,18 @@ namespace {
         public function order_received_text($text, $order)
         {
         }
+        /**
+         * Determines whether PayPal Standard should be loaded or not.
+         *
+         * By default PayPal Standard isn't loaded on new installs or on existing sites which haven't set up the gateway.
+         *
+         * @since 5.5.0
+         *
+         * @return bool Whether PayPal Standard should be loaded.
+         */
+        public function should_load()
+        {
+        }
     }
     /**
      * Handles Refunds and other API requests such as capture.
@@ -40835,6 +41213,12 @@ namespace {
         {
         }
     }
+    /**
+     * WooCommerce Importer Interface
+     *
+     * @package  WooCommerce\Interface
+     * @version  3.1.0
+     */
     /**
      * WC_Importer_Interface class.
      */
@@ -41647,6 +42031,12 @@ namespace {
         {
         }
     }
+    /**
+     * Queue Interface
+     *
+     * @version 3.5.0
+     * @package WooCommerce\Interface
+     */
     /**
      * WC Queue Interface
      *
