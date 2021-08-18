@@ -32668,7 +32668,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '5.5.0';
+        public $version = '5.5.2';
         /**
          * WooCommerce Schema version.
          *
