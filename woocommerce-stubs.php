@@ -6508,6 +6508,17 @@ namespace {
         public static function show_extension($item)
         {
         }
+        /**
+         * We're displaying page=wc-addons and page=wc-addons&section=helper as two separate pages.
+         * When we're on those pages, add body classes to distinguishe them.
+         *
+         * @param string $admin_body_class Unfiltered body class.
+         *
+         * @return string Body class with added class for Marketplace or My Subscriptions page.
+         */
+        public static function filter_admin_body_classes(string $admin_body_class = '') : string
+        {
+        }
     }
     /**
      * API Keys table list class.
@@ -7546,6 +7557,28 @@ namespace {
          * @param WP_Admin_Bar $wp_admin_bar Admin bar instance.
          */
         public function admin_bar_menus($wp_admin_bar)
+        {
+        }
+        /**
+         * Highlight the My Subscriptions menu item when on that page
+         *
+         * @param string $submenu_file The submenu file.
+         * @param string $parent_file  currently opened page.
+         *
+         * @return string
+         */
+        public function update_menu_highlight($submenu_file, $parent_file)
+        {
+        }
+        /**
+         * Update the My Subscriptions document title when on that page.
+         * We want to maintain existing page URL but add it as a separate page,
+         * which requires updating it manually.
+         *
+         * @param  string $admin_title existing page title.
+         * @return string
+         */
+        public function update_my_subscriptions_title($admin_title)
         {
         }
     }
@@ -19577,6 +19610,13 @@ namespace {
          */
         protected $calculated_shipping = \false;
         /**
+         * This is the name of this object type.
+         *
+         * @since 5.6.0
+         * @var string
+         */
+        protected $object_type = 'customer';
+        /**
          * Load customer data based on how WC_Customer is called.
          *
          * If $customer is 'new', you can build a new WC_Customer object. If it's empty, some
@@ -19587,15 +19627,6 @@ namespace {
          * @throws Exception If customer cannot be read/found and $data is set.
          */
         public function __construct($data = 0, $is_session = \false)
-        {
-        }
-        /**
-         * Prefix for action and filter hooks on data.
-         *
-         * @since  3.0.0
-         * @return string
-         */
-        protected function get_hook_prefix()
         {
         }
         /**
@@ -32087,14 +32118,6 @@ namespace {
         {
         }
         /**
-         * When an admin user logs in, there user agent is tracked in user meta and collected here.
-         *
-         * @return array
-         */
-        private static function get_admin_user_agents()
-        {
-        }
-        /**
          * Search a specific post for text content.
          *
          * @param integer $post_id The id of the post to search.
@@ -32794,7 +32817,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '5.6.0';
+        public $version = '5.7.0';
         /**
          * WooCommerce Schema version.
          *
