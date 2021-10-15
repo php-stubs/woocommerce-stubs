@@ -11686,6 +11686,18 @@ namespace {
         public static function set_email_sent_message($location)
         {
         }
+        /**
+         * Get the available order actions for a given order.
+         *
+         * @since 5.8.0
+         *
+         * @param WC_Order|null $order The order object or null if no order is available.
+         *
+         * @return array
+         */
+        private static function get_available_order_actions_for_order($order)
+        {
+        }
     }
     /**
      * WC_Meta_Box_Order_Data Class.
@@ -32817,7 +32829,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '5.7.1';
+        public $version = '5.8.0';
         /**
          * WooCommerce Schema version.
          *
