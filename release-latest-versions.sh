@@ -21,14 +21,14 @@ for V in         5.5 5.6 5.7 5.8 5.9; do
     LATEST="$(jq -r "$JQ_FILTER" <<<"$WC_JSON" | sort -t "." -k 3 -g | tail -n 1)"
     if [ -z "$LATEST" ]; then
         echo "No version for ${V}!"
-        continue;
+        continue
     fi
 
     echo "Releasing version ${LATEST} ..."
 
     if git rev-parse "refs/tags/v${LATEST}" >/dev/null 2>&1; then
         echo "Tag exists!"
-        continue;
+        continue
     fi
 
     # Clean up source/ directory

@@ -6588,6 +6588,25 @@ namespace {
         {
         }
         /**
+         * Determine which class should be used for a rating star:
+         * - golden
+         * - half-filled (50/50 golden and gray)
+         * - gray
+         *
+         * Consider ratings from 3.0 to 4.0 as an example
+         * 3.0 will produce 3 stars
+         * 3.1 to 3.5 will produce 3 stars and a half star
+         * 3.6 to 4.0 will product 4 stars
+         *
+         * @param float $rating Rating of a product.
+         * @param int   $index  Index of a star in a row.
+         *
+         * @return string CSS class to use.
+         */
+        public static function get_star_class($rating, $index)
+        {
+        }
+        /**
          * Take an action object and return the URL based on properties of the action.
          *
          * @param object $action Action object.
@@ -6630,25 +6649,6 @@ namespace {
          * @return void
          */
         public static function render_product_card($data, $block_type = \null)
-        {
-        }
-        /**
-         * Determine which class should be used for a rating star:
-         * - golden
-         * - half-filled (50/50 golden and gray)
-         * - gray
-         *
-         * Consider ratings from 3.0 to 4.0 as an example
-         * 3.0 will produce 3 stars
-         * 3.1 to 3.5 will produce 3 stars and a half star
-         * 3.6 to 4.0 will product 4 stars
-         *
-         * @param float $rating Rating of a product.
-         * @param int   $index  Index of a star in a row.
-         *
-         * @return string CSS class to use.
-         */
-        public static function get_star_class($rating, $index)
         {
         }
     }
@@ -7689,28 +7689,6 @@ namespace {
          * @param WP_Admin_Bar $wp_admin_bar Admin bar instance.
          */
         public function admin_bar_menus($wp_admin_bar)
-        {
-        }
-        /**
-         * Highlight the My Subscriptions menu item when on that page
-         *
-         * @param string $submenu_file The submenu file.
-         * @param string $parent_file  currently opened page.
-         *
-         * @return string
-         */
-        public function update_menu_highlight($submenu_file, $parent_file)
-        {
-        }
-        /**
-         * Update the My Subscriptions document title when on that page.
-         * We want to maintain existing page URL but add it as a separate page,
-         * which requires updating it manually.
-         *
-         * @param  string $admin_title existing page title.
-         * @return string
-         */
-        public function update_my_subscriptions_title($admin_title)
         {
         }
     }
@@ -16662,7 +16640,7 @@ namespace {
          *
          * @since 3.2.0
          * @param string $context If the context is view, the value will be formatted for display. This keeps it compatible with pre-3.2 versions.
-         * @return float
+         * @return float|string
          */
         public function get_total($context = 'view')
         {
@@ -18008,6 +17986,18 @@ namespace {
          * @return array
          */
         public static function add_avatar_for_review_comment_type($comment_types)
+        {
+        }
+        /**
+         * Add Product Reviews filter for `review` comment type.
+         *
+         * @since 6.0.0
+         *
+         * @param array $comment_types Array of comment type labels keyed by their name.
+         *
+         * @return array
+         */
+        public static function add_review_comment_filter(array $comment_types) : array
         {
         }
         /**
@@ -22821,7 +22811,7 @@ namespace {
          *
          * @var array
          */
-        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_update_400_db_version'), '4.4.0' => array('wc_update_440_insert_attribute_terms_for_variable_products', 'wc_update_440_db_version'), '4.5.0' => array('wc_update_450_sanitize_coupons_code', 'wc_update_450_db_version'), '5.0.0' => array('wc_update_500_fix_product_review_count', 'wc_update_500_db_version'), '5.6.0' => array('wc_update_560_create_refund_returns_page', 'wc_update_560_db_version'));
+        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_update_400_db_version'), '4.4.0' => array('wc_update_440_insert_attribute_terms_for_variable_products', 'wc_update_440_db_version'), '4.5.0' => array('wc_update_450_sanitize_coupons_code', 'wc_update_450_db_version'), '5.0.0' => array('wc_update_500_fix_product_review_count', 'wc_update_500_db_version'), '5.6.0' => array('wc_update_560_create_refund_returns_page', 'wc_update_560_db_version'), '6.0.0' => array('wc_update_600_migrate_rate_limit_options', 'wc_update_600_db_version'));
         /**
          * Hook in tabs.
          */
@@ -29440,12 +29430,51 @@ namespace {
     class WC_Rate_Limiter
     {
         /**
-         * Constructs Option name from action identifier.
+         * Cache group.
+         */
+        const CACHE_GROUP = 'wc_rate_limit';
+        /**
+         * Hook in methods.
+         */
+        public static function init()
+        {
+        }
+        /**
+         * Constructs key name from action identifier.
+         * Left in for backwards compatibility.
          *
          * @param string $action_id Identifier of the action.
          * @return string
          */
         public static function storage_id($action_id)
+        {
+        }
+        /**
+         * Gets a cache prefix.
+         *
+         * @param string $action_id Identifier of the action.
+         * @return string
+         */
+        protected static function get_cache_key($action_id)
+        {
+        }
+        /**
+         * Retrieve a cached rate limit.
+         *
+         * @param string $action_id Identifier of the action.
+         * @return bool|int
+         */
+        protected static function get_cached($action_id)
+        {
+        }
+        /**
+         * Cache a rate limit.
+         *
+         * @param string $action_id Identifier of the action.
+         * @param int    $expiry Timestamp when the limit expires.
+         * @return bool
+         */
+        protected static function set_cache($action_id, $expiry)
         {
         }
         /**
@@ -29465,6 +29494,12 @@ namespace {
          * @return bool True if the option setting was successful, false otherwise.
          */
         public static function set_rate_limit($action_id, $delay)
+        {
+        }
+        /**
+         * Cleanup expired rate limits from the database and clear caches.
+         */
+        public static function cleanup()
         {
         }
     }
@@ -31947,6 +31982,14 @@ namespace {
         {
         }
         /**
+         * Add theme support for Product page gallery.
+         *
+         * @since x.x.x
+         */
+        private static function add_support_for_product_page_gallery()
+        {
+        }
+        /**
          * Enhance the unsupported theme experience on Product Category and Attribute pages by rendering
          * those pages using the single template and shortcode-based content. To do this we make a dummy
          * post and set a shortcode as the post content. This approach is adapted from bbPress.
@@ -32969,7 +33012,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '5.9.0';
+        public $version = '6.0.0';
         /**
          * WooCommerce Schema version.
          *
@@ -38977,6 +39020,12 @@ namespace {
          */
         public $password_generated;
         /**
+         * Magic link to set initial password.
+         *
+         * @var string
+         */
+        public $set_password_url;
+        /**
          * Constructor.
          */
         public function __construct()
@@ -39033,6 +39082,17 @@ namespace {
          * @return string
          */
         public function get_default_additional_content()
+        {
+        }
+        /**
+         * Generate set password URL link for a new user.
+         * 
+         * See also Automattic\WooCommerce\Blocks\Domain\Services\Email\CustomerNewAccount and wp_new_user_notification.
+         * 
+         * @since 6.0.0
+         * @return string
+         */
+        protected function generate_set_password_url()
         {
         }
     }
@@ -55959,6 +56019,24 @@ namespace {
      * @return bool
      */
     function wc_is_file_valid_csv($file, $check_path = \true)
+    {
+    }
+    /**
+     * Check if the current theme is an FSE theme.
+     *
+     * @since x.x.x
+     * @return bool
+     */
+    function wc_current_theme_is_fse_theme()
+    {
+    }
+    /**
+     * Check if the current theme has WooCommerce support or is a FSE theme.
+     *
+     * @since x.x.x
+     * @return bool
+     */
+    function wc_current_theme_supports_woocommerce_or_fse()
     {
     }
     // Before wpautop().
