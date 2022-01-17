@@ -433,7 +433,7 @@ namespace {
          *
          * Only allows raising the existing limit and prevents lowering it. Wrapper for wc_set_time_limit(), when available.
          *
-         * @param int The time limit in seconds.
+         * @param int $limit The time limit in seconds.
          */
         public static function raise_time_limit($limit = 0)
         {
@@ -707,8 +707,8 @@ namespace {
      * which columns needs to be shown, filter, ordered by and more and forget about the details.
      *
      * This class supports:
-     *	- Bulk actions
-     *	- Search
+     *  - Bulk actions
+     *  - Search
      *  - Sortable columns
      *  - Automatic translations of the columns
      *
@@ -719,25 +719,35 @@ namespace {
     {
         /**
          * The table name
+         *
+         * @var string
          */
         protected $table_name;
         /**
          * Package name, used to get options from WP_List_Table::get_items_per_page.
+         *
+         * @var string
          */
         protected $package;
         /**
          * How many items do we render per page?
+         *
+         * @var int
          */
         protected $items_per_page = 10;
         /**
          * Enables search in this table listing. If this array
          * is empty it means the listing is not searchable.
+         *
+         * @var array
          */
         protected $search_by = array();
         /**
          * Columns to show in the table listing. It is a key => value pair. The
          * key must much the table column name and the value is the label, which is
          * automatically translated.
+         *
+         * @var array
          */
         protected $columns = array();
         /**
@@ -747,28 +757,45 @@ namespace {
          * The array of actions are key => value, where key is the method name
          * (with the prefix row_action_<key>) and the value is the label
          * and title.
+         *
+         * @var array
          */
         protected $row_actions = array();
         /**
          * The Primary key of our table
+         *
+         * @var string
          */
         protected $ID = 'ID';
         /**
          * Enables sorting, it expects an array
          * of columns (the column names are the values)
+         *
+         * @var array
          */
         protected $sort_by = array();
+        /**
+         * The default sort order
+         *
+         * @var string
+         */
         protected $filter_by = array();
         /**
-         * @var array The status name => count combinations for this table's items. Used to display status filters.
+         * The status name => count combinations for this table's items. Used to display status filters.
+         *
+         * @var array
          */
         protected $status_counts = array();
         /**
-         * @var array Notices to display when loading the table. Array of arrays of form array( 'class' => {updated|error}, 'message' => 'This is the notice text display.' ).
+         * Notices to display when loading the table. Array of arrays of form array( 'class' => {updated|error}, 'message' => 'This is the notice text display.' ).
+         *
+         * @var array
          */
         protected $admin_notices = array();
         /**
-         * @var string Localised string displayed in the <h1> element above the able.
+         * Localised string displayed in the <h1> element above the able.
+         *
+         * @var string
          */
         protected $table_header;
         /**
@@ -781,13 +808,19 @@ namespace {
          * validations and afterwards will execute the bulk method, with two arguments. The first argument
          * is the array with primary keys, the second argument is a string with a list of the primary keys,
          * escaped and ready to use (with `IN`).
+         *
+         * @var array
          */
         protected $bulk_actions = array();
         /**
          * Makes translation easier, it basically just wraps
          * `_x` with some default (the package name).
          *
-         * @deprecated 3.0.0
+         * @param string $text The new text to translate.
+         * @param string $context The context of the text.
+         * @return string|void The translated text.
+         *
+         * @deprecated 3.0.0 Use `_x()` instead.
          */
         protected function translate($text, $context = '')
         {
@@ -796,6 +829,10 @@ namespace {
          * Reads `$this->bulk_actions` and returns an array that WP_List_Table understands. It
          * also validates that the bulk method handler exists. It throws an exception because
          * this is a library meant for developers and missing a bulk method is a development-time error.
+         *
+         * @return array
+         *
+         * @throws RuntimeException Throws RuntimeException when the bulk action does not have a callback method.
          */
         protected function get_bulk_actions()
         {
@@ -811,6 +848,10 @@ namespace {
         /**
          * Default code for deleting entries.
          * validated already by process_bulk_action()
+         *
+         * @param array  $ids ids of the items to delete.
+         * @param string $ids_sql the sql for the ids.
+         * @return void
          */
         protected function bulk_delete(array $ids, $ids_sql)
         {
@@ -920,9 +961,6 @@ namespace {
          * If the current request does not have any search or if this list table does not support
          * that feature it will return an empty string.
          *
-         * TODO:
-         *   - Improve search doing LIKE by word rather than by phrases.
-         *
          * @return string
          */
         protected function get_items_query_search()
@@ -947,12 +985,19 @@ namespace {
         public function prepare_items()
         {
         }
+        /**
+         * Display the table.
+         *
+         * @param string $which The name of the table.
+         */
         public function extra_tablenav($which)
         {
         }
         /**
          * Set the data for displaying. It will attempt to unserialize (There is a chance that some columns
          * are serialized). This can be override in child classes for futher data transformation.
+         *
+         * @param array $items Items array.
          */
         protected function set_items(array $items)
         {
@@ -961,6 +1006,8 @@ namespace {
          * Renders the checkbox for each row, this is the first column and it is named ID regardless
          * of how the primary key is named (to keep the code simpler). The bulk actions will do the proper
          * name transformation though using `$this->ID`.
+         *
+         * @param array $row The row to render.
          */
         public function column_cb($row)
         {
@@ -971,18 +1018,28 @@ namespace {
          * This method renders the action menu, it reads the definition from the $row_actions property,
          * and it checks that the row action method exists before rendering it.
          *
-         * @param array $row     Row to render
-         * @param $column_name   Current row
-         * @return
+         * @param array  $row Row to be rendered.
+         * @param string $column_name Column name.
+         * @return string
          */
         protected function maybe_render_actions($row, $column_name)
         {
         }
+        /**
+         * Process the bulk actions.
+         *
+         * @return void
+         */
         protected function process_row_actions()
         {
         }
         /**
          * Default column formatting, it will escape everythig for security.
+         *
+         * @param array  $item The item array.
+         * @param string $column_name Column name to display.
+         *
+         * @return string
          */
         public function column_default($item, $column_name)
         {
@@ -1029,6 +1086,14 @@ namespace {
          * Get the text to display in the search box on the list table.
          */
         protected function get_search_box_placeholder()
+        {
+        }
+        /**
+         * Gets the screen per_page option name.
+         *
+         * @return string
+         */
+        protected function get_per_page_option_name()
         {
         }
     }
@@ -1104,6 +1169,17 @@ namespace {
          * @param ActionScheduler_QueueRunner $runner
          */
         public function __construct(\ActionScheduler_Store $store, \ActionScheduler_Logger $logger, \ActionScheduler_QueueRunner $runner)
+        {
+        }
+        /**
+         * Handles setting the items_per_page option for this screen.
+         *
+         * @param mixed  $status Default false (to skip saving the current option).
+         * @param string $option Screen option name.
+         * @param int    $value  Screen option value.
+         * @return int
+         */
+        public function set_items_per_page_option($status, $option, $value)
         {
         }
         /**
@@ -1263,6 +1339,12 @@ namespace {
          * Get the text to display in the search box on the list table.
          */
         protected function get_search_box_button_text()
+        {
+        }
+        /**
+         * {@inheritDoc}
+         */
+        protected function get_per_page_option_name()
         {
         }
     }
@@ -1867,7 +1949,14 @@ namespace {
          * @var ActionScheduler_Store
          */
         protected $store;
-        function __construct($store)
+        /**
+         * Constructor method for ActionScheduler_wcSystemStatus.
+         *
+         * @param ActionScheduler_Store $store Active store object.
+         *
+         * @return void
+         */
+        public function __construct($store)
         {
         }
         /**
@@ -1908,10 +1997,10 @@ namespace {
         {
         }
         /**
-         * is triggered when invoking inaccessible methods in an object context.
+         * Is triggered when invoking inaccessible methods in an object context.
          *
-         * @param string $name
-         * @param array  $arguments
+         * @param string $name Name of method called.
+         * @param array  $arguments Parameters to invoke the method with.
          *
          * @return mixed
          * @link https://php.net/manual/en/language.oop5.overloading.php#language.oop5.overloading.methods
@@ -2071,11 +2160,11 @@ namespace {
          * Get the date & time this schedule was created to run, or calculate when it should be run
          * after a given date & time.
          *
-         * @param DateTime $after
+         * @param DateTime $after DateTime to calculate against.
          *
          * @return DateTime|null
          */
-        public function next(\DateTime $after = \NULL)
+        public function next(\DateTime $after = \null)
         {
         }
     }
@@ -3001,9 +3090,10 @@ namespace {
          * Save an action.
          *
          * @param ActionScheduler_Action $action Action object.
-         * @param DateTime               $date Optional schedule date. Default null.
+         * @param DateTime              $date Optional schedule date. Default null.
          *
          * @return int Action ID.
+         * @throws RuntimeException     Throws exception when saving the action fails.
          */
         public function save_action(\ActionScheduler_Action $action, \DateTime $date = \null)
         {
@@ -3030,7 +3120,7 @@ namespace {
          * Get a group's ID based on its name/slug.
          *
          * @param string $slug The string name of a group.
-         * @param bool $create_if_not_exists Whether to create the group if it does not already exist. Default, true - create the group.
+         * @param bool   $create_if_not_exists Whether to create the group if it does not already exist. Default, true - create the group.
          *
          * @return int The group's ID, if it exists or is created, or 0 if it does not exist and is not created.
          */
@@ -3084,6 +3174,7 @@ namespace {
          * @param string $select_or_count  Whether the SQL should select and return the IDs or just the row count.
          *
          * @return string SQL statement already properly escaped.
+         * @throws InvalidArgumentException If the query is invalid.
          */
         protected function get_query_actions_sql(array $query, $select_or_count = 'select')
         {
@@ -3100,7 +3191,7 @@ namespace {
          *
          * @return string|array|null The IDs of actions matching the query. Null on failure.
          */
-        public function query_actions($query = [], $query_type = 'select')
+        public function query_actions($query = array(), $query_type = 'select')
         {
         }
         /**
@@ -3117,6 +3208,7 @@ namespace {
          * @param int $action_id Action ID.
          *
          * @return void
+         * @throws \InvalidArgumentException If the action update failed.
          */
         public function cancel_action($action_id)
         {
@@ -3157,6 +3249,7 @@ namespace {
          * Delete an action.
          *
          * @param int $action_id Action ID.
+         * @throws \InvalidArgumentException If the action deletion failed.
          */
         public function delete_action($action_id)
         {
@@ -3166,7 +3259,6 @@ namespace {
          *
          * @param string $action_id Action ID.
          *
-         * @throws \InvalidArgumentException
          * @return \DateTime The local date the action is scheduled to run, or the date that it ran.
          */
         public function get_date($action_id)
@@ -3177,7 +3269,7 @@ namespace {
          *
          * @param int $action_id Action ID.
          *
-         * @throws \InvalidArgumentException
+         * @throws \InvalidArgumentException If action cannot be identified.
          * @return \DateTime The GMT date the action is scheduled to run, or the date that it ran.
          */
         protected function get_date_gmt($action_id)
@@ -3188,6 +3280,8 @@ namespace {
          *
          * @param int       $max_actions Maximum number of action to include in claim.
          * @param \DateTime $before_date Jobs must be schedule before this date. Defaults to now.
+         * @param array     $hooks Hooks to filter for.
+         * @param string    $group Group to filter for.
          *
          * @return ActionScheduler_ActionClaim
          */
@@ -3208,9 +3302,12 @@ namespace {
          * @param string    $claim_id Claim Id.
          * @param int       $limit Number of action to include in claim.
          * @param \DateTime $before_date Should use UTC timezone.
+         * @param array     $hooks Hooks to filter for.
+         * @param string    $group Group to filter for.
          *
          * @return int The number of actions that were claimed.
-         * @throws \RuntimeException
+         * @throws \InvalidArgumentException Throws InvalidArgumentException if group doesn't exist.
+         * @throws \RuntimeException Throws RuntimeException if unable to claim action.
          */
         protected function claim_actions($claim_id, $limit, \DateTime $before_date = \null, $hooks = array(), $group = '')
         {
@@ -3235,6 +3332,7 @@ namespace {
         /**
          * Retrieve the action IDs of action in a claim.
          *
+         * @param  int $claim_id Claim ID.
          * @return int[]
          */
         public function find_actions_by_claim_id($claim_id)
@@ -3262,6 +3360,7 @@ namespace {
          * Mark an action as failed.
          *
          * @param int $action_id Action ID.
+         * @throws \InvalidArgumentException Throw an exception if action was not updated.
          */
         public function mark_failure($action_id)
         {
@@ -3282,6 +3381,7 @@ namespace {
          * @param int $action_id Action ID.
          *
          * @return void
+         * @throws \InvalidArgumentException Throw an exception if action was not updated.
          */
         public function mark_complete($action_id)
         {
@@ -3292,6 +3392,8 @@ namespace {
          * @param int $action_id Action ID.
          *
          * @return string
+         * @throws \InvalidArgumentException Throw an exception if not status was found for action_id.
+         * @throws \RuntimeException Throw an exception if action status could not be retrieved.
          */
         public function get_status($action_id)
         {
@@ -3680,17 +3782,52 @@ namespace {
          * @var DateTime|null
          */
         private $claim_before_date = \null;
-        /** @var DateTimeZone */
-        protected $local_timezone = \NULL;
-        public function save_action(\ActionScheduler_Action $action, \DateTime $scheduled_date = \NULL)
+        /**
+         * Local Timezone.
+         *
+         * @var DateTimeZone
+         */
+        protected $local_timezone = \null;
+        /**
+         * Save action.
+         *
+         * @param ActionScheduler_Action $action Scheduled Action.
+         * @param DateTime               $scheduled_date Scheduled Date.
+         *
+         * @throws RuntimeException Throws an exception if the action could not be saved.
+         * @return int
+         */
+        public function save_action(\ActionScheduler_Action $action, \DateTime $scheduled_date = \null)
         {
         }
-        protected function create_post_array(\ActionScheduler_Action $action, \DateTime $scheduled_date = \NULL)
+        /**
+         * Create post array.
+         *
+         * @param ActionScheduler_Action $action Scheduled Action.
+         * @param DateTime               $scheduled_date Scheduled Date.
+         *
+         * @return array Returns an array of post data.
+         */
+        protected function create_post_array(\ActionScheduler_Action $action, \DateTime $scheduled_date = \null)
         {
         }
+        /**
+         * Save post array.
+         *
+         * @param array $post_array Post array.
+         * @return int Returns the post ID.
+         * @throws RuntimeException Throws an exception if the action could not be saved.
+         */
         protected function save_post_array($post_array)
         {
         }
+        /**
+         * Filter insert post data.
+         *
+         * @param array $postdata Post data to filter.
+         *
+         * @return array
+         */
         public function filter_insert_post_data($postdata)
         {
         }
@@ -3725,36 +3862,79 @@ namespace {
         public function set_unique_post_slug($override_slug, $slug, $post_ID, $post_status, $post_type)
         {
         }
+        /**
+         * Save post schedule.
+         *
+         * @param int    $post_id  Post ID of the scheduled action.
+         * @param string $schedule Schedule to save.
+         *
+         * @return void
+         */
         protected function save_post_schedule($post_id, $schedule)
         {
         }
+        /**
+         * Save action group.
+         *
+         * @param int    $post_id Post ID.
+         * @param string $group   Group to save.
+         * @return void
+         */
         protected function save_action_group($post_id, $group)
         {
         }
+        /**
+         * Fetch actions.
+         *
+         * @param int $action_id Action ID.
+         * @return object
+         */
         public function fetch_action($action_id)
         {
         }
+        /**
+         * Get post.
+         *
+         * @param string $action_id - Action ID.
+         * @return WP_Post|null
+         */
         protected function get_post($action_id)
         {
         }
+        /**
+         * Get NULL action.
+         *
+         * @return ActionScheduler_NullAction
+         */
         protected function get_null_action()
         {
         }
+        /**
+         * Make action from post.
+         *
+         * @param WP_Post $post Post object.
+         * @return WP_Post
+         */
         protected function make_action_from_post($post)
         {
         }
         /**
-         * @param string $post_status
+         * Get action status by post status.
          *
-         * @throws InvalidArgumentException if $post_status not in known status fields returned by $this->get_status_labels()
+         * @param string $post_status Post status.
+         *
+         * @throws InvalidArgumentException Throw InvalidArgumentException if $post_status not in known status fields returned by $this->get_status_labels().
          * @return string
          */
         protected function get_action_status_by_post_status($post_status)
         {
         }
         /**
-         * @param string $action_status
-         * @throws InvalidArgumentException if $post_status not in known status fields returned by $this->get_status_labels()
+         * Get post status by action status.
+         *
+         * @param string $action_status Action status.
+         *
+         * @throws InvalidArgumentException Throws InvalidArgumentException if $post_status not in known status fields returned by $this->get_status_labels().
          * @return string
          */
         protected function get_post_status_by_action_status($action_status)
@@ -3763,9 +3943,10 @@ namespace {
         /**
          * Returns the SQL statement to query (or count) actions.
          *
-         * @param array $query Filtering options
-         * @param string $select_or_count  Whether the SQL should select and return the IDs or just the row count
-         * @throws InvalidArgumentException if $select_or_count not count or select
+         * @param array  $query            - Filtering options.
+         * @param string $select_or_count  - Whether the SQL should select and return the IDs or just the row count.
+         *
+         * @throws InvalidArgumentException - Throw InvalidArgumentException if $select_or_count not count or select.
          * @return string SQL statement. The returned SQL is already properly escaped.
          */
         protected function get_query_actions_sql(array $query, $select_or_count = 'select')
@@ -3795,36 +3976,49 @@ namespace {
         {
         }
         /**
-         * @param string $action_id
+         * Cancel action.
          *
-         * @throws InvalidArgumentException
+         * @param int $action_id Action ID.
+         *
+         * @throws InvalidArgumentException If $action_id is not identified.
          */
         public function cancel_action($action_id)
         {
         }
+        /**
+         * Delete action.
+         *
+         * @param int $action_id Action ID.
+         * @return void
+         * @throws InvalidArgumentException If action is not identified.
+         */
         public function delete_action($action_id)
         {
         }
         /**
-         * @param string $action_id
+         * Get date for claim id.
          *
-         * @throws InvalidArgumentException
+         * @param int $action_id Action ID.
          * @return ActionScheduler_DateTime The date the action is schedule to run, or the date that it ran.
          */
         public function get_date($action_id)
         {
         }
         /**
-         * @param string $action_id
+         * Get Date GMT.
          *
-         * @throws InvalidArgumentException
+         * @param int $action_id Action ID.
+         *
+         * @throws InvalidArgumentException If $action_id is not identified.
          * @return ActionScheduler_DateTime The date the action is schedule to run, or the date that it ran.
          */
         public function get_date_gmt($action_id)
         {
         }
         /**
-         * @param int      $max_actions
+         * Stake claim.
+         *
+         * @param int      $max_actions Maximum number of actions.
          * @param DateTime $before_date Jobs must be schedule before this date. Defaults to now.
          * @param array    $hooks       Claim only actions with a hook or hooks.
          * @param string   $group       Claim only actions in the given group.
@@ -3837,24 +4031,32 @@ namespace {
         {
         }
         /**
+         * Get claim count.
+         *
          * @return int
          */
         public function get_claim_count()
         {
         }
+        /**
+         * Generate claim id.
+         *
+         * @return string
+         */
         protected function generate_claim_id()
         {
         }
         /**
-         * @param string   $claim_id
-         * @param int      $limit
+         * Claim actions.
+         *
+         * @param string   $claim_id    Claim ID.
+         * @param int      $limit       Limit.
          * @param DateTime $before_date Should use UTC timezone.
          * @param array    $hooks       Claim only actions with a hook or hooks.
          * @param string   $group       Claim only actions in the given group.
          *
-         * @return int The number of actions that were claimed
-         * @throws RuntimeException When there is a database error.
-         * @throws InvalidArgumentException When the group is invalid.
+         * @return int The number of actions that were claimed.
+         * @throws RuntimeException  When there is a database error.
          */
         protected function claim_actions($claim_id, $limit, \DateTime $before_date = \null, $hooks = array(), $group = '')
         {
@@ -3874,28 +4076,48 @@ namespace {
         {
         }
         /**
-         * @param string $claim_id
+         * Find actions by claim ID.
+         *
+         * @param string $claim_id Claim ID.
          * @return array
          */
         public function find_actions_by_claim_id($claim_id)
         {
         }
+        /**
+         * Release claim.
+         *
+         * @param ActionScheduler_ActionClaim $claim Claim object to release.
+         * @return void
+         * @throws RuntimeException When the claim is not unlocked.
+         */
         public function release_claim(\ActionScheduler_ActionClaim $claim)
         {
         }
         /**
-         * @param string $action_id
+         * Unclaim action.
+         *
+         * @param string $action_id Action ID.
+         * @throws RuntimeException When unable to unlock claim on action ID.
          */
         public function unclaim_action($action_id)
         {
         }
+        /**
+         * Mark failure on action.
+         *
+         * @param int $action_id Action ID.
+         *
+         * @return void
+         * @throws RuntimeException When unable to mark failure on action ID.
+         */
         public function mark_failure($action_id)
         {
         }
         /**
          * Return an action's claim ID, as stored in the post password column
          *
-         * @param string $action_id
+         * @param int $action_id Action ID.
          * @return mixed
          */
         public function get_claim_id($action_id)
@@ -3904,17 +4126,29 @@ namespace {
         /**
          * Return an action's status, as stored in the post status column
          *
-         * @param string $action_id
+         * @param int $action_id Action ID.
+         *
          * @return mixed
+         * @throws InvalidArgumentException When the action ID is invalid.
          */
         public function get_status($action_id)
         {
         }
+        /**
+         * Get post column
+         *
+         * @param string $action_id Action ID.
+         * @param string $column_name Column Name.
+         *
+         * @return string|null
+         */
         private function get_post_column($action_id, $column_name)
         {
         }
         /**
-         * @param string $action_id
+         * Log Execution.
+         *
+         * @param string $action_id Action ID.
          */
         public function log_execution($action_id)
         {
@@ -3922,8 +4156,10 @@ namespace {
         /**
          * Record that an action was completed.
          *
-         * @param int $action_id ID of the completed action.
-         * @throws InvalidArgumentException|RuntimeException
+         * @param string $action_id ID of the completed action.
+         *
+         * @throws InvalidArgumentException When the action ID is invalid.
+         * @throws RuntimeException         When there was an error executing the action.
          */
         public function mark_complete($action_id)
         {
@@ -3939,6 +4175,7 @@ namespace {
         /**
          * Determine whether the post store can be migrated.
          *
+         * @param [type] $setting - Setting value.
          * @return bool
          */
         public function migration_dependencies_met($setting)
@@ -3951,13 +4188,13 @@ namespace {
          * as we prepare to move to custom tables, and can use an indexed VARCHAR column instead, we want to warn
          * developers of this impending requirement.
          *
-         * @param ActionScheduler_Action $action
+         * @param ActionScheduler_Action $action Action object.
          */
         protected function validate_action(\ActionScheduler_Action $action)
         {
         }
         /**
-         * @codeCoverageIgnore
+         * (@codeCoverageIgnore)
          */
         public function init()
         {
@@ -4912,7 +5149,7 @@ namespace {
         /**
          * @var int Increment this value to trigger a schema update.
          */
-        protected $schema_version = 5;
+        protected $schema_version = 6;
         public function __construct()
         {
         }
@@ -6580,6 +6817,16 @@ namespace Automattic\WooCommerce\Admin\API {
         {
         }
         /**
+         * Unhide a task list.
+         *
+         * @param WP_REST_Request $request Request data.
+         *
+         * @return WP_REST_Response|WP_Error
+         */
+        public function unhide_task_list($request)
+        {
+        }
+        /**
          * Action a single task.
          *
          * @param WP_REST_Request $request Full details about the request.
@@ -6899,6 +7146,14 @@ namespace Automattic\WooCommerce\Admin\API {
          * @return \WP_Error|\WP_HTTP_Response|\WP_REST_Response
          */
         public function recommended_payment_plugins($request)
+        {
+        }
+        /**
+         * Dismisses recommended payment plugins.
+         *
+         * @return \WP_Error|\WP_HTTP_Response|\WP_REST_Response
+         */
+        public function dismiss_recommended_payment_plugins()
         {
         }
         /**
@@ -13460,7 +13715,7 @@ namespace Automattic\WooCommerce\Admin\Composer {
          *
          * @var string
          */
-        const VERSION = '2.9.4';
+        const VERSION = '3.0.3';
         /**
          * Package active.
          *
@@ -13550,6 +13805,10 @@ namespace Automattic\WooCommerce\Admin {
          * Name of data sources filter.
          */
         const FILTER_NAME = 'data_source_poller_data_sources';
+        /**
+         * Name of data source specs filter.
+         */
+        const FILTER_NAME_SPECS = 'data_source_poller_specs';
         /**
          * Id of DataSourcePoller.
          *
@@ -13779,6 +14038,12 @@ namespace Automattic\WooCommerce\Admin {
          * Adds notes that should be added.
          */
         protected function possibly_add_notes()
+        {
+        }
+        /**
+         * Deletes notes that should be deleted.
+         */
+        protected function possibly_delete_notes()
         {
         }
         /**
@@ -15695,6 +15960,442 @@ namespace Automattic\WooCommerce\Admin\Features {
 }
 namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
     /**
+     * TaskTraits class.
+     */
+    trait TaskTraits
+    {
+        /**
+         * Prefix event for backwards compatibility with tracks event naming.
+         *
+         * @param string $event_name Event name.
+         * @return string
+         */
+        public function prefix_event($event_name)
+        {
+        }
+        /**
+         * Record a tracks event with the prefixed event name.
+         *
+         * @param string $event_name Event name.
+         * @param array  $args Array of tracks arguments.
+         */
+        public function record_tracks_event($event_name, $args = array())
+        {
+        }
+        /**
+         * Get the task list ID.
+         *
+         * @return string
+         */
+        public function get_list_id()
+        {
+        }
+    }
+    /**
+     * Task class.
+     */
+    abstract class Task
+    {
+        /**
+         * Task traits.
+         */
+        use \Automattic\WooCommerce\Admin\Features\OnboardingTasks\TaskTraits;
+        /**
+         * Name of the dismiss option.
+         *
+         * @var string
+         */
+        const DISMISSED_OPTION = 'woocommerce_task_list_dismissed_tasks';
+        /**
+         * Name of the snooze option.
+         *
+         * @var string
+         */
+        const SNOOZED_OPTION = 'woocommerce_task_list_remind_me_later_tasks';
+        /**
+         * Name of the actioned option.
+         *
+         * @var string
+         */
+        const ACTIONED_OPTION = 'woocommerce_task_list_tracked_completed_actions';
+        /**
+         * Option name of completed tasks.
+         *
+         * @var string
+         */
+        const COMPLETED_OPTION = 'woocommerce_task_list_tracked_completed_tasks';
+        /**
+         * Name of the active task transient.
+         *
+         * @var string
+         */
+        const ACTIVE_TASK_TRANSIENT = 'wc_onboarding_active_task';
+        /**
+         * Duration to milisecond mapping.
+         *
+         * @var string
+         */
+        protected $duration_to_ms = array('day' => DAY_IN_SECONDS * 1000, 'hour' => HOUR_IN_SECONDS * 1000, 'week' => WEEK_IN_SECONDS * 1000);
+        /**
+         * ID.
+         *
+         * @return string
+         */
+        public abstract function get_id();
+        /**
+         * Parent ID.
+         *
+         * @return string
+         */
+        public abstract function get_parent_id();
+        /**
+         * Title.
+         *
+         * @return string
+         */
+        public abstract function get_title();
+        /**
+         * Content.
+         *
+         * @return string
+         */
+        public abstract function get_content();
+        /**
+         * Time.
+         *
+         * @return string
+         */
+        public abstract function get_time();
+        /**
+         * Additional info.
+         *
+         * @return string
+         */
+        public function get_additional_info()
+        {
+        }
+        /**
+         * Additional data.
+         *
+         * @return mixed
+         */
+        public function get_additional_data()
+        {
+        }
+        /**
+         * Level.
+         *
+         * @return string
+         */
+        public function get_level()
+        {
+        }
+        /**
+         * Action label.
+         *
+         * @return string
+         */
+        public function get_action_label()
+        {
+        }
+        /**
+         * Action URL.
+         *
+         * @return string
+         */
+        public function get_action_url()
+        {
+        }
+        /**
+         * Check if a task is dismissable.
+         *
+         * @return bool
+         */
+        public function is_dismissable()
+        {
+        }
+        /**
+         * Bool for task dismissal.
+         *
+         * @return bool
+         */
+        public function is_dismissed()
+        {
+        }
+        /**
+         * Dismiss the task.
+         *
+         * @return bool
+         */
+        public function dismiss()
+        {
+        }
+        /**
+         * Undo task dismissal.
+         *
+         * @return bool
+         */
+        public function undo_dismiss()
+        {
+        }
+        /**
+         * Check if a task is snoozeable.
+         *
+         * @return bool
+         */
+        public function is_snoozeable()
+        {
+        }
+        /**
+         * Get the snoozed until datetime.
+         *
+         * @return string
+         */
+        public function get_snoozed_until()
+        {
+        }
+        /**
+         * Bool for task snoozed.
+         *
+         * @return bool
+         */
+        public function is_snoozed()
+        {
+        }
+        /**
+         * Snooze the task.
+         *
+         * @param string $duration Duration to snooze. day|hour|week.
+         * @return bool
+         */
+        public function snooze($duration = 'day')
+        {
+        }
+        /**
+         * Undo task snooze.
+         *
+         * @return bool
+         */
+        public function undo_snooze()
+        {
+        }
+        /**
+         * Check if a task list has previously been marked as complete.
+         *
+         * @return bool
+         */
+        public function has_previously_completed()
+        {
+        }
+        /**
+         * Track task completion if task is viewable.
+         */
+        public function possibly_track_completion()
+        {
+        }
+        /**
+         * Set this as the active task across page loads.
+         */
+        public function set_active()
+        {
+        }
+        /**
+         * Check if this is the active task.
+         */
+        public function is_active()
+        {
+        }
+        /**
+         * Check if the store is capable of viewing the task.
+         *
+         * @return bool
+         */
+        public function can_view()
+        {
+        }
+        /**
+         * Check if the task is complete.
+         *
+         * @return bool
+         */
+        public function is_complete()
+        {
+        }
+        /**
+         * Get the task as JSON.
+         *
+         * @return array
+         */
+        public function get_json()
+        {
+        }
+        /**
+         * Convert object keys to camelcase.
+         *
+         * @param array $data Data to convert.
+         * @return object
+         */
+        public static function convert_object_to_camelcase($data)
+        {
+        }
+        /**
+         * Mark a task as actioned.  Used to verify an action has taken place in some tasks.
+         *
+         * @return bool
+         */
+        public function mark_actioned()
+        {
+        }
+        /**
+         * Check if a task has been actioned.
+         *
+         * @return bool
+         */
+        public function is_actioned()
+        {
+        }
+        /**
+         * Check if a provided task ID has been actioned.
+         *
+         * @param string $id Task ID.
+         * @return bool
+         */
+        public static function is_task_actioned($id)
+        {
+        }
+        /**
+         * Sorting function for tasks.
+         *
+         * @param Task  $a Task a.
+         * @param Task  $b Task b.
+         * @param array $sort_by list of columns with sort order.
+         * @return int
+         */
+        public static function sort($a, $b, $sort_by = array())
+        {
+        }
+    }
+    /**
+     * DeprecatedExtendedTask class.
+     */
+    class DeprecatedExtendedTask extends \Automattic\WooCommerce\Admin\Features\OnboardingTasks\Task
+    {
+        /**
+         * ID.
+         *
+         * @var string
+         */
+        public $id = '';
+        /**
+         * Snoozeable.
+         *
+         * @var boolean
+         */
+        public $is_snoozeable = false;
+        /**
+         * Dismissable.
+         *
+         * @var boolean
+         */
+        public $is_dismissable = false;
+        /**
+         * Constructor.
+         *
+         * @param array $args Array of task args.
+         */
+        public function __construct($args)
+        {
+        }
+        /**
+         * ID.
+         *
+         * @return string
+         */
+        public function get_id()
+        {
+        }
+        /**
+         * Additonal info.
+         *
+         * @return string
+         */
+        public function get_additional_info()
+        {
+        }
+        /**
+         * Content.
+         *
+         * @return string
+         */
+        public function get_content()
+        {
+        }
+        /**
+         * Parent ID.
+         *
+         * @return string
+         */
+        public function get_parent_id()
+        {
+        }
+        /**
+         * Level.
+         *
+         * @return int
+         */
+        public function get_level()
+        {
+        }
+        /**
+         * Title
+         *
+         * @return string
+         */
+        public function get_title()
+        {
+        }
+        /**
+         * Time
+         *
+         * @return string|null
+         */
+        public function get_time()
+        {
+        }
+        /**
+         * Check if a task is snoozeable.
+         *
+         * @return bool
+         */
+        public function is_snoozeable()
+        {
+        }
+        /**
+         * Check if a task is dismissable.
+         *
+         * @return bool
+         */
+        public function is_dismissable()
+        {
+        }
+        /**
+         * Check if a task is dismissable.
+         *
+         * @return bool
+         */
+        public function is_complete()
+        {
+        }
+        /**
+         * Check if a task is dismissable.
+         *
+         * @return bool
+         */
+        public function can_view()
+        {
+        }
+    }
+    /**
      * DeprecatedOptions class.
      */
     class DeprecatedOptions
@@ -15757,304 +16458,6 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
          * @return array
          */
         public static function get_settings()
-        {
-        }
-    }
-    /**
-     * TaskTraits class.
-     */
-    trait TaskTraits
-    {
-        /**
-         * Prefix event for backwards compatibility with tracks event naming.
-         *
-         * @param string $event_name Event name.
-         * @return string
-         */
-        public function prefix_event($event_name)
-        {
-        }
-        /**
-         * Record a tracks event with the prefixed event name.
-         *
-         * @param string $event_name Event name.
-         * @param array  $args Array of tracks arguments.
-         */
-        public function record_tracks_event($event_name, $args = array())
-        {
-        }
-        /**
-         * Get the task list ID.
-         *
-         * @return string
-         */
-        public function get_list_id()
-        {
-        }
-    }
-    /**
-     * Task class.
-     */
-    class Task
-    {
-        /**
-         * Task traits.
-         */
-        use \Automattic\WooCommerce\Admin\Features\OnboardingTasks\TaskTraits;
-        /**
-         * ID.
-         *
-         * @var string
-         */
-        public $id = '';
-        /**
-         * Parent task list ID.
-         *
-         * @var string
-         */
-        public $parent_id = '';
-        /**
-         * Title.
-         *
-         * @var string
-         */
-        public $title = '';
-        /**
-         * Content.
-         *
-         * @var string
-         */
-        public $content = '';
-        /**
-         * Additional info.
-         *
-         * @var string
-         */
-        public $additional_info = '';
-        /**
-         * Action label.
-         *
-         * @var string
-         */
-        public $action_label = '';
-        /**
-         * Action URL.
-         *
-         * @var string|null
-         */
-        public $action_url = null;
-        /**
-         * Task completion.
-         *
-         * @var bool
-         */
-        public $is_complete = false;
-        /**
-         * Viewing capability.
-         *
-         * @var bool
-         */
-        public $can_view = true;
-        /**
-         * Time string.
-         *
-         * @var string|null
-         */
-        public $time = null;
-        /**
-         * Level of task importance.
-         *
-         * @var int|null
-         */
-        public $level = null;
-        /**
-         * Dismissability.
-         *
-         * @var bool
-         */
-        public $is_dismissable = false;
-        /**
-         * Snoozeability.
-         *
-         * @var bool
-         */
-        public $is_snoozeable = false;
-        /**
-         * Snoozeability.
-         *
-         * @var string|null
-         */
-        public $snoozed_until = null;
-        /**
-         * Name of the dismiss option.
-         *
-         * @var string
-         */
-        const DISMISSED_OPTION = 'woocommerce_task_list_dismissed_tasks';
-        /**
-         * Name of the snooze option.
-         *
-         * @var string
-         */
-        const SNOOZED_OPTION = 'woocommerce_task_list_remind_me_later_tasks';
-        /**
-         * Name of the actioned option.
-         *
-         * @var string
-         */
-        const ACTIONED_OPTION = 'woocommerce_task_list_tracked_completed_actions';
-        /**
-         * Option name of completed tasks.
-         *
-         * @var string
-         */
-        const COMPLETED_OPTION = 'woocommerce_task_list_tracked_completed_tasks';
-        /**
-         * Name of the active task transient.
-         *
-         * @var string
-         */
-        const ACTIVE_TASK_TRANSIENT = 'wc_onboarding_active_task';
-        /**
-         * Duration to milisecond mapping.
-         *
-         * @var string
-         */
-        protected $duration_to_ms = array('day' => DAY_IN_SECONDS * 1000, 'hour' => HOUR_IN_SECONDS * 1000, 'week' => WEEK_IN_SECONDS * 1000);
-        /**
-         * Constructor
-         *
-         * @param array $data Task list data.
-         */
-        public function __construct($data = array())
-        {
-        }
-        /**
-         * Bool for task dismissal.
-         *
-         * @return bool
-         */
-        public function is_dismissed()
-        {
-        }
-        /**
-         * Dismiss the task.
-         *
-         * @return bool
-         */
-        public function dismiss()
-        {
-        }
-        /**
-         * Undo task dismissal.
-         *
-         * @return bool
-         */
-        public function undo_dismiss()
-        {
-        }
-        /**
-         * Bool for task snoozed.
-         *
-         * @return bool
-         */
-        public function is_snoozed()
-        {
-        }
-        /**
-         * Snooze the task.
-         *
-         * @param string $duration Duration to snooze. day|hour|week.
-         * @return bool
-         */
-        public function snooze($duration = 'day')
-        {
-        }
-        /**
-         * Undo task snooze.
-         *
-         * @return bool
-         */
-        public function undo_snooze()
-        {
-        }
-        /**
-         * Check if a task list has previously been marked as complete.
-         *
-         * @return bool
-         */
-        public function has_previously_completed()
-        {
-        }
-        /**
-         * Track task completion if task is viewable.
-         */
-        public function possibly_track_completion()
-        {
-        }
-        /**
-         * Set this as the active task across page loads.
-         */
-        public function set_active()
-        {
-        }
-        /**
-         * Check if this is the active task.
-         */
-        public function is_active()
-        {
-        }
-        /**
-         * Get the task as JSON.
-         *
-         * @return array
-         */
-        public function get_json()
-        {
-        }
-        /**
-         * Convert object keys to camelcase.
-         *
-         * @param object $object Object to convert.
-         * @return object
-         */
-        public static function convert_object_to_camelcase($object)
-        {
-        }
-        /**
-         * Mark a task as actioned.  Used to verify an action has taken place in some tasks.
-         *
-         * @return bool
-         */
-        public function mark_actioned()
-        {
-        }
-        /**
-         * Check if a task has been actioned.
-         *
-         * @return bool
-         */
-        public function is_actioned()
-        {
-        }
-        /**
-         * Check if a provided task ID has been actioned.
-         *
-         * @param string $id Task ID.
-         * @return bool
-         */
-        public static function is_task_actioned($id)
-        {
-        }
-        /**
-         * Sorting function for tasks.
-         *
-         * @param Task  $a Task a.
-         * @param Task  $b Task b.
-         * @param array $sort_by list of columns with sort order.
-         * @return int
-         */
-        public static function sort($a, $b, $sort_by = array())
         {
         }
     }
@@ -16136,7 +16539,7 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
          *
          * @return bool
          */
-        public function show()
+        public function unhide()
         {
         }
         /**
@@ -16158,9 +16561,9 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
         /**
          * Add task to the task list.
          *
-         * @param array $args Task properties.
+         * @param Task $task Task class.
          */
-        public function add_task($args)
+        public function add_task($task)
         {
         }
         /**
@@ -16335,26 +16738,66 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
     /**
      * Appearance Task
      */
-    class Appearance
+    class Appearance extends \Automattic\WooCommerce\Admin\Features\OnboardingTasks\Task
     {
         /**
          * Initialize.
          */
-        public static function init()
+        public function __construct()
         {
         }
         /**
-         * Get the task arguments.
+         * ID.
+         *
+         * @return string
+         */
+        public function get_id()
+        {
+        }
+        /**
+         * Parent ID.
+         *
+         * @return string
+         */
+        public function get_parent_id()
+        {
+        }
+        /**
+         * Title.
+         *
+         * @return string
+         */
+        public function get_title()
+        {
+        }
+        /**
+         * Content.
+         *
+         * @return string
+         */
+        public function get_content()
+        {
+        }
+        /**
+         * Time.
+         *
+         * @return string
+         */
+        public function get_time()
+        {
+        }
+        /**
+         * Addtional data.
          *
          * @return array
          */
-        public static function get_task()
+        public function get_additional_data()
         {
         }
         /**
          * Add media scripts for image uploader.
          */
-        public static function add_media_scripts()
+        public function add_media_scripts()
         {
         }
         /**
@@ -16362,7 +16805,7 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
          *
          * @param string $hook Page hook.
          */
-        public static function possibly_add_return_notice_script($hook)
+        public function possibly_add_return_notice_script($hook)
         {
         }
         /**
@@ -16375,14 +16818,62 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
     /**
      * Marketing Task
      */
-    class Marketing
+    class Marketing extends \Automattic\WooCommerce\Admin\Features\OnboardingTasks\Task
     {
         /**
-         * Get the task arguments.
+         * ID.
          *
-         * @return array
+         * @return string
          */
-        public static function get_task()
+        public function get_id()
+        {
+        }
+        /**
+         * Parent ID.
+         *
+         * @return string
+         */
+        public function get_parent_id()
+        {
+        }
+        /**
+         * Title.
+         *
+         * @return string
+         */
+        public function get_title()
+        {
+        }
+        /**
+         * Content.
+         *
+         * @return string
+         */
+        public function get_content()
+        {
+        }
+        /**
+         * Time.
+         *
+         * @return string
+         */
+        public function get_time()
+        {
+        }
+        /**
+         * Task completion.
+         *
+         * @return bool
+         */
+        public function is_complete()
+        {
+        }
+        /**
+         * Task visibility.
+         *
+         * @return bool
+         */
+        public function can_view()
         {
         }
         /**
@@ -16405,14 +16896,62 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
     /**
      * Payments Task
      */
-    class Payments
+    class Payments extends \Automattic\WooCommerce\Admin\Features\OnboardingTasks\Task
     {
         /**
-         * Get the task arguments.
+         * ID.
          *
-         * @return array
+         * @return string
          */
-        public static function get_task()
+        public function get_id()
+        {
+        }
+        /**
+         * Parent ID.
+         *
+         * @return string
+         */
+        public function get_parent_id()
+        {
+        }
+        /**
+         * Title.
+         *
+         * @return string
+         */
+        public function get_title()
+        {
+        }
+        /**
+         * Content.
+         *
+         * @return string
+         */
+        public function get_content()
+        {
+        }
+        /**
+         * Time.
+         *
+         * @return string
+         */
+        public function get_time()
+        {
+        }
+        /**
+         * Task completion.
+         *
+         * @return bool
+         */
+        public function is_complete()
+        {
+        }
+        /**
+         * Task visibility.
+         *
+         * @return bool
+         */
+        public function can_view()
         {
         }
         /**
@@ -16427,12 +16966,68 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
     /**
      * Products Task
      */
-    class Products
+    class Products extends \Automattic\WooCommerce\Admin\Features\OnboardingTasks\Task
     {
         /**
          * Initialize.
          */
-        public static function init()
+        public function __construct()
+        {
+        }
+        /**
+         * ID.
+         *
+         * @return string
+         */
+        public function get_id()
+        {
+        }
+        /**
+         * Parent ID.
+         *
+         * @return string
+         */
+        public function get_parent_id()
+        {
+        }
+        /**
+         * Title.
+         *
+         * @return string
+         */
+        public function get_title()
+        {
+        }
+        /**
+         * Content.
+         *
+         * @return string
+         */
+        public function get_content()
+        {
+        }
+        /**
+         * Time.
+         *
+         * @return string
+         */
+        public function get_time()
+        {
+        }
+        /**
+         * Task completion.
+         *
+         * @return bool
+         */
+        public function is_complete()
+        {
+        }
+        /**
+         * Addtional data.
+         *
+         * @return array
+         */
+        public function get_additional_data()
         {
         }
         /**
@@ -16440,7 +17035,7 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
          *
          * @param string $hook Page hook.
          */
-        public static function possibly_add_manual_return_notice_script($hook)
+        public function possibly_add_manual_return_notice_script($hook)
         {
         }
         /**
@@ -16448,15 +17043,7 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
          *
          * @param string $hook Page hook.
          */
-        public static function possibly_add_import_return_notice_script($hook)
-        {
-        }
-        /**
-         * Get the task arguments.
-         *
-         * @return array
-         */
-        public static function get_task()
+        public function possibly_add_import_return_notice_script($hook)
         {
         }
         /**
@@ -16471,14 +17058,94 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
     /**
      * Purchase Task
      */
-    class Purchase
+    class Purchase extends \Automattic\WooCommerce\Admin\Features\OnboardingTasks\Task
     {
         /**
-         * Get the task arguments.
-         *
-         * @return array
+         * Initialize.
          */
-        public static function get_task()
+        public function __construct()
+        {
+        }
+        /**
+         * Clear dismissal on onboarding product type changes.
+         *
+         * @param array $old_value Old value.
+         * @param array $new_value New value.
+         */
+        public function clear_dismissal($old_value, $new_value)
+        {
+        }
+        /**
+         * Get the task arguments.
+         * ID.
+         *
+         * @return string
+         */
+        public function get_id()
+        {
+        }
+        /**
+         * Parent ID.
+         *
+         * @return string
+         */
+        public function get_parent_id()
+        {
+        }
+        /**
+         * Title.
+         *
+         * @return string
+         */
+        public function get_title()
+        {
+        }
+        /**
+         * Content.
+         *
+         * @return string
+         */
+        public function get_content()
+        {
+        }
+        /**
+         * Action label.
+         *
+         * @return string
+         */
+        public function get_action_label()
+        {
+        }
+        /**
+         * Time.
+         *
+         * @return string
+         */
+        public function get_time()
+        {
+        }
+        /**
+         * Task completion.
+         *
+         * @return bool
+         */
+        public function is_complete()
+        {
+        }
+        /**
+         * Dismissable.
+         *
+         * @return bool
+         */
+        public function is_dismissable()
+        {
+        }
+        /**
+         * Task visibility.
+         *
+         * @return bool
+         */
+        public function can_view()
         {
         }
         /**
@@ -16493,14 +17160,70 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
     /**
      * Shipping Task
      */
-    class Shipping
+    class Shipping extends \Automattic\WooCommerce\Admin\Features\OnboardingTasks\Task
     {
         /**
-         * Get the task arguments.
+         * ID.
          *
-         * @return array
+         * @return string
          */
-        public static function get_task()
+        public function get_id()
+        {
+        }
+        /**
+         * Parent ID.
+         *
+         * @return string
+         */
+        public function get_parent_id()
+        {
+        }
+        /**
+         * Title.
+         *
+         * @return string
+         */
+        public function get_title()
+        {
+        }
+        /**
+         * Content.
+         *
+         * @return string
+         */
+        public function get_content()
+        {
+        }
+        /**
+         * Time.
+         *
+         * @return string
+         */
+        public function get_time()
+        {
+        }
+        /**
+         * Task completion.
+         *
+         * @return bool
+         */
+        public function is_complete()
+        {
+        }
+        /**
+         * Task visibility.
+         *
+         * @return bool
+         */
+        public function can_view()
+        {
+        }
+        /**
+         * Action URL.
+         *
+         * @return string
+         */
+        public function get_action_url()
         {
         }
         /**
@@ -16523,40 +17246,144 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
     /**
      * Store Details Task
      */
-    class StoreDetails
+    class StoreDetails extends \Automattic\WooCommerce\Admin\Features\OnboardingTasks\Task
     {
         /**
-         * Get the task arguments.
+         * ID.
          *
-         * @return array
+         * @return string
          */
-        public static function get_task()
+        public function get_id()
+        {
+        }
+        /**
+         * Parent ID.
+         *
+         * @return string
+         */
+        public function get_parent_id()
+        {
+        }
+        /**
+         * Title.
+         *
+         * @return string
+         */
+        public function get_title()
+        {
+        }
+        /**
+         * Content.
+         *
+         * @return string
+         */
+        public function get_content()
+        {
+        }
+        /**
+         * Time.
+         *
+         * @return string
+         */
+        public function get_time()
+        {
+        }
+        /**
+         * Time.
+         *
+         * @return string
+         */
+        public function get_action_url()
+        {
+        }
+        /**
+         * Task completion.
+         *
+         * @return bool
+         */
+        public function is_complete()
         {
         }
     }
     /**
      * Tax Task
      */
-    class Tax
+    class Tax extends \Automattic\WooCommerce\Admin\Features\OnboardingTasks\Task
     {
         /**
          * Initialize.
          */
-        public static function init()
+        public function __construct()
         {
         }
         /**
          * Adds a return to task list notice when completing the task.
          */
-        public static function possibly_add_return_notice_script()
+        public function possibly_add_return_notice_script()
         {
         }
         /**
-         * Get the task arguments.
+         * ID.
+         *
+         * @return string
+         */
+        public function get_id()
+        {
+        }
+        /**
+         * Parent ID.
+         *
+         * @return string
+         */
+        public function get_parent_id()
+        {
+        }
+        /**
+         * Title.
+         *
+         * @return string
+         */
+        public function get_title()
+        {
+        }
+        /**
+         * Content.
+         *
+         * @return string
+         */
+        public function get_content()
+        {
+        }
+        /**
+         * Time.
+         *
+         * @return string
+         */
+        public function get_time()
+        {
+        }
+        /**
+         * Action label.
+         *
+         * @return string
+         */
+        public function get_action_label()
+        {
+        }
+        /**
+         * Task completion.
+         *
+         * @return bool
+         */
+        public function is_complete()
+        {
+        }
+        /**
+         * Addtional data.
          *
          * @return array
          */
-        public static function get_task()
+        public function get_additional_data()
         {
         }
         /**
@@ -16579,14 +17406,78 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
     /**
      * WooCommercePayments Task
      */
-    class WooCommercePayments
+    class WooCommercePayments extends \Automattic\WooCommerce\Admin\Features\OnboardingTasks\Task
     {
         /**
-         * Get the task arguments.
+         * ID.
          *
-         * @return array
+         * @return string
          */
-        public static function get_task()
+        public function get_id()
+        {
+        }
+        /**
+         * Parent ID.
+         *
+         * @return string
+         */
+        public function get_parent_id()
+        {
+        }
+        /**
+         * Title.
+         *
+         * @return string
+         */
+        public function get_title()
+        {
+        }
+        /**
+         * Content.
+         *
+         * @return string
+         */
+        public function get_content()
+        {
+        }
+        /**
+         * Time.
+         *
+         * @return string
+         */
+        public function get_time()
+        {
+        }
+        /**
+         * Action label.
+         *
+         * @return string
+         */
+        public function get_action_label()
+        {
+        }
+        /**
+         * Additional info.
+         *
+         * @return string
+         */
+        public function get_additional_info()
+        {
+        }
+        /**
+         * Task completion.
+         *
+         * @return bool
+         */
+        public function is_complete()
+        {
+        }
+        /**
+         * Task visibility.
+         *
+         * @return bool
+         */
+        public function can_view()
         {
         }
         /**
@@ -17272,18 +18163,19 @@ namespace Automattic\WooCommerce\Admin\Features\WcPayPromotion {
         /**
          * Possibly filters out woocommerce-payments from recommended payment methods.
          *
-         * @param array $payment_methods list of payment methods.
+         * @param array  $specs list of payment methods.
+         * @param string $datasource_poller_id id of data source poller.
          * @return array list of payment method.
          */
-        public static function possibly_filter_recommended_payment_gateways($payment_methods)
+        public static function possibly_filter_recommended_payment_gateways($specs, $datasource_poller_id)
         {
         }
         /**
-         * Checks if promoted gateway should be registered.
+         * Checks if promoted gateway can be registered.
          *
          * @return boolean if promoted gateway should be registered.
          */
-        public static function should_register_pre_install_wc_pay_promoted_gateway()
+        public static function can_show_promotion()
         {
         }
         /**
@@ -17336,6 +18228,20 @@ namespace Automattic\WooCommerce\Admin\Features\WcPayPromotion {
         public function __construct()
         {
         }
+        /**
+         * Initialise Gateway Settings Form Fields.
+         */
+        public function init_form_fields()
+        {
+        }
+        /**
+         * Check if the promotional gateaway has been dismissed.
+         *
+         * @return bool
+         */
+        public static function is_dismissed()
+        {
+        }
     }
     /**
      * Specs data source poller class for WooCommerce Payment Promotion.
@@ -17376,7 +18282,7 @@ namespace Automattic\WooCommerce\Admin {
          *
          * @var array
          */
-        protected static $db_updates = array('0.20.1' => array('wc_admin_update_0201_order_status_index', 'wc_admin_update_0201_db_version'), '0.23.0' => array('wc_admin_update_0230_rename_gross_total', 'wc_admin_update_0230_db_version'), '0.25.1' => array('wc_admin_update_0251_remove_unsnooze_action', 'wc_admin_update_0251_db_version'), '1.1.0' => array('wc_admin_update_110_remove_facebook_note', 'wc_admin_update_110_db_version'), '1.3.0' => array('wc_admin_update_130_remove_dismiss_action_from_tracking_opt_in_note', 'wc_admin_update_130_db_version'), '1.4.0' => array('wc_admin_update_140_change_deactivate_plugin_note_type', 'wc_admin_update_140_db_version'), '1.6.0' => array('wc_admin_update_160_remove_facebook_note', 'wc_admin_update_160_db_version'), '1.7.0' => array('wc_admin_update_170_homescreen_layout', 'wc_admin_update_170_db_version'), '2.7.0' => array('wc_admin_update_270_delete_report_downloads', 'wc_admin_update_270_db_version'), '2.7.1' => array('wc_admin_update_271_update_task_list_options', 'wc_admin_update_271_db_version'), '2.8.0' => array('wc_admin_update_280_order_status', 'wc_admin_update_280_db_version'), '2.9.0' => array('wc_admin_update_290_update_apperance_task_option', 'wc_admin_update_290_delete_default_homepage_layout_option', 'wc_admin_update_290_db_version'));
+        protected static $db_updates = array('0.20.1' => array('wc_admin_update_0201_order_status_index', 'wc_admin_update_0201_db_version'), '0.23.0' => array('wc_admin_update_0230_rename_gross_total', 'wc_admin_update_0230_db_version'), '0.25.1' => array('wc_admin_update_0251_remove_unsnooze_action', 'wc_admin_update_0251_db_version'), '1.1.0' => array('wc_admin_update_110_remove_facebook_note', 'wc_admin_update_110_db_version'), '1.3.0' => array('wc_admin_update_130_remove_dismiss_action_from_tracking_opt_in_note', 'wc_admin_update_130_db_version'), '1.4.0' => array('wc_admin_update_140_change_deactivate_plugin_note_type', 'wc_admin_update_140_db_version'), '1.6.0' => array('wc_admin_update_160_remove_facebook_note', 'wc_admin_update_160_db_version'), '1.7.0' => array('wc_admin_update_170_homescreen_layout', 'wc_admin_update_170_db_version'), '2.7.0' => array('wc_admin_update_270_delete_report_downloads', 'wc_admin_update_270_db_version'), '2.7.1' => array('wc_admin_update_271_update_task_list_options', 'wc_admin_update_271_db_version'), '2.8.0' => array('wc_admin_update_280_order_status', 'wc_admin_update_280_db_version'), '2.9.0' => array('wc_admin_update_290_update_apperance_task_option', 'wc_admin_update_290_delete_default_homepage_layout_option', 'wc_admin_update_290_db_version'), '3.0.0' => array('wc_admin_update_300_update_is_read_from_last_read', 'wc_admin_update_300_db_version'));
         /**
          * Migrated option names mapping. New => old.
          *
@@ -18185,6 +19091,18 @@ namespace Automattic\WooCommerce\Admin\Notes {
          * @throws NotesUnavailableException Throws exception when notes are unavailable.
          */
         public static function add_note()
+        {
+        }
+        /**
+         * Should this note exist? (Default implementation is generous. Override as needed.)
+         */
+        public static function is_applicable()
+        {
+        }
+        /**
+         * Delete this note if it is not applicable, unless has been soft-deleted or actioned already.
+         */
+        public static function delete_if_not_applicable()
         {
         }
         /**
@@ -20031,6 +20949,12 @@ namespace Automattic\WooCommerce\Admin\Notes {
          */
         const NOTE_NAME = 'wc-admin-navigation-feedback';
         /**
+         * Should this note exist? (The navigation feature should exist.)
+         */
+        public static function is_applicable()
+        {
+        }
+        /**
          * Get the note.
          *
          * @return Note
@@ -20052,6 +20976,12 @@ namespace Automattic\WooCommerce\Admin\Notes {
          * Name of the note for use in the database.
          */
         const NOTE_NAME = 'wc-admin-navigation-feedback-follow-up';
+        /**
+         * Should this note exist? (The navigation feature should exist.)
+         */
+        public static function is_applicable()
+        {
+        }
         /**
          * Get the note.
          *
@@ -20078,6 +21008,12 @@ namespace Automattic\WooCommerce\Admin\Notes {
          * Attach hooks.
          */
         public function __construct()
+        {
+        }
+        /**
+         * Should this note exist? (The navigation feature should exist.)
+         */
+        public static function is_applicable()
         {
         }
         /**
@@ -20394,6 +21330,15 @@ namespace Automattic\WooCommerce\Admin\Notes {
         public function get_is_deleted($context = 'view')
         {
         }
+        /**
+         * Get is_read status.
+         *
+         * @param  string $context What the value is for. Valid values are 'view' and 'edit'.
+         * @return array
+         */
+        public function get_is_read($context = 'view')
+        {
+        }
         /*
         |--------------------------------------------------------------------------
         | Setters
@@ -20529,6 +21474,14 @@ namespace Automattic\WooCommerce\Admin\Notes {
          * @param bool $is_deleted Note deleted status.
          */
         public function set_is_deleted($is_deleted)
+        {
+        }
+        /**
+         * Set note is_read status. NULL is not allowed
+         *
+         * @param bool $is_read Note is_read status.
+         */
+        public function set_is_read($is_read)
         {
         }
         /**
@@ -21087,6 +22040,12 @@ namespace Automattic\WooCommerce\Admin\Notes {
          * show the note if the plugin is activated again.
          */
         public static function on_deactivate_wcpay()
+        {
+        }
+        /**
+         * Check if this note should exist.
+         */
+        public static function is_applicable()
         {
         }
         /**
@@ -21869,24 +22828,23 @@ namespace Automattic\WooCommerce\Admin {
         }
     }
     /**
-     * Contains backend logic for retrieving payment plugin recommendations.
+     * Specs data source poller class for payment gateway suggestions.
      */
-    class PaymentPlugins
+    class PaymentMethodSuggestionsDataSourcePoller extends \Automattic\WooCommerce\Admin\DataSourcePoller
     {
+        const ID = 'payment_method_suggestions';
         /**
-         * Name of recommended plugins filter.
+         * Option name for dismissed payment method suggestions.
          */
-        const FILTER_NAME = 'woocommerce_admin_recommended_payment_plugins';
+        const RECOMMENDED_PAYMENT_PLUGINS_DISMISS_OPTION = 'woocommerce_setting_payments_recommendations_hidden';
         /**
-         * Name of recommended plugins transient.
-         *
-         * @var string
+         * Default data sources array.
          */
-        const RECOMMENDED_PLUGINS_TRANSIENT = 'wc_recommended_payment_plugins';
+        const DATA_SOURCES = array('https://woocommerce.com/wp-json/wccom/payment-gateway-suggestions/1.0/payment-method/suggestions.json');
         /**
          * Class instance.
          *
-         * @var PaymentPlugins instance
+         * @var Analytics instance
          */
         protected static $instance = null;
         /**
@@ -21896,11 +22854,11 @@ namespace Automattic\WooCommerce\Admin {
         {
         }
         /**
-         * Load recommended payment plugins from WooCommerce.com
+         * Gets the payment method suggestions after validating the specs.
          *
-         * @return array
+         * @return array visible specs.
          */
-        public function get_recommended_plugins()
+        public function get_suggestions()
         {
         }
         /**
@@ -24999,11 +25957,23 @@ namespace Automattic\WooCommerce\Blocks {
          */
         private $templates_directory;
         /**
+         * Holds the path for the directory where the block template parts will be kept.
+         *
+         * @var string
+         */
+        private $template_parts_directory;
+        /**
          * Directory name of the block template directory.
          *
          * @var string
          */
         const TEMPLATES_DIR_NAME = 'block-templates';
+        /**
+         * Directory name of the block template parts directory.
+         *
+         * @var string
+         */
+        const TEMPLATE_PARTS_DIR_NAME = 'block-template-parts';
         /**
          * Constructor.
          */
@@ -25071,10 +26041,11 @@ namespace Automattic\WooCommerce\Blocks {
          * Gets the templates saved in the database.
          *
          * @param array $slugs An array of slugs to retrieve templates for.
+         * @param array $template_type wp_template or wp_template_part.
          *
          * @return int[]|\WP_Post[] An array of found templates.
          */
-        public function get_block_templates_from_db($slugs = array())
+        public function get_block_templates_from_db($slugs = array(), $template_type = 'wp_template')
         {
         }
         /**
@@ -25083,43 +26054,67 @@ namespace Automattic\WooCommerce\Blocks {
          *
          * @param string[] $slugs An array of slugs to filter templates by. Templates whose slug does not match will not be returned.
          * @param array    $already_found_templates Templates that have already been found, these are customised templates that are loaded from the database.
+         * @param string   $template_type wp_template or wp_template_part.
          *
          * @return array Templates from the WooCommerce blocks plugin directory.
          */
-        public function get_block_templates_from_woocommerce($slugs, $already_found_templates)
+        public function get_block_templates_from_woocommerce($slugs, $already_found_templates, $template_type = 'wp_template')
         {
         }
         /**
          * Get and build the block template objects from the block template files.
          *
          * @param array $slugs An array of slugs to retrieve templates for.
+         * @param array $template_type wp_template or wp_template_part.
+         *
          * @return array
          */
-        public function get_block_templates($slugs = array())
+        public function get_block_templates($slugs = array(), $template_type = 'wp_template')
         {
         }
         /**
-         * Check if the theme has a template. So we know if to load our own in or not.
+         * Gets the directory where templates of a specific template type can be found.
          *
-         * @param string $template_name name of the template file without .html extension e.g. 'single-product'.
-         * @return boolean
+         * @param array $template_type wp_template or wp_template_part.
+         *
+         * @return string
          */
-        public function theme_has_template($template_name)
+        protected function get_templates_directory($template_type = 'wp_template')
         {
         }
         /**
          * Checks whether a block template with that name exists in Woo Blocks
          *
          * @param string $template_name Template to check.
+         * @param array  $template_type wp_template or wp_template_part.
+         *
          * @return boolean
          */
-        public function block_template_is_available($template_name)
+        public function block_template_is_available($template_name, $template_type = 'wp_template')
         {
         }
         /**
          * Renders the default block template from Woo Blocks if no theme templates exist.
          */
         public function render_block_template()
+        {
+        }
+        /**
+         * Add template part areas for our blocks.
+         *
+         * @param array $area_definitions An array of supported area objects.
+         */
+        public function add_template_part_areas($area_definitions)
+        {
+        }
+        /**
+         * Add mini cart content block to new template part for Mini Cart area.
+         *
+         * @param int      $post_id Post ID.
+         * @param \WP_Post $post    Post object.
+         * @param bool     $update  Whether this is an existing post being updated.
+         */
+        public function add_mini_cart_content_to_template_part($post_id, $post, $update)
         {
         }
     }
@@ -25873,6 +26868,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         protected function hydrate_from_api()
         {
         }
+        /**
+         * Register script and style assets for the block type before it is registered.
+         *
+         * This registers the scripts; it does not enqueue them.
+         */
+        protected function register_block_type_assets()
+        {
+        }
     }
     /**
      * Checkout class.
@@ -25979,6 +26982,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @return array The list item with the token id added.
          */
         public static function include_token_id_with_payment_methods($list_item, $token)
+        {
+        }
+        /**
+         * Register script and style assets for the block type before it is registered.
+         *
+         * This registers the scripts; it does not enqueue them.
+         */
+        protected function register_block_type_assets()
         {
         }
     }
@@ -26219,6 +27230,28 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          */
         protected $scripts_to_lazy_load = array();
         /**
+         *  Inc Tax label.
+         *
+         * @var string
+         */
+        protected $tax_label = '';
+        /**
+         *  Visibility of price including tax.
+         *
+         * @var string
+         */
+        protected $display_cart_prices_including_tax = false;
+        /**
+         * Constructor.
+         *
+         * @param AssetApi            $asset_api Instance of the asset API.
+         * @param AssetDataRegistry   $asset_data_registry Instance of the asset data registry.
+         * @param IntegrationRegistry $integration_registry Instance of the integration registry.
+         */
+        public function __construct(\Automattic\WooCommerce\Blocks\Assets\Api $asset_api, \Automattic\WooCommerce\Blocks\Assets\AssetDataRegistry $asset_data_registry, \Automattic\WooCommerce\Blocks\Integrations\IntegrationRegistry $integration_registry)
+        {
+        }
+        /**
          * Get the editor script handle for this block type.
          *
          * @param string $key Data to get, or default to everything.
@@ -26272,6 +27305,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
+         * Returns the markup for render the tax label.
+         *
+         * @return string
+         */
+        protected function get_include_tax_label_markup()
+        {
+        }
+        /**
          * Append frontend scripts when rendering the Mini Cart block.
          *
          * @param array  $attributes Block attributes.
@@ -26293,30 +27334,66 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
-         * Render the markup of the Cart contents.
+         * Return an instace of the CartController class.
          *
-         * @param array $cart_contents Array of contents in the cart.
-         *
-         * @return string The HTML markup.
+         * @return CartController CartController class instance.
          */
-        protected function get_cart_contents_markup($cart_contents)
+        protected function get_cart_controller()
         {
         }
         /**
-         * Render the skeleton of a Cart item.
+         * Get array with data for handle the tax label.
+         * the entire logic of this function is was taken from:
+         * https://github.com/woocommerce/woocommerce/blob/e730f7463c25b50258e97bf56e31e9d7d3bc7ae7/includes/class-wc-cart.php#L1582
          *
-         * @return string The skeleton HTML markup.
+         * @return array;
          */
-        protected function get_cart_item_markup()
+        protected function get_tax_label()
+        {
+        }
+    }
+    /**
+     * Mini Cart class.
+     *
+     * @internal
+     */
+    class MiniCartContents extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'mini-cart-contents';
+        /**
+         * Get the editor script handle for this block type.
+         *
+         * @param string $key Data to get, or default to everything.
+         *
+         * @return array|string;
+         */
+        protected function get_block_type_editor_script($key = null)
         {
         }
         /**
-         * Get the supports array for this block type.
+         * Get the frontend script handle for this block type.
          *
-         * @see $this->register_block_type()
-         * @return string;
+         * @param string $key Data to get, or default to everything.
+         *
+         * @return null
          */
-        protected function get_block_type_supports()
+        protected function get_block_type_script($key = null)
+        {
+        }
+        /**
+         * Render the markup for the Mini Cart contents block.
+         *
+         * @param array  $attributes Block attributes.
+         * @param string $content    Block content.
+         *
+         * @return string Rendered block type output.
+         */
+        protected function render($attributes, $content)
         {
         }
     }
@@ -33463,6 +34540,19 @@ namespace Automattic\WooCommerce\Blocks\Utils {
         {
         }
         /**
+         * Build a new template object so that we can make Woo Blocks default templates available in the current theme should they not have any.
+         *
+         * @param string $template_file Block template file path.
+         * @param string $template_type wp_template or wp_template_part.
+         * @param string $template_slug Block template slug e.g. single-product.
+         * @param bool   $template_is_from_theme If the block template file is being loaded from the current theme instead of Woo Blocks.
+         *
+         * @return object Block template object.
+         */
+        public static function create_new_block_template_object($template_file, $template_type, $template_slug, $template_is_from_theme = false)
+        {
+        }
+        /**
          * Finds all nested template part file paths in a theme's directory.
          *
          * @param string $base_directory The theme's file path.
@@ -33478,6 +34568,42 @@ namespace Automattic\WooCommerce\Blocks\Utils {
          * @return string Human friendly title converted from the slug.
          */
         public static function convert_slug_to_title($template_slug)
+        {
+        }
+        /**
+         * Converts template paths into a slug
+         *
+         * @param string $path The template's path.
+         * @param string $directory_name The template's directory name.
+         * @return string slug
+         */
+        public static function generate_template_slug_from_path($path, $directory_name = 'block-templates')
+        {
+        }
+        /**
+         * Check if the theme has a template. So we know if to load our own in or not.
+         *
+         * @param string $template_name name of the template file without .html extension e.g. 'single-product'.
+         * @return boolean
+         */
+        public static function theme_has_template($template_name)
+        {
+        }
+        /**
+         * Check if the theme has a template. So we know if to load our own in or not.
+         *
+         * @param string $template_name name of the template file without .html extension e.g. 'single-product'.
+         * @return boolean
+         */
+        public static function theme_has_template_part($template_name)
+        {
+        }
+        /**
+         * Checks to see if they are using a compatible version of WP, or if not they have a compatible version of the Gutenberg plugin installed.
+         *
+         * @return boolean
+         */
+        public static function supports_block_templates()
         {
         }
     }
@@ -33520,6 +34646,85 @@ namespace Automattic\WooCommerce\Blocks\Utils {
          * @return WP_Post[]|int[] Array of post objects or post IDs.
          */
         public function get_cached_posts($transient_version = '')
+        {
+        }
+    }
+    /**
+     * StyleAttributesUtils class used for getting class and style from attributes.
+     */
+    class StyleAttributesUtils
+    {
+        /**
+         * Get class and style for font-size from attributes.
+         *
+         * @param array $attributes Block attributes.
+         *
+         * @return (array | null)
+         */
+        public static function get_font_size_class_and_style($attributes)
+        {
+        }
+        /**
+         * Get class and style for text-color from attributes.
+         *
+         * @param array $attributes Block attributes.
+         *
+         * @return (array | null)
+         */
+        public static function get_text_color_class_and_style($attributes)
+        {
+        }
+        /**
+         * Get class and style for link-color from attributes.
+         *
+         * @param array $attributes Block attributes.
+         *
+         * @return (array | null)
+         */
+        public static function get_link_color_class_and_style($attributes)
+        {
+        }
+        /**
+         * Get class and style for line height from attributes.
+         *
+         * @param array $attributes Block attributes.
+         *
+         * @return (array | null)
+         */
+        public static function get_line_height_class_and_style($attributes)
+        {
+        }
+        /**
+         * Get classes and styles from attributes.
+         *
+         * @param array $attributes Block attributes.
+         * @param array $properties Properties to get classes/styles from.
+         *
+         * @return array
+         */
+        public static function get_classes_and_styles_by_attributes($attributes, $properties = array())
+        {
+        }
+        /**
+         * Get space-separated classes from block attributes.
+         *
+         * @param array $attributes Block attributes.
+         * @param array $properties Properties to get classes from.
+         *
+         * @return string Space-separated classes.
+         */
+        public static function get_classes_by_attributes($attributes, $properties = array())
+        {
+        }
+        /**
+         * Get space-separated style rules from block attributes.
+         *
+         * @param array $attributes Block attributes.
+         * @param array $properties Properties to get styles from.
+         *
+         * @return string Space-separated style rules.
+         */
+        public static function get_styles_by_attributes($attributes, $properties = array())
         {
         }
     }
