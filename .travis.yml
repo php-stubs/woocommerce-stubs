@@ -22,9 +22,9 @@ before_install:
   - "composer validate --strict"
 
 install:
-  - "composer update --no-interaction --no-suggest"
+  - "composer update --no-interaction"
   # Reinstall sub-packages into /packages/
-  - "composer update --no-interaction --no-suggest"
+  - "composer update --no-interaction"
 
 before_script:
   - "cat ./source/woocommerce/woocommerce.php"
