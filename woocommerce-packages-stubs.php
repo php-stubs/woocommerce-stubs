@@ -6096,6 +6096,12 @@ namespace Automattic\WooCommerce\Admin\API {
          */
         protected $rest_base = 'admin/notes';
         /**
+         * Allowed promo notes for experimental-activate-promo.
+         *
+         * @var array
+         */
+        protected $allowed_promo_notes = array('wcpay-promo-2021-6-incentive-2');
+        /**
          * Register the routes for admin notes.
          */
         public function register_routes()
@@ -6217,6 +6223,15 @@ namespace Automattic\WooCommerce\Admin\API {
          * @return WP_REST_Request|WP_Error
          */
         public function batch_update_items($request)
+        {
+        }
+        /**
+         * Activate a promo note, create if not exist.
+         *
+         * @param WP_REST_Request $request Request object.
+         * @return WP_REST_Request|WP_Error
+         */
+        public function activate_promo_note($request)
         {
         }
         /**
@@ -13715,7 +13730,7 @@ namespace Automattic\WooCommerce\Admin\Composer {
          *
          * @var string
          */
-        const VERSION = '3.0.3';
+        const VERSION = '3.1.0';
         /**
          * Package active.
          *
@@ -15978,6 +15993,7 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
          *
          * @param string $event_name Event name.
          * @param array  $args Array of tracks arguments.
+         * @return string Prefixed event name.
          */
         public function record_tracks_event($event_name, $args = array())
         {
@@ -18267,6 +18283,37 @@ namespace Automattic\WooCommerce\Admin\Features\WcPayPromotion {
         }
     }
 }
+namespace Automattic\WooCommerce\Admin\Features {
+    /**
+     * Class WCPayWelcomePage
+     *
+     * @package Automattic\WooCommerce\Admin\Features
+     */
+    class WcPayWelcomePage
+    {
+        const EXPERIMENT_NAME_BASE = 'woocommerce_payments_menu_promo_nz_ie_:yyyy_:mm';
+        /**
+         * WCPayWelcomePage constructor.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Registers the WooCommerce Payments welcome page.
+         */
+        public function register_payments_welcome_page()
+        {
+        }
+        /**
+         * Checks if user is in the experiment.
+         *
+         * @return bool Whether the user is in the treatment group.
+         */
+        private function should_add_the_menu()
+        {
+        }
+    }
+}
 namespace Automattic\WooCommerce\Admin {
     /**
      * Install Class.
@@ -19172,28 +19219,6 @@ namespace Automattic\WooCommerce\Admin\Notes {
         }
     }
     /**
-     * Choose_Niche.
-     */
-    class ChooseNiche
-    {
-        /**
-         * Note traits.
-         */
-        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
-        /**
-         * Name of the note for use in the database.
-         */
-        const NOTE_NAME = 'wc-admin-choose-niche';
-        /**
-         * Get the note.
-         *
-         * @return Note
-         */
-        public static function get_note()
-        {
-        }
-    }
-    /**
      * Giving_Feedback_Notes
      */
     class ChoosingTheme
@@ -19294,6 +19319,12 @@ namespace Automattic\WooCommerce\Admin\Notes {
          * Safe redirect to the coupon page to force page refresh.
          */
         public function redirect_to_coupons()
+        {
+        }
+        /**
+         * Disable legacy coupon menu when installing for the first time.
+         */
+        public function disable_legacy_menu_for_new_install()
         {
         }
     }
@@ -19552,26 +19583,6 @@ namespace Automattic\WooCommerce\Admin\Notes {
         protected static $deprecated_in_version = '1.7.0';
     }
     /**
-     * WC_Admin_Notes_Choose_Niche.
-     *
-     * @deprecated since 1.7.0, use ChooseNiche
-     */
-    class WC_Admin_Notes_Choose_Niche extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\ChooseNiche';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '1.7.0';
-    }
-    /**
      * WC_Admin_Notes_Coupon_Page_Moved.
      *
      * @deprecated since 1.7.0, use CouponPageMoved
@@ -19624,26 +19635,6 @@ namespace Automattic\WooCommerce\Admin\Notes {
          * @var string
          */
         protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\DeactivatePlugin';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '1.7.0';
-    }
-    /**
-     * WC_Admin_Notes_Draw_Attention.
-     *
-     * @deprecated since 1.7.0, use DrawAttention
-     */
-    class WC_Admin_Notes_Draw_Attention extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\DrawAttention';
         /**
          * The version that this class was deprecated in.
          *
@@ -19812,26 +19803,6 @@ namespace Automattic\WooCommerce\Admin\Notes {
         protected static $deprecated_in_version = '1.7.0';
     }
     /**
-     * WC_Admin_Notes_Marketing.
-     *
-     * @deprecated since 1.7.0, use Marketing
-     */
-    class WC_Admin_Notes_Marketing extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\Marketing';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '1.7.0';
-    }
-    /**
      * WC_Admin_Notes_Migrate_From_Shopify.
      *
      * @deprecated since 1.7.0, use MigrateFromShopify
@@ -19864,26 +19835,6 @@ namespace Automattic\WooCommerce\Admin\Notes {
          * @var string
          */
         protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\MobileApp';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '1.7.0';
-    }
-    /**
-     * WC_Admin_Notes_Need_Some_Inspiration.
-     *
-     * @deprecated since 1.7.0, use NeedSomeInspiration
-     */
-    class WC_Admin_Notes_Need_Some_Inspiration extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\NeedSomeInspiration';
         /**
          * The version that this class was deprecated in.
          *
@@ -20092,26 +20043,6 @@ namespace Automattic\WooCommerce\Admin\Notes {
         protected static $deprecated_in_version = '1.7.0';
     }
     /**
-     * WC_Admin_Notes_Start_Dropshipping_Business.
-     *
-     * @deprecated since 1.7.0, use StartDropshippingBusiness
-     */
-    class WC_Admin_Notes_Start_Dropshipping_Business extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\StartDropshippingBusiness';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '1.7.0';
-    }
-    /**
      * WC_Admin_Notes_Test_Checkout.
      *
      * @deprecated since 1.7.0, use TestCheckout
@@ -20212,34 +20143,6 @@ namespace Automattic\WooCommerce\Admin\Notes {
         protected static $deprecated_in_version = '1.7.0';
     }
     /**
-     * Draw_Attention
-     */
-    class DrawAttention
-    {
-        /**
-         * Note traits.
-         */
-        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
-        /**
-         * Name of the note for use in the database.
-         */
-        const NOTE_NAME = 'wc-admin-draw-attention';
-        /**
-         * Constructor.
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Get the note.
-         *
-         * @return Note
-         */
-        public static function get_note()
-        {
-        }
-    }
-    /**
      * EU_VAT_Number
      */
     class EUVATNumber
@@ -20284,36 +20187,6 @@ namespace Automattic\WooCommerce\Admin\Notes {
         }
     }
     /**
-     * FilterByProductVariationsInReports.
-     */
-    class FilterByProductVariationsInReports
-    {
-        /**
-         * Note traits.
-         */
-        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
-        /**
-         * Name of the note for use in the database.
-         */
-        const NOTE_NAME = 'wc-admin-filter-by-product-variations-in-reports';
-        /**
-         * Get the note
-         *
-         * @return Note|null
-         */
-        public static function get_note()
-        {
-        }
-        /**
-         * Returns whether or not there are variable products.
-         *
-         * @return bool If there are variable products
-         */
-        private static function are_products_with_variations()
-        {
-        }
-    }
-    /**
      * FirstDownlaodableProduct.
      */
     class FirstDownlaodableProduct
@@ -20348,72 +20221,6 @@ namespace Automattic\WooCommerce\Admin\Notes {
          * Name of the note for use in the database.
          */
         const NOTE_NAME = 'wc-admin-first-product';
-        /**
-         * Get the note.
-         *
-         * @return Note
-         */
-        public static function get_note()
-        {
-        }
-    }
-    /**
-     * OnboardingTraits class, encapsulates onboarding checks and functionality
-     * that are useful to determining whether to display notes or not.
-     */
-    trait OnboardingTraits
-    {
-        /**
-         * Get access to the onboarding profile option.
-         */
-        private static function get_onboarding_profile()
-        {
-        }
-        /**
-         * Check if user has started the onboarding profile wizard.
-         *
-         * @return bool Whether or not the onboarding profile has been started.
-         */
-        public static function onboarding_profile_started()
-        {
-        }
-        /**
-         * Check if onboarding profile revenue is between 2 amounts
-         *
-         * @param int $min_dollars Minimum amount the range must fall within (inclusive).
-         * @param int $max_dollars Maximum amount the range must fall within (inclusive).
-         * @return bool Whether the revenue falls within the min and max (inclusive).
-         */
-        public static function revenue_is_within($min_dollars, $max_dollars)
-        {
-        }
-        /**
-         * Check if the store was marked as being setup for a client in onboarding. (Returns false if onboarding
-         * was not completed).
-         *
-         * @return bool Whether or not the store is being setup for a client.
-         */
-        public static function store_setup_for_client()
-        {
-        }
-    }
-    /**
-     * Getting started in ecommmerce note class.
-     */
-    class GettingStartedInEcommerceWebinar
-    {
-        /**
-         * Note traits.
-         */
-        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
-        /**
-         * Onboarding traits.
-         */
-        use \Automattic\WooCommerce\Admin\Notes\OnboardingTraits;
-        /**
-         * Name of the note for use in the database.
-         */
-        const NOTE_NAME = 'wc-admin-getting-started-ecommerce-webinar';
         /**
          * Get the note.
          *
@@ -20565,48 +20372,6 @@ namespace Automattic\WooCommerce\Admin\Notes {
         }
     }
     /**
-     * Class AddingAndManangingProducts
-     *
-     * @package Automattic\WooCommerce\Admin\Notes
-     */
-    class LearnMoreAboutVariableProducts
-    {
-        /**
-         * Note traits.
-         */
-        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
-        /**
-         * Name of the note for use in the database.
-         */
-        const NOTE_NAME = 'wc-admin-learn-more-about-variable-products';
-        /**
-         * Add transition_post_status action.
-         *
-         * LearnMoreAboutVariableProducts constructor.
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Maybe attempt to add a new note if product is published.
-         *
-         * @param string $new_status new status.
-         * @param string $old_status old status.
-         * @param object $post post object.
-         */
-        public function maybe_add_new_note($new_status, $old_status, $post)
-        {
-        }
-        /**
-         * Get the note.
-         *
-         * @return Note|null
-         */
-        public static function get_note()
-        {
-        }
-    }
-    /**
      * Manage_Orders_On_The_Go
      */
     class ManageOrdersOnTheGo
@@ -20651,28 +20416,6 @@ namespace Automattic\WooCommerce\Admin\Notes {
          * Get the note.
          *
          * @return Note|null
-         */
-        public static function get_note()
-        {
-        }
-    }
-    /**
-     * Marketing
-     */
-    class Marketing
-    {
-        /**
-         * Note traits.
-         */
-        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
-        /**
-         * Name of the note for use in the database.
-         */
-        const NOTE_NAME = 'wc-admin-marketing-intro';
-        /**
-         * Get the note.
-         *
-         * @return Note
          */
         public static function get_note()
         {
@@ -20936,62 +20679,6 @@ namespace Automattic\WooCommerce\Admin\Notes {
         }
     }
     /**
-     * NavigationFeedback
-     */
-    class NavigationFeedback
-    {
-        /**
-         * Note traits.
-         */
-        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
-        /**
-         * Name of the note for use in the database.
-         */
-        const NOTE_NAME = 'wc-admin-navigation-feedback';
-        /**
-         * Should this note exist? (The navigation feature should exist.)
-         */
-        public static function is_applicable()
-        {
-        }
-        /**
-         * Get the note.
-         *
-         * @return Note
-         */
-        public static function get_note()
-        {
-        }
-    }
-    /**
-     * NavigationFeedbackFollowUp
-     */
-    class NavigationFeedbackFollowUp
-    {
-        /**
-         * Note traits.
-         */
-        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
-        /**
-         * Name of the note for use in the database.
-         */
-        const NOTE_NAME = 'wc-admin-navigation-feedback-follow-up';
-        /**
-         * Should this note exist? (The navigation feature should exist.)
-         */
-        public static function is_applicable()
-        {
-        }
-        /**
-         * Get the note.
-         *
-         * @return Note
-         */
-        public static function get_note()
-        {
-        }
-    }
-    /**
      * Navigation Nudge.
      */
     class NavigationNudge
@@ -21031,28 +20718,6 @@ namespace Automattic\WooCommerce\Admin\Notes {
          * @param string $value     New value.
          */
         public static function action_note($old_value, $value)
-        {
-        }
-    }
-    /**
-     * Need_Some_Inspiration.
-     */
-    class NeedSomeInspiration
-    {
-        /**
-         * Note traits.
-         */
-        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
-        /**
-         * Name of the note for use in the database.
-         */
-        const NOTE_NAME = 'wc-admin-need-some-inspiration';
-        /**
-         * Get the note.
-         *
-         * @return Note
-         */
-        public static function get_note()
         {
         }
     }
@@ -21730,6 +21395,46 @@ namespace Automattic\WooCommerce\Admin\Notes {
         }
     }
     /**
+     * OnboardingTraits class, encapsulates onboarding checks and functionality
+     * that are useful to determining whether to display notes or not.
+     */
+    trait OnboardingTraits
+    {
+        /**
+         * Get access to the onboarding profile option.
+         */
+        private static function get_onboarding_profile()
+        {
+        }
+        /**
+         * Check if user has started the onboarding profile wizard.
+         *
+         * @return bool Whether or not the onboarding profile has been started.
+         */
+        public static function onboarding_profile_started()
+        {
+        }
+        /**
+         * Check if onboarding profile revenue is between 2 amounts
+         *
+         * @param int $min_dollars Minimum amount the range must fall within (inclusive).
+         * @param int $max_dollars Maximum amount the range must fall within (inclusive).
+         * @return bool Whether the revenue falls within the min and max (inclusive).
+         */
+        public static function revenue_is_within($min_dollars, $max_dollars)
+        {
+        }
+        /**
+         * Check if the store was marked as being setup for a client in onboarding. (Returns false if onboarding
+         * was not completed).
+         *
+         * @return bool Whether or not the store is being setup for a client.
+         */
+        public static function store_setup_for_client()
+        {
+        }
+    }
+    /**
      * Online_Clothing_Store.
      */
     class OnlineClothingStore
@@ -21902,6 +21607,42 @@ namespace Automattic\WooCommerce\Admin\Notes {
         }
     }
     /**
+     * PaymentsRemindMeLater
+     */
+    class PaymentsRemindMeLater
+    {
+        /**
+         * Note traits.
+         */
+        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
+        /**
+         * Name of the note for use in the database.
+         */
+        const NOTE_NAME = 'wc-admin-payments-remind-me-later';
+        /**
+         * Should this note exist?
+         */
+        public static function is_applicable()
+        {
+        }
+        /**
+         * Returns true if we should display the note.
+         *
+         * @return bool
+         */
+        public static function should_display_note()
+        {
+        }
+        /**
+         * Get the note.
+         *
+         * @return Note
+         */
+        public static function get_note()
+        {
+        }
+    }
+    /**
      * Performance_On_Mobile
      */
     class PerformanceOnMobile
@@ -22052,28 +21793,6 @@ namespace Automattic\WooCommerce\Admin\Notes {
          * Get the note.
          *
          * @return Note
-         */
-        public static function get_note()
-        {
-        }
-    }
-    /**
-     * Start_Dropshipping_Business.
-     */
-    class StartDropshippingBusiness
-    {
-        /**
-         * Note traits.
-         */
-        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
-        /**
-         * Name of the note for use in the database.
-         */
-        const NOTE_NAME = 'wc-admin-start-dropshipping-business';
-        /**
-         * Get the note.
-         *
-         * @return Note|null
          */
         public static function get_note()
         {
@@ -26067,7 +25786,7 @@ namespace Automattic\WooCommerce\Blocks {
          * @param array $slugs An array of slugs to retrieve templates for.
          * @param array $template_type wp_template or wp_template_part.
          *
-         * @return array
+         * @return array WP_Block_Template[] An array of block template objects.
          */
         public function get_block_templates($slugs = array(), $template_type = 'wp_template')
         {
@@ -26097,24 +25816,6 @@ namespace Automattic\WooCommerce\Blocks {
          * Renders the default block template from Woo Blocks if no theme templates exist.
          */
         public function render_block_template()
-        {
-        }
-        /**
-         * Add template part areas for our blocks.
-         *
-         * @param array $area_definitions An array of supported area objects.
-         */
-        public function add_template_part_areas($area_definitions)
-        {
-        }
-        /**
-         * Add mini cart content block to new template part for Mini Cart area.
-         *
-         * @param int      $post_id Post ID.
-         * @param \WP_Post $post    Post object.
-         * @param bool     $update  Whether this is an existing post being updated.
-         */
-        public function add_mini_cart_content_to_template_part($post_id, $post, $update)
         {
         }
     }
@@ -26344,14 +26045,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @param array $attributes Any attributes that currently are available from the block.
          */
         protected function enqueue_scripts(array $attributes = [])
-        {
-        }
-        /**
-         * Script to append the correct sizing class to a block skeleton.
-         *
-         * @return string
-         */
-        protected function get_skeleton_inline_script()
         {
         }
     }
@@ -28758,6 +28451,30 @@ namespace Automattic\WooCommerce\Blocks\Domain\Services {
         public function is_test_environment()
         {
         }
+        /**
+         * Returns core flag value.
+         *
+         * @return number
+         */
+        public static function get_core_flag()
+        {
+        }
+        /**
+         * Returns feature plugin flag value.
+         *
+         * @return number
+         */
+        public static function get_feature_plugin_flag()
+        {
+        }
+        /**
+         * Returns experimental flag value.
+         *
+         * @return number
+         */
+        public static function get_experimental_flag()
+        {
+        }
     }
     /**
      * Service class to integrate Blocks with the Google Analytics extension,
@@ -30259,7 +29976,7 @@ namespace Automattic\WooCommerce\Blocks {
          * Get routes for a namespace.
          *
          * @param string $namespace Namespace to retrieve.
-         * @return array|null
+         * @return array
          */
         public function get_routes_from_namespace($namespace)
         {
@@ -30503,8 +30220,8 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
         /**
          * Converts an error to a response object. Based on \WP_REST_Server.
          *
-         * @param WP_Error $error WP_Error instance.
-         * @return WP_REST_Response List of associative arrays with code and message keys.
+         * @param \WP_Error $error WP_Error instance.
+         * @return \WP_REST_Response List of associative arrays with code and message keys.
          */
         protected function error_to_response($error)
         {
@@ -30627,6 +30344,52 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
         {
         }
     }
+}
+namespace Automattic\WooCommerce\Blocks\StoreApi\Utilities {
+    /**
+     * DraftOrderTrait
+     *
+     * Shared functionality for getting and setting draft order IDs from session.
+     */
+    trait DraftOrderTrait
+    {
+        /**
+         * Gets draft order data from the customer session.
+         *
+         * @return integer
+         */
+        protected function get_draft_order_id()
+        {
+        }
+        /**
+         * Updates draft order data in the customer session.
+         *
+         * @param integer $order_id Draft order ID.
+         */
+        protected function set_draft_order_id($order_id)
+        {
+        }
+        /**
+         * Uses the draft order ID to return an order object, if valid.
+         *
+         * @return \WC_Order|null;
+         */
+        protected function get_draft_order()
+        {
+        }
+        /**
+         * Whether the passed argument is a draft order or an order that is
+         * pending/failed and the cart hasn't changed.
+         *
+         * @param \WC_Order $order_object Order object to check.
+         * @return boolean Whether the order is valid as a draft order.
+         */
+        protected function is_valid_draft_order($order_object)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
     /**
      * Abstract Cart Route
      *
@@ -30634,6 +30397,7 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
      */
     abstract class AbstractCartRoute extends \Automattic\WooCommerce\Blocks\StoreApi\Routes\AbstractRoute
     {
+        use \Automattic\WooCommerce\Blocks\StoreApi\Utilities\DraftOrderTrait;
         /**
          * Schema class for this route's response.
          *
@@ -30653,14 +30417,21 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
          */
         protected $cart_controller;
         /**
+         * Order controller class instance.
+         *
+         * @var OrderController
+         */
+        protected $order_controller;
+        /**
          * Constructor accepts two types of schema; one for the item being returned, and one for the cart as a whole. These
          * may be the same depending on the route.
          *
-         * @param CartSchema     $cart_schema Schema class for the cart.
-         * @param AbstractSchema $item_schema Schema class for this route's items if it differs from the cart schema.
-         * @param CartController $cart_controller Cart controller class.
+         * @param CartSchema      $cart_schema Schema class for the cart.
+         * @param AbstractSchema  $item_schema Schema class for this route's items if it differs from the cart schema.
+         * @param CartController  $cart_controller Cart controller class.
+         * @param OrderController $order_controller Order controller class.
          */
-        public function __construct(\Automattic\WooCommerce\Blocks\StoreApi\Schemas\CartSchema $cart_schema, \Automattic\WooCommerce\Blocks\StoreApi\Schemas\AbstractSchema $item_schema = null, \Automattic\WooCommerce\Blocks\StoreApi\Utilities\CartController $cart_controller)
+        public function __construct(\Automattic\WooCommerce\Blocks\StoreApi\Schemas\CartSchema $cart_schema, \Automattic\WooCommerce\Blocks\StoreApi\Schemas\AbstractSchema $item_schema = null, \Automattic\WooCommerce\Blocks\StoreApi\Utilities\CartController $cart_controller, \Automattic\WooCommerce\Blocks\StoreApi\Utilities\OrderController $order_controller)
         {
         }
         /**
@@ -30691,17 +30462,18 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
         {
         }
         /**
-         * Ensures the cart totals are calculated before an API response is generated.
+         * Triggered after an update to cart data. Re-calculates totals and updates draft orders (if they already exist) to
+         * keep all data in sync.
+         *
+         * @param \WP_REST_Request $request Request object.
          */
-        protected function calculate_totals()
+        protected function cart_updated(\WP_REST_Request $request)
         {
         }
         /**
-         * If there is a draft order, releases stock.
-         *
-         * @return void
+         * Ensures the cart totals are calculated before an API response is generated.
          */
-        protected function maybe_release_stock()
+        protected function calculate_totals()
         {
         }
         /**
@@ -31223,6 +30995,7 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
      */
     class CartRemoveItem extends \Automattic\WooCommerce\Blocks\StoreApi\Routes\AbstractCartRoute
     {
+        use \Automattic\WooCommerce\Blocks\StoreApi\Utilities\DraftOrderTrait;
         /**
          * Get the path of this REST route.
          *
@@ -31247,6 +31020,14 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
          * @return \WP_REST_Response
          */
         protected function get_route_post_response(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * If there is a draft order, releases stock.
+         *
+         * @return void
+         */
+        protected function maybe_release_stock()
         {
         }
     }
@@ -31293,6 +31074,7 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
      */
     class CartUpdateCustomer extends \Automattic\WooCommerce\Blocks\StoreApi\Routes\AbstractCartRoute
     {
+        use \Automattic\WooCommerce\Blocks\StoreApi\Utilities\DraftOrderTrait;
         /**
          * Get the namespace for this route.
          *
@@ -31328,11 +31110,12 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
         {
         }
         /**
-         * If there is a draft order, update customer data there also.
+         * Get full customer billing address.
          *
-         * @return void
+         * @param \WC_Customer $customer Customer object.
+         * @return array
          */
-        protected function maybe_update_order()
+        protected function get_customer_billing_address(\WC_Customer $customer)
         {
         }
     }
@@ -31377,30 +31160,13 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
      */
     class Checkout extends \Automattic\WooCommerce\Blocks\StoreApi\Routes\AbstractCartRoute
     {
+        use \Automattic\WooCommerce\Blocks\StoreApi\Utilities\DraftOrderTrait;
         /**
          * Holds the current order being processed.
          *
          * @var \WC_Order
          */
         private $order = null;
-        /**
-         * Order controller class instance.
-         *
-         * @var OrderController
-         */
-        protected $order_controller;
-        /**
-         * Constructor accepts two types of schema; one for the item being returned, and one for the cart as a whole. These
-         * may be the same depending on the route.
-         *
-         * @param CartSchema      $cart_schema Schema class for the cart.
-         * @param AbstractSchema  $item_schema Schema class for this route's items if it differs from the cart schema.
-         * @param CartController  $cart_controller Cart controller class.
-         * @param OrderController $order_controller Order controller class.
-         */
-        public function __construct(\Automattic\WooCommerce\Blocks\StoreApi\Schemas\CartSchema $cart_schema, \Automattic\WooCommerce\Blocks\StoreApi\Schemas\AbstractSchema $item_schema = null, \Automattic\WooCommerce\Blocks\StoreApi\Utilities\CartController $cart_controller, \Automattic\WooCommerce\Blocks\StoreApi\Utilities\OrderController $order_controller)
-        {
-        }
         /**
          * Get the path of this REST route.
          *
@@ -31510,32 +31276,6 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
          * @returns \WP_Error The \WP_Error with the cart added.
          */
         private function add_data_to_error_object($error, $data, $http_status_code, bool $include_cart = false)
-        {
-        }
-        /**
-         * Gets draft order data from the customer session.
-         *
-         * @return array
-         */
-        private function get_draft_order_id()
-        {
-        }
-        /**
-         * Updates draft order data in the customer session.
-         *
-         * @param integer $order_id Draft order ID.
-         */
-        private function set_draft_order_id($order_id)
-        {
-        }
-        /**
-         * Whether the passed argument is a draft order or an order that is
-         * pending/failed and the cart hasn't changed.
-         *
-         * @param \WC_Order $order_object Order object to check.
-         * @return boolean Whether the order is valid as a draft order.
-         */
-        private function is_valid_draft_order($order_object)
         {
         }
         /**
@@ -32091,7 +31831,7 @@ namespace Automattic\WooCommerce\Blocks\StoreApi {
         /**
          * Get a route class instance.
          *
-         * @throws Exception If the schema does not exist.
+         * @throws \Exception If the schema does not exist.
          *
          * @param string $name Name of schema.
          * @return AbstractRoute
@@ -32204,6 +31944,12 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Schemas {
         {
         }
         /**
+         * Return schema properties.
+         *
+         * @return array
+         */
+        public abstract function get_properties();
+        /**
          * Recursive removal of arg_options.
          *
          * @param array $properties Schema properties.
@@ -32222,7 +31968,7 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Schemas {
         /**
          * Returns extended data for a specific endpoint.
          *
-         * @param string $endpoint The endpoint identifer.
+         * @param string $endpoint The endpoint identifier.
          * @param array  ...$passed_args An array of arguments to be passed to callbacks.
          * @return object the data that will get added.
          */
@@ -32797,6 +32543,7 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Schemas {
      */
     class CartItemSchema extends \Automattic\WooCommerce\Blocks\StoreApi\Schemas\ProductSchema
     {
+        use \Automattic\WooCommerce\Blocks\StoreApi\Utilities\DraftOrderTrait;
         /**
          * The schema item name.
          *
@@ -33556,6 +33303,7 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Utilities {
      */
     class CartController
     {
+        use \Automattic\WooCommerce\Blocks\StoreApi\Utilities\DraftOrderTrait;
         /**
          * Makes the cart and sessions available to a route by loading them from core.
          */
@@ -34604,6 +34352,25 @@ namespace Automattic\WooCommerce\Blocks\Utils {
         {
         }
         /**
+         * Gets the first matching template part within themes directories
+         *
+         * Since [Gutenberg 12.1.0](https://github.com/WordPress/gutenberg/releases/tag/v12.1.0), the conventions for
+         * block templates and parts directory has changed from `block-templates` and `block-templates-parts`
+         * to `templates` and `parts` respectively.
+         *
+         * This function traverses all possible combinations of directory paths where a template or part
+         * could be located and returns the first one which is readable, prioritizing the new convention
+         * over the deprecated one, but maintaining that one for backwards compatibility.
+         *
+         * @param string $template_slug  The slug of the template (i.e. without the file extension).
+         * @param string $template_type  Either `wp_template` or `wp_template_part`.
+         *
+         * @return string|null  The matched path or `null` if no match was found.
+         */
+        public static function get_theme_template_path($template_slug, $template_type = 'wp_template')
+        {
+        }
+        /**
          * Check if the theme has a template. So we know if to load our own in or not.
          *
          * @param string $template_name name of the template file without .html extension e.g. 'single-product'.
@@ -34627,6 +34394,48 @@ namespace Automattic\WooCommerce\Blocks\Utils {
          * @return boolean
          */
         public static function supports_block_templates()
+        {
+        }
+        /**
+         * Checks if we can fallback to the `archive-product` template for a given slug
+         *
+         * `taxonomy-product_cat` and `taxonomy-product_tag` templates can generally use the
+         * `archive-product` as a fallback if there are no specific overrides.
+         *
+         * @param string $template_slug Slug to check for fallbacks.
+         * @return boolean
+         */
+        public static function template_is_eligible_for_product_archive_fallback($template_slug)
+        {
+        }
+        /**
+         * Sets the `has_theme_file` to `true` for templates with fallbacks
+         *
+         * There are cases (such as tags and categories) in which fallback templates
+         * can be used; so, while *technically* the theme doesn't have a specific file
+         * for them, it is important that we tell Gutenberg that we do, in fact,
+         * have a theme file (i.e. the fallback one).
+         *
+         * **Note:** this function changes the array that has been passed.
+         *
+         * It returns `true` if anything was changed, `false` otherwise.
+         *
+         * @param array  $query_result Array of template objects.
+         * @param object $template A specific template object which could have a fallback.
+         *
+         * @return boolean
+         */
+        public static function set_has_theme_file_if_fallback_is_available($query_result, $template)
+        {
+        }
+        /**
+         * Filter block templates by feature flag.
+         *
+         * @param WP_Block_Template[] $block_templates An array of block template objects.
+         *
+         * @return WP_Block_Template[] An array of block template objects.
+         */
+        public static function filter_block_templates_by_feature_flag($block_templates)
         {
         }
     }
@@ -34715,6 +34524,16 @@ namespace Automattic\WooCommerce\Blocks\Utils {
          * @return (array | null)
          */
         public static function get_line_height_class_and_style($attributes)
+        {
+        }
+        /**
+         * Get class and style for background-color from attributes.
+         *
+         * @param array $attributes Block attributes.
+         *
+         * @return (array | null)
+         */
+        public static function get_background_color_class_and_style($attributes)
         {
         }
         /**

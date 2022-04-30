@@ -6994,11 +6994,13 @@ namespace {
     class WC_Admin_Dashboard_Setup
     {
         /**
-         * List of tasks.
-         *
-         * @var array
+         * The task list.
          */
-        private $tasks = array('store_details' => array('completed' => \false, 'button_link' => 'admin.php?page=wc-admin&path=%2Fsetup-wizard'), 'products' => array('completed' => \false, 'button_link' => 'admin.php?page=wc-admin&task=products'), 'woocommerce-payments' => array('completed' => \false, 'button_link' => 'admin.php?page=wc-admin&path=%2Fpayments%2Fconnect'), 'payments' => array('completed' => \false, 'button_link' => 'admin.php?page=wc-admin&task=payments'), 'tax' => array('completed' => \false, 'button_link' => 'admin.php?page=wc-admin&task=tax'), 'shipping' => array('completed' => \false, 'button_link' => 'admin.php?page=wc-admin&task=shipping'), 'appearance' => array('completed' => \false, 'button_link' => 'admin.php?page=wc-admin&task=appearance'));
+        private $task_list = \null;
+        /**
+         * The tasks.
+         */
+        private $tasks = \null;
         /**
          * # of completed tasks.
          *
@@ -7018,13 +7020,30 @@ namespace {
         {
         }
         /**
-         * Populate tasks from the database.
+         * Get the button link for a given task.
+         *
+         * @param Task $task Task.
+         * @return string
          */
-        private function populate_general_tasks()
+        public function get_button_link($task)
         {
         }
         /**
-         * Getter for $tasks
+         * Get the task list.
+         *
+         * @return array
+         */
+        public function get_task_list()
+        {
+        }
+        /**
+         * Set the task list.
+         */
+        public function set_task_list($task_list)
+        {
+        }
+        /**
+         * Get the tasks.
          *
          * @return array
          */
@@ -7033,6 +7052,8 @@ namespace {
         }
         /**
          * Return # of completed tasks
+         *
+         * @return integer
          */
         public function get_completed_tasks_count()
         {
@@ -7050,13 +7071,7 @@ namespace {
          *
          * @return bool
          */
-        private function should_display_widget()
-        {
-        }
-        /**
-         * Populate payment tasks's visibility and completion
-         */
-        private function populate_payment_tasks()
+        public function should_display_widget()
         {
         }
     }
@@ -7839,6 +7854,24 @@ namespace {
         {
         }
         /**
+         * Add an admin notice about the bump of the required PHP version in WooCommerce 6.5
+         * if the current PHP version is too old.
+         *
+         * TODO: Remove this method in WooCommerce 6.5.
+         */
+        private static function maybe_add_php72_required_notice()
+        {
+        }
+        /**
+         * Remove the admin notice about the bump of the required PHP version in WooCommerce 6.5
+         * if the current PHP version is good.
+         *
+         * TODO: Remove this method in WooCommerce 6.5.
+         */
+        private static function maybe_remove_php72_required_notice()
+        {
+        }
+        /**
          * Show a notice.
          *
          * @param string $name Notice name.
@@ -7870,6 +7903,14 @@ namespace {
          * Hide a notice if the GET variable is set.
          */
         public static function hide_notices()
+        {
+        }
+        /**
+         * Hide a single notice.
+         *
+         * @param $name Notice name.
+         */
+        private static function hide_notice($name)
         {
         }
         /**
@@ -10699,6 +10740,12 @@ namespace {
          */
         public $delimiter;
         /**
+         * Error message for import.
+         *
+         * @var string
+         */
+        public $import_error_message;
+        /**
          * Constructor.
          */
         public function __construct()
@@ -10740,6 +10787,14 @@ namespace {
          * Performs post-import cleanup of files and the cache.
          */
         public function import_end()
+        {
+        }
+        /**
+         * Set the import error message.
+         *
+         * @param string $message Error message.
+         */
+        protected function set_import_error_message($message)
         {
         }
         /**
@@ -18507,7 +18562,7 @@ namespace {
          * @since 3.0.0
          * @var array
          */
-        protected $data = array('code' => '', 'amount' => 0, 'date_created' => \null, 'date_modified' => \null, 'date_expires' => \null, 'discount_type' => 'fixed_cart', 'description' => '', 'usage_count' => 0, 'individual_use' => \false, 'product_ids' => array(), 'excluded_product_ids' => array(), 'usage_limit' => 0, 'usage_limit_per_user' => 0, 'limit_usage_to_x_items' => \null, 'free_shipping' => \false, 'product_categories' => array(), 'excluded_product_categories' => array(), 'exclude_sale_items' => \false, 'minimum_amount' => '', 'maximum_amount' => '', 'email_restrictions' => array(), 'used_by' => array(), 'virtual' => \false);
+        protected $data = array('code' => '', 'amount' => 0, 'status' => \null, 'date_created' => \null, 'date_modified' => \null, 'date_expires' => \null, 'discount_type' => 'fixed_cart', 'description' => '', 'usage_count' => 0, 'individual_use' => \false, 'product_ids' => array(), 'excluded_product_ids' => array(), 'usage_limit' => 0, 'usage_limit_per_user' => 0, 'limit_usage_to_x_items' => \null, 'free_shipping' => \false, 'product_categories' => array(), 'excluded_product_categories' => array(), 'exclude_sale_items' => \false, 'minimum_amount' => '', 'maximum_amount' => '', 'email_restrictions' => array(), 'used_by' => array(), 'virtual' => \false);
         // Coupon message codes.
         const E_WC_COUPON_INVALID_FILTERED = 100;
         const E_WC_COUPON_INVALID_REMOVED = 101;
@@ -18594,6 +18649,16 @@ namespace {
          * @return string
          */
         public function get_description($context = 'view')
+        {
+        }
+        /**
+         * Get coupon status.
+         *
+         * @since  6.2.0
+         * @param  string $context What the value is for. Valid values are 'view' and 'edit'.
+         * @return string
+         */
+        public function get_status($context = 'view')
         {
         }
         /**
@@ -18843,6 +18908,15 @@ namespace {
          * @param string $description Description.
          */
         public function set_description($description)
+        {
+        }
+        /**
+         * Set coupon status.
+         *
+         * @since 3.0.0
+         * @param string $status Status.
+         */
+        public function set_status($status)
         {
         }
         /**
@@ -27576,7 +27650,7 @@ namespace {
         /**
          * Set name (this is the attribute name or taxonomy).
          *
-         * @param int $value Attribute name.
+         * @param string $value Attribute name.
          */
         public function set_name($value)
         {
@@ -33052,7 +33126,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '6.1.2';
+        public $version = '6.2.2';
         /**
          * WooCommerce Schema version.
          *
