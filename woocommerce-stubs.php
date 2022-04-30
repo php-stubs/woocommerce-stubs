@@ -7594,6 +7594,12 @@ namespace {
         {
         }
         /**
+         * Check if the user can access the top-level WooCommerce item.
+         */
+        public static function can_view_woocommerce_menu_item()
+        {
+        }
+        /**
          * Loads gateways and shipping methods into memory for use within settings.
          */
         public function settings_page_init()
@@ -22895,7 +22901,7 @@ namespace {
          *
          * @var array
          */
-        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_update_400_db_version'), '4.4.0' => array('wc_update_440_insert_attribute_terms_for_variable_products', 'wc_update_440_db_version'), '4.5.0' => array('wc_update_450_sanitize_coupons_code', 'wc_update_450_db_version'), '5.0.0' => array('wc_update_500_fix_product_review_count', 'wc_update_500_db_version'), '5.6.0' => array('wc_update_560_create_refund_returns_page', 'wc_update_560_db_version'), '6.0.0' => array('wc_update_600_migrate_rate_limit_options', 'wc_update_600_db_version'));
+        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_update_400_db_version'), '4.4.0' => array('wc_update_440_insert_attribute_terms_for_variable_products', 'wc_update_440_db_version'), '4.5.0' => array('wc_update_450_sanitize_coupons_code', 'wc_update_450_db_version'), '5.0.0' => array('wc_update_500_fix_product_review_count', 'wc_update_500_db_version'), '5.6.0' => array('wc_update_560_create_refund_returns_page', 'wc_update_560_db_version'), '6.0.0' => array('wc_update_600_migrate_rate_limit_options', 'wc_update_600_db_version'), '6.3.0' => array('wc_update_630_create_product_attributes_lookup_table', 'wc_update_630_db_version'));
         /**
          * Hook in tabs.
          */
@@ -30249,6 +30255,14 @@ namespace {
         {
         }
         /**
+         * Checks if session cookie is expired, or belongs to a logged out user.
+         *
+         * @return bool Whether session cookie is valid.
+         */
+        private function is_session_cookie_valid()
+        {
+        }
+        /**
          * Sets the session cookie on-demand (usually after adding an item to the cart).
          *
          * Since the cookie name (as of 2.1) is prepended with wp, cache systems like batcache will not cache pages when set.
@@ -30291,6 +30305,16 @@ namespace {
          * @return string
          */
         public function generate_customer_id()
+        {
+        }
+        /**
+         * Checks if this is an auto-generated customer ID.
+         *
+         * @param string|int $customer_id Customer ID to check.
+         *
+         * @return bool Whether customer ID is randomly generated.
+         */
+        private function is_customer_guest($customer_id)
         {
         }
         /**
@@ -32044,6 +32068,7 @@ namespace {
          * @since  3.0.0
          * @since  5.5.0 If a block template with the same name exists, return an
          * empty string.
+         * @since  6.3.0 It checks custom product taxonomies
          * @return string
          */
         private static function get_template_loader_default_file()
@@ -32303,6 +32328,14 @@ namespace {
          * @return array
          */
         private static function get_all_plugins()
+        {
+        }
+        /**
+         * Get the settings of WooCommerce Payments plugin
+         *
+         * @return array
+         */
+        private static function get_wcpay_settings()
         {
         }
         /**
@@ -33126,7 +33159,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '6.2.2';
+        public $version = '6.3.1';
         /**
          * WooCommerce Schema version.
          *
@@ -33986,15 +34019,6 @@ namespace {
          * Scripts to improve our form.
          */
         public function add_scripts()
-        {
-        }
-        /**
-         * For FSE themes add a "Customize WooCommerce" link to the Appearance menu.
-         *
-         * FSE themes hide the "Customize" link in the Appearance menu. In WooCommerce we have several options that can currently
-         * only be edited via the Customizer. For now, we are thus adding a new link for WooCommerce specific Customizer options.
-         */
-        public function add_fse_customize_link()
         {
         }
         /**
@@ -49882,6 +49906,15 @@ namespace {
          * @var string
          */
         protected $namespace = 'wc/v3';
+        /**
+         * Prepare objects query.
+         *
+         * @param  WP_REST_Request $request Full details about the request.
+         * @return array
+         */
+        protected function prepare_objects_query($request)
+        {
+        }
     }
     /**
      * REST API Customers controller class.
@@ -53954,11 +53987,13 @@ namespace {
         /**
          * Send a Tracks event when a product is published.
          *
-         * @param string $new_status New post_status.
-         * @param string $old_status Previous post_status.
-         * @param object $post WordPress post.
+         * @param int          $post_id     Post ID.
+         * @param WP_Post      $post        Post object.
+         * @param bool         $update      Whether this is an existing post being updated.
+         * @param null|WP_Post $post_before Null for new posts, the WP_Post object prior
+         *                                  to the update for updated posts.
          */
-        public function track_product_published($new_status, $old_status, $post)
+        public function track_product_published($post_id, $post, $update, $post_before)
         {
         }
         /**
@@ -61197,11 +61232,11 @@ namespace {
      * Get the product thumbnail, or the placeholder if not set.
      *
      * @param string $size (default: 'woocommerce_thumbnail').
-     * @param int    $deprecated1 Deprecated since WooCommerce 2.0 (default: 0).
-     * @param int    $deprecated2 Deprecated since WooCommerce 2.0 (default: 0).
+     * @param  array $attr Image attributes.
+     * @param  bool  $placeholder True to return $placeholder if no image is found, or false to return an empty string.
      * @return string
      */
-    function woocommerce_get_product_thumbnail($size = 'woocommerce_thumbnail', $deprecated1 = 0, $deprecated2 = 0)
+    function woocommerce_get_product_thumbnail($size = 'woocommerce_thumbnail', $attr = array(), $placeholder = \true)
     {
     }
     /**
