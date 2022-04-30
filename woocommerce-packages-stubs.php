@@ -7103,16 +7103,6 @@ namespace Automattic\WooCommerce\Admin\API {
         {
         }
         /**
-         * Create an alert notification in response to an error installing a plugin.
-         *
-         * @todo This should be moved to a filter to make this API more generic and less plugin-specific.
-         *
-         * @param string $slug The slug of the plugin being installed.
-         */
-        private function create_install_plugin_error_inbox_notification_for_jetpack_installs($slug)
-        {
-        }
-        /**
          * Install the requested plugin.
          *
          * @param  WP_REST_Request $request Full details about the request.
@@ -7128,6 +7118,24 @@ namespace Automattic\WooCommerce\Admin\API {
          * @return WP_Error|array Plugin Status
          */
         public function install_plugins($request)
+        {
+        }
+        /**
+         * Returns a list of recently scheduled installation jobs.
+         *
+         * @param  WP_REST_Request $request Full details about the request.
+         * @return array Jobs.
+         */
+        public function get_installation_status($request)
+        {
+        }
+        /**
+         * Returns a list of recently scheduled installation jobs.
+         *
+         * @param  WP_REST_Request $request Full details about the request.
+         * @return array Job.
+         */
+        public function get_job_installation_status($request)
         {
         }
         /**
@@ -7161,6 +7169,24 @@ namespace Automattic\WooCommerce\Admin\API {
          * @return WP_Error|array Plugin Status
          */
         public function activate_plugins($request)
+        {
+        }
+        /**
+         * Returns a list of recently scheduled activation jobs.
+         *
+         * @param  WP_REST_Request $request Full details about the request.
+         * @return array Job.
+         */
+        public function get_activation_status($request)
+        {
+        }
+        /**
+         * Returns a list of recently scheduled activation jobs.
+         *
+         * @param  WP_REST_Request $request Full details about the request.
+         * @return array Jobs.
+         */
+        public function get_job_activation_status($request)
         {
         }
         /**
@@ -13101,7 +13127,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Variations {
          * @param array $status Stock status from report row.
          * @return string
          */
-        protected function _get_stock_status($status)
+        protected function get_stock_status($status)
         {
         }
         /**
@@ -13206,6 +13232,26 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Variations {
          * @param array $query_args Query parameters.
          */
         protected function include_extended_info(&$products_data, $query_args)
+        {
+        }
+        /**
+         * Returns if simple products should be excluded from the report.
+         *
+         * @internal
+         *
+         * @param array $query_args Query parameters.
+         *
+         * @return boolean
+         */
+        protected function should_exclude_simple_products(array $query_args)
+        {
+        }
+        /**
+         * Fill missing extended_info.name for the deleted products.
+         *
+         * @param array $products Product data.
+         */
+        protected function fill_deleted_product_name(array &$products)
         {
         }
         /**
@@ -13360,6 +13406,18 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Variations\Stats {
          * @param array $query_args       Query arguments supplied by the user.
          */
         protected function update_sql_query_params($query_args)
+        {
+        }
+        /**
+         * Returns if simple products should be excluded from the report.
+         *
+         * @internal
+         *
+         * @param array $query_args Query parameters.
+         *
+         * @return boolean
+         */
+        protected function should_exclude_simple_products(array $query_args)
         {
         }
         /**
@@ -13601,144 +13659,6 @@ namespace Automattic\WooCommerce\Admin\API {
         }
     }
 }
-namespace Automattic\WooCommerce\Admin {
-    /**
-     * \Automattic\WooCommerce\Admin\CategoryLookup class.
-     */
-    class CategoryLookup
-    {
-        /**
-         * Stores changes to categories we need to sync.
-         *
-         * @var array
-         */
-        protected $edited_product_cats = array();
-        /**
-         * The single instance of the class.
-         *
-         * @var object
-         */
-        protected static $instance = null;
-        /**
-         * Constructor
-         *
-         * @return void
-         */
-        protected function __construct()
-        {
-        }
-        /**
-         * Get class instance.
-         *
-         * @return object Instance.
-         */
-        public static final function instance()
-        {
-        }
-        /**
-         * Init hooks.
-         */
-        public function init()
-        {
-        }
-        /**
-         * Regenerate all lookup table data.
-         */
-        public function regenerate()
-        {
-        }
-        /**
-         * Store edits so we know when the parent ID changes.
-         *
-         * @param int $category_id Term ID being edited.
-         */
-        public function before_edit($category_id)
-        {
-        }
-        /**
-         * When a product category gets edited, see if we need to sync the table.
-         *
-         * @param int $category_id Term ID being edited.
-         */
-        public function on_edit($category_id)
-        {
-        }
-        /**
-         * When a product category gets created, add a new lookup row.
-         *
-         * @param int $category_id Term ID being created.
-         */
-        public function on_create($category_id)
-        {
-        }
-        /**
-         * Delete lookup table data from a tree.
-         *
-         * @param int $category_id Category ID to delete.
-         * @param int $category_tree_id Tree to delete from.
-         * @return void
-         */
-        protected function delete($category_id, $category_tree_id)
-        {
-        }
-        /**
-         * Updates lookup table data for a category by ID.
-         *
-         * @param int $category_id Category ID to update.
-         */
-        protected function update($category_id)
-        {
-        }
-        /**
-         * Get category lookup table values to insert.
-         *
-         * @param int $category_id Category ID to insert.
-         * @param int $category_tree_id Tree to insert into.
-         * @return string
-         */
-        protected function get_insert_sql($category_id, $category_tree_id)
-        {
-        }
-        /**
-         * Used to construct insert query recursively.
-         *
-         * @param  array $inserts Array of data to insert.
-         * @param  array $terms   Terms to insert.
-         * @param  array $parents Parent IDs the terms belong to.
-         */
-        protected function get_term_insert_values(&$inserts, $terms, $parents = array())
-        {
-        }
-        /**
-         * Convert flat terms array into nested array.
-         *
-         * @param array   $hierarchy Array to put terms into.
-         * @param array   $terms Array of terms (id=>parent).
-         * @param integer $parent Parent ID.
-         */
-        protected function unflatten_terms(&$hierarchy, &$terms, $parent = 0)
-        {
-        }
-        /**
-         * Get category descendants.
-         *
-         * @param int $category_id The category ID to lookup.
-         * @return array
-         */
-        protected function get_descendants($category_id)
-        {
-        }
-        /**
-         * Return all ancestor category ids for a category.
-         *
-         * @param int $category_id The category ID to lookup.
-         * @return array
-         */
-        protected function get_ancestors($category_id)
-        {
-        }
-    }
-}
 namespace Automattic\WooCommerce\Admin\Composer {
     /**
      * Main package class.
@@ -13750,7 +13670,7 @@ namespace Automattic\WooCommerce\Admin\Composer {
          *
          * @var string
          */
-        const VERSION = '3.2.1';
+        const VERSION = '3.3.2';
         /**
          * Package active.
          *
@@ -14028,651 +13948,8 @@ namespace Automattic\WooCommerce\Admin {
         {
         }
     }
-    /**
-     * Events Class.
-     */
-    class Events
-    {
-        /**
-         * The single instance of the class.
-         *
-         * @var object
-         */
-        protected static $instance = null;
-        /**
-         * Constructor
-         *
-         * @return void
-         */
-        protected function __construct()
-        {
-        }
-        /**
-         * Get class instance.
-         *
-         * @return object Instance.
-         */
-        public static final function instance()
-        {
-        }
-        /**
-         * Cron event handlers.
-         */
-        public function init()
-        {
-        }
-        /**
-         * Daily events to run.
-         *
-         * Note: Order_Milestones::other_milestones is hooked to this as well.
-         */
-        public function do_wc_admin_daily()
-        {
-        }
-        /**
-         * Adds notes that should be added.
-         */
-        protected function possibly_add_notes()
-        {
-        }
-        /**
-         * Deletes notes that should be deleted.
-         */
-        protected function possibly_delete_notes()
-        {
-        }
-        /**
-         * Checks if remote inbox notifications are enabled.
-         *
-         * @return bool Whether remote inbox notifications are enabled.
-         */
-        protected function is_remote_inbox_notifications_enabled()
-        {
-        }
-        /**
-         * Checks if merchant email notifications are enabled.
-         *
-         * @return bool Whether merchant email notifications are enabled.
-         */
-        protected function is_merchant_email_notifications_enabled()
-        {
-        }
-    }
-    /**
-     * Feature plugin main class.
-     *
-     * @internal This file will not be bundled with woo core, only the feature plugin.
-     * @internal Note this is not called WC_Admin due to a class already existing in core with that name.
-     */
-    class FeaturePlugin
-    {
-        /**
-         * The single instance of the class.
-         *
-         * @var object
-         */
-        protected static $instance = null;
-        /**
-         * Constructor
-         *
-         * @return void
-         */
-        protected function __construct()
-        {
-        }
-        /**
-         * Get class instance.
-         *
-         * @return object Instance.
-         */
-        public static final function instance()
-        {
-        }
-        /**
-         * Init the feature plugin, only if we can detect both Gutenberg and WooCommerce.
-         */
-        public function init()
-        {
-        }
-        /**
-         * Install DB and create cron events when activated.
-         *
-         * @return void
-         */
-        public function on_activation()
-        {
-        }
-        /**
-         * Remove WooCommerce Admin scheduled actions on deactivate.
-         *
-         * @return void
-         */
-        public function on_deactivation()
-        {
-        }
-        /**
-         * Setup plugin once all other plugins are loaded.
-         *
-         * @return void
-         */
-        public function on_plugins_loaded()
-        {
-        }
-        /**
-         * Define Constants.
-         */
-        protected function define_constants()
-        {
-        }
-        /**
-         * Load Localisation files.
-         */
-        protected function load_plugin_textdomain()
-        {
-        }
-        /**
-         * Include WC Admin classes.
-         */
-        public function includes()
-        {
-        }
-        /**
-         * Set up our admin hooks and plugin loader.
-         */
-        protected function hooks()
-        {
-        }
-        /**
-         * Get an array of dependency error messages.
-         *
-         * @return array
-         */
-        protected function get_dependency_errors()
-        {
-        }
-        /**
-         * Returns true if all dependencies for the wc-admin plugin are loaded.
-         *
-         * @return bool
-         */
-        public function has_satisfied_dependencies()
-        {
-        }
-        /**
-         * Deactivates this plugin.
-         */
-        public function deactivate_self()
-        {
-        }
-        /**
-         * Notify users of the plugin requirements.
-         */
-        public function render_dependencies_notice()
-        {
-        }
-        /**
-         * Overwrites the allowed features array using a local `feature-config.php` file.
-         *
-         * @param array $features Array of feature slugs.
-         */
-        public function replace_supported_features($features)
-        {
-        }
-        /**
-         * Define constant if not already set.
-         *
-         * @param string      $name  Constant name.
-         * @param string|bool $value Constant value.
-         */
-        protected function define($name, $value)
-        {
-        }
-        /**
-         * Prevent cloning.
-         */
-        private function __clone()
-        {
-        }
-        /**
-         * Prevent unserializing.
-         */
-        public function __wakeup()
-        {
-        }
-    }
 }
 namespace Automattic\WooCommerce\Admin\Features {
-    /**
-     * Contains backend logic for the activity panel feature.
-     */
-    class ActivityPanels
-    {
-        /**
-         * Class instance.
-         *
-         * @var ActivityPanels instance
-         */
-        protected static $instance = null;
-        /**
-         * Get class instance.
-         */
-        public static function get_instance()
-        {
-        }
-        /**
-         * Hook into WooCommerce.
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Adds fields so that we can store activity panel last read and open times.
-         *
-         * @param array $user_data_fields User data fields.
-         * @return array
-         */
-        public function add_user_data_fields($user_data_fields)
-        {
-        }
-        /**
-         * Add alert count to the component settings.
-         *
-         * @param array $settings Component settings.
-         */
-        public function component_settings($settings)
-        {
-        }
-    }
-    /**
-     * Contains backend logic for the Analytics feature.
-     */
-    class Analytics
-    {
-        /**
-         * Option name used to toggle this feature.
-         */
-        const TOGGLE_OPTION_NAME = 'woocommerce_analytics_enabled';
-        /**
-         * Clear cache tool identifier.
-         */
-        const CACHE_TOOL_ID = 'clear_woocommerce_analytics_cache';
-        /**
-         * Class instance.
-         *
-         * @var Analytics instance
-         */
-        protected static $instance = null;
-        /**
-         * Get class instance.
-         */
-        public static function get_instance()
-        {
-        }
-        /**
-         * Hook into WooCommerce.
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Add the feature toggle to the features settings.
-         *
-         * @param array $features Feature sections.
-         * @return array
-         */
-        public static function add_feature_toggle($features)
-        {
-        }
-        /**
-         * Reloads the page when the option is toggled to make sure all Analytics features are loaded.
-         *
-         * @param string $old_value Old value.
-         * @param string $value     New value.
-         */
-        public static function reload_page_on_toggle($old_value, $value)
-        {
-        }
-        /**
-         * Preload data from the countries endpoint.
-         *
-         * @param array $endpoints Array of preloaded endpoints.
-         * @return array
-         */
-        public function add_preload_endpoints($endpoints)
-        {
-        }
-        /**
-         * Adds fields so that we can store user preferences for the columns to display on a report.
-         *
-         * @param array $user_data_fields User data fields.
-         * @return array
-         */
-        public function add_user_data_fields($user_data_fields)
-        {
-        }
-        /**
-         * Register the cache clearing tool on the WooCommerce > Status > Tools page.
-         *
-         * @param array $debug_tools Available debug tool registrations.
-         * @return array Filtered debug tool registrations.
-         */
-        public function register_cache_clear_tool($debug_tools)
-        {
-        }
-        /**
-         * Registers report pages.
-         */
-        public function register_pages()
-        {
-        }
-        /**
-         * Get report pages.
-         */
-        public static function get_report_pages()
-        {
-        }
-        /**
-         * "Clear" analytics cache by invalidating it.
-         */
-        public function run_clear_cache_tool()
-        {
-        }
-    }
-    /**
-     * CouponsMovedTrait trait.
-     */
-    trait CouponsMovedTrait
-    {
-        /**
-         * The GET query key for the legacy menu.
-         *
-         * @var string
-         */
-        protected static $query_key = 'legacy_coupon_menu';
-        /**
-         * The key for storing an option in the DB.
-         *
-         * @var string
-         */
-        protected static $option_key = 'wc_admin_show_legacy_coupon_menu';
-        /**
-         * Get the URL for the legacy coupon management.
-         *
-         * @return string The unescaped URL for the legacy coupon management page.
-         */
-        protected static function get_legacy_coupon_url()
-        {
-        }
-        /**
-         * Get the URL for the coupon management page.
-         *
-         * @param array $args Additional URL query arguments.
-         *
-         * @return string
-         */
-        protected static function get_coupon_url($args = [])
-        {
-        }
-        /**
-         * Get the new URL for managing coupons.
-         *
-         * @param string $page The management page.
-         *
-         * @return string
-         */
-        protected static function get_management_url($page)
-        {
-        }
-        /**
-         * Get the WC Admin path for the marking page.
-         *
-         * @return string
-         */
-        protected static function get_marketing_path()
-        {
-        }
-        /**
-         * Whether we should display the legacy coupon menu item.
-         *
-         * @return bool
-         */
-        protected static function should_display_legacy_menu()
-        {
-        }
-        /**
-         * Set whether we should display the legacy coupon menu item.
-         *
-         * @param bool $display Whether the menu should be displayed or not.
-         */
-        protected static function display_legacy_menu($display = false)
-        {
-        }
-    }
-    /**
-     * Contains backend logic for the Coupons feature.
-     */
-    class Coupons
-    {
-        use \Automattic\WooCommerce\Admin\Features\CouponsMovedTrait;
-        /**
-         * Class instance.
-         *
-         * @var Coupons instance
-         */
-        protected static $instance = null;
-        /**
-         * Get class instance.
-         */
-        public static function get_instance()
-        {
-        }
-        /**
-         * Hook into WooCommerce.
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Maybe add menu item back in original spot to help people transition
-         */
-        public function maybe_add_coupon_menu_redirect()
-        {
-        }
-        /**
-         * Call back for transition menu item
-         */
-        public function coupon_menu_moved()
-        {
-        }
-        /**
-         * Modify registered post type shop_coupon
-         *
-         * @param array $args Array of post type parameters.
-         *
-         * @return array the filtered parameters.
-         */
-        public function move_coupons($args)
-        {
-        }
-        /**
-         * Undo WC modifications to $parent_file for 'shop_coupon'
-         */
-        public function fix_coupon_menu_highlight()
-        {
-        }
-        /**
-         * Maybe add our wc-admin coupon scripts if viewing coupon pages
-         */
-        public function maybe_add_marketing_coupon_script()
-        {
-        }
-    }
-    /**
-     * Triggers customer effort score on several different actions.
-     */
-    class CustomerEffortScoreTracks
-    {
-        /**
-         * Option name for the CES Tracks queue.
-         */
-        const CES_TRACKS_QUEUE_OPTION_NAME = 'woocommerce_ces_tracks_queue';
-        /**
-         * Option name for the clear CES Tracks queue for page.
-         */
-        const CLEAR_CES_TRACKS_QUEUE_FOR_PAGE_OPTION_NAME = 'woocommerce_clear_ces_tracks_queue_for_page';
-        /**
-         * Option name for the set of actions that have been shown.
-         */
-        const SHOWN_FOR_ACTIONS_OPTION_NAME = 'woocommerce_ces_shown_for_actions';
-        /**
-         * Action name for settings change.
-         */
-        const SETTINGS_CHANGE_ACTION_NAME = 'settings_change';
-        /**
-         * Action name for add product categories.
-         */
-        const ADD_PRODUCT_CATEGORIES_ACTION_NAME = 'add_product_categories';
-        /**
-         * Action name for add product tags.
-         */
-        const ADD_PRODUCT_TAGS_ACTION_NAME = 'add_product_tags';
-        /*
-         * Action name for add product attributes.
-         */
-        const ADD_PRODUCT_ATTRIBUTES_ACTION_NAME = 'add_product_attributes';
-        /**
-         * Action name for import products.
-         */
-        const IMPORT_PRODUCTS_ACTION_NAME = 'import_products';
-        /**
-         * Action name for search.
-         */
-        const SEARCH_ACTION_NAME = 'ces_search';
-        /**
-         * Label for the snackbar that appears when a user submits the survey.
-         *
-         * @var string
-         */
-        private $onsubmit_label;
-        /**
-         * Constructor. Sets up filters to hook into WooCommerce.
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Add actions that require woocommerce_allow_tracking.
-         */
-        private function enable_survey_enqueing_if_tracking_is_enabled()
-        {
-        }
-        /**
-         * Returns a generated script for tracking tags added on edit-tags.php page.
-         * CES survey is triggered via direct access to wc/customer-effort-score store
-         * via wp.data.dispatch method.
-         *
-         * Due to lack of options to directly hook ourselves into the ajax post request
-         * initiated by edit-tags.php page, we infer a successful request by observing
-         * an increase of the number of rows in tags table
-         *
-         * @param string $action Action name for the survey.
-         * @param string $label Label for the snackbar.
-         *
-         * @return string Generated JavaScript to append to page.
-         */
-        private function get_script_track_edit_php($action, $label)
-        {
-        }
-        /**
-         * Get the current published product count.
-         *
-         * @return integer The current published product count.
-         */
-        private function get_product_count()
-        {
-        }
-        /**
-         * Get the current shop order count.
-         *
-         * @return integer The current shop order count.
-         */
-        private function get_shop_order_count()
-        {
-        }
-        /**
-         * Return whether the action has already been shown.
-         *
-         * @param string $action The action to check.
-         *
-         * @return bool Whether the action has already been shown.
-         */
-        private function has_been_shown($action)
-        {
-        }
-        /**
-         * Enqueue the item to the CES tracks queue.
-         *
-         * @param array $item The item to enqueue.
-         */
-        private function enqueue_to_ces_tracks($item)
-        {
-        }
-        /**
-         * Enqueue the CES survey on using search dynamically.
-         *
-         * @param string $search_area Search area such as "product" or "shop_order".
-         * @param string $page_now Value of window.pagenow.
-         * @param string $admin_page Value of window.adminpage.
-         */
-        public function enqueue_ces_survey_for_search($search_area, $page_now, $admin_page)
-        {
-        }
-        /**
-         * Maybe clear the CES tracks queue, executed on every page load. If the
-         * clear option is set it clears the queue. In practice, this executes a
-         * page load after the queued CES tracks are displayed on the client, which
-         * sets the clear option.
-         */
-        public function maybe_clear_ces_tracks_queue()
-        {
-        }
-        /**
-         * Appends a script to footer to trigger CES on adding product categories.
-         */
-        public function add_script_track_product_categories()
-        {
-        }
-        /**
-         * Appends a script to footer to trigger CES on adding product tags.
-         */
-        public function add_script_track_product_tags()
-        {
-        }
-        /**
-         * Maybe enqueue the CES survey on product import, if step is done.
-         */
-        public function run_on_product_import()
-        {
-        }
-        /**
-         * Enqueue the CES survey trigger for setting changes.
-         */
-        public function run_on_update_options()
-        {
-        }
-        /**
-         * Enqueue the CES survey on adding new product attributes.
-         */
-        public function run_on_add_product_attributes()
-        {
-        }
-        /**
-         * Determine on initiating CES survey on searching for product or orders.
-         */
-        public function run_on_load_edit_php()
-        {
-        }
-    }
     /**
      * Features Class.
      */
@@ -14833,214 +14110,13 @@ namespace Automattic\WooCommerce\Admin\Features {
         public static function add_admin_body_classes($admin_body_class = '')
         {
         }
-    }
-    /**
-     * Contains backend logic for the homescreen feature.
-     */
-    class Homescreen
-    {
         /**
-         * Menu slug.
+         * Alias internal features classes to make them backward compatible.
+         * We've moved our feature classes to src-internal as part of merging this
+         * repository with WooCommerce Core to form a monorepo.
+         * See https://wp.me/p90Yrv-2HY for details.
          */
-        const MENU_SLUG = 'wc-admin';
-        /**
-         * Class instance.
-         *
-         * @var Homescreen instance
-         */
-        protected static $instance = null;
-        /**
-         * Get class instance.
-         */
-        public static function get_instance()
-        {
-        }
-        /**
-         * Hook into WooCommerce.
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Adds fields so that we can store performance indicators, row settings, and chart type settings for users.
-         *
-         * @param array $user_data_fields User data fields.
-         * @return array
-         */
-        public function add_user_data_fields($user_data_fields)
-        {
-        }
-        /**
-         * Registers home page.
-         */
-        public function register_page()
-        {
-        }
-        /**
-         * Check if the user can access the top-level WooCommerce item.
-         *
-         * @return bool
-         */
-        public static function is_admin_user()
-        {
-        }
-        /**
-         * Possibly remove the WooCommerce menu item if it was purely used to access wc-admin pages.
-         */
-        public function possibly_remove_woocommerce_menu()
-        {
-        }
-        /**
-         * Update the WooCommerce menu structure to make our main dashboard/handler
-         * the top level link for 'WooCommerce'.
-         */
-        public function update_link_structure()
-        {
-        }
-        /**
-         * Preload options to prime state of the application.
-         *
-         * @param array $options Array of options to preload.
-         * @return array
-         */
-        public function preload_options($options)
-        {
-        }
-        /**
-         * Add data to the shared component settings.
-         *
-         * @param array $settings Shared component settings.
-         */
-        public function component_settings($settings)
-        {
-        }
-    }
-    /**
-     * Contains backend logic for the Marketing feature.
-     */
-    class Marketing
-    {
-        use \Automattic\WooCommerce\Admin\Features\CouponsMovedTrait;
-        /**
-         * Name of recommended plugins transient.
-         *
-         * @var string
-         */
-        const RECOMMENDED_PLUGINS_TRANSIENT = 'wc_marketing_recommended_plugins';
-        /**
-         * Name of knowledge base post transient.
-         *
-         * @var string
-         */
-        const KNOWLEDGE_BASE_TRANSIENT = 'wc_marketing_knowledge_base';
-        /**
-         * Class instance.
-         *
-         * @var Marketing instance
-         */
-        protected static $instance = null;
-        /**
-         * Get class instance.
-         */
-        public static function get_instance()
-        {
-        }
-        /**
-         * Hook into WooCommerce.
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Add main marketing menu item.
-         *
-         * Uses priority of 9 so other items can easily be added at the default priority (10).
-         */
-        public function add_parent_menu_item()
-        {
-        }
-        /**
-         * Registers report pages.
-         */
-        public function register_pages()
-        {
-        }
-        /**
-         * Register the main Marketing page, which is Marketing > Overview.
-         *
-         * This is done separately because we need to ensure the page is registered properly and
-         * that the link is done properly. For some reason the normal page registration process
-         * gives us the wrong menu link.
-         */
-        protected function register_overview_page()
-        {
-        }
-        /**
-         * Preload options to prime state of the application.
-         *
-         * @param array $options Array of options to preload.
-         * @return array
-         */
-        public function preload_options($options)
-        {
-        }
-        /**
-         * Add settings for marketing feature.
-         *
-         * @param array $settings Component settings.
-         * @return array
-         */
-        public function component_settings($settings)
-        {
-        }
-        /**
-         * Load recommended plugins from WooCommerce.com
-         *
-         * @return array
-         */
-        public function get_recommended_plugins()
-        {
-        }
-        /**
-         * Load knowledge base posts from WooCommerce.com
-         *
-         * @param string $category Category of posts to retrieve.
-         * @return array
-         */
-        public function get_knowledge_base_posts($category)
-        {
-        }
-    }
-    /**
-     * Determine if the mobile app banner shows on Android devices
-     */
-    class MobileAppBanner
-    {
-        /**
-         * Class instance.
-         *
-         * @var Analytics instance
-         */
-        protected static $instance = null;
-        /**
-         * Get class instance.
-         */
-        public static function get_instance()
-        {
-        }
-        /**
-         * Hook into WooCommerce.
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Adds fields so that we can store user preferences for the mobile app banner
-         *
-         * @param array $user_data_fields User data fields.
-         * @return array
-         */
-        public function add_user_data_fields($user_data_fields)
+        private function register_internal_class_aliases()
         {
         }
     }
@@ -15737,15 +14813,6 @@ namespace Automattic\WooCommerce\Admin\Features {
         {
         }
         /**
-         * Preload data from the countries endpoint.
-         *
-         * @param array $endpoints Array of preloaded endpoints.
-         * @return array
-         */
-        public function add_preload_endpoints($endpoints)
-        {
-        }
-        /**
          * Send profile data to WooCommerce.com.
          */
         public static function send_profile_data()
@@ -15772,6 +14839,36 @@ namespace Automattic\WooCommerce\Admin\Features {
          * @return bool
          */
         public static function should_show_profiler()
+        {
+        }
+        /**
+         * Redirect to the profiler on homepage if completion is needed.
+         */
+        public static function redirect_to_profiler()
+        {
+        }
+        /**
+         * Check if the profiler still needs to be completed.
+         *
+         * @return bool
+         */
+        public static function profiler_needs_completion()
+        {
+        }
+        /**
+         * Check if the current page is the profile wizard.
+         *
+         * @return bool
+         */
+        public static function is_profile_wizard()
+        {
+        }
+        /**
+         * Check if the current page is the homepage.
+         *
+         * @return bool
+         */
+        public static function is_homepage()
         {
         }
         /**
@@ -15846,12 +14943,12 @@ namespace Automattic\WooCommerce\Admin\Features {
         {
         }
         /**
-         * Append dynamic product data from API.
+         * Get dynamic product data from API.
          *
          * @param array $product_types Array of product types.
          * @return array
          */
-        public static function append_product_data($product_types)
+        public static function get_product_data($product_types)
         {
         }
         /**
@@ -15896,12 +14993,12 @@ namespace Automattic\WooCommerce\Admin\Features {
         {
         }
         /**
-         * Let the app know that we will be showing the onboarding route, so wp-admin elements should be hidden while loading.
+         * Set the admin full screen class when loading to prevent flashes of unstyled content.
          *
-         * @param bool $is_loading Indicates if the `woocommerce-admin-is-loading` should be appended or not.
-         * @return bool
+         * @param bool $classes Body classes.
+         * @return array
          */
-        public function is_loading($is_loading)
+        public static function add_loading_classes($classes)
         {
         }
         /**
@@ -15973,7 +15070,7 @@ namespace Automattic\WooCommerce\Admin\Features {
         {
         }
         /**
-         * Delete MailchimpScheduler::SUBSCRIBED_OPTION_NAME option if profile data is being updated with a new email.
+         * Reset MailchimpScheduler if profile data is being updated with a new email.
          *
          * @param array $existing_data Existing option data.
          * @param array $updating_data Updating option data.
@@ -15989,15 +15086,6 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
      */
     trait TaskTraits
     {
-        /**
-         * Prefix event for backwards compatibility with tracks event naming.
-         *
-         * @param string $event_name Event name.
-         * @return string
-         */
-        public function prefix_event($event_name)
-        {
-        }
         /**
          * Record a tracks event with the prefixed event name.
          *
@@ -16057,23 +15145,31 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
          */
         const ACTIVE_TASK_TRANSIENT = 'wc_onboarding_active_task';
         /**
+         * Parent task list.
+         *
+         * @var TaskList
+         */
+        protected $task_list;
+        /**
          * Duration to milisecond mapping.
          *
          * @var string
          */
         protected $duration_to_ms = array('day' => DAY_IN_SECONDS * 1000, 'hour' => HOUR_IN_SECONDS * 1000, 'week' => WEEK_IN_SECONDS * 1000);
         /**
+         * Constructor
+         *
+         * @param TaskList|null $task_list Parent task list.
+         */
+        public function __construct($task_list = null)
+        {
+        }
+        /**
          * ID.
          *
          * @return string
          */
         public abstract function get_id();
-        /**
-         * Parent ID.
-         *
-         * @return string
-         */
-        public abstract function get_parent_id();
         /**
          * Title.
          *
@@ -16092,6 +15188,23 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
          * @return string
          */
         public abstract function get_time();
+        /**
+         * Parent ID.
+         *
+         * @return string
+         */
+        public function get_parent_id()
+        {
+        }
+        /**
+         * Prefix event for track event naming.
+         *
+         * @param string $event_name Event name.
+         * @return string
+         */
+        public function prefix_event($event_name)
+        {
+        }
         /**
          * Additional info.
          *
@@ -16327,9 +15440,10 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
         /**
          * Constructor.
          *
-         * @param array $args Array of task args.
+         * @param TaskList $task_list Parent task list.
+         * @param array    $args Array of task args.
          */
-        public function __construct($args)
+        public function __construct($task_list, $args)
         {
         }
         /**
@@ -16354,14 +15468,6 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
          * @return string
          */
         public function get_content()
-        {
-        }
-        /**
-         * Parent ID.
-         *
-         * @return string
-         */
-        public function get_parent_id()
         {
         }
         /**
@@ -16511,6 +15617,12 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
          */
         public $id = '';
         /**
+         * ID.
+         *
+         * @var string
+         */
+        public $hidden_id = '';
+        /**
          * Title.
          *
          * @var string
@@ -16528,6 +15640,12 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
          * @var array
          */
         public $sort_by = array();
+        /**
+         * Event prefix.
+         *
+         * @var string|null
+         */
+        public $event_prefix = null;
         /**
          * Constructor
          *
@@ -16595,6 +15713,15 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
         /**
          * Get only visible tasks in list.
          *
+         * @param string $task_id id of task.
+         * @return Task
+         */
+        public function get_task($task_id)
+        {
+        }
+        /**
+         * Get only visible tasks in list.
+         *
          * @return array
          */
         public function get_viewable_tasks()
@@ -16613,6 +15740,15 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
          * @return TaskList returns $this, for chaining.
          */
         public function sort_tasks($sort_by = array())
+        {
+        }
+        /**
+         * Prefix event for track event naming.
+         *
+         * @param string $event_name Event name.
+         * @return string
+         */
+        public function prefix_event($event_name)
         {
         }
         /**
@@ -16688,7 +15824,7 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
          * Add a task list.
          *
          * @param array $args Task list properties.
-         * @return WP_Error|Task
+         * @return WP_Error|TaskList
          */
         public static function add_list($args)
         {
@@ -16701,12 +15837,6 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
          * @return WP_Error|Task
          */
         public static function add_task($list_id, $args)
-        {
-        }
-        /**
-         * Add default task lists.
-         */
-        public static function maybe_add_default_tasks()
         {
         }
         /**
@@ -16723,6 +15853,23 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
          * @return array
          */
         public static function get_lists()
+        {
+        }
+        /**
+         * Get all task lists.
+         *
+         * @param array $ids list of task list ids.
+         * @return array
+         */
+        public static function get_lists_by_ids($ids)
+        {
+        }
+        /**
+         * Get all task list ids.
+         *
+         * @return array
+         */
+        public static function get_list_ids()
         {
         }
         /**
@@ -16772,14 +15919,6 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
          * @return string
          */
         public function get_id()
-        {
-        }
-        /**
-         * Parent ID.
-         *
-         * @return string
-         */
-        public function get_parent_id()
         {
         }
         /**
@@ -16837,11 +15976,11 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
     class AdditionalPayments extends \Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks\Payments
     {
         /**
-         * Parent ID.
+         * ID.
          *
          * @return string
          */
-        public function get_parent_id()
+        public function get_id()
         {
         }
         /**
@@ -16853,11 +15992,43 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
         {
         }
         /**
+         * Content.
+         *
+         * @return string
+         */
+        public function get_content()
+        {
+        }
+        /**
+         * Time.
+         *
+         * @return string
+         */
+        public function get_time()
+        {
+        }
+        /**
+         * Task completion.
+         *
+         * @return bool
+         */
+        public function is_complete()
+        {
+        }
+        /**
          * Task visibility.
          *
          * @return bool
          */
         public function can_view()
+        {
+        }
+        /**
+         * Check if the store has any enabled gateways.
+         *
+         * @return bool
+         */
+        public static function has_gateways()
         {
         }
     }
@@ -16867,9 +16038,11 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
     class Appearance extends \Automattic\WooCommerce\Admin\Features\OnboardingTasks\Task
     {
         /**
-         * Initialize.
+         * Constructor
+         *
+         * @param TaskList $task_list Parent task list.
          */
-        public function __construct()
+        public function __construct($task_list)
         {
         }
         /**
@@ -16878,14 +16051,6 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
          * @return string
          */
         public function get_id()
-        {
-        }
-        /**
-         * Parent ID.
-         *
-         * @return string
-         */
-        public function get_parent_id()
         {
         }
         /**
@@ -16955,14 +16120,6 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
         {
         }
         /**
-         * Parent ID.
-         *
-         * @return string
-         */
-        public function get_parent_id()
-        {
-        }
-        /**
          * Title.
          *
          * @return string
@@ -17025,9 +16182,11 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
     class Products extends \Automattic\WooCommerce\Admin\Features\OnboardingTasks\Task
     {
         /**
-         * Initialize.
+         * Constructor
+         *
+         * @param TaskList $task_list Parent task list.
          */
-        public function __construct()
+        public function __construct($task_list)
         {
         }
         /**
@@ -17036,14 +16195,6 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
          * @return string
          */
         public function get_id()
-        {
-        }
-        /**
-         * Parent ID.
-         *
-         * @return string
-         */
-        public function get_parent_id()
         {
         }
         /**
@@ -17117,9 +16268,11 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
     class Purchase extends \Automattic\WooCommerce\Admin\Features\OnboardingTasks\Task
     {
         /**
-         * Initialize.
+         * Constructor
+         *
+         * @param TaskList $task_list Parent task list.
          */
-        public function __construct()
+        public function __construct($task_list)
         {
         }
         /**
@@ -17138,14 +16291,6 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
          * @return string
          */
         public function get_id()
-        {
-        }
-        /**
-         * Parent ID.
-         *
-         * @return string
-         */
-        public function get_parent_id()
         {
         }
         /**
@@ -17205,11 +16350,29 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
         {
         }
         /**
+         * Get puchasable theme by slug.
+         *
+         * @param string $price_string string of price.
+         * @return float|null
+         */
+        private function get_price_from_string($price_string)
+        {
+        }
+        /**
+         * Get puchasable theme by slug.
+         *
+         * @param string $slug from theme.
+         * @return array|null
+         */
+        private function get_paid_theme_by_slug($slug)
+        {
+        }
+        /**
          * Get purchaseable and remaining products.
          *
          * @return array
          */
-        public static function get_products()
+        private function get_paid_products_and_themes()
         {
         }
     }
@@ -17224,14 +16387,6 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
          * @return string
          */
         public function get_id()
-        {
-        }
-        /**
-         * Parent ID.
-         *
-         * @return string
-         */
-        public function get_parent_id()
         {
         }
         /**
@@ -17313,14 +16468,6 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
         {
         }
         /**
-         * Parent ID.
-         *
-         * @return string
-         */
-        public function get_parent_id()
-        {
-        }
-        /**
          * Title.
          *
          * @return string
@@ -17367,9 +16514,11 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
     class Tax extends \Automattic\WooCommerce\Admin\Features\OnboardingTasks\Task
     {
         /**
-         * Initialize.
+         * Constructor
+         *
+         * @param TaskList $task_list Parent task list.
          */
-        public function __construct()
+        public function __construct($task_list)
         {
         }
         /**
@@ -17384,14 +16533,6 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
          * @return string
          */
         public function get_id()
-        {
-        }
-        /**
-         * Parent ID.
-         *
-         * @return string
-         */
-        public function get_parent_id()
         {
         }
         /**
@@ -17736,388 +16877,7 @@ namespace Automattic\WooCommerce\Admin\Features\PaymentGatewaySuggestions {
         }
     }
 }
-namespace Automattic\WooCommerce\Admin\Features\RemoteFreeExtensions {
-    /**
-     * Default Free Extensions
-     */
-    class DefaultFreeExtensions
-    {
-        /**
-         * Get default specs.
-         *
-         * @return array Default specs.
-         */
-        public static function get_all()
-        {
-        }
-        /**
-         * Get the plugin arguments by slug.
-         *
-         * @param string $slug Slug.
-         * @return array
-         */
-        public static function get_plugin($slug)
-        {
-        }
-    }
-    /**
-     * Evaluates the extension and returns it.
-     */
-    class EvaluateExtension
-    {
-        /**
-         * Evaluates the extension and returns it.
-         *
-         * @param object $extension The extension to evaluate.
-         * @return object The evaluated extension.
-         */
-        public static function evaluate($extension)
-        {
-        }
-    }
-    /**
-     * Remote Payment Methods engine.
-     * This goes through the specs and gets eligible payment methods.
-     */
-    class Init
-    {
-        /**
-         * Constructor.
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Go through the specs and run them.
-         *
-         * @param array $allowed_bundles Optional array of allowed bundles to be returned.
-         * @return array
-         */
-        public static function get_extensions($allowed_bundles = array())
-        {
-        }
-        /**
-         * Delete the specs transient.
-         */
-        public static function delete_specs_transient()
-        {
-        }
-        /**
-         * Get specs or fetch remotely if they don't exist.
-         */
-        public static function get_specs()
-        {
-        }
-    }
-    /**
-     * Specs data source poller class for remote free extensions.
-     */
-    class RemoteFreeExtensionsDataSourcePoller extends \Automattic\WooCommerce\Admin\DataSourcePoller
-    {
-        const ID = 'remote_free_extensions';
-        const DATA_SOURCES = array('https://woocommerce.com/wp-json/wccom/obw-free-extensions/3.0/extensions.json');
-        /**
-         * Class instance.
-         *
-         * @var Analytics instance
-         */
-        protected static $instance = null;
-        /**
-         * Get class instance.
-         */
-        public static function get_instance()
-        {
-        }
-    }
-}
 namespace Automattic\WooCommerce\Admin\Features {
-    /**
-     * Remote Inbox Notifications feature logic.
-     */
-    class RemoteInboxNotifications
-    {
-        /**
-         * Option name used to toggle this feature.
-         */
-        const TOGGLE_OPTION_NAME = 'woocommerce_show_marketplace_suggestions';
-        /**
-         * Class instance.
-         *
-         * @var RemoteInboxNotifications instance
-         */
-        protected static $instance = null;
-        /**
-         * Get class instance.
-         */
-        public static function get_instance()
-        {
-        }
-        /**
-         * Hook into WooCommerce.
-         */
-        public function __construct()
-        {
-        }
-    }
-    /**
-     * Contains backend logic for the Settings feature.
-     */
-    class Settings
-    {
-        /**
-         * Option name used to toggle this feature.
-         */
-        const TOGGLE_OPTION_NAME = 'woocommerce_settings_enabled';
-        /**
-         * Class instance.
-         *
-         * @var Settings instance
-         */
-        protected static $instance = null;
-        /**
-         * Get class instance.
-         */
-        public static function get_instance()
-        {
-        }
-        /**
-         * Hook into WooCommerce.
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Add the necessary data to initially load the WooCommerce Settings pages.
-         *
-         * @param array $settings Array of component settings.
-         * @return array Array of component settings.
-         */
-        public static function add_component_settings($settings)
-        {
-        }
-        /**
-         * Add the feature toggle to the features settings.
-         *
-         * @param array $features Feature sections.
-         * @return array
-         */
-        public static function add_feature_toggle($features)
-        {
-        }
-        /**
-         * Registers settings pages.
-         */
-        public function register_pages()
-        {
-        }
-        /**
-         * Replace the Settings page in the original WooCommerce menu.
-         *
-         * @param array $page Page used to replace the original.
-         */
-        protected function replace_settings_page($page)
-        {
-        }
-        /**
-         * Redirect the old settings page URLs to the new ones.
-         */
-        public function redirect_core_settings_pages()
-        {
-        }
-    }
-    /**
-     * Shows print shipping label banner on edit order page.
-     */
-    class ShippingLabelBanner
-    {
-        /**
-         * Singleton for the display rules class
-         *
-         * @var ShippingLabelBannerDisplayRules
-         */
-        private $shipping_label_banner_display_rules;
-        /**
-         * Constructor
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Check if WooCommerce Shipping makes sense for this merchant.
-         *
-         * @return bool
-         */
-        private function should_show_meta_box()
-        {
-        }
-        /**
-         * Add metabox to order page.
-         *
-         * @param string   $post_type current post type.
-         * @param \WP_Post $post Current post object.
-         */
-        public function add_meta_boxes($post_type, $post)
-        {
-        }
-        /**
-         * Count shippable items
-         *
-         * @param \WC_Order $order Current order.
-         * @return int
-         */
-        private function count_shippable_items(\WC_Order $order)
-        {
-        }
-        /**
-         * Adds JS to order page to render shipping banner.
-         *
-         * @param string $hook current page hook.
-         */
-        public function add_print_shipping_label_script($hook)
-        {
-        }
-        /**
-         * Render placeholder metabox.
-         *
-         * @param \WP_Post $post current post.
-         * @param array    $args empty args.
-         */
-        public function meta_box($post, $args)
-        {
-        }
-    }
-    /**
-     * Determines whether or not the Shipping Label Banner should be displayed
-     */
-    class ShippingLabelBannerDisplayRules
-    {
-        /**
-         * Holds the installed Jetpack version.
-         *
-         * @var string
-         */
-        private $jetpack_version;
-        /**
-         * Whether or not the installed Jetpack is connected.
-         *
-         * @var bool
-         */
-        private $jetpack_connected;
-        /**
-         * Holds the installed WooCommerce Shipping & Tax version.
-         *
-         * @var string
-         */
-        private $wcs_version;
-        /**
-         * Whether or not there're plugins installed incompatible with the banner.
-         *
-         * @var bool
-         */
-        private $no_incompatible_plugins_installed;
-        /**
-         * Whether or not the WooCommerce Shipping & Tax ToS has been accepted.
-         *
-         * @var bool
-         */
-        private $wcs_tos_accepted;
-        /**
-         * Minimum supported Jetpack version.
-         *
-         * @var string
-         */
-        private $min_jetpack_version = '4.4';
-        /**
-         * Minimum supported WooCommerce Shipping & Tax version.
-         *
-         * @var string
-         */
-        private $min_wcs_version = '1.22.5';
-        /**
-         * Supported countries by USPS, see: https://webpmt.usps.gov/pmt010.cfm
-         *
-         * @var array
-         */
-        private $supported_countries = array('US', 'AS', 'PR', 'VI', 'GU', 'MP', 'UM', 'FM', 'MH');
-        /**
-         * Array of supported currency codes.
-         *
-         * @var array
-         */
-        private $supported_currencies = array('USD');
-        /**
-         * Constructor.
-         *
-         * @param string $jetpack_version Installed Jetpack version to check.
-         * @param bool   $jetpack_connected Is Jetpack connected?.
-         * @param string $wcs_version Installed WooCommerce Shipping & Tax version to check.
-         * @param bool   $wcs_tos_accepted WooCommerce Shipping & Tax Terms of Service accepted?.
-         * @param bool   $incompatible_plugins_installed Are there any incompatible plugins installed?.
-         */
-        public function __construct($jetpack_version, $jetpack_connected, $wcs_version, $wcs_tos_accepted, $incompatible_plugins_installed)
-        {
-        }
-        /**
-         * Determines whether banner is eligible for display (does not include a/b logic).
-         */
-        public function should_display_banner()
-        {
-        }
-        /**
-         * Checks if the banner was not dismissed by the user.
-         *
-         * @return bool
-         */
-        private function banner_not_dismissed()
-        {
-        }
-        /**
-         * Checks if jetpack is installed and active.
-         *
-         * @return bool
-         */
-        private function jetpack_installed_and_active()
-        {
-        }
-        /**
-         * Checks if Jetpack version is supported.
-         *
-         * @return bool
-         */
-        private function jetpack_up_to_date()
-        {
-        }
-        /**
-         * Checks if there's a shippable product in the current order.
-         *
-         * @return bool
-         */
-        private function order_has_shippable_products()
-        {
-        }
-        /**
-         * Checks if the store is in the US and has its default currency set to USD.
-         *
-         * @return bool
-         */
-        private function store_in_us_and_usd()
-        {
-        }
-        /**
-         * Checks if WooCommerce Shipping & Tax is not installed.
-         *
-         * @return bool
-         */
-        private function wcs_not_installed()
-        {
-        }
-        /**
-         * Checks if WooCommerce Shipping & Tax is up to date.
-         */
-        private function wcs_up_to_date()
-        {
-        }
-    }
     /**
      * Shows print shipping label banner on edit order page.
      */
@@ -18194,321 +16954,7 @@ namespace Automattic\WooCommerce\Admin\Features {
         }
     }
 }
-namespace Automattic\WooCommerce\Admin\Features\WcPayPromotion {
-    /**
-     * WC Pay Promotion engine.
-     */
-    class Init
-    {
-        const EXPLAT_VARIATION_PREFIX = 'woocommerce_wc_pay_promotion_payment_methods_table_';
-        /**
-         * Constructor.
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Possibly registers the pre install wc pay promoted gateway.
-         *
-         * @param array $gateways list of gateway classes.
-         * @return array list of gateway classes.
-         */
-        public static function possibly_register_pre_install_wc_pay_promotion_gateway($gateways)
-        {
-        }
-        /**
-         * Possibly filters out woocommerce-payments from recommended payment methods.
-         *
-         * @param array  $specs list of payment methods.
-         * @param string $datasource_poller_id id of data source poller.
-         * @return array list of payment method.
-         */
-        public static function possibly_filter_recommended_payment_gateways($specs, $datasource_poller_id)
-        {
-        }
-        /**
-         * Checks if promoted gateway can be registered.
-         *
-         * @return boolean if promoted gateway should be registered.
-         */
-        public static function can_show_promotion()
-        {
-        }
-        /**
-         * By default, new payment gateways are put at the bottom of the list on the admin "Payments" settings screen.
-         * For visibility, we want WooCommerce Payments to be at the top of the list.
-         *
-         * @param array $ordering Existing ordering of the payment gateways.
-         *
-         * @return array Modified ordering.
-         */
-        public static function set_gateway_top_of_list($ordering)
-        {
-        }
-        /**
-         * Get WC Pay promotion spec.
-         */
-        public static function get_wc_pay_promotion_spec()
-        {
-        }
-        /**
-         * Go through the specs and run them.
-         */
-        public static function get_promotions()
-        {
-        }
-        /**
-         * Delete the specs transient.
-         */
-        public static function delete_specs_transient()
-        {
-        }
-        /**
-         * Get specs or fetch remotely if they don't exist.
-         */
-        public static function get_specs()
-        {
-        }
-    }
-    /**
-     * A Psuedo WCPay gateway class.
-     *
-     * @extends WC_Payment_Gateway
-     */
-    class WCPaymentGatewayPreInstallWCPayPromotion extends \WC_Payment_Gateway
-    {
-        const GATEWAY_ID = 'pre_install_woocommerce_payments_promotion';
-        /**
-         * Constructor
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Initialise Gateway Settings Form Fields.
-         */
-        public function init_form_fields()
-        {
-        }
-        /**
-         * Check if the promotional gateaway has been dismissed.
-         *
-         * @return bool
-         */
-        public static function is_dismissed()
-        {
-        }
-    }
-    /**
-     * Specs data source poller class for WooCommerce Payment Promotion.
-     */
-    class WcPayPromotionDataSourcePoller extends \Automattic\WooCommerce\Admin\DataSourcePoller
-    {
-        const ID = 'payment_method_promotion';
-        /**
-         * Default data sources array.
-         */
-        const DATA_SOURCES = array('https://woocommerce.com/wp-json/wccom/payment-gateway-suggestions/1.0/payment-method/promotions.json');
-        /**
-         * Class instance.
-         *
-         * @var Analytics instance
-         */
-        protected static $instance = null;
-        /**
-         * Get class instance.
-         */
-        public static function get_instance()
-        {
-        }
-    }
-}
-namespace Automattic\WooCommerce\Admin\Features {
-    /**
-     * Class WCPayWelcomePage
-     *
-     * @package Automattic\WooCommerce\Admin\Features
-     */
-    class WcPayWelcomePage
-    {
-        const EXPERIMENT_NAME_BASE = 'woocommerce_payments_menu_promo_nz_ie_:yyyy_:mm';
-        /**
-         * WCPayWelcomePage constructor.
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Registers the WooCommerce Payments welcome page.
-         */
-        public function register_payments_welcome_page()
-        {
-        }
-        /**
-         * Checks if user is in the experiment.
-         *
-         * @return bool Whether the user is in the treatment group.
-         */
-        private function should_add_the_menu()
-        {
-        }
-    }
-}
 namespace Automattic\WooCommerce\Admin {
-    /**
-     * Install Class.
-     */
-    class Install
-    {
-        /**
-         * Plugin version option name.
-         */
-        const VERSION_OPTION = 'woocommerce_admin_version';
-        /**
-         * DB updates and callbacks that need to be run per version.
-         *
-         * @var array
-         */
-        protected static $db_updates = array('0.20.1' => array('wc_admin_update_0201_order_status_index', 'wc_admin_update_0201_db_version'), '0.23.0' => array('wc_admin_update_0230_rename_gross_total', 'wc_admin_update_0230_db_version'), '0.25.1' => array('wc_admin_update_0251_remove_unsnooze_action', 'wc_admin_update_0251_db_version'), '1.1.0' => array('wc_admin_update_110_remove_facebook_note', 'wc_admin_update_110_db_version'), '1.3.0' => array('wc_admin_update_130_remove_dismiss_action_from_tracking_opt_in_note', 'wc_admin_update_130_db_version'), '1.4.0' => array('wc_admin_update_140_change_deactivate_plugin_note_type', 'wc_admin_update_140_db_version'), '1.6.0' => array('wc_admin_update_160_remove_facebook_note', 'wc_admin_update_160_db_version'), '1.7.0' => array('wc_admin_update_170_homescreen_layout', 'wc_admin_update_170_db_version'), '2.7.0' => array('wc_admin_update_270_delete_report_downloads', 'wc_admin_update_270_db_version'), '2.7.1' => array('wc_admin_update_271_update_task_list_options', 'wc_admin_update_271_db_version'), '2.8.0' => array('wc_admin_update_280_order_status', 'wc_admin_update_280_db_version'), '2.9.0' => array('wc_admin_update_290_update_apperance_task_option', 'wc_admin_update_290_delete_default_homepage_layout_option', 'wc_admin_update_290_db_version'), '3.0.0' => array('wc_admin_update_300_update_is_read_from_last_read', 'wc_admin_update_300_db_version'));
-        /**
-         * Migrated option names mapping. New => old.
-         *
-         * @var array
-         */
-        protected static $migrated_options = array('woocommerce_onboarding_profile' => 'wc_onboarding_profile', 'woocommerce_admin_install_timestamp' => 'wc_admin_install_timestamp', 'woocommerce_onboarding_opt_in' => 'wc_onboarding_opt_in', 'woocommerce_admin_import_stats' => 'wc_admin_import_stats', 'woocommerce_admin_version' => 'wc_admin_version', 'woocommerce_admin_last_orders_milestone' => 'wc_admin_last_orders_milestone', 'woocommerce_admin-wc-helper-last-refresh' => 'wc-admin-wc-helper-last-refresh', 'woocommerce_admin_report_export_status' => 'wc_admin_report_export_status', 'woocommerce_task_list_complete' => 'woocommerce_task_list_complete', 'woocommerce_task_list_hidden' => 'woocommerce_task_list_hidden', 'woocommerce_extended_task_list_complete' => 'woocommerce_extended_task_list_complete', 'woocommerce_extended_task_list_hidden' => 'woocommerce_extended_task_list_hidden');
-        /**
-         * Hook in tabs.
-         */
-        public static function init()
-        {
-        }
-        /**
-         * Migrate option values to their new keys/names.
-         */
-        public static function migrate_options()
-        {
-        }
-        /**
-         * Check WC Admin version and run the updater is required.
-         *
-         * This check is done on all requests and runs if the versions do not match.
-         */
-        public static function check_version()
-        {
-        }
-        /**
-         * Install WC Admin.
-         */
-        public static function install()
-        {
-        }
-        /**
-         * Check if the installer is installing.
-         *
-         * @return bool
-         */
-        public static function is_installing()
-        {
-        }
-        /**
-         * Get database schema.
-         *
-         * @return string
-         */
-        protected static function get_schema()
-        {
-        }
-        /**
-         * Create database tables.
-         */
-        public static function create_tables()
-        {
-        }
-        /**
-         * Return a list of tables. Used to make sure all WC Admin tables are dropped
-         * when uninstalling the plugin in a single site or multi site environment.
-         *
-         * @return array WC tables.
-         */
-        public static function get_tables()
-        {
-        }
-        /**
-         * Adds new tables.
-         *
-         * @param array $wc_tables List of WooCommerce tables.
-         * @return array
-         */
-        public static function add_tables($wc_tables)
-        {
-        }
-        /**
-         * Uninstall tables when MU blog is deleted.
-         *
-         * @param array $tables List of tables that will be deleted by WP.
-         *
-         * @return string[]
-         */
-        public static function wpmu_drop_tables($tables)
-        {
-        }
-        /**
-         * Get list of DB update callbacks.
-         *
-         * @return array
-         */
-        public static function get_db_update_callbacks()
-        {
-        }
-        /**
-         * Is a DB update needed?
-         *
-         * @return boolean
-         */
-        public static function needs_db_update()
-        {
-        }
-        /**
-         * See if we need to show or run database updates during install.
-         */
-        private static function maybe_update_db_version()
-        {
-        }
-        /**
-         * Push all needed DB updates to the queue for processing.
-         */
-        private static function update()
-        {
-        }
-        /**
-         * Update WC Admin version to current.
-         *
-         * @param string|null $version New WooCommerce Admin DB version or null.
-         */
-        public static function update_db_version($version = null)
-        {
-        }
-        /**
-         * Schedule cron events.
-         */
-        public static function create_events()
-        {
-        }
-        /**
-         * Delete obsolete notes.
-         */
-        protected static function delete_obsolete_notes()
-        {
-        }
-        /**
-         * Drop WooCommerce Admin tables.
-         *
-         * @return void
-         */
-        public static function drop_tables()
-        {
-        }
-    }
     /**
      * Loader Class.
      */
@@ -19315,7 +17761,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
      */
     class CouponPageMoved
     {
-        use \Automattic\WooCommerce\Admin\Notes\NoteTraits, \Automattic\WooCommerce\Admin\Features\CouponsMovedTrait;
+        use \Automattic\WooCommerce\Admin\Notes\NoteTraits, \Automattic\WooCommerce\Internal\Admin\CouponsMovedTrait;
         const NOTE_NAME = 'wc-admin-coupon-page-moved';
         /**
          * Initialize our hooks.
@@ -20243,6 +18689,123 @@ namespace Automattic\WooCommerce\Admin\Notes {
         }
     }
     /**
+     * EmailNotification Class.
+     */
+    class EmailNotification extends \WC_Email
+    {
+        /**
+         * Constructor.
+         *
+         * @param Note $note The notification to send.
+         */
+        public function __construct($note)
+        {
+        }
+        /**
+         * This email has no user-facing settings.
+         */
+        public function init_form_fields()
+        {
+        }
+        /**
+         * This email has no user-facing settings.
+         */
+        public function init_settings()
+        {
+        }
+        /**
+         * Return template filename.
+         *
+         * @param string $type Type of email to send.
+         * @return string
+         */
+        public function get_template_filename($type = 'html')
+        {
+        }
+        /**
+         * Return email type.
+         *
+         * @return string
+         */
+        public function get_email_type()
+        {
+        }
+        /**
+         * Get email heading.
+         *
+         * @return string
+         */
+        public function get_default_heading()
+        {
+        }
+        /**
+         * Get email headers.
+         *
+         * @return string
+         */
+        public function get_headers()
+        {
+        }
+        /**
+         * Get email subject.
+         *
+         * @return string
+         */
+        public function get_default_subject()
+        {
+        }
+        /**
+         * Get note content.
+         *
+         * @return string
+         */
+        public function get_note_content()
+        {
+        }
+        /**
+         * Get note image.
+         *
+         * @return string
+         */
+        public function get_image()
+        {
+        }
+        /**
+         * Get email action.
+         *
+         * @return stdClass
+         */
+        public function get_actions()
+        {
+        }
+        /**
+         * Get content html.
+         *
+         * @return string
+         */
+        public function get_content_html()
+        {
+        }
+        /**
+         * Get content plain.
+         *
+         * @return string
+         */
+        public function get_content_plain()
+        {
+        }
+        /**
+         * Trigger the sending of this email.
+         *
+         * @param string $user_email Email to send the note.
+         * @param int    $user_id User id to to track the note.
+         * @param string $user_name User's name.
+         */
+        public function trigger($user_email, $user_id, $user_name)
+        {
+        }
+    }
+    /**
      * FirstDownlaodableProduct.
      */
     class FirstDownlaodableProduct
@@ -20404,6 +18967,14 @@ namespace Automattic\WooCommerce\Admin\Notes {
         private function install_and_activate_plugin($plugin)
         {
         }
+        /**
+         * Create an alert notification in response to an error installing a plugin.
+         *
+         * @param string $slug The slug of the plugin being installed.
+         */
+        public function on_install_error($slug)
+        {
+        }
     }
     /**
      * Launch_Checklist
@@ -20557,179 +19128,6 @@ namespace Automattic\WooCommerce\Admin\Notes {
         {
         }
     }
-}
-namespace Automattic\WooCommerce\Admin\Notes\MerchantEmailNotifications {
-    /**
-     * Merchant email notifications.
-     * This gets all non-sent notes type `email` and sends them.
-     */
-    class MerchantEmailNotifications
-    {
-        /**
-         * Initialize the merchant email notifications.
-         */
-        public static function init()
-        {
-        }
-        /**
-         * Trigger the note action.
-         */
-        public static function trigger_notification_action()
-        {
-        }
-        /**
-         * Send all the notifications type `email`.
-         */
-        public static function run()
-        {
-        }
-        /**
-         * Send the notification to the merchant.
-         *
-         * @param object $note The note to send.
-         */
-        public static function send_merchant_notification($note)
-        {
-        }
-        /**
-         * Get the preferred name for user. First choice is
-         * the user's first name, and then display_name.
-         *
-         * @param WP_User $user Recipient to send the note to.
-         * @return string User's name.
-         */
-        public static function get_merchant_preferred_name($user)
-        {
-        }
-        /**
-         * Get users by role to notify.
-         *
-         * @param object $note The note to send.
-         * @return array Users to notify
-         */
-        public static function get_notification_recipients($note)
-        {
-        }
-    }
-    /**
-     * NotificationEmail Class.
-     */
-    class NotificationEmail extends \WC_Email
-    {
-        /**
-         * Constructor.
-         *
-         * @param Note $note The notification to send.
-         */
-        public function __construct($note)
-        {
-        }
-        /**
-         * This email has no user-facing settings.
-         */
-        public function init_form_fields()
-        {
-        }
-        /**
-         * This email has no user-facing settings.
-         */
-        public function init_settings()
-        {
-        }
-        /**
-         * Return template filename.
-         *
-         * @param string $type Type of email to send.
-         * @return string
-         */
-        public function get_template_filename($type = 'html')
-        {
-        }
-        /**
-         * Return email type.
-         *
-         * @return string
-         */
-        public function get_email_type()
-        {
-        }
-        /**
-         * Get email heading.
-         *
-         * @return string
-         */
-        public function get_default_heading()
-        {
-        }
-        /**
-         * Get email headers.
-         *
-         * @return string
-         */
-        public function get_headers()
-        {
-        }
-        /**
-         * Get email subject.
-         *
-         * @return string
-         */
-        public function get_default_subject()
-        {
-        }
-        /**
-         * Get note content.
-         *
-         * @return string
-         */
-        public function get_note_content()
-        {
-        }
-        /**
-         * Get note image.
-         *
-         * @return string
-         */
-        public function get_image()
-        {
-        }
-        /**
-         * Get email action.
-         *
-         * @return stdClass
-         */
-        public function get_actions()
-        {
-        }
-        /**
-         * Get content html.
-         *
-         * @return string
-         */
-        public function get_content_html()
-        {
-        }
-        /**
-         * Get content plain.
-         *
-         * @return string
-         */
-        public function get_content_plain()
-        {
-        }
-        /**
-         * Trigger the sending of this email.
-         *
-         * @param string $user_email Email to send the note.
-         * @param int    $user_id User id to to track the note.
-         * @param string $user_name User's name.
-         */
-        public function trigger($user_email, $user_id, $user_name)
-        {
-        }
-    }
-}
-namespace Automattic\WooCommerce\Admin\Notes {
     /**
      * Migrate_From_Shopify.
      */
@@ -21323,6 +19721,18 @@ namespace Automattic\WooCommerce\Admin\Notes {
          * @return Note|bool
          */
         public static function get_note($note_id)
+        {
+        }
+        /**
+         * Get admin note using its name.
+         *
+         * This is a shortcut for the common pattern of looking up note ids by name and then passing the first id to get_note().
+         * It will behave unpredictably when more than one note with the given name exists.
+         *
+         * @param string $note_name Note name.
+         * @return Note|bool
+         **/
+        public static function get_note_by_name($note_name)
         {
         }
         /**
@@ -22713,6 +21123,12 @@ namespace Automattic\WooCommerce\Admin {
     class PluginsHelper
     {
         /**
+         * Initialize hooks.
+         */
+        public static function init()
+        {
+        }
+        /**
          * Get the path to the plugin file relative to the plugins directory from the plugin slug.
          *
          * E.g. 'woocommerce' returns 'woocommerce/woocommerce.php'
@@ -22776,6 +21192,69 @@ namespace Automattic\WooCommerce\Admin {
          * @return array|false
          */
         public static function get_plugin_data($plugin)
+        {
+        }
+        /**
+         * Install an array of plugins.
+         *
+         * @param array $plugins Plugins to install.
+         * @return array
+         */
+        public static function install_plugins($plugins)
+        {
+        }
+        /**
+         * Schedule plugin installation.
+         *
+         * @param array $plugins Plugins to install.
+         * @return string Job ID.
+         */
+        public static function schedule_install_plugins($plugins)
+        {
+        }
+        /**
+         * Activate the requested plugins.
+         *
+         * @param array $plugins Plugins.
+         * @return WP_Error|array Plugin Status
+         */
+        public static function activate_plugins($plugins)
+        {
+        }
+        /**
+         * Schedule plugin activation.
+         *
+         * @param array $plugins Plugins to activate.
+         * @return string Job ID.
+         */
+        public static function schedule_activate_plugins($plugins)
+        {
+        }
+        /**
+         * Installation status.
+         *
+         * @param int $job_id Job ID.
+         * @return array Job data.
+         */
+        public static function get_installation_status($job_id = null)
+        {
+        }
+        /**
+         * Gets the plugin data for the first action.
+         *
+         * @param array $actions Array of AS actions.
+         * @return array Array of action data.
+         */
+        public static function get_action_data($actions)
+        {
+        }
+        /**
+         * Activation status.
+         *
+         * @param int $job_id Job ID.
+         * @return array Array of action data.
+         */
+        public static function get_activation_status($job_id = null)
         {
         }
     }
@@ -23855,7 +22334,7 @@ namespace Automattic\WooCommerce\Admin\RemoteInboxNotifications {
          * Enqueues an async action (using action-scheduler) to run remote
          * notifications.
          */
-        private static function enqueue_async_run_remote_notifications()
+        private static function update_stored_state_and_possibly_run_remote_notifications()
         {
         }
     }
@@ -24823,373 +23302,6 @@ namespace Automattic\WooCommerce\Admin {
         {
         }
     }
-}
-namespace Automattic\WooCommerce\Admin\Schedulers {
-    interface ImportInterface
-    {
-        /**
-         * Get items based on query and return IDs along with total available.
-         *
-         * @param int      $limit Number of records to retrieve.
-         * @param int      $page  Page number.
-         * @param int|bool $days Number of days prior to current date to limit search results.
-         * @param bool     $skip_existing Skip already imported items.
-         */
-        public static function get_items($limit, $page, $days, $skip_existing);
-        /**
-         * Get total number of items already imported.
-         *
-         * @return null
-         */
-        public static function get_total_imported();
-    }
-    /**
-     * ImportScheduler class.
-     */
-    abstract class ImportScheduler implements \Automattic\WooCommerce\Admin\Schedulers\ImportInterface
-    {
-        /**
-         * Import stats option name.
-         */
-        const IMPORT_STATS_OPTION = 'woocommerce_admin_import_stats';
-        /**
-         * Scheduler traits.
-         */
-        use \Automattic\WooCommerce\Admin\Schedulers\SchedulerTraits {
-            get_batch_sizes as get_scheduler_batch_sizes;
-        }
-        /**
-         * Returns true if an import is in progress.
-         *
-         * @return bool
-         */
-        public static function is_importing()
-        {
-        }
-        /**
-         * Get batch sizes.
-         *
-         * @retun array
-         */
-        public static function get_batch_sizes()
-        {
-        }
-        /**
-         * Get all available scheduling actions.
-         * Used to determine action hook names and clear events.
-         *
-         * @return array
-         */
-        public static function get_scheduler_actions()
-        {
-        }
-        /**
-         * Queue the imports into multiple batches.
-         *
-         * @param integer|boolean $days Number of days to import.
-         * @param boolean         $skip_existing Skip exisiting records.
-         */
-        public static function import_batch_init($days, $skip_existing)
-        {
-        }
-        /**
-         * Imports a batch of items to update.
-         *
-         * @param int      $batch_number Batch number to import (essentially a query page number).
-         * @param int|bool $days Number of days to import.
-         * @param bool     $skip_existing Skip exisiting records.
-         * @return void
-         */
-        public static function import_batch($batch_number, $days, $skip_existing)
-        {
-        }
-        /**
-         * Queue item deletion in batches.
-         */
-        public static function delete_batch_init()
-        {
-        }
-        /**
-         * Delete a batch by passing the count to be deleted to the child delete method.
-         *
-         * @return void
-         */
-        public static function delete_batch()
-        {
-        }
-    }
-    /**
-     * CustomersScheduler Class.
-     */
-    class CustomersScheduler extends \Automattic\WooCommerce\Admin\Schedulers\ImportScheduler
-    {
-        /**
-         * Slug to identify the scheduler.
-         *
-         * @var string
-         */
-        public static $name = 'customers';
-        /**
-         * Attach customer lookup update hooks.
-         */
-        public static function init()
-        {
-        }
-        /**
-         * Add customer dependencies.
-         *
-         * @return array
-         */
-        public static function get_dependencies()
-        {
-        }
-        /**
-         * Get the customer IDs and total count that need to be synced.
-         *
-         * @param int      $limit Number of records to retrieve.
-         * @param int      $page  Page number.
-         * @param int|bool $days Number of days prior to current date to limit search results.
-         * @param bool     $skip_existing Skip already imported customers.
-         */
-        public static function get_items($limit = 10, $page = 1, $days = false, $skip_existing = false)
-        {
-        }
-        /**
-         * Exclude users that already exist in our customer lookup table.
-         *
-         * Meant to be hooked into 'pre_user_query' action.
-         *
-         * @param WP_User_Query $wp_user_query WP_User_Query to modify.
-         */
-        public static function exclude_existing_customers_from_query($wp_user_query)
-        {
-        }
-        /**
-         * Get total number of rows imported.
-         *
-         * @return int
-         */
-        public static function get_total_imported()
-        {
-        }
-        /**
-         * Get all available scheduling actions.
-         * Used to determine action hook names and clear events.
-         *
-         * @return array
-         */
-        public static function get_scheduler_actions()
-        {
-        }
-        /**
-         * Schedule import.
-         *
-         * @param int $user_id User ID.
-         * @return void
-         */
-        public static function schedule_import($user_id)
-        {
-        }
-        /**
-         * Schedule an import if the "last active" meta value was changed.
-         * Function expects to be hooked into the `updated_user_meta` action.
-         *
-         * @param int    $meta_id ID of updated metadata entry.
-         * @param int    $user_id ID of the user being updated.
-         * @param string $meta_key Meta key being updated.
-         */
-        public static function schedule_import_via_last_active($meta_id, $user_id, $meta_key)
-        {
-        }
-        /**
-         * Schedule an action to anonymize a single Order.
-         *
-         * @param WC_Order $order Order object.
-         * @return void
-         */
-        public static function schedule_anonymize($order)
-        {
-        }
-        /**
-         * Schedule an action to delete a single User.
-         *
-         * @param int $user_id User ID.
-         * @return void
-         */
-        public static function schedule_user_delete($user_id)
-        {
-        }
-        /**
-         * Imports a single customer.
-         *
-         * @param int $user_id User ID.
-         * @return void
-         */
-        public static function import($user_id)
-        {
-        }
-        /**
-         * Delete a batch of customers.
-         *
-         * @param int $batch_size Number of items to delete.
-         * @return void
-         */
-        public static function delete($batch_size)
-        {
-        }
-        /**
-         * Anonymize the customer data for a single order.
-         *
-         * @param int $order_id Order id.
-         * @return void
-         */
-        public static function anonymize($order_id)
-        {
-        }
-        /**
-         * Delete the customer data for a single user.
-         *
-         * @param int $user_id User ID.
-         * @return void
-         */
-        public static function delete_user($user_id)
-        {
-        }
-    }
-    /**
-     * Class MailchimpScheduler
-     *
-     * @package Automattic\WooCommerce\Admin\Schedulers
-     */
-    class MailchimpScheduler
-    {
-        const SUBSCRIBE_ENDPOINT = 'https://woocommerce.com/wp-json/wccom/v1/subscribe';
-        const SUBSCRIBE_ENDPOINT_DEV = 'http://woocommerce.test/wp-json/wccom/v1/subscribe';
-        const SUBSCRIBED_OPTION_NAME = 'woocommerce_onboarding_subscribed_to_mailchimp';
-        const LOGGER_CONTEXT = 'mailchimp_scheduler';
-        /**
-         * The logger instance.
-         *
-         * @var \WC_Logger_Interface|null
-         */
-        private $logger;
-        /**
-         * MailchimpScheduler constructor.
-         *
-         * @param \WC_Logger_Interface|null $logger Logger instance.
-         */
-        public function __construct(\WC_Logger_Interface $logger = null)
-        {
-        }
-        /**
-         * Attempt to subscribe store_email to MailChimp.
-         */
-        public function run()
-        {
-        }
-        /**
-         * Make an HTTP request to the API.
-         *
-         * @param string $store_email Email address to subscribe.
-         *
-         * @return mixed
-         */
-        public function make_request($store_email)
-        {
-        }
-    }
-    /**
-     * OrdersScheduler Class.
-     */
-    class OrdersScheduler extends \Automattic\WooCommerce\Admin\Schedulers\ImportScheduler
-    {
-        /**
-         * Slug to identify the scheduler.
-         *
-         * @var string
-         */
-        public static $name = 'orders';
-        /**
-         * Attach order lookup update hooks.
-         */
-        public static function init()
-        {
-        }
-        /**
-         * Add customer dependencies.
-         *
-         * @return array
-         */
-        public static function get_dependencies()
-        {
-        }
-        /**
-         * Get the order/refund IDs and total count that need to be synced.
-         *
-         * @param int      $limit Number of records to retrieve.
-         * @param int      $page  Page number.
-         * @param int|bool $days Number of days prior to current date to limit search results.
-         * @param bool     $skip_existing Skip already imported orders.
-         */
-        public static function get_items($limit = 10, $page = 1, $days = false, $skip_existing = false)
-        {
-        }
-        /**
-         * Get total number of rows imported.
-         */
-        public static function get_total_imported()
-        {
-        }
-        /**
-         * Schedule this import if the post is an order or refund.
-         *
-         * @param int $post_id Post ID.
-         */
-        public static function possibly_schedule_import($post_id)
-        {
-        }
-        /**
-         * Imports a single order or refund to update lookup tables for.
-         * If an error is encountered in one of the updates, a retry action is scheduled.
-         *
-         * @param int $order_id Order or refund ID.
-         * @return void
-         */
-        public static function import($order_id)
-        {
-        }
-        /**
-         * Delete a batch of orders.
-         *
-         * @param int $batch_size Number of items to delete.
-         * @return void
-         */
-        public static function delete($batch_size)
-        {
-        }
-    }
-}
-namespace Automattic\WooCommerce\Admin {
-    /**
-     * Survey Class.
-     */
-    class Survey
-    {
-        /**
-         * Survey URL.
-         */
-        const SURVEY_URL = 'https://automattic.survey.fm';
-        /**
-         * Get a survey's URL from a path.
-         *
-         * @param  string $path Path of the survey.
-         * @param  array  $query Query arguments as key value pairs.
-         * @return string Full URL to survey.
-         */
-        public static function get_url($path, $query = array())
-        {
-        }
-    }
     /**
      * Class WCAdminHelper
      */
@@ -25226,46 +23338,6 @@ namespace Automattic\WooCommerce\Admin {
          * @return bool Whether or not WooCommerce admin has been active within the range.
          */
         public static function is_wc_admin_active_in_date_range($range, $custom_start = null)
-        {
-        }
-    }
-    /**
-     * \Automattic\WooCommerce\Admin\WCAdminSharedSettings class.
-     */
-    class WCAdminSharedSettings
-    {
-        /**
-         * Settings prefix used for the window.wcSettings object.
-         *
-         * @var string
-         */
-        private $settings_prefix = 'admin';
-        /**
-         * Class instance.
-         *
-         * @var WCAdminSharedSettings instance
-         */
-        protected static $instance = null;
-        /**
-         * Hook into WooCommerce Blocks.
-         */
-        protected function __construct()
-        {
-        }
-        /**
-         * Get class instance.
-         *
-         * @return object Instance.
-         */
-        public static function get_instance()
-        {
-        }
-        /**
-         * Adds settings to the Blocks AssetDataRegistry when woocommerce_blocks is loaded.
-         *
-         * @return void
-         */
-        public function on_woocommerce_blocks_loaded()
         {
         }
     }
@@ -25572,6 +23644,16 @@ namespace Automattic\WooCommerce\Blocks\Assets {
         {
         }
         /**
+         * Get product related settings.
+         *
+         * Note: For the time being we are exposing only the settings that are used by blocks.
+         *
+         * @return array
+         */
+        protected function get_products_settings()
+        {
+        }
+        /**
          * Format a page object into a standard array of data.
          *
          * @param WP_Post|int $page Page object or ID.
@@ -25828,33 +23910,17 @@ namespace Automattic\WooCommerce\Blocks {
         {
         }
         /**
-         * This function checks if there's a blocks template (ultimately it resolves either a saved blocks template from the
-         * database or a template file in `woo-gutenberg-products-block/templates/templates/`)
+         * This function checks if there's a block template file in `woo-gutenberg-products-block/templates/templates/`
          * to return to pre_get_posts short-circuiting the query in Gutenberg.
          *
          * @param \WP_Block_Template|null $template Return a block template object to short-circuit the default query,
          *                                               or null to allow WP to run its normal queries.
          * @param string                  $id Template unique identifier (example: theme_slug//template_slug).
-         * @param array                   $template_type wp_template or wp_template_part.
+         * @param string                  $template_type wp_template or wp_template_part.
          *
          * @return mixed|\WP_Block_Template|\WP_Error
          */
-        public function maybe_return_blocks_template($template, $id, $template_type)
-        {
-        }
-        /**
-         * Runs on the get_block_template hook. If a template is already found and passed to this function, then return it
-         * and don't run.
-         * If a template is *not* passed, try to look for one that matches the ID in the database, if that's not found defer
-         * to Blocks templates files. Priority goes: DB-Theme, DB-Blocks, Filesystem-Theme, Filesystem-Blocks.
-         *
-         * @param \WP_Block_Template $template The found block template.
-         * @param string             $id Template unique identifier (example: theme_slug//template_slug).
-         * @param array              $template_type wp_template or wp_template_part.
-         *
-         * @return mixed|null
-         */
-        public function get_single_block_template($template, $id, $template_type)
+        public function get_block_file_template($template, $id, $template_type)
         {
         }
         /**
@@ -26159,6 +24225,15 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          *                           not in the post content on editor load.
          */
         protected function enqueue_data(array $attributes = [])
+        {
+        }
+        /**
+         * Get routes from a REST API namespace.
+         *
+         * @param string $namespace Namespace to retrieve.
+         * @return array
+         */
+        protected function get_routes_from_namespace($namespace)
         {
         }
         /**
@@ -26519,11 +24594,9 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
-         * Register script and style assets for the block type before it is registered.
-         *
-         * This registers the scripts; it does not enqueue them.
+         * Hydrate the All Product block with data from the API.
          */
-        protected function register_block_type_assets()
+        protected function hydrate_from_api()
         {
         }
     }
@@ -26922,6 +24995,12 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          */
         protected $defaults = array('align' => 'none', 'contentAlign' => 'center', 'dimRatio' => 50, 'focalPoint' => false, 'height' => false, 'mediaId' => 0, 'mediaSrc' => '', 'showDesc' => true, 'showPrice' => true);
         /**
+         * Global style enabled for this block.
+         *
+         * @var array
+         */
+        protected $global_style_wrapper = array('text_color', 'font_size', 'border_color', 'border_radius', 'border_width', 'background_color', 'text_color');
+        /**
          * Render the Featured Product block.
          *
          * @param array  $attributes Block attributes.
@@ -27143,12 +25222,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
-         * Hydrate the cart block with data from the API.
-         */
-        protected function hydrate_from_api()
-        {
-        }
-        /**
          * Returns the script data given its handle.
          *
          * @param string $handle Handle of the script.
@@ -27211,6 +25284,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @return array;
          */
         protected function get_tax_label()
+        {
+        }
+        /**
+         * Get Cart Payload.
+         *
+         * @return object;
+         */
+        protected function get_cart_payload()
         {
         }
         /**
@@ -27289,6 +25370,32 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         protected $block_name = 'price-filter';
     }
     /**
+     * ProductAddToCart class.
+     */
+    class ProductAddToCart extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'product-add-to-cart';
+        /**
+         * API version name.
+         *
+         * @var string
+         */
+        protected $api_version = '2';
+        /**
+         * Register script and style assets for the block type before it is registered.
+         *
+         * This registers the scripts; it does not enqueue them.
+         */
+        protected function register_block_type_assets()
+        {
+        }
+    }
+    /**
      * ProductBestSellers class.
      */
     class ProductBestSellers extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractProductGrid
@@ -27305,6 +25412,41 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @param array $query_args Query args.
          */
         protected function set_block_query_args(&$query_args)
+        {
+        }
+    }
+    /**
+     * ProductButton class.
+     */
+    class ProductButton extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'product-button';
+        /**
+         * API version name.
+         *
+         * @var string
+         */
+        protected $api_version = '2';
+        /**
+         * Get block supports. Shared with the frontend.
+         * IMPORTANT: If you change anything here, make sure to update the JS file too.
+         *
+         * @return array
+         */
+        protected function get_block_type_supports()
+        {
+        }
+        /**
+         * Register script and style assets for the block type before it is registered.
+         *
+         * This registers the scripts; it does not enqueue them.
+         */
+        protected function register_block_type_assets()
         {
         }
     }
@@ -27478,6 +25620,76 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         }
     }
     /**
+     * ProductCategoryList class.
+     */
+    class ProductCategoryList extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'product-category-list';
+        /**
+         * API version name.
+         *
+         * @var string
+         */
+        protected $api_version = '2';
+        /**
+         * Get block supports. Shared with the frontend.
+         * IMPORTANT: If you change anything here, make sure to update the JS file too.
+         *
+         * @return array
+         */
+        protected function get_block_type_supports()
+        {
+        }
+        /**
+         * Register script and style assets for the block type before it is registered.
+         *
+         * This registers the scripts; it does not enqueue them.
+         */
+        protected function register_block_type_assets()
+        {
+        }
+    }
+    /**
+     * ProductImage class.
+     */
+    class ProductImage extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'product-image';
+        /**
+         * API version name.
+         *
+         * @var string
+         */
+        protected $api_version = '2';
+        /**
+         * Get block supports. Shared with the frontend.
+         * IMPORTANT: If you change anything here, make sure to update the JS file too.
+         *
+         * @return array
+         */
+        protected function get_block_type_supports()
+        {
+        }
+        /**
+         * Register script and style assets for the block type before it is registered.
+         *
+         * This registers the scripts; it does not enqueue them.
+         */
+        protected function register_block_type_assets()
+        {
+        }
+    }
+    /**
      * ProductNew class.
      */
     class ProductNew extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractProductGrid
@@ -27522,6 +25734,136 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @return array
          */
         protected function get_block_type_attributes()
+        {
+        }
+    }
+    /**
+     * ProductPrice class.
+     */
+    class ProductPrice extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'product-price';
+        /**
+         * API version name.
+         *
+         * @var string
+         */
+        protected $api_version = '2';
+        /**
+         * Get block supports. Shared with the frontend.
+         * IMPORTANT: If you change anything here, make sure to update the JS file too.
+         *
+         * @return array
+         */
+        protected function get_block_type_supports()
+        {
+        }
+        /**
+         * Register script and style assets for the block type before it is registered.
+         *
+         * This registers the scripts; it does not enqueue them.
+         */
+        protected function register_block_type_assets()
+        {
+        }
+    }
+    /**
+     * ProductRating class.
+     */
+    class ProductRating extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'product-rating';
+        /**
+         * API version name.
+         *
+         * @var string
+         */
+        protected $api_version = '2';
+        /**
+         * Get block supports. Shared with the frontend.
+         * IMPORTANT: If you change anything here, make sure to update the JS file too.
+         *
+         * @return array
+         */
+        protected function get_block_type_supports()
+        {
+        }
+        /**
+         * Register script and style assets for the block type before it is registered.
+         *
+         * This registers the scripts; it does not enqueue them.
+         */
+        protected function register_block_type_assets()
+        {
+        }
+    }
+    /**
+     * ProductSKU class.
+     */
+    class ProductSKU extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'product-sku';
+        /**
+         * API version name.
+         *
+         * @var string
+         */
+        protected $api_version = '2';
+        /**
+         * Register script and style assets for the block type before it is registered.
+         *
+         * This registers the scripts; it does not enqueue them.
+         */
+        protected function register_block_type_assets()
+        {
+        }
+    }
+    /**
+     * ProductSaleBadge class.
+     */
+    class ProductSaleBadge extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'product-sale-badge';
+        /**
+         * API version name.
+         *
+         * @var string
+         */
+        protected $api_version = '2';
+        /**
+         * Get block attributes.
+         *
+         * @return array
+         */
+        protected function get_block_type_supports()
+        {
+        }
+        /**
+         * Register script and style assets for the block type before it is registered.
+         *
+         * This registers the scripts; it does not enqueue them.
+         */
+        protected function register_block_type_assets()
         {
         }
     }
@@ -27582,6 +25924,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         protected function get_block_type_supports()
         {
         }
+        /**
+         * Register script and style assets for the block type before it is registered.
+         *
+         * This registers the scripts; it does not enqueue them.
+         */
+        protected function register_block_type_assets()
+        {
+        }
     }
     /**
      * ProductSummary class.
@@ -27607,6 +25957,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @return array
          */
         protected function get_block_type_supports()
+        {
+        }
+        /**
+         * Register script and style assets for the block type before it is registered.
+         *
+         * This registers the scripts; it does not enqueue them.
+         */
+        protected function register_block_type_assets()
         {
         }
     }
@@ -27649,6 +26007,41 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         }
     }
     /**
+     * ProductTagList class.
+     */
+    class ProductTagList extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'product-tag-list';
+        /**
+         * API version name.
+         *
+         * @var string
+         */
+        protected $api_version = '2';
+        /**
+         * Get block supports. Shared with the frontend.
+         * IMPORTANT: If you change anything here, make sure to update the JS file too.
+         *
+         * @return array
+         */
+        protected function get_block_type_supports()
+        {
+        }
+        /**
+         * Register script and style assets for the block type before it is registered.
+         *
+         * This registers the scripts; it does not enqueue them.
+         */
+        protected function register_block_type_assets()
+        {
+        }
+    }
+    /**
      * ProductTitle class.
      */
     class ProductTitle extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
@@ -27672,6 +26065,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @return array
          */
         protected function get_block_type_supports()
+        {
+        }
+        /**
+         * Register script and style assets for the block type before it is registered.
+         *
+         * This registers the scripts; it does not enqueue them.
+         */
+        protected function register_block_type_assets()
         {
         }
     }
@@ -27816,7 +26217,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
-         * Hydrate the cart block with data from the API.
+         * Hydrate the Single Product block with data from the API.
          *
          * @param int $product_id ID of the product.
          */
@@ -27923,14 +26324,6 @@ namespace Automattic\WooCommerce\Blocks {
         protected function get_block_types()
         {
         }
-        /**
-         * Get atomic blocks types.
-         *
-         * @return array
-         */
-        protected function get_atomic_blocks()
-        {
-        }
     }
 }
 namespace Automattic\WooCommerce\Blocks\Domain {
@@ -27996,6 +26389,17 @@ namespace Automattic\WooCommerce\Blocks\Domain {
         {
         }
         /**
+         * Throws a deprecation notice for a dependency without breaking requests.
+         *
+         * @param string $function Class or function being deprecated.
+         * @param string $version Version in which it was deprecated.
+         * @param string $replacement Replacement class or function, if applicable.
+         * @param string $trigger_error_version Optional version to start surfacing this as a PHP error rather than a log. Defaults to $version.
+         */
+        protected function deprecated_dependency($function, $version, $replacement = '', $trigger_error_version = '')
+        {
+        }
+        /**
          * Register payment method integrations with the container.
          */
         protected function register_payment_methods()
@@ -28023,6 +26427,12 @@ namespace Automattic\WooCommerce\Blocks\Domain {
          * @var string
          */
         private $path;
+        /**
+         * Holds locally the plugin_dir_url to avoid recomputing it.
+         *
+         * @var string
+         */
+        private $plugin_dir_url;
         /**
          * Holds the feature gating class instance.
          *
@@ -28097,7 +26507,7 @@ namespace Automattic\WooCommerce\Blocks\Domain {
 }
 namespace Automattic\WooCommerce\Blocks\Domain\Services {
     /**
-     * Service class implementing new create account behaviour for order processing.
+     * Service class implementing new create account emails used for order processing via the Block Based Checkout.
      */
     class CreateAccount
     {
@@ -28116,9 +26526,9 @@ namespace Automattic\WooCommerce\Blocks\Domain\Services {
         {
         }
         /**
-         * Single method for feature gating logic. Used to gate all non-private methods.
+         * Feature gating. This feature is only enabled when using the feature plugin/checkout block.
          *
-         * @return True if Checkout sign-up feature should be made available.
+         * @return boolean
          */
         private function is_feature_enabled()
         {
@@ -28139,60 +26549,6 @@ namespace Automattic\WooCommerce\Blocks\Domain\Services {
          * @param array $new_customer_data Assoc array of data for the new account.
          */
         public function customer_new_account($customer_id = 0, array $new_customer_data = array())
-        {
-        }
-        /**
-         * Create a user account for specified request (if necessary).
-         * If a new account is created:
-         * - The user is logged in.
-         *
-         * @param \WP_REST_Request $request The current request object being handled.
-         *
-         * @throws Exception On error.
-         * @return int The new user id, or 0 if no user was created.
-         */
-        public function from_order_request(\WP_REST_Request $request)
-        {
-        }
-        /**
-         * Check request options and store (shop) config to determine if a user account
-         * should be created as part of order processing.
-         *
-         * @param \WP_REST_Request $request The current request object being handled.
-         *
-         * @return boolean True if a new user account should be created.
-         */
-        protected function should_create_customer_account(\WP_REST_Request $request)
-        {
-        }
-        /**
-         * Convert an account creation error to an exception.
-         *
-         * @param \WP_Error $error An error object.
-         *
-         * @return Exception.
-         */
-        private function map_create_account_error(\WP_Error $error)
-        {
-        }
-        /**
-         * Create a new account for a customer (using a new blocks-specific PHP API).
-         *
-         * The account is created with a generated username. The customer is sent
-         * an email notifying them about the account and containing a link to set
-         * their (initial) password.
-         *
-         * Intended as a replacement for wc_create_new_customer in WC core.
-         *
-         * @throws \Exception If an error is encountered when creating the user account.
-         *
-         * @param string $user_email The email address to use for the new account.
-         * @param string $first_name The first name to use for the new account.
-         * @param string $last_name  The last name to use for the new account.
-         *
-         * @return int User id if successful
-         */
-        private function create_customer_account($user_email, $first_name, $last_name)
         {
         }
     }
@@ -28342,11 +26698,11 @@ namespace Automattic\WooCommerce\Blocks\Domain\Services\Email {
      * Customer New Account.
      *
      * An email sent to the customer when they create an account.
-     * This is intended as a replacement to WC_Email_Customer_New_Account(),
+     * This is intended as a replacement to \WC_Email_Customer_New_Account(),
      * with a set password link instead of emailing the new password in email
      * content.
      *
-     * @extends     WC_Email
+     * @extends     \WC_Email
      */
     class CustomerNewAccount extends \WC_Email
     {
@@ -28438,181 +26794,6 @@ namespace Automattic\WooCommerce\Blocks\Domain\Services\Email {
     }
 }
 namespace Automattic\WooCommerce\Blocks\Domain\Services {
-    /**
-     * Service class to provide utility functions to extend REST API.
-     */
-    final class ExtendRestApi
-    {
-        /**
-         * List of Store API schema that is allowed to be extended by extensions.
-         *
-         * @var array
-         */
-        private $endpoints = [\Automattic\WooCommerce\Blocks\StoreApi\Schemas\CartItemSchema::IDENTIFIER, \Automattic\WooCommerce\Blocks\StoreApi\Schemas\CartSchema::IDENTIFIER, \Automattic\WooCommerce\Blocks\StoreApi\Schemas\CheckoutSchema::IDENTIFIER];
-        /**
-         * Holds the Package instance
-         *
-         * @var Package
-         */
-        private $package;
-        /**
-         * Holds the formatters class instance.
-         *
-         * @var Formatters
-         */
-        private $formatters;
-        /**
-         * Constructor
-         *
-         * @param Package    $package An instance of the package class.
-         * @param Formatters $formatters An instance of the formatters class.
-         */
-        public function __construct(\Automattic\WooCommerce\Blocks\Domain\Package $package, \Automattic\WooCommerce\Blocks\StoreApi\Formatters $formatters)
-        {
-        }
-        /**
-         * Returns a formatter instance.
-         *
-         * @param string $name Formatter name.
-         * @return FormatterInterface
-         */
-        public function get_formatter($name)
-        {
-        }
-        /**
-         * Data to be extended
-         *
-         * @var array
-         */
-        private $extend_data = [];
-        /**
-         * Data to be extended
-         *
-         * @var array
-         */
-        private $callback_methods = [];
-        /**
-         * Array of payment requirements
-         *
-         * @var array
-         */
-        private $payment_requirements = [];
-        /**
-         * An endpoint that validates registration method call
-         *
-         * @param array $args {
-         *     An array of elements that make up a post to update or insert.
-         *
-         *     @type string   $endpoint The endpoint to extend.
-         *     @type string   $namespace Plugin namespace.
-         *     @type callable $schema_callback Callback executed to add schema data.
-         *     @type callable $data_callback Callback executed to add endpoint data.
-         *     @type string   $schema_type The type of data, object or array.
-         * }
-         *
-         * @throws Exception On failure to register.
-         * @return boolean True on success.
-         */
-        public function register_endpoint_data($args)
-        {
-        }
-        /**
-         * Add callback functions that can be executed by the cart/extensions endpoint.
-         *
-         * @param array $args {
-         *     An array of elements that make up the callback configuration.
-         *
-         *     @type string   $endpoint The endpoint to extend.
-         *     @type string   $namespace Plugin namespace.
-         *     @type callable $callback The function/callable to execute.
-         * }
-         *
-         * @throws RouteException On failure to register.
-         * @returns boolean True on success.
-         */
-        public function register_update_callback($args)
-        {
-        }
-        /**
-         * Get callback for a specific endpoint and namespace.
-         *
-         * @param string $namespace The namespace to get callbacks for.
-         *
-         * @return callable The callback registered by the extension.
-         * @throws RouteException When callback is not callable or parameters are incorrect.
-         */
-        public function get_update_callback($namespace)
-        {
-        }
-        /**
-         * Returns the registered endpoint data
-         *
-         * @param string $endpoint    A valid identifier.
-         * @param array  $passed_args Passed arguments from the Schema class.
-         * @return object Returns an casted object with registered endpoint data.
-         * @throws Exception If a registered callback throws an error, or silently logs it.
-         */
-        public function get_endpoint_data($endpoint, array $passed_args = [])
-        {
-        }
-        /**
-         * Returns the registered endpoint schema
-         *
-         * @param string $endpoint    A valid identifier.
-         * @param array  $passed_args Passed arguments from the Schema class.
-         * @return array Returns an array with registered schema data.
-         * @throws Exception If a registered callback throws an error, or silently logs it.
-         */
-        public function get_endpoint_schema($endpoint, array $passed_args = [])
-        {
-        }
-        /**
-         * Registers and validates payment requirements callbacks.
-         *
-         * @param array $args {
-         *     Array of registration data.
-         *
-         *     @type callable $data_callback Callback executed to add payment requirements data.
-         * }
-         *
-         * @throws Exception On failure to register.
-         * @return boolean True on success.
-         */
-        public function register_payment_requirements($args)
-        {
-        }
-        /**
-         * Returns the additional payment requirements.
-         *
-         * @param array $initial_requirements list of requirements that should be added to the collected requirements.
-         * @return array Returns a list of payment requirements.
-         * @throws Exception If a registered callback throws an error, or silently logs it.
-         */
-        public function get_payment_requirements(array $initial_requirements = ['products'])
-        {
-        }
-        /**
-         * Throws error and/or silently logs it.
-         *
-         * @param string|Throwable $exception_or_error Error message or Exception.
-         * @throws Exception An error to throw if we have debug enabled and user is admin.
-         */
-        private function throw_exception($exception_or_error)
-        {
-        }
-        /**
-         * Format schema for an extension.
-         *
-         * @param string $namespace Error message or Exception.
-         * @param array  $schema An error to throw if we have debug enabled and user is admin.
-         * @param string $schema_type How should data be shaped.
-         *
-         * @return array Formatted schema.
-         */
-        private function format_extensions_properties($namespace, $schema, $schema_type)
-        {
-        }
-    }
     /**
      * Service class that handles the feature flags.
      *
@@ -29236,7 +27417,7 @@ namespace Automattic\WooCommerce\Blocks\Payments {
          * @param PaymentContext $context Holds context for the payment.
          * @param PaymentResult  $result  Result of the payment.
          */
-        public function process_legacy_payment(\Automattic\WooCommerce\Blocks\Payments\PaymentContext $context, \Automattic\WooCommerce\Blocks\Payments\PaymentResult &$result)
+        public function process_legacy_payment(\Automattic\WooCommerce\StoreApi\Payments\PaymentContext $context, \Automattic\WooCommerce\StoreApi\Payments\PaymentResult &$result)
         {
         }
         /**
@@ -29655,70 +27836,6 @@ namespace Automattic\WooCommerce\Blocks\Payments\Integrations {
 }
 namespace Automattic\WooCommerce\Blocks\Payments {
     /**
-     * PaymentContext class.
-     */
-    class PaymentContext
-    {
-        /**
-         * Payment method ID.
-         *
-         * @var string
-         */
-        protected $payment_method = '';
-        /**
-         * Order object for the order being paid.
-         *
-         * @var \WC_Order
-         */
-        protected $order;
-        /**
-         * Holds data to send to the payment gateway to support payment.
-         *
-         * @var array Key value pairs.
-         */
-        protected $payment_data = [];
-        /**
-         * Magic getter for protected properties.
-         *
-         * @param string $name Property name.
-         */
-        public function __get($name)
-        {
-        }
-        /**
-         * Set the chosen payment method ID context.
-         *
-         * @param string $payment_method Payment method ID.
-         */
-        public function set_payment_method($payment_method)
-        {
-        }
-        /**
-         * Retrieve the payment method instance for the current set payment method.
-         *
-         * @return {\WC_Payment_Gateway|null} An instance of the payment gateway if it exists.
-         */
-        public function get_payment_method_instance()
-        {
-        }
-        /**
-         * Set the order context.
-         *
-         * @param \WC_Order $order Order object.
-         */
-        public function set_order(\WC_Order $order)
-        {
-        }
-        /**
-         * Set payment data context.
-         *
-         * @param array $payment_data Array of key value pairs of data.
-         */
-        public function set_payment_data($payment_data = [])
-        {
-        }
-    }
-    /**
      * Class used for interacting with payment method types.
      *
      * @since 2.6.0
@@ -29753,78 +27870,6 @@ namespace Automattic\WooCommerce\Blocks\Payments {
          * @return array
          */
         public function get_all_registered_script_data()
-        {
-        }
-    }
-    /**
-     * PaymentResult class.
-     */
-    class PaymentResult
-    {
-        /**
-         * List of valid payment statuses.
-         *
-         * @var array
-         */
-        protected $valid_statuses = ['success', 'failure', 'pending', 'error'];
-        /**
-         * Current payment status.
-         *
-         * @var string
-         */
-        protected $status = '';
-        /**
-         * Array of details about the payment.
-         *
-         * @var string
-         */
-        protected $payment_details = [];
-        /**
-         * Redirect URL for checkout.
-         *
-         * @var string
-         */
-        protected $redirect_url = '';
-        /**
-         * Constructor.
-         *
-         * @param string $status Sets the payment status for the result.
-         */
-        public function __construct($status = '')
-        {
-        }
-        /**
-         * Magic getter for protected properties.
-         *
-         * @param string $name Property name.
-         */
-        public function __get($name)
-        {
-        }
-        /**
-         * Set payment status.
-         *
-         * @throws \Exception When an invalid status is provided.
-         *
-         * @param string $payment_status Status to set.
-         */
-        public function set_status($payment_status)
-        {
-        }
-        /**
-         * Set payment details.
-         *
-         * @param array $payment_details Array of key value pairs of data.
-         */
-        public function set_payment_details($payment_details = [])
-        {
-        }
-        /**
-         * Set redirect URL.
-         *
-         * @param array $redirect_url URL to redirect the customer to after checkout.
-         */
-        public function set_redirect_url($redirect_url = [])
         {
         }
     }
@@ -29995,48 +28040,16 @@ namespace Automattic\WooCommerce\Blocks\Registry {
         }
     }
 }
-namespace Automattic\WooCommerce\Blocks {
+namespace Automattic\WooCommerce\StoreApi {
     /**
-     * RestApi class.
-     * Registers controllers in the blocks REST API namespace.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
+     * Authentication class.
      */
-    class RestApi
+    class Authentication
     {
         /**
-         * Stores Rest Routes instance
-         *
-         * @var RoutesController
+         * Hook into WP lifecycle events.
          */
-        private $routes;
-        /**
-         * Constructor
-         *
-         * @param RoutesController $routes Rest Routes instance.
-         */
-        public function __construct(\Automattic\WooCommerce\Blocks\StoreApi\RoutesController $routes)
-        {
-        }
-        /**
-         * Initialize class features.
-         */
-        protected function init()
-        {
-        }
-        /**
-         * Register REST API routes.
-         */
-        public function register_rest_routes()
-        {
-        }
-        /**
-         * Get routes for a namespace.
-         *
-         * @param string $namespace Namespace to retrieve.
-         * @return array
-         */
-        public function get_routes_from_namespace($namespace)
+        public function init()
         {
         }
         /**
@@ -30045,7 +28058,7 @@ namespace Automattic\WooCommerce\Blocks {
          * @param \WP_Error|mixed $result Error from another authentication handler, null if we should handle it, or another value if not.
          * @return \WP_Error|null|bool
          */
-        public function store_api_authentication($result)
+        public function check_authentication($result)
         {
         }
         /**
@@ -30054,7 +28067,7 @@ namespace Automattic\WooCommerce\Blocks {
          *
          * @param string $logged_in_cookie The value for the logged in cookie.
          */
-        public function store_api_logged_in_cookie($logged_in_cookie)
+        public function set_logged_in_cookie($logged_in_cookie)
         {
         }
         /**
@@ -30067,11 +28080,270 @@ namespace Automattic\WooCommerce\Blocks {
         }
     }
 }
-namespace Automattic\WooCommerce\Blocks\StoreApi {
+namespace Automattic\WooCommerce\StoreApi\Exceptions {
+    /**
+     * InvalidCartException class.
+     *
+     * @internal This exception is thrown if the cart is in an erroneous state.
+     */
+    class InvalidCartException extends \Exception
+    {
+        /**
+         * Sanitized error code.
+         *
+         * @var string
+         */
+        public $error_code;
+        /**
+         * Additional error data.
+         *
+         * @var array
+         */
+        public $additional_data = [];
+        /**
+         * All errors to display to the user.
+         *
+         * @var WP_Error
+         */
+        public $error;
+        /**
+         * Setup exception.
+         *
+         * @param string   $error_code      Machine-readable error code, e.g `woocommerce_invalid_product_id`.
+         * @param WP_Error $error           The WP_Error object containing all errors relating to stock availability.
+         * @param array    $additional_data Extra data (key value pairs) to expose in the error response.
+         */
+        public function __construct($error_code, \WP_Error $error, $additional_data = [])
+        {
+        }
+        /**
+         * Returns the error code.
+         *
+         * @return string
+         */
+        public function getErrorCode()
+        {
+        }
+        /**
+         * Returns the list of messages.
+         *
+         * @return WP_Error
+         */
+        public function getError()
+        {
+        }
+        /**
+         * Returns additional error data.
+         *
+         * @return array
+         */
+        public function getAdditionalData()
+        {
+        }
+    }
+    /**
+     * InvalidStockLevelsInCartException class.
+     *
+     * This exception is thrown if any items are out of stock after each product on a draft order has been stock checked.
+     */
+    class InvalidStockLevelsInCartException extends \Exception
+    {
+        /**
+         * Sanitized error code.
+         *
+         * @var string
+         */
+        public $error_code;
+        /**
+         * Additional error data.
+         *
+         * @var array
+         */
+        public $additional_data = [];
+        /**
+         * All errors to display to the user.
+         *
+         * @var WP_Error
+         */
+        public $error;
+        /**
+         * Setup exception.
+         *
+         * @param string   $error_code      Machine-readable error code, e.g `woocommerce_invalid_product_id`.
+         * @param WP_Error $error           The WP_Error object containing all errors relating to stock availability.
+         * @param array    $additional_data Extra data (key value pairs) to expose in the error response.
+         */
+        public function __construct($error_code, $error, $additional_data = [])
+        {
+        }
+        /**
+         * Returns the error code.
+         *
+         * @return string
+         */
+        public function getErrorCode()
+        {
+        }
+        /**
+         * Returns the list of messages.
+         *
+         * @return WP_Error
+         */
+        public function getError()
+        {
+        }
+        /**
+         * Returns additional error data.
+         *
+         * @return array
+         */
+        public function getAdditionalData()
+        {
+        }
+    }
+    /**
+     * StockAvailabilityException class.
+     *
+     * This exception is thrown when more than one of a product that can only be purchased individually is in a cart.
+     */
+    class StockAvailabilityException extends \Exception
+    {
+        /**
+         * Sanitized error code.
+         *
+         * @var string
+         */
+        public $error_code;
+        /**
+         * The name of the product that can only be purchased individually.
+         *
+         * @var string
+         */
+        public $product_name;
+        /**
+         * Additional error data.
+         *
+         * @var array
+         */
+        public $additional_data = [];
+        /**
+         * Setup exception.
+         *
+         * @param string $error_code       Machine-readable error code, e.g `woocommerce_invalid_product_id`.
+         * @param string $product_name     The name of the product that can only be purchased individually.
+         * @param array  $additional_data  Extra data (key value pairs) to expose in the error response.
+         */
+        public function __construct($error_code, $product_name, $additional_data = [])
+        {
+        }
+        /**
+         * Returns the error code.
+         *
+         * @return string
+         */
+        public function getErrorCode()
+        {
+        }
+        /**
+         * Returns additional error data.
+         *
+         * @return array
+         */
+        public function getAdditionalData()
+        {
+        }
+        /**
+         * Returns the product name.
+         *
+         * @return string
+         */
+        public function getProductName()
+        {
+        }
+    }
+    /**
+     * NotPurchasableException class.
+     *
+     * This exception is thrown when an item in the cart is not able to be purchased.
+     */
+    class NotPurchasableException extends \Automattic\WooCommerce\StoreApi\Exceptions\StockAvailabilityException
+    {
+    }
+    /**
+     * OutOfStockException class.
+     *
+     * This exception is thrown when an item in a draft order is out of stock completely.
+     */
+    class OutOfStockException extends \Automattic\WooCommerce\StoreApi\Exceptions\StockAvailabilityException
+    {
+    }
+    /**
+     * PartialOutOfStockException class.
+     *
+     * This exception is thrown when an item in a draft order has a quantity greater than what is available in stock.
+     */
+    class PartialOutOfStockException extends \Automattic\WooCommerce\StoreApi\Exceptions\StockAvailabilityException
+    {
+    }
+    /**
+     * RouteException class.
+     */
+    class RouteException extends \Exception
+    {
+        /**
+         * Sanitized error code.
+         *
+         * @var string
+         */
+        public $error_code;
+        /**
+         * Additional error data.
+         *
+         * @var array
+         */
+        public $additional_data = [];
+        /**
+         * Setup exception.
+         *
+         * @param string $error_code       Machine-readable error code, e.g `woocommerce_invalid_product_id`.
+         * @param string $message          User-friendly translated error message, e.g. 'Product ID is invalid'.
+         * @param int    $http_status_code Proper HTTP status code to respond with, e.g. 400.
+         * @param array  $additional_data  Extra data (key value pairs) to expose in the error response.
+         */
+        public function __construct($error_code, $message, $http_status_code = 400, $additional_data = [])
+        {
+        }
+        /**
+         * Returns the error code.
+         *
+         * @return string
+         */
+        public function getErrorCode()
+        {
+        }
+        /**
+         * Returns additional error data.
+         *
+         * @return array
+         */
+        public function getAdditionalData()
+        {
+        }
+    }
+    /**
+     * TooManyInCartException class.
+     *
+     * This exception is thrown when more than one of a product that can only be purchased individually is in a cart.
+     */
+    class TooManyInCartException extends \Automattic\WooCommerce\StoreApi\Exceptions\StockAvailabilityException
+    {
+    }
+}
+namespace Automattic\WooCommerce\StoreApi {
     /**
      * Formatters class.
      *
-     * Allows formatter classes to be registered. Formatters are exposed to extensions via the ExtendRestApi class.
+     * Allows formatter classes to be registered. Formatters are exposed to extensions via the ExtendSchema class.
      */
     class Formatters
     {
@@ -30103,11 +28375,9 @@ namespace Automattic\WooCommerce\Blocks\StoreApi {
         }
     }
 }
-namespace Automattic\WooCommerce\Blocks\StoreApi\Formatters {
+namespace Automattic\WooCommerce\StoreApi\Formatters {
     /**
      * FormatterInterface.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
     interface FormatterInterface
     {
@@ -30124,10 +28394,8 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Formatters {
      * Currency Formatter.
      *
      * Formats an array of monetary values by inserting currency data.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class CurrencyFormatter implements \Automattic\WooCommerce\Blocks\StoreApi\Formatters\FormatterInterface
+    class CurrencyFormatter implements \Automattic\WooCommerce\StoreApi\Formatters\FormatterInterface
     {
         /**
          * Format a given value and return the result.
@@ -30142,10 +28410,8 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Formatters {
     }
     /**
      * Default Formatter.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class DefaultFormatter implements \Automattic\WooCommerce\Blocks\StoreApi\Formatters\FormatterInterface
+    class DefaultFormatter implements \Automattic\WooCommerce\StoreApi\Formatters\FormatterInterface
     {
         /**
          * Format a given value and return the result.
@@ -30165,7 +28431,7 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Formatters {
      *
      * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class HtmlFormatter implements \Automattic\WooCommerce\Blocks\StoreApi\Formatters\FormatterInterface
+    class HtmlFormatter implements \Automattic\WooCommerce\StoreApi\Formatters\FormatterInterface
     {
         /**
          * Format a given value and return the result.
@@ -30185,10 +28451,8 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Formatters {
      * Money Formatter.
      *
      * Formats monetary values using store settings.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class MoneyFormatter implements \Automattic\WooCommerce\Blocks\StoreApi\Formatters\FormatterInterface
+    class MoneyFormatter implements \Automattic\WooCommerce\StoreApi\Formatters\FormatterInterface
     {
         /**
          * Format a given value and return the result.
@@ -30202,20 +28466,150 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Formatters {
         }
     }
 }
-namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
+namespace Automattic\WooCommerce\StoreApi\Payments {
+    /**
+     * PaymentContext class.
+     */
+    class PaymentContext
+    {
+        /**
+         * Payment method ID.
+         *
+         * @var string
+         */
+        protected $payment_method = '';
+        /**
+         * Order object for the order being paid.
+         *
+         * @var \WC_Order
+         */
+        protected $order;
+        /**
+         * Holds data to send to the payment gateway to support payment.
+         *
+         * @var array Key value pairs.
+         */
+        protected $payment_data = [];
+        /**
+         * Magic getter for protected properties.
+         *
+         * @param string $name Property name.
+         */
+        public function __get($name)
+        {
+        }
+        /**
+         * Set the chosen payment method ID context.
+         *
+         * @param string $payment_method Payment method ID.
+         */
+        public function set_payment_method($payment_method)
+        {
+        }
+        /**
+         * Retrieve the payment method instance for the current set payment method.
+         *
+         * @return {\WC_Payment_Gateway|null} An instance of the payment gateway if it exists.
+         */
+        public function get_payment_method_instance()
+        {
+        }
+        /**
+         * Set the order context.
+         *
+         * @param \WC_Order $order Order object.
+         */
+        public function set_order(\WC_Order $order)
+        {
+        }
+        /**
+         * Set payment data context.
+         *
+         * @param array $payment_data Array of key value pairs of data.
+         */
+        public function set_payment_data($payment_data = [])
+        {
+        }
+    }
+    /**
+     * PaymentResult class.
+     */
+    class PaymentResult
+    {
+        /**
+         * List of valid payment statuses.
+         *
+         * @var array
+         */
+        protected $valid_statuses = ['success', 'failure', 'pending', 'error'];
+        /**
+         * Current payment status.
+         *
+         * @var string
+         */
+        protected $status = '';
+        /**
+         * Array of details about the payment.
+         *
+         * @var string
+         */
+        protected $payment_details = [];
+        /**
+         * Redirect URL for checkout.
+         *
+         * @var string
+         */
+        protected $redirect_url = '';
+        /**
+         * Constructor.
+         *
+         * @param string $status Sets the payment status for the result.
+         */
+        public function __construct($status = '')
+        {
+        }
+        /**
+         * Magic getter for protected properties.
+         *
+         * @param string $name Property name.
+         */
+        public function __get($name)
+        {
+        }
+        /**
+         * Set payment status.
+         *
+         * @throws \Exception When an invalid status is provided.
+         *
+         * @param string $payment_status Status to set.
+         */
+        public function set_status($payment_status)
+        {
+        }
+        /**
+         * Set payment details.
+         *
+         * @param array $payment_details Array of key value pairs of data.
+         */
+        public function set_payment_details($payment_details = [])
+        {
+        }
+        /**
+         * Set redirect URL.
+         *
+         * @param array $redirect_url URL to redirect the customer to after checkout.
+         */
+        public function set_redirect_url($redirect_url = [])
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\StoreApi\Routes {
     /**
      * RouteInterface.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
     interface RouteInterface
     {
-        /**
-         * Get the namespace for this route.
-         *
-         * @return string
-         */
-        public function get_namespace();
         /**
          * Get the path of this REST route.
          *
@@ -30229,12 +28623,12 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
          */
         public function get_args();
     }
+}
+namespace Automattic\WooCommerce\StoreApi\Routes\V1 {
     /**
      * AbstractRoute class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    abstract class AbstractRoute implements \Automattic\WooCommerce\Blocks\StoreApi\Routes\RouteInterface
+    abstract class AbstractRoute implements \Automattic\WooCommerce\StoreApi\Routes\RouteInterface
     {
         /**
          * Schema class instance.
@@ -30243,11 +28637,36 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
          */
         protected $schema;
         /**
+         * Route namespace.
+         *
+         * @var string
+         */
+        protected $namespace = 'wc/store/v1';
+        /**
+         * Schema Controller instance.
+         *
+         * @var SchemaController
+         */
+        protected $schema_controller;
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = '';
+        /**
+         * The routes schema version.
+         *
+         * @var integer
+         */
+        const SCHEMA_VERSION = 1;
+        /**
          * Constructor.
          *
-         * @param AbstractSchema $schema Schema class for this route.
+         * @param SchemaController $schema_controller Schema Controller instance.
+         * @param AbstractSchema   $schema Schema class for this route.
          */
-        public function __construct(\Automattic\WooCommerce\Blocks\StoreApi\Schemas\AbstractSchema $schema)
+        public function __construct(\Automattic\WooCommerce\StoreApi\SchemaController $schema_controller, \Automattic\WooCommerce\StoreApi\Schemas\v1\AbstractSchema $schema)
         {
         }
         /**
@@ -30256,6 +28675,14 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
          * @return string
          */
         public function get_namespace()
+        {
+        }
+        /**
+         * Set the namespace for this route.
+         *
+         * @param string $namespace Given namespace.
+         */
+        public function set_namespace($namespace)
         {
         }
         /**
@@ -30403,7 +28830,7 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
         }
     }
 }
-namespace Automattic\WooCommerce\Blocks\StoreApi\Utilities {
+namespace Automattic\WooCommerce\StoreApi\Utilities {
     /**
      * DraftOrderTrait
      *
@@ -30447,21 +28874,19 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Utilities {
         }
     }
 }
-namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
+namespace Automattic\WooCommerce\StoreApi\Routes\V1 {
     /**
      * Abstract Cart Route
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    abstract class AbstractCartRoute extends \Automattic\WooCommerce\Blocks\StoreApi\Routes\AbstractRoute
+    abstract class AbstractCartRoute extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
     {
-        use \Automattic\WooCommerce\Blocks\StoreApi\Utilities\DraftOrderTrait;
+        use \Automattic\WooCommerce\StoreApi\Utilities\DraftOrderTrait;
         /**
-         * Schema class for this route's response.
+         * The routes schema.
          *
-         * @var AbstractSchema|CartSchema
+         * @var string
          */
-        protected $schema;
+        const SCHEMA_TYPE = 'cart';
         /**
          * Schema class for the cart.
          *
@@ -30481,15 +28906,12 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
          */
         protected $order_controller;
         /**
-         * Constructor accepts two types of schema; one for the item being returned, and one for the cart as a whole. These
-         * may be the same depending on the route.
+         * Constructor.
          *
-         * @param CartSchema      $cart_schema Schema class for the cart.
-         * @param AbstractSchema  $item_schema Schema class for this route's items if it differs from the cart schema.
-         * @param CartController  $cart_controller Cart controller class.
-         * @param OrderController $order_controller Order controller class.
+         * @param SchemaController $schema_controller Schema Controller instance.
+         * @param AbstractSchema   $schema Schema class for this route.
          */
-        public function __construct(\Automattic\WooCommerce\Blocks\StoreApi\Schemas\CartSchema $cart_schema, \Automattic\WooCommerce\Blocks\StoreApi\Schemas\AbstractSchema $item_schema = null, \Automattic\WooCommerce\Blocks\StoreApi\Utilities\CartController $cart_controller, \Automattic\WooCommerce\Blocks\StoreApi\Utilities\OrderController $order_controller)
+        public function __construct(\Automattic\WooCommerce\StoreApi\SchemaController $schema_controller, \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema $schema)
         {
         }
         /**
@@ -30561,11 +28983,15 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
     }
     /**
      * AbstractTermsRoute class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    abstract class AbstractTermsRoute extends \Automattic\WooCommerce\Blocks\StoreApi\Routes\AbstractRoute
+    abstract class AbstractTermsRoute extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
     {
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'term';
         /**
          * Get the query params for collections of attributes.
          *
@@ -30598,23 +29024,27 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
     }
     /**
      * Batch Route class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class Batch extends \Automattic\WooCommerce\Blocks\StoreApi\Routes\AbstractRoute implements \Automattic\WooCommerce\Blocks\StoreApi\Routes\RouteInterface
+    class Batch extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute implements \Automattic\WooCommerce\StoreApi\Routes\RouteInterface
     {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'batch';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'batch';
         /**
          * Get the path of this REST route.
          *
          * @return string
          */
         public function get_path()
-        {
-        }
-        /**
-         * Constructor.
-         */
-        public function __construct()
         {
         }
         /**
@@ -30642,11 +29072,15 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
     }
     /**
      * Cart class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class Cart extends \Automattic\WooCommerce\Blocks\StoreApi\Routes\AbstractCartRoute
+    class Cart extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractCartRoute
     {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'cart';
         /**
          * Get the path of this REST route.
          *
@@ -30666,7 +29100,6 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
         /**
          * Handle the request and return a valid response for this endpoint.
          *
-         * @throws RouteException On error.
          * @param \WP_REST_Request $request Request object.
          * @return \WP_REST_Response
          */
@@ -30676,11 +29109,15 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
     }
     /**
      * CartAddItem class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class CartAddItem extends \Automattic\WooCommerce\Blocks\StoreApi\Routes\AbstractCartRoute
+    class CartAddItem extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractCartRoute
     {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'cart-add-item';
         /**
          * Get the path of this REST route.
          *
@@ -30710,11 +29147,15 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
     }
     /**
      * CartApplyCoupon class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class CartApplyCoupon extends \Automattic\WooCommerce\Blocks\StoreApi\Routes\AbstractCartRoute
+    class CartApplyCoupon extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractCartRoute
     {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'cart-apply-coupon';
         /**
          * Get the path of this REST route.
          *
@@ -30744,11 +29185,21 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
     }
     /**
      * CartCoupons class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class CartCoupons extends \Automattic\WooCommerce\Blocks\StoreApi\Routes\AbstractCartRoute
+    class CartCoupons extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractCartRoute
     {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'cart-coupons';
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'cart-coupon';
         /**
          * Get the path of this REST route.
          *
@@ -30808,11 +29259,21 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
     }
     /**
      * CartCouponsByCode class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class CartCouponsByCode extends \Automattic\WooCommerce\Blocks\StoreApi\Routes\AbstractCartRoute
+    class CartCouponsByCode extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractCartRoute
     {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'cart-coupons-by-code';
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'cart-coupon';
         /**
          * Get the path of this REST route.
          *
@@ -30852,11 +29313,21 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
     }
     /**
      * CartExtensions class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class CartExtensions extends \Automattic\WooCommerce\Blocks\StoreApi\Routes\AbstractCartRoute
+    class CartExtensions extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractCartRoute
     {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'cart-extensions';
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'cart-extensions';
         /**
          * Get the path of this REST route.
          *
@@ -30886,11 +29357,21 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
     }
     /**
      * CartItems class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class CartItems extends \Automattic\WooCommerce\Blocks\StoreApi\Routes\AbstractCartRoute
+    class CartItems extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractCartRoute
     {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'cart-items';
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'cart-item';
         /**
          * Get the path of this REST route.
          *
@@ -30950,11 +29431,21 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
     }
     /**
      * CartItemsByKey class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class CartItemsByKey extends \Automattic\WooCommerce\Blocks\StoreApi\Routes\AbstractCartRoute
+    class CartItemsByKey extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractCartRoute
     {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'cart-items-by-key';
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'cart-item';
         /**
          * Get the path of this REST route.
          *
@@ -31014,11 +29505,15 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
     }
     /**
      * CartRemoveCoupon class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class CartRemoveCoupon extends \Automattic\WooCommerce\Blocks\StoreApi\Routes\AbstractCartRoute
+    class CartRemoveCoupon extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractCartRoute
     {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'cart-remove-coupon';
         /**
          * Get the path of this REST route.
          *
@@ -31048,12 +29543,16 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
     }
     /**
      * CartRemoveItem class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class CartRemoveItem extends \Automattic\WooCommerce\Blocks\StoreApi\Routes\AbstractCartRoute
+    class CartRemoveItem extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractCartRoute
     {
-        use \Automattic\WooCommerce\Blocks\StoreApi\Utilities\DraftOrderTrait;
+        use \Automattic\WooCommerce\StoreApi\Utilities\DraftOrderTrait;
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'cart-remove-item';
         /**
          * Get the path of this REST route.
          *
@@ -31091,11 +29590,15 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
     }
     /**
      * CartSelectShippingRate class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class CartSelectShippingRate extends \Automattic\WooCommerce\Blocks\StoreApi\Routes\AbstractCartRoute
+    class CartSelectShippingRate extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractCartRoute
     {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'cart-select-shipping-rate';
         /**
          * Get the path of this REST route.
          *
@@ -31127,20 +29630,16 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
      * CartUpdateCustomer class.
      *
      * Updates the customer billing and shipping address and returns an updated cart--things such as taxes may be recalculated.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class CartUpdateCustomer extends \Automattic\WooCommerce\Blocks\StoreApi\Routes\AbstractCartRoute
+    class CartUpdateCustomer extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractCartRoute
     {
-        use \Automattic\WooCommerce\Blocks\StoreApi\Utilities\DraftOrderTrait;
+        use \Automattic\WooCommerce\StoreApi\Utilities\DraftOrderTrait;
         /**
-         * Get the namespace for this route.
+         * The route identifier.
          *
-         * @return string
+         * @var string
          */
-        public function get_namespace()
-        {
-        }
+        const IDENTIFIER = 'cart-update-customer';
         /**
          * Get the path of this REST route.
          *
@@ -31160,7 +29659,6 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
         /**
          * Handle the request and return a valid response for this endpoint.
          *
-         * @throws RouteException On error.
          * @param \WP_REST_Request $request Request object.
          * @return \WP_REST_Response
          */
@@ -31179,11 +29677,15 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
     }
     /**
      * CartUpdateItem class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class CartUpdateItem extends \Automattic\WooCommerce\Blocks\StoreApi\Routes\AbstractCartRoute
+    class CartUpdateItem extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractCartRoute
     {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'cart-update-item';
         /**
          * Get the path of this REST route.
          *
@@ -31202,8 +29704,8 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
         }
         /**
          * Handle the request and return a valid response for this endpoint.
+         * .
          *
-         * @throws RouteException On error.
          * @param \WP_REST_Request $request Request object.
          * @return \WP_REST_Response
          */
@@ -31213,12 +29715,22 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
     }
     /**
      * Checkout class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class Checkout extends \Automattic\WooCommerce\Blocks\StoreApi\Routes\AbstractCartRoute
+    class Checkout extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractCartRoute
     {
-        use \Automattic\WooCommerce\Blocks\StoreApi\Utilities\DraftOrderTrait;
+        use \Automattic\WooCommerce\StoreApi\Utilities\DraftOrderTrait;
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'checkout';
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'checkout';
         /**
          * Holds the current order being processed.
          *
@@ -31357,7 +29869,7 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
          * @param \WP_REST_Request $request Request object.
          * @param PaymentResult    $payment_result Payment result object.
          */
-        private function process_without_payment(\WP_REST_Request $request, \Automattic\WooCommerce\Blocks\Payments\PaymentResult $payment_result)
+        private function process_without_payment(\WP_REST_Request $request, \Automattic\WooCommerce\StoreApi\Payments\PaymentResult $payment_result)
         {
         }
         /**
@@ -31368,7 +29880,7 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
          * @param \WP_REST_Request $request Request object.
          * @param PaymentResult    $payment_result Payment result object.
          */
-        private function process_payment(\WP_REST_Request $request, \Automattic\WooCommerce\Blocks\Payments\PaymentResult $payment_result)
+        private function process_payment(\WP_REST_Request $request, \Automattic\WooCommerce\StoreApi\Payments\PaymentResult $payment_result)
         {
         }
         /**
@@ -31386,7 +29898,7 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
          *
          * @throws RouteException On error.
          * @param \WP_REST_Request $request Request object.
-         * @return \WC_Payment_Gateway
+         * @return \WC_Payment_Gateway|null
          */
         private function get_request_payment_method(\WP_REST_Request $request)
         {
@@ -31412,14 +29924,57 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
         private function process_customer(\WP_REST_Request $request)
         {
         }
+        /**
+         * Check request options and store (shop) config to determine if a user account should be created as part of order
+         * processing.
+         *
+         * @param \WP_REST_Request $request The current request object being handled.
+         * @return boolean True if a new user account should be created.
+         */
+        private function should_create_customer_account(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Create a new account for a customer.
+         *
+         * The account is created with a generated username. The customer is sent
+         * an email notifying them about the account and containing a link to set
+         * their (initial) password.
+         *
+         * Intended as a replacement for wc_create_new_customer in WC core.
+         *
+         * @throws \Exception If an error is encountered when creating the user account.
+         *
+         * @param string $user_email The email address to use for the new account.
+         * @param string $first_name The first name to use for the new account.
+         * @param string $last_name  The last name to use for the new account.
+         *
+         * @return int User id if successful
+         */
+        private function create_customer_account($user_email, $first_name, $last_name)
+        {
+        }
+        /**
+         * Convert an account creation error to an exception.
+         *
+         * @param \WP_Error $error An error object.
+         * @return \Exception.
+         */
+        private function map_create_account_error(\WP_Error $error)
+        {
+        }
     }
     /**
      * ProductAttributeTerms class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class ProductAttributeTerms extends \Automattic\WooCommerce\Blocks\StoreApi\Routes\AbstractTermsRoute
+    class ProductAttributeTerms extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractTermsRoute
     {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'product-attribute-terms';
         /**
          * Get the path of this REST route.
          *
@@ -31449,11 +30004,21 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
     }
     /**
      * ProductAttributes class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class ProductAttributes extends \Automattic\WooCommerce\Blocks\StoreApi\Routes\AbstractRoute
+    class ProductAttributes extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
     {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'product-attributes';
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'product-attribute';
         /**
          * Get the path of this REST route.
          *
@@ -31473,7 +30038,6 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
         /**
          * Get a collection of attributes.
          *
-         * @throws RouteException On error.
          * @param \WP_REST_Request $request Request object.
          * @return \WP_REST_Response
          */
@@ -31483,11 +30047,21 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
     }
     /**
      * ProductAttributesById class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class ProductAttributesById extends \Automattic\WooCommerce\Blocks\StoreApi\Routes\AbstractRoute
+    class ProductAttributesById extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
     {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'product-attributes-by-id';
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'product-attribute';
         /**
          * Get the path of this REST route.
          *
@@ -31517,11 +30091,21 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
     }
     /**
      * ProductCategories class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class ProductCategories extends \Automattic\WooCommerce\Blocks\StoreApi\Routes\AbstractTermsRoute
+    class ProductCategories extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractTermsRoute
     {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'product-categories';
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'product-category';
         /**
          * Get the path of this REST route.
          *
@@ -31541,7 +30125,6 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
         /**
          * Get a collection of terms.
          *
-         * @throws RouteException On error.
          * @param \WP_REST_Request $request Request object.
          * @return \WP_REST_Response
          */
@@ -31551,11 +30134,21 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
     }
     /**
      * ProductCategoriesById class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class ProductCategoriesById extends \Automattic\WooCommerce\Blocks\StoreApi\Routes\AbstractRoute
+    class ProductCategoriesById extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
     {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'product-categories-by-id';
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'product-category';
         /**
          * Get the path of this REST route.
          *
@@ -31588,11 +30181,21 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
      * Get aggregate data from a collection of products.
      *
      * Supports the same parameters as /products, but returns a different response.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class ProductCollectionData extends \Automattic\WooCommerce\Blocks\StoreApi\Routes\AbstractRoute
+    class ProductCollectionData extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
     {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'product-collection-data';
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'product-collection-data';
         /**
          * Get the path of this REST route.
          *
@@ -31612,7 +30215,6 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
         /**
          * Get a collection of posts and add the post title filter option to \WP_Query.
          *
-         * @throws RouteException On error.
          * @param \WP_REST_Request $request Request object.
          * @return \WP_REST_Response
          */
@@ -31630,11 +30232,21 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
     }
     /**
      * ProductReviews class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class ProductReviews extends \Automattic\WooCommerce\Blocks\StoreApi\Routes\AbstractRoute
+    class ProductReviews extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
     {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'product-reviews';
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'product-review';
         /**
          * Get the path of this REST route.
          *
@@ -31654,7 +30266,6 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
         /**
          * Get a collection of reviews.
          *
-         * @throws RouteException On error.
          * @param \WP_REST_Request $request Request object.
          * @return \WP_REST_Response
          */
@@ -31681,11 +30292,15 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
     }
     /**
      * ProductTags class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class ProductTags extends \Automattic\WooCommerce\Blocks\StoreApi\Routes\AbstractTermsRoute
+    class ProductTags extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractTermsRoute
     {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'product-tags';
         /**
          * Get the path of this REST route.
          *
@@ -31705,7 +30320,6 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
         /**
          * Get a collection of terms.
          *
-         * @throws RouteException On error.
          * @param \WP_REST_Request $request Request object.
          * @return \WP_REST_Response
          */
@@ -31715,11 +30329,21 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
     }
     /**
      * Products class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class Products extends \Automattic\WooCommerce\Blocks\StoreApi\Routes\AbstractRoute
+    class Products extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
     {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'products';
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'product';
         /**
          * Get the path of this REST route.
          *
@@ -31739,7 +30363,6 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
         /**
          * Get a collection of posts and add the post title filter option to \WP_Query.
          *
-         * @throws RouteException On error.
          * @param \WP_REST_Request $request Request object.
          * @return \WP_REST_Response
          */
@@ -31767,11 +30390,21 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
     }
     /**
      * ProductsById class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class ProductsById extends \Automattic\WooCommerce\Blocks\StoreApi\Routes\AbstractRoute
+    class ProductsById extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
     {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'products-by-id';
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'product';
         /**
          * Get the path of this REST route.
          *
@@ -31799,160 +30432,279 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Routes {
         {
         }
     }
-    /**
-     * ReserveStockRouteExceptionException class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
-     */
-    class RouteException extends \Exception
-    {
-        /**
-         * Sanitized error code.
-         *
-         * @var string
-         */
-        public $error_code;
-        /**
-         * Additional error data.
-         *
-         * @var array
-         */
-        public $additional_data = [];
-        /**
-         * Setup exception.
-         *
-         * @param string $error_code       Machine-readable error code, e.g `woocommerce_invalid_product_id`.
-         * @param string $message          User-friendly translated error message, e.g. 'Product ID is invalid'.
-         * @param int    $http_status_code Proper HTTP status code to respond with, e.g. 400.
-         * @param array  $additional_data  Extra data (key value pairs) to expose in the error response.
-         */
-        public function __construct($error_code, $message, $http_status_code = 400, $additional_data = [])
-        {
-        }
-        /**
-         * Returns the error code.
-         *
-         * @return string
-         */
-        public function getErrorCode()
-        {
-        }
-        /**
-         * Returns additional error data.
-         *
-         * @return array
-         */
-        public function getAdditionalData()
-        {
-        }
-    }
 }
-namespace Automattic\WooCommerce\Blocks\StoreApi {
+namespace Automattic\WooCommerce\StoreApi {
     /**
      * RoutesController class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
     class RoutesController
     {
         /**
-         * Stores schemas.
+         * Stores schema_controller.
          *
          * @var SchemaController
          */
-        protected $schemas;
+        protected $schema_controller;
         /**
          * Stores routes.
          *
-         * @var AbstractRoute[]
+         * @var array
          */
         protected $routes = [];
         /**
          * Constructor.
          *
-         * @param SchemaController $schemas Schema controller class passed to each route.
+         * @param SchemaController $schema_controller Schema controller class passed to each route.
          */
-        public function __construct(\Automattic\WooCommerce\Blocks\StoreApi\SchemaController $schemas)
+        public function __construct(\Automattic\WooCommerce\StoreApi\SchemaController $schema_controller)
+        {
+        }
+        /**
+         * Register all Store API routes. This includes routes under specific version namespaces.
+         */
+        public function register_all_routes()
         {
         }
         /**
          * Get a route class instance.
          *
-         * @throws \Exception If the schema does not exist.
+         * Each route class is instantized with the SchemaController instance, and its main Schema Type.
          *
+         * @throws \Exception If the schema does not exist.
          * @param string $name Name of schema.
+         * @param string $version API Version being requested.
          * @return AbstractRoute
          */
-        public function get($name)
+        public function get($name, $version = 'v1')
         {
         }
         /**
          * Register defined list of routes with WordPress.
+         *
+         * @param string $version API Version being registered..
+         * @param string $namespace Overrides the default route namespace.
          */
-        public function register_routes()
-        {
-        }
-        /**
-         * Load route class instances.
-         */
-        protected function initialize()
+        protected function register_routes($version = 'v1', $namespace = 'wc/store/v1')
         {
         }
     }
     /**
      * SchemaController class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
     class SchemaController
     {
         /**
          * Stores schema class instances.
          *
-         * @var AbstractSchema[]
+         * @var Schemas\V1\AbstractSchema[]
          */
         protected $schemas = [];
         /**
          * Stores Rest Extending instance
          *
-         * @var ExtendRestApi
+         * @var ExtendSchema
          */
         private $extend;
         /**
          * Constructor.
          *
-         * @param ExtendRestApi $extend Rest Extending instance.
+         * @param ExtendSchema $extend Rest Extending instance.
          */
-        public function __construct(\Automattic\WooCommerce\Blocks\Domain\Services\ExtendRestApi $extend)
+        public function __construct(\Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema $extend)
         {
         }
         /**
          * Get a schema class instance.
          *
-         * @throws Exception If the schema does not exist.
+         * @throws \Exception If the schema does not exist.
          *
          * @param string $name Name of schema.
-         * @return AbstractSchema
+         * @param int    $version API Version being requested.
+         * @return Schemas\V1\AbstractSchema A new instance of the requested schema.
          */
-        public function get($name)
-        {
-        }
-        /**
-         * Load schema class instances.
-         */
-        protected function initialize()
+        public function get($name, $version = 1)
         {
         }
     }
 }
-namespace Automattic\WooCommerce\Blocks\StoreApi\Schemas {
+namespace Automattic\WooCommerce\StoreApi\Schemas {
+    /**
+     * Provides utility functions to extend Store API schemas.
+     *
+     * Note there are also helpers that map to these methods.
+     *
+     * @see woocommerce_store_api_register_endpoint_data()
+     * @see woocommerce_store_api_register_update_callback()
+     * @see woocommerce_store_api_register_payment_requirements()
+     * @see woocommerce_store_api_get_formatter()
+     */
+    final class ExtendSchema
+    {
+        /**
+         * List of Store API schema that is allowed to be extended by extensions.
+         *
+         * @var string[]
+         */
+        private $endpoints = [\Automattic\WooCommerce\StoreApi\Schemas\V1\CartItemSchema::IDENTIFIER, \Automattic\WooCommerce\StoreApi\Schemas\V1\CartSchema::IDENTIFIER, \Automattic\WooCommerce\StoreApi\Schemas\V1\CheckoutSchema::IDENTIFIER];
+        /**
+         * Holds the formatters class instance.
+         *
+         * @var Formatters
+         */
+        private $formatters;
+        /**
+         * Data to be extended
+         *
+         * @var array
+         */
+        private $extend_data = [];
+        /**
+         * Data to be extended
+         *
+         * @var array
+         */
+        private $callback_methods = [];
+        /**
+         * Array of payment requirements
+         *
+         * @var array
+         */
+        private $payment_requirements = [];
+        /**
+         * Constructor
+         *
+         * @param Formatters $formatters An instance of the formatters class.
+         */
+        public function __construct(\Automattic\WooCommerce\StoreApi\Formatters $formatters)
+        {
+        }
+        /**
+         * Register endpoint data under a specified namespace
+         *
+         * @param array $args {
+         *     An array of elements that make up a post to update or insert.
+         *
+         *     @type string   $endpoint Required. The endpoint to extend.
+         *     @type string   $namespace Required. Plugin namespace.
+         *     @type callable $schema_callback Callback executed to add schema data.
+         *     @type callable $data_callback Callback executed to add endpoint data.
+         *     @type string   $schema_type The type of data, object or array.
+         * }
+         *
+         * @throws \Exception On failure to register.
+         */
+        public function register_endpoint_data($args)
+        {
+        }
+        /**
+         * Add callback functions that can be executed by the cart/extensions endpoint.
+         *
+         * @param array $args {
+         *     An array of elements that make up the callback configuration.
+         *
+         *     @type string   $namespace Required. Plugin namespace.
+         *     @type callable $callback Required. The function/callable to execute.
+         * }
+         *
+         * @throws \Exception On failure to register.
+         */
+        public function register_update_callback($args)
+        {
+        }
+        /**
+         * Registers and validates payment requirements callbacks.
+         *
+         * @param array $args {
+         *     Array of registration data.
+         *
+         *     @type callable $data_callback Required. Callback executed to add payment requirements data.
+         * }
+         *
+         * @throws \Exception On failure to register.
+         */
+        public function register_payment_requirements($args)
+        {
+        }
+        /**
+         * Returns a formatter instance.
+         *
+         * @param string $name Formatter name.
+         * @return FormatterInterface
+         */
+        public function get_formatter($name)
+        {
+        }
+        /**
+         * Get callback for a specific endpoint and namespace.
+         *
+         * @param string $namespace The namespace to get callbacks for.
+         *
+         * @return callable The callback registered by the extension.
+         * @throws \Exception When callback is not callable or parameters are incorrect.
+         */
+        public function get_update_callback($namespace)
+        {
+        }
+        /**
+         * Returns the registered endpoint data
+         *
+         * @param string $endpoint    A valid identifier.
+         * @param array  $passed_args Passed arguments from the Schema class.
+         * @return object Returns an casted object with registered endpoint data.
+         * @throws \Exception If a registered callback throws an error, or silently logs it.
+         */
+        public function get_endpoint_data($endpoint, array $passed_args = [])
+        {
+        }
+        /**
+         * Returns the registered endpoint schema
+         *
+         * @param string $endpoint    A valid identifier.
+         * @param array  $passed_args Passed arguments from the Schema class.
+         * @return object Returns an array with registered schema data.
+         * @throws \Exception If a registered callback throws an error, or silently logs it.
+         */
+        public function get_endpoint_schema($endpoint, array $passed_args = [])
+        {
+        }
+        /**
+         * Returns the additional payment requirements for the cart which are required to make payments. Values listed here
+         * are compared against each Payment Gateways "supports" flag.
+         *
+         * @param array $requirements list of requirements that should be added to the collected requirements.
+         * @return array Returns a list of payment requirements.
+         * @throws \Exception If a registered callback throws an error, or silently logs it.
+         */
+        public function get_payment_requirements(array $requirements = ['products'])
+        {
+        }
+        /**
+         * Throws error and/or silently logs it.
+         *
+         * @param string|\Throwable $exception_or_error Error message or \Exception.
+         * @throws \Exception An error to throw if we have debug enabled and user is admin.
+         */
+        private function throw_exception($exception_or_error)
+        {
+        }
+        /**
+         * Format schema for an extension.
+         *
+         * @param string $namespace Error message or \Exception.
+         * @param array  $schema An error to throw if we have debug enabled and user is admin.
+         * @param string $schema_type How should data be shaped.
+         * @return array Formatted schema.
+         */
+        private function format_extensions_properties($namespace, $schema, $schema_type)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\StoreApi\Schemas\V1 {
     /**
      * AbstractSchema class.
      *
      * For REST Route Schemas
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
-     * @since 2.5.0
      */
     abstract class AbstractSchema
     {
@@ -31963,11 +30715,17 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Schemas {
          */
         protected $title = 'Schema';
         /**
-         * Rest extend instance
+         * Rest extend instance.
          *
-         * @var ExtendRestApi
+         * @var ExtendSchema
          */
         protected $extend;
+        /**
+         * Schema Controller instance.
+         *
+         * @var SchemaController
+         */
+        protected $controller;
         /**
          * Extending key that gets added to endpoint.
          *
@@ -31977,9 +30735,10 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Schemas {
         /**
          * Constructor.
          *
-         * @param ExtendRestApi $extend Rest Extending instance.
+         * @param ExtendSchema     $extend Rest Extending instance.
+         * @param SchemaController $controller Schema Controller instance.
          */
-        public function __construct(\Automattic\WooCommerce\Blocks\Domain\Services\ExtendRestApi $extend)
+        public function __construct(\Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema $extend, \Automattic\WooCommerce\StoreApi\SchemaController $controller)
         {
         }
         /**
@@ -32066,7 +30825,7 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Schemas {
          * @param array          $items Array of items.
          * @return array Array of values from the callback function.
          */
-        protected function get_item_responses_from_schema(\Automattic\WooCommerce\Blocks\StoreApi\Schemas\AbstractSchema $schema, $items)
+        protected function get_item_responses_from_schema(\Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema $schema, $items)
         {
         }
         /**
@@ -32131,11 +30890,8 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Schemas {
      * AddressSchema class.
      *
      * Provides a generic address schema for composition in other schemas.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
-     * @since 4.1.0
      */
-    abstract class AbstractAddressSchema extends \Automattic\WooCommerce\Blocks\StoreApi\Schemas\AbstractSchema
+    abstract class AbstractAddressSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
     {
         /**
          * Term properties.
@@ -32203,13 +30959,37 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Schemas {
         }
     }
     /**
+     * BatchSchema class.
+     */
+    class BatchSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'batch';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'batch';
+        /**
+         * Batch schema properties.
+         *
+         * @return array
+         */
+        public function get_properties()
+        {
+        }
+    }
+    /**
      * BillingAddressSchema class.
      *
      * Provides a generic billing address schema for composition in other schemas.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class BillingAddressSchema extends \Automattic\WooCommerce\Blocks\StoreApi\Schemas\AbstractAddressSchema
+    class BillingAddressSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractAddressSchema
     {
         /**
          * The schema item name.
@@ -32267,12 +31047,8 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Schemas {
     }
     /**
      * CartCouponSchema class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
-     * @since 2.5.0
-     * @since 3.9.0 Coupon type (`discount_type`) added.
      */
-    class CartCouponSchema extends \Automattic\WooCommerce\Blocks\StoreApi\Schemas\AbstractSchema
+    class CartCouponSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
     {
         /**
          * The schema item name.
@@ -32315,10 +31091,8 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Schemas {
     }
     /**
      * Class CartExtensionsSchema
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class CartExtensionsSchema extends \Automattic\WooCommerce\Blocks\StoreApi\Schemas\AbstractSchema
+    class CartExtensionsSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
     {
         /**
          * The schema item name.
@@ -32354,10 +31128,8 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Schemas {
     }
     /**
      * CartFeeSchema class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class CartFeeSchema extends \Automattic\WooCommerce\Blocks\StoreApi\Schemas\AbstractSchema
+    class CartFeeSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
     {
         /**
          * The schema item name.
@@ -32391,11 +31163,8 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Schemas {
     }
     /**
      * ProductSchema class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
-     * @since 2.5.0
      */
-    class ProductSchema extends \Automattic\WooCommerce\Blocks\StoreApi\Schemas\AbstractSchema
+    class ProductSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
     {
         /**
          * The schema item name.
@@ -32418,10 +31187,10 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Schemas {
         /**
          * Constructor.
          *
-         * @param ExtendRestApi         $extend Rest Extending instance.
-         * @param ImageAttachmentSchema $image_attachment_schema Image attachment schema instance.
+         * @param ExtendSchema     $extend Rest Extending instance.
+         * @param SchemaController $controller Schema Controller instance.
          */
-        public function __construct(\Automattic\WooCommerce\Blocks\Domain\Services\ExtendRestApi $extend, \Automattic\WooCommerce\Blocks\StoreApi\Schemas\ImageAttachmentSchema $image_attachment_schema)
+        public function __construct(\Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema $extend, \Automattic\WooCommerce\StoreApi\SchemaController $controller)
         {
         }
         /**
@@ -32575,13 +31344,10 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Schemas {
     }
     /**
      * CartItemSchema class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
-     * @since 2.5.0
      */
-    class CartItemSchema extends \Automattic\WooCommerce\Blocks\StoreApi\Schemas\ProductSchema
+    class CartItemSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\ProductSchema
     {
-        use \Automattic\WooCommerce\Blocks\StoreApi\Utilities\DraftOrderTrait;
+        use \Automattic\WooCommerce\StoreApi\Utilities\DraftOrderTrait;
         /**
          * The schema item name.
          *
@@ -32652,11 +31418,8 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Schemas {
     }
     /**
      * CartSchema class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
-     * @since 2.5.0
      */
-    class CartSchema extends \Automattic\WooCommerce\Blocks\StoreApi\Schemas\AbstractSchema
+    class CartSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
     {
         /**
          * The schema item name.
@@ -32715,16 +31478,10 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Schemas {
         /**
          * Constructor.
          *
-         * @param ExtendRestApi          $extend Rest Extending instance.
-         * @param CartItemSchema         $item_schema Item schema instance.
-         * @param CartCouponSchema       $coupon_schema Coupon schema instance.
-         * @param CartFeeSchema          $fee_schema Fee schema instance.
-         * @param CartShippingRateSchema $shipping_rate_schema Shipping rates schema instance.
-         * @param ShippingAddressSchema  $shipping_address_schema Shipping address schema instance.
-         * @param BillingAddressSchema   $billing_address_schema Billing address schema instance.
-         * @param ErrorSchema            $error_schema Error schema instance.
+         * @param ExtendSchema     $extend Rest Extending instance.
+         * @param SchemaController $controller Schema Controller instance.
          */
-        public function __construct(\Automattic\WooCommerce\Blocks\Domain\Services\ExtendRestApi $extend, \Automattic\WooCommerce\Blocks\StoreApi\Schemas\CartItemSchema $item_schema, \Automattic\WooCommerce\Blocks\StoreApi\Schemas\CartCouponSchema $coupon_schema, \Automattic\WooCommerce\Blocks\StoreApi\Schemas\CartFeeSchema $fee_schema, \Automattic\WooCommerce\Blocks\StoreApi\Schemas\CartShippingRateSchema $shipping_rate_schema, \Automattic\WooCommerce\Blocks\StoreApi\Schemas\ShippingAddressSchema $shipping_address_schema, \Automattic\WooCommerce\Blocks\StoreApi\Schemas\BillingAddressSchema $billing_address_schema, \Automattic\WooCommerce\Blocks\StoreApi\Schemas\ErrorSchema $error_schema)
+        public function __construct(\Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema $extend, \Automattic\WooCommerce\StoreApi\SchemaController $controller)
         {
         }
         /**
@@ -32765,10 +31522,8 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Schemas {
     }
     /**
      * CartShippingRateSchema class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class CartShippingRateSchema extends \Automattic\WooCommerce\Blocks\StoreApi\Schemas\AbstractSchema
+    class CartShippingRateSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
     {
         /**
          * The schema item name.
@@ -32866,10 +31621,8 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Schemas {
     }
     /**
      * CheckoutSchema class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class CheckoutSchema extends \Automattic\WooCommerce\Blocks\StoreApi\Schemas\AbstractSchema
+    class CheckoutSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
     {
         /**
          * The schema item name.
@@ -32898,11 +31651,10 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Schemas {
         /**
          * Constructor.
          *
-         * @param ExtendRestApi         $extend Rest Extending instance.
-         * @param BillingAddressSchema  $billing_address_schema Billing address schema instance.
-         * @param ShippingAddressSchema $shipping_address_schema Shipping address schema instance.
+         * @param ExtendSchema     $extend Rest Extending instance.
+         * @param SchemaController $controller Schema Controller instance.
          */
-        public function __construct(\Automattic\WooCommerce\Blocks\Domain\Services\ExtendRestApi $extend, \Automattic\WooCommerce\Blocks\StoreApi\Schemas\BillingAddressSchema $billing_address_schema, \Automattic\WooCommerce\Blocks\StoreApi\Schemas\ShippingAddressSchema $shipping_address_schema)
+        public function __construct(\Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema $extend, \Automattic\WooCommerce\StoreApi\SchemaController $controller)
         {
         }
         /**
@@ -32929,7 +31681,7 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Schemas {
          * @param PaymentResult $payment_result Payment result object.
          * @return array
          */
-        protected function get_checkout_response(\WC_Order $order, \Automattic\WooCommerce\Blocks\Payments\PaymentResult $payment_result = null)
+        protected function get_checkout_response(\WC_Order $order, \Automattic\WooCommerce\StoreApi\Payments\PaymentResult $payment_result = null)
         {
         }
         /**
@@ -32947,11 +31699,8 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Schemas {
     }
     /**
      * ErrorSchema class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
-     * @since 2.5.0
      */
-    class ErrorSchema extends \Automattic\WooCommerce\Blocks\StoreApi\Schemas\AbstractSchema
+    class ErrorSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
     {
         /**
          * The schema item name.
@@ -32985,10 +31734,8 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Schemas {
     }
     /**
      * ImageAttachmentSchema class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class ImageAttachmentSchema extends \Automattic\WooCommerce\Blocks\StoreApi\Schemas\AbstractSchema
+    class ImageAttachmentSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
     {
         /**
          * The schema item name.
@@ -33022,10 +31769,8 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Schemas {
     }
     /**
      * OrderCouponSchema class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class OrderCouponSchema extends \Automattic\WooCommerce\Blocks\StoreApi\Schemas\AbstractSchema
+    class OrderCouponSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
     {
         /**
          * The schema item name.
@@ -33059,11 +31804,8 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Schemas {
     }
     /**
      * ProductAttributeSchema class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
-     * @since 2.5.0
      */
-    class ProductAttributeSchema extends \Automattic\WooCommerce\Blocks\StoreApi\Schemas\AbstractSchema
+    class ProductAttributeSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
     {
         /**
          * The schema item name.
@@ -33097,11 +31839,8 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Schemas {
     }
     /**
      * TermSchema class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
-     * @since 2.5.0
      */
-    class TermSchema extends \Automattic\WooCommerce\Blocks\StoreApi\Schemas\AbstractSchema
+    class TermSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
     {
         /**
          * The schema item name.
@@ -33135,10 +31874,8 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Schemas {
     }
     /**
      * ProductCategorySchema class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class ProductCategorySchema extends \Automattic\WooCommerce\Blocks\StoreApi\Schemas\TermSchema
+    class ProductCategorySchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\TermSchema
     {
         /**
          * The schema item name.
@@ -33161,10 +31898,10 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Schemas {
         /**
          * Constructor.
          *
-         * @param ExtendRestApi         $extend Rest Extending instance.
-         * @param ImageAttachmentSchema $image_attachment_schema Image attachment schema instance.
+         * @param ExtendSchema     $extend Rest Extending instance.
+         * @param SchemaController $controller Schema Controller instance.
          */
-        public function __construct(\Automattic\WooCommerce\Blocks\Domain\Services\ExtendRestApi $extend, \Automattic\WooCommerce\Blocks\StoreApi\Schemas\ImageAttachmentSchema $image_attachment_schema)
+        public function __construct(\Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema $extend, \Automattic\WooCommerce\StoreApi\SchemaController $controller)
         {
         }
         /**
@@ -33196,11 +31933,8 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Schemas {
     }
     /**
      * ProductCollectionDataSchema class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
-     * @since 2.5.0
      */
-    class ProductCollectionDataSchema extends \Automattic\WooCommerce\Blocks\StoreApi\Schemas\AbstractSchema
+    class ProductCollectionDataSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
     {
         /**
          * The schema item name.
@@ -33234,10 +31968,8 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Schemas {
     }
     /**
      * ProductReviewSchema class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
-    class ProductReviewSchema extends \Automattic\WooCommerce\Blocks\StoreApi\Schemas\AbstractSchema
+    class ProductReviewSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
     {
         /**
          * The schema item name.
@@ -33260,10 +31992,10 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Schemas {
         /**
          * Constructor.
          *
-         * @param ExtendRestApi         $extend Rest Extending instance.
-         * @param ImageAttachmentSchema $image_attachment_schema Image attachment schema instance.
+         * @param ExtendSchema     $extend Rest Extending instance.
+         * @param SchemaController $controller Schema Controller instance.
          */
-        public function __construct(\Automattic\WooCommerce\Blocks\Domain\Services\ExtendRestApi $extend, \Automattic\WooCommerce\Blocks\StoreApi\Schemas\ImageAttachmentSchema $image_attachment_schema)
+        public function __construct(\Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema $extend, \Automattic\WooCommerce\StoreApi\SchemaController $controller)
         {
         }
         /**
@@ -33288,11 +32020,8 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Schemas {
      * ShippingAddressSchema class.
      *
      * Provides a generic shipping address schema for composition in other schemas.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
-     * @since 2.5.0
      */
-    class ShippingAddressSchema extends \Automattic\WooCommerce\Blocks\StoreApi\Schemas\AbstractAddressSchema
+    class ShippingAddressSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractAddressSchema
     {
         /**
          * The schema item name.
@@ -33319,17 +32048,58 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Schemas {
         }
     }
 }
-namespace Automattic\WooCommerce\Blocks\StoreApi\Utilities {
+namespace Automattic\WooCommerce\StoreApi {
+    /**
+     * StoreApi Main Class.
+     */
+    final class StoreApi
+    {
+        /**
+         * Init and hook in Store API functionality.
+         */
+        public function init()
+        {
+        }
+        /**
+         * Loads the DI container for Store API.
+         *
+         * @internal This uses the Blocks DI container. If Store API were to move to core, this container could be replaced
+         * with a different compatible container.
+         *
+         * @param boolean $reset Used to reset the container to a fresh instance. Note: this means all dependencies will be reconstructed.
+         * @return mixed
+         */
+        public static function container($reset = false)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\StoreApi\Utilities {
+    /**
+     * ArrayUtils class used for custom functions to operate on arrays
+     */
+    class ArrayUtils
+    {
+        /**
+         * Join a string with a natural language conjunction at the end.
+         *
+         * @param array $array  The array to join together with the natural language conjunction.
+         * @param bool  $enclose_items_with_quotes Whether each item in the array should be enclosed within quotation marks.
+         *
+         * @return string a string containing a list of items and a natural language conjuction.
+         */
+        public static function natural_language_join($array, $enclose_items_with_quotes = false)
+        {
+        }
+    }
     /**
      * Woo Cart Controller class.
-     * Helper class to bridge the gap between the cart API and Woo core.
      *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
-     * @since 2.5.0
+     * Helper class to bridge the gap between the cart API and Woo core.
      */
     class CartController
     {
-        use \Automattic\WooCommerce\Blocks\StoreApi\Utilities\DraftOrderTrait;
+        use \Automattic\WooCommerce\StoreApi\Utilities\DraftOrderTrait;
         /**
          * Makes the cart and sessions available to a route by loading them from core.
          */
@@ -33398,9 +32168,17 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Utilities {
         {
         }
         /**
+         * Validate cart and check for errors.
+         *
+         * @throws InvalidCartException Exception if invalid data is detected in the cart.
+         */
+        public function validate_cart()
+        {
+        }
+        /**
          * Validate all items in the cart and check for errors.
          *
-         * @throws InvalidStockLevelsInCartException Exception if invalid data is detected due to insufficient stock levels.
+         * @throws InvalidCartException Exception if invalid data is detected due to insufficient stock levels.
          */
         public function validate_cart_items()
         {
@@ -33408,12 +32186,12 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Utilities {
         /**
          * This method will take arrays of exceptions relating to stock, and will convert them to a WP_Error object.
          *
-         * @param TooManyInCartException[]     $too_many_in_cart_products         Array of TooManyInCartExceptions.
-         * @param NotPurchasableException[]    $not_purchasable_products         Array of NotPurchasableExceptions.
+         * @param TooManyInCartException[]     $too_many_in_cart_products     Array of TooManyInCartExceptions.
+         * @param NotPurchasableException[]    $not_purchasable_products      Array of NotPurchasableExceptions.
          * @param PartialOutOfStockException[] $partial_out_of_stock_products Array of PartialOutOfStockExceptions.
-         * @param OutOfStockException[]        $out_of_stock_products                Array of OutOfStockExceptions.
+         * @param OutOfStockException[]        $out_of_stock_products         Array of OutOfStockExceptions.
          *
-         * @return WP_Error[] The WP_Error object returned. Will have errors if any exceptions were in the args. It will be empty if they do not.
+         * @return WP_Error  The WP_Error object returned. Will have errors if any exceptions were in the args. It will be empty if they do not.
          */
         private function stock_exceptions_to_wp_errors($too_many_in_cart_products, $not_purchasable_products, $partial_out_of_stock_products, $out_of_stock_products)
         {
@@ -33434,25 +32212,17 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Utilities {
         /**
          * Validate all coupons in the cart and check for errors.
          *
-         * @throws RouteException Exception if invalid data is detected.
+         * @throws InvalidCartException Exception if invalid data is detected.
          */
         public function validate_cart_coupons()
         {
         }
         /**
-         * Validate all items in the cart and get a list of errors.
+         * Validate the cart and get a list of errors.
          *
-         * @return WP_Error[] An array of WP_Errors describing the cart's error state.
+         * @return WP_Error A WP_Error instance containing the cart's errors.
          */
-        public function get_cart_item_errors()
-        {
-        }
-        /**
-         * Validate all items in the cart and get a list of errors.
-         *
-         * @throws RouteException Exception if invalid data is detected.
-         */
-        public function get_cart_coupon_errors()
+        public function get_cart_errors()
         {
         }
         /**
@@ -33618,7 +32388,7 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Utilities {
         /**
          * Default exception thrown when an item cannot be added to the cart.
          *
-         * @throws RouteException Exception with code woocommerce_rest_cart_product_is_not_purchasable.
+         * @throws RouteException Exception with code woocommerce_rest_product_not_purchasable.
          *
          * @param \WC_Product $product Product object associated with the cart item.
          */
@@ -33684,141 +32454,8 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Utilities {
         }
     }
     /**
-     * InvalidStockLevelsInCartException class.
-     *
-     * @internal This API is used internally by Blocks, this exception is thrown if any items are out of stock
-     * after each product on a draft order has been stock checked.
-     */
-    class InvalidStockLevelsInCartException extends \Exception
-    {
-        /**
-         * Sanitized error code.
-         *
-         * @var string
-         */
-        public $error_code;
-        /**
-         * Additional error data.
-         *
-         * @var array
-         */
-        public $additional_data = [];
-        /**
-         * All errors to display to the user.
-         *
-         * @var WP_Error
-         */
-        public $error;
-        /**
-         * Setup exception.
-         *
-         * @param string   $error_code      Machine-readable error code, e.g `woocommerce_invalid_product_id`.
-         * @param WP_Error $error           The WP_Error object containing all errors relating to stock availability.
-         * @param array    $additional_data Extra data (key value pairs) to expose in the error response.
-         */
-        public function __construct($error_code, $error, $additional_data = [])
-        {
-        }
-        /**
-         * Returns the error code.
-         *
-         * @return string
-         */
-        public function getErrorCode()
-        {
-        }
-        /**
-         * Returns the list of messages.
-         *
-         * @return WP_Error
-         */
-        public function getError()
-        {
-        }
-        /**
-         * Returns additional error data.
-         *
-         * @return array
-         */
-        public function getAdditionalData()
-        {
-        }
-    }
-    /**
-     * StockAvailabilityException class.
-     *
-     * @internal This API is used internally by Blocks, this exception is thrown when more than one of a product that
-     * can only be purchased individually is in a cart.
-     */
-    class StockAvailabilityException extends \Exception
-    {
-        /**
-         * Sanitized error code.
-         *
-         * @var string
-         */
-        public $error_code;
-        /**
-         * The name of the product that can only be purchased individually.
-         *
-         * @var string
-         */
-        public $product_name;
-        /**
-         * Additional error data.
-         *
-         * @var array
-         */
-        public $additional_data = [];
-        /**
-         * Setup exception.
-         *
-         * @param string $error_code       Machine-readable error code, e.g `woocommerce_invalid_product_id`.
-         * @param string $product_name     The name of the product that can only be purchased individually.
-         * @param array  $additional_data  Extra data (key value pairs) to expose in the error response.
-         */
-        public function __construct($error_code, $product_name, $additional_data = [])
-        {
-        }
-        /**
-         * Returns the error code.
-         *
-         * @return string
-         */
-        public function getErrorCode()
-        {
-        }
-        /**
-         * Returns additional error data.
-         *
-         * @return array
-         */
-        public function getAdditionalData()
-        {
-        }
-        /**
-         * Returns the product name.
-         *
-         * @return string
-         */
-        public function getProductName()
-        {
-        }
-    }
-    /**
-     * NotPurchasableException class.
-     *
-     * @internal This API is used internally by Blocks, this exception is thrown when an item in the cart is not able to be
-     * purchased.
-     */
-    class NotPurchasableException extends \Automattic\WooCommerce\Blocks\StoreApi\Utilities\StockAvailabilityException
-    {
-    }
-    /**
      * NoticeHandler class.
-     * Helper class to convert notices to exceptions.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
+     * Helper class to handle notices.
      */
     class NoticeHandler
     {
@@ -33837,12 +32474,25 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Utilities {
         public static function convert_notices_to_exceptions($error_code = 'unknown_server_error')
         {
         }
+        /**
+         * Collects queued error notices into a \WP_Error.
+         *
+         * For example, cart validation processes may add error notices to prevent checkout.
+         * Since we're not rendering notices at all, we need to catch them and group them in a single WP_Error instance.
+         *
+         * This method will discard notices once complete.
+         *
+         * @param string $error_code Error code for the thrown exceptions.
+         *
+         * @return \WP_Error The WP_Error object containing all error notices.
+         */
+        public static function convert_notices_to_wp_errors($error_code = 'unknown_server_error')
+        {
+        }
     }
     /**
      * OrderController class.
      * Helper class which creates and syncs orders with the cart.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
      */
     class OrderController
     {
@@ -33995,19 +32645,7 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Utilities {
         }
     }
     /**
-     * OutOfStockException class.
-     *
-     * @internal This API is used internally by Blocks, this exception is thrown when an item in a draft order is out
-     * of stock completely.
-     */
-    class OutOfStockException extends \Automattic\WooCommerce\Blocks\StoreApi\Utilities\StockAvailabilityException
-    {
-    }
-    /**
      * Pagination class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
-     * @since 2.5.0
      */
     class Pagination
     {
@@ -34054,20 +32692,9 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Utilities {
         }
     }
     /**
-     * PartialOutOfStockException class.
-     *
-     * @internal This API is used internally by Blocks, this exception is thrown when an item in a draft order has a
-     * quantity greater than what is available in stock.
-     */
-    class PartialOutOfStockException extends \Automattic\WooCommerce\Blocks\StoreApi\Utilities\StockAvailabilityException
-    {
-    }
-    /**
      * Product Query class.
-     * Helper class to handle product queries for the API.
      *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
-     * @since 2.5.0
+     * Helper class to handle product queries for the API.
      */
     class ProductQuery
     {
@@ -34181,9 +32808,6 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Utilities {
     }
     /**
      * Product Query filters class.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
-     * @since 2.5.0
      */
     class ProductQueryFilters
     {
@@ -34191,7 +32815,7 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Utilities {
          * Get filtered min price for current products.
          *
          * @param \WP_REST_Request $request The request object.
-         * @return array
+         * @return object
          */
         public function get_filtered_price($request)
         {
@@ -34241,13 +32865,10 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Utilities {
      * QuantityLimits class.
      *
      * Returns limits for products and cart items when using the StoreAPI and supporting classes.
-     *
-     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
-     * @since 2.5.0
      */
     final class QuantityLimits
     {
-        use \Automattic\WooCommerce\Blocks\StoreApi\Utilities\DraftOrderTrait;
+        use \Automattic\WooCommerce\StoreApi\Utilities\DraftOrderTrait;
         /**
          * Get quantity limits (min, max, step/multiple) for a product or cart item.
          *
@@ -34322,34 +32943,8 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Utilities {
         {
         }
     }
-    /**
-     * TooManyInCartException class.
-     *
-     * @internal This API is used internally by Blocks, this exception is thrown when more than one of a product that
-     * can only be purchased individually is in a cart.
-     */
-    class TooManyInCartException extends \Automattic\WooCommerce\Blocks\StoreApi\Utilities\StockAvailabilityException
-    {
-    }
 }
 namespace Automattic\WooCommerce\Blocks\Utils {
-    /**
-     * ArrayUtils class used for custom functions to operate on arrays
-     */
-    class ArrayUtils
-    {
-        /**
-         * Join a string with a natural language conjunction at the end.
-         *
-         * @param array $array  The array to join together with the natural language conjunction.
-         * @param bool  $enclose_items_with_quotes Whether each item in the array should be enclosed within quotation marks.
-         *
-         * @return string a string containing a list of items and a natural language conjuction.
-         */
-        public static function natural_language_join($array, $enclose_items_with_quotes = false)
-        {
-        }
-    }
     /**
      * BlockTemplateUtils class used for serving block templates from Woo Blocks.
      * IMPORTANT: These methods have been duplicated from Gutenberg/lib/full-site-editing/block-templates.php as those functions are not for public usage.
@@ -34379,6 +32974,15 @@ namespace Automattic\WooCommerce\Blocks\Utils {
          * @var string
          */
         const PLUGIN_SLUG = 'woocommerce/woocommerce';
+        /**
+         * Deprecated WooCommerce plugin slug
+         *
+         * For supporting users who have customized templates under the incorrect plugin slug during the first release.
+         * More context found here: https://github.com/woocommerce/woocommerce-gutenberg-products-block/issues/5423.
+         *
+         * @var string
+         */
+        const DEPRECATED_PLUGIN_SLUG = 'woocommerce';
         /**
          * Returns an array containing the references of
          * the passed blocks and their inner blocks.
@@ -34414,12 +33018,12 @@ namespace Automattic\WooCommerce\Blocks\Utils {
         /**
          * Build a unified template object based on a theme file.
          *
-         * @param array $template_file Theme file.
-         * @param array $template_type wp_template or wp_template_part.
+         * @param array|object $template_file Theme file.
+         * @param string       $template_type wp_template or wp_template_part.
          *
          * @return \WP_Block_Template Template.
          */
-        public static function gutenberg_build_template_result_from_file($template_file, $template_type)
+        public static function build_template_result_from_file($template_file, $template_type)
         {
         }
         /**
@@ -35137,6 +33741,50 @@ namespace {
      * @return array Navigation pieces (breadcrumbs).
      */
     function wc_admin_get_breadcrumbs()
+    {
+    }
+    /**
+     * Register endpoint data under a specified namespace.
+     *
+     * @see Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema::register_endpoint_data()
+     *
+     * @param array $args Args to pass to register_endpoint_data.
+     * @returns boolean|\WP_Error True on success, WP_Error on fail.
+     */
+    function woocommerce_store_api_register_endpoint_data($args)
+    {
+    }
+    /**
+     * Add callback functions that can be executed by the cart/extensions endpoint.
+     *
+     * @see Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema::register_update_callback()
+     *
+     * @param array $args Args to pass to register_update_callback.
+     * @returns boolean|\WP_Error True on success, WP_Error on fail.
+     */
+    function woocommerce_store_api_register_update_callback($args)
+    {
+    }
+    /**
+     * Registers and validates payment requirements callbacks.
+     *
+     * @see Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema::register_payment_requirements()
+     *
+     * @param array $args Args to pass to register_payment_requirements.
+     * @returns boolean|\WP_Error True on success, WP_Error on fail.
+     */
+    function woocommerce_store_api_register_payment_requirements($args)
+    {
+    }
+    /**
+     * Returns a formatter instance.
+     *
+     * @see Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema::get_formatter()
+     *
+     * @param string $name Formatter name.
+     * @return Automattic\WooCommerce\StoreApi\Formatters\FormatterInterface
+     */
+    function woocommerce_store_api_get_formatter($name)
     {
     }
 }

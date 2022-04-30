@@ -6994,6 +6994,10 @@ namespace {
     class WC_Admin_Dashboard_Setup
     {
         /**
+         * Check for task list initialization.
+         */
+        private $initalized = \false;
+        /**
          * The task list.
          */
         private $task_list = \null;
@@ -18614,7 +18618,7 @@ namespace {
         /**
          * Checks the coupon type.
          *
-         * @param  string $type Array or string of types.
+         * @param  string|array $type Array or string of types.
          * @return bool
          */
         public function is_type($type)
@@ -22899,9 +22903,16 @@ namespace {
         /**
          * DB updates and callbacks that need to be run per version.
          *
+         * Please note that these functions are invoked when WooCommerce is updated from a previous version,
+         * but NOT when WooCommerce is newly installed.
+         *
+         * Database schema changes must be incorporated to the SQL returned by get_schema, which is applied
+         * via dbDelta at both install and update time. If any other kind of database change is required
+         * at install time (e.g. populating tables), use the 'woocommerce_installed' hook.
+         *
          * @var array
          */
-        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_update_400_db_version'), '4.4.0' => array('wc_update_440_insert_attribute_terms_for_variable_products', 'wc_update_440_db_version'), '4.5.0' => array('wc_update_450_sanitize_coupons_code', 'wc_update_450_db_version'), '5.0.0' => array('wc_update_500_fix_product_review_count', 'wc_update_500_db_version'), '5.6.0' => array('wc_update_560_create_refund_returns_page', 'wc_update_560_db_version'), '6.0.0' => array('wc_update_600_migrate_rate_limit_options', 'wc_update_600_db_version'), '6.3.0' => array('wc_update_630_create_product_attributes_lookup_table', 'wc_update_630_db_version'));
+        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_update_400_db_version'), '4.4.0' => array('wc_update_440_insert_attribute_terms_for_variable_products', 'wc_update_440_db_version'), '4.5.0' => array('wc_update_450_sanitize_coupons_code', 'wc_update_450_db_version'), '5.0.0' => array('wc_update_500_fix_product_review_count', 'wc_update_500_db_version'), '5.6.0' => array('wc_update_560_create_refund_returns_page', 'wc_update_560_db_version'), '6.0.0' => array('wc_update_600_migrate_rate_limit_options', 'wc_update_600_db_version'), '6.3.0' => array('wc_update_630_create_product_attributes_lookup_table', 'wc_update_630_db_version'), '6.4.0' => array('wc_update_640_add_primary_key_to_product_attributes_lookup_table', 'wc_update_640_db_version'));
         /**
          * Hook in tabs.
          */
@@ -22987,7 +22998,7 @@ namespace {
          * @param bool $modify_notice Whether to modify notice based on if all tables are present.
          * @param bool $execute       Whether to execute get_schema queries as well.
          *
-         * @return array List of querues.
+         * @return array List of queries.
          */
         public static function verify_base_tables($modify_notice = \true, $execute = \false)
         {
@@ -23290,7 +23301,7 @@ namespace {
          * Gets the content of the sample refunds and return policy page.
          *
          * @since 5.6.0
-         * @return HTML The content for the page
+         * @return string The content for the page
          */
         private static function get_refunds_return_policy_page_content()
         {
@@ -24032,6 +24043,16 @@ namespace {
         | Meta Data Handling
         |--------------------------------------------------------------------------
         */
+        /**
+         * Wrapper for get_formatted_meta_data that includes all metadata by default. See https://github.com/woocommerce/woocommerce/pull/30948
+         *
+         * @param string $hideprefix  Meta data prefix, (default: _).
+         * @param bool   $include_all Include all meta data, this stop skip items with values already in the product name.
+         * @return array
+         */
+        public function get_all_formatted_meta_data($hideprefix = '_', $include_all = \true)
+        {
+        }
         /**
          * Expands things like term slugs before return.
          *
@@ -33159,7 +33180,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '6.3.1';
+        public $version = '6.4.1';
         /**
          * WooCommerce Schema version.
          *
@@ -47423,7 +47444,7 @@ namespace {
          * {@link WC_Meta_Data}. Returns the merged array.
          *
          * @param WC_Meta_Data $meta_item           An object from {@link WC_Order_Item::get_meta_data()}.
-         * @param array        $formatted_meta_data An object result from {@link WC_Order_Item::get_formatted_meta_data}.
+         * @param array        $formatted_meta_data An object result from {@link WC_Order_Item::get_all_formatted_meta_data}.
          * The keys are the IDs of {@link WC_Meta_Data}.
          *
          * @return array
@@ -55305,7 +55326,7 @@ namespace Automattic\WooCommerce {
          *
          * @var string[]
          */
-        private $service_providers = array(\Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\AssignDefaultCategoryServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\DownloadPermissionsAdjusterServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductAttributesLookupServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProxiesServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\RestockRefundedItemsAdjusterServiceProvider::class);
+        private $service_providers = array(\Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\AssignDefaultCategoryServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\DownloadPermissionsAdjusterServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrdersDataStoreServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductAttributesLookupServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProxiesServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\RestockRefundedItemsAdjusterServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\UtilsClassesServiceProvider::class);
         /**
          * The underlying container.
          *
@@ -55544,6 +55565,84 @@ namespace Automattic\WooCommerce\Utilities {
         {
         }
     }
+}
+namespace Automattic\WooCommerce\Internal\Utilities {
+    /**
+     * A class of utilities for dealing with the database.
+     */
+    class DatabaseUtil
+    {
+        /**
+         * Wrapper for the WordPress dbDelta function, allows to execute a series of SQL queries.
+         *
+         * @param string $queries The SQL queries to execute.
+         * @param bool   $execute Ture to actually execute the queries, false to only simulate the execution.
+         * @return array The result of the execution (or simulation) from dbDelta.
+         */
+        public function dbdelta(string $queries = '', bool $execute = true) : array
+        {
+        }
+        /**
+         * Given a set of table creation SQL statements, check which of the tables are currently missing in the database.
+         *
+         * @param string $creation_queries The SQL queries to execute ("CREATE TABLE" statements, same format as for dbDelta).
+         * @return array An array containing the names of the tables that currently don't exist in the database.
+         */
+        public function get_missing_tables(string $creation_queries) : array
+        {
+        }
+        /**
+         * Parses the output given by dbdelta and returns information about it.
+         *
+         * @param array $dbdelta_output The output from the execution of dbdelta.
+         * @return array[] An array containing a 'created_tables' key whose value is an array with the names of the tables that have been (or would have been) created.
+         */
+        public function parse_dbdelta_output(array $dbdelta_output) : array
+        {
+        }
+        /**
+         * Drops a database table.
+         *
+         * @param string $table_name The name of the table to drop.
+         * @param bool   $add_prefix True if the table name passed needs to be prefixed with $wpdb->prefix before processing.
+         * @return bool True on success, false on error.
+         */
+        public function drop_database_table(string $table_name, bool $add_prefix = false)
+        {
+        }
+        /**
+         * Drops a table index, if both the table and the index exist.
+         *
+         * @param string $table_name The name of the table that contains the index.
+         * @param string $index_name The name of the index to be dropped.
+         * @return bool True if the index has been dropped, false if either the table or the index don't exist.
+         */
+        public function drop_table_index(string $table_name, string $index_name) : bool
+        {
+        }
+        /**
+         * Create a primary key for a table, only if the table doesn't have a primary key already.
+         *
+         * @param string $table_name Table name.
+         * @param array  $columns An array with the index column names.
+         * @return bool True if the key has been created, false if the table already had a primary key.
+         */
+        public function create_primary_key(string $table_name, array $columns)
+        {
+        }
+        /**
+         * Get the columns of a given table index, or of the primary key.
+         *
+         * @param string $table_name Table name.
+         * @param string $index_name Index name, empty string for the primary key.
+         * @return array The index columns. Empty array if the table or the index don't exist.
+         */
+        public function get_index_columns(string $table_name, string $index_name = '') : array
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Utilities {
     /**
      * A class of utilities for dealing with numbers.
      */
