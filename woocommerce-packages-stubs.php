@@ -4942,6 +4942,81 @@ namespace {
         }
     }
 }
+namespace WooCommerce\Admin {
+    /**
+     * This class provides an interface to the Explat A/B tests.
+     *
+     * @internal This class is experimental and should not be used externally due to planned breaking changes.
+     */
+    final class Experimental_Abtest
+    {
+        /**
+         * A variable to hold the tests we fetched, and their variations for the current user.
+         *
+         * @var array
+         */
+        private $tests = array();
+        /**
+         * ExPlat Anonymous ID.
+         *
+         * @var string
+         */
+        private $anon_id = null;
+        /**
+         * ExPlat Platform name.
+         *
+         * @var string
+         */
+        private $platform = 'woocommerce';
+        /**
+         * Whether trcking consent is given.
+         *
+         * @var bool
+         */
+        private $consent = false;
+        /**
+         * Constructor.
+         *
+         * @param string $anon_id ExPlat anonymous ID.
+         * @param string $platform ExPlat platform name.
+         * @param bool   $consent Whether tracking consent is given.
+         */
+        public function __construct(string $anon_id, string $platform, bool $consent)
+        {
+        }
+        /**
+         * Retrieve the test variation for a provided A/B test.
+         *
+         * @param string $test_name Name of the A/B test.
+         * @return mixed|null A/B test variation, or null on failure.
+         */
+        public function get_variation($test_name)
+        {
+        }
+        /**
+         * Fetch and cache the test variation for a provided A/B test from WP.com.
+         *
+         * ExPlat returns a null value when the assigned variation is control or
+         * an assignment has not been set. In these instances, this method returns
+         * a value of "control".
+         *
+         * @param string $test_name Name of the A/B test.
+         * @return array|\WP_Error A/B test variation, or error on failure.
+         */
+        protected function fetch_variation($test_name)
+        {
+        }
+        /**
+         * Perform the request for a variation of a provided A/B test from WP.com.
+         *
+         * @param string $test_name Name of the A/B test.
+         * @return array|\WP_Error A/B test variation error on failure.
+         */
+        protected function request_variation($test_name)
+        {
+        }
+    }
+}
 namespace Automattic\WooCommerce\Admin\API {
     /**
      * Coupons controller.
@@ -6079,6 +6154,51 @@ namespace Automattic\WooCommerce\Admin\API {
         }
     }
     /**
+     * Onboarding Product Types Controller.
+     *
+     * @extends WC_REST_Data_Controller
+     */
+    class OnboardingProductTypes extends \WC_REST_Data_Controller
+    {
+        /**
+         * Endpoint namespace.
+         *
+         * @var string
+         */
+        protected $namespace = 'wc-admin';
+        /**
+         * Route base.
+         *
+         * @var string
+         */
+        protected $rest_base = 'onboarding/product-types';
+        /**
+         * Register routes.
+         */
+        public function register_routes()
+        {
+        }
+        /**
+         * Check whether a given request has permission to read onboarding profile data.
+         *
+         * @param  WP_REST_Request $request Full details about the request.
+         * @return WP_Error|boolean
+         */
+        public function get_items_permissions_check($request)
+        {
+        }
+        /**
+         * Return available product types.
+         *
+         * @param \WP_REST_Request $request Request data.
+         *
+         * @return \WP_Error|\WP_REST_Response
+         */
+        public function get_product_types($request)
+        {
+        }
+    }
+    /**
      * Onboarding Profile controller.
      *
      * @extends WC_REST_Data_Controller
@@ -6281,6 +6401,15 @@ namespace Automattic\WooCommerce\Admin\API {
         {
         }
         /**
+         * Check if a given request has permission to hide task lists.
+         *
+         * @param  WP_REST_Request $request Full details about the request.
+         * @return WP_Error|boolean
+         */
+        public function hide_task_list_permission_check($request)
+        {
+        }
+        /**
          * Check if a given request has access to manage woocommerce.
          *
          * @param  WP_REST_Request $request Full details about the request.
@@ -6446,6 +6575,16 @@ namespace Automattic\WooCommerce\Admin\API {
          * @return WP_REST_Request|WP_Error
          */
         public function undo_snooze_task($request)
+        {
+        }
+        /**
+         * Hide a task list.
+         *
+         * @param WP_REST_Request $request Request data.
+         *
+         * @return WP_REST_Response|WP_Error
+         */
+        public function hide_task_list($request)
         {
         }
     }
@@ -13320,7 +13459,7 @@ namespace Automattic\WooCommerce\Admin\Composer {
          *
          * @var string
          */
-        const VERSION = '2.7.2';
+        const VERSION = '2.8.0';
         /**
          * Package active.
          *
@@ -15217,6 +15356,7 @@ namespace Automattic\WooCommerce\Admin\Features {
         /**
          * Returns true if the task list should be displayed (not completed or hidden off the dashboard).
          *
+         * @deprecated 2.7.0
          * @return bool
          */
         public static function should_show_tasks()
@@ -15427,254 +15567,6 @@ namespace Automattic\WooCommerce\Admin\Features {
         {
         }
     }
-    /**
-     * Contains the logic for completing onboarding tasks.
-     */
-    class OnboardingTasks
-    {
-        /**
-         * Class instance.
-         *
-         * @var OnboardingTasks instance
-         */
-        protected static $instance = null;
-        /**
-         * Name of the active task transient.
-         *
-         * @var string
-         */
-        const ACTIVE_TASK_TRANSIENT = 'wc_onboarding_active_task';
-        /**
-         * Get class instance.
-         */
-        public static function get_instance()
-        {
-        }
-        /**
-         * Constructor
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Enqueue scripts and styles.
-         */
-        public function add_media_scripts()
-        {
-        }
-        /**
-         * Get task item data for settings filter.
-         *
-         * @return array
-         */
-        public static function get_settings()
-        {
-        }
-        /**
-         * Add task items to component settings.
-         *
-         * @param array $settings Component settings.
-         * @return array
-         */
-        public function component_settings($settings)
-        {
-        }
-        /**
-         * Temporarily store the active task to persist across page loads when neccessary (such as publishing a product). Most tasks do not need to do this.
-         */
-        public static function set_active_task()
-        {
-        }
-        /**
-         * Get the name of the active task.
-         *
-         * @return string
-         */
-        public static function get_active_task()
-        {
-        }
-        /**
-         * Check for active task completion, and clears the transient.
-         *
-         * @return bool
-         */
-        public static function is_active_task_complete()
-        {
-        }
-        /**
-         * Check for task completion of a given task.
-         *
-         * @param string $task Name of task.
-         * @return bool
-         */
-        public static function check_task_completion($task)
-        {
-        }
-        /**
-         * Hooks into the product page to add a notice to return to the task list if a product was added.
-         *
-         * @param string $hook Page hook.
-         */
-        public static function add_onboarding_product_notice_admin_script($hook)
-        {
-        }
-        /**
-         * Hooks into the post page to display a different success notice and sets the active page as the site's home page if visted from onboarding.
-         *
-         * @param string $hook Page hook.
-         */
-        public static function add_onboarding_homepage_notice_admin_script($hook)
-        {
-        }
-        /**
-         * Adds a notice to return to the task list when the save button is clicked on tax settings pages.
-         */
-        public static function add_onboarding_tax_notice_admin_script()
-        {
-        }
-        /**
-         * Adds a notice to return to the task list when the product importeris done running.
-         *
-         * @param string $hook Page hook.
-         */
-        public function add_onboarding_product_import_notice_admin_script($hook)
-        {
-        }
-        /**
-         * Get an array of countries that support automated tax.
-         *
-         * @return array
-         */
-        public static function get_automated_tax_supported_countries()
-        {
-        }
-        /**
-         * Returns a list of Stripe supported countries. This method can be removed once merged to core.
-         *
-         * @return array
-         */
-        public static function get_stripe_supported_countries()
-        {
-        }
-        /**
-         * Returns a list of WooCommerce Payments supported countries.
-         *
-         * @return array
-         */
-        public static function get_woocommerce_payments_supported_countries()
-        {
-        }
-        /**
-         * Records an event when all tasks are completed in the task list.
-         *
-         * @param mixed $old_value Old value.
-         * @param mixed $new_value New value.
-         */
-        public static function track_completion($old_value, $new_value)
-        {
-        }
-        /**
-         * Records an event when all tasks are completed in the extended task list.
-         *
-         * @param mixed $old_value Old value.
-         * @param mixed $new_value New value.
-         */
-        public static function track_extended_completion($old_value, $new_value)
-        {
-        }
-        /**
-         * Record the tasks that are marked complete.
-         *
-         * @param array $task_lists Array of task lists.
-         */
-        public static function record_completed_tasks($task_lists)
-        {
-        }
-        /**
-         * Records an event for individual task completion.
-         *
-         * @param mixed $old_value Old value.
-         * @param mixed $new_value New value.
-         */
-        public static function possibly_track_completed_tasks($old_value, $new_value)
-        {
-        }
-        /**
-         * Update registered extended task list items.
-         */
-        public static function update_option_extended_task_list()
-        {
-        }
-        /**
-         * Get the task lists.
-         *
-         * @return array
-         */
-        public static function get_task_lists()
-        {
-        }
-        /**
-         * Retrieve a task list by ID.
-         *
-         * @param String $task_list_id Task list ID.
-         *
-         * @return Object
-         */
-        public static function get_task_list_by_id($task_list_id)
-        {
-        }
-        /**
-         * Retrieve single task.
-         *
-         * @param String $task_id Task ID.
-         * @param String $task_list_id Task list ID.
-         *
-         * @return Object
-         */
-        public static function get_task_by_id($task_id, $task_list_id = null)
-        {
-        }
-        /**
-         * Add the dismissal status to each task.
-         *
-         * @param array $task_lists Task lists.
-         * @return array
-         */
-        public function add_task_dismissal($task_lists)
-        {
-        }
-        /**
-         * Add the snoozed status to each task.
-         *
-         * @param array $task_lists Task lists.
-         * @return array
-         */
-        public function add_task_snoozed($task_lists)
-        {
-        }
-        /**
-         * Get the values from the correct source when attempting to retrieve deprecated options.
-         *
-         * @param string $pre_option Pre option value.
-         * @param string $option Option name.
-         * @return string
-         */
-        public function get_deprecated_options($pre_option, $option)
-        {
-        }
-        /**
-         * Updates the new option names when deprecated options are updated.
-         * This is a temporary fallback until we can fully remove the old task list components.
-         *
-         * @param string $value New value.
-         * @param string $old_value Old value.
-         * @param string $option Option name.
-         * @return string
-         */
-        public function update_deprecated_options($value, $old_value, $option)
-        {
-        }
-    }
 }
 namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
     /**
@@ -15791,30 +15683,6 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
         {
         }
         /**
-         * Get an array of countries that support automated tax.
-         *
-         * @return array
-         */
-        public static function get_automated_tax_supported_countries()
-        {
-        }
-        /**
-         * Returns a list of Stripe supported countries. This method can be removed once merged to core.
-         *
-         * @return array
-         */
-        public static function get_stripe_supported_countries()
-        {
-        }
-        /**
-         * Returns a list of WooCommerce Payments supported countries.
-         *
-         * @return array
-         */
-        public static function get_woocommerce_payments_supported_countries()
-        {
-        }
-        /**
          * Records an event when all tasks are completed in the task list.
          *
          * @param mixed $old_value Old value.
@@ -15848,33 +15716,6 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
         {
         }
         /**
-         * Add the dismissal status to each task.
-         *
-         * @param array $task_lists Task lists.
-         * @return array
-         */
-        public function add_task_dismissal($task_lists)
-        {
-        }
-        /**
-         * Add the snoozed status to each task.
-         *
-         * @param array $task_lists Task lists.
-         * @return array
-         */
-        public function add_task_snoozed($task_lists)
-        {
-        }
-        /**
-         * Add the task list isHidden attribute to each list.
-         *
-         * @param array $task_lists Task lists.
-         * @return array
-         */
-        public function add_task_list_hidden($task_lists)
-        {
-        }
-        /**
          * Get the values from the correct source when attempting to retrieve deprecated options.
          *
          * @param string $pre_option Pre option value.
@@ -15894,6 +15735,585 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
          * @return string
          */
         public function update_deprecated_options($value, $old_value, $option)
+        {
+        }
+    }
+    /**
+     * Task class.
+     */
+    class Task
+    {
+        /**
+         * ID.
+         *
+         * @var string
+         */
+        public $id = '';
+        /**
+         * Title.
+         *
+         * @var string
+         */
+        public $title = '';
+        /**
+         * Title.
+         *
+         * @var string
+         */
+        public $content = '';
+        /**
+         * Action label.
+         *
+         * @var string
+         */
+        public $action_label = '';
+        /**
+         * Action URL.
+         *
+         * @var string|null
+         */
+        public $action_url = null;
+        /**
+         * Task completion.
+         *
+         * @var bool
+         */
+        protected $is_complete = false;
+        /**
+         * Viewing capability.
+         *
+         * @var bool
+         */
+        protected $can_view = true;
+        /**
+         * Time string.
+         *
+         * @var string|null
+         */
+        public $time = null;
+        /**
+         * Dismissability.
+         *
+         * @var bool
+         */
+        protected $is_dismissable = false;
+        /**
+         * Snoozeability.
+         *
+         * @var bool
+         */
+        protected $is_snoozeable = false;
+        /**
+         * Snoozeability.
+         *
+         * @var string|null
+         */
+        public $snoozed_until = null;
+        /**
+         * Name of the dismiss option.
+         *
+         * @var string
+         */
+        const DISMISSED_OPTION = 'woocommerce_task_list_dismissed_tasks';
+        /**
+         * Name of the snooze option.
+         *
+         * @var string
+         */
+        const SNOOZED_OPTION = 'woocommerce_task_list_remind_me_later_tasks';
+        /**
+         * Duration to milisecond mapping.
+         *
+         * @var string
+         */
+        protected $duration_to_ms = array('day' => DAY_IN_SECONDS * 1000, 'hour' => HOUR_IN_SECONDS * 1000, 'week' => WEEK_IN_SECONDS * 1000);
+        /**
+         * Constructor
+         *
+         * @param array $data Task list data.
+         */
+        public function __construct($data = array())
+        {
+        }
+        /**
+         * Bool for task dismissal.
+         *
+         * @return bool
+         */
+        public function is_dismissed()
+        {
+        }
+        /**
+         * Dismiss the task.
+         *
+         * @return bool
+         */
+        public function dismiss()
+        {
+        }
+        /**
+         * Undo task dismissal.
+         *
+         * @return bool
+         */
+        public function undo_dismiss()
+        {
+        }
+        /**
+         * Bool for task snoozed.
+         *
+         * @return bool
+         */
+        public function is_snoozed()
+        {
+        }
+        /**
+         * Snooze the task.
+         *
+         * @param string $duration Duration to snooze. day|hour|week.
+         * @return bool
+         */
+        public function snooze($duration = 'day')
+        {
+        }
+        /**
+         * Undo task snooze.
+         *
+         * @return bool
+         */
+        public function undo_snooze()
+        {
+        }
+        /**
+         * Bool for task visibility.
+         *
+         * @return bool
+         */
+        public function is_visible()
+        {
+        }
+        /**
+         * Get the task as JSON.
+         *
+         * @return array
+         */
+        public function get_json()
+        {
+        }
+    }
+    /**
+     * Task List class.
+     */
+    class TaskList
+    {
+        /**
+         * Option name hidden task lists.
+         */
+        const HIDDEN_OPTION = 'woocommerce_task_list_hidden_lists';
+        /**
+         * Option name completed task lists.
+         */
+        const COMPLETED_OPTION = 'woocommerce_task_list_completed_lists';
+        /**
+         * ID.
+         *
+         * @var string
+         */
+        public $id = '';
+        /**
+         * Title.
+         *
+         * @var string
+         */
+        public $title = '';
+        /**
+         * Title.
+         *
+         * @var array
+         */
+        protected $tasks = array();
+        /**
+         * Constructor
+         *
+         * @param array $data Task list data.
+         */
+        public function __construct($data = array())
+        {
+        }
+        /**
+         * Check if the task list is hidden.
+         *
+         * @return bool
+         */
+        public function is_hidden()
+        {
+        }
+        /**
+         * Hide the task list.
+         *
+         * @return bool
+         */
+        public function hide()
+        {
+        }
+        /**
+         * Undo hiding of the task list.
+         *
+         * @return bool
+         */
+        public function show()
+        {
+        }
+        /**
+         * Check if the task list is complete.
+         *
+         * @return bool
+         */
+        public function is_complete()
+        {
+        }
+        /**
+         * Add task to the task list.
+         *
+         * @param array $args Task properties.
+         */
+        public function add_task($args)
+        {
+        }
+        /**
+         * Get the list for use in JSON.
+         *
+         * @return array
+         */
+        public function get_json()
+        {
+        }
+    }
+    /**
+     * Task Lists class.
+     */
+    class TaskLists
+    {
+        /**
+         * Class instance.
+         *
+         * @var TaskLists instance
+         */
+        protected static $instance = null;
+        /**
+         * An array of all registered lists.
+         *
+         * @var array
+         */
+        protected static $lists = array();
+        /**
+         * Get class instance.
+         */
+        public static final function instance()
+        {
+        }
+        /**
+         * Initialize the task lists.
+         */
+        public static function init()
+        {
+        }
+        /**
+         * Initialize default lists.
+         */
+        public static function init_default_lists()
+        {
+        }
+        /**
+         * Add a task list.
+         *
+         * @param array $args Task list properties.
+         * @return WP_Error|Task
+         */
+        public static function add_list($args)
+        {
+        }
+        /**
+         * Add task to a given task list.
+         *
+         * @param string $list_id List ID to add the task to.
+         * @param array  $args Task properties.
+         * @return WP_Error|Task
+         */
+        public static function add_task($list_id, $args)
+        {
+        }
+        /**
+         * Add default task lists.
+         */
+        public static function maybe_add_default_tasks()
+        {
+        }
+        /**
+         * Get all task lists.
+         *
+         * @return array
+         */
+        public static function get_lists()
+        {
+        }
+        /**
+         * Get visible task lists.
+         */
+        public static function get_visible()
+        {
+        }
+        /**
+         * Retrieve a task list by ID.
+         *
+         * @param String $id Task list ID.
+         *
+         * @return TaskList|null
+         */
+        public static function get_list($id)
+        {
+        }
+        /**
+         * Retrieve single task.
+         *
+         * @param String $id Task ID.
+         * @param String $task_list_id Task list ID.
+         *
+         * @return Object
+         */
+        public static function get_task($id, $task_list_id = null)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
+    /**
+     * Appearance Task
+     */
+    class Appearance
+    {
+        /**
+         * Get the task arguments.
+         *
+         * @return array
+         */
+        public static function get_task()
+        {
+        }
+    }
+    /**
+     * Marketing Task
+     */
+    class Marketing
+    {
+        /**
+         * Get the task arguments.
+         *
+         * @return array
+         */
+        public static function get_task()
+        {
+        }
+        /**
+         * Get the marketing bundles.
+         *
+         * @return array
+         */
+        public static function get_bundles()
+        {
+        }
+        /**
+         * Check if the store has installed marketing extensions.
+         *
+         * @return bool
+         */
+        public static function has_installed_extensions()
+        {
+        }
+    }
+    /**
+     * Payments Task
+     */
+    class Payments
+    {
+        /**
+         * Get the task arguments.
+         *
+         * @return array
+         */
+        public static function get_task()
+        {
+        }
+        /**
+         * Check if the store has any enabled gateways.
+         *
+         * @return bool
+         */
+        public static function has_gateways()
+        {
+        }
+    }
+    /**
+     * Products Task
+     */
+    class Products
+    {
+        /**
+         * Get the task arguments.
+         *
+         * @return array
+         */
+        public static function get_task()
+        {
+        }
+        /**
+         * Check if the store has any published products.
+         *
+         * @return bool
+         */
+        public static function has_products()
+        {
+        }
+    }
+    /**
+     * Purchase Task
+     */
+    class Purchase
+    {
+        /**
+         * Get the task arguments.
+         *
+         * @return array
+         */
+        public static function get_task()
+        {
+        }
+        /**
+         * Get purchaseable and remaining products.
+         *
+         * @return array
+         */
+        public static function get_products()
+        {
+        }
+    }
+    /**
+     * Shipping Task
+     */
+    class Shipping
+    {
+        /**
+         * Get the task arguments.
+         *
+         * @return array
+         */
+        public static function get_task()
+        {
+        }
+        /**
+         * Check if the store has any shipping zones.
+         *
+         * @return bool
+         */
+        public static function has_shipping_zones()
+        {
+        }
+        /**
+         * Check if the store has physical products.
+         *
+         * @return bool
+         */
+        public static function has_physical_products()
+        {
+        }
+    }
+    /**
+     * Store Details Task
+     */
+    class StoreDetails
+    {
+        /**
+         * Get the task arguments.
+         *
+         * @return array
+         */
+        public static function get_task()
+        {
+        }
+    }
+    /**
+     * Tax Task
+     */
+    class Tax
+    {
+        /**
+         * Get the task arguments.
+         *
+         * @return array
+         */
+        public static function get_task()
+        {
+        }
+        /**
+         * Check if the store has any enabled gateways.
+         *
+         * @return bool
+         */
+        public static function can_use_automated_taxes()
+        {
+        }
+        /**
+         * Get an array of countries that support automated tax.
+         *
+         * @return array
+         */
+        public static function get_automated_tax_supported_countries()
+        {
+        }
+    }
+    /**
+     * WooCommercePayments Task
+     */
+    class WooCommercePayments
+    {
+        /**
+         * Get the task arguments.
+         *
+         * @return array
+         */
+        public static function get_task()
+        {
+        }
+        /**
+         * Check if the plugin was requested during onboarding.
+         *
+         * @return bool
+         */
+        public static function is_requested()
+        {
+        }
+        /**
+         * Check if the plugin is installed.
+         *
+         * @return bool
+         */
+        public static function is_installed()
+        {
+        }
+        /**
+         * Check if WooCommerce Payments is connected.
+         *
+         * @return bool
+         */
+        public static function is_connected()
+        {
+        }
+        /**
+         * Check if the store is in a supported country.
+         *
+         * @return bool
+         */
+        public static function is_supported()
         {
         }
     }
@@ -16024,8 +16444,8 @@ namespace Automattic\WooCommerce\Admin\Features\PaymentGatewaySuggestions {
         /**
          * Evaluates the spec and returns the suggestion.
          *
-         * @param array $spec The suggestion to evaluate.
-         * @return array The evaluated suggestion.
+         * @param object|array $spec The suggestion to evaluate.
+         * @return object The evaluated suggestion.
          */
         public static function evaluate($spec)
         {
@@ -16601,6 +17021,154 @@ namespace Automattic\WooCommerce\Admin\Features {
         }
     }
 }
+namespace Automattic\WooCommerce\Admin\Features\WcPayPromotion {
+    /**
+     * Specs data source poller class.
+     * This handles polling specs from JSON endpoints.
+     */
+    class DataSourcePoller
+    {
+        /**
+         * Name of data sources filter.
+         */
+        const FILTER_NAME = 'woocommerce_admin_payment_method_promotions_data_sources';
+        /**
+         * Default data sources array.
+         */
+        const DATA_SOURCES = array('https://woocommerce.com/wp-json/wccom/payment-gateway-suggestions/1.0/payment-method/promotions.json');
+        /**
+         * The logger instance.
+         *
+         * @var WC_Logger|null
+         */
+        protected static $logger = null;
+        /**
+         * Get the logger instance.
+         *
+         * @return WC_Logger
+         */
+        private static function get_logger()
+        {
+        }
+        /**
+         * Reads the data sources for specs and persists those specs.
+         *
+         * @return bool Whether any specs were read.
+         */
+        public static function read_specs_from_data_sources()
+        {
+        }
+        /**
+         * Read a single data source and return the read specs
+         *
+         * @param string $url The URL to read the specs from.
+         *
+         * @return array The specs that have been read from the data source.
+         */
+        private static function read_data_source($url)
+        {
+        }
+        /**
+         * Merge the specs.
+         *
+         * @param Array $specs_to_merge_in The specs to merge in to $specs.
+         * @param Array $specs             The list of specs being merged into.
+         */
+        private static function merge_specs($specs_to_merge_in, &$specs)
+        {
+        }
+    }
+    /**
+     * WC Pay Promotion engine.
+     */
+    class Init
+    {
+        const SPECS_TRANSIENT_NAME = 'woocommerce_admin_payment_method_promotion_specs';
+        const EXPLAT_VARIATION_PREFIX = 'woocommerce_wc_pay_promotion_payment_methods_table_';
+        /**
+         * Constructor.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Possibly registers the pre install wc pay promoted gateway.
+         *
+         * @param array $gateways list of gateway classes.
+         * @return array list of gateway classes.
+         */
+        public static function possibly_register_pre_install_wc_pay_promotion_gateway($gateways)
+        {
+        }
+        /**
+         * Possibly filters out woocommerce-payments from recommended payment methods.
+         *
+         * @param array $payment_methods list of payment methods.
+         * @return array list of payment method.
+         */
+        public static function possibly_filter_recommended_payment_gateways($payment_methods)
+        {
+        }
+        /**
+         * Checks if promoted gateway should be registered.
+         *
+         * @return boolean if promoted gateway should be registered.
+         */
+        public static function should_register_pre_install_wc_pay_promoted_gateway()
+        {
+        }
+        /**
+         * By default, new payment gateways are put at the bottom of the list on the admin "Payments" settings screen.
+         * For visibility, we want WooCommerce Payments to be at the top of the list.
+         *
+         * @param array $ordering Existing ordering of the payment gateways.
+         *
+         * @return array Modified ordering.
+         */
+        public static function set_gateway_top_of_list($ordering)
+        {
+        }
+        /**
+         * Get WC Pay promotion spec.
+         */
+        public static function get_wc_pay_promotion_spec()
+        {
+        }
+        /**
+         * Go through the specs and run them.
+         */
+        public static function get_promotions()
+        {
+        }
+        /**
+         * Delete the specs transient.
+         */
+        public static function delete_specs_transient()
+        {
+        }
+        /**
+         * Get specs or fetch remotely if they don't exist.
+         */
+        public static function get_specs()
+        {
+        }
+    }
+    /**
+     * A Psuedo WCPay gateway class.
+     *
+     * @extends WC_Payment_Gateway
+     */
+    class WCPaymentGatewayPreInstallWCPayPromotion extends \WC_Payment_Gateway
+    {
+        const GATEWAY_ID = 'pre_install_woocommerce_payments_promotion';
+        /**
+         * Constructor
+         */
+        public function __construct()
+        {
+        }
+    }
+}
 namespace Automattic\WooCommerce\Admin {
     /**
      * Install Class.
@@ -16616,7 +17184,7 @@ namespace Automattic\WooCommerce\Admin {
          *
          * @var array
          */
-        protected static $db_updates = array('0.20.1' => array('wc_admin_update_0201_order_status_index', 'wc_admin_update_0201_db_version'), '0.23.0' => array('wc_admin_update_0230_rename_gross_total', 'wc_admin_update_0230_db_version'), '0.25.1' => array('wc_admin_update_0251_remove_unsnooze_action', 'wc_admin_update_0251_db_version'), '1.1.0' => array('wc_admin_update_110_remove_facebook_note', 'wc_admin_update_110_db_version'), '1.3.0' => array('wc_admin_update_130_remove_dismiss_action_from_tracking_opt_in_note', 'wc_admin_update_130_db_version'), '1.4.0' => array('wc_admin_update_140_change_deactivate_plugin_note_type', 'wc_admin_update_140_db_version'), '1.6.0' => array('wc_admin_update_160_remove_facebook_note', 'wc_admin_update_160_db_version'), '1.7.0' => array('wc_admin_update_170_homescreen_layout', 'wc_admin_update_170_db_version'), '2.7.0' => array('wc_admin_update_270_delete_report_downloads', 'wc_admin_update_270_db_version'), '2.7.1' => array('wc_admin_update_271_update_task_list_options', 'wc_admin_update_271_db_version'));
+        protected static $db_updates = array('0.20.1' => array('wc_admin_update_0201_order_status_index', 'wc_admin_update_0201_db_version'), '0.23.0' => array('wc_admin_update_0230_rename_gross_total', 'wc_admin_update_0230_db_version'), '0.25.1' => array('wc_admin_update_0251_remove_unsnooze_action', 'wc_admin_update_0251_db_version'), '1.1.0' => array('wc_admin_update_110_remove_facebook_note', 'wc_admin_update_110_db_version'), '1.3.0' => array('wc_admin_update_130_remove_dismiss_action_from_tracking_opt_in_note', 'wc_admin_update_130_db_version'), '1.4.0' => array('wc_admin_update_140_change_deactivate_plugin_note_type', 'wc_admin_update_140_db_version'), '1.6.0' => array('wc_admin_update_160_remove_facebook_note', 'wc_admin_update_160_db_version'), '1.7.0' => array('wc_admin_update_170_homescreen_layout', 'wc_admin_update_170_db_version'), '2.7.0' => array('wc_admin_update_270_delete_report_downloads', 'wc_admin_update_270_db_version'), '2.7.1' => array('wc_admin_update_271_update_task_list_options', 'wc_admin_update_271_db_version'), '2.8.0' => array('wc_admin_update_280_order_status', 'wc_admin_update_280_db_version'));
         /**
          * Migrated option names mapping. New => old.
          *
@@ -19849,9 +20417,10 @@ namespace Automattic\WooCommerce\Admin\Notes {
         /**
          * Soft delete of all the admin notes. Returns the deleted items.
          *
+         * @param array $args Arguments to pass to the query (ex: status).
          * @return array Array of notes.
          */
-        public static function delete_all_notes()
+        public static function delete_all_notes($args = array())
         {
         }
         /**
@@ -21060,6 +21629,10 @@ namespace Automattic\WooCommerce\Admin {
      */
     class PaymentPlugins
     {
+        /**
+         * Name of recommended plugins filter.
+         */
+        const FILTER_NAME = 'woocommerce_admin_recommended_payment_plugins';
         /**
          * Name of recommended plugins transient.
          *
@@ -24267,6 +24840,16 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
+         * Injects Chunk Translations into the page so translations work for lazy loaded components.
+         *
+         * The chunk names are defined when creating lazy loaded components using webpackChunkName.
+         *
+         * @param string[] $chunks Array of chunk names.
+         */
+        protected function register_chunk_translations($chunks)
+        {
+        }
+        /**
          * Registers the block type with WordPress.
          */
         protected function register_block_type()
@@ -24732,6 +25315,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         protected function enqueue_data(array $attributes = [])
         {
         }
+        /**
+         * Register script and style assets for the block type before it is registered.
+         *
+         * This registers the scripts; it does not enqueue them.
+         */
+        protected function register_block_type_assets()
+        {
+        }
     }
     /**
      * AllReviews class.
@@ -24752,6 +25343,16 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @return array|string
          */
         protected function get_block_type_script($key = null)
+        {
+        }
+        /**
+         * Extra data passed through from server to client for block.
+         *
+         * @param array $attributes  Any attributes that currently are available from the block.
+         *                           Note, this will be empty in the editor context when the block is
+         *                           not in the post content on editor load.
+         */
+        protected function enqueue_data(array $attributes = [])
         {
         }
     }
@@ -24921,18 +25522,18 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         }
     }
     /**
-     * Checkout class.
+     * Cart class.
      *
      * @internal
      */
-    class Checkout extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    class CartI2 extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
     {
         /**
          * Block name.
          *
          * @var string
          */
-        protected $block_name = 'checkout';
+        protected $block_name = 'cart-i2';
         /**
          * Get the editor script handle for this block type.
          *
@@ -24961,21 +25562,13 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
-         * Append frontend scripts when rendering the block.
+         * Append frontend scripts when rendering the Cart block.
          *
          * @param array  $attributes Block attributes.
          * @param string $content    Block content.
          * @return string Rendered block type output.
          */
         protected function render($attributes, $content)
-        {
-        }
-        /**
-         * Check if we're viewing a checkout page endpoint, rather than the main checkout page itself.
-         *
-         * @return boolean
-         */
-        protected function is_checkout_endpoint()
         {
         }
         /**
@@ -24998,33 +25591,9 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
-         * Get customer payment methods for use in checkout.
-         */
-        protected function hydrate_customer_payment_methods()
-        {
-        }
-        /**
-         * Hydrate the checkout block with data from the API.
+         * Hydrate the cart block with data from the API.
          */
         protected function hydrate_from_api()
-        {
-        }
-        /**
-         * Render skeleton markup for the checkout block.
-         */
-        protected function get_skeleton()
-        {
-        }
-        /**
-         * Callback for woocommerce_payment_methods_list_item filter to add token id
-         * to the generated list.
-         *
-         * @param array     $list_item The current list item for the saved payment method.
-         * @param \WC_Token $token     The token for the current list item.
-         *
-         * @return array The list item with the token id added.
-         */
-        public static function include_token_id_with_payment_methods($list_item, $token)
         {
         }
     }
@@ -25033,23 +25602,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
      *
      * @internal
      */
-    class CheckoutI2 extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    class Checkout extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
     {
         /**
          * Block name.
          *
          * @var string
          */
-        protected $block_name = 'checkout-i2';
-        /**
-         * Initialize this block type.
-         *
-         * - Hook into WP lifecycle.
-         * - Register the block with WordPress.
-         */
-        protected function initialize()
-        {
-        }
+        protected $block_name = 'checkout';
         /**
          * Get the editor script handle for this block type.
          *
@@ -26851,7 +27411,7 @@ namespace Automattic\WooCommerce\Blocks {
     {
         const SURFACE_CART_CHECKOUT_NOTE_NAME = 'surface_cart_checkout';
         const SURFACE_CART_CHECKOUT_PROBABILITY_OPTION = 'wc_blocks_surface_cart_checkout_probability';
-        const PERCENT_USERS_TO_TARGET = 10;
+        const PERCENT_USERS_TO_TARGET = 50;
         const INELIGIBLE_EXTENSIONS = [
             'automatewoo',
             'mailchimp-for-woocommerce',
@@ -32184,6 +32744,16 @@ namespace Automattic\WooCommerce\Blocks\StoreApi\Utilities {
          * @param \WC_Order  $order Order object.
          */
         protected function validate_coupon_usage_limit(\WC_Coupon $coupon, \WC_Order $order)
+        {
+        }
+        /**
+         * Check there is a shipping method if it requires shipping.
+         *
+         * @throws RouteException Exception if invalid data is detected.
+         * @param boolean $needs_shipping Current order needs shipping.
+         * @param array   $chosen_shipping_methods Array of shipping methods.
+         */
+        public function validate_selected_shipping_methods($needs_shipping, $chosen_shipping_methods = array())
         {
         }
         /**

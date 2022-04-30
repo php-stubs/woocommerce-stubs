@@ -6314,9 +6314,19 @@ namespace {
         /**
          * Get featured for the addons screen
          *
+         * @deprecated 5.9.0 No longer used in In-App Marketplace
+         *
          * @return array of objects
          */
         public static function get_featured()
+        {
+        }
+        /**
+         * Render featured products and banners using WCCOM's the Featured 2.0 Endpoint
+         *
+         * @return void
+         */
+        public static function render_featured()
         {
         }
         /**
@@ -6338,7 +6348,7 @@ namespace {
          * @param  string $term     Search terms.
          * @param  string $country  Store country.
          *
-         * @return array of extensions
+         * @return object of extensions and promotions.
          */
         public static function get_extension_data($category, $term, $country)
         {
@@ -6364,6 +6374,8 @@ namespace {
         /**
          * Get section content for the addons screen.
          *
+         * @deprecated 5.9.0 No longer used in In-App Marketplace
+         *
          * @param  string $section_id Required section ID.
          *
          * @return array
@@ -6373,12 +6385,16 @@ namespace {
         }
         /**
          * Handles the outputting of a contextually aware Storefront link (points to child themes if Storefront is already active).
+         *
+         * @deprecated 5.9.0 No longer used in In-App Marketplace
          */
         public static function output_storefront_button()
         {
         }
         /**
          * Handles the outputting of a banner block.
+         *
+         * @deprecated 5.9.0 No longer used in In-App Marketplace
          *
          * @param object $block Banner data.
          */
@@ -6388,6 +6404,8 @@ namespace {
         /**
          * Handles the outputting of a column.
          *
+         * @deprecated 5.9.0 No longer used in In-App Marketplace
+         *
          * @param object $block Column data.
          */
         public static function output_column($block)
@@ -6395,6 +6413,8 @@ namespace {
         }
         /**
          * Handles the outputting of a column block.
+         *
+         * @deprecated 5.9.0 No longer used in In-App Marketplace
          *
          * @param object $block Column block data.
          */
@@ -6404,6 +6424,8 @@ namespace {
         /**
          * Handles the outputting of a small light block.
          *
+         * @deprecated 5.9.0 No longer used in In-App Marketplace
+         *
          * @param object $block Block data.
          */
         public static function output_small_light_block($block)
@@ -6411,6 +6433,8 @@ namespace {
         }
         /**
          * Handles the outputting of a small dark block.
+         *
+         * @deprecated 5.9.0 No longer used in In-App Marketplace
          *
          * @param object $block Block data.
          */
@@ -6420,6 +6444,8 @@ namespace {
         /**
          * Handles the outputting of the WooCommerce Services banner block.
          *
+         * @deprecated 5.9.0 No longer used in In-App Marketplace
+         *
          * @param object $block Block data.
          */
         public static function output_wcs_banner_block($block = array())
@@ -6428,13 +6454,26 @@ namespace {
         /**
          * Handles the outputting of the WooCommerce Pay banner block.
          *
+         * @deprecated 5.9.0 No longer used in In-App Marketplace
+         *
          * @param object $block Block data.
          */
         public static function output_wcpay_banner_block($block = array())
         {
         }
         /**
+         * Output the HTML for the promotion block.
+         *
+         * @param array $promotion Array of promotion block data.
+         * @return void
+         */
+        public static function output_search_promotion_block(array $promotion)
+        {
+        }
+        /**
          * Handles the output of a full-width block.
+         *
+         * @deprecated 5.9.0 No longer used in In-App Marketplace
          *
          * @param array $section Section data.
          */
@@ -6447,6 +6486,34 @@ namespace {
          * @param array $sections Section data.
          */
         public static function output_featured_sections($sections)
+        {
+        }
+        /**
+         * Handles the outputting of featured page
+         *
+         * @param array $blocks Featured page's blocks.
+         */
+        private static function output_featured($blocks)
+        {
+        }
+        /**
+         * Render a group block including products
+         *
+         * @param mixed $block Block of the page for rendering.
+         *
+         * @return void
+         */
+        private static function output_group($block)
+        {
+        }
+        /**
+         * Render a banner contains a product
+         *
+         * @param mixed $block Block of the page for rendering.
+         *
+         * @return void
+         */
+        private static function output_banner($block)
         {
         }
         /**
@@ -6478,6 +6545,16 @@ namespace {
         {
         }
         /**
+         * Output HTML for a promotion action.
+         *
+         * @param array $action Array of action properties.
+         *
+         * @return void
+         */
+        public static function output_promotion_action(array $action)
+        {
+        }
+        /**
          * Handles output of the addons page in admin.
          */
         public static function output()
@@ -6500,15 +6577,6 @@ namespace {
         {
         }
         /**
-         * Should an extension be shown on the featured page.
-         *
-         * @param object $item Item data.
-         * @return boolean
-         */
-        public static function show_extension($item)
-        {
-        }
-        /**
          * We're displaying page=wc-addons and page=wc-addons&section=helper as two separate pages.
          * When we're on those pages, add body classes to distinguishe them.
          *
@@ -6517,6 +6585,70 @@ namespace {
          * @return string Body class with added class for Marketplace or My Subscriptions page.
          */
         public static function filter_admin_body_classes(string $admin_body_class = '') : string
+        {
+        }
+        /**
+         * Take an action object and return the URL based on properties of the action.
+         *
+         * @param object $action Action object.
+         * @return string URL.
+         */
+        public static function get_action_url($action) : string
+        {
+        }
+        /**
+         * Format the promotion data ready for display, ie fetch locales and actions.
+         *
+         * @param array $promotions Array of promotoin objects.
+         * @return array Array of formatted promotions ready for output.
+         */
+        public static function format_promotions(array $promotions) : array
+        {
+        }
+        /**
+         * Map data from different endpoints to a universal format
+         *
+         * Search and featured products has a slightly different products' field names.
+         * Mapping converts different data structures into a universal one for further processing.
+         *
+         * @param mixed $data Product Card Data.
+         *
+         * @return object Converted data.
+         */
+        public static function map_product_card_data($data)
+        {
+        }
+        /**
+         * Render a product card
+         *
+         * There's difference in data structure (e.g. field names) between endpoints such as search and
+         * featured. Inner mapping helps to use universal field names for further work.
+         *
+         * @param mixed  $data       Product data.
+         * @param string $block_type Block type that's different from the default product card, e.g. a banner.
+         *
+         * @return void
+         */
+        public static function render_product_card($data, $block_type = \null)
+        {
+        }
+        /**
+         * Determine which class should be used for a rating star:
+         * - golden
+         * - half-filled (50/50 golden and gray)
+         * - gray
+         *
+         * Consider ratings from 3.0 to 4.0 as an example
+         * 3.0 will produce 3 stars
+         * 3.1 to 3.5 will produce 3 stars and a half star
+         * 3.6 to 4.0 will product 4 stars
+         *
+         * @param float $rating Rating of a product.
+         * @param int   $index  Index of a star in a row.
+         *
+         * @return string CSS class to use.
+         */
+        public static function get_star_class($rating, $index)
         {
         }
     }
@@ -32159,6 +32291,14 @@ namespace {
         public static function get_cart_checkout_info()
         {
         }
+        /**
+         * Get info about WooCommerce Mobile App usage
+         *
+         * @return array
+         */
+        public static function get_woocommerce_mobile_usage()
+        {
+        }
     }
     /**
      * Validation class.
@@ -32829,7 +32969,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '5.8.1';
+        public $version = '5.9.1';
         /**
          * WooCommerce Schema version.
          *
@@ -43536,6 +43676,67 @@ namespace {
         }
     }
     /**
+     * Telemetry controller class.
+     *
+     * @package WooCommerce\RestApi
+     * @extends WC_REST_Controller
+     */
+    class WC_REST_Telemetry_Controller extends \WC_REST_Controller
+    {
+        /**
+         * Endpoint namespace.
+         *
+         * @var string
+         */
+        protected $namespace = 'wc-telemetry';
+        /**
+         * Route base.
+         *
+         * @var string
+         */
+        protected $rest_base = 'tracker';
+        /**
+         * Register the route for /tracker
+         */
+        public function register_routes()
+        {
+        }
+        /**
+         * Check whether a given request has permission to post telemetry data
+         *
+         * @param  WP_REST_Request $request Full details about the request.
+         * @return WP_Error|boolean
+         */
+        public function telemetry_permissions_check($request)
+        {
+        }
+        /**
+         * Record WCTracker Data
+         *
+         * @param  WP_REST_Request $request Full details about the request.
+         */
+        public function record_usage_data($request)
+        {
+        }
+        /**
+         * Get usage data from current request
+         *
+         * @param  WP_REST_Request $request Full details about the request.
+         * @return Array
+         */
+        public function get_usage_data($request)
+        {
+        }
+        /**
+         * Get any query params needed.
+         *
+         * @return array
+         */
+        public function get_collection_params()
+        {
+        }
+    }
+    /**
      * WC_REST_Posts_Controller
      *
      * @package WooCommerce\RestApi
@@ -51338,6 +51539,14 @@ namespace Automattic\WooCommerce\RestApi {
          * @return array
          */
         protected function get_v3_controllers()
+        {
+        }
+        /**
+         * List of controllers in the telemetry namespace.
+         *
+         * @return array
+         */
+        protected function get_telemetry_controllers()
         {
         }
         /**
