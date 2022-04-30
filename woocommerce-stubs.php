@@ -6588,6 +6588,25 @@ namespace {
         {
         }
         /**
+         * Determine which class should be used for a rating star:
+         * - golden
+         * - half-filled (50/50 golden and gray)
+         * - gray
+         *
+         * Consider ratings from 3.0 to 4.0 as an example
+         * 3.0 will produce 3 stars
+         * 3.1 to 3.5 will produce 3 stars and a half star
+         * 3.6 to 4.0 will product 4 stars
+         *
+         * @param float $rating Rating of a product.
+         * @param int   $index  Index of a star in a row.
+         *
+         * @return string CSS class to use.
+         */
+        public static function get_star_class($rating, $index)
+        {
+        }
+        /**
          * Take an action object and return the URL based on properties of the action.
          *
          * @param object $action Action object.
@@ -6630,25 +6649,6 @@ namespace {
          * @return void
          */
         public static function render_product_card($data, $block_type = \null)
-        {
-        }
-        /**
-         * Determine which class should be used for a rating star:
-         * - golden
-         * - half-filled (50/50 golden and gray)
-         * - gray
-         *
-         * Consider ratings from 3.0 to 4.0 as an example
-         * 3.0 will produce 3 stars
-         * 3.1 to 3.5 will produce 3 stars and a half star
-         * 3.6 to 4.0 will product 4 stars
-         *
-         * @param float $rating Rating of a product.
-         * @param int   $index  Index of a star in a row.
-         *
-         * @return string CSS class to use.
-         */
-        public static function get_star_class($rating, $index)
         {
         }
     }
@@ -7689,28 +7689,6 @@ namespace {
          * @param WP_Admin_Bar $wp_admin_bar Admin bar instance.
          */
         public function admin_bar_menus($wp_admin_bar)
-        {
-        }
-        /**
-         * Highlight the My Subscriptions menu item when on that page
-         *
-         * @param string $submenu_file The submenu file.
-         * @param string $parent_file  currently opened page.
-         *
-         * @return string
-         */
-        public function update_menu_highlight($submenu_file, $parent_file)
-        {
-        }
-        /**
-         * Update the My Subscriptions document title when on that page.
-         * We want to maintain existing page URL but add it as a separate page,
-         * which requires updating it manually.
-         *
-         * @param  string $admin_title existing page title.
-         * @return string
-         */
-        public function update_my_subscriptions_title($admin_title)
         {
         }
     }
@@ -16662,7 +16640,7 @@ namespace {
          *
          * @since 3.2.0
          * @param string $context If the context is view, the value will be formatted for display. This keeps it compatible with pre-3.2 versions.
-         * @return float
+         * @return float|string
          */
         public function get_total($context = 'view')
         {
@@ -18008,6 +17986,18 @@ namespace {
          * @return array
          */
         public static function add_avatar_for_review_comment_type($comment_types)
+        {
+        }
+        /**
+         * Add Product Reviews filter for `review` comment type.
+         *
+         * @since 6.0.0
+         *
+         * @param array $comment_types Array of comment type labels keyed by their name.
+         *
+         * @return array
+         */
+        public static function add_review_comment_filter(array $comment_types) : array
         {
         }
         /**
@@ -22821,7 +22811,7 @@ namespace {
          *
          * @var array
          */
-        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_update_400_db_version'), '4.4.0' => array('wc_update_440_insert_attribute_terms_for_variable_products', 'wc_update_440_db_version'), '4.5.0' => array('wc_update_450_sanitize_coupons_code', 'wc_update_450_db_version'), '5.0.0' => array('wc_update_500_fix_product_review_count', 'wc_update_500_db_version'), '5.6.0' => array('wc_update_560_create_refund_returns_page', 'wc_update_560_db_version'));
+        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_update_400_db_version'), '4.4.0' => array('wc_update_440_insert_attribute_terms_for_variable_products', 'wc_update_440_db_version'), '4.5.0' => array('wc_update_450_sanitize_coupons_code', 'wc_update_450_db_version'), '5.0.0' => array('wc_update_500_fix_product_review_count', 'wc_update_500_db_version'), '5.6.0' => array('wc_update_560_create_refund_returns_page', 'wc_update_560_db_version'), '6.0.0' => array('wc_update_600_migrate_rate_limit_options', 'wc_update_600_db_version'));
         /**
          * Hook in tabs.
          */
@@ -29440,12 +29430,51 @@ namespace {
     class WC_Rate_Limiter
     {
         /**
-         * Constructs Option name from action identifier.
+         * Cache group.
+         */
+        const CACHE_GROUP = 'wc_rate_limit';
+        /**
+         * Hook in methods.
+         */
+        public static function init()
+        {
+        }
+        /**
+         * Constructs key name from action identifier.
+         * Left in for backwards compatibility.
          *
          * @param string $action_id Identifier of the action.
          * @return string
          */
         public static function storage_id($action_id)
+        {
+        }
+        /**
+         * Gets a cache prefix.
+         *
+         * @param string $action_id Identifier of the action.
+         * @return string
+         */
+        protected static function get_cache_key($action_id)
+        {
+        }
+        /**
+         * Retrieve a cached rate limit.
+         *
+         * @param string $action_id Identifier of the action.
+         * @return bool|int
+         */
+        protected static function get_cached($action_id)
+        {
+        }
+        /**
+         * Cache a rate limit.
+         *
+         * @param string $action_id Identifier of the action.
+         * @param int    $expiry Timestamp when the limit expires.
+         * @return bool
+         */
+        protected static function set_cache($action_id, $expiry)
         {
         }
         /**
@@ -29465,6 +29494,12 @@ namespace {
          * @return bool True if the option setting was successful, false otherwise.
          */
         public static function set_rate_limit($action_id, $delay)
+        {
+        }
+        /**
+         * Cleanup expired rate limits from the database and clear caches.
+         */
+        public static function cleanup()
         {
         }
     }
@@ -31947,6 +31982,14 @@ namespace {
         {
         }
         /**
+         * Add theme support for Product page gallery.
+         *
+         * @since x.x.x
+         */
+        private static function add_support_for_product_page_gallery()
+        {
+        }
+        /**
          * Enhance the unsupported theme experience on Product Category and Attribute pages by rendering
          * those pages using the single template and shortcode-based content. To do this we make a dummy
          * post and set a shortcode as the post content. This approach is adapted from bbPress.
@@ -32969,7 +33012,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '5.9.1';
+        public $version = '6.0.1';
         /**
          * WooCommerce Schema version.
          *
@@ -38977,6 +39020,12 @@ namespace {
          */
         public $password_generated;
         /**
+         * Magic link to set initial password.
+         *
+         * @var string
+         */
+        public $set_password_url;
+        /**
          * Constructor.
          */
         public function __construct()
@@ -39033,6 +39082,17 @@ namespace {
          * @return string
          */
         public function get_default_additional_content()
+        {
+        }
+        /**
+         * Generate set password URL link for a new user.
+         * 
+         * See also Automattic\WooCommerce\Blocks\Domain\Services\Email\CustomerNewAccount and wp_new_user_notification.
+         * 
+         * @since 6.0.0
+         * @return string
+         */
+        protected function generate_set_password_url()
         {
         }
     }
@@ -54870,6 +54930,483 @@ namespace {
         }
     }
 }
+namespace Automattic\WooCommerce {
+    /**
+     * Autoloader class.
+     *
+     * @since 3.7.0
+     */
+    class Autoloader
+    {
+        /**
+         * Static-only class.
+         */
+        private function __construct()
+        {
+        }
+        /**
+         * Require the autoloader and return the result.
+         *
+         * If the autoloader is not present, let's log the failure and display a nice admin notice.
+         *
+         * @return boolean
+         */
+        public static function init()
+        {
+        }
+        /**
+         * If the autoloader is missing, add an admin notice.
+         */
+        protected static function missing_autoloader()
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Checkout\Helpers {
+    /**
+     * Stock Reservation class.
+     */
+    final class ReserveStock
+    {
+        /**
+         * Is stock reservation enabled?
+         *
+         * @var boolean
+         */
+        private $enabled = true;
+        /**
+         * Constructor
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Is stock reservation enabled?
+         *
+         * @return boolean
+         */
+        protected function is_enabled()
+        {
+        }
+        /**
+         * Query for any existing holds on stock for this item.
+         *
+         * @param \WC_Product $product Product to get reserved stock for.
+         * @param integer     $exclude_order_id Optional order to exclude from the results.
+         *
+         * @return integer Amount of stock already reserved.
+         */
+        public function get_reserved_stock($product, $exclude_order_id = 0)
+        {
+        }
+        /**
+         * Put a temporary hold on stock for an order if enough is available.
+         *
+         * @throws ReserveStockException If stock cannot be reserved.
+         *
+         * @param \WC_Order $order Order object.
+         * @param int       $minutes How long to reserve stock in minutes. Defaults to woocommerce_hold_stock_minutes.
+         */
+        public function reserve_stock_for_order($order, $minutes = 0)
+        {
+        }
+        /**
+         * Release a temporary hold on stock for an order.
+         *
+         * @param \WC_Order $order Order object.
+         */
+        public function release_stock_for_order($order)
+        {
+        }
+        /**
+         * Reserve stock for a product by inserting rows into the DB.
+         *
+         * @throws ReserveStockException If a row cannot be inserted.
+         *
+         * @param int       $product_id Product ID which is having stock reserved.
+         * @param int       $stock_quantity Stock amount to reserve.
+         * @param \WC_Order $order Order object which contains the product.
+         * @param int       $minutes How long to reserve stock in minutes.
+         */
+        private function reserve_stock_for_product($product_id, $stock_quantity, $order, $minutes)
+        {
+        }
+        /**
+         * Returns query statement for getting reserved stock of a product.
+         *
+         * @param int     $product_id Product ID.
+         * @param integer $exclude_order_id Optional order to exclude from the results.
+         * @return string|void Query statement.
+         */
+        private function get_query_for_reserved_stock($product_id, $exclude_order_id = 0)
+        {
+        }
+    }
+    /**
+     * ReserveStockException class.
+     */
+    class ReserveStockException extends \Exception
+    {
+        /**
+         * Sanitized error code.
+         *
+         * @var string
+         */
+        protected $error_code;
+        /**
+         * Error extra data.
+         *
+         * @var array
+         */
+        protected $error_data;
+        /**
+         * Setup exception.
+         *
+         * @param string $code             Machine-readable error code, e.g `woocommerce_invalid_product_id`.
+         * @param string $message          User-friendly translated error message, e.g. 'Product ID is invalid'.
+         * @param int    $http_status_code Proper HTTP status code to respond with, e.g. 400.
+         * @param array  $data             Extra error data.
+         */
+        public function __construct($code, $message, $http_status_code = 400, $data = array())
+        {
+        }
+        /**
+         * Returns the error code.
+         *
+         * @return string
+         */
+        public function getErrorCode()
+        {
+        }
+        /**
+         * Returns error data.
+         *
+         * @return array
+         */
+        public function getErrorData()
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce {
+    /**
+     * PSR11 compliant dependency injection container for WooCommerce.
+     *
+     * Classes in the `src` directory should specify dependencies from that directory via an 'init' method having arguments
+     * with type hints. If an instance of the container itself is needed, the type hint to use is \Psr\Container\ContainerInterface.
+     *
+     * Classes in the `src` directory should interact with anything outside (especially code in the `includes` directory
+     * and WordPress functions) by using the classes in the `Proxies` directory. The exception is idempotent
+     * functions (e.g. `wp_parse_url`), those can be used directly.
+     *
+     * Classes in the `includes` directory should use the `wc_get_container` function to get the instance of the container when
+     * they need to get an instance of a class from the `src` directory.
+     *
+     * Class registration should be done via service providers that inherit from Automattic\WooCommerce\Internal\DependencyManagement
+     * and those should go in the `src\Internal\DependencyManagement\ServiceProviders` folder unless there's a good reason
+     * to put them elsewhere. All the service provider class names must be in the `SERVICE_PROVIDERS` constant.
+     */
+    final class Container implements \Psr\Container\ContainerInterface
+    {
+        /**
+         * The list of service provider classes to register.
+         *
+         * @var string[]
+         */
+        private $service_providers = array(\Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\AssignDefaultCategoryServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\DownloadPermissionsAdjusterServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductAttributesLookupServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProxiesServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\RestockRefundedItemsAdjusterServiceProvider::class);
+        /**
+         * The underlying container.
+         *
+         * @var \League\Container\Container
+         */
+        private $container;
+        /**
+         * Class constructor.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Finds an entry of the container by its identifier and returns it.
+         *
+         * @param string $id Identifier of the entry to look for.
+         *
+         * @throws NotFoundExceptionInterface  No entry was found for **this** identifier.
+         * @throws Psr\Container\ContainerExceptionInterface Error while retrieving the entry.
+         *
+         * @return mixed Entry.
+         */
+        public function get($id)
+        {
+        }
+        /**
+         * Returns true if the container can return an entry for the given identifier.
+         * Returns false otherwise.
+         *
+         * `has($id)` returning true does not mean that `get($id)` will not throw an exception.
+         * It does however mean that `get($id)` will not throw a `NotFoundExceptionInterface`.
+         *
+         * @param string $id Identifier of the entry to look for.
+         *
+         * @return bool
+         */
+        public function has($id)
+        {
+        }
+    }
+    /**
+     * Packages class.
+     *
+     * @since 3.7.0
+     */
+    class Packages
+    {
+        /**
+         * Static-only class.
+         */
+        private function __construct()
+        {
+        }
+        /**
+         * Array of package names and their main package classes.
+         *
+         * @var array Key is the package name/directory, value is the main package class which handles init.
+         */
+        protected static $packages = array('woocommerce-blocks' => '\\Automattic\\WooCommerce\\Blocks\\Package', 'woocommerce-admin' => '\\Automattic\\WooCommerce\\Admin\\Composer\\Package');
+        /**
+         * Init the package loader.
+         *
+         * @since 3.7.0
+         */
+        public static function init()
+        {
+        }
+        /**
+         * Callback for WordPress init hook.
+         */
+        public static function on_init()
+        {
+        }
+        /**
+         * Checks a package exists by looking for it's directory.
+         *
+         * @param string $package Package name.
+         * @return boolean
+         */
+        public static function package_exists($package)
+        {
+        }
+        /**
+         * Loads packages after plugins_loaded hook.
+         *
+         * Each package should include an init file which loads the package so it can be used by core.
+         */
+        protected static function load_packages()
+        {
+        }
+        /**
+         * If a package is missing, add an admin notice.
+         *
+         * @param string $package Package name.
+         */
+        protected static function missing_package($package)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Proxies {
+    /**
+     * Proxy for interacting with WordPress actions and filters.
+     *
+     * This class should be used instead of directly accessing the WordPress functions, to ease unit testing.
+     */
+    class ActionsProxy
+    {
+        /**
+         * Retrieve the number of times an action is fired.
+         *
+         * @param string $tag The name of the action hook.
+         *
+         * @return int The number of times action hook $tag is fired.
+         */
+        public function did_action($tag)
+        {
+        }
+        /**
+         * Calls the callback functions that have been added to a filter hook.
+         *
+         * @param string $tag     The name of the filter hook.
+         * @param mixed  $value   The value to filter.
+         * @param mixed  ...$parameters Additional parameters to pass to the callback functions.
+         *
+         * @return mixed The filtered value after all hooked functions are applied to it.
+         */
+        public function apply_filters($tag, $value, ...$parameters)
+        {
+        }
+        // TODO: Add the rest of the actions and filters related methods.
+    }
+    /**
+     * Proxy class to access legacy WooCommerce functionality.
+     *
+     * This class should be used to interact with code outside the `src` directory, especially functions and classes
+     * in the `includes` directory, unless a more specific proxy exists for the functionality at hand (e.g. `ActionsProxy`).
+     * Idempotent functions can be executed directly.
+     */
+    class LegacyProxy
+    {
+        /**
+         * Gets an instance of a given legacy class.
+         * This must not be used to get instances of classes in the `src` directory.
+         *
+         * If a given class needs a special procedure to get an instance of it,
+         * please add a private get_instance_of_(lowercased_class_name) and it will be
+         * automatically invoked. See also how objects of classes having a static `instance`
+         * method are retrieved, similar approaches can be used as needed to make use
+         * of existing factory methods such as e.g. 'load'.
+         *
+         * @param string $class_name The name of the class to get an instance for.
+         * @param mixed  ...$args Parameters to be passed to the class constructor or to the appropriate internal 'get_instance_of_' method.
+         *
+         * @return object The instance of the class.
+         * @throws \Exception The requested class belongs to the `src` directory, or there was an error creating an instance of the class.
+         */
+        public function get_instance_of(string $class_name, ...$args)
+        {
+        }
+        /**
+         * Get an instance of a class implementing WC_Queue_Interface.
+         *
+         * @return \WC_Queue_Interface The instance.
+         */
+        private function get_instance_of_wc_queue_interface()
+        {
+        }
+        /**
+         * Call a user function. This should be used to execute any non-idempotent function, especially
+         * those in the `includes` directory or provided by WordPress.
+         *
+         * @param string $function_name The function to execute.
+         * @param mixed  ...$parameters The parameters to pass to the function.
+         *
+         * @return mixed The result from the function.
+         */
+        public function call_function($function_name, ...$parameters)
+        {
+        }
+        /**
+         * Call a static method in a class. This should be used to execute any non-idempotent method in classes
+         * from the `includes` directory.
+         *
+         * @param string $class_name The name of the class containing the method.
+         * @param string $method_name The name of the method.
+         * @param mixed  ...$parameters The parameters to pass to the method.
+         *
+         * @return mixed The result from the method.
+         */
+        public function call_static($class_name, $method_name, ...$parameters)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Utilities {
+    /**
+     * A class of utilities for dealing with arrays.
+     */
+    class ArrayUtil
+    {
+        /**
+         * Get a value from an nested array by specifying the entire key hierarchy with '::' as separator.
+         *
+         * E.g. for [ 'foo' => [ 'bar' => [ 'fizz' => 'buzz' ] ] ] the value for key 'foo::bar::fizz' would be 'buzz'.
+         *
+         * @param array  $array The array to get the value from.
+         * @param string $key The complete key hierarchy, using '::' as separator.
+         * @param mixed  $default The value to return if the key doesn't exist in the array.
+         *
+         * @return mixed The retrieved value, or the supplied default value.
+         * @throws \Exception $array is not an array.
+         */
+        public static function get_nested_value(array $array, string $key, $default = null)
+        {
+        }
+        /**
+         * Checks if a given key exists in an array and its value can be evaluated as 'true'.
+         *
+         * @param array  $array The array to check.
+         * @param string $key The key for the value to check.
+         * @return bool True if the key exists in the array and the value can be evaluated as 'true'.
+         */
+        public static function is_truthy(array $array, string $key)
+        {
+        }
+        /**
+         * Gets the value for a given key from an array, or a default value if the key doesn't exist in the array.
+         *
+         * @param array  $array The array to get the value from.
+         * @param string $key The key to use to retrieve the value.
+         * @param null   $default The default value to return if the key doesn't exist in the array.
+         * @return mixed|null The value for the key, or the default value passed.
+         */
+        public static function get_value_or_default(array $array, string $key, $default = null)
+        {
+        }
+    }
+    /**
+     * A class of utilities for dealing with numbers.
+     */
+    final class NumberUtil
+    {
+        /**
+         * Round a number using the built-in `round` function, but unless the value to round is numeric
+         * (a number or a string that can be parsed as a number), apply 'floatval' first to it
+         * (so it will convert it to 0 in most cases).
+         *
+         * This is needed because in PHP 7 applying `round` to a non-numeric value returns 0,
+         * but in PHP 8 it throws an error. Specifically, in WooCommerce we have a few places where
+         * round('') is often executed.
+         *
+         * @param mixed $val The value to round.
+         * @param int   $precision The optional number of decimal digits to round to.
+         * @param int   $mode A constant to specify the mode in which rounding occurs.
+         *
+         * @return float The value rounded to the given precision as a float, or the supplied default value.
+         */
+        public static function round($val, int $precision = 0, int $mode = PHP_ROUND_HALF_UP) : float
+        {
+        }
+    }
+    /**
+     * A class of utilities for dealing with strings.
+     */
+    final class StringUtil
+    {
+        /**
+         * Checks to see whether or not a string starts with another.
+         *
+         * @param string $string The string we want to check.
+         * @param string $starts_with The string we're looking for at the start of $string.
+         * @param bool   $case_sensitive Indicates whether the comparison should be case-sensitive.
+         *
+         * @return bool True if the $string starts with $starts_with, false otherwise.
+         */
+        public static function starts_with(string $string, string $starts_with, bool $case_sensitive = true) : bool
+        {
+        }
+        /**
+         * Checks to see whether or not a string ends with another.
+         *
+         * @param string $string The string we want to check.
+         * @param string $ends_with The string we're looking for at the end of $string.
+         * @param bool   $case_sensitive Indicates whether the comparison should be case-sensitive.
+         *
+         * @return bool True if the $string ends with $ends_with, false otherwise.
+         */
+        public static function ends_with(string $string, string $ends_with, bool $case_sensitive = true) : bool
+        {
+        }
+    }
+}
 namespace {
     /**
      * Importer current locale.
@@ -55986,6 +56523,24 @@ namespace {
      * @return bool
      */
     function wc_is_file_valid_csv($file, $check_path = \true)
+    {
+    }
+    /**
+     * Check if the current theme is an FSE theme.
+     *
+     * @since x.x.x
+     * @return bool
+     */
+    function wc_current_theme_is_fse_theme()
+    {
+    }
+    /**
+     * Check if the current theme has WooCommerce support or is a FSE theme.
+     *
+     * @since x.x.x
+     * @return bool
+     */
+    function wc_current_theme_supports_woocommerce_or_fse()
     {
     }
     // Before wpautop().

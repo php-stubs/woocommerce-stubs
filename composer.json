@@ -27,8 +27,8 @@
         }
     },
     "scripts": {
-        "post-install-cmd": "@composer --working-dir=source/ update --no-interaction",
-        "post-update-cmd" : "@composer --working-dir=source/ update --no-interaction",
+        "disabled-post-install-cmd": "@composer --working-dir=source/ update --no-interaction",
+        "disabled-post-update-cmd" : "@composer --working-dir=source/ update --no-interaction",
         "cleanup": "git status --short --ignored | sed -n -e 's#^!! ##p' | xargs -r rm -vrf"
     },
     "scripts-descriptions": {

@@ -9,6 +9,11 @@ return \StubsGenerator\Finder::create()
             ->depth('< 1')
             ->path('woocommerce.php')
     )
+    ->append(
+        \StubsGenerator\Finder::create()
+            ->in(['source/woocommerce/src'])
+            ->notPath('Internal')
+    )
     // Exclude woocommerce.com API as is uses the woocommerce-rest-api package.
     ->notPath('wccom-site/rest-api/endpoints')
     // Templates.

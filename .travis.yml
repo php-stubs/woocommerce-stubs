@@ -14,7 +14,6 @@ php:
   - "7.3"
   - "7.2"
   - "7.1"
-  # giacocorsiglia/stubs-generator does not support PHP 7.0
 
 before_install:
   - "phpenv config-rm xdebug.ini"
@@ -22,8 +21,12 @@ before_install:
 
 install:
   - "composer update --no-interaction"
-  # Reinstall sub-packages into /packages/
-  - "composer update --no-interaction"
+  ## Reinstall sub-packages into /packages/
+  #- "composer update --no-interaction"
+  - |
+    LATEST="$(jq -r '."require"."woocommerce/woocommerce"' source/composer.json)"
+    wget -P source/ "https://downloads.wordpress.org/plugin/woocommerce.${LATEST}.zip"
+    unzip -q -d source/ "source/woocommerce.${LATEST}.zip"
 
 before_script:
   - "cat ./source/woocommerce/woocommerce.php"
