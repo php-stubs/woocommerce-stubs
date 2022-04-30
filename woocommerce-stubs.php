@@ -4828,6 +4828,24 @@ namespace {
         {
         }
         /**
+         * Do any extra processing needed before the actual product save
+         * (but after triggering the 'woocommerce_before_..._object_save' action)
+         *
+         * @return mixed A state value that will be passed to after_data_store_save_or_update.
+         */
+        protected function before_data_store_save_or_update()
+        {
+        }
+        /**
+         * Do any extra processing needed after the actual product save
+         * (but before triggering the 'woocommerce_after_..._object_save' action)
+         *
+         * @param mixed $state The state object that was returned by before_data_store_save_or_update.
+         */
+        protected function after_data_store_save_or_update($state)
+        {
+        }
+        /**
          * Delete the product, set its ID to 0, and return result.
          *
          * @param  bool $force_delete Should the product be deleted permanently.
@@ -11914,6 +11932,33 @@ namespace {
          * @param WP_Post $post Post object.
          */
         public static function output($post)
+        {
+        }
+    }
+    /**
+     * WC_Notes_Refund_Returns.
+     */
+    class WC_Notes_Refund_Returns
+    {
+        /**
+         * Name of the note for use in the database.
+         */
+        const NOTE_NAME = 'wc-refund-returns-page';
+        /**
+         * Maybe add a note to the inbox.
+         *
+         * @param int $page_id The ID of the page.
+         */
+        public static function possibly_add_note($page_id)
+        {
+        }
+        /**
+         * Get the note.
+         *
+         * @param int $page_id The ID of the page.
+         * @return object $note The note object.
+         */
+        public static function get_note($page_id)
         {
         }
     }
@@ -19512,7 +19557,7 @@ namespace {
          *
          * @var array
          */
-        protected $data = array('date_created' => \null, 'date_modified' => \null, 'email' => '', 'first_name' => '', 'last_name' => '', 'display_name' => '', 'role' => 'customer', 'username' => '', 'billing' => array('first_name' => '', 'last_name' => '', 'company' => '', 'address_1' => '', 'address_2' => '', 'city' => '', 'postcode' => '', 'country' => '', 'state' => '', 'email' => '', 'phone' => ''), 'shipping' => array('first_name' => '', 'last_name' => '', 'company' => '', 'address_1' => '', 'address_2' => '', 'city' => '', 'postcode' => '', 'country' => '', 'state' => ''), 'is_paying_customer' => \false);
+        protected $data = array('date_created' => \null, 'date_modified' => \null, 'email' => '', 'first_name' => '', 'last_name' => '', 'display_name' => '', 'role' => 'customer', 'username' => '', 'billing' => array('first_name' => '', 'last_name' => '', 'company' => '', 'address_1' => '', 'address_2' => '', 'city' => '', 'postcode' => '', 'country' => '', 'state' => '', 'email' => '', 'phone' => ''), 'shipping' => array('first_name' => '', 'last_name' => '', 'company' => '', 'address_1' => '', 'address_2' => '', 'city' => '', 'postcode' => '', 'country' => '', 'state' => '', 'phone' => ''), 'is_paying_customer' => \false);
         /**
          * Stores a password if this needs to be changed. Write-only and hidden from _data.
          *
@@ -20015,6 +20060,16 @@ namespace {
         {
         }
         /**
+         * Get shipping phone.
+         *
+         * @since 5.6.0
+         * @param  string $context What the value is for. Valid values are 'view' and 'edit'.
+         * @return string
+         */
+        public function get_shipping_phone($context = 'view')
+        {
+        }
+        /**
          * Is the user a paying customer?
          *
          * @since  3.0.0
@@ -20324,6 +20379,15 @@ namespace {
          * @param string $value Shipping country.
          */
         public function set_shipping_country($value)
+        {
+        }
+        /**
+         * Set shipping phone.
+         *
+         * @since 5.6.0
+         * @param string $value Shipping phone.
+         */
+        public function set_shipping_phone($value)
         {
         }
         /**
@@ -22582,7 +22646,7 @@ namespace {
          *
          * @var array
          */
-        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_update_400_db_version'), '4.4.0' => array('wc_update_440_insert_attribute_terms_for_variable_products', 'wc_update_440_db_version'), '4.5.0' => array('wc_update_450_sanitize_coupons_code', 'wc_update_450_db_version'), '5.0.0' => array('wc_update_500_fix_product_review_count', 'wc_update_500_db_version'), '5.5.3' => array('Automattic\\WooCommerce\\Admin\\ReportCSVExporter::maybe_create_directory', 'wc_admin_update_245_delete_report_downloads', 'wc_update_553_db_version'));
+        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_update_400_db_version'), '4.4.0' => array('wc_update_440_insert_attribute_terms_for_variable_products', 'wc_update_440_db_version'), '4.5.0' => array('wc_update_450_sanitize_coupons_code', 'wc_update_450_db_version'), '5.0.0' => array('wc_update_500_fix_product_review_count', 'wc_update_500_db_version'), '5.6.0' => array('wc_update_560_create_refund_returns_page', 'wc_update_560_db_version'), '5.6.1' => array('Automattic\\WooCommerce\\Admin\\ReportCSVExporter::maybe_create_directory', 'wc_admin_update_252_delete_report_downloads', 'wc_update_561_db_version'));
         /**
          * Hook in tabs.
          */
@@ -22965,6 +23029,39 @@ namespace {
          * @since 5.5.0
          */
         private static function set_paypal_standard_load_eligibility()
+        {
+        }
+        /**
+         * Gets the content of the sample refunds and return policy page.
+         *
+         * @since 5.6.0
+         * @return HTML The content for the page
+         */
+        private static function get_refunds_return_policy_page_content()
+        {
+        }
+        /**
+         * Adds an admin inbox note after a page has been created to notify
+         * user. For example to take action to edit the page such as the
+         * Refund and returns page.
+         *
+         * @since 5.6.0
+         * @return void
+         */
+        public static function add_admin_note_after_page_created()
+        {
+        }
+        /**
+         * When pages are created, we might want to take some action.
+         * In this case we want to set an option when refund and returns
+         * page is created.
+         *
+         * @since 5.6.0
+         * @param int   $page_id ID of the page.
+         * @param array $page_data The data of the page created.
+         * @return void
+         */
+        public static function page_created($page_id, $page_data)
         {
         }
     }
@@ -25097,7 +25194,7 @@ namespace {
             'customer_id' => 0,
             'order_key' => '',
             'billing' => array('first_name' => '', 'last_name' => '', 'company' => '', 'address_1' => '', 'address_2' => '', 'city' => '', 'state' => '', 'postcode' => '', 'country' => '', 'email' => '', 'phone' => ''),
-            'shipping' => array('first_name' => '', 'last_name' => '', 'company' => '', 'address_1' => '', 'address_2' => '', 'city' => '', 'state' => '', 'postcode' => '', 'country' => ''),
+            'shipping' => array('first_name' => '', 'last_name' => '', 'company' => '', 'address_1' => '', 'address_2' => '', 'city' => '', 'state' => '', 'postcode' => '', 'country' => '', 'phone' => ''),
             'payment_method' => '',
             'payment_method_title' => '',
             'transaction_id' => '',
@@ -25491,6 +25588,16 @@ namespace {
         {
         }
         /**
+         * Get shipping phone.
+         *
+         * @since  5.6.0
+         * @param  string $context What the value is for. Valid values are view and edit.
+         * @return string
+         */
+        public function get_shipping_phone($context = 'view')
+        {
+        }
+        /**
          * Get the payment method.
          *
          * @param  string $context What the value is for. Valid values are view and edit.
@@ -25875,6 +25982,16 @@ namespace {
          * @throws WC_Data_Exception Throws exception when invalid data is found.
          */
         public function set_shipping_country($value)
+        {
+        }
+        /**
+         * Set shipping phone.
+         *
+         * @since 5.6.0
+         * @param string $value Shipping phone.
+         * @throws WC_Data_Exception Throws exception when invalid data is found.
+         */
+        public function set_shipping_phone($value)
         {
         }
         /**
@@ -26703,6 +26820,15 @@ namespace {
          * @param mixed $id Post ID.
          */
         public static function untrash_post($id)
+        {
+        }
+        /**
+         * Get the post type for a given post.
+         *
+         * @param int $id The post id.
+         * @return string The post type.
+         */
+        private static function get_post_type($id)
         {
         }
         /**
@@ -28218,11 +28344,21 @@ namespace {
         {
         }
         /**
-         * Save data (either create or update depending on if we are working on an existing product).
+         * Do any extra processing needed before the actual product save
+         * (but after triggering the 'woocommerce_before_..._object_save' action)
          *
-         * @since 3.0.0
+         * @return mixed A state value that will be passed to after_data_store_save_or_update.
          */
-        public function save()
+        protected function before_data_store_save_or_update()
+        {
+        }
+        /**
+         * Do any extra processing needed after the actual product save
+         * (but before triggering the 'woocommerce_after_..._object_save' action)
+         *
+         * @param mixed $state The state object that was returned by before_data_store_save_or_update.
+         */
+        protected function after_data_store_save_or_update($state)
         {
         }
         /*
@@ -28667,16 +28803,6 @@ namespace {
          * @return array valid tax classes
          */
         protected function get_valid_tax_classes()
-        {
-        }
-        /**
-         * Delete variation, set the ID to 0, and return result.
-         *
-         * @since  4.4.0
-         * @param  bool $force_delete Should the variation be deleted permanently.
-         * @return bool result
-         */
-        public function delete($force_delete = \false)
         {
         }
     }
@@ -32668,7 +32794,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '5.5.4';
+        public $version = '5.6.2';
         /**
          * WooCommerce Schema version.
          *
@@ -34600,7 +34726,7 @@ namespace {
          *
          * @var array
          */
-        protected $session_keys = array('id', 'date_modified', 'billing_postcode', 'billing_city', 'billing_address_1', 'billing_address', 'billing_address_2', 'billing_state', 'billing_country', 'shipping_postcode', 'shipping_city', 'shipping_address_1', 'shipping_address', 'shipping_address_2', 'shipping_state', 'shipping_country', 'is_vat_exempt', 'calculated_shipping', 'billing_first_name', 'billing_last_name', 'billing_company', 'billing_phone', 'billing_email', 'shipping_first_name', 'shipping_last_name', 'shipping_company');
+        protected $session_keys = array('id', 'date_modified', 'billing_postcode', 'billing_city', 'billing_address_1', 'billing_address', 'billing_address_2', 'billing_state', 'billing_country', 'shipping_postcode', 'shipping_city', 'shipping_address_1', 'shipping_address', 'shipping_address_2', 'shipping_state', 'shipping_country', 'is_vat_exempt', 'calculated_shipping', 'billing_first_name', 'billing_last_name', 'billing_company', 'billing_phone', 'billing_email', 'shipping_first_name', 'shipping_last_name', 'shipping_company', 'shipping_phone');
         /**
          * Simply update the session.
          *
@@ -34697,7 +34823,7 @@ namespace {
          * @since 3.0.0
          * @var array
          */
-        protected $internal_meta_keys = array('locale', 'billing_postcode', 'billing_city', 'billing_address_1', 'billing_address_2', 'billing_state', 'billing_country', 'shipping_postcode', 'shipping_city', 'shipping_address_1', 'shipping_address_2', 'shipping_state', 'shipping_country', 'paying_customer', 'last_update', 'first_name', 'last_name', 'display_name', 'show_admin_bar_front', 'use_ssl', 'admin_color', 'rich_editing', 'comment_shortcuts', 'dismissed_wp_pointers', 'show_welcome_panel', 'session_tokens', 'nickname', 'description', 'billing_first_name', 'billing_last_name', 'billing_company', 'billing_phone', 'billing_email', 'shipping_first_name', 'shipping_last_name', 'shipping_company', 'wptests_capabilities', 'wptests_user_level', 'syntax_highlighting', '_order_count', '_money_spent', '_last_order', '_woocommerce_tracks_anon_id');
+        protected $internal_meta_keys = array('locale', 'billing_postcode', 'billing_city', 'billing_address_1', 'billing_address_2', 'billing_state', 'billing_country', 'shipping_postcode', 'shipping_city', 'shipping_address_1', 'shipping_address_2', 'shipping_state', 'shipping_country', 'paying_customer', 'last_update', 'first_name', 'last_name', 'display_name', 'show_admin_bar_front', 'use_ssl', 'admin_color', 'rich_editing', 'comment_shortcuts', 'dismissed_wp_pointers', 'show_welcome_panel', 'session_tokens', 'nickname', 'description', 'billing_first_name', 'billing_last_name', 'billing_company', 'billing_phone', 'billing_email', 'shipping_first_name', 'shipping_last_name', 'shipping_company', 'shipping_phone', 'wptests_capabilities', 'wptests_user_level', 'syntax_highlighting', '_order_count', '_money_spent', '_last_order', '_woocommerce_tracks_anon_id');
         /**
          * Internal meta type used to store user data.
          *
@@ -35287,7 +35413,7 @@ namespace {
          * @since 3.0.0
          * @var array
          */
-        protected $internal_meta_keys = array('_customer_user', '_order_key', '_order_currency', '_billing_first_name', '_billing_last_name', '_billing_company', '_billing_address_1', '_billing_address_2', '_billing_city', '_billing_state', '_billing_postcode', '_billing_country', '_billing_email', '_billing_phone', '_shipping_first_name', '_shipping_last_name', '_shipping_company', '_shipping_address_1', '_shipping_address_2', '_shipping_city', '_shipping_state', '_shipping_postcode', '_shipping_country', '_completed_date', '_paid_date', '_edit_lock', '_edit_last', '_cart_discount', '_cart_discount_tax', '_order_shipping', '_order_shipping_tax', '_order_tax', '_order_total', '_payment_method', '_payment_method_title', '_transaction_id', '_customer_ip_address', '_customer_user_agent', '_created_via', '_order_version', '_prices_include_tax', '_date_completed', '_date_paid', '_payment_tokens', '_billing_address_index', '_shipping_address_index', '_recorded_sales', '_recorded_coupon_usage_counts', '_download_permissions_granted', '_order_stock_reduced');
+        protected $internal_meta_keys = array('_customer_user', '_order_key', '_order_currency', '_billing_first_name', '_billing_last_name', '_billing_company', '_billing_address_1', '_billing_address_2', '_billing_city', '_billing_state', '_billing_postcode', '_billing_country', '_billing_email', '_billing_phone', '_shipping_first_name', '_shipping_last_name', '_shipping_company', '_shipping_address_1', '_shipping_address_2', '_shipping_city', '_shipping_state', '_shipping_postcode', '_shipping_country', '_shipping_phone', '_completed_date', '_paid_date', '_edit_lock', '_edit_last', '_cart_discount', '_cart_discount_tax', '_order_shipping', '_order_shipping_tax', '_order_tax', '_order_total', '_payment_method', '_payment_method_title', '_transaction_id', '_customer_ip_address', '_customer_user_agent', '_created_via', '_order_version', '_prices_include_tax', '_date_completed', '_date_paid', '_payment_tokens', '_billing_address_index', '_shipping_address_index', '_recorded_sales', '_recorded_coupon_usage_counts', '_download_permissions_granted', '_order_stock_reduced');
         /**
          * Method to create a new order in the database.
          *
@@ -39673,6 +39799,23 @@ namespace {
          * @return string
          */
         protected function get_file_path()
+        {
+        }
+        /**
+         * Get CSV headers row file path to export to.
+         *
+         * @return string
+         */
+        protected function get_headers_row_file_path()
+        {
+        }
+        /**
+         * Get the contents of the CSV headers row file. Defaults to the original known headers.
+         *
+         * @since 3.1.0
+         * @return string
+         */
+        public function get_headers_row_file()
         {
         }
         /**
@@ -54581,9 +54724,10 @@ namespace {
      * @param string $page_title (default: '') Title for the new page.
      * @param string $page_content (default: '') Content for the new page.
      * @param int    $post_parent (default: 0) Parent for the new page.
+     * @param string $post_status (default: publish) The post status of the new page.
      * @return int page ID.
      */
-    function wc_create_page($slug, $option = '', $page_title = '', $page_content = '', $post_parent = 0)
+    function wc_create_page($slug, $option = '', $page_title = '', $page_content = '', $post_parent = 0, $post_status = 'publish')
     {
     }
     /**
@@ -57512,7 +57656,7 @@ namespace {
     /**
      * Format decimal numbers ready for DB storage.
      *
-     * Sanitize, remove decimals, and optionally round + trim off zeros.
+     * Sanitize, optionally remove decimals, and optionally round + trim off zeros.
      *
      * This function does not remove thousands - this should be done before passing a value to the function.
      *
