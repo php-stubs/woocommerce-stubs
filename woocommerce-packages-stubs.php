@@ -11457,6 +11457,18 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Stock {
          */
         protected $rest_base = 'reports/stock';
         /**
+         * Registered stock status options.
+         *
+         * @var array
+         */
+        protected $status_options;
+        /**
+         * Constructor.
+         */
+        public function __construct()
+        {
+        }
+        /**
          * Maps query arguments from the REST request.
          *
          * @param  WP_REST_Request $request Request array.
@@ -13122,7 +13134,7 @@ namespace Automattic\WooCommerce\Admin\Composer {
          *
          * @var string
          */
-        const VERSION = '2.5.2';
+        const VERSION = '2.6.5';
         /**
          * Package active.
          *
@@ -14115,6 +14127,18 @@ namespace Automattic\WooCommerce\Admin\Features {
         {
         }
         /**
+         * Check if the user can access the top-level WooCommerce item.
+         */
+        public function is_admin_user()
+        {
+        }
+        /**
+         * Possibly remove the WooCommerce menu item if it was purely used to access wc-admin pages.
+         */
+        public function possibly_remove_woocommerce_menu()
+        {
+        }
+        /**
          * Update the WooCommerce menu structure to make our main dashboard/handler
          * the top level link for 'WooCommerce'.
          */
@@ -14316,9 +14340,17 @@ namespace Automattic\WooCommerce\Admin\Features\Navigation {
         {
         }
         /**
+         * Get marketplace menu items.
+         *
+         * @return array
+         */
+        public static function get_marketplace_items()
+        {
+        }
+        /**
          * Get items for tools category.
          *
-         * @returna array
+         * @return array
          */
         public static function get_tool_items()
         {
@@ -15371,6 +15403,28 @@ namespace Automattic\WooCommerce\Admin\Features {
         public static function update_option_extended_task_list()
         {
         }
+        /**
+         * Get the values from the correct source when attempting to retrieve deprecated options.
+         *
+         * @param string $pre_option Pre option value.
+         * @param string $option Option name.
+         * @return string
+         */
+        public function get_deprecated_options($pre_option, $option)
+        {
+        }
+        /**
+         * Updates the new option names when deprecated options are updated.
+         * This is a temporary fallback until we can fully remove the old task list components.
+         *
+         * @param string $value New value.
+         * @param string $old_value Old value.
+         * @param string $option Option name.
+         * @return string
+         */
+        public function update_deprecated_options($value, $old_value, $option)
+        {
+        }
     }
 }
 namespace Automattic\WooCommerce\Admin\Features\PaymentGatewaySuggestions {
@@ -15592,7 +15646,7 @@ namespace Automattic\WooCommerce\Admin\Features\RemoteFreeExtensions {
      */
     class DataSourcePoller
     {
-        const DATA_SOURCES = array('https://woocommerce.com/wp-json/wccom/obw-free-extensions/1.0/extensions.json');
+        const DATA_SOURCES = array('https://woocommerce.com/wp-json/wccom/obw-free-extensions/2.0/extensions.json');
         /**
          * The logger instance.
          *
@@ -15648,17 +15702,31 @@ namespace Automattic\WooCommerce\Admin\Features\RemoteFreeExtensions {
         }
     }
     /**
-     * Evaluates the spec and returns the evaluated method.
+     * Default Free Extensions
+     */
+    class DefaultFreeExtensions
+    {
+        /**
+         * Get default specs.
+         *
+         * @return array Default specs.
+         */
+        public static function get_all()
+        {
+        }
+    }
+    /**
+     * Evaluates the extension and returns it.
      */
     class EvaluateExtension
     {
         /**
-         * Evaluates the spec and returns the extension.
+         * Evaluates the extension and returns it.
          *
-         * @param array $spec The extension section to evaluate.
-         * @return array The evaluated extension section.
+         * @param object $extension The extension to evaluate.
+         * @return object The evaluated extension.
          */
-        public static function evaluate($spec)
+        public static function evaluate($extension)
         {
         }
     }
@@ -15691,15 +15759,6 @@ namespace Automattic\WooCommerce\Admin\Features\RemoteFreeExtensions {
          * Get specs or fetch remotely if they don't exist.
          */
         public static function get_specs()
-        {
-        }
-        /**
-         * Localize the provided method.
-         *
-         * @param array $specs The specs to localize.
-         * @return array Localized specs.
-         */
-        public static function localize($specs)
         {
         }
     }
@@ -16083,7 +16142,7 @@ namespace Automattic\WooCommerce\Admin {
          *
          * @var array
          */
-        protected static $db_updates = array('0.20.1' => array('wc_admin_update_0201_order_status_index', 'wc_admin_update_0201_db_version'), '0.23.0' => array('wc_admin_update_0230_rename_gross_total', 'wc_admin_update_0230_db_version'), '0.25.1' => array('wc_admin_update_0251_remove_unsnooze_action', 'wc_admin_update_0251_db_version'), '1.1.0' => array('wc_admin_update_110_remove_facebook_note', 'wc_admin_update_110_db_version'), '1.3.0' => array('wc_admin_update_130_remove_dismiss_action_from_tracking_opt_in_note', 'wc_admin_update_130_db_version'), '1.4.0' => array('wc_admin_update_140_change_deactivate_plugin_note_type', 'wc_admin_update_140_db_version'), '1.6.0' => array('wc_admin_update_160_remove_facebook_note', 'wc_admin_update_160_db_version'), '1.7.0' => array('wc_admin_update_170_homescreen_layout', 'wc_admin_update_170_db_version'), '2.5.2' => array('wc_admin_update_252_delete_report_downloads', 'wc_admin_update_252_db_version'));
+        protected static $db_updates = array('0.20.1' => array('wc_admin_update_0201_order_status_index', 'wc_admin_update_0201_db_version'), '0.23.0' => array('wc_admin_update_0230_rename_gross_total', 'wc_admin_update_0230_db_version'), '0.25.1' => array('wc_admin_update_0251_remove_unsnooze_action', 'wc_admin_update_0251_db_version'), '1.1.0' => array('wc_admin_update_110_remove_facebook_note', 'wc_admin_update_110_db_version'), '1.3.0' => array('wc_admin_update_130_remove_dismiss_action_from_tracking_opt_in_note', 'wc_admin_update_130_db_version'), '1.4.0' => array('wc_admin_update_140_change_deactivate_plugin_note_type', 'wc_admin_update_140_db_version'), '1.6.0' => array('wc_admin_update_160_remove_facebook_note', 'wc_admin_update_160_db_version'), '1.7.0' => array('wc_admin_update_170_homescreen_layout', 'wc_admin_update_170_db_version'), '2.7.0' => array('wc_admin_update_270_update_task_list_options', 'wc_admin_update_270_delete_report_downloads', 'wc_admin_update_270_db_version'));
         /**
          * Migrated option names mapping. New => old.
          *
@@ -16985,28 +17044,6 @@ namespace Automattic\WooCommerce\Admin\Notes {
          * @return Note
          */
         protected static function get_note()
-        {
-        }
-    }
-    /**
-     * ConfirmTaxSettings.
-     */
-    class ConfirmTaxSettings
-    {
-        /**
-         * Note traits.
-         */
-        use \Automattic\WooCommerce\Admin\Notes\NoteTraits;
-        /**
-         * Name of the note for use in the database.
-         */
-        const NOTE_NAME = 'wc-admin-confirm-tax-settings';
-        /**
-         * Get the note.
-         *
-         * @return Note
-         */
-        public static function get_note()
         {
         }
     }
@@ -24363,6 +24400,123 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * Render skeleton markup for the checkout block.
          */
         protected function get_skeleton()
+        {
+        }
+        /**
+         * Callback for woocommerce_payment_methods_list_item filter to add token id
+         * to the generated list.
+         *
+         * @param array     $list_item The current list item for the saved payment method.
+         * @param \WC_Token $token     The token for the current list item.
+         *
+         * @return array The list item with the token id added.
+         */
+        public static function include_token_id_with_payment_methods($list_item, $token)
+        {
+        }
+    }
+    /**
+     * Checkout class.
+     *
+     * @internal
+     */
+    class CheckoutI2 extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'checkout-i2';
+        /**
+         * Initialize this block type.
+         *
+         * - Hook into WP lifecycle.
+         * - Register the block with WordPress.
+         */
+        protected function initialize()
+        {
+        }
+        /**
+         * Get the editor script handle for this block type.
+         *
+         * @param string $key Data to get, or default to everything.
+         * @return array|string;
+         */
+        protected function get_block_type_editor_script($key = null)
+        {
+        }
+        /**
+         * Get the frontend script handle for this block type.
+         *
+         * @see $this->register_block_type()
+         * @param string $key Data to get, or default to everything.
+         * @return array|string
+         */
+        protected function get_block_type_script($key = null)
+        {
+        }
+        /**
+         * Enqueue frontend assets for this block, just in time for rendering.
+         *
+         * @param array $attributes  Any attributes that currently are available from the block.
+         */
+        protected function enqueue_assets(array $attributes)
+        {
+        }
+        /**
+         * Append frontend scripts when rendering the block.
+         *
+         * @param array  $attributes Block attributes.
+         * @param string $content    Block content.
+         * @return string Rendered block type output.
+         */
+        protected function render($attributes, $content)
+        {
+        }
+        /**
+         * Check if we're viewing a checkout page endpoint, rather than the main checkout page itself.
+         *
+         * @return boolean
+         */
+        protected function is_checkout_endpoint()
+        {
+        }
+        /**
+         * Extra data passed through from server to client for block.
+         *
+         * @param array $attributes  Any attributes that currently are available from the block.
+         *                           Note, this will be empty in the editor context when the block is
+         *                           not in the post content on editor load.
+         */
+        protected function enqueue_data(array $attributes = [])
+        {
+        }
+        /**
+         * Are we currently on the admin block editor screen?
+         */
+        protected function is_block_editor()
+        {
+        }
+        /**
+         * Removes accents from an array of values, sorts by the values, then returns the original array values sorted.
+         *
+         * @param array $array Array of values to sort.
+         * @return array Sorted array.
+         */
+        protected function deep_sort_with_accents($array)
+        {
+        }
+        /**
+         * Get customer payment methods for use in checkout.
+         */
+        protected function hydrate_customer_payment_methods()
+        {
+        }
+        /**
+         * Hydrate the checkout block with data from the API.
+         */
+        protected function hydrate_from_api()
         {
         }
         /**
