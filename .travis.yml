@@ -18,7 +18,6 @@ php:
 
 before_install:
   - "phpenv config-rm xdebug.ini"
-  - "composer self-update --1"
   - "composer validate --strict"
 
 install:
