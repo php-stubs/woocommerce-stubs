@@ -6329,6 +6329,9 @@ namespace {
         public static function render_featured()
         {
         }
+        public static function is_ssl_error($error_message)
+        {
+        }
         /**
          * Build url parameter string
          *
@@ -6348,7 +6351,7 @@ namespace {
          * @param  string $term     Search terms.
          * @param  string $country  Store country.
          *
-         * @return object of extensions and promotions.
+         * @return object|WP_Error  Object with products and promotions properties, or WP_Error
          */
         public static function get_extension_data($category, $term, $country)
         {
@@ -6552,6 +6555,9 @@ namespace {
          * @return void
          */
         public static function output_promotion_action(array $action)
+        {
+        }
+        public static function output_empty($message = '')
         {
         }
         /**
@@ -19467,35 +19473,39 @@ namespace {
         /**
          * OffsetGet.
          *
-         * @param string $offset Offset.
+         * @param mixed $offset Offset.
          * @return mixed
          */
+        #[\ReturnTypeWillChange]
         public function offsetGet($offset)
         {
         }
         /**
          * OffsetSet.
          *
-         * @param string $offset Offset.
-         * @param mixed  $value  Value.
+         * @param mixed $offset Offset.
+         * @param mixed $value  Value.
          */
+        #[\ReturnTypeWillChange]
         public function offsetSet($offset, $value)
         {
         }
         /**
          * OffsetUnset
          *
-         * @param string $offset Offset.
+         * @param mixed $offset Offset.
          */
+        #[\ReturnTypeWillChange]
         public function offsetUnset($offset)
         {
         }
         /**
          * OffsetExists.
          *
-         * @param string $offset Offset.
+         * @param mixed $offset Offset.
          * @return bool
          */
+        #[\ReturnTypeWillChange]
         public function offsetExists($offset)
         {
         }
@@ -23966,6 +23976,7 @@ namespace {
          * @param string $offset Offset.
          * @param mixed  $value  Value.
          */
+        #[\ReturnTypeWillChange]
         public function offsetSet($offset, $value)
         {
         }
@@ -23974,6 +23985,7 @@ namespace {
          *
          * @param string $offset Offset.
          */
+        #[\ReturnTypeWillChange]
         public function offsetUnset($offset)
         {
         }
@@ -23983,6 +23995,7 @@ namespace {
          * @param string $offset Offset.
          * @return bool
          */
+        #[\ReturnTypeWillChange]
         public function offsetExists($offset)
         {
         }
@@ -23992,6 +24005,7 @@ namespace {
          * @param string $offset Offset.
          * @return mixed
          */
+        #[\ReturnTypeWillChange]
         public function offsetGet($offset)
         {
         }
@@ -24110,6 +24124,7 @@ namespace {
          * @param string $offset Offset.
          * @return mixed
          */
+        #[\ReturnTypeWillChange]
         public function offsetGet($offset)
         {
         }
@@ -24120,6 +24135,7 @@ namespace {
          * @param string $offset Offset.
          * @param mixed  $value  Value.
          */
+        #[\ReturnTypeWillChange]
         public function offsetSet($offset, $value)
         {
         }
@@ -24129,6 +24145,7 @@ namespace {
          * @param string $offset Offset.
          * @return bool
          */
+        #[\ReturnTypeWillChange]
         public function offsetExists($offset)
         {
         }
@@ -24310,6 +24327,7 @@ namespace {
          * @param string $offset Offset.
          * @return mixed
          */
+        #[\ReturnTypeWillChange]
         public function offsetGet($offset)
         {
         }
@@ -24320,6 +24338,7 @@ namespace {
          * @param string $offset Offset.
          * @param mixed  $value  Value.
          */
+        #[\ReturnTypeWillChange]
         public function offsetSet($offset, $value)
         {
         }
@@ -24329,6 +24348,7 @@ namespace {
          * @param string $offset Offset.
          * @return bool
          */
+        #[\ReturnTypeWillChange]
         public function offsetExists($offset)
         {
         }
@@ -24664,6 +24684,7 @@ namespace {
          * @param string $offset Offset.
          * @return mixed
          */
+        #[\ReturnTypeWillChange]
         public function offsetGet($offset)
         {
         }
@@ -24674,6 +24695,7 @@ namespace {
          * @param string $offset Offset.
          * @param mixed  $value  Value.
          */
+        #[\ReturnTypeWillChange]
         public function offsetSet($offset, $value)
         {
         }
@@ -24683,6 +24705,7 @@ namespace {
          * @param string $offset Offset.
          * @return bool
          */
+        #[\ReturnTypeWillChange]
         public function offsetExists($offset)
         {
         }
@@ -24886,6 +24909,7 @@ namespace {
          * @param string $offset Key.
          * @return mixed
          */
+        #[\ReturnTypeWillChange]
         public function offsetGet($offset)
         {
         }
@@ -24896,6 +24920,7 @@ namespace {
          * @param string $offset Key.
          * @param mixed  $value Value to set.
          */
+        #[\ReturnTypeWillChange]
         public function offsetSet($offset, $value)
         {
         }
@@ -24905,6 +24930,7 @@ namespace {
          * @param string $offset Key.
          * @return bool
          */
+        #[\ReturnTypeWillChange]
         public function offsetExists($offset)
         {
         }
@@ -25105,6 +25131,7 @@ namespace {
          * @param string $offset Offset.
          * @return mixed
          */
+        #[\ReturnTypeWillChange]
         public function offsetGet($offset)
         {
         }
@@ -25115,6 +25142,7 @@ namespace {
          * @param string $offset Offset.
          * @param mixed  $value  Value.
          */
+        #[\ReturnTypeWillChange]
         public function offsetSet($offset, $value)
         {
         }
@@ -25124,6 +25152,7 @@ namespace {
          * @param string $offset Offset.
          * @return bool
          */
+        #[\ReturnTypeWillChange]
         public function offsetExists($offset)
         {
         }
@@ -27648,6 +27677,7 @@ namespace {
          * @param string $offset Offset.
          * @return mixed
          */
+        #[\ReturnTypeWillChange]
         public function offsetGet($offset)
         {
         }
@@ -27657,6 +27687,7 @@ namespace {
          * @param string $offset Offset.
          * @param mixed  $value  Value.
          */
+        #[\ReturnTypeWillChange]
         public function offsetSet($offset, $value)
         {
         }
@@ -27665,6 +27696,7 @@ namespace {
          *
          * @param string $offset Offset.
          */
+        #[\ReturnTypeWillChange]
         public function offsetUnset($offset)
         {
         }
@@ -27674,6 +27706,7 @@ namespace {
          * @param string $offset Offset.
          * @return bool
          */
+        #[\ReturnTypeWillChange]
         public function offsetExists($offset)
         {
         }
@@ -27834,6 +27867,7 @@ namespace {
          * @param string $offset Offset.
          * @return mixed
          */
+        #[\ReturnTypeWillChange]
         public function offsetGet($offset)
         {
         }
@@ -27843,6 +27877,7 @@ namespace {
          * @param string $offset Offset.
          * @param mixed  $value Offset value.
          */
+        #[\ReturnTypeWillChange]
         public function offsetSet($offset, $value)
         {
         }
@@ -27851,6 +27886,7 @@ namespace {
          *
          * @param string $offset Offset.
          */
+        #[\ReturnTypeWillChange]
         public function offsetUnset($offset)
         {
         }
@@ -27860,6 +27896,7 @@ namespace {
          * @param string $offset Offset.
          * @return bool
          */
+        #[\ReturnTypeWillChange]
         public function offsetExists($offset)
         {
         }
@@ -31916,6 +31953,9 @@ namespace {
         /**
          * Checks whether a block template with that name exists.
          *
+         * **Note: ** This checks both the `templates` and `block-templates` directories
+         * as both conventions should be supported.
+         *
          * @since  5.5.0
          * @param string $template_name Template to check.
          * @return boolean
@@ -33012,7 +33052,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '6.0.1';
+        public $version = '6.1.2';
         /**
          * WooCommerce Schema version.
          *
@@ -53037,6 +53077,39 @@ namespace {
         }
     }
     /**
+     * WC_Twenty_Twenty_One class.
+     */
+    class WC_Twenty_Twenty_Two
+    {
+        /**
+         * Theme init.
+         */
+        public static function init()
+        {
+        }
+        /**
+         * Enqueue CSS for this theme.
+         *
+         * @param  array $styles Array of registered styles.
+         * @return array
+         */
+        public static function enqueue_styles($styles)
+        {
+        }
+        /**
+         * Wrap checkout order review with a `col2-set` div.
+         */
+        public static function before_order_review()
+        {
+        }
+        /**
+         * Close the div wrapper.
+         */
+        public static function after_order_review()
+        {
+        }
+    }
+    /**
      * WC_Twenty_Twenty class.
      */
     class WC_Twenty_Twenty
@@ -53382,6 +53455,7 @@ namespace {
         }
         /**
          * Record an event in Tracks - this is the preferred way to record events from PHP.
+         * Note: the event request won't be made if $properties has a member called `error`.
          *
          * @param string $event_name The name of the event.
          * @param array  $properties Custom properties to send with the event.
@@ -53594,6 +53668,15 @@ namespace {
          * Send a Tracks event when an Extensions page is viewed.
          */
         public function track_extensions_page()
+        {
+        }
+        /**
+         * Send a Tracks event when the Extensions page gets a bad response or no response
+         * from the WCCOM extensions API.
+         *
+         * @param string $error
+         */
+        public function track_extensions_page_connection_error(string $error = '')
         {
         }
         /**
@@ -56384,6 +56467,7 @@ namespace {
     /**
      * Is_ajax - Returns true when the page is loaded via ajax.
      *
+     * @see wp_doing_ajax() for an equivalent function provided by WordPress since 4.7.0
      * @return bool
      */
     function is_ajax()
@@ -56526,7 +56610,7 @@ namespace {
     {
     }
     /**
-     * Check if the current theme is an FSE theme.
+     * Check if the current theme is a block theme.
      *
      * @since x.x.x
      * @return bool
