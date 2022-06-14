@@ -15,6 +15,13 @@ return \StubsGenerator\Finder::create()
             ->notPath('Internal')
             ->sortByName(true)
     )
+    ->append(
+        \StubsGenerator\Finder::create()
+            ->in(['source/woocommerce/src/Internal/Admin'])
+            ->files()
+            ->depth('< 1')
+            ->path('CouponsMovedTrait.php')
+    )
     // Comment out existing interface exclusion
     // $ editor vendor/php-stubs/generator/src/NodeVisitor.php:352
     ->append(
