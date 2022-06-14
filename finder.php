@@ -13,6 +13,14 @@ return \StubsGenerator\Finder::create()
         \StubsGenerator\Finder::create()
             ->in(['source/woocommerce/src'])
             ->notPath('Internal')
+            ->sortByName(true)
+    )
+    // Comment out existing interface exclusion
+    // $ editor vendor/php-stubs/generator/src/NodeVisitor.php:352
+    ->append(
+        \StubsGenerator\Finder::create()
+            ->in(['source/woocommerce/vendor/psr/container/src'])
+            ->sortByName(true)
     )
     // Exclude woocommerce.com API as is uses the woocommerce-rest-api package.
     ->notPath('wccom-site/rest-api/endpoints')
@@ -33,5 +41,5 @@ return \StubsGenerator\Finder::create()
     ->notPath('legacy/api')
     // Update functions.
     ->notPath('wc-update-functions.php')
-    ->sortByName()
+    ->sortByName(true)
 ;
