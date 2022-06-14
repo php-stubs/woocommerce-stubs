@@ -21,15 +21,5 @@ return \StubsGenerator\Finder::create()
             ->depth('< 1')
             ->path('functions.php')
     )
-    // WC Admin "includes".
-    ->append(
-        \StubsGenerator\Finder::create()
-            ->in(['source/woocommerce/packages/woocommerce-admin/includes'])
-            // Email templates.
-            ->notPath('emails')
-            // Update functions.
-            ->notPath('wc-admin-update-functions.php')
-            ->sortByName(true)
-    )
     ->sortByName(true)
 ;
