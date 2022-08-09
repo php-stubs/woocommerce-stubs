@@ -31,6 +31,8 @@ return \StubsGenerator\Finder::create()
     )
     // Exclude woocommerce.com API as is uses the woocommerce-rest-api package.
     ->notPath('wccom-site/rest-api/endpoints')
+    // Exclude WP-CLI command as is extends Plugin_Command.
+    ->notPath('cli/class-wc-cli-com-extension-command.php')
     // Templates.
     ->notPath('admin/views')
     ->notPath('admin/helper/views')

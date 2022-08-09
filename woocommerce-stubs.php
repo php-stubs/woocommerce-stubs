@@ -7757,22 +7757,6 @@ namespace {
         {
         }
         /**
-         * Set-up the orders admin list table.
-         *
-         * @return void
-         */
-        public function orders_table() : void
-        {
-        }
-        /**
-         * Render the orders admin list table.
-         *
-         * @return void
-         */
-        public function orders_page() : void
-        {
-        }
-        /**
          * Add custom nav meta box.
          *
          * Adapted from http://www.johnmorrisonline.com/how-to-add-a-fully-functional-custom-meta-box-to-wordpress-navigation-menus/.
@@ -7861,6 +7845,12 @@ namespace {
          * Add WC Meta boxes.
          */
         public function add_meta_boxes()
+        {
+        }
+        /**
+         * Add default sort order for meta boxes on product page.
+         */
+        public function add_product_boxes_sort_order()
         {
         }
         /**
@@ -10188,6 +10178,15 @@ namespace {
          * @return object The same or a modified version of the transient.
          */
         public static function transient_update_themes($transient)
+        {
+        }
+        /**
+         * Get update data for all plugins.
+         *
+         * @return array Update data {product_id => data}
+         * @see get_update_data
+         */
+        public static function get_available_extensions_downloads_data()
         {
         }
         /**
@@ -12560,19 +12559,21 @@ namespace {
      *
      * Extended by reports to show charts and stats in admin.
      *
-     * @author      WooThemes
-     * @category    Admin
      * @package     WooCommerce\Admin\Reports
      * @version     2.1.0
      */
     class WC_Admin_Report
     {
         /**
-         * @var array List of transients name that have been updated and need persisting.
+         * List of transients name that have been updated and need persisting.
+         *
+         * @var array
          */
         protected static $transients_to_update = array();
         /**
-         * @var array The list of transients.
+         * The list of transients.
+         *
+         * @var array
          */
         protected static $cached_results = array();
         /**
@@ -12622,7 +12623,7 @@ namespace {
          *     'name'     => 'total_sales'
          * )
          *
-         * @param  array $args
+         * @param  array $args arguments for the report.
          * @return mixed depending on query_type
          */
         public function get_order_report_data($args = array())
@@ -12668,12 +12669,12 @@ namespace {
         /**
          * Put data with post_date's into an array of times.
          *
-         * @param  array  $data array of your data
-         * @param  string $date_key key for the 'date' field. e.g. 'post_date'
-         * @param  string $data_key key for the data you are charting
-         * @param  int    $interval
-         * @param  string $start_date
-         * @param  string $group_by
+         * @param  array  $data array of your data.
+         * @param  string $date_key key for the 'date' field. e.g. 'post_date'.
+         * @param  string $data_key key for the data you are charting.
+         * @param  int    $interval interval to use.
+         * @param  string $start_date start date.
+         * @param  string $group_by group by.
          * @return array
          */
         public function prepare_chart_data($data, $date_key, $data_key, $interval, $start_date, $group_by)
@@ -12693,7 +12694,7 @@ namespace {
         /**
          * Get the current range and calculate the start and end dates.
          *
-         * @param  string $current_range
+         * @param  string $current_range Type of range.
          */
         public function calculate_current_range($current_range)
         {
@@ -33366,7 +33367,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '6.7.0';
+        public $version = '6.8.0';
         /**
          * WooCommerce Schema version.
          *
@@ -33864,6 +33865,44 @@ namespace {
         }
     }
     /**
+     * Allows to interact with extensions from WCCOM marketplace via CLI.
+     *
+     * @version 6.8
+     * @package WooCommerce
+     */
+    class WC_CLI_COM_Command
+    {
+        /**
+         * Registers a commands for managing WooCommerce.com extensions.
+         */
+        public static function register_commands()
+        {
+        }
+        /**
+         * List extensions owned by the connected site
+         *
+         * [--format]
+         * : If set, the command will use the specified format. Possible values are table, json, csv and yaml. By default the table format will be used.
+         *
+         * [--fields]
+         * : If set, the command will show only the specified fields instead of showing all the fields in the output.
+         *
+         * ## EXAMPLES
+         *
+         *     # List extensions owned by the connected site in table format with all the fields
+         *     $ wp wc com extension list
+         *
+         *     # List the product slug of the extension owned by the connected site in csv format
+         *     $ wp wc com extension list --format=csv --fields=product_slug
+         *
+         * @param  array $args  WP-CLI positional arguments.
+         * @param  array $assoc_args  WP-CLI associative arguments.
+         */
+        public static function list_extensions(array $args, array $assoc_args)
+        {
+        }
+    }
+    /**
      * Main Command for WooCommere CLI.
      *
      * Since a lot of WC operations can be handled via the REST API, we base our CLI
@@ -34314,6 +34353,51 @@ namespace {
         }
     }
     /**
+     * Order Data Store Interface
+     *
+     * @version 3.0.0
+     * @package WooCommerce\Interfaces
+     */
+    /**
+     * WC Order Data Store Interface
+     *
+     * Functions that must be defined by order store classes.
+     *
+     * @version  3.0.0
+     */
+    interface WC_Abstract_Order_Data_Store_Interface
+    {
+        /**
+         * Read order items of a specific type from the database for this order.
+         *
+         * @param WC_Order $order Order object.
+         * @param string   $type Order item type.
+         * @return array
+         */
+        public function read_items($order, $type);
+        /**
+         * Remove all line items (products, coupons, shipping, taxes) from the order.
+         *
+         * @param WC_Order $order Order object.
+         * @param string   $type Order item type. Default null.
+         */
+        public function delete_items($order, $type = \null);
+        /**
+         * Get token ids for an order.
+         *
+         * @param WC_Order $order Order object.
+         * @return array
+         */
+        public function get_payment_token_ids($order);
+        /**
+         * Update token ids for an order.
+         *
+         * @param WC_Order $order Order object.
+         * @param array    $token_ids Token IDs.
+         */
+        public function update_payment_token_ids($order, $token_ids);
+    }
+    /**
      * Object Data Store Interface
      *
      * @version 3.0.0
@@ -34382,51 +34466,6 @@ namespace {
          * @param  object  $meta Meta object (containing ->id, ->key and ->value).
          */
         public function update_meta(&$data, $meta);
-    }
-    /**
-     * Order Data Store Interface
-     *
-     * @version 3.0.0
-     * @package WooCommerce\Interfaces
-     */
-    /**
-     * WC Order Data Store Interface
-     *
-     * Functions that must be defined by order store classes.
-     *
-     * @version  3.0.0
-     */
-    interface WC_Abstract_Order_Data_Store_Interface
-    {
-        /**
-         * Read order items of a specific type from the database for this order.
-         *
-         * @param WC_Order $order Order object.
-         * @param string   $type Order item type.
-         * @return array
-         */
-        public function read_items($order, $type);
-        /**
-         * Remove all line items (products, coupons, shipping, taxes) from the order.
-         *
-         * @param WC_Order $order Order object.
-         * @param string   $type Order item type. Default null.
-         */
-        public function delete_items($order, $type = \null);
-        /**
-         * Get token ids for an order.
-         *
-         * @param WC_Order $order Order object.
-         * @return array
-         */
-        public function get_payment_token_ids($order);
-        /**
-         * Update token ids for an order.
-         *
-         * @param WC_Order $order Order object.
-         * @param array    $token_ids Token IDs.
-         */
-        public function update_payment_token_ids($order, $token_ids);
     }
     /**
      * WC_Data_Store_WP class.
@@ -34708,7 +34747,7 @@ namespace {
      *
      * @version  3.0.0
      */
-    abstract class Abstract_WC_Order_Data_Store_CPT extends \WC_Data_Store_WP implements \WC_Object_Data_Store_Interface, \WC_Abstract_Order_Data_Store_Interface
+    abstract class Abstract_WC_Order_Data_Store_CPT extends \WC_Data_Store_WP implements \WC_Abstract_Order_Data_Store_Interface, \WC_Object_Data_Store_Interface
     {
         /**
          * Internal meta type used to store order data.
@@ -36711,7 +36750,7 @@ namespace {
      *
      * @version  3.0.0
      */
-    class WC_Order_Item_Product_Data_Store extends \Abstract_WC_Order_Item_Type_Data_Store implements \WC_Object_Data_Store_Interface, \WC_Order_Item_Type_Data_Store_Interface, \WC_Order_Item_Product_Data_Store_Interface
+    class WC_Order_Item_Product_Data_Store extends \Abstract_WC_Order_Item_Type_Data_Store implements \WC_Object_Data_Store_Interface, \WC_Order_Item_Product_Data_Store_Interface, \WC_Order_Item_Type_Data_Store_Interface
     {
         /**
          * Data stored in meta keys.
@@ -36956,7 +36995,7 @@ namespace {
      *
      * @version  3.0.0
      */
-    class WC_Payment_Token_Data_Store extends \WC_Data_Store_WP implements \WC_Payment_Token_Data_Store_Interface, \WC_Object_Data_Store_Interface
+    class WC_Payment_Token_Data_Store extends \WC_Data_Store_WP implements \WC_Object_Data_Store_Interface, \WC_Payment_Token_Data_Store_Interface
     {
         /**
          * Meta type. Payment tokens are a new object type.
@@ -38277,7 +38316,7 @@ namespace {
      *
      * @version  3.0.0
      */
-    class WC_Shipping_Zone_Data_Store extends \WC_Data_Store_WP implements \WC_Shipping_Zone_Data_Store_Interface, \WC_Object_Data_Store_Interface
+    class WC_Shipping_Zone_Data_Store extends \WC_Data_Store_WP implements \WC_Object_Data_Store_Interface, \WC_Shipping_Zone_Data_Store_Interface
     {
         /**
          * Method to create a new shipping zone.
@@ -43950,6 +43989,11 @@ namespace WooCommerce\Admin {
      *      $allow_tracking
      * );
      *
+     * OR use the helper function:
+     *
+     * WooCommerce\Admin\Experimental_Abtest::in_treatment('experiment_name');
+     *
+     *
      * $isTreatment = $abtest->get_variation('your-experiment-name') === 'treatment';
      *
      * @internal This class is experimental and should not be used externally due to planned breaking changes.
@@ -43995,6 +44039,16 @@ namespace WooCommerce\Admin {
          * @param bool   $as_auth_wpcom_user  Request variation as a auth wp user or not.
          */
         public function __construct(string $anon_id, string $platform, bool $consent, bool $as_auth_wpcom_user = false)
+        {
+        }
+        /**
+         * Returns true if the current user is in the treatment group of the given experiment.
+         *
+         * @param string $experiment_name Name of the experiment.
+         * @param bool   $as_auth_wpcom_user Request variation as a auth wp user or not.
+         * @return bool
+         */
+        public static function in_treatment(string $experiment_name, bool $as_auth_wpcom_user = false)
         {
         }
         /**
@@ -47326,8 +47380,8 @@ namespace {
         /**
          * Prepare a single webhook output for response.
          *
-         * @param int               $id       Webhook ID or object.
-         * @param WP_REST_Request   $request  Request object.
+         * @param int             $id       Webhook ID or object.
+         * @param WP_REST_Request $request  Request object.
          * @return WP_REST_Response $response Response data.
          */
         public function prepare_item_for_response($id, $request)
@@ -53768,41 +53822,6 @@ namespace {
         public static function init()
         {
         }
-        /**
-         * Get total product counts.
-         *
-         * @return int Number of products.
-         */
-        public static function get_products_count()
-        {
-        }
-        /**
-         * Gather blog related properties.
-         *
-         * @param int $user_id User id.
-         * @return array Blog details.
-         */
-        public static function get_blog_details($user_id)
-        {
-        }
-        /**
-         * Gather details from the request to the server.
-         *
-         * @return array Server details.
-         */
-        public static function get_server_details()
-        {
-        }
-        /**
-         * Add global properties to tracks.
-         *
-         * @param array $properties Array of event properties.
-         * @param array $event_name Name of the event, if passed.
-         * @return array
-         */
-        public static function add_global_properties($properties, $event_name = \null)
-        {
-        }
     }
     /**
      * WC_Tracks_Client class.
@@ -54038,6 +54057,31 @@ namespace {
          * Tracks event name prefix.
          */
         const PREFIX = 'wcadmin_';
+        /**
+         * Get total product counts.
+         *
+         * @return int Number of products.
+         */
+        public static function get_products_count()
+        {
+        }
+        /**
+         * Gather blog related properties.
+         *
+         * @param int $user_id User id.
+         * @return array Blog details.
+         */
+        public static function get_blog_details($user_id)
+        {
+        }
+        /**
+         * Gather details from the request to the server.
+         *
+         * @return array Server details.
+         */
+        public static function get_server_details()
+        {
+        }
         /**
          * Record an event in Tracks - this is the preferred way to record events from PHP.
          * Note: the event request won't be made if $properties has a member called `error`.
@@ -66316,7 +66360,7 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
          *
          * @var array
          */
-        const DEFAULT_TASKS = array('StoreDetails', 'Purchase', 'Products', 'WooCommercePayments', 'Payments', 'Tax', 'Shipping', 'Marketing', 'Appearance', 'AdditionalPayments');
+        const DEFAULT_TASKS = array('StoreDetails', 'Purchase', 'Products', 'WooCommercePayments', 'Payments', 'Tax', 'Shipping', 'Marketing', 'Appearance', 'AdditionalPayments', 'ReviewShippingOptions');
         /**
          * Get class instance.
          */
@@ -66668,6 +66712,84 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
         }
     }
     /**
+     * Shipping Task
+     */
+    class ExperimentalShippingRecommendation extends \Automattic\WooCommerce\Admin\Features\OnboardingTasks\Task
+    {
+        /**
+         * ID.
+         *
+         * @return string
+         */
+        public function get_id()
+        {
+        }
+        /**
+         * Title.
+         *
+         * @return string
+         */
+        public function get_title()
+        {
+        }
+        /**
+         * Content.
+         *
+         * @return string
+         */
+        public function get_content()
+        {
+        }
+        /**
+         * Time.
+         *
+         * @return string
+         */
+        public function get_time()
+        {
+        }
+        /**
+         * Task completion.
+         *
+         * @return bool
+         */
+        public function is_complete()
+        {
+        }
+        /**
+         * Task visibility.
+         *
+         * @return bool
+         */
+        public function can_view()
+        {
+        }
+        /**
+         * Action URL.
+         *
+         * @return string
+         */
+        public function get_action_url()
+        {
+        }
+        /**
+         * Check if the store has any shipping zones.
+         *
+         * @return bool
+         */
+        public static function has_plugins_active()
+        {
+        }
+        /**
+         * Check if the Jetpack is connected.
+         *
+         * @return bool
+         */
+        public static function has_jetpack_connected()
+        {
+        }
+    }
+    /**
      * Marketing Task
      */
     class Marketing extends \Automattic\WooCommerce\Admin\Features\OnboardingTasks\Task
@@ -66928,10 +67050,81 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
         }
     }
     /**
+     * Review Shipping Options Task
+     */
+    class ReviewShippingOptions extends \Automattic\WooCommerce\Admin\Features\OnboardingTasks\Task
+    {
+        /**
+         * ID.
+         *
+         * @return string
+         */
+        public function get_id()
+        {
+        }
+        /**
+         * Title.
+         *
+         * @return string
+         */
+        public function get_title()
+        {
+        }
+        /**
+         * Content.
+         *
+         * @return string
+         */
+        public function get_content()
+        {
+        }
+        /**
+         * Time.
+         *
+         * @return string
+         */
+        public function get_time()
+        {
+        }
+        /**
+         * Task completion.
+         *
+         * @return bool
+         */
+        public function is_complete()
+        {
+        }
+        /**
+         * Task visibility.
+         *
+         * @return bool
+         */
+        public function can_view()
+        {
+        }
+        /**
+         * Action URL.
+         *
+         * @return string
+         */
+        public function get_action_url()
+        {
+        }
+    }
+    /**
      * Shipping Task
      */
     class Shipping extends \Automattic\WooCommerce\Admin\Features\OnboardingTasks\Task
     {
+        const ZONE_COUNT_TRANSIENT_NAME = 'woocommerce_shipping_task_zone_count_transient';
+        /**
+         * Constructor
+         *
+         * @param TaskList $task_list Parent task list.
+         */
+        public function __construct($task_list = null)
+        {
+        }
         /**
          * ID.
          *
@@ -67002,6 +67195,21 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
          * @return bool
          */
         public static function has_physical_products()
+        {
+        }
+        /**
+         * Delete the zone count transient used in has_shipping_zones() method
+         * to refresh the cache.
+         */
+        public static function delete_zone_count_transient()
+        {
+        }
+        /**
+         * Check if the store sells digital products only.
+         *
+         * @return bool
+         */
+        private static function is_selling_digital_type_only()
         {
         }
     }

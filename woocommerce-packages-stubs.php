@@ -14681,6 +14681,17 @@ namespace Automattic\WooCommerce\StoreApi\Utilities {
         {
         }
         /**
+         * Passes the correct base for local pick orders
+         *
+         * @todo: Remove custom local pickup handling once WooCommerce 6.8.0 is the minimum version.
+         *
+         * @param array $location Taxes location.
+         * @return array updated location that accounts for local pickup.
+         */
+        public function handle_local_pickup_taxes($location)
+        {
+        }
+        /**
          * Create order line items.
          *
          * @param \WC_Order $order The order object to update.
@@ -15058,6 +15069,15 @@ namespace Automattic\WooCommerce\Blocks\Templates {
         }
     }
     /**
+     * MiniCartTemplate class.
+     *
+     * @internal
+     */
+    class MiniCartTemplate
+    {
+        const SLUG = 'mini-cart';
+    }
+    /**
      * ProductSearchResultsTemplate class.
      *
      * @internal
@@ -15065,8 +15085,6 @@ namespace Automattic\WooCommerce\Blocks\Templates {
     class ProductSearchResultsTemplate
     {
         const SLUG = 'product-search-results';
-        const TITLE = 'Product Search Results';
-        const DESCRIPTION = 'Template used to display search results for products.';
         /**
          * Constructor.
          */
@@ -15085,14 +15103,6 @@ namespace Automattic\WooCommerce\Blocks\Templates {
          * @param array $templates Templates that match the search hierarchy.
          */
         public function update_search_template_hierarchy($templates)
-        {
-        }
-        /**
-         * Update Product Search Template info.
-         *
-         * @param array $templates List of templates.
-         */
-        public function set_template_info($templates)
         {
         }
     }
@@ -15204,12 +15214,30 @@ namespace Automattic\WooCommerce\Blocks\Utils {
         {
         }
         /**
-         * Converts template slugs into readable titles.
+         * Returns template titles.
          *
          * @param string $template_slug The templates slug (e.g. single-product).
-         * @return string Human friendly title converted from the slug.
+         * @return string Human friendly title.
          */
-        public static function convert_slug_to_title($template_slug)
+        public static function get_block_template_title($template_slug)
+        {
+        }
+        /**
+         * Returns template descriptions.
+         *
+         * @param string $template_slug The templates slug (e.g. single-product).
+         * @return string Template description.
+         */
+        public static function get_block_template_description($template_slug)
+        {
+        }
+        /**
+         * Returns a filtered list of plugin template types, containing their
+         * localized titles and descriptions.
+         *
+         * @return array The plugin template types.
+         */
+        public static function get_plugin_block_template_types()
         {
         }
         /**
@@ -15334,7 +15362,7 @@ namespace Automattic\WooCommerce\Blocks\Utils {
     /**
      * BlocksWpQuery query.
      *
-     * Wrapper for WP Query with additonal helper methods.
+     * Wrapper for WP Query with additional helper methods.
      * Allows query args to be set and parsed without doing running it, so that a cache can be used.
      *
      * @deprecated 2.5.0
