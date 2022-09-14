@@ -585,7 +585,6 @@ namespace {
          *
          * @return int
          */
-        #[\ReturnTypeWillChange]
         public function getTimestamp()
         {
         }
@@ -605,7 +604,6 @@ namespace {
          * @return int
          * @link http://php.net/manual/en/datetime.getoffset.php
          */
-        #[\ReturnTypeWillChange]
         public function getOffset()
         {
         }
@@ -617,7 +615,6 @@ namespace {
          * @return static
          * @link http://php.net/manual/en/datetime.settimezone.php
          */
-        #[\ReturnTypeWillChange]
         public function setTimezone($timezone)
         {
         }
@@ -5866,19 +5863,6 @@ namespace Automattic\WooCommerce\Blocks {
         public function render_block_template()
         {
         }
-        /**
-         * Remove the template panel from the Sidebar of the Shop page because
-         * the Site Editor handles it.
-         *
-         * @see https://github.com/woocommerce/woocommerce-gutenberg-products-block/issues/6278
-         *
-         * @param bool $is_support Whether the active theme supports block templates.
-         *
-         * @return bool
-         */
-        public function remove_block_template_support_for_shop_page($is_support)
-        {
-        }
     }
 }
 namespace Automattic\WooCommerce\Blocks\BlockTypes {
@@ -5981,18 +5965,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
-         * Generate an array of chunks paths for loading translation.
-         *
-         * @param string $chunks_folder The folder to iterate over.
-         * @return string[] $chunks list of chunks to load.
-         */
-        protected function get_chunks_paths($chunks_folder)
-        {
-        }
-        /**
          * Registers the block type with WordPress.
-         *
-         * @return string[] Chunks paths.
          */
         protected function register_block_type()
         {
@@ -6594,12 +6567,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          */
         protected $block_name = 'cart';
         /**
-         * Chunks build folder.
-         *
-         * @var string
-         */
-        protected $chunks_folder = 'cart-blocks';
-        /**
          * Get the editor script handle for this block type.
          *
          * @param string $key Data to get, or default to everything.
@@ -6683,12 +6650,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @var string
          */
         protected $block_name = 'checkout';
-        /**
-         * Chunks build folder.
-         *
-         * @var string
-         */
-        protected $chunks_folder = 'checkout-blocks';
         /**
          * Get the editor script handle for this block type.
          *
@@ -6811,7 +6772,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @var string
          */
         protected $api_version = '2';
-        const FILTER_PRODUCTS_BY_STOCK_QUERY_PARAM = 'filter_stock_status';
         /**
          * Initialize this block.
          */
@@ -6857,89 +6817,40 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         public function add_alignment_class_to_wrapper(string $content, array $block)
         {
         }
-        /**
-         * Filter products by stock status when as query param there is "filter_stock_status"
-         *
-         * @param array $meta_query Meta query.
-         * @return array
-         */
-        public function filter_products_by_stock($meta_query)
-        {
-        }
-        /**
-         * Add custom query params
-         *
-         * @param array $vars Query vars.
-         * @return array Query vars.
-         */
-        public function add_query_vars_filter($vars)
-        {
-        }
     }
     /**
-     * FeaturedItem class.
+     * FeaturedCategory class.
      */
-    abstract class FeaturedItem extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractDynamicBlock
+    class FeaturedCategory extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractDynamicBlock
     {
         /**
          * Block name.
          *
          * @var string
          */
-        protected $block_name;
-        /**
-         * Default attribute values.
-         *
-         * @var array
-         */
-        protected $defaults = array('align' => 'none');
+        protected $block_name = 'featured-category';
         /**
          * Global style enabled for this block.
          *
          * @var array
          */
-        protected $global_style_wrapper = array('background_color', 'border_color', 'border_radius', 'border_width', 'font_size', 'padding', 'text_color');
+        protected $global_style_wrapper = array('text_color', 'font_size', 'border_color', 'border_radius', 'border_width', 'background_color', 'text_color');
         /**
-         * Returns the featured item.
+         * Default attribute values, should match what's set in JS `registerBlockType`.
          *
-         * @param array $attributes Block attributes. Default empty array.
-         * @return \WP_Term|\WC_Product|null
+         * @var array
          */
-        protected abstract function get_item($attributes);
+        protected $defaults = array('align' => 'none', 'contentAlign' => 'center', 'dimRatio' => 50, 'focalPoint' => false, 'height' => false, 'mediaId' => 0, 'mediaSrc' => '', 'showDesc' => true);
         /**
-         * Returns the name of the featured item.
+         * Get block attributes.
          *
-         * @param \WP_Term|\WC_Product $item Item object.
-         * @return string
+         * @return array
          */
-        protected abstract function get_item_title($item);
-        /**
-         * Returns the featured item image URL.
-         *
-         * @param \WP_Term|\WC_Product $item Item object.
-         * @param string               $size Image size, defaults to 'full'.
-         * @return string
-         */
-        protected abstract function get_item_image($item, $size = 'full');
-        /**
-         * Renders the featured item attributes.
-         *
-         * @param \WP_Term|\WC_Product $item       Item object.
-         * @param array                $attributes Block attributes. Default empty array.
-         * @return string
-         */
-        protected abstract function render_attributes($item, $attributes);
-        /**
-         * Get the supports array for this block type.
-         *
-         * @return string[][];
-         * @see $this->register_block_type()
-         */
-        protected function get_block_type_supports()
+        protected function get_block_type_attributes()
         {
         }
         /**
-         * Render the featured item block.
+         * Render the Featured Category block.
          *
          * @param array  $attributes Block attributes.
          * @param string $content    Block content.
@@ -6949,57 +6860,13 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
-         * Returns the url the item's image
-         *
-         * @param array                $attributes Block attributes. Default empty array.
-         * @param \WP_Term|\WC_Product $item       Item object.
-         *
-         * @return string
-         */
-        private function get_image_url($attributes, $item)
-        {
-        }
-        /**
-         * Renders the featured image as a div background.
-         *
-         * @param array  $attributes Block attributes. Default empty array.
-         * @param string $image_url  Item image url.
-         *
-         * @return string
-         */
-        private function render_bg_image($attributes, $image_url)
-        {
-        }
-        /**
          * Get the styles for the wrapper element (background image, color).
          *
-         * @param array  $attributes Block attributes. Default empty array.
-         * @param string $image_url  Item image url.
-         *
+         * @param array    $attributes Block attributes. Default empty array.
+         * @param \WP_Term $category Term object.
          * @return string
          */
-        public function get_bg_styles($attributes, $image_url)
-        {
-        }
-        /**
-         * Renders the featured image
-         *
-         * @param array                $attributes Block attributes. Default empty array.
-         * @param \WC_Product|\WP_Term $item       Item object.
-         * @param string               $image_url  Item image url.
-         *
-         * @return string
-         */
-        private function render_image($attributes, $item, string $image_url)
-        {
-        }
-        /**
-         * Get the styles for the wrapper element (background image, color).
-         *
-         * @param array $attributes Block attributes. Default empty array.
-         * @return string
-         */
-        public function get_styles($attributes)
+        public function get_styles($attributes, $category)
         {
         }
         /**
@@ -7012,23 +6879,13 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
-         * Renders the block overlay
+         * Returns the main product image URL.
          *
-         * @param array $attributes Block attributes. Default empty array.
-         *
+         * @param \WP_Term $category Term object.
+         * @param string   $size    Image size, defaults to 'full'.
          * @return string
          */
-        private function render_overlay($attributes)
-        {
-        }
-        /**
-         * Returns whether the focal point is defined for the block.
-         *
-         * @param array $attributes Block attributes. Default empty array.
-         *
-         * @return bool
-         */
-        private function hasFocalPoint($attributes) : bool
+        public function get_image($category, $size = 'full')
         {
         }
         /**
@@ -7043,67 +6900,9 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         }
     }
     /**
-     * FeaturedCategory class.
-     */
-    class FeaturedCategory extends \Automattic\WooCommerce\Blocks\BlockTypes\FeaturedItem
-    {
-        /**
-         * Block name.
-         *
-         * @var string
-         */
-        protected $block_name = 'featured-category';
-        /**
-         * Get block attributes.
-         *
-         * @return array
-         */
-        protected function get_block_type_attributes()
-        {
-        }
-        /**
-         * Returns the featured category.
-         *
-         * @param array $attributes Block attributes. Default empty array.
-         * @return \WP_Term|null
-         */
-        protected function get_item($attributes)
-        {
-        }
-        /**
-         * Returns the name of the featured category.
-         *
-         * @param \WP_Term $category Featured category.
-         * @return string
-         */
-        protected function get_item_title($category)
-        {
-        }
-        /**
-         * Returns the featured category image URL.
-         *
-         * @param \WP_Term $category Term object.
-         * @param string   $size Image size, defaults to 'full'.
-         * @return string
-         */
-        protected function get_item_image($category, $size = 'full')
-        {
-        }
-        /**
-         * Renders the featured category attributes.
-         *
-         * @param \WP_Term $category Term object.
-         * @param array    $attributes Block attributes. Default empty array.
-         * @return string
-         */
-        protected function render_attributes($category, $attributes)
-        {
-        }
-    }
-    /**
      * FeaturedProduct class.
      */
-    class FeaturedProduct extends \Automattic\WooCommerce\Blocks\BlockTypes\FeaturedItem
+    class FeaturedProduct extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractDynamicBlock
     {
         /**
          * Block name.
@@ -7112,41 +6911,64 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          */
         protected $block_name = 'featured-product';
         /**
-         * Returns the featured product.
+         * Default attribute values, should match what's set in JS `registerBlockType`.
          *
-         * @param array $attributes Block attributes. Default empty array.
-         * @return \WP_Term|null
+         * @var array
          */
-        protected function get_item($attributes)
+        protected $defaults = array('align' => 'none', 'contentAlign' => 'center', 'dimRatio' => 50, 'focalPoint' => false, 'height' => false, 'mediaId' => 0, 'mediaSrc' => '', 'showDesc' => true, 'showPrice' => true);
+        /**
+         * Global style enabled for this block.
+         *
+         * @var array
+         */
+        protected $global_style_wrapper = array('text_color', 'font_size', 'border_color', 'border_radius', 'border_width', 'background_color', 'text_color');
+        /**
+         * Render the Featured Product block.
+         *
+         * @param array  $attributes Block attributes.
+         * @param string $content    Block content.
+         * @return string Rendered block type output.
+         */
+        protected function render($attributes, $content)
         {
         }
         /**
-         * Returns the name of the featured product.
+         * Get the styles for the wrapper element (background image, color).
          *
+         * @param array       $attributes Block attributes. Default empty array.
          * @param \WC_Product $product Product object.
          * @return string
          */
-        protected function get_item_title($product)
+        public function get_styles($attributes, $product)
         {
         }
         /**
-         * Returns the featured product image URL.
+         * Get class names for the block container.
+         *
+         * @param array $attributes Block attributes. Default empty array.
+         * @return string
+         */
+        public function get_classes($attributes)
+        {
+        }
+        /**
+         * Returns the main product image URL.
          *
          * @param \WC_Product $product Product object.
          * @param string      $size    Image size, defaults to 'full'.
          * @return string
          */
-        protected function get_item_image($product, $size = 'full')
+        public function get_image($product, $size = 'full')
         {
         }
         /**
-         * Renders the featured product attributes.
+         * Extra data passed through from server to client for block.
          *
-         * @param \WC_Product $product Product object.
-         * @param array       $attributes Block attributes. Default empty array.
-         * @return string
+         * @param array $attributes  Any attributes that currently are available from the block.
+         *                           Note, this will be empty in the editor context when the block is
+         *                           not in the post content on editor load.
          */
-        protected function render_attributes($product, $attributes)
+        protected function enqueue_data(array $attributes = [])
         {
         }
     }
@@ -7199,12 +7021,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @var string
          */
         protected $block_name = 'mini-cart';
-        /**
-         * Chunks build folder.
-         *
-         * @var string
-         */
-        protected $chunks_folder = 'mini-cart-contents-block';
         /**
          * Array of scripts that will be lazy loaded when interacting with the block.
          *
@@ -8645,9 +8461,23 @@ namespace Automattic\WooCommerce\Blocks\Domain\Services {
         {
         }
         /**
+         * Remove cronjobs if they exist (but only from admin).
+         *
+         * @internal
+         */
+        public function uninstall()
+        {
+        }
+        /**
          * Maybe create cron events.
          */
         protected function maybe_create_cronjobs()
+        {
+        }
+        /**
+         * Unschedule cron jobs that are present.
+         */
+        protected function maybe_remove_cronjobs()
         {
         }
         /**
@@ -9447,6 +9277,16 @@ namespace Automattic\WooCommerce\Blocks\Payments {
          * @param PaymentMethodRegistry $payment_method_registry Payment method registry instance.
          */
         public function register_payment_method_integrations(\Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry $payment_method_registry)
+        {
+        }
+        /**
+         * Attempt to process a payment for the checkout API if no payment methods support the
+         * woocommerce_rest_checkout_process_payment_with_context action.
+         *
+         * @param PaymentContext $context Holds context for the payment.
+         * @param PaymentResult  $result  Result of the payment.
+         */
+        public function process_legacy_payment(\Automattic\WooCommerce\StoreApi\Payments\PaymentContext $context, \Automattic\WooCommerce\StoreApi\Payments\PaymentResult &$result)
         {
         }
         /**
@@ -10491,30 +10331,6 @@ namespace Automattic\WooCommerce\StoreApi\Formatters {
          * @return mixed
          */
         public function format($value, array $options = [])
-        {
-        }
-    }
-}
-namespace Automattic\WooCommerce\StoreApi {
-    /**
-     * Legacy class.
-     */
-    class Legacy
-    {
-        /**
-         * Hook into WP lifecycle events.
-         */
-        public function init()
-        {
-        }
-        /**
-         * Attempt to process a payment for the checkout API if no payment methods support the
-         * woocommerce_rest_checkout_process_payment_with_context action.
-         *
-         * @param PaymentContext $context Holds context for the payment.
-         * @param PaymentResult  $result  Result of the payment.
-         */
-        public function process_legacy_payment(\Automattic\WooCommerce\StoreApi\Payments\PaymentContext $context, \Automattic\WooCommerce\StoreApi\Payments\PaymentResult &$result)
         {
         }
     }
@@ -12598,7 +12414,7 @@ namespace Automattic\WooCommerce\StoreApi\Schemas {
          *
          * @var string[]
          */
-        private $endpoints = [\Automattic\WooCommerce\StoreApi\Schemas\V1\CartItemSchema::IDENTIFIER, \Automattic\WooCommerce\StoreApi\Schemas\V1\CartSchema::IDENTIFIER, \Automattic\WooCommerce\StoreApi\Schemas\V1\CheckoutSchema::IDENTIFIER, \Automattic\WooCommerce\StoreApi\Schemas\V1\ProductSchema::IDENTIFIER];
+        private $endpoints = [\Automattic\WooCommerce\StoreApi\Schemas\V1\CartItemSchema::IDENTIFIER, \Automattic\WooCommerce\StoreApi\Schemas\V1\CartSchema::IDENTIFIER, \Automattic\WooCommerce\StoreApi\Schemas\V1\CheckoutSchema::IDENTIFIER];
         /**
          * Holds the formatters class instance.
          *
@@ -14681,17 +14497,6 @@ namespace Automattic\WooCommerce\StoreApi\Utilities {
         {
         }
         /**
-         * Passes the correct base for local pick orders
-         *
-         * @todo: Remove custom local pickup handling once WooCommerce 6.8.0 is the minimum version.
-         *
-         * @param array $location Taxes location.
-         * @return array updated location that accounts for local pickup.
-         */
-        public function handle_local_pickup_taxes($location)
-        {
-        }
-        /**
          * Create order line items.
          *
          * @param \WC_Order $order The order object to update.
@@ -15008,105 +14813,6 @@ namespace Automattic\WooCommerce\StoreApi\Utilities {
         }
     }
 }
-namespace Automattic\WooCommerce\Blocks\Templates {
-    /**
-     * ClassicTemplatesCompatibility class.
-     *
-     * To bridge the gap on compatibility with widget blocks and classic PHP core templates.
-     *
-     * @internal
-     */
-    class ClassicTemplatesCompatibility
-    {
-        /**
-         * Instance of the asset data registry.
-         *
-         * @var AssetDataRegistry
-         */
-        protected $asset_data_registry;
-        /**
-         * Constructor.
-         *
-         * @param AssetDataRegistry $asset_data_registry Instance of the asset data registry.
-         */
-        public function __construct(\Automattic\WooCommerce\Blocks\Assets\AssetDataRegistry $asset_data_registry)
-        {
-        }
-        /**
-         * Initialization method.
-         */
-        protected function init()
-        {
-        }
-        /**
-         * Executes the methods which set the necessary data needed for filter blocks to work correctly as widgets in Classic templates.
-         *
-         * @return void
-         */
-        public function set_classic_template_data()
-        {
-        }
-        /**
-         * This method passes the value `has_filterable_products` to the front-end for product archive pages,
-         * so that widget product filter blocks are aware of the context they are in and can render accordingly.
-         *
-         * @return void
-         */
-        public function set_filterable_product_data()
-        {
-        }
-        /**
-         * This method passes the value `is_rendering_php_template` to the front-end of Classic themes,
-         * so that widget product filter blocks are aware of how to filter the products.
-         *
-         * This data only matters on WooCommerce product archive pages.
-         * On non-archive pages the merchant could be using the All Products block which is not a PHP template.
-         *
-         * @return void
-         */
-        public function set_php_template_data()
-        {
-        }
-    }
-    /**
-     * MiniCartTemplate class.
-     *
-     * @internal
-     */
-    class MiniCartTemplate
-    {
-        const SLUG = 'mini-cart';
-    }
-    /**
-     * ProductSearchResultsTemplate class.
-     *
-     * @internal
-     */
-    class ProductSearchResultsTemplate
-    {
-        const SLUG = 'product-search-results';
-        /**
-         * Constructor.
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Initialization method.
-         */
-        protected function init()
-        {
-        }
-        /**
-         * When the search is for products and a block theme is active, render the Product Search Template.
-         *
-         * @param array $templates Templates that match the search hierarchy.
-         */
-        public function update_search_template_hierarchy($templates)
-        {
-        }
-    }
-}
 namespace Automattic\WooCommerce\Blocks\Utils {
     /**
      * Utility methods used for serving block templates from WooCommerce Blocks.
@@ -15214,30 +14920,12 @@ namespace Automattic\WooCommerce\Blocks\Utils {
         {
         }
         /**
-         * Returns template titles.
+         * Converts template slugs into readable titles.
          *
          * @param string $template_slug The templates slug (e.g. single-product).
-         * @return string Human friendly title.
+         * @return string Human friendly title converted from the slug.
          */
-        public static function get_block_template_title($template_slug)
-        {
-        }
-        /**
-         * Returns template descriptions.
-         *
-         * @param string $template_slug The templates slug (e.g. single-product).
-         * @return string Template description.
-         */
-        public static function get_block_template_description($template_slug)
-        {
-        }
-        /**
-         * Returns a filtered list of plugin template types, containing their
-         * localized titles and descriptions.
-         *
-         * @return array The plugin template types.
-         */
-        public static function get_plugin_block_template_types()
+        public static function convert_slug_to_title($template_slug)
         {
         }
         /**
@@ -15362,7 +15050,7 @@ namespace Automattic\WooCommerce\Blocks\Utils {
     /**
      * BlocksWpQuery query.
      *
-     * Wrapper for WP Query with additional helper methods.
+     * Wrapper for WP Query with additonal helper methods.
      * Allows query args to be set and parsed without doing running it, so that a cache can be used.
      *
      * @deprecated 2.5.0
@@ -15414,16 +15102,6 @@ namespace Automattic\WooCommerce\Blocks\Utils {
          * @return (array | null)
          */
         public static function get_font_size_class_and_style($attributes)
-        {
-        }
-        /**
-         * Get class and style for font-family from attributes.
-         *
-         * @param array $attributes Block attributes.
-         *
-         * @return (array | null)
-         */
-        public static function get_font_family_class_and_style($attributes)
         {
         }
         /**
@@ -15504,16 +15182,6 @@ namespace Automattic\WooCommerce\Blocks\Utils {
          * @return (array | null)
          */
         public static function get_align_class_and_style($attributes)
-        {
-        }
-        /**
-         * Get class and style for padding from attributes.
-         *
-         * @param array $attributes Block attributes.
-         *
-         * @return (array | null)
-         */
-        public static function get_padding_class_and_style($attributes)
         {
         }
         /**
@@ -15755,7 +15423,7 @@ namespace {
      * @param array $args Args that would have been passed to the job.
      * @param string $group The group the job is assigned to.
      *
-     * @return int|null The scheduled action ID if a scheduled action was found, or null if no matching action found.
+     * @return string|null The scheduled action ID if a scheduled action was found, or null if no matching action found.
      */
     function as_unschedule_action($hook, $args = array(), $group = '')
     {
