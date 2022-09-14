@@ -22,6 +22,7 @@ return \StubsGenerator\Finder::create()
             ->depth('< 1')
             ->path('CouponsMovedTrait.php')
     )
+/*
     // Comment out existing interface exclusion
     // $ editor vendor/php-stubs/generator/src/NodeVisitor.php:352
     ->append(
@@ -29,6 +30,7 @@ return \StubsGenerator\Finder::create()
             ->in(['source/woocommerce/vendor/psr/container/src'])
             ->sortByName(true)
     )
+*/
     // Exclude woocommerce.com API as is uses the woocommerce-rest-api package.
     ->notPath('wccom-site/rest-api/endpoints')
     // Exclude WP-CLI command as is extends Plugin_Command.

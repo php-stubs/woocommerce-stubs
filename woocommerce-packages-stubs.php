@@ -5743,12 +5743,68 @@ namespace Automattic\WooCommerce\Blocks {
         }
     }
     /**
+     * Registers patterns under the `./patterns/` directory.
+     * Each pattern is defined as a PHP file and defines its metadata using plugin-style headers.
+     * The minimum required definition is:
+     *
+     *     /**
+     *      * Title: My Pattern
+     *      * Slug: my-theme/my-pattern
+     *      *
+     *
+     * The output of the PHP source corresponds to the content of the pattern, e.g.:
+     *
+     *     <main><p><?php echo "Hello"; ?></p></main>
+     *
+     * Other settable fields include:
+     *
+     *   - Description
+     *   - Viewport Width
+     *   - Categories       (comma-separated values)
+     *   - Keywords         (comma-separated values)
+     *   - Block Types      (comma-separated values)
+     *   - Inserter         (yes/no)
+     *
+     * @internal
+     */
+    class BlockPatterns
+    {
+        const SLUG_REGEX = '/^[A-z0-9\\/_-]+$/';
+        const COMMA_SEPARATED_REGEX = '/[\\s,]+/';
+        /**
+         * Path to the patterns directory.
+         *
+         * @var string $patterns_path
+         */
+        private $patterns_path;
+        /**
+         * Constructor for class
+         *
+         * @param Package $package An instance of Package.
+         */
+        public function __construct(\Automattic\WooCommerce\Blocks\Domain\Package $package)
+        {
+        }
+        /**
+         * Registers the block patterns and categories under `./patterns/`.
+         */
+        public function register_block_patterns()
+        {
+        }
+    }
+    /**
      * BlockTypesController class.
      *
      * @internal
      */
     class BlockTemplatesController
     {
+        /**
+         * Holds the Package instance
+         *
+         * @var Package
+         */
+        private $package;
         /**
          * Holds the path for the directory where the block templates will be kept.
          *
@@ -5769,14 +5825,27 @@ namespace Automattic\WooCommerce\Blocks {
         const TEMPLATES_ROOT_DIR = 'templates';
         /**
          * Constructor.
+         *
+         * @param Package $package An instance of Package.
          */
-        public function __construct()
+        public function __construct(\Automattic\WooCommerce\Blocks\Domain\Package $package)
         {
         }
         /**
          * Initialization method.
          */
         protected function init()
+        {
+        }
+        /**
+         * Checks the old and current themes and determines if the "wc_blocks_use_blockified_product_grid_block_as_template"
+         * option need to be updated accordingly.
+         *
+         * @param string    $old_name Old theme name.
+         * @param \WP_Theme $old_theme Instance of the old theme.
+         * @return void
+         */
+        public function check_should_use_blockified_product_grid_templates($old_name, $old_theme)
         {
         }
         /**
@@ -6192,6 +6261,37 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @return array Property definition.
          */
         protected function get_schema_string($default = '')
+        {
+        }
+    }
+    /**
+     * AbstractInnerBlock class.
+     */
+    abstract class AbstractInnerBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    {
+        /**
+         * Is this inner block lazy loaded? this helps us know if we should load its frontend script ot not.
+         *
+         * @var boolean
+         */
+        protected $is_lazy_loaded = true;
+        /**
+         * Registers the block type with WordPress using the metadata file.
+         *
+         * The registration using metadata is now recommended. And it's required for "Inner Blocks" to
+         * fix the issue of missing translations in the inspector (in the Editor mode)
+         */
+        protected function register_block_type()
+        {
+        }
+        /**
+         * For lazy loaded inner blocks, we don't want to enqueue the script but rather leave it for webpack to do that.
+         *
+         * @see $this->register_block_type()
+         * @param string $key Data to get, or default to everything.
+         * @return array|string|null
+         */
+        protected function get_block_type_script($key = null)
         {
         }
     }
@@ -6669,6 +6769,170 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         protected function register_block_type_assets()
         {
         }
+        /**
+         * Get list of Cart block & its inner-block types.
+         *
+         * @return array;
+         */
+        public static function get_cart_block_types()
+        {
+        }
+    }
+    /**
+     * CartAcceptedPaymentMethodsBlock class.
+     */
+    class CartAcceptedPaymentMethodsBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'cart-accepted-payment-methods-block';
+    }
+    /**
+     * CartExpressPaymentBlock class.
+     */
+    class CartExpressPaymentBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'cart-express-payment-block';
+    }
+    /**
+     * CartItemsBlock class.
+     */
+    class CartItemsBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'cart-items-block';
+    }
+    /**
+     * CartLineItemsBlock class.
+     */
+    class CartLineItemsBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'cart-line-items-block';
+    }
+    /**
+     * CartOrderSummaryBlock class.
+     */
+    class CartOrderSummaryBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'cart-order-summary-block';
+    }
+    /**
+     * CartOrderSummaryCouponFormBlock class.
+     */
+    class CartOrderSummaryCouponFormBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'cart-order-summary-coupon-form-block';
+    }
+    /**
+     * CartOrderSummaryDiscountBlock class.
+     */
+    class CartOrderSummaryDiscountBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'cart-order-summary-discount-block';
+    }
+    /**
+     * CartOrderSummaryFeeBlock class.
+     */
+    class CartOrderSummaryFeeBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'cart-order-summary-fee-block';
+    }
+    /**
+     * CartOrderSummaryHeadingBlock class.
+     */
+    class CartOrderSummaryHeadingBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'cart-order-summary-heading-block';
+    }
+    /**
+     * CartOrderSummaryShippingBlock class.
+     */
+    class CartOrderSummaryShippingBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'cart-order-summary-shipping-block';
+    }
+    /**
+     * CartOrderSummarySubtotalBlock class.
+     */
+    class CartOrderSummarySubtotalBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'cart-order-summary-subtotal-block';
+    }
+    /**
+     * CartOrderSummaryTaxesBlock class.
+     */
+    class CartOrderSummaryTaxesBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'cart-order-summary-taxes-block';
+    }
+    /**
+     * CartTotalsBlock class.
+     */
+    class CartTotalsBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'cart-totals-block';
     }
     /**
      * Checkout class.
@@ -6791,6 +7055,242 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         protected function register_block_type_assets()
         {
         }
+        /**
+         * Get list of Checkout block & its inner-block types.
+         *
+         * @return array;
+         */
+        public static function get_checkout_block_types()
+        {
+        }
+    }
+    /**
+     * CheckoutActionsBlock class.
+     */
+    class CheckoutActionsBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'checkout-actions-block';
+    }
+    /**
+     * CheckoutBillingAddressBlock class.
+     */
+    class CheckoutBillingAddressBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'checkout-billing-address-block';
+    }
+    /**
+     * CheckoutContactInformationBlock class.
+     */
+    class CheckoutContactInformationBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'checkout-contact-information-block';
+    }
+    /**
+     * CheckoutExpressPaymentBlock class.
+     */
+    class CheckoutExpressPaymentBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'checkout-express-payment-block';
+    }
+    /**
+     * CheckoutFieldsBlock class.
+     */
+    class CheckoutFieldsBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'checkout-fields-block';
+    }
+    /**
+     * CheckoutOrderNoteBlock class.
+     */
+    class CheckoutOrderNoteBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'checkout-order-note-block';
+    }
+    /**
+     * CheckoutOrderSummaryBlock class.
+     */
+    class CheckoutOrderSummaryBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'checkout-order-summary-block';
+    }
+    /**
+     * CheckoutOrderSummaryCartItemsBlock class.
+     */
+    class CheckoutOrderSummaryCartItemsBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'checkout-order-summary-cart-items-block';
+    }
+    /**
+     * CheckoutOrderSummaryCouponFormBlock class.
+     */
+    class CheckoutOrderSummaryCouponFormBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'checkout-order-summary-coupon-form-block';
+    }
+    /**
+     * CheckoutOrderSummaryDiscountBlock class.
+     */
+    class CheckoutOrderSummaryDiscountBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'checkout-order-summary-discount-block';
+    }
+    /**
+     * CheckoutOrderSummaryFeeBlock class.
+     */
+    class CheckoutOrderSummaryFeeBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'checkout-order-summary-fee-block';
+    }
+    /**
+     * CheckoutOrderSummaryShippingBlock class.
+     */
+    class CheckoutOrderSummaryShippingBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'checkout-order-summary-shipping-block';
+    }
+    /**
+     * CheckoutOrderSummarySubtotalBlock class.
+     */
+    class CheckoutOrderSummarySubtotalBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'checkout-order-summary-subtotal-block';
+    }
+    /**
+     * CheckoutOrderSummaryTaxesBlock class.
+     */
+    class CheckoutOrderSummaryTaxesBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'checkout-order-summary-taxes-block';
+    }
+    /**
+     * CheckoutPaymentBlock class.
+     */
+    class CheckoutPaymentBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'checkout-payment-block';
+    }
+    /**
+     * CheckoutShippingAddressBlock class.
+     */
+    class CheckoutShippingAddressBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'checkout-shipping-address-block';
+    }
+    /**
+     * CheckoutShippingMethodsBlock class.
+     */
+    class CheckoutShippingMethodsBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'checkout-shipping-methods-block';
+    }
+    /**
+     * CheckoutTermsBlock class.
+     */
+    class CheckoutTermsBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'checkout-terms-block';
+    }
+    /**
+     * CheckoutTotalsBlock class.
+     */
+    class CheckoutTotalsBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'checkout-totals-block';
     }
     /**
      * Classic Single Product class
@@ -6866,15 +7366,18 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         public function filter_products_by_stock($meta_query)
         {
         }
+    }
+    /**
+     * EmptyCartBlock class.
+     */
+    class EmptyCartBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
         /**
-         * Add custom query params
+         * Block name.
          *
-         * @param array $vars Query vars.
-         * @return array Query vars.
+         * @var string
          */
-        public function add_query_vars_filter($vars)
-        {
-        }
+        protected $block_name = 'empty-cart-block';
     }
     /**
      * FeaturedItem class.
@@ -7151,6 +7654,18 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         }
     }
     /**
+     * FilledCartBlock class.
+     */
+    class FilledCartBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'filled-cart-block';
+    }
+    /**
      * HandpickedProducts class.
      */
     class HandpickedProducts extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractProductGrid
@@ -7290,6 +7805,16 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
+         * Returns the markup for the cart price.
+         *
+         * @param array $attributes Block attributes.
+         *
+         * @return string
+         */
+        protected function get_cart_price_markup($attributes)
+        {
+        }
+        /**
          * Returns the markup for render the tax label.
          *
          * @return string
@@ -7421,6 +7946,28 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @var string
          */
         protected $block_name = 'price-filter';
+    }
+    /**
+     * ProceedToCheckoutBlock class.
+     */
+    class ProceedToCheckoutBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'proceed-to-checkout-block';
+        /**
+         * Extra data passed through from server to client for block.
+         *
+         * @param array $attributes  Any attributes that currently are available from the block.
+         *                           Note, this will be empty in the editor context when the block is
+         *                           not in the post content on editor load.
+         */
+        protected function enqueue_data(array $attributes = [])
+        {
+        }
     }
     /**
      * ProductAddToCart class.
@@ -8400,6 +8947,12 @@ namespace Automattic\WooCommerce\Blocks\Domain {
          */
         private $package;
         /**
+         * Holds the Migration instance
+         *
+         * @var Migration
+         */
+        private $migration;
+        /**
          * Constructor
          *
          * @param Container $container  The Dependency Injection Container.
@@ -8511,6 +9064,21 @@ namespace Automattic\WooCommerce\Blocks\Domain {
         {
         }
         /**
+         * Returns the version of the plugin stored in the database.
+         *
+         * @return string
+         */
+        public function get_version_stored_on_db()
+        {
+        }
+        /**
+         * Set the version of the plugin stored in the database.
+         * This is useful during the first installation or after the upgrade process.
+         */
+        public function set_version_stored_on_db()
+        {
+        }
+        /**
          * Returns the path to the plugin directory.
          *
          * @param string $relative_path  If provided, the relative path will be
@@ -8553,9 +9121,15 @@ namespace Automattic\WooCommerce\Blocks\Domain {
          *
          * @return boolean
          */
-        public function is_feature_plugin_build()
-        {
-        }
+        // phpcs:disable Squiz.PHP.CommentedOutCode
+        // phpcs:disable Squiz.Commenting.InlineComment.InvalidEndChar
+        // phpcs:disable Squiz.Commenting.InlineComment.SpacingBefore
+        //	public function is_feature_plugin_build() {
+        //		return $this->feature()->is_feature_plugin_build();
+        //	}
+        // phpcs:enable Squiz.PHP.CommentedOutCode
+        // phpcs:enable Squiz.Commenting.InlineComment.InvalidEndChar
+        // phpcs:enable Squiz.Commenting.InlineComment.SpacingBefore
     }
 }
 namespace Automattic\WooCommerce\Blocks\Domain\Services {
@@ -8576,14 +9150,6 @@ namespace Automattic\WooCommerce\Blocks\Domain\Services {
          * @param Package $package An instance of (Woo Blocks) Package.
          */
         public function __construct(\Automattic\WooCommerce\Blocks\Domain\Package $package)
-        {
-        }
-        /**
-         * Feature gating. This feature is only enabled when using the feature plugin/checkout block.
-         *
-         * @return boolean
-         */
-        private function is_feature_enabled()
         {
         }
         /**
@@ -9028,47 +9594,10 @@ namespace Automattic\WooCommerce\Blocks {
     class InboxNotifications
     {
         const SURFACE_CART_CHECKOUT_NOTE_NAME = 'surface_cart_checkout';
-        const SURFACE_CART_CHECKOUT_PROBABILITY_OPTION = 'wc_blocks_surface_cart_checkout_probability';
-        const PERCENT_USERS_TO_TARGET = 50;
-        const INELIGIBLE_EXTENSIONS = [
-            'automatewoo',
-            'mailchimp-for-woocommerce',
-            'mailpoet',
-            'klarna-payments-for-woocommerce',
-            'klarna-checkout-for-woocommerce',
-            'woocommerce-gutenberg-products-block',
-            // Disallow the notification if the store is using the feature plugin already.
-            'woocommerce-all-products-for-subscriptions',
-            'woocommerce-bookings',
-            'woocommerce-box-office',
-            'woocommerce-cart-add-ons',
-            'woocommerce-checkout-add-ons',
-            'woocommerce-checkout-field-editor',
-            'woocommerce-conditional-shipping-and-payments',
-            'woocommerce-dynamic-pricing',
-            'woocommerce-eu-vat-number',
-            'woocommerce-follow-up-emails',
-            'woocommerce-gateway-amazon-payments-advanced',
-            'woocommerce-gateway-authorize-net-cim',
-            'woocommerce-google-analytics-pro',
-            'woocommerce-memberships',
-            'woocommerce-paypal-payments',
-            'woocommerce-pre-orders',
-            'woocommerce-product-bundles',
-            'woocommerce-shipping-fedex',
-            'woocommerce-smart-coupons',
-        ];
-        const ELIGIBLE_COUNTRIES = ['GB', 'US'];
         /**
          * Deletes the note.
          */
         public static function delete_surface_cart_checkout_blocks_notification()
-        {
-        }
-        /**
-         * Creates a notification letting merchants know about the Cart and Checkout Blocks.
-         */
-        public static function create_surface_cart_checkout_blocks_notification()
         {
         }
     }
@@ -9296,6 +9825,45 @@ namespace Automattic\WooCommerce\Blocks {
         }
     }
     /**
+     * Takes care of the migrations.
+     *
+     * @since 2.5.0
+     */
+    class Migration
+    {
+        /**
+         * DB updates and callbacks that need to be run per version.
+         *
+         * Please note that these functions are invoked when WooCommerce Blocks is updated from a previous version,
+         * but NOT when WooCommerce Blocks is newly installed.
+         *
+         * @var array
+         */
+        private $db_upgrades = array();
+        /**
+         * Runs all the necessary migrations.
+         *
+         * @var array
+         */
+        public function run_migrations()
+        {
+        }
+        /**
+         * Set a flag to indicate if the blockified Product Grid Block should be rendered by default.
+         */
+        public static function wc_blocks_update_710_blockified_product_grid_block()
+        {
+        }
+    }
+    /**
+     * Contains all the option names used by the plugin.
+     */
+    class Options
+    {
+        const WC_BLOCK_VERSION = 'wc_blocks_version';
+        const WC_BLOCK_USE_BLOCKIFIED_PRODUCT_GRID_BLOCK_AS_TEMPLATE = 'wc_blocks_use_blockified_product_grid_block_as_template';
+    }
+    /**
      * Main package class.
      *
      * Returns information about the package and handles init.
@@ -9362,13 +9930,20 @@ namespace Automattic\WooCommerce\Blocks {
         {
         }
         /**
-         * Checks if we're executing the code in an feature plugin or experimental build mode.
+         * Checks if we're executing the code in a feature plugin or experimental build mode.
          *
          * @return boolean
          */
-        public static function is_feature_plugin_build()
-        {
-        }
+        // This function will be kept around but commented out in case we add feature-plugin-specific code in the future.
+        // phpcs:disable Squiz.PHP.CommentedOutCode
+        // phpcs:disable Squiz.Commenting.InlineComment.InvalidEndChar
+        // phpcs:disable Squiz.Commenting.InlineComment.SpacingBefore
+        //	public static function is_feature_plugin_build() {
+        //		return self::get_package()->is_feature_plugin_build();
+        //	}
+        // phpcs:enable Squiz.PHP.CommentedOutCode
+        // phpcs:enable Squiz.Commenting.InlineComment.InvalidEndChar
+        // phpcs:enable Squiz.Commenting.InlineComment.SpacingBefore
         /**
          * Loads the dependency injection container for woocommerce blocks.
          *
@@ -13499,6 +14074,12 @@ namespace Automattic\WooCommerce\StoreApi\Schemas\V1 {
          */
         public $coupon_schema;
         /**
+         * Product item schema instance representing cross-sell items.
+         *
+         * @var ProductSchema
+         */
+        public $cross_sells_item_schema;
+        /**
          * Fee schema instance.
          *
          * @var CartFeeSchema
@@ -15078,6 +15659,35 @@ namespace Automattic\WooCommerce\Blocks\Templates {
         const SLUG = 'mini-cart';
     }
     /**
+     * ProductAttributeTemplate class.
+     *
+     * @internal
+     */
+    class ProductAttributeTemplate
+    {
+        const SLUG = 'archive-product';
+        /**
+         * Constructor.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Initialization method.
+         */
+        protected function init()
+        {
+        }
+        /**
+         * Render the Archive Product Template for product attributes.
+         *
+         * @param array $templates Templates that match the product attributes taxonomy.
+         */
+        public function update_taxonomy_template_hierarchy($templates)
+        {
+        }
+    }
+    /**
      * ProductSearchResultsTemplate class.
      *
      * @internal
@@ -15358,6 +15968,15 @@ namespace Automattic\WooCommerce\Blocks\Utils {
         public static function remove_theme_templates_with_custom_alternative($templates)
         {
         }
+        /**
+         * Returns whether the blockified templates should be used or not.
+         * If the option is not stored on the db, we need to check if the current theme is a block one or not.
+         *
+         * @return boolean
+         */
+        public static function should_use_blockified_product_grid_templates()
+        {
+        }
     }
     /**
      * BlocksWpQuery query.
@@ -15414,6 +16033,16 @@ namespace Automattic\WooCommerce\Blocks\Utils {
          * @return (array | null)
          */
         public static function get_font_size_class_and_style($attributes)
+        {
+        }
+        /**
+         * Get class and style for font-weight from attributes.
+         *
+         * @param array $attributes Block attributes.
+         *
+         * @return (array | null)
+         */
+        public static function get_font_weight_class_and_style($attributes)
         {
         }
         /**
