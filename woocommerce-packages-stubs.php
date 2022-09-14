@@ -5863,6 +5863,19 @@ namespace Automattic\WooCommerce\Blocks {
         public function render_block_template()
         {
         }
+        /**
+         * Remove the template panel from the Sidebar of the Shop page because
+         * the Site Editor handles it.
+         *
+         * @see https://github.com/woocommerce/woocommerce-gutenberg-products-block/issues/6278
+         *
+         * @param bool $is_support Whether the active theme supports block templates.
+         *
+         * @return bool
+         */
+        public function remove_block_template_support_for_shop_page($is_support)
+        {
+        }
     }
 }
 namespace Automattic\WooCommerce\Blocks\BlockTypes {
@@ -6772,6 +6785,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @var string
          */
         protected $api_version = '2';
+        const FILTER_PRODUCTS_BY_STOCK_QUERY_PARAM = 'filter_stock_status';
         /**
          * Initialize this block.
          */
@@ -6817,6 +6831,24 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         public function add_alignment_class_to_wrapper(string $content, array $block)
         {
         }
+        /**
+         * Filter products by stock status when as query param there is "filter_stock_status"
+         *
+         * @param array $meta_query Meta query.
+         * @return array
+         */
+        public function filter_products_by_stock($meta_query)
+        {
+        }
+        /**
+         * Add custom query params
+         *
+         * @param array $vars Query vars.
+         * @return array Query vars.
+         */
+        public function add_query_vars_filter($vars)
+        {
+        }
     }
     /**
      * FeaturedCategory class.
@@ -6834,13 +6866,22 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          *
          * @var array
          */
-        protected $global_style_wrapper = array('text_color', 'font_size', 'border_color', 'border_radius', 'border_width', 'background_color', 'text_color');
+        protected $global_style_wrapper = array('text_color', 'font_size', 'border_color', 'border_radius', 'border_width', 'background_color', 'text_color', 'padding');
+        /**
+         * Get the supports array for this block type.
+         *
+         * @see $this->register_block_type()
+         * @return string;
+         */
+        protected function get_block_type_supports()
+        {
+        }
         /**
          * Default attribute values, should match what's set in JS `registerBlockType`.
          *
          * @var array
          */
-        protected $defaults = array('align' => 'none', 'contentAlign' => 'center', 'dimRatio' => 50, 'focalPoint' => false, 'height' => false, 'mediaId' => 0, 'mediaSrc' => '', 'showDesc' => true);
+        protected $defaults = array('align' => 'none');
         /**
          * Get block attributes.
          *
@@ -6860,13 +6901,33 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
-         * Get the styles for the wrapper element (background image, color).
+         * Renders the featured image
          *
-         * @param array    $attributes Block attributes. Default empty array.
-         * @param \WP_Term $category Term object.
+         * @param array       $attributes Block attributes. Default empty array.
+         * @param \WC_Product $category   Product object.
+         *
          * @return string
          */
-        public function get_styles($attributes, $category)
+        private function render_image($attributes, $category)
+        {
+        }
+        /**
+         * Renders the block overlay
+         *
+         * @param array $attributes Block attributes. Default empty array.
+         *
+         * @return string
+         */
+        private function render_overlay($attributes)
+        {
+        }
+        /**
+         * Get the styles for the wrapper element (background image, color).
+         *
+         * @param array $attributes Block attributes. Default empty array.
+         * @return string
+         */
+        public function get_styles($attributes)
         {
         }
         /**
@@ -6911,17 +6972,26 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          */
         protected $block_name = 'featured-product';
         /**
-         * Default attribute values, should match what's set in JS `registerBlockType`.
+         * Default attribute values.
          *
          * @var array
          */
-        protected $defaults = array('align' => 'none', 'contentAlign' => 'center', 'dimRatio' => 50, 'focalPoint' => false, 'height' => false, 'mediaId' => 0, 'mediaSrc' => '', 'showDesc' => true, 'showPrice' => true);
+        protected $defaults = array('align' => 'none');
         /**
          * Global style enabled for this block.
          *
          * @var array
          */
-        protected $global_style_wrapper = array('text_color', 'font_size', 'border_color', 'border_radius', 'border_width', 'background_color', 'text_color');
+        protected $global_style_wrapper = array('text_color', 'font_size', 'border_color', 'border_radius', 'border_width', 'background_color', 'text_color', 'padding');
+        /**
+         * Get the supports array for this block type.
+         *
+         * @see $this->register_block_type()
+         * @return string;
+         */
+        protected function get_block_type_supports()
+        {
+        }
         /**
          * Render the Featured Product block.
          *
@@ -6933,13 +7003,34 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
-         * Get the styles for the wrapper element (background image, color).
+         * Renders the featured image
          *
          * @param array       $attributes Block attributes. Default empty array.
          * @param \WC_Product $product Product object.
+         *
          * @return string
          */
-        public function get_styles($attributes, $product)
+        private function render_image($attributes, $product)
+        {
+        }
+        /**
+         * Renders the block overlay
+         *
+         * @param array $attributes Block attributes. Default empty array.
+         *
+         * @return string
+         */
+        private function render_overlay($attributes)
+        {
+        }
+        /**
+         * Get the styles for the wrapper element (background image, color).
+         *
+         * @param array $attributes Block attributes. Default empty array.
+         *
+         * @return string
+         */
+        public function get_styles($attributes)
         {
         }
         /**
@@ -8461,23 +8552,9 @@ namespace Automattic\WooCommerce\Blocks\Domain\Services {
         {
         }
         /**
-         * Remove cronjobs if they exist (but only from admin).
-         *
-         * @internal
-         */
-        public function uninstall()
-        {
-        }
-        /**
          * Maybe create cron events.
          */
         protected function maybe_create_cronjobs()
-        {
-        }
-        /**
-         * Unschedule cron jobs that are present.
-         */
-        protected function maybe_remove_cronjobs()
         {
         }
         /**
@@ -12414,7 +12491,7 @@ namespace Automattic\WooCommerce\StoreApi\Schemas {
          *
          * @var string[]
          */
-        private $endpoints = [\Automattic\WooCommerce\StoreApi\Schemas\V1\CartItemSchema::IDENTIFIER, \Automattic\WooCommerce\StoreApi\Schemas\V1\CartSchema::IDENTIFIER, \Automattic\WooCommerce\StoreApi\Schemas\V1\CheckoutSchema::IDENTIFIER];
+        private $endpoints = [\Automattic\WooCommerce\StoreApi\Schemas\V1\CartItemSchema::IDENTIFIER, \Automattic\WooCommerce\StoreApi\Schemas\V1\CartSchema::IDENTIFIER, \Automattic\WooCommerce\StoreApi\Schemas\V1\CheckoutSchema::IDENTIFIER, \Automattic\WooCommerce\StoreApi\Schemas\V1\ProductSchema::IDENTIFIER];
         /**
          * Holds the formatters class instance.
          *
@@ -14813,6 +14890,106 @@ namespace Automattic\WooCommerce\StoreApi\Utilities {
         }
     }
 }
+namespace Automattic\WooCommerce\Blocks\Templates {
+    /**
+     * ClassicTemplatesCompatibility class.
+     *
+     * To bridge the gap on compatibility with widget blocks and classic PHP core templates.
+     *
+     * @internal
+     */
+    class ClassicTemplatesCompatibility
+    {
+        /**
+         * Instance of the asset data registry.
+         *
+         * @var AssetDataRegistry
+         */
+        protected $asset_data_registry;
+        /**
+         * Constructor.
+         *
+         * @param AssetDataRegistry $asset_data_registry Instance of the asset data registry.
+         */
+        public function __construct(\Automattic\WooCommerce\Blocks\Assets\AssetDataRegistry $asset_data_registry)
+        {
+        }
+        /**
+         * Initialization method.
+         */
+        protected function init()
+        {
+        }
+        /**
+         * Executes the methods which set the necessary data needed for filter blocks to work correctly as widgets in Classic templates.
+         *
+         * @return void
+         */
+        public function set_classic_template_data()
+        {
+        }
+        /**
+         * This method passes the value `has_filterable_products` to the front-end for product archive pages,
+         * so that widget product filter blocks are aware of the context they are in and can render accordingly.
+         *
+         * @return void
+         */
+        public function set_filterable_product_data()
+        {
+        }
+        /**
+         * This method passes the value `is_rendering_php_template` to the front-end of Classic themes,
+         * so that widget product filter blocks are aware of how to filter the products.
+         *
+         * This data only matters on WooCommerce product archive pages.
+         * On non-archive pages the merchant could be using the All Products block which is not a PHP template.
+         *
+         * @return void
+         */
+        public function set_php_template_data()
+        {
+        }
+    }
+    /**
+     * ProductSearchResultsTemplate class.
+     *
+     * @internal
+     */
+    class ProductSearchResultsTemplate
+    {
+        const SLUG = 'product-search-results';
+        const TITLE = 'Product Search Results';
+        const DESCRIPTION = 'Template used to display search results for products.';
+        /**
+         * Constructor.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Initialization method.
+         */
+        protected function init()
+        {
+        }
+        /**
+         * When the search is for products and a block theme is active, render the Product Search Template.
+         *
+         * @param array $templates Templates that match the search hierarchy.
+         */
+        public function update_search_template_hierarchy($templates)
+        {
+        }
+        /**
+         * Update Product Search Template info.
+         *
+         * @param array $templates List of templates.
+         */
+        public function set_template_info($templates)
+        {
+        }
+    }
+}
 namespace Automattic\WooCommerce\Blocks\Utils {
     /**
      * Utility methods used for serving block templates from WooCommerce Blocks.
@@ -15182,6 +15359,16 @@ namespace Automattic\WooCommerce\Blocks\Utils {
          * @return (array | null)
          */
         public static function get_align_class_and_style($attributes)
+        {
+        }
+        /**
+         * Get class and style for padding from attributes.
+         *
+         * @param array $attributes Block attributes.
+         *
+         * @return (array | null)
+         */
+        public static function get_padding_class_and_style($attributes)
         {
         }
         /**

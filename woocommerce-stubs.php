@@ -931,6 +931,23 @@ namespace {
         {
         }
         /**
+         * Sanitize 'Safe Text' fields.
+         *
+         * These fields are similar to regular text fields, but a much  smaller set of HTML tags are allowed. By default,
+         * this means `<br>`, `<img>`, `<p>` and `<span>` tags.
+         *
+         * Note: this is a sanitization method, rather than a validation method (the name is due to some historic naming
+         * choices).
+         *
+         * @param  string $key   Field key (currently unused).
+         * @param  string $value Posted Value.
+         *
+         * @return string
+         */
+        public function validate_safe_text_field(string $key, ?string $value) : string
+        {
+        }
+        /**
          * Validate Price Field.
          *
          * Make sure the data is escaped correctly, etc.
@@ -10271,6 +10288,17 @@ namespace {
         {
         }
         /**
+         * Add tracking parameters to buttons (Renew, Purchase, etc.) on subscriptions page
+         *
+         * @param string $url URL to product page or to https://woocommerce.com/my-account/my-subscriptions/
+         * @param string $utm_content value of utm_content query parameter used for tracking
+         *
+         * @return string URL including utm parameters for tracking
+         */
+        public static function add_utm_params_to_url_for_subscription_link($url, $utm_content)
+        {
+        }
+        /**
          * Get available subscriptions filters.
          *
          * @return array An array of filter keys and labels.
@@ -13812,6 +13840,12 @@ namespace {
          * @param object $gateway The gateway object to run the method on.
          */
         protected function run_gateway_admin_options($gateway)
+        {
+        }
+        /**
+         * Creates the React mount point for the embedded banner.
+         */
+        public function payment_gateways_banner()
         {
         }
         /**
@@ -32604,6 +32638,14 @@ namespace {
         {
         }
         /**
+         * Get info about the Mini Cart Block.
+         *
+         * @return array
+         */
+        private static function get_mini_cart_info()
+        {
+        }
+        /**
          * Get info about WooCommerce Mobile App usage
          *
          * @return array
@@ -33281,7 +33323,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '6.5.1';
+        public $version = '6.6.1';
         /**
          * WooCommerce Schema version.
          *
@@ -35893,6 +35935,20 @@ namespace {
          */
         protected $internal_meta_keys = array('_customer_user', '_order_key', '_order_currency', '_billing_first_name', '_billing_last_name', '_billing_company', '_billing_address_1', '_billing_address_2', '_billing_city', '_billing_state', '_billing_postcode', '_billing_country', '_billing_email', '_billing_phone', '_shipping_first_name', '_shipping_last_name', '_shipping_company', '_shipping_address_1', '_shipping_address_2', '_shipping_city', '_shipping_state', '_shipping_postcode', '_shipping_country', '_shipping_phone', '_completed_date', '_paid_date', '_edit_lock', '_edit_last', '_cart_discount', '_cart_discount_tax', '_order_shipping', '_order_shipping_tax', '_order_tax', '_order_total', '_payment_method', '_payment_method_title', '_transaction_id', '_customer_ip_address', '_customer_user_agent', '_created_via', '_order_version', '_prices_include_tax', '_date_completed', '_date_paid', '_payment_tokens', '_billing_address_index', '_shipping_address_index', '_recorded_sales', '_recorded_coupon_usage_counts', '_download_permissions_granted', '_order_stock_reduced');
         /**
+         * Getters for internal key in data stores.
+         *
+         * @var string[]
+         */
+        protected $internal_data_store_key_getters = array('_download_permissions_granted' => 'download_permissions_granted', '_recorded_sales' => 'recorded_sales', '_recorded_coupon_usage_counts' => 'recorded_coupon_usage_counts', '_order_stock_reduced' => 'stock_reduced', '_new_order_email_sent' => 'email_sent');
+        /**
+         * Return internal key getters name.
+         *
+         * @return string[]
+         */
+        public function get_internal_data_store_key_getters()
+        {
+        }
+        /**
          * Method to create a new order in the database.
          *
          * @param WC_Order $order Order object.
@@ -35925,6 +35981,24 @@ namespace {
          * @since 3.0.0
          */
         protected function update_post_meta(&$order)
+        {
+        }
+        /**
+         * Given an initialized order object, update the post/postmeta records.
+         *
+         * @param WC_Order $order Order object.
+         *
+         * @return bool Whether the order was updated.
+         */
+        public function update_order_from_object($order)
+        {
+        }
+        /**
+         * Helper method to update order metadata from intialized order object.
+         *
+         * @param WC_Order $order Order object.
+         */
+        private function update_order_meta_from_object($order)
         {
         }
         /**
@@ -36084,6 +36158,25 @@ namespace {
          * @param bool         $set True or false.
          */
         public function set_recorded_coupon_usage_counts($order, $set)
+        {
+        }
+        /**
+         * Whether email have been sent for this order.
+         *
+         * @param WC_Order|int $order Order ID or order object.
+         *
+         * @return bool               Whether email is sent.
+         */
+        public function get_email_sent($order)
+        {
+        }
+        /**
+         * Stores information about whether email was sent.
+         *
+         * @param WC_Order|int $order Order ID or order object.
+         * @param bool         $set True or false.
+         */
+        public function set_email_sent($order, $set)
         {
         }
         /**
@@ -43795,6 +43888,18 @@ namespace WooCommerce\Admin {
     /**
      * This class provides an interface to the Explat A/B tests.
      *
+     * Usage:
+     *
+     * $anon_id = isset( $_COOKIE['tk_ai'] ) ? sanitize_text_field( wp_unslash( $_COOKIE['tk_ai'] ) ) : '';
+     * $allow_tracking = 'yes' === get_option( 'woocommerce_allow_tracking' );
+     * $abtest = new \WooCommerce\Admin\Experimental_Abtest(
+     *      $anon_id,
+     *      'woocommerce',
+     *      $allow_tracking
+     * );
+     *
+     * $isTreatment = $abtest->get_variation('your-experiment-name') === 'treatment';
+     *
      * @internal This class is experimental and should not be used externally due to planned breaking changes.
      */
     final class Experimental_Abtest
@@ -49834,6 +49939,16 @@ namespace {
          */
         protected $rest_base = 'system_status';
         /**
+         * Register cache cleaner
+         *
+         * Handles all the cache cleaning for this endpoint. We need to register
+         * these functions before the routes are registered, so this function gets
+         * called from Server.php
+         */
+        public static function register_cache_clean()
+        {
+        }
+        /**
          * Register the route for /system_status
          */
         public function register_routes()
@@ -49984,6 +50099,12 @@ namespace {
          * @return array
          */
         public function get_theme_info()
+        {
+        }
+        /**
+         * Clear the system status theme cache
+         */
+        public static function clean_theme_cache()
         {
         }
         /**
@@ -51198,6 +51319,14 @@ namespace {
          */
         protected $namespace = 'wc/v3';
         /**
+         * A string to inject into a query to do a partial match SKU search.
+         *
+         * See prepare_objects_query()
+         *
+         * @var string
+         */
+        private $search_sku_in_product_lookup_table = '';
+        /**
          * Get the images for a product or product variation.
          *
          * @param WC_Product|WC_Product_Variation $product Product instance.
@@ -51214,6 +51343,33 @@ namespace {
          * @return array
          */
         protected function prepare_objects_query($request)
+        {
+        }
+        /**
+         * Get objects.
+         *
+         * @param array $query_args Query args.
+         * @return array
+         */
+        protected function get_objects($query_args)
+        {
+        }
+        /**
+         * Join `wc_product_meta_lookup` table when SKU search query is present.
+         *
+         * @param string $join Join clause used to search posts.
+         * @return string
+         */
+        public function add_search_criteria_to_wp_query_join($join)
+        {
+        }
+        /**
+         * Add a where clause for matching the SKU field.
+         *
+         * @param string $where Where clause used to search posts.
+         * @return string
+         */
+        public function add_search_criteria_to_wp_query_where($where)
         {
         }
         /**
@@ -53560,6 +53716,41 @@ namespace {
         public static function init()
         {
         }
+        /**
+         * Get total product counts.
+         *
+         * @return int Number of products.
+         */
+        public static function get_products_count()
+        {
+        }
+        /**
+         * Gather blog related properties.
+         *
+         * @param int $user_id User id.
+         * @return array Blog details.
+         */
+        public static function get_blog_details($user_id)
+        {
+        }
+        /**
+         * Gather details from the request to the server.
+         *
+         * @return array Server details.
+         */
+        public static function get_server_details()
+        {
+        }
+        /**
+         * Add global properties to tracks.
+         *
+         * @param array $properties Array of event properties.
+         * @param array $event_name Name of the event, if passed.
+         * @return array
+         */
+        public static function add_global_properties($properties, $event_name = \null)
+        {
+        }
     }
     /**
      * WC_Tracks_Client class.
@@ -53795,31 +53986,6 @@ namespace {
          * Tracks event name prefix.
          */
         const PREFIX = 'wcadmin_';
-        /**
-         * Get total product counts.
-         *
-         * @return int Number of products.
-         */
-        public static function get_products_count()
-        {
-        }
-        /**
-         * Gather blog related properties.
-         *
-         * @param int $user_id User id.
-         * @return array Blog details.
-         */
-        public static function get_blog_details($user_id)
-        {
-        }
-        /**
-         * Gather details from the request to the server.
-         *
-         * @return array Server details.
-         */
-        public static function get_server_details()
-        {
-        }
         /**
          * Record an event in Tracks - this is the preferred way to record events from PHP.
          * Note: the event request won't be made if $properties has a member called `error`.
@@ -54262,6 +54428,14 @@ namespace {
          * @param int $category_id Category ID.
          */
         public function track_product_category_created($category_id)
+        {
+        }
+        /**
+         * Adds the tracking scripts for product filtering actions.
+         *
+         * @param string $hook Page hook.
+         */
+        public function possibly_add_tracking_scripts($hook)
         {
         }
     }
@@ -56845,6 +57019,14 @@ namespace Automattic\WooCommerce\Admin\API {
         {
         }
         /**
+         * Check if product task experiment is treatment.
+         *
+         * @return bool
+         */
+        public static function is_experiment_product_task()
+        {
+        }
+        /**
          * Creates a product from a template name passed in through the template_name param.
          *
          * @internal
@@ -57082,7 +57264,7 @@ namespace Automattic\WooCommerce\Admin\API {
     /**
      * Options Controller.
      *
-     * @deprecated since 3.1.0
+     * @deprecated since 6.2.0
      *
      * @extends WC_REST_Data_Controller
      */
@@ -66097,6 +66279,20 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
         {
         }
         /**
+         * Return number of setup tasks remaining
+         *
+         * @return number
+         */
+        public static function setup_tasks_remaining()
+        {
+        }
+        /**
+         * Add badge to homescreen menu item for remaining tasks
+         */
+        public static function menu_task_count()
+        {
+        }
+        /**
          * Add visible list ids to component settings.
          *
          * @param array $settings Component settings.
@@ -66452,6 +66648,14 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
          * @param string $hook Page hook.
          */
         public function possibly_add_import_return_notice_script($hook)
+        {
+        }
+        /**
+         * Adds a return to task list notice when completing the loading sample products action.
+         *
+         * @param string $hook Page hook.
+         */
+        public function possibly_add_load_sample_return_notice_script($hook)
         {
         }
         /**
@@ -67238,7 +67442,7 @@ namespace Automattic\WooCommerce\Admin {
          * @param  string $feature Feature slug.
          * @return bool Returns true if the feature is enabled.
          *
-         * @deprecated since 1.9.0, use Features::is_enabled( $feature )
+         * @deprecated since 5.0.0, use Features::is_enabled( $feature )
          */
         public static function is_feature_enabled($feature)
         {
@@ -67527,7 +67731,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
     /**
      * WC_Admin_Note.
      *
-     * @deprecated since 1.7.0, use Note
+     * @deprecated since 4.8.0, use Note
      */
     class WC_Admin_Note extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
     {
@@ -67554,7 +67758,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $deprecated_in_version = '1.7.0';
+        protected static $deprecated_in_version = '4.8.0';
         /**
          * Note constructor. Loads note data.
          *
@@ -67567,7 +67771,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
     /**
      * WC_Admin_Notes.
      *
-     * @deprecated since 1.7.0, use Notes
+     * @deprecated since 4.8.0, use Notes
      */
     class WC_Admin_Notes extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
     {
@@ -67582,12 +67786,12 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $deprecated_in_version = '1.7.0';
+        protected static $deprecated_in_version = '4.8.0';
     }
     /**
      * WC_Admin_Notes_Coupon_Page_Moved.
      *
-     * @deprecated since 1.7.0, use CouponPageMoved
+     * @deprecated since 4.8.0, use CouponPageMoved
      */
     class WC_Admin_Notes_Coupon_Page_Moved extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
     {
@@ -67602,12 +67806,12 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $deprecated_in_version = '1.7.0';
+        protected static $deprecated_in_version = '4.8.0';
     }
     /**
      * WC_Admin_Notes_Customize_Store_With_Blocks.
      *
-     * @deprecated since 1.7.0, use CustomizeStoreWithBlocks
+     * @deprecated since 4.8.0, use CustomizeStoreWithBlocks
      */
     class WC_Admin_Notes_Customize_Store_With_Blocks extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
     {
@@ -67622,12 +67826,12 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $deprecated_in_version = '1.7.0';
+        protected static $deprecated_in_version = '4.8.0';
     }
     /**
      * WC_Admin_Notes_Edit_Products_On_The_Move.
      *
-     * @deprecated since 1.7.0, use EditProductsOnTheMove
+     * @deprecated since 4.8.0, use EditProductsOnTheMove
      */
     class WC_Admin_Notes_Edit_Products_On_The_Move extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
     {
@@ -67642,12 +67846,12 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $deprecated_in_version = '1.7.0';
+        protected static $deprecated_in_version = '4.8.0';
     }
     /**
      * WC_Admin_Notes_EU_VAT_Number.
      *
-     * @deprecated since 1.7.0, use EUVATNumber
+     * @deprecated since 4.8.0, use EUVATNumber
      */
     class WC_Admin_Notes_EU_VAT_Number extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
     {
@@ -67662,12 +67866,12 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $deprecated_in_version = '1.7.0';
+        protected static $deprecated_in_version = '4.8.0';
     }
     /**
      * WC_Admin_Notes_Facebook_Marketing_Expert.
      *
-     * @deprecated since 1.7.0, use FacebookMarketingExpert
+     * @deprecated since 4.8.0, use FacebookMarketingExpert
      */
     class WC_Admin_Notes_Facebook_Marketing_Expert extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
     {
@@ -67682,12 +67886,12 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $deprecated_in_version = '1.7.0';
+        protected static $deprecated_in_version = '4.8.0';
     }
     /**
      * WC_Admin_Notes_First_Product.
      *
-     * @deprecated since 1.7.0, use FirstProduct
+     * @deprecated since 4.8.0, use FirstProduct
      */
     class WC_Admin_Notes_First_Product extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
     {
@@ -67702,12 +67906,12 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $deprecated_in_version = '1.7.0';
+        protected static $deprecated_in_version = '4.8.0';
     }
     /**
      * WC_Admin_Notes_Giving_Feedback_Notes.
      *
-     * @deprecated since 1.7.0, use GivingFeedbackNotes
+     * @deprecated since 4.8.0, use GivingFeedbackNotes
      */
     class WC_Admin_Notes_Giving_Feedback_Notes extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
     {
@@ -67722,12 +67926,12 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $deprecated_in_version = '1.7.0';
+        protected static $deprecated_in_version = '4.8.0';
     }
     /**
      * WC_Admin_Notes_Insight_First_Sale.
      *
-     * @deprecated since 1.7.0, use InsightFirstSale
+     * @deprecated since 4.8.0, use InsightFirstSale
      */
     class WC_Admin_Notes_Insight_First_Sale extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
     {
@@ -67742,12 +67946,12 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $deprecated_in_version = '1.7.0';
+        protected static $deprecated_in_version = '4.8.0';
     }
     /**
      * WC_Admin_Notes_Install_JP_And_WCS_Plugins.
      *
-     * @deprecated since 1.7.0, use InstallJPAndWCSPlugins
+     * @deprecated since 4.8.0, use InstallJPAndWCSPlugins
      */
     class WC_Admin_Notes_Install_JP_And_WCS_Plugins extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
     {
@@ -67762,12 +67966,12 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $deprecated_in_version = '1.7.0';
+        protected static $deprecated_in_version = '4.8.0';
     }
     /**
      * WC_Admin_Notes_Launch_Checklist.
      *
-     * @deprecated since 1.7.0, use LaunchChecklist
+     * @deprecated since 4.8.0, use LaunchChecklist
      */
     class WC_Admin_Notes_Launch_Checklist extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
     {
@@ -67782,12 +67986,12 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $deprecated_in_version = '1.7.0';
+        protected static $deprecated_in_version = '4.8.0';
     }
     /**
      * WC_Admin_Notes_Migrate_From_Shopify.
      *
-     * @deprecated since 1.7.0, use MigrateFromShopify
+     * @deprecated since 4.8.0, use MigrateFromShopify
      */
     class WC_Admin_Notes_Migrate_From_Shopify extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
     {
@@ -67802,12 +68006,12 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $deprecated_in_version = '1.7.0';
+        protected static $deprecated_in_version = '4.8.0';
     }
     /**
      * WC_Admin_Notes_Mobile_App.
      *
-     * @deprecated since 1.7.0, use MobileApp
+     * @deprecated since 4.8.0, use MobileApp
      */
     class WC_Admin_Notes_Mobile_App extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
     {
@@ -67822,12 +68026,12 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $deprecated_in_version = '1.7.0';
+        protected static $deprecated_in_version = '4.8.0';
     }
     /**
      * WC_Admin_Notes_New_Sales_Record.
      *
-     * @deprecated since 1.7.0, use NewSalesRecord
+     * @deprecated since 4.8.0, use NewSalesRecord
      */
     class WC_Admin_Notes_New_Sales_Record extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
     {
@@ -67842,12 +68046,12 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $deprecated_in_version = '1.7.0';
+        protected static $deprecated_in_version = '4.8.0';
     }
     /**
      * WC_Admin_Notes_Onboarding_Email_Marketing.
      *
-     * @deprecated since 1.7.0, use OnboardingEmailMarketing
+     * @deprecated since 4.8.0, use OnboardingEmailMarketing
      */
     class WC_Admin_Notes_Onboarding_Email_Marketing extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
     {
@@ -67862,12 +68066,12 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $deprecated_in_version = '1.7.0';
+        protected static $deprecated_in_version = '4.8.0';
     }
     /**
      * WC_Admin_Notes_Onboarding_Payments.
      *
-     * @deprecated since 1.7.0, use OnboardingPayments
+     * @deprecated since 4.8.0, use OnboardingPayments
      */
     class WC_Admin_Notes_Onboarding_Payments extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
     {
@@ -67882,12 +68086,12 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $deprecated_in_version = '1.7.0';
+        protected static $deprecated_in_version = '4.8.0';
     }
     /**
      * WC_Admin_Notes_Online_Clothing_Store.
      *
-     * @deprecated since 1.7.0, use OnlineClothingStore
+     * @deprecated since 4.8.0, use OnlineClothingStore
      */
     class WC_Admin_Notes_Online_Clothing_Store extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
     {
@@ -67902,12 +68106,12 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $deprecated_in_version = '1.7.0';
+        protected static $deprecated_in_version = '4.8.0';
     }
     /**
      * WC_Admin_Notes_Order_Milestones.
      *
-     * @deprecated since 1.7.0, use OrderMilestones
+     * @deprecated since 4.8.0, use OrderMilestones
      */
     class WC_Admin_Notes_Order_Milestones extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
     {
@@ -67922,12 +68126,12 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $deprecated_in_version = '1.7.0';
+        protected static $deprecated_in_version = '4.8.0';
     }
     /**
      * WC_Admin_Notes_Performance_On_Mobile.
      *
-     * @deprecated since 1.7.0, use PerformanceOnMobile
+     * @deprecated since 4.8.0, use PerformanceOnMobile
      */
     class WC_Admin_Notes_Performance_On_Mobile extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
     {
@@ -67942,12 +68146,12 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $deprecated_in_version = '1.7.0';
+        protected static $deprecated_in_version = '4.8.0';
     }
     /**
      * WC_Admin_Notes_Personalize_Store.
      *
-     * @deprecated since 1.7.0, use PersonalizeStore
+     * @deprecated since 4.8.0, use PersonalizeStore
      */
     class WC_Admin_Notes_Personalize_Store extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
     {
@@ -67962,12 +68166,12 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $deprecated_in_version = '1.7.0';
+        protected static $deprecated_in_version = '4.8.0';
     }
     /**
      * WC_Admin_Notes_Real_Time_Order_Alerts.
      *
-     * @deprecated since 1.7.0, use RealTimeOrderAlerts
+     * @deprecated since 4.8.0, use RealTimeOrderAlerts
      */
     class WC_Admin_Notes_Real_Time_Order_Alerts extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
     {
@@ -67982,12 +68186,12 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $deprecated_in_version = '1.7.0';
+        protected static $deprecated_in_version = '4.8.0';
     }
     /**
      * WC_Admin_Notes_Selling_Online_Courses.
      *
-     * @deprecated since 1.7.0, use SellingOnlineCourses
+     * @deprecated since 4.8.0, use SellingOnlineCourses
      */
     class WC_Admin_Notes_Selling_Online_Courses extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
     {
@@ -68002,32 +68206,12 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $deprecated_in_version = '1.7.0';
-    }
-    /**
-     * WC_Admin_Notes_Set_Up_Additional_Payment_Types.
-     *
-     * @deprecated since 1.7.0, use SetUpAdditionalPaymentTypes
-     */
-    class WC_Admin_Notes_Set_Up_Additional_Payment_Types extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Internal\\Admin\\Notes\\SetUpAdditionalPaymentTypes';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '1.7.0';
+        protected static $deprecated_in_version = '4.8.0';
     }
     /**
      * WC_Admin_Notes_Test_Checkout.
      *
-     * @deprecated since 1.7.0, use TestCheckout
+     * @deprecated since 4.8.0, use TestCheckout
      */
     class WC_Admin_Notes_Test_Checkout extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
     {
@@ -68042,12 +68226,12 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $deprecated_in_version = '1.7.0';
+        protected static $deprecated_in_version = '4.8.0';
     }
     /**
      * WC_Admin_Notes_Tracking_Opt_In.
      *
-     * @deprecated since 1.7.0, use TrackingOptIn
+     * @deprecated since 4.8.0, use TrackingOptIn
      */
     class WC_Admin_Notes_Tracking_Opt_In extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
     {
@@ -68062,12 +68246,12 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $deprecated_in_version = '1.7.0';
+        protected static $deprecated_in_version = '4.8.0';
     }
     /**
      * WC_Admin_Notes_Woo_Subscriptions_Notes.
      *
-     * @deprecated since 1.7.0, use WooSubscriptionsNotes
+     * @deprecated since 4.8.0, use WooSubscriptionsNotes
      */
     class WC_Admin_Notes_Woo_Subscriptions_Notes extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
     {
@@ -68082,12 +68266,12 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $deprecated_in_version = '1.7.0';
+        protected static $deprecated_in_version = '4.8.0';
     }
     /**
      * WC_Admin_Notes_WooCommerce_Payments.
      *
-     * @deprecated since 1.7.0, use WooCommercePayments
+     * @deprecated since 4.8.0, use WooCommercePayments
      */
     class WC_Admin_Notes_WooCommerce_Payments extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
     {
@@ -68102,12 +68286,12 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $deprecated_in_version = '1.7.0';
+        protected static $deprecated_in_version = '4.8.0';
     }
     /**
      * WC_Admin_Notes_WooCommerce_Subscriptions.
      *
-     * @deprecated since 1.7.0, use WooCommerceSubscriptions
+     * @deprecated since 4.8.0, use WooCommerceSubscriptions
      */
     class WC_Admin_Notes_WooCommerce_Subscriptions extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
     {
@@ -68122,7 +68306,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $deprecated_in_version = '1.7.0';
+        protected static $deprecated_in_version = '4.8.0';
     }
     /**
      * Note class.
@@ -71760,7 +71944,7 @@ namespace Automattic\WooCommerce {
          *
          * @var string[]
          */
-        private $service_providers = array(\Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\AssignDefaultCategoryServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\DownloadPermissionsAdjusterServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrdersDataStoreServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductAttributesLookupServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductDownloadsServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProxiesServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\RestockRefundedItemsAdjusterServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\UtilsClassesServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\COTMigrationServiceProvider::class);
+        private $service_providers = array(\Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\AssignDefaultCategoryServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\DownloadPermissionsAdjusterServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OptionSanitizerServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrdersDataStoreServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductAttributesLookupServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductDownloadsServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProxiesServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\RestockRefundedItemsAdjusterServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\UtilsClassesServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\COTMigrationServiceProvider::class);
         /**
          * The underlying container.
          *
@@ -71802,9 +71986,196 @@ namespace Automattic\WooCommerce {
         }
     }
 }
+namespace Automattic\WooCommerce\DataBase\Migrations\CustomOrderTable {
+    /**
+     * CLI tool for migrating order data to/from custom table.
+     *
+     * Credits https://github.com/liquidweb/woocommerce-custom-orders-table/blob/develop/includes/class-woocommerce-custom-orders-table-cli.php.
+     *
+     * Class CLIRunner
+     */
+    class CLIRunner
+    {
+        /**
+         * CustomOrdersTableController instance.
+         *
+         * @var CustomOrdersTableController
+         */
+        private $controller;
+        /**
+         * DataSynchronizer instance.
+         *
+         * @var DataSynchronizer;
+         */
+        private $synchronizer;
+        /**
+         * PostsToOrdersMigrationController instance.
+         *
+         * @var PostsToOrdersMigrationController
+         */
+        private $post_to_cot_migrator;
+        /**
+         * Init method, invoked by DI container.
+         *
+         * @param CustomOrdersTableController      $controller Instance.
+         * @param DataSynchronizer                 $synchronizer Instance.
+         * @param PostsToOrdersMigrationController $posts_to_orders_migration_controller Instance.
+         *
+         * @internal
+         */
+        public final function init(\Automattic\WooCommerce\Internal\DataStores\Orders\CustomOrdersTableController $controller, \Automattic\WooCommerce\Internal\DataStores\Orders\DataSynchronizer $synchronizer, \Automattic\WooCommerce\DataBase\Migrations\CustomOrderTable\PostsToOrdersMigrationController $posts_to_orders_migration_controller)
+        {
+        }
+        /**
+         * Registers commands for CLI.
+         */
+        public function register_commands()
+        {
+        }
+        /**
+         * Check if the COT feature is enabled.
+         *
+         * @param bool $log Optionally log a error message.
+         *
+         * @return bool Whether the COT feature is enabled.
+         */
+        private function is_enabled($log = true) : bool
+        {
+        }
+        /**
+         * Helper method to log warning that feature is not yet production ready.
+         */
+        private function log_production_warning()
+        {
+        }
+        /**
+         * Count how many orders have yet to be migrated into the custom orders table.
+         *
+         * ## EXAMPLES
+         *
+         *     wp wc cot count_unmigrated
+         *
+         * @param array $args Positional arguments passed to the command.
+         *
+         * @param array $assoc_args Associative arguments (options) passed to the command.
+         *
+         * @return int The number of orders to be migrated.*
+         */
+        public function count_unmigrated($args = array(), $assoc_args = array()) : int
+        {
+        }
+        /**
+         * Migrate order data to the custom orders table.
+         *
+         * ## OPTIONS
+         *
+         * [--batch-size=<batch-size>]
+         * : The number of orders to process in each batch.
+         * ---
+         * default: 500
+         * ---
+         *
+         * ## EXAMPLES
+         *
+         *     wp wc cot migrate --batch-size=500
+         *
+         * @param array $args Positional arguments passed to the command.
+         * @param array $assoc_args Associative arguments (options) passed to the command.
+         */
+        public function migrate($args = array(), $assoc_args = array())
+        {
+        }
+        /**
+         * Copy order data into the postmeta table.
+         *
+         * Note that this could dramatically increase the size of your postmeta table, but is recommended
+         * if you wish to stop using the custom orders table plugin.
+         *
+         * ## OPTIONS
+         *
+         * [--batch-size=<batch-size>]
+         * : The number of orders to process in each batch. Passing a value of 0 will disable batching.
+         * ---
+         * default: 500
+         * ---
+         *
+         * ## EXAMPLES
+         *
+         *     # Copy all order data into the post meta table, 500 posts at a time.
+         *     wp wc cot backfill --batch-size=500
+         *
+         * @param array $args Positional arguments passed to the command.
+         * @param array $assoc_args Associative arguments (options) passed to the command.
+         */
+        public function backfill($args = array(), $assoc_args = array())
+        {
+        }
+        /**
+         * Verify migrated order data with original posts data.
+         *
+         * ## OPTIONS
+         *
+         * [--batch-size=<batch-size>]
+         * : The number of orders to verify in each batch.
+         * ---
+         * default: 500
+         * ---
+         *
+         * [--start-from=<order_id>]
+         * : Order ID to start from.
+         * ---
+         * default: 0
+         * ---
+         *
+         * ## EXAMPLES
+         *
+         *     # Verify migrated order data, 500 orders at a time.
+         *     wp wc cot verify_cot_data --batch-size=500 --start-from=0
+         *
+         * @param array $args Positional arguments passed to the command.
+         * @param array $assoc_args Associative arguments (options) passed to the command.
+         */
+        public function verify_cot_data($args = array(), $assoc_args = array())
+        {
+        }
+        /**
+         * Helper method to get count for orders needing verification.
+         *
+         * @param int  $order_id_start Order ID to start from.
+         * @param bool $log Whether to also log an error message.
+         *
+         * @return int Order count.
+         */
+        private function get_verify_order_count(int $order_id_start, $log = true) : int
+        {
+        }
+        /**
+         * Verify meta data as part of verifying the order object.
+         *
+         * @param array $order_ids Order IDs.
+         * @param array $failed_ids Array for storing failed IDs.
+         *
+         * @return array Failed IDs with meta details.
+         */
+        private function verify_meta_data(array $order_ids, array $failed_ids) : array
+        {
+        }
+        /**
+         * Helper method to normalize response from meta queries into order_id > meta_key > meta_values.
+         *
+         * @param array $data Data fetched from meta queries.
+         *
+         * @return array Normalized data.
+         */
+        private function normalize_raw_meta_data(array $data) : array
+        {
+        }
+    }
+}
 namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
     /**
-     * Class MetaToCustomTableMigrator.
+     * Base class for implementing migrations from the standard WordPress meta table
+     * to custom structured tables.
      *
      * @package Automattic\WooCommerce\Database\Migrations\CustomOrderTable
      */
@@ -71866,7 +72237,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
         			'primary_key_type' => $type bool|int|string|decimal
         		)
         */
-        public abstract function get_schema_config();
+        public abstract function get_schema_config() : array;
         /**
          * Specify column config from the source table.
          *
@@ -71882,7 +72253,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *  ....
          * ).
          */
-        public abstract function get_core_column_mapping();
+        public abstract function get_core_column_mapping() : array;
         /**
          * Specify meta keys config from source meta table.
          *
@@ -71898,7 +72269,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *  ....
          * ).
          */
-        public abstract function get_meta_column_config();
+        public abstract function get_meta_column_config() : array;
         /**
          * Generate SQL for data insertion.
          *
@@ -71910,7 +72281,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *  ($value for row 2)
          * ...
          */
-        public function generate_insert_sql_for_batch($batch)
+        public function generate_insert_sql_for_batch(array $batch) : string
         {
         }
         /**
@@ -71930,7 +72301,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          * $column2 = VALUES($column2)
          * ...
          */
-        public function generate_update_sql_for_batch($batch, $entity_row_mapping)
+        public function generate_update_sql_for_batch(array $batch, array $entity_row_mapping) : string
         {
         }
         /**
@@ -71938,7 +72309,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @return array[] Schema for primary ID column.
          */
-        protected function get_destination_table_primary_id_schema()
+        protected function get_destination_table_primary_id_schema() : array
         {
         }
         /**
@@ -71949,17 +72320,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @return array SQL clause for values, columns placeholders, and columns.
          */
-        protected function generate_column_clauses($columns_schema, $batch)
-        {
-        }
-        /**
-         * Generates ON DUPLICATE KEY UPDATE clause to be used in migration.
-         *
-         * @param array $columns List of column names.
-         *
-         * @return string SQL clause for INSERT...ON DUPLICATE KEY UPDATE
-         */
-        private function generate_on_duplicate_statement_clause($columns)
+        protected function generate_column_clauses(array $columns_schema, array $batch) : array
         {
         }
         /**
@@ -71969,7 +72330,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @return array List of errors happened during migration.
          */
-        public function process_migration_batch_for_ids($entity_ids)
+        public function process_migration_batch_for_ids(array $entity_ids) : array
         {
         }
         /**
@@ -71977,7 +72338,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @param array $batch Data to insert, will be of the form as returned by `data` in `fetch_data_for_migration_for_ids`.
          */
-        protected function process_insert_batch($batch)
+        protected function process_insert_batch(array $batch) : void
         {
         }
         /**
@@ -71986,7 +72347,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          * @param array $batch Data to insert, will be of the form as returned by `data` in `fetch_data_for_migration_for_ids`.
          * @param array $already_migrated Maps rows to update data with their original IDs.
          */
-        protected function process_update_batch($batch, $already_migrated)
+        protected function process_update_batch(array $batch, array $already_migrated) : void
         {
         }
         /**
@@ -72005,7 +72366,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *      ...,
          * )
          */
-        public function fetch_data_for_migration_for_ids($entity_ids)
+        public function fetch_data_for_migration_for_ids(array $entity_ids) : array
         {
         }
         /**
@@ -72022,7 +72383,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *      ...
          * )
          */
-        public function get_already_migrated_records($entity_ids)
+        public function get_already_migrated_records(array $entity_ids) : array
         {
         }
         /**
@@ -72032,7 +72393,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @return string Query that can be used to fetch data.
          */
-        protected function build_entity_table_query($entity_ids)
+        protected function build_entity_table_query(array $entity_ids) : string
         {
         }
         /**
@@ -72042,7 +72403,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @return string Query for fetching meta data.
          */
-        protected function build_meta_data_query($entity_ids)
+        protected function build_meta_data_query(array $entity_ids) : string
         {
         }
         /**
@@ -72053,7 +72414,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @return array[] Validated and combined data with errors.
          */
-        private function process_and_sanitize_data($entity_data, $meta_data)
+        private function process_and_sanitize_data(array $entity_data, array $meta_data) : array
         {
         }
         /**
@@ -72063,7 +72424,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          * @param array $error_records Error records.
          * @param array $entity_data Original source data.
          */
-        private function process_and_sanitize_entity_data(&$sanitized_entity_data, &$error_records, $entity_data)
+        private function process_and_sanitize_entity_data(array &$sanitized_entity_data, array &$error_records, array $entity_data) : void
         {
         }
         /**
@@ -72073,7 +72434,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          * @param array $error_records Error records.
          * @param array $meta_data Original source data.
          */
-        private function processs_and_sanitize_meta_data(&$sanitized_entity_data, &$error_records, $meta_data)
+        private function processs_and_sanitize_meta_data(array &$sanitized_entity_data, array &$error_records, array $meta_data) : void
         {
         }
         /**
@@ -72084,18 +72445,102 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @return float|int|mixed|string|\WP_Error
          */
-        private function validate_data($value, $type)
+        private function validate_data($value, string $type)
+        {
+        }
+        /**
+         * Verify whether data was migrated properly for given IDs.
+         *
+         * @param array $source_ids List of source IDs.
+         *
+         * @return array List of IDs along with columns that failed to migrate.
+         */
+        public function verify_migrated_data(array $source_ids) : array
+        {
+        }
+        /**
+         * Generate query to fetch data from both source and destination tables. Use the results in `verify_data` to verify if data was migrated properly.
+         *
+         * @param array $source_ids Array of IDs in source table.
+         *
+         * @return string SELECT statement.
+         */
+        protected function build_verification_query($source_ids)
+        {
+        }
+        /**
+         * Helper function to generate where clause for fetching data for verification.
+         *
+         * @param array $source_ids Array of IDs from source table.
+         *
+         * @return string WHERE clause.
+         */
+        protected function get_where_clause_for_verification($source_ids)
+        {
+        }
+        /**
+         * Verify data from both source and destination tables and check if they were migrated properly.
+         *
+         * @param array $collected_data Collected data in array format, should be in same structure as returned from query in `$this->build_verification_query`.
+         *
+         * @return array Array of failed IDs if any, along with columns/meta_key names.
+         */
+        protected function verify_data($collected_data)
+        {
+        }
+        /**
+         * Helper method to verify and compare core columns.
+         *
+         * @param array $row        Both migrated and source data for a single row.
+         * @param array $failed_ids Array of failed IDs.
+         *
+         * @return array Array of failed IDs if any, along with columns/meta_key names.
+         */
+        private function verify_entity_columns($row, $failed_ids)
+        {
+        }
+        /**
+         * Helper method to verify meta columns.
+         *
+         * @param array $row        Both migrated and source data for a single row.
+         * @param array $failed_ids Array of failed IDs.
+         *
+         * @return array Array of failed IDs if any, along with columns/meta_key names.
+         */
+        private function verify_meta_columns($row, $failed_ids)
+        {
+        }
+        /**
+         * Helper method to pre-process rows to make sure we parse the correct type.
+         *
+         * @param array  $row Both migrated and source data for a single row.
+         * @param array  $schema Column schema.
+         * @param string $alias Name of source column.
+         * @param string $destination_alias Name of destination column.
+         *
+         * @return array Processed row.
+         */
+        private function pre_process_row($row, $schema, $alias, $destination_alias)
+        {
+        }
+        /**
+         * Helper method to get default value of a type.
+         *
+         * @param string $type Type.
+         *
+         * @return mixed Default value.
+         */
+        private function get_type_defaults($type)
         {
         }
     }
     /**
-     * Class MetaToMetaTableMigrator.
-     *
-     * Generic class for powering migrations from one meta table to another table.
+     * Base class for implementing migrations from the standard WordPress meta table
+     * to custom meta (key-value pairs) tables.
      *
      * @package Automattic\WooCommerce\Database\Migrations\CustomOrderTable
      */
-    class MetaToMetaTableMigrator
+    abstract class MetaToMetaTableMigrator
     {
         /**
          * Schema config, see __construct for more details.
@@ -72104,29 +72549,81 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          */
         private $schema_config;
         /**
-         * MetaToMetaTableMigrator constructor.
+         * Store errors along with entity IDs from migrations.
          *
-         * @param array $schema_config This parameters provides general but essential information about tables under migrations. Must be of the form-
-         * TODO: Add structure.
+         * @var array
          */
-        public function __construct($schema_config)
+        protected $errors;
+        /**
+         * Returns config for the migration.
+         *
+         * @return array Meta config, must be in following format:
+         * array(
+         *  'source'      => array(
+         *      'meta'          => array(
+         *          'table_name'        => source_meta_table_name,
+         *          'entity_id_column'  => entity_id column name in source meta table,
+         *          'meta_key_column'   => meta_key column',
+         *          'meta_value_column' => meta_value column',
+         *      ),
+         *      'entity' => array(
+         *          'table_name'       => entity table name for the meta table,
+         *          'source_id_column' => column name in entity table which maps to meta table,
+         *          'id_column'        => id column in entity table,
+         *      ),
+         *      'excluded_keys' => array of keys to exclude,
+         *  ),
+         *  'destination' => array(
+         *      'meta'   => array(
+         *          'table_name'        => destination meta table name,
+         *          'entity_id_column'  => entity_id column in meta table,
+         *          'meta_key_column'   => meta key column,
+         *          'meta_value_column' => meta_value column,
+         *          'entity_id_type'    => data type of entity id,
+         *          'meta_id_column'    => id column in meta table,
+         *      ),
+         *  ),
+         * )
+         */
+        public abstract function get_meta_config() : array;
+        /**
+         * MetaToMetaTableMigrator constructor.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Process migration for provided entity ids.
+         *
+         * @param array $entity_ids Entity IDs to process migration for.
+         */
+        public function process_migration_batch_for_ids(array $entity_ids) : void
+        {
+        }
+        /**
+         * Generate update SQL for given batch.
+         *
+         * @param array $batch List of data to generate update SQL for. Should be in same format as output of $this->fetch_data_for_migration_for_ids.
+         *
+         * @return string Query to update batch records.
+         */
+        public function generate_update_sql_for_batch(array $batch) : string
         {
         }
         /**
          * Generate insert sql queries for batches.
          *
-         * @param array  $batch Data to generate queries for.
-         * @param string $insert_switch Insert switch to use.
+         * @param array $batch Data to generate queries for.
          *
-         * @return string
+         * @return string Insert SQL query.
          */
-        public function generate_insert_sql_for_batch($batch, $insert_switch)
+        public function generate_insert_sql_for_batch(array $batch) : string
         {
         }
         /**
          * Fetch data for migration.
          *
-         * @param array $order_post_ids Array of IDs to fetch data for.
+         * @param array $entity_ids Array of IDs to fetch data for.
          *
          * @return array[] Data along with errors (if any), will of the form:
          * array(
@@ -72135,71 +72632,64 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *      ...,
          *   ),
          *  'errors' => array(
-         *      'id_1' => array( 'column1' => error1, 'column2' => value2, ...),
          *      ...,
          * )
          */
-        public function fetch_data_for_migration_for_ids($order_post_ids)
+        public function fetch_data_for_migration_for_ids(array $entity_ids) : array
+        {
+        }
+        /**
+         * Helper method to get already migrated records. Will be used to find prevent migration of already migrated records.
+         *
+         * @param array $entity_ids List of entity ids to check for.
+         *
+         * @return array Already migrated records.
+         */
+        private function get_already_migrated_records(array $entity_ids) : array
+        {
+        }
+        /**
+         * Classify each record on whether to migrate or update.
+         *
+         * @param array $to_migrate Records to migrate.
+         * @param array $already_migrated Records already migrated.
+         *
+         * @return array[] Returns two arrays, first for records to migrate, and second for records to upgrade.
+         */
+        private function classify_update_insert_records(array $to_migrate, array $already_migrated) : array
         {
         }
         /**
          * Helper method to build query used to fetch data from source meta table.
          *
-         * @param string $entity_ids List of entity IDs to build meta query for.
+         * @param array $entity_ids List of entity IDs to build meta query for.
          *
          * @return string Query that can be used to fetch data.
          */
-        private function build_meta_table_query($entity_ids)
+        private function build_meta_table_query(array $entity_ids) : string
         {
         }
     }
     /**
-     * Class WPPostToCOTMigrator
+     * Helper class to migrate records from the WordPress post meta table
+     * to the custom orders meta table.
      *
      * @package Automattic\WooCommerce\Database\Migrations\CustomOrderTable
      */
-    class WPPostToCOTMigrator
+    class PostMetaToOrderMetaMigrator extends \Automattic\WooCommerce\Database\Migrations\CustomOrderTable\MetaToMetaTableMigrator
     {
         /**
-         * Error logger for migration errors.
+         * List of meta keys to exclude from migration.
          *
-         * @var MigrationErrorLogger $error_logger
+         * @var array
          */
-        private $error_logger;
+        private $excluded_columns;
         /**
-         * Migrator instance to migrate data into wc_order table.
+         * PostMetaToOrderMetaMigrator constructor.
          *
-         * @var WPPostToOrderTableMigrator
+         * @param array $excluded_columns List of meta keys to exclude from migration.
          */
-        private $order_table_migrator;
-        /**
-         * Migrator instance to migrate billing data into address table.
-         *
-         * @var WPPostToOrderAddressTableMigrator
-         */
-        private $billing_address_table_migrator;
-        /**
-         * Migrator instance to migrate shipping data into address table.
-         *
-         * @var WPPostToOrderAddressTableMigrator
-         */
-        private $shipping_address_table_migrator;
-        /**
-         * Migrator instance to migrate operational data.
-         *
-         * @var WPPostToOrderOpTableMigrator
-         */
-        private $operation_data_table_migrator;
-        /**
-         * Migrator instance to migrate meta data.
-         *
-         * @var MetaToMetaTableMigrator
-         */
-        private $meta_table_migrator;
-        /**
-         * WPPostToCOTMigrator constructor.
-         */
-        public function __construct()
+        public function __construct($excluded_columns)
         {
         }
         /**
@@ -72207,84 +72697,17 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @return array Meta data migration config.
          */
-        private function get_config_for_meta_table()
-        {
-        }
-        /**
-         * Process next migration batch, uses option `wc_cot_migration` to checkpoints of what have been processed so far.
-         *
-         * @param int $batch_size Batch size of records to migrate.
-         *
-         * @return bool True if migration is completed, false if there are still records to process.
-         */
-        public function process_next_migration_batch($batch_size = 100)
-        {
-        }
-        /**
-         * Process migration for specific order post IDs.
-         *
-         * @param array $order_post_ids List of post IDs to migrate.
-         */
-        public function process_migration_for_ids($order_post_ids)
-        {
-        }
-        /**
-         * Process migration for metadata for given post ids.
-         *
-         * @param array $order_post_ids Post IDs.
-         */
-        private function process_meta_migration($order_post_ids)
-        {
-        }
-        /**
-         * Method to migrate single record.
-         *
-         * @param int $post_id Post ID of record to migrate.
-         */
-        public function process_single($post_id)
-        {
-        }
-        /**
-         * Helper function to get where clause to send to MetaToCustomTableMigrator instance.
-         *
-         * @param int $batch_size Number of orders in batch.
-         *
-         * @return array List of IDs in the current patch.
-         */
-        private function get_next_batch_ids($batch_size)
-        {
-        }
-        /**
-         * Current checkpoint status.
-         *
-         * @return false|mixed|void
-         */
-        private function get_checkpoint()
-        {
-        }
-        /**
-         * Updates current checkpoint
-         *
-         * @param int $id Order ID.
-         */
-        public function update_checkpoint($id)
-        {
-        }
-        /**
-         * Remove checkpoint.
-         *
-         * @return bool Whether checkpoint was removed.
-         */
-        public function delete_checkpoint()
+        public function get_meta_config() : array
         {
         }
     }
     /**
-     * Class WPPostToOrderAddressTableMigrator
+     * Helper class to migrate records from the WordPress post table
+     * to the custom order addresses table.
      *
      * @package Automattic\WooCommerce\Database\Migrations\CustomOrderTable
      */
-    class WPPostToOrderAddressTableMigrator extends \Automattic\WooCommerce\Database\Migrations\CustomOrderTable\MetaToCustomTableMigrator
+    class PostToOrderAddressTableMigrator extends \Automattic\WooCommerce\Database\Migrations\CustomOrderTable\MetaToCustomTableMigrator
     {
         /**
          * Type of addresses being migrated, could be billing|shipping.
@@ -72293,7 +72716,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          */
         protected $type;
         /**
-         * WPPostToOrderAddressTableMigrator constructor.
+         * PostToOrderAddressTableMigrator constructor.
          *
          * @param string $type Type of addresses being migrated, could be billing|shipping.
          */
@@ -72305,7 +72728,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @return array Config.
          */
-        public function get_schema_config()
+        public function get_schema_config() : array
         {
         }
         /**
@@ -72313,7 +72736,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @return \string[][] Config.
          */
-        public function get_core_column_mapping()
+        public function get_core_column_mapping() : array
         {
         }
         /**
@@ -72321,7 +72744,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @return \string[][] Config.
          */
-        public function get_meta_column_config()
+        public function get_meta_column_config() : array
         {
         }
         /**
@@ -72338,23 +72761,34 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *      ...
          * )
          */
-        public function get_already_migrated_records($entity_ids)
+        public function get_already_migrated_records(array $entity_ids) : array
+        {
+        }
+        /**
+         * Helper function to generate where clause for fetching data for verification.
+         *
+         * @param array $source_ids Array of IDs from source table.
+         *
+         * @return string WHERE clause.
+         */
+        protected function get_where_clause_for_verification($source_ids)
         {
         }
     }
     /**
-     * Class WPPostToOrderOpTableMigrator
+     * Helper class to migrate records from the WordPress post table
+     * to the custom order operations table.
      *
      * @package Automattic\WooCommerce\Database\Migrations\CustomOrderTable
      */
-    class WPPostToOrderOpTableMigrator extends \Automattic\WooCommerce\Database\Migrations\CustomOrderTable\MetaToCustomTableMigrator
+    class PostToOrderOpTableMigrator extends \Automattic\WooCommerce\Database\Migrations\CustomOrderTable\MetaToCustomTableMigrator
     {
         /**
          * Get schema config for wp_posts and wc_order_operational_detail table.
          *
          * @return array Config.
          */
-        public function get_schema_config()
+        public function get_schema_config() : array
         {
         }
         /**
@@ -72362,7 +72796,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @return \string[][] Config.
          */
-        public function get_core_column_mapping()
+        public function get_core_column_mapping() : array
         {
         }
         /**
@@ -72370,21 +72804,23 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @return \string[][] Config.
          */
-        public function get_meta_column_config()
+        public function get_meta_column_config() : array
         {
         }
     }
     /**
-     * Class WPPostToOrderTableMigrator.
+     * Helper class to migrate records from the WordPress post table
+     * to the custom order table (and only that table - PostsToOrdersMigrationController
+     * is used for fully migrating orders).
      */
-    class WPPostToOrderTableMigrator extends \Automattic\WooCommerce\Database\Migrations\CustomOrderTable\MetaToCustomTableMigrator
+    class PostToOrderTableMigrator extends \Automattic\WooCommerce\Database\Migrations\CustomOrderTable\MetaToCustomTableMigrator
     {
         /**
          * Get schema config for wp_posts and wc_order table.
          *
          * @return array Config.
          */
-        public function get_schema_config()
+        public function get_schema_config() : array
         {
         }
         /**
@@ -72392,7 +72828,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @return \string[][] Config.
          */
-        public function get_core_column_mapping()
+        public function get_core_column_mapping() : array
         {
         }
         /**
@@ -72400,15 +72836,98 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @return \string[][] Config.
          */
-        public function get_meta_column_config()
+        public function get_meta_column_config() : array
+        {
+        }
+    }
+    /**
+     * This is the main class used to perform the complete migration of orders
+     * from the posts table to the custom orders table.
+     *
+     * @package Automattic\WooCommerce\Database\Migrations\CustomOrderTable
+     */
+    class PostsToOrdersMigrationController
+    {
+        /**
+         * Error logger for migration errors.
+         *
+         * @var MigrationErrorLogger $error_logger
+         */
+        private $error_logger;
+        /**
+         * Migrator instance to migrate data into wc_order table.
+         *
+         * @var PostToOrderTableMigrator
+         */
+        private $order_table_migrator;
+        /**
+         * Migrator instance to migrate billing data into address table.
+         *
+         * @var PostToOrderAddressTableMigrator
+         */
+        private $billing_address_table_migrator;
+        /**
+         * Migrator instance to migrate shipping data into address table.
+         *
+         * @var PostToOrderAddressTableMigrator
+         */
+        private $shipping_address_table_migrator;
+        /**
+         * Migrator instance to migrate operational data.
+         *
+         * @var PostToOrderOpTableMigrator
+         */
+        private $operation_data_table_migrator;
+        /**
+         * Migrator instance to migrate meta data.
+         *
+         * @var MetaToMetaTableMigrator
+         */
+        private $meta_table_migrator;
+        /**
+         * PostsToOrdersMigrationController constructor.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Helper method to get keys to migrate for migrations.
+         *
+         * @return int[]|string[]
+         */
+        public function get_migrated_meta_keys() : array
+        {
+        }
+        /**
+         * Migrates a set of orders from the posts table to the custom orders tables.
+         *
+         * @param array $order_post_ids List of post IDs of the orders to migrate.
+         */
+        public function migrate_orders(array $order_post_ids) : void
+        {
+        }
+        /**
+         * Verify whether the given order IDs were migrated properly or not.
+         *
+         * @param array $order_post_ids Order IDs.
+         *
+         * @return array Array of failed IDs along with columns.
+         */
+        public function verify_migrated_orders(array $order_post_ids) : array
+        {
+        }
+        /**
+         * Migrates an order from the posts table to the custom orders tables.
+         *
+         * @param int $order_post_id Post ID of the order to migrate.
+         */
+        public function migrate_order(int $order_post_id) : void
         {
         }
     }
 }
 namespace Automattic\WooCommerce\Database\Migrations {
     /**
-     * Class MigrationErrorLogger.
-     *
      * Error logging for custom table migrations.
      *
      * @package Automattic\WooCommerce\Database\Migrations
@@ -72417,8 +72936,6 @@ namespace Automattic\WooCommerce\Database\Migrations {
     {
     }
     /**
-     * Class MigrationHelper.
-     *
      * Helper class to assist with migration related operations.
      */
     class MigrationHelper
@@ -72430,23 +72947,13 @@ namespace Automattic\WooCommerce\Database\Migrations {
          */
         private static $wpdb_placeholder_for_type = array('int' => '%d', 'decimal' => '%f', 'string' => '%s', 'date' => '%s', 'date_epoch' => '%s', 'bool' => '%d');
         /**
-         * Get insert clause for appropriate switch.
-         *
-         * @param string $switch Name of the switch to use.
-         *
-         * @return string Insert clause.
-         */
-        public static function get_insert_switch($switch)
-        {
-        }
-        /**
          * Helper method to escape backtick in various schema fields.
          *
          * @param array $schema_config Schema config.
          *
          * @return array Schema config escaped for backtick.
          */
-        public static function escape_schema_for_backtick($schema_config)
+        public static function escape_schema_for_backtick(array $schema_config) : array
         {
         }
         /**
@@ -72467,7 +72974,17 @@ namespace Automattic\WooCommerce\Database\Migrations {
          *
          * @return string $wpdb placeholder.
          */
-        public static function get_wpdb_placeholder_for_type($type)
+        public static function get_wpdb_placeholder_for_type(string $type) : string
+        {
+        }
+        /**
+         * Generates ON DUPLICATE KEY UPDATE clause to be used in migration.
+         *
+         * @param array $columns List of column names.
+         *
+         * @return string SQL clause for INSERT...ON DUPLICATE KEY UPDATE
+         */
+        public static function generate_on_duplicate_statement_clause(array $columns) : string
         {
         }
     }
@@ -72743,84 +73260,6 @@ namespace Automattic\WooCommerce\Utilities {
         {
         }
     }
-}
-namespace Automattic\WooCommerce\Internal\Utilities {
-    /**
-     * A class of utilities for dealing with the database.
-     */
-    class DatabaseUtil
-    {
-        /**
-         * Wrapper for the WordPress dbDelta function, allows to execute a series of SQL queries.
-         *
-         * @param string $queries The SQL queries to execute.
-         * @param bool   $execute Ture to actually execute the queries, false to only simulate the execution.
-         * @return array The result of the execution (or simulation) from dbDelta.
-         */
-        public function dbdelta(string $queries = '', bool $execute = true) : array
-        {
-        }
-        /**
-         * Given a set of table creation SQL statements, check which of the tables are currently missing in the database.
-         *
-         * @param string $creation_queries The SQL queries to execute ("CREATE TABLE" statements, same format as for dbDelta).
-         * @return array An array containing the names of the tables that currently don't exist in the database.
-         */
-        public function get_missing_tables(string $creation_queries) : array
-        {
-        }
-        /**
-         * Parses the output given by dbdelta and returns information about it.
-         *
-         * @param array $dbdelta_output The output from the execution of dbdelta.
-         * @return array[] An array containing a 'created_tables' key whose value is an array with the names of the tables that have been (or would have been) created.
-         */
-        public function parse_dbdelta_output(array $dbdelta_output) : array
-        {
-        }
-        /**
-         * Drops a database table.
-         *
-         * @param string $table_name The name of the table to drop.
-         * @param bool   $add_prefix True if the table name passed needs to be prefixed with $wpdb->prefix before processing.
-         * @return bool True on success, false on error.
-         */
-        public function drop_database_table(string $table_name, bool $add_prefix = false)
-        {
-        }
-        /**
-         * Drops a table index, if both the table and the index exist.
-         *
-         * @param string $table_name The name of the table that contains the index.
-         * @param string $index_name The name of the index to be dropped.
-         * @return bool True if the index has been dropped, false if either the table or the index don't exist.
-         */
-        public function drop_table_index(string $table_name, string $index_name) : bool
-        {
-        }
-        /**
-         * Create a primary key for a table, only if the table doesn't have a primary key already.
-         *
-         * @param string $table_name Table name.
-         * @param array  $columns An array with the index column names.
-         * @return bool True if the key has been created, false if the table already had a primary key.
-         */
-        public function create_primary_key(string $table_name, array $columns)
-        {
-        }
-        /**
-         * Get the columns of a given table index, or of the primary key.
-         *
-         * @param string $table_name Table name.
-         * @param string $index_name Index name, empty string for the primary key.
-         * @return array The index columns. Empty array if the table or the index don't exist.
-         */
-        public function get_index_columns(string $table_name, string $index_name = '') : array
-        {
-        }
-    }
-}
-namespace Automattic\WooCommerce\Utilities {
     /**
      * A class of utilities for dealing with numbers.
      */
@@ -74375,7 +74814,7 @@ namespace {
     /**
      * Get full list of currency codes.
      *
-     * Currency symbols and names should follow the Unicode CLDR recommendation (http://cldr.unicode.org/translation/currency-names)
+     * Currency symbols and names should follow the Unicode CLDR recommendation (https://cldr.unicode.org/translation/currency-names-and-symbols)
      *
      * @return array
      */
@@ -74385,7 +74824,7 @@ namespace {
     /**
      * Get all available Currency symbols.
      *
-     * Currency symbols and names should follow the Unicode CLDR recommendation (http://cldr.unicode.org/translation/currency-names)
+     * Currency symbols and names should follow the Unicode CLDR recommendation (https://cldr.unicode.org/translation/currency-names-and-symbols)
      *
      * @since 4.1.0
      * @return array
@@ -74396,7 +74835,7 @@ namespace {
     /**
      * Get Currency symbol.
      *
-     * Currency symbols and names should follow the Unicode CLDR recommendation (http://cldr.unicode.org/translation/currency-names)
+     * Currency symbols and names should follow the Unicode CLDR recommendation (https://cldr.unicode.org/translation/currency-names-and-symbols)
      *
      * @param string $currency Currency. (default: '').
      * @return string
@@ -76174,7 +76613,7 @@ namespace {
     {
     }
     /**
-     * Format a decimal with PHP Locale settings.
+     * Format a decimal with the decimal separator for prices or PHP Locale settings.
      *
      * @param  string $value Decimal to localize.
      * @return string
