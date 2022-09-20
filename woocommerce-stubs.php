@@ -6981,7 +6981,7 @@ namespace {
          *
          * @return bool Whether the current screen is an order edit screen.
          */
-        private function is_order_meta_box_screen(string $screen_id)
+        private function is_order_meta_box_screen($screen_id)
         {
         }
     }
@@ -28683,23 +28683,11 @@ namespace {
     class WC_Product_Simple extends \WC_Product
     {
         /**
-         * Track wehther post_upload_ui hook was run.
-         *
-         * @var boolean
-         */
-        public static $post_upload_hook_done = \false;
-        /**
          * Initialize simple product.
          *
          * @param WC_Product|int $product Product instance or ID.
          */
         public function __construct($product = 0)
-        {
-        }
-        /**
-         * Adding product photo suggestions in upload modal.
-         */
-        public function add_product_photo_suggestions($content)
         {
         }
         /**
@@ -33537,7 +33525,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '6.9.0';
+        public $version = '6.9.3';
         /**
          * WooCommerce Schema version.
          *
@@ -79285,6 +79273,23 @@ namespace {
      * @return string
      */
     function wc_product_post_type_link($permalink, $post)
+    {
+    }
+    /**
+     * Filter to add upload tips under the product image thumbnail.
+     *
+     * @param  string $content The HTML markup for the admin post thumbnail.
+     * @return string
+     */
+    function wc_product_post_thumbnail_html($content)
+    {
+    }
+    /**
+     * Action to add the filter to add upload tips under the product image thumbnail.
+     *
+     * @param WP_Screen $current_screen Current WP_Screen object.
+     */
+    function wc_add_product_post_thumbnail_html_filter($current_screen)
     {
     }
     /**
