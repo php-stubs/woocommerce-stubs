@@ -15,6 +15,15 @@ return \StubsGenerator\Finder::create()
             ->notPath('Internal')
             ->sortByName(true)
     )
+    // WC_Query uses this internal trait
+    ->append(
+        \StubsGenerator\Finder::create()
+            ->in(['source/woocommerce/src/Internal/Traits'])
+            ->files()
+            ->depth('< 1')
+            ->path('AccessiblePrivateMethods.php')
+    )
+/*
     ->append(
         \StubsGenerator\Finder::create()
             ->in(['source/woocommerce/src/Internal/Admin'])
@@ -22,6 +31,7 @@ return \StubsGenerator\Finder::create()
             ->depth('< 1')
             ->path('CouponsMovedTrait.php')
     )
+*/
 /*
     // Comment out existing interface exclusion
     // $ editor vendor/php-stubs/generator/src/NodeVisitor.php:352

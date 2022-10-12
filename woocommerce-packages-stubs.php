@@ -6018,9 +6018,10 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          *
          * @param array|WP_Block $attributes Block attributes, or an instance of a WP_Block. Defaults to an empty array.
          * @param string         $content    Block content. Default empty string.
+         * @param WP_Block|null  $block      Block instance.
          * @return string Rendered block type output.
          */
-        public function render_callback($attributes = [], $content = '')
+        public function render_callback($attributes = [], $content = '', $block = null)
         {
         }
         /**
@@ -6150,6 +6151,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
+         * Get block usesContext.
+         *
+         * @return array;
+         */
+        protected function get_block_type_uses_context()
+        {
+        }
+        /**
          * Parses block attributes from the render_callback.
          *
          * @param array|WP_Block $attributes Block attributes, or an instance of a WP_Block. Defaults to an empty array.
@@ -6161,11 +6170,12 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         /**
          * Render the block. Extended by children.
          *
-         * @param array  $attributes Block attributes.
-         * @param string $content    Block content.
+         * @param array    $attributes Block attributes.
+         * @param string   $content    Block content.
+         * @param WP_Block $block      Block instance.
          * @return string Rendered block type output.
          */
-        protected function render($attributes, $content)
+        protected function render($attributes, $content, $block)
         {
         }
         /**
@@ -6344,11 +6354,12 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         /**
          * Include and render the dynamic block.
          *
-         * @param array  $attributes Block attributes. Default empty array.
-         * @param string $content    Block content. Default empty string.
+         * @param array         $attributes Block attributes. Default empty array.
+         * @param string        $content    Block content. Default empty string.
+         * @param WP_Block|null $block      Block instance.
          * @return string Rendered block type output.
          */
-        protected function render($attributes = array(), $content = '')
+        protected function render($attributes = array(), $content = '', $block = null)
         {
         }
         /**
@@ -6738,11 +6749,12 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         /**
          * Append frontend scripts when rendering the Cart block.
          *
-         * @param array  $attributes Block attributes.
-         * @param string $content    Block content.
+         * @param array    $attributes Block attributes.
+         * @param string   $content    Block content.
+         * @param WP_Block $block      Block instance.
          * @return string Rendered block type output.
          */
-        protected function render($attributes, $content)
+        protected function render($attributes, $content, $block)
         {
         }
         /**
@@ -6992,11 +7004,12 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         /**
          * Append frontend scripts when rendering the block.
          *
-         * @param array  $attributes Block attributes.
-         * @param string $content    Block content.
+         * @param array    $attributes Block attributes.
+         * @param string   $content    Block content.
+         * @param WP_Block $block Block instance.
          * @return string Rendered block type output.
          */
-        protected function render($attributes, $content)
+        protected function render($attributes, $content, $block)
         {
         }
         /**
@@ -7330,12 +7343,12 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         /**
          * Render method for the Classic Template block. This method will determine which template to render.
          *
-         * @param array  $attributes Block attributes.
-         * @param string $content    Block content.
-         *
+         * @param array    $attributes Block attributes.
+         * @param string   $content    Block content.
+         * @param WP_Block $block      Block instance.
          * @return string | void Rendered block type output.
          */
-        protected function render($attributes, $content)
+        protected function render($attributes, $content, $block)
         {
         }
         /**
@@ -7453,11 +7466,12 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         /**
          * Render the featured item block.
          *
-         * @param array  $attributes Block attributes.
-         * @param string $content    Block content.
+         * @param array    $attributes Block attributes.
+         * @param string   $content    Block content.
+         * @param WP_Block $block      Block instance.
          * @return string Rendered block type output.
          */
-        protected function render($attributes, $content)
+        protected function render($attributes, $content, $block)
         {
         }
         /**
@@ -7834,12 +7848,12 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         /**
          * Append frontend scripts when rendering the Mini Cart block.
          *
-         * @param array  $attributes Block attributes.
-         * @param string $content    Block content.
-         *
+         * @param array    $attributes Block attributes.
+         * @param string   $content    Block content.
+         * @param WP_Block $block      Block instance.
          * @return string Rendered block type output.
          */
-        protected function render($attributes, $content)
+        protected function render($attributes, $content, $block)
         {
         }
         /**
@@ -7927,12 +7941,12 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         /**
          * Render the markup for the Mini Cart contents block.
          *
-         * @param array  $attributes Block attributes.
-         * @param string $content    Block content.
-         *
+         * @param array    $attributes Block attributes.
+         * @param string   $content    Block content.
+         * @param WP_Block $block      Block instance.
          * @return string Rendered block type output.
          */
-        protected function render($attributes, $content)
+        protected function render($attributes, $content, $block)
         {
         }
         /**
@@ -8087,11 +8101,12 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         /**
          * Render the Product Categories List block.
          *
-         * @param array  $attributes Block attributes.
-         * @param string $content    Block content.
+         * @param array    $attributes Block attributes.
+         * @param string   $content    Block content.
+         * @param WP_Block $block Block instance.
          * @return string Rendered block type output.
          */
-        protected function render($attributes, $content)
+        protected function render($attributes, $content, $block)
         {
         }
         /**
@@ -8290,11 +8305,74 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
-         * Register script and style assets for the block type before it is registered.
-         *
-         * This registers the scripts; it does not enqueue them.
+         * It is necessary to register and enqueues assets during the render phase because we want to load assets only if the block has the content.
          */
         protected function register_block_type_assets()
+        {
+        }
+        /**
+         * Register the context.
+         */
+        protected function get_block_type_uses_context()
+        {
+        }
+        /**
+         * Get the block's attributes.
+         *
+         * @param array $attributes Block attributes. Default empty array.
+         * @return array  Block attributes merged with defaults.
+         */
+        private function parse_attributes($attributes)
+        {
+        }
+        /**
+         * Render on Sale Badge.
+         *
+         * @param \WC_Product $product Product object.
+         * @param array       $attributes Attributes.
+         * @return string
+         */
+        private function render_on_sale_badge($product, $attributes)
+        {
+        }
+        /**
+         * Render anchor.
+         *
+         * @param \WC_Product $product Product object.
+         * @param array       $attributes Attributes.
+         * @return string
+         */
+        private function render_anchor($product, $attributes)
+        {
+        }
+        /**
+         * Render Image.
+         *
+         * @param \WC_Product $product Product object.
+         * @return string
+         */
+        private function render_image($product)
+        {
+        }
+        /**
+         * Extra data passed through from server to client for block.
+         *
+         * @param array $attributes  Any attributes that currently are available from the block.
+         *                           Note, this will be empty in the editor context when the block is
+         *                           not in the post content on editor load.
+         */
+        protected function enqueue_data(array $attributes = [])
+        {
+        }
+        /**
+         * Include and render the block
+         *
+         * @param array    $attributes Block attributes. Default empty array.
+         * @param string   $content    Block content. Default empty string.
+         * @param WP_Block $block      Block instance.
+         * @return string Rendered block type output.
+         */
+        protected function render($attributes, $content, $block)
         {
         }
     }
@@ -8378,6 +8456,77 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * This registers the scripts; it does not enqueue them.
          */
         protected function register_block_type_assets()
+        {
+        }
+    }
+    /**
+     * ProductQuery class.
+     */
+    class ProductQuery extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'product-query';
+        /**
+         * The Block with its attributes before it gets rendered
+         *
+         * @var array
+         */
+        protected $parsed_block;
+        /**
+         * Initialize this block type.
+         *
+         * - Hook into WP lifecycle.
+         * - Register the block with WordPress.
+         * - Hook into pre_render_block to update the query.
+         */
+        protected function initialize()
+        {
+        }
+        /**
+         * Remove the query block filter and parse the custom query
+         *
+         * This function is supposed to be called by the `query_loop_block_query_vars`
+         * filter. It de-registers the filter to make sure it runs only once and doesn't end
+         * up hi-jacking future Query Loop blocks.
+         *
+         * It needs unfortunately to be `public` or otherwise the filter can't call it.
+         *
+         * @param WP_Query $query The WordPress Query.
+         * @return array
+         */
+        public function get_query_by_attributes_once($query)
+        {
+        }
+        /**
+         * Update the query for the product query block.
+         *
+         * @param string|null $pre_render   The pre-rendered content. Default null.
+         * @param array       $parsed_block The block being rendered.
+         */
+        public function update_query($pre_render, $parsed_block)
+        {
+        }
+        /**
+         * Return a custom query based on the attributes.
+         *
+         * @param WP_Query $query         The WordPress Query.
+         * @param WP_Block $parsed_block  The block being rendered.
+         * @return array
+         */
+        public function get_query_by_attributes($query, $parsed_block)
+        {
+        }
+        /**
+         * Return a query for on sale products.
+         *
+         * @param array $variation_props Dedicated attributes for the variation.
+         * @return array
+         */
+        private function get_on_sale_products_query($variation_props)
         {
         }
     }
@@ -8499,11 +8648,22 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         /**
          * Render the block.
          *
-         * @param array  $attributes Block attributes.
-         * @param string $content    Block content.
+         * @param array    $attributes Block attributes.
+         * @param string   $content    Block content.
+         * @param WP_Block $block      Block instance.
          * @return string Rendered block type output.
          */
-        protected function render($attributes, $content)
+        protected function render($attributes, $content, $block)
+        {
+        }
+        /**
+         * Extra data passed through from server to client for block.
+         *
+         * @param array $attributes  Any attributes that currently are available from the block.
+         *                           Note, this will be empty in the editor context when the block is
+         *                           not in the post content on editor load.
+         */
+        protected function enqueue_data(array $attributes = [])
         {
         }
     }
@@ -16152,6 +16312,16 @@ namespace Automattic\WooCommerce\Blocks\Utils {
          * @return (array | null)
          */
         public static function get_padding_class_and_style($attributes)
+        {
+        }
+        /**
+         * Get class and style for margin from attributes.
+         *
+         * @param array $attributes Block attributes.
+         *
+         * @return (array | null)
+         */
+        public static function get_margin_class_and_style($attributes)
         {
         }
         /**

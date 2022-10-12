@@ -7851,6 +7851,10 @@ namespace {
          */
         public const ERROR_STORE = 'woocommerce_meta_box_errors';
         /**
+         * The css class used to close the meta box
+         */
+        private const CLOSED_CSS_CLASS = 'closed';
+        /**
          * Is meta boxes saved once?
          *
          * @var boolean
@@ -7904,6 +7908,14 @@ namespace {
          * Add WC Meta boxes.
          */
         public function add_meta_boxes()
+        {
+        }
+        /**
+         * Collapse product short description meta box by default
+         *
+         * @param array $classes The css class array applied to the meta box.
+         */
+        public function collapse_postexcerpt($classes)
         {
         }
         /**
@@ -12046,6 +12058,16 @@ namespace {
          * @param WP_Post|WC_Order $post Post or order object.
          */
         public static function output($post)
+        {
+        }
+        /**
+         * Forms a trash/delete order URL.
+         *
+         * @param int $order_id The order ID for which we want a trash/delete URL.
+         *
+         * @return string
+         */
+        private static function get_trash_or_delete_order_link(int $order_id) : string
         {
         }
         /**
@@ -21521,6 +21543,9 @@ namespace {
         /**
          * Ensure coupon exists or throw exception.
          *
+         * A coupon is also considered to no longer exist if it has been placed in the trash, even if the trash has not yet
+         * been emptied.
+         *
          * @since  3.2.0
          * @throws Exception Error message.
          * @param  WC_Coupon $coupon Coupon data.
@@ -21854,6 +21879,17 @@ namespace {
          * Can prevent errors, for example: transfer closed with 3 bytes remaining to read.
          */
         private static function clean_buffers()
+        {
+        }
+        /**
+         *
+         * Get selected content disposition
+         *
+         * Defaults to attachment if `woocommerce_downloads_deliver_inline` setting is not selected.
+         *
+         * @return string Content disposition value.
+         */
+        private static function get_content_disposition() : string
         {
         }
         /**
@@ -23163,7 +23199,7 @@ namespace {
          *
          * @var array
          */
-        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_admin_update_0201_order_status_index', 'wc_admin_update_0230_rename_gross_total', 'wc_admin_update_0251_remove_unsnooze_action', 'wc_update_400_db_version'), '4.4.0' => array('wc_update_440_insert_attribute_terms_for_variable_products', 'wc_admin_update_110_remove_facebook_note', 'wc_admin_update_130_remove_dismiss_action_from_tracking_opt_in_note', 'wc_update_440_db_version'), '4.5.0' => array('wc_update_450_sanitize_coupons_code', 'wc_update_450_db_version'), '5.0.0' => array('wc_update_500_fix_product_review_count', 'wc_admin_update_160_remove_facebook_note', 'wc_admin_update_170_homescreen_layout', 'wc_update_500_db_version'), '5.6.0' => array('wc_update_560_create_refund_returns_page', 'wc_update_560_db_version'), '6.0.0' => array('wc_update_600_migrate_rate_limit_options', 'wc_admin_update_270_delete_report_downloads', 'wc_admin_update_271_update_task_list_options', 'wc_admin_update_280_order_status', 'wc_admin_update_290_update_apperance_task_option', 'wc_admin_update_290_delete_default_homepage_layout_option', 'wc_update_600_db_version'), '6.3.0' => array('wc_update_630_create_product_attributes_lookup_table', 'wc_admin_update_300_update_is_read_from_last_read', 'wc_update_630_db_version'), '6.4.0' => array('wc_update_640_add_primary_key_to_product_attributes_lookup_table', 'wc_admin_update_340_remove_is_primary_from_note_action', 'wc_update_640_db_version'), '6.5.0' => array('wc_update_650_approved_download_directories'), '6.5.1' => array('wc_update_651_approved_download_directories'), '6.7.0' => array('wc_update_670_purge_comments_count_cache', 'wc_update_670_delete_deprecated_remote_inbox_notifications_option'));
+        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_admin_update_0201_order_status_index', 'wc_admin_update_0230_rename_gross_total', 'wc_admin_update_0251_remove_unsnooze_action', 'wc_update_400_db_version'), '4.4.0' => array('wc_update_440_insert_attribute_terms_for_variable_products', 'wc_admin_update_110_remove_facebook_note', 'wc_admin_update_130_remove_dismiss_action_from_tracking_opt_in_note', 'wc_update_440_db_version'), '4.5.0' => array('wc_update_450_sanitize_coupons_code', 'wc_update_450_db_version'), '5.0.0' => array('wc_update_500_fix_product_review_count', 'wc_admin_update_160_remove_facebook_note', 'wc_admin_update_170_homescreen_layout', 'wc_update_500_db_version'), '5.6.0' => array('wc_update_560_create_refund_returns_page', 'wc_update_560_db_version'), '6.0.0' => array('wc_update_600_migrate_rate_limit_options', 'wc_admin_update_270_delete_report_downloads', 'wc_admin_update_271_update_task_list_options', 'wc_admin_update_280_order_status', 'wc_admin_update_290_update_apperance_task_option', 'wc_admin_update_290_delete_default_homepage_layout_option', 'wc_update_600_db_version'), '6.3.0' => array('wc_update_630_create_product_attributes_lookup_table', 'wc_admin_update_300_update_is_read_from_last_read', 'wc_update_630_db_version'), '6.4.0' => array('wc_update_640_add_primary_key_to_product_attributes_lookup_table', 'wc_admin_update_340_remove_is_primary_from_note_action', 'wc_update_640_db_version'), '6.5.0' => array('wc_update_650_approved_download_directories'), '6.5.1' => array('wc_update_651_approved_download_directories'), '6.7.0' => array('wc_update_670_purge_comments_count_cache', 'wc_update_670_delete_deprecated_remote_inbox_notifications_option'), '7.0.0' => array('wc_update_700_remove_download_log_fk', 'wc_update_700_remove_recommended_marketing_plugins_transient'));
         /**
          * Hook in tabs.
          */
@@ -29446,11 +29482,150 @@ namespace {
         {
         }
     }
+}
+namespace Automattic\WooCommerce\Internal\Traits {
+    /**
+     * This trait allows making private methods of a class accessible from outside.
+     * This is useful to define hook handlers with the [$this, 'method'] or [__CLASS__, 'method'] syntax
+     * without having to make the method public (and thus having to keep it forever for backwards compatibility).
+     *
+     * Example:
+     *
+     * class Foobar {
+     *   use AccessiblePrivateMethods;
+     *
+     *   public function __construct() {
+     *     self::add_action('some_action', [$this, 'handle_some_action']);
+     *   }
+     *
+     *   public static function init() {
+     *     self::add_filter('some_filter', [__CLASS__, 'handle_some_filter']);
+     *   }
+     *
+     *   private function handle_some_action() {
+     *   }
+     *
+     *   private static function handle_some_filter() {
+     *   }
+     * }
+     *
+     * For this to work the callback must be an array and the first element of the array must be either '$this', '__CLASS__',
+     * or another instance of the same class; otherwise the method won't be marked as accessible
+     * (but the corresponding WordPress 'add_action' and 'add_filter' functions will still be called).
+     *
+     * No special procedure is needed to remove hooks set up with these methods, the regular 'remove_action'
+     * and 'remove_filter' functions provided by WordPress can be used as usual.
+     */
+    trait AccessiblePrivateMethods
+    {
+        //phpcs:disable PSR2.Classes.PropertyDeclaration.Underscore
+        /**
+         * List of instance methods marked as externally accessible.
+         *
+         * @var array
+         */
+        private $_accessible_private_methods = array();
+        /**
+         * List of static methods marked as externally accessible.
+         *
+         * @var array
+         */
+        private static $_accessible_static_private_methods = array();
+        //phpcs:enable PSR2.Classes.PropertyDeclaration.Underscore
+        /**
+         * Register a WordPress action.
+         * If the callback refers to a private or protected instance method in this class, the method is marked as externally accessible.
+         *
+         * $callback can be a standard callable, or a string representing the name of a method in this class.
+         *
+         * @param string          $hook_name       The name of the action to add the callback to.
+         * @param callable|string $callback        The callback to be run when the action is called.
+         * @param int             $priority        Optional. Used to specify the order in which the functions
+         *                                         associated with a particular action are executed.
+         *                                         Lower numbers correspond with earlier execution,
+         *                                         and functions with the same priority are executed
+         *                                         in the order in which they were added to the action. Default 10.
+         * @param int             $accepted_args   Optional. The number of arguments the function accepts. Default 1.
+         */
+        protected static function add_action(string $hook_name, $callback, int $priority = 10, int $accepted_args = 1) : void
+        {
+        }
+        /**
+         * Register a WordPress filter.
+         * If the callback refers to a private or protected instance method in this class, the method is marked as externally accessible.
+         *
+         * $callback can be a standard callable, or a string representing the name of a method in this class.
+         *
+         * @param string          $hook_name       The name of the filter to add the callback to.
+         * @param callable|string $callback        The callback to be run when the filter is called.
+         * @param int             $priority        Optional. Used to specify the order in which the functions
+         *                                         associated with a particular filter are executed.
+         *                                         Lower numbers correspond with earlier execution,
+         *                                         and functions with the same priority are executed
+         *                                         in the order in which they were added to the filter. Default 10.
+         * @param int             $accepted_args   Optional. The number of arguments the function accepts. Default 1.
+         */
+        protected static function add_filter(string $hook_name, $callback, int $priority = 10, int $accepted_args = 1) : void
+        {
+        }
+        /**
+         * Do the required processing to a callback before invoking the WordPress 'add_action' or 'add_filter' function.
+         *
+         * @param callable $callback The callback to process.
+         * @return void
+         */
+        protected static function process_callback_before_hooking($callback) : void
+        {
+        }
+        /**
+         * Register a private or protected instance method of this class as externally accessible.
+         *
+         * @param string $method_name Method name.
+         * @return bool True if the method has been marked as externally accessible, false if the method doesn't exist.
+         */
+        protected function mark_method_as_accessible(string $method_name) : bool
+        {
+        }
+        /**
+         * Register a private or protected static method of this class as externally accessible.
+         *
+         * @param string $method_name Method name.
+         * @return bool True if the method has been marked as externally accessible, false if the method doesn't exist.
+         */
+        protected static function mark_static_method_as_accessible(string $method_name) : bool
+        {
+        }
+        /**
+         * Undefined/inaccessible instance method call handler.
+         *
+         * @param string $name Called method name.
+         * @param array  $arguments Called method arguments.
+         * @return mixed
+         * @throws \Error The called instance method doesn't exist or is private/protected and not marked as externally accessible.
+         */
+        public function __call($name, $arguments)
+        {
+        }
+        /**
+         * Undefined/inaccessible static method call handler.
+         *
+         * @param string $name Called method name.
+         * @param array  $arguments Called method arguments.
+         * @return mixed
+         * @throws \Error The called static method doesn't exist or is private/protected and not marked as externally accessible.
+         */
+        public static function __callStatic($name, $arguments)
+        {
+        }
+    }
+}
+namespace {
     /**
      * WC_Query Class.
      */
     class WC_Query
     {
+        use \Automattic\WooCommerce\Internal\Traits\AccessiblePrivateMethods;
         /**
          * Query vars to add to wp.
          *
@@ -33525,7 +33700,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '6.9.4';
+        public $version = '7.0.0';
         /**
          * WooCommerce Schema version.
          *
@@ -34030,6 +34205,7 @@ namespace {
      */
     class WC_CLI_COM_Command
     {
+        const APPLICATION_PASSWORD_SECTION_URL = 'https://woocommerce.com/my-account/#application-passwords';
         /**
          * Registers a commands for managing WooCommerce.com extensions.
          */
@@ -34981,6 +35157,20 @@ namespace {
          * @var array
          */
         protected $internal_meta_keys = array('_order_currency', '_cart_discount', '_cart_discount_tax', '_order_shipping', '_order_shipping_tax', '_order_tax', '_order_total', '_order_version', '_prices_include_tax', '_payment_tokens');
+        /**
+         * Custom setters for props. Add key here if it has corresponding set_ and get_ method present.
+         *
+         * @var string[]
+         */
+        protected $internal_data_store_key_getters = array();
+        /**
+         * Return internal key getters name.
+         *
+         * @return string[]
+         */
+        public function get_internal_data_store_key_getters()
+        {
+        }
         /*
         |--------------------------------------------------------------------------
         | CRUD Methods
@@ -35140,6 +35330,37 @@ namespace {
          * @return string Order title.
          */
         public function get_title(\WC_Order $order)
+        {
+        }
+        /**
+         * Given an initialized order object, update the post/postmeta records.
+         *
+         * @param WC_Order $order Order object.
+         *
+         * @return bool Whether the order was updated.
+         */
+        public function update_order_from_object($order)
+        {
+        }
+        /**
+         * Change the modified date of the post to match the order's modified date if passed.
+         *
+         * @hooked wp_insert_post_data See function update_order_from_object.
+         *
+         * @param array $data An array of slashed, sanitized, and processed post data.
+         * @param array $postarr An array of sanitized (and slashed) but otherwise unmodified post data.
+         *
+         * @return array Data with updated modified date.
+         */
+        public function update_post_modified_data($data, $postarr)
+        {
+        }
+        /**
+         * Helper method to update order metadata from intialized order object.
+         *
+         * @param WC_Order $order Order object.
+         */
+        private function update_order_meta_from_object($order)
         {
         }
     }
@@ -35936,6 +36157,17 @@ namespace {
         {
         }
         /**
+         * Delete download_log related to download permission via $field with value $value.
+         *
+         * @param string           $field Field used to query download permission table with.
+         * @param string|int|float $value Value to filter the field by.
+         *
+         * @return void
+         */
+        private function delete_download_log_by_field_value($field, $value)
+        {
+        }
+        /**
          * Method to delete a download permission from the database by order ID.
          *
          * @param int $id Order ID of the downloads that will be deleted.
@@ -36263,19 +36495,11 @@ namespace {
          */
         protected $internal_meta_keys = array('_customer_user', '_order_key', '_order_currency', '_billing_first_name', '_billing_last_name', '_billing_company', '_billing_address_1', '_billing_address_2', '_billing_city', '_billing_state', '_billing_postcode', '_billing_country', '_billing_email', '_billing_phone', '_shipping_first_name', '_shipping_last_name', '_shipping_company', '_shipping_address_1', '_shipping_address_2', '_shipping_city', '_shipping_state', '_shipping_postcode', '_shipping_country', '_shipping_phone', '_completed_date', '_paid_date', '_edit_lock', '_edit_last', '_cart_discount', '_cart_discount_tax', '_order_shipping', '_order_shipping_tax', '_order_tax', '_order_total', '_payment_method', '_payment_method_title', '_transaction_id', '_customer_ip_address', '_customer_user_agent', '_created_via', '_order_version', '_prices_include_tax', '_date_completed', '_date_paid', '_payment_tokens', '_billing_address_index', '_shipping_address_index', '_recorded_sales', '_recorded_coupon_usage_counts', '_download_permissions_granted', '_order_stock_reduced');
         /**
-         * Getters for internal key in data stores.
+         * Custom setters for props. Add key here if it has corresponding set_ and get_ method present.
          *
          * @var string[]
          */
         protected $internal_data_store_key_getters = array('_download_permissions_granted' => 'download_permissions_granted', '_recorded_sales' => 'recorded_sales', '_recorded_coupon_usage_counts' => 'recorded_coupon_usage_counts', '_order_stock_reduced' => 'stock_reduced', '_new_order_email_sent' => 'email_sent');
-        /**
-         * Return internal key getters name.
-         *
-         * @return string[]
-         */
-        public function get_internal_data_store_key_getters()
-        {
-        }
         /**
          * Method to create a new order in the database.
          *
@@ -36309,24 +36533,6 @@ namespace {
          * @since 3.0.0
          */
         protected function update_post_meta(&$order)
-        {
-        }
-        /**
-         * Given an initialized order object, update the post/postmeta records.
-         *
-         * @param WC_Order $order Order object.
-         *
-         * @return bool Whether the order was updated.
-         */
-        public function update_order_from_object($order)
-        {
-        }
-        /**
-         * Helper method to update order metadata from intialized order object.
-         *
-         * @param WC_Order $order Order object.
-         */
-        private function update_order_meta_from_object($order)
         {
         }
         /**
@@ -37148,6 +37354,7 @@ namespace {
          * Helper method that updates all the post meta for an order based on it's settings in the WC_Order class.
          *
          * @param WC_Order_Refund $refund Refund object.
+         *
          * @since 3.0.0
          */
         protected function update_post_meta(&$refund)
@@ -40382,6 +40589,14 @@ namespace {
          * Initialise settings form fields.
          */
         public function init_form_fields()
+        {
+        }
+        /**
+         * Add mobile messaging.
+         *
+         * @param WC_Email $email that called for mobile messaging. May not contain a WC_Email for legacy reasons.
+         */
+        public function mobile_messaging($email)
         {
         }
     }
@@ -44530,6 +44745,20 @@ namespace {
          * @return array Fields to be included in the response.
          */
         public function get_fields_for_response($request)
+        {
+        }
+        /**
+         * Limit the contents of the meta_data property based on certain request parameters.
+         *
+         * Note that if both `include_meta` and `exclude_meta` are present in the request,
+         * `include_meta` will take precedence.
+         *
+         * @param \WP_REST_Request $request   The request.
+         * @param array            $meta_data All of the meta data for an object.
+         *
+         * @return array
+         */
+        protected function get_meta_data_for_response($request, $meta_data)
         {
         }
     }
@@ -54175,7 +54404,7 @@ namespace {
         /**
          * Event name regex.
          */
-        public const EVENT_NAME_REGEX = '/^(([a-z0-9]+)_){2}([a-z0-9_]+)$/';
+        public const EVENT_NAME_REGEX = '/^(([a-z0-9]+)_){1}([a-z0-9_]+)$/';
         /**
          * Property name regex.
          */
@@ -56774,6 +57003,43 @@ namespace Automattic\WooCommerce\Admin\API {
          * @return \WP_Error|\WP_REST_Response
          */
         public function get_installed_plugins($request)
+        {
+        }
+    }
+    /**
+     * REST API Data countries controller class.
+     *
+     * @internal
+     * @extends WC_REST_Data_Controller
+     */
+    class MobileAppMagicLink extends \WC_REST_Data_Controller
+    {
+        /**
+         * Endpoint namespace.
+         *
+         * @var string
+         */
+        protected $namespace = 'wc-admin';
+        /**
+         * Route base.
+         *
+         * @var string
+         */
+        protected $rest_base = 'mobile-app';
+        /**
+         * Register routes.
+         *
+         * @since 7.0.0
+         */
+        public function register_routes()
+        {
+        }
+        /**
+         * Sends request to generate magic link email.
+         *
+         * @return \WP_REST_Response|\WP_Error
+         */
+        public function send_magic_link()
         {
         }
     }
@@ -64913,13 +65179,13 @@ namespace Automattic\WooCommerce\Admin\Features {
          *
          * @var array
          */
-        protected static $optional_features = array('navigation' => array('default' => 'no'), 'settings' => array('default' => 'no'), 'analytics' => array('default' => 'yes'), 'remote-inbox-notifications' => array('default' => 'yes'));
+        protected static $optional_features = array('multichannel-marketing' => array('default' => 'no'), 'navigation' => array('default' => 'no'), 'settings' => array('default' => 'no'), 'analytics' => array('default' => 'yes'), 'remote-inbox-notifications' => array('default' => 'yes'));
         /**
          * Beta features
          *
          * @var array
          */
-        protected static $beta_features = array('navigation', 'settings');
+        protected static $beta_features = array('multichannel-marketing', 'navigation', 'settings');
         /**
          * Get class instance.
          */
@@ -65064,6 +65330,54 @@ namespace Automattic\WooCommerce\Admin\Features {
          * See https://wp.me/p90Yrv-2HY for details.
          */
         private function register_internal_class_aliases()
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Admin\Features\MultichannelMarketing {
+    /**
+     * Contains logic for Multichannel Marketing.
+     */
+    class Init
+    {
+        /**
+         * Option name used to toggle this feature.
+         */
+        const TOGGLE_OPTION_NAME = 'woocommerce_multichannel_marketing_enabled';
+        /**
+         * Determines if the feature has been toggled on or off.
+         *
+         * @var boolean
+         */
+        protected static $is_updated = false;
+        /**
+         * Hook into WooCommerce.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Add the feature toggle to the features settings.
+         *
+         * @param array $features Feature sections.
+         * @return array
+         */
+        public static function add_feature_toggle($features)
+        {
+        }
+        /**
+         * Reloads the page when the option is toggled to make sure all Multichannel Marketing features are loaded.
+         *
+         * @param string $old_value Old value.
+         * @param string $value     New value.
+         */
+        public static function reload_page_on_toggle($old_value, $value)
+        {
+        }
+        /**
+         * Reload the page if the setting has been updated.
+         */
+        public static function maybe_reload_page()
         {
         }
     }
@@ -66647,7 +66961,7 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
          *
          * @var array
          */
-        const DEFAULT_TASKS = array('StoreDetails', 'Purchase', 'Products', 'WooCommercePayments', 'Payments', 'Tax', 'Shipping', 'Marketing', 'Appearance', 'AdditionalPayments', 'ReviewShippingOptions');
+        const DEFAULT_TASKS = array('StoreDetails', 'Purchase', 'Products', 'WooCommercePayments', 'Payments', 'Tax', 'Shipping', 'Marketing', 'Appearance', 'AdditionalPayments', 'ReviewShippingOptions', 'GetMobileApp');
         /**
          * Get class instance.
          */
@@ -67073,6 +67387,68 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
          * @return bool
          */
         public static function has_jetpack_connected()
+        {
+        }
+    }
+    /**
+     * Get Mobile App Task
+     */
+    class GetMobileApp extends \Automattic\WooCommerce\Admin\Features\OnboardingTasks\Task
+    {
+        /**
+         * ID.
+         *
+         * @return string
+         */
+        public function get_id()
+        {
+        }
+        /**
+         * Title.
+         *
+         * @return string
+         */
+        public function get_title()
+        {
+        }
+        /**
+         * Content.
+         *
+         * @return string
+         */
+        public function get_content()
+        {
+        }
+        /**
+         * Time.
+         *
+         * @return string
+         */
+        public function get_time()
+        {
+        }
+        /**
+         * Task completion.
+         *
+         * @return bool
+         */
+        public function is_complete()
+        {
+        }
+        /**
+         * Task visibility.
+         *
+         * @return bool
+         */
+        public function can_view()
+        {
+        }
+        /**
+         * Action URL.
+         *
+         * @return string
+         */
+        public function get_action_url()
         {
         }
     }
@@ -68178,11 +68554,35 @@ namespace Automattic\WooCommerce\Admin\Marketing {
         {
         }
         /**
+         * Get AutomateWoo Refer a Friend extension data.
+         *
+         * @return array|bool
+         */
+        protected static function get_aw_referral_extension_data()
+        {
+        }
+        /**
+         * Get AutomateWoo Birthdays extension data.
+         *
+         * @return array|bool
+         */
+        protected static function get_aw_birthdays_extension_data()
+        {
+        }
+        /**
          * Get MailChimp extension data.
          *
          * @return array|bool
          */
         protected static function get_mailchimp_extension_data()
+        {
+        }
+        /**
+         * Get Facebook extension data.
+         *
+         * @return array|bool
+         */
+        protected static function get_facebook_extension_data()
         {
         }
         /**
@@ -68202,14 +68602,6 @@ namespace Automattic\WooCommerce\Admin\Marketing {
         {
         }
         /**
-         * Get Hubspot extension data.
-         *
-         * @return array|bool
-         */
-        protected static function get_hubspot_extension_data()
-        {
-        }
-        /**
          * Get Amazon / Ebay extension data.
          *
          * @return array|bool
@@ -68223,6 +68615,62 @@ namespace Automattic\WooCommerce\Admin\Marketing {
          * @return array|bool
          */
         protected static function get_mailpoet_extension_data()
+        {
+        }
+        /**
+         * Get Creative Mail for WooCommerce extension data.
+         *
+         * @return array|bool
+         */
+        protected static function get_creative_mail_extension_data()
+        {
+        }
+        /**
+         * Get TikTok for WooCommerce extension data.
+         *
+         * @return array|bool
+         */
+        protected static function get_tiktok_extension_data()
+        {
+        }
+        /**
+         * Get Jetpack CRM for WooCommerce extension data.
+         *
+         * @return array|bool
+         */
+        protected static function get_jetpack_crm_extension_data()
+        {
+        }
+        /**
+         * Get WooCommerce Zapier extension data.
+         *
+         * @return array|bool
+         */
+        protected static function get_zapier_extension_data()
+        {
+        }
+        /**
+         * Get Salesforce extension data.
+         *
+         * @return array|bool
+         */
+        protected static function get_salesforce_extension_data()
+        {
+        }
+        /**
+         * Get Vimeo extension data.
+         *
+         * @return array|bool
+         */
+        protected static function get_vimeo_extension_data()
+        {
+        }
+        /**
+         * Get Trustpilot extension data.
+         *
+         * @return array|bool
+         */
+        protected static function get_trustpilot_extension_data()
         {
         }
         /**
@@ -69113,7 +69561,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
          * Get note content data (i.e. values that would be needed for re-localization)
          *
          * @param  string $context What the value is for. Valid values are 'view' and 'edit'.
-         * @return array
+         * @return object
          */
         public function get_content_data($context = 'view')
         {
@@ -72987,7 +73435,7 @@ namespace Automattic\WooCommerce {
          *
          * @var string[]
          */
-        private $service_providers = array(\Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\AssignDefaultCategoryServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\DownloadPermissionsAdjusterServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OptionSanitizerServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrdersDataStoreServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductAttributesLookupServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductDownloadsServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductReviewsServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProxiesServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\RestockRefundedItemsAdjusterServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\UtilsClassesServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\COTMigrationServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrdersControllersServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ObjectCacheServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\BatchProcessingServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrderMetaBoxServiceProvider::class);
+        private $service_providers = array(\Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\AssignDefaultCategoryServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\DownloadPermissionsAdjusterServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OptionSanitizerServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrdersDataStoreServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductAttributesLookupServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductDownloadsServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductReviewsServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProxiesServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\RestockRefundedItemsAdjusterServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\UtilsClassesServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\COTMigrationServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrdersControllersServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ObjectCacheServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\BatchProcessingServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrderMetaBoxServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrderAdminServiceProvider::class);
         /**
          * The underlying container.
          *
@@ -73972,7 +74420,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
         /**
          * Error logger for migration errors.
          *
-         * @var WC_Logger
+         * @var \WC_Logger
          */
         private $error_logger;
         /**
@@ -74132,78 +74580,6 @@ namespace Automattic\WooCommerce\Database\Migrations {
          * @return string SQL clause for INSERT...ON DUPLICATE KEY UPDATE
          */
         public static function generate_on_duplicate_statement_clause(array $columns) : string
-        {
-        }
-    }
-}
-namespace Automattic\WooCommerce\Internal\Admin {
-    /**
-     * CouponsMovedTrait trait.
-     */
-    trait CouponsMovedTrait
-    {
-        /**
-         * The GET query key for the legacy menu.
-         *
-         * @var string
-         */
-        protected static $query_key = 'legacy_coupon_menu';
-        /**
-         * The key for storing an option in the DB.
-         *
-         * @var string
-         */
-        protected static $option_key = 'wc_admin_show_legacy_coupon_menu';
-        /**
-         * Get the URL for the legacy coupon management.
-         *
-         * @return string The unescaped URL for the legacy coupon management page.
-         */
-        protected static function get_legacy_coupon_url()
-        {
-        }
-        /**
-         * Get the URL for the coupon management page.
-         *
-         * @param array $args Additional URL query arguments.
-         *
-         * @return string
-         */
-        protected static function get_coupon_url($args = [])
-        {
-        }
-        /**
-         * Get the new URL for managing coupons.
-         *
-         * @param string $page The management page.
-         *
-         * @return string
-         */
-        protected static function get_management_url($page)
-        {
-        }
-        /**
-         * Get the WC Admin path for the marking page.
-         *
-         * @return string
-         */
-        protected static function get_marketing_path()
-        {
-        }
-        /**
-         * Whether we should display the legacy coupon menu item.
-         *
-         * @return bool
-         */
-        protected static function should_display_legacy_menu()
-        {
-        }
-        /**
-         * Set whether we should display the legacy coupon menu item.
-         *
-         * @param bool $display Whether the menu should be displayed or not.
-         */
-        protected static function display_legacy_menu($display = false)
         {
         }
     }
@@ -74458,6 +74834,16 @@ namespace Automattic\WooCommerce\Utilities {
         public static function select(array $items, string $selector_name, int $selector_type = self::SELECT_BY_AUTO)
         {
         }
+        /**
+         * Push a value to an array, but only if the value isn't in the array already.
+         *
+         * @param array $array The array.
+         * @param mixed $value The value to maybe push.
+         * @return bool True if the value has been added to the array, false if the value was already in the array.
+         */
+        public static function push_once(array &$array, $value) : bool
+        {
+        }
     }
     /**
      * A class of utilities for dealing with numbers.
@@ -74565,6 +74951,24 @@ namespace Automattic\WooCommerce\Utilities {
          * @return string|null Type of the order.
          */
         public static function get_order_type($order_id)
+        {
+        }
+        /**
+         * Helper method to generate admin url for an order.
+         *
+         * @param int $order_id Order ID.
+         *
+         * @return string Admin url for an order.
+         */
+        public static function get_order_admin_edit_url(int $order_id) : string
+        {
+        }
+        /**
+         * Helper method to generate admin URL for new order.
+         *
+         * @return string Link for new order.
+         */
+        public static function get_order_admin_new_url() : string
         {
         }
     }
