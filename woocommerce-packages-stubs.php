@@ -5689,6 +5689,15 @@ namespace Automattic\WooCommerce\Blocks {
         {
         }
         /**
+         * Returns an absolute url to relative links for WordPress core scripts.
+         *
+         * @param string $src Original src that can be relative.
+         * @return string Correct full path string.
+         */
+        private function get_absolute_url($src)
+        {
+        }
+        /**
          * Add body classes to the frontend and within admin.
          *
          * @param string|array $classes Array or string of CSS classnames.
