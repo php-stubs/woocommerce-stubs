@@ -73138,7 +73138,7 @@ namespace Automattic\WooCommerce\Caching {
          * @return bool True on success, false on error.
          * @throws CacheException Invalid parameter, or null id was passed and get_object_id returns null too.
          */
-        public function set($id = null, $object, int $expiration = self::DEFAULT_EXPIRATION) : bool
+        public function set($id = null, $object = [], int $expiration = self::DEFAULT_EXPIRATION) : bool
         {
         }
         /**
