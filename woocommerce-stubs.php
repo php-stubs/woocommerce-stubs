@@ -33700,7 +33700,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '7.0.0';
+        public $version = '7.0.1';
         /**
          * WooCommerce Schema version.
          *
@@ -54198,6 +54198,39 @@ namespace {
          * Enqueue the wp-admin CSS overrides for this theme.
          */
         public static function enqueue_admin_styles()
+        {
+        }
+    }
+    /**
+     * WC_Twenty_Twenty_Three class.
+     */
+    class WC_Twenty_Twenty_Three
+    {
+        /**
+         * Theme init.
+         */
+        public static function init()
+        {
+        }
+        /**
+         * Enqueue CSS for this theme.
+         *
+         * @param  array $styles Array of registered styles.
+         * @return array
+         */
+        public static function enqueue_styles($styles)
+        {
+        }
+        /**
+         * Wrap checkout order review with a `col2-set` div.
+         */
+        public static function before_order_review()
+        {
+        }
+        /**
+         * Close the div wrapper.
+         */
+        public static function after_order_review()
         {
         }
     }
@@ -76362,7 +76395,7 @@ namespace {
     /**
      * Check if the current theme is a block theme.
      *
-     * @since x.x.x
+     * @since 6.0.0
      * @return bool
      */
     function wc_current_theme_is_fse_theme()
@@ -76371,10 +76404,23 @@ namespace {
     /**
      * Check if the current theme has WooCommerce support or is a FSE theme.
      *
-     * @since x.x.x
+     * @since 6.0.0
      * @return bool
      */
     function wc_current_theme_supports_woocommerce_or_fse()
+    {
+    }
+    /**
+     * Given an element name, returns a class name.
+     *
+     * If the WP-related function is not defined, return empty string.
+     *
+     * @param string $element The name of the element.
+     *
+     * @since 7.1.0
+     * @return string
+     */
+    function wc_wp_theme_get_element_class_name($element)
     {
     }
     // Before wpautop().
