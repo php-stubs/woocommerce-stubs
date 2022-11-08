@@ -5318,10 +5318,11 @@ namespace Automattic\WooCommerce\Blocks\Assets {
          * Get the path to a block's metadata
          *
          * @param string $block_name The block to get metadata for.
+         * @param string $path Optional. The path to the metadata file inside the 'build' folder.
          *
          * @return string|boolean False if metadata file is not found for the block.
          */
-        public function get_block_metadata_path($block_name)
+        public function get_block_metadata_path($block_name, $path = '')
         {
         }
         /**
@@ -7046,7 +7047,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
-         * Get customer payment methods for use in checkout.
+         * Get saved customer payment methods for use in checkout.
          */
         protected function hydrate_customer_payment_methods()
         {
@@ -7689,6 +7690,18 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         protected $block_name = 'filled-cart-block';
     }
     /**
+     * FilledCartBlock class.
+     */
+    class FilterWrapper extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'filter-wrapper';
+    }
+    /**
      * HandpickedProducts class.
      */
     class HandpickedProducts extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractProductGrid
@@ -7969,6 +7982,8 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @var string
          */
         protected $block_name = 'price-filter';
+        const MIN_PRICE_QUERY_VAR = 'min_price';
+        const MAX_PRICE_QUERY_VAR = 'max_price';
     }
     /**
      * ProceedToCheckoutBlock class.
@@ -8065,11 +8080,26 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
-         * Register script and style assets for the block type before it is registered.
-         *
-         * This registers the scripts; it does not enqueue them.
+         * It is necessary to register and enqueues assets during the render phase because we want to load assets only if the block has the content.
          */
         protected function register_block_type_assets()
+        {
+        }
+        /**
+         * Register the context.
+         */
+        protected function get_block_type_uses_context()
+        {
+        }
+        /**
+         * Include and render the block
+         *
+         * @param array    $attributes Block attributes. Default empty array.
+         * @param string   $content    Block content. Default empty string.
+         * @param WP_Block $block      Block instance.
+         * @return string Rendered block type output.
+         */
+        protected function render($attributes, $content, $block)
         {
         }
     }
@@ -8338,11 +8368,13 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         /**
          * Render anchor.
          *
-         * @param \WC_Product $product Product object.
-         * @param array       $attributes Attributes.
+         * @param \WC_Product $product       Product object.
+         * @param string      $on_sale_badge Return value from $render_image.
+         * @param string      $product_image Return value from $render_on_sale_badge.
+         * @param array       $attributes    Attributes.
          * @return string
          */
-        private function render_anchor($product, $attributes)
+        private function render_anchor($product, $on_sale_badge, $product_image, $attributes)
         {
         }
         /**
@@ -8451,11 +8483,29 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
-         * Register script and style assets for the block type before it is registered.
+         * Overwrite parent method to prevent script registration.
          *
-         * This registers the scripts; it does not enqueue them.
+         * It is necessary to register and enqueues assets during the render
+         * phase because we want to load assets only if the block has the content.
          */
         protected function register_block_type_assets()
+        {
+        }
+        /**
+         * Register the context.
+         */
+        protected function get_block_type_uses_context()
+        {
+        }
+        /**
+         * Include and render the block.
+         *
+         * @param array    $attributes Block attributes. Default empty array.
+         * @param string   $content    Block content. Default empty string.
+         * @param WP_Block $block      Block instance.
+         * @return string Rendered block type output.
+         */
+        protected function render($attributes, $content, $block)
         {
         }
     }
@@ -8487,18 +8537,12 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
-         * Remove the query block filter and parse the custom query
+         * Check if a given block
          *
-         * This function is supposed to be called by the `query_loop_block_query_vars`
-         * filter. It de-registers the filter to make sure it runs only once and doesn't end
-         * up hi-jacking future Query Loop blocks.
-         *
-         * It needs unfortunately to be `public` or otherwise the filter can't call it.
-         *
-         * @param WP_Query $query The WordPress Query.
-         * @return array
+         * @param array $parsed_block The block being rendered.
+         * @return boolean
          */
-        public function get_query_by_attributes_once($query)
+        private function is_woocommerce_variation($parsed_block)
         {
         }
         /**
@@ -8511,22 +8555,54 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
-         * Return a custom query based on the attributes.
+         * Return a custom query based on attributes, filters and global WP_Query.
          *
-         * @param WP_Query $query         The WordPress Query.
-         * @param WP_Block $parsed_block  The block being rendered.
+         * @param WP_Query $query The WordPress Query.
          * @return array
          */
-        public function get_query_by_attributes($query, $parsed_block)
+        public function build_query($query)
         {
         }
         /**
          * Return a query for on sale products.
          *
-         * @param array $variation_props Dedicated attributes for the variation.
          * @return array
          */
-        private function get_on_sale_products_query($variation_props)
+        private function get_on_sale_products_query()
+        {
+        }
+        /**
+         * Set the query vars that are used by filter blocks.
+         *
+         * @param array $qvars Public query vars.
+         * @return array
+         */
+        public function set_query_vars($qvars)
+        {
+        }
+        /**
+         * Return queries that are generated by query args
+         *
+         * @return array
+         */
+        private function get_queries_by_applied_filters()
+        {
+        }
+        /**
+         * Return queries that are generated by attributes
+         *
+         * @param array $parsed_block The Product Query that being rendered.
+         * @return array
+         */
+        private function get_queries_by_attributes($parsed_block)
+        {
+        }
+        /**
+         * Return a query that filters products by price.
+         *
+         * @return array
+         */
+        private function get_filter_by_price_query()
         {
         }
     }
@@ -8892,6 +8968,18 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         protected function get_block_type_attributes()
         {
         }
+    }
+    /**
+     * PriceFilter class.
+     */
+    class RatingFilter extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'rating-filter';
     }
     /**
      * ReviewsByCategory class.
@@ -9290,15 +9378,9 @@ namespace Automattic\WooCommerce\Blocks\Domain {
          *
          * @return boolean
          */
-        // phpcs:disable Squiz.PHP.CommentedOutCode
-        // phpcs:disable Squiz.Commenting.InlineComment.InvalidEndChar
-        // phpcs:disable Squiz.Commenting.InlineComment.SpacingBefore
-        //	public function is_feature_plugin_build() {
-        //		return $this->feature()->is_feature_plugin_build();
-        //	}
-        // phpcs:enable Squiz.PHP.CommentedOutCode
-        // phpcs:enable Squiz.Commenting.InlineComment.InvalidEndChar
-        // phpcs:enable Squiz.Commenting.InlineComment.SpacingBefore
+        public function is_feature_plugin_build()
+        {
+        }
     }
 }
 namespace Automattic\WooCommerce\Blocks\Domain\Services {
@@ -10103,16 +10185,9 @@ namespace Automattic\WooCommerce\Blocks {
          *
          * @return boolean
          */
-        // This function will be kept around but commented out in case we add feature-plugin-specific code in the future.
-        // phpcs:disable Squiz.PHP.CommentedOutCode
-        // phpcs:disable Squiz.Commenting.InlineComment.InvalidEndChar
-        // phpcs:disable Squiz.Commenting.InlineComment.SpacingBefore
-        //	public static function is_feature_plugin_build() {
-        //		return self::get_package()->is_feature_plugin_build();
-        //	}
-        // phpcs:enable Squiz.PHP.CommentedOutCode
-        // phpcs:enable Squiz.Commenting.InlineComment.InvalidEndChar
-        // phpcs:enable Squiz.Commenting.InlineComment.SpacingBefore
+        public static function is_feature_plugin_build()
+        {
+        }
         /**
          * Loads the dependency injection container for woocommerce blocks.
          *
@@ -11679,7 +11754,7 @@ namespace Automattic\WooCommerce\StoreApi\Routes\V1 {
     {
         use \Automattic\WooCommerce\StoreApi\Utilities\DraftOrderTrait;
         /**
-         * The routes schema.
+         * The route's schema.
          *
          * @var string
          */
@@ -11690,6 +11765,12 @@ namespace Automattic\WooCommerce\StoreApi\Routes\V1 {
          * @var CartSchema
          */
         protected $cart_schema;
+        /**
+         * Schema class for the cart item.
+         *
+         * @var CartItemSchema
+         */
+        protected $cart_item_schema;
         /**
          * Cart controller class instance.
          *
@@ -11715,7 +11796,8 @@ namespace Automattic\WooCommerce\StoreApi\Routes\V1 {
          * Get the route response based on the type of request.
          *
          * @param \WP_REST_Request $request Request object.
-         * @return \WP_Error|\WP_REST_Response
+         *
+         * @return \WP_REST_Response
          */
         public function get_response(\WP_REST_Request $request)
         {
@@ -11724,15 +11806,52 @@ namespace Automattic\WooCommerce\StoreApi\Routes\V1 {
          * Add nonce headers to a response object.
          *
          * @param \WP_REST_Response $response The response object.
+         *
          * @return \WP_REST_Response
          */
-        protected function add_nonce_headers(\WP_REST_Response $response)
+        protected function add_response_headers(\WP_REST_Response $response)
+        {
+        }
+        /**
+         * Load the cart session before handling responses.
+         *
+         * @param \WP_REST_Request $request Request object.
+         */
+        protected function load_cart_session(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Generates a cart token for the response headers.
+         *
+         * Current namespace is used as the token Issuer.
+         * *
+         *
+         * @return string
+         */
+        protected function get_cart_token()
+        {
+        }
+        /**
+         * Gets the secret for the cart token using wp_salt.
+         *
+         * @return string
+         */
+        protected function get_cart_token_secret()
+        {
+        }
+        /**
+         * Gets the expiration of the cart token. Defaults to 48h.
+         *
+         * @return int
+         */
+        protected function get_cart_token_expiration()
         {
         }
         /**
          * Checks if a nonce is required for the route.
          *
          * @param \WP_REST_Request $request Request.
+         *
          * @return bool
          */
         protected function requires_nonce(\WP_REST_Request $request)
@@ -11760,6 +11879,7 @@ namespace Automattic\WooCommerce\StoreApi\Routes\V1 {
          * to match the logged in cookie in your browser.
          *
          * @param \WP_REST_Request $request Request object.
+         *
          * @return \WP_Error|boolean
          */
         protected function check_nonce(\WP_REST_Request $request)
@@ -11771,7 +11891,8 @@ namespace Automattic\WooCommerce\StoreApi\Routes\V1 {
          * @param string $error_code String based error code.
          * @param string $error_message User facing error message.
          * @param int    $http_status_code HTTP status. Defaults to 500.
-         * @param array  $additional_data  Extra data (key value pairs) to expose in the error response.
+         * @param array  $additional_data Extra data (key value pairs) to expose in the error response.
+         *
          * @return \WP_Error WP Error object.
          */
         protected function get_route_error_response($error_code, $error_message, $http_status_code = 500, $additional_data = [])
@@ -14853,6 +14974,65 @@ namespace Automattic\WooCommerce\StoreApi\Schemas\V1 {
 }
 namespace Automattic\WooCommerce\StoreApi {
     /**
+     * SessionHandler class
+     */
+    final class SessionHandler extends \WC_Session
+    {
+        /**
+         * Token from HTTP headers.
+         *
+         * @var string
+         */
+        protected $token;
+        /**
+         * Table name for session data.
+         *
+         * @var string Custom session table name
+         */
+        protected $table;
+        /**
+         * Expiration timestamp.
+         *
+         * @var int
+         */
+        protected $session_expiration;
+        /**
+         * Constructor for the session class.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Init hooks and session data.
+         */
+        public function init()
+        {
+        }
+        /**
+         * Process the token header to load the correct session.
+         */
+        protected function init_session_from_token()
+        {
+        }
+        /**
+         * Returns the session.
+         *
+         * @param string $customer_id Customer ID.
+         * @param mixed  $default Default session value.
+         *
+         * @return string|array|bool
+         */
+        public function get_session($customer_id, $default = false)
+        {
+        }
+        /**
+         * Save data and delete user session.
+         */
+        public function save_data()
+        {
+        }
+    }
+    /**
      * StoreApi Main Class.
      */
     final class StoreApi
@@ -15099,6 +15279,15 @@ namespace Automattic\WooCommerce\StoreApi\Utilities {
         {
         }
         /**
+         * We want to make local pickup always avaiable without checking for a shipping zone or address.
+         *
+         * @param array $shipping_methods Package we're checking against right now.
+         * @return array $shipping_methods Shipping methods with local pickup.
+         */
+        public function enable_local_pickup_without_address($shipping_methods)
+        {
+        }
+        /**
          * Creates a name for a package.
          *
          * @param array $package Shipping package from WooCommerce.
@@ -15253,6 +15442,109 @@ namespace Automattic\WooCommerce\StoreApi\Utilities {
          * @return array
          */
         protected function get_variable_product_attributes($product)
+        {
+        }
+    }
+    /**
+     * JsonWebToken class.
+     *
+     * Simple Json Web Token generator & verifier static utility class, currently supporting only HS256 signatures.
+     */
+    final class JsonWebToken
+    {
+        /**
+         * JWT header type.
+         *
+         * @var string
+         */
+        private static $type = 'JWT';
+        /**
+         * JWT algorithm to generate signature.
+         *
+         * @var string
+         */
+        private static $algorithm = 'HS256';
+        /**
+         * Generates a token from provided data and secret.
+         *
+         * @param array  $payload Payload data.
+         * @param string $secret The secret used to generate the signature.
+         *
+         * @return string
+         */
+        public static function create(array $payload, string $secret)
+        {
+        }
+        /**
+         * Validates a provided token against the provided secret.
+         * Checks for format, valid header for our class, expiration claim validity and signature.
+         * https://datatracker.ietf.org/doc/html/rfc7519#section-7.2
+         *
+         * @param string $token Full token string.
+         * @param string $secret The secret used to generate the signature.
+         *
+         * @return bool
+         */
+        public static function validate(string $token, string $secret)
+        {
+        }
+        /**
+         * Returns the decoded/encoded header, payload and signature from a token string.
+         *
+         * @param string $token Full token string.
+         *
+         * @return object
+         */
+        public static function get_parts(string $token)
+        {
+        }
+        /**
+         * Generates the json formatted header for our HS256 JWT token.
+         *
+         * @return string|bool
+         */
+        private static function generate_header()
+        {
+        }
+        /**
+         * Generates a sha256 signature for the provided string using the provided secret.
+         *
+         * @param string $string Header + Payload token substring.
+         * @param string $secret The secret used to generate the signature.
+         *
+         * @return false|string
+         */
+        private static function generate_signature(string $string, string $secret)
+        {
+        }
+        /**
+         * Generates the payload in json formatted string.
+         *
+         * @param array $payload Payload data.
+         *
+         * @return string|bool
+         */
+        private static function generate_payload(array $payload)
+        {
+        }
+        /**
+         * Encodes a string to url safe base64.
+         *
+         * @param string $string The string to be encoded.
+         *
+         * @return string
+         */
+        private static function to_base_64_url(string $string)
+        {
+        }
+        /**
+         * Decodes a string encoded using url safe base64, supporting auto padding.
+         *
+         * @param string $string the string to be decoded.
+         *
+         * @return string
+         */
+        private static function from_base_64_url(string $string)
         {
         }
     }

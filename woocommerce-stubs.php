@@ -90,6 +90,15 @@ namespace {
          */
         protected $meta_data = \null;
         /**
+         * List of properties that were earlier managed by data store. However, since DataStore is a not a stored entity in itself, they used to store data in metadata of the data object.
+         * With custom tables, some of these are moved from metadata to their own columns, but existing code will still try to add them to metadata. This array is used to keep track of such properties.
+         *
+         * Only reason to add a property here is that you are moving properties from DataStore instance to data object. If you are adding a new property, consider adding it to to $data array instead.
+         *
+         * @var array
+         */
+        protected $legacy_datastore_props = array();
+        /**
          * Default constructor.
          *
          * @param int|object|array $read ID to load from the DB (optional) or already queried data.
@@ -346,6 +355,14 @@ namespace {
          * @param bool $force_read True to force a new DB read (and update cache).
          */
         public function read_meta_data($force_read = \false)
+        {
+        }
+        /**
+         * Helper function to initialize metadata entries from filtered raw meta data.
+         *
+         * @param array $filtered_meta_data Filtered metadata fetched from DB.
+         */
+        public function init_meta_data(array $filtered_meta_data = array())
         {
         }
         /**
@@ -1645,6 +1662,15 @@ namespace {
          */
         protected $data = array('parent_id' => 0, 'status' => '', 'currency' => '', 'version' => '', 'prices_include_tax' => \false, 'date_created' => \null, 'date_modified' => \null, 'discount_total' => 0, 'discount_tax' => 0, 'shipping_total' => 0, 'shipping_tax' => 0, 'cart_tax' => 0, 'total' => 0, 'total_tax' => 0);
         /**
+         * List of properties that were earlier managed by data store. However, since DataStore is a not a stored entity in itself, they used to store data in metadata of the data object.
+         * With custom tables, some of these are moved from metadata to their own columns, but existing code will still try to add them to metadata. This array is used to keep track of such properties.
+         *
+         * Only reason to add a property here is that you are moving properties from DataStore instance to data object. If you are adding a new property, consider adding it to to $data array instead.
+         *
+         * @var array
+         */
+        protected $legacy_datastore_props = array('_recorded_coupon_usage_counts');
+        /**
          * Order items will be stored here, sometimes before they persist in the DB.
          *
          * @since 3.0.0
@@ -1932,6 +1958,24 @@ namespace {
         public function get_user()
         {
         }
+        /**
+         * Gets information about whether coupon counts were updated.
+         *
+         * @param string $context What the value is for. Valid values are view and edit.
+         *
+         * @return bool True if coupon counts were updated, false otherwise.
+         */
+        public function get_recorded_coupon_usage_counts($context = 'view')
+        {
+        }
+        /**
+         * Get basic order data in array format.
+         *
+         * @return array
+         */
+        public function get_base_data()
+        {
+        }
         /*
         |--------------------------------------------------------------------------
         | Setters
@@ -2071,6 +2115,16 @@ namespace {
          * @throws WC_Data_Exception Exception may be thrown if value is invalid.
          */
         public function set_total($value, $deprecated = '')
+        {
+        }
+        /**
+         * Stores information about whether the coupon usage were counted.
+         *
+         * @param bool|string $value True if counted, false if not.
+         *
+         * @return void
+         */
+        public function set_recorded_coupon_usage_counts($value)
         {
         }
         /*
@@ -8316,25 +8370,9 @@ namespace {
         {
         }
         /**
-         * Check if product tour experiment is treatment.
-         *
-         * @return bool
-         */
-        public static function is_experiment_product_tour()
-        {
-        }
-        /**
          * Pointers for creating a product.
          */
         public function create_product_tutorial()
-        {
-        }
-        /**
-         * Enqueue pointers and add script to page.
-         *
-         * @param array $pointers Pointers data.
-         */
-        public function enqueue_pointers($pointers)
         {
         }
     }
@@ -14660,6 +14698,18 @@ namespace {
          * Search for categories and return json.
          */
         public static function json_search_categories()
+        {
+        }
+        /**
+         * Search for taxonomy terms and return json.
+         */
+        public static function json_search_taxonomy_terms()
+        {
+        }
+        /**
+         * Search for product attributes and return json.
+         */
+        public static function json_search_product_attributes()
         {
         }
         /**
@@ -21106,6 +21156,16 @@ namespace {
         public function __call($method, $parameters)
         {
         }
+        /**
+         * Check if the data store we are working with has a callable method.
+         *
+         * @param string $method Method name.
+         *
+         * @return bool Whether the passed method is callable.
+         */
+        public function has_callable(string $method) : bool
+        {
+        }
     }
     /**
      * Datetime class.
@@ -24198,6 +24258,16 @@ namespace {
         {
         }
         /**
+         * Gets the class name bunch of order instances should have based on their IDs.
+         *
+         * @param array $order_ids Order IDs to get the class name for.
+         *
+         * @return array Array of order_id => class_name.
+         */
+        public static function get_class_names_for_order_ids($order_ids)
+        {
+        }
+        /**
          * Gets the class name an order instance should have based on its ID.
          *
          * @since 6.9.0
@@ -25636,6 +25706,15 @@ namespace {
          */
         protected $extra_data = array('amount' => '', 'reason' => '', 'refunded_by' => 0, 'refunded_payment' => \false);
         /**
+         * List of properties that were earlier managed by data store. However, since DataStore is a not a stored entity in itself, they used to store data in metadata of the data object.
+         * With custom tables, some of these are moved from metadata to their own columns, but existing code will still try to add them to metadata. This array is used to keep track of such properties.
+         *
+         * Only reason to add a property here is that you are moving properties from DataStore instance to data object. Otherwise, if you are adding a new property, consider adding it to $data array instead.
+         *
+         * @var array
+         */
+        protected $legacy_datastore_props = array('_refunded_by', '_refunded_payment');
+        /**
          * Get internal type (post type.)
          *
          * @return string
@@ -25830,7 +25909,22 @@ namespace {
             'date_completed' => \null,
             'date_paid' => \null,
             'cart_hash' => '',
+            // Operational data.
+            'order_stock_reduced' => \false,
+            'download_permissions_granted' => \false,
+            'new_order_email_sent' => \false,
+            'recorded_sales' => \false,
+            'recorded_coupon_usage_counts' => \false,
         );
+        /**
+         * List of properties that were earlier managed by data store. However, since DataStore is a not a stored entity in itself, they used to store data in metadata of the data object.
+         * With custom tables, some of these are moved from metadata to their own columns, but existing code will still try to add them to metadata. This array is used to keep track of such properties.
+         *
+         * Only reason to add a property here is that you are moving properties from DataStore instance to data object. Otherwise, if you are adding a new property, consider adding it to $data array instead.
+         *
+         * @var array
+         */
+        protected $legacy_datastore_props = array('_recorded_sales', '_recorded_coupon_usage_counts', '_download_permissions_granted', '_order_stock_reduced', '_new_order_email_sent');
         /**
          * When a payment is complete this function is called.
          *
@@ -26383,6 +26477,46 @@ namespace {
         public function has_shipping_address()
         {
         }
+        /**
+         * Gets information about whether stock was reduced.
+         *
+         * @since 7.0.0
+         * @param string $context What the value is for. Valid values are view and edit.
+         * @return bool
+         */
+        public function get_order_stock_reduced(string $context = 'view')
+        {
+        }
+        /**
+         * Gets information about whether permissions were generated yet.
+         *
+         * @param string $context What the value is for. Valid values are view and edit.
+         *
+         * @return bool True if permissions were generated, false otherwise.
+         */
+        public function get_download_permissions_granted(string $context = 'view')
+        {
+        }
+        /**
+         * Whether email have been sent for this order.
+         *
+         * @param string $context What the value is for. Valid values are view and edit.
+         *
+         * @return bool
+         */
+        public function get_new_order_email_sent(string $context = 'view')
+        {
+        }
+        /**
+         * Gets information about whether sales were recorded.
+         *
+         * @param string $context What the value is for. Valid values are view and edit.
+         *
+         * @return bool True if sales were recorded, false otherwise.
+         */
+        public function get_recorded_sales(string $context = 'view')
+        {
+        }
         /*
         |--------------------------------------------------------------------------
         | Setters
@@ -26403,6 +26537,48 @@ namespace {
          * @param mixed  $value Value of the prop.
          */
         protected function set_address_prop($prop, $address, $value)
+        {
+        }
+        /**
+         * Setter for billing address, expects the $address parameter to be key value pairs for individual address props.
+         *
+         * @param array $address Address to set.
+         *
+         * @return void
+         */
+        public function set_billing_address(array $address)
+        {
+        }
+        /**
+         * Shortcut for calling set_billing_address.
+         *
+         * This is useful in scenarios where set_$prop_name is invoked, and since we store the billing address as 'billing' prop in data, it can be called directly.
+         *
+         * @param array $address Address to set.
+         *
+         * @return void
+         */
+        public function set_billing(array $address)
+        {
+        }
+        /**
+         * Setter for shipping address, expects the $address parameter to be key value pairs for individual address props.
+         *
+         * @param array $address Address to set.
+         *
+         * @return void
+         */
+        public function set_shipping_address(array $address)
+        {
+        }
+        /**
+         * Shortcut for calling set_shipping_address. This is useful in scenarios where set_$prop_name is invoked, and since we store the shipping address as 'shipping' prop in data, it can be called directly.
+         *
+         * @param array $address Address to set.
+         *
+         * @return void
+         */
+        public function set_shipping(array $address)
         {
         }
         /**
@@ -26707,6 +26883,46 @@ namespace {
          * @throws WC_Data_Exception Throws exception when invalid data is found.
          */
         public function set_cart_hash($value)
+        {
+        }
+        /**
+         * Stores information about whether stock was reduced.
+         *
+         * @param bool|string $value True if stock was reduced, false if not.
+         *
+         * @return void
+         */
+        public function set_order_stock_reduced($value)
+        {
+        }
+        /**
+         * Stores information about whether permissions were generated yet.
+         *
+         * @param bool|string $value True if permissions were generated, false if not.
+         *
+         * @return void
+         */
+        public function set_download_permissions_granted($value)
+        {
+        }
+        /**
+         * Stores information about whether email was sent.
+         *
+         * @param bool|string $value True if email was sent, false if not.
+         *
+         * @return void
+         */
+        public function set_new_order_email_sent($value)
+        {
+        }
+        /**
+         * Stores information about whether sales were recorded.
+         *
+         * @param bool|string $value True if sales were recorded, false if not.
+         *
+         * @return void
+         */
+        public function set_recorded_sales($value)
         {
         }
         /*
@@ -32937,6 +33153,14 @@ namespace {
         {
         }
         /**
+         * Get orders origin details.
+         *
+         * @return array
+         */
+        private static function get_orders_origins()
+        {
+        }
+        /**
          * Get review counts for different statuses.
          *
          * @return array
@@ -33700,7 +33924,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '7.0.1';
+        public $version = '7.1.0';
         /**
          * WooCommerce Schema version.
          *
@@ -35335,7 +35559,7 @@ namespace {
         /**
          * Given an initialized order object, update the post/postmeta records.
          *
-         * @param WC_Order $order Order object.
+         * @param WC_Abstract_Order $order Order object.
          *
          * @return bool Whether the order was updated.
          */
@@ -35358,7 +35582,7 @@ namespace {
         /**
          * Helper method to update order metadata from intialized order object.
          *
-         * @param WC_Order $order Order object.
+         * @param WC_Abstract_Order $order Order object.
          */
         private function update_order_meta_from_object($order)
         {
@@ -36493,13 +36717,13 @@ namespace {
          * @since 3.0.0
          * @var array
          */
-        protected $internal_meta_keys = array('_customer_user', '_order_key', '_order_currency', '_billing_first_name', '_billing_last_name', '_billing_company', '_billing_address_1', '_billing_address_2', '_billing_city', '_billing_state', '_billing_postcode', '_billing_country', '_billing_email', '_billing_phone', '_shipping_first_name', '_shipping_last_name', '_shipping_company', '_shipping_address_1', '_shipping_address_2', '_shipping_city', '_shipping_state', '_shipping_postcode', '_shipping_country', '_shipping_phone', '_completed_date', '_paid_date', '_edit_lock', '_edit_last', '_cart_discount', '_cart_discount_tax', '_order_shipping', '_order_shipping_tax', '_order_tax', '_order_total', '_payment_method', '_payment_method_title', '_transaction_id', '_customer_ip_address', '_customer_user_agent', '_created_via', '_order_version', '_prices_include_tax', '_date_completed', '_date_paid', '_payment_tokens', '_billing_address_index', '_shipping_address_index', '_recorded_sales', '_recorded_coupon_usage_counts', '_download_permissions_granted', '_order_stock_reduced');
+        protected $internal_meta_keys = array('_customer_user', '_order_key', '_order_currency', '_billing_first_name', '_billing_last_name', '_billing_company', '_billing_address_1', '_billing_address_2', '_billing_city', '_billing_state', '_billing_postcode', '_billing_country', '_billing_email', '_billing_phone', '_shipping_first_name', '_shipping_last_name', '_shipping_company', '_shipping_address_1', '_shipping_address_2', '_shipping_city', '_shipping_state', '_shipping_postcode', '_shipping_country', '_shipping_phone', '_completed_date', '_paid_date', '_edit_lock', '_edit_last', '_cart_discount', '_cart_discount_tax', '_order_shipping', '_order_shipping_tax', '_order_tax', '_order_total', '_payment_method', '_payment_method_title', '_transaction_id', '_customer_ip_address', '_customer_user_agent', '_created_via', '_order_version', '_prices_include_tax', '_date_completed', '_date_paid', '_payment_tokens', '_billing_address_index', '_shipping_address_index', '_recorded_sales', '_recorded_coupon_usage_counts', '_download_permissions_granted', '_order_stock_reduced', '_new_order_email_sent');
         /**
          * Custom setters for props. Add key here if it has corresponding set_ and get_ method present.
          *
          * @var string[]
          */
-        protected $internal_data_store_key_getters = array('_download_permissions_granted' => 'download_permissions_granted', '_recorded_sales' => 'recorded_sales', '_recorded_coupon_usage_counts' => 'recorded_coupon_usage_counts', '_order_stock_reduced' => 'stock_reduced', '_new_order_email_sent' => 'email_sent');
+        protected $internal_data_store_key_getters = array('_download_permissions_granted' => 'download_permissions_granted', '_recorded_sales' => 'recorded_sales', '_recorded_coupon_usage_counts' => 'recorded_coupon_usage_counts', '_order_stock_reduced' => 'order_stock_reduced', '_new_order_email_sent' => 'new_order_email_sent');
         /**
          * Method to create a new order in the database.
          *
@@ -36705,12 +36929,31 @@ namespace {
         {
         }
         /**
+         * Whether email have been sent for this order.
+         *
+         * @param WC_Order|int $order Order ID or order object.
+         *
+         * @return bool               Whether email is sent.
+         */
+        public function get_new_order_email_sent($order)
+        {
+        }
+        /**
          * Stores information about whether email was sent.
          *
          * @param WC_Order|int $order Order ID or order object.
          * @param bool         $set True or false.
          */
         public function set_email_sent($order, $set)
+        {
+        }
+        /**
+         * Stores information about whether email was sent.
+         *
+         * @param WC_Order|int $order Order ID or order object.
+         * @param bool         $set True or false.
+         */
+        public function set_new_order_email_sent($order, $set)
         {
         }
         /**
@@ -36771,9 +37014,27 @@ namespace {
          * Stores information about whether stock was reduced.
          *
          * @param WC_Order|int $order Order ID or order object.
+         * @return bool
+         */
+        public function get_order_stock_reduced($order)
+        {
+        }
+        /**
+         * Stores information about whether stock was reduced.
+         *
+         * @param WC_Order|int $order Order ID or order object.
          * @param bool         $set True or false.
          */
         public function set_stock_reduced($order, $set)
+        {
+        }
+        /**
+         * Gets information about whether stock was reduced.
+         *
+         * @param WC_Order|int $order Order ID or order object.
+         * @param bool         $set True or false.
+         */
+        public function set_order_stock_reduced($order, $set)
         {
         }
         /**
@@ -36819,6 +37080,15 @@ namespace {
          * @return array Orders.
          */
         private function compile_orders($order_ids, $query_vars, $query)
+        {
+        }
+        /**
+         * Helper method to prime caches for orders. Call this if you are going to be fetching orders in a loop.
+         *
+         * @param array $order_ids List of order IDS to prime caches for.
+         * @param array $query_vars Original query arguments.
+         */
+        public function prime_caches_for_orders($order_ids, $query_vars)
         {
         }
         /**
@@ -65318,6 +65588,8 @@ namespace Automattic\WooCommerce\Admin\Features {
         /**
          * Adds the Features section to the advanced tab of WooCommerce Settings
          *
+         * @deprecated 7.0 The WooCommerce Admin features are now handled by the WooCommerce features engine (see the FeaturesController class).
+         *
          * @param array $sections Sections.
          * @return array
          */
@@ -65326,6 +65598,8 @@ namespace Automattic\WooCommerce\Admin\Features {
         }
         /**
          * Adds the Features settings.
+         *
+         * @deprecated 7.0 The WooCommerce Admin features are now handled by the WooCommerce features engine (see the FeaturesController class).
          *
          * @param array  $settings Settings.
          * @param string $current_section Current section slug.
@@ -65596,6 +65870,8 @@ namespace Automattic\WooCommerce\Admin\Features\Navigation {
         }
         /**
          * Add the feature toggle to the features settings.
+         *
+         * @deprecated 7.0 The WooCommerce Admin features are now handled by the WooCommerce features engine (see the FeaturesController class).
          *
          * @param array $features Feature sections.
          * @return array
@@ -67423,6 +67699,7 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
         {
         }
     }
+    // https://github.com/Automattic/jetpack/blob/trunk/projects/packages/connection/src/class-manager.php .
     /**
      * Get Mobile App Task
      */
@@ -67470,10 +67747,29 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
         }
         /**
          * Task visibility.
+         * Can view under these conditions:
+         *  - Jetpack is installed and connected && current site user has a wordpress.com account connected to jetpack
+         *  - Jetpack is not connected && current user is capable of installing plugins
          *
          * @return bool
          */
         public function can_view()
+        {
+        }
+        /**
+         * Determines if site has any users connected to WordPress.com via JetPack
+         *
+         * @return bool
+         */
+        private static function is_jetpack_connected()
+        {
+        }
+        /**
+         * Determines if the current user is connected to Jetpack.
+         *
+         * @return bool
+         */
+        private static function is_current_user_connected()
         {
         }
         /**
@@ -73468,7 +73764,7 @@ namespace Automattic\WooCommerce {
          *
          * @var string[]
          */
-        private $service_providers = array(\Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\AssignDefaultCategoryServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\DownloadPermissionsAdjusterServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OptionSanitizerServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrdersDataStoreServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductAttributesLookupServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductDownloadsServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductReviewsServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProxiesServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\RestockRefundedItemsAdjusterServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\UtilsClassesServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\COTMigrationServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrdersControllersServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ObjectCacheServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\BatchProcessingServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrderMetaBoxServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrderAdminServiceProvider::class);
+        private $service_providers = array(\Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\AssignDefaultCategoryServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\DownloadPermissionsAdjusterServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OptionSanitizerServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrdersDataStoreServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductAttributesLookupServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductDownloadsServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductReviewsServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProxiesServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\RestockRefundedItemsAdjusterServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\UtilsClassesServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\COTMigrationServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrdersControllersServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ObjectCacheServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\BatchProcessingServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrderMetaBoxServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrderAdminServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\FeaturesServiceProvider::class);
         /**
          * The underlying container.
          *
@@ -73589,7 +73885,7 @@ namespace Automattic\WooCommerce\DataBase\Migrations\CustomOrderTable {
         {
         }
         /**
-         * Migrate order data to the custom orders table.
+         * Sync order data between the custom order tables and the core WordPress post tables.
          *
          * ## OPTIONS
          *
@@ -73601,12 +73897,12 @@ namespace Automattic\WooCommerce\DataBase\Migrations\CustomOrderTable {
          *
          * ## EXAMPLES
          *
-         *     wp wc cot migrate --batch-size=500
+         *     wp wc cot sync --batch-size=500
          *
          * @param array $args Positional arguments passed to the command.
          * @param array $assoc_args Associative arguments (options) passed to the command.
          */
-        public function migrate($args = array(), $assoc_args = array())
+        public function sync($args = array(), $assoc_args = array())
         {
         }
         /**
@@ -73631,7 +73927,7 @@ namespace Automattic\WooCommerce\DataBase\Migrations\CustomOrderTable {
          * @param array $args Positional arguments passed to the command.
          * @param array $assoc_args Associative arguments (options) passed to the command.
          */
-        public function backfill($args = array(), $assoc_args = array())
+        public function migrate($args = array(), $assoc_args = array())
         {
         }
         /**
@@ -74856,6 +75152,17 @@ namespace Automattic\WooCommerce\Utilities {
         {
         }
         /**
+         * Helper function to generate a callback which can be executed on an array to select a value from each item.
+         *
+         * @param string $selector_name Field/property/method name to select.
+         * @param int    $selector_type Selector type.
+         *
+         * @return \Closure Callback to select the value.
+         */
+        private static function get_selector_callback(string $selector_name, int $selector_type = self::SELECT_BY_AUTO) : \Closure
+        {
+        }
+        /**
          * Select one single value from all the items in an array of either arrays or objects based on a selector.
          * For arrays, the selector is a key name; for objects, the selector can be either a method name or a property name.
          *
@@ -74864,7 +75171,56 @@ namespace Automattic\WooCommerce\Utilities {
          * @param int    $selector_type Selector type, one of the SELECT_BY_* constants.
          * @return array The selected values.
          */
-        public static function select(array $items, string $selector_name, int $selector_type = self::SELECT_BY_AUTO)
+        public static function select(array $items, string $selector_name, int $selector_type = self::SELECT_BY_AUTO) : array
+        {
+        }
+        /**
+         * Returns a new assoc array with format [ $key1 => $item1, $key2 => $item2, ... ] where $key is the value of the selector and items are original items passed.
+         *
+         * @param array  $items Items to use for conversion.
+         * @param string $selector_name Key, method or property name to use as a selector.
+         * @param int    $selector_type Selector type, one of the SELECT_BY_* constants.
+         *
+         * @return array The converted assoc array.
+         */
+        public static function select_as_assoc(array $items, string $selector_name, int $selector_type = self::SELECT_BY_AUTO) : array
+        {
+        }
+        /**
+         * Returns whether two assoc array are same. The comparison is done recursively by keys, and the functions returns on first difference found.
+         *
+         * @param array $array1 First array to compare.
+         * @param array $array2 Second array to compare.
+         * @param bool  $strict Whether to use strict comparison.
+         *
+         * @return bool Whether the arrays are different.
+         */
+        public static function deep_compare_array_diff(array $array1, array $array2, bool $strict = true)
+        {
+        }
+        /**
+         * Computes difference between two assoc arrays recursively. Similar to PHP's native assoc_array_diff, but also supports nested arrays.
+         *
+         * @param array $array1 First array.
+         * @param array $array2 Second array.
+         * @param bool  $strict Whether to also match type of values.
+         *
+         * @return array The difference between the two arrays.
+         */
+        public static function deep_assoc_array_diff(array $array1, array $array2, bool $strict = true) : array
+        {
+        }
+        /**
+         * Helper method to compare to compute difference between two arrays. Comparison is done recursively.
+         *
+         * @param array $array1 First array.
+         * @param array $array2 Second array.
+         * @param bool  $compare Whether to compare the arrays. If true, then function will return false on first difference, in order to be slightly more efficient.
+         * @param bool  $strict Whether to do string comparison.
+         *
+         * @return array|bool The difference between the two arrays, or if array are same, depending upon $compare param.
+         */
+        private static function deep_compute_or_compare_array_diff(array $array1, array $array2, bool $compare, bool $strict = true)
         {
         }
         /**
@@ -74875,6 +75231,101 @@ namespace Automattic\WooCommerce\Utilities {
          * @return bool True if the value has been added to the array, false if the value was already in the array.
          */
         public static function push_once(array &$array, $value) : bool
+        {
+        }
+        /**
+         * Ensure that an associative array has a given key, and if not, set the key to an empty array.
+         *
+         * @param array  $array The array to check.
+         * @param string $key The key to check.
+         * @param bool   $throw_if_existing_is_not_array If true, an exception will be thrown if the key already exists in the array but the value is not an array.
+         * @return bool True if the key has been added to the array, false if not (the key already existed).
+         * @throws \Exception The key already exists in the array but the value is not an array.
+         */
+        public static function ensure_key_is_array(array &$array, string $key, bool $throw_if_existing_is_not_array = false) : bool
+        {
+        }
+    }
+    /**
+     * Class with methods that allow to retrieve information about the existing WooCommerce features,
+     * also has methods for WooCommerce plugins to declare (in)compatibility with the features.
+     */
+    class FeaturesUtil
+    {
+        /**
+         * Get all the existing WooCommerce features.
+         *
+         * Returns an associative array where keys are unique feature ids
+         * and values are arrays with these keys:
+         *
+         * - name
+         * - description
+         * - is_experimental
+         * - is_enabled (if $include_enabled_info is passed as true)
+         *
+         * @param bool $include_experimental Include also experimental/work in progress features in the list.
+         * @param bool $include_enabled_info True to include the 'is_enabled' field in the returned features info.
+         * @returns array An array of information about existing features.
+         */
+        public static function get_features(bool $include_experimental = false, bool $include_enabled_info = false) : array
+        {
+        }
+        /**
+         * Check if a given feature is currently enabled.
+         *
+         * @param  string $feature_id Unique feature id.
+         * @return bool True if the feature is enabled, false if not or if the feature doesn't exist.
+         */
+        public static function feature_is_enabled(string $feature_id) : bool
+        {
+        }
+        /**
+         * Declare (in)compatibility with a given feature for a given plugin.
+         *
+         * This method MUST be executed from inside a handler for the 'before_woocommerce_init' hook and
+         * SHOULD be executed from the main plugin file passing __FILE__ or 'my-plugin/my-plugin.php' for the
+         * $plugin_file argument.
+         *
+         * @param string $feature_id Unique feature id.
+         * @param string $plugin_file The full plugin file path.
+         * @param bool   $positive_compatibility True if the plugin declares being compatible with the feature, false if it declares being incompatible.
+         * @return bool True on success, false on error (feature doesn't exist or not inside the required hook).
+         */
+        public static function declare_compatibility(string $feature_id, string $plugin_file, bool $positive_compatibility = true) : bool
+        {
+        }
+        /**
+         * Get the ids of the features that a certain plugin has declared compatibility for.
+         *
+         * This method can't be called before the 'woocommerce_init' hook is fired.
+         *
+         * @param string $plugin_name Plugin name, in the form 'directory/file.php'.
+         * @return array An array having a 'compatible' and an 'incompatible' key, each holding an array of plugin ids.
+         */
+        public static function get_compatible_features_for_plugin(string $plugin_name) : array
+        {
+        }
+        /**
+         * Get the names of the plugins that have been declared compatible or incompatible with a given feature.
+         *
+         * @param string $feature_id Feature id.
+         * @return array An array having a 'compatible' and an 'incompatible' key, each holding an array of plugin names.
+         */
+        public static function get_compatible_plugins_for_feature(string $feature_id) : array
+        {
+        }
+        /**
+         * Sets a flag indicating that it's allowed to enable features for which incompatible plugins are active
+         * from the WooCommerce feature settings page.
+         */
+        public static function allow_enabling_features_with_incompatible_plugins() : void
+        {
+        }
+        /**
+         * Sets a flag indicating that it's allowed to activate plugins for which incompatible features are enabled
+         * from the WordPress plugins page.
+         */
+        public static function allow_activating_plugins_with_incompatible_features() : void
         {
         }
     }
@@ -74950,9 +75401,9 @@ namespace Automattic\WooCommerce\Utilities {
          *
          * @param WC_Order|WP_Post $post_or_order_object Post or order object.
          *
-         * @return WC_Order WC_Order object.
+         * @return bool|WC_Order|WC_Order_Refund WC_Order object.
          */
-        public static function init_theorder_object($post_or_order_object) : \WC_Order
+        public static function init_theorder_object($post_or_order_object)
         {
         }
         /**
@@ -75006,6 +75457,92 @@ namespace Automattic\WooCommerce\Utilities {
         }
     }
     /**
+     * A class of utilities for dealing with plugins.
+     */
+    class PluginUtil
+    {
+        use \Automattic\WooCommerce\Internal\Traits\AccessiblePrivateMethods;
+        /**
+         * The LegacyProxy instance to use.
+         *
+         * @var LegacyProxy
+         */
+        private $proxy;
+        /**
+         * The cached list of WooCommerce aware plugin ids.
+         *
+         * @var null|array
+         */
+        private $woocommerce_aware_plugins = null;
+        /**
+         * The cached list of enabled WooCommerce aware plugin ids.
+         *
+         * @var null|array
+         */
+        private $woocommerce_aware_active_plugins = null;
+        /**
+         * Creates a new instance of the class.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Initialize the class instance.
+         *
+         * @internal
+         *
+         * @param LegacyProxy $proxy The instance of LegacyProxy to use.
+         */
+        public final function init(\Automattic\WooCommerce\Proxies\LegacyProxy $proxy)
+        {
+        }
+        /**
+         * Get a list with the names of the WordPress plugins that are WooCommerce aware
+         * (they have a "WC tested up to" header).
+         *
+         * @param bool $active_only True to return only active plugins, false to return all the active plugins.
+         * @return string[] A list of plugin ids (path/file.php).
+         */
+        public function get_woocommerce_aware_plugins(bool $active_only = false) : array
+        {
+        }
+        /**
+         * Get the printable name of a plugin.
+         *
+         * @param string $plugin_id Plugin id (path/file.php).
+         * @return string Printable plugin name, or the plugin id itself if printable name is not available.
+         */
+        public function get_plugin_name(string $plugin_id) : string
+        {
+        }
+        /**
+         * Check if a plugin is WooCommerce aware.
+         *
+         * @param string|array $plugin_file_or_data Plugin id (path/file.php) or plugin data (as returned by get_plugins).
+         * @return bool True if the plugin exists and is WooCommerce aware.
+         * @throws \Exception The input is neither a string nor an array.
+         */
+        public function is_woocommerce_aware_plugin($plugin_file_or_data) : bool
+        {
+        }
+        /**
+         * Match plugin identifier passed as a parameter with the output from `get_plugins()`.
+         *
+         * @param string $plugin_file Plugin identifier, either 'my-plugin/my-plugin.php', or output from __FILE__.
+         *
+         * @return string|false Key from the array returned by `get_plugins` if matched. False if no match.
+         */
+        public function get_wp_plugin_id($plugin_file)
+        {
+        }
+        /**
+         * Handle plugin activation and deactivation by clearing the WooCommerce aware plugin ids cache.
+         */
+        private function handle_plugin_de_activation() : void
+        {
+        }
+    }
+    /**
      * A class of utilities for dealing with strings.
      */
     final class StringUtil
@@ -75043,6 +75580,15 @@ namespace Automattic\WooCommerce\Utilities {
          * @return bool True if $contained is contained inside $string, false otherwise.
          */
         public static function contains(string $string, string $contained, bool $case_sensitive = true) : bool
+        {
+        }
+        /**
+         * Get the name of a plugin in the form 'directory/file.php', as in the keys of the array returned by 'get_plugins'.
+         *
+         * @param string $plugin_file_path The path of the main plugin file (can be passed as __FILE__ from the plugin itself).
+         * @return string The name of the plugin in the form 'directory/file.php'.
+         */
+        public static function plugin_name_from_plugin_file(string $plugin_file_path) : string
         {
         }
     }
