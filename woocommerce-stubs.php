@@ -7905,10 +7905,6 @@ namespace {
          */
         public const ERROR_STORE = 'woocommerce_meta_box_errors';
         /**
-         * The css class used to close the meta box
-         */
-        private const CLOSED_CSS_CLASS = 'closed';
-        /**
          * Is meta boxes saved once?
          *
          * @var boolean
@@ -7962,14 +7958,6 @@ namespace {
          * Add WC Meta boxes.
          */
         public function add_meta_boxes()
-        {
-        }
-        /**
-         * Collapse product short description meta box by default
-         *
-         * @param array $classes The css class array applied to the meta box.
-         */
-        public function collapse_postexcerpt($classes)
         {
         }
         /**
@@ -8373,6 +8361,12 @@ namespace {
          * Pointers for creating a product.
          */
         public function create_product_tutorial()
+        {
+        }
+        /**
+         * Pointers for accessing In-App Marketplace.
+         */
+        public function create_wc_addons_tutorial()
         {
         }
     }
@@ -10122,10 +10116,11 @@ namespace {
          * Using the API base, form a request URL from a given endpoint.
          *
          * @param string $endpoint The endpoint to request.
+         * @param string $query_string Optional query string to append to the URL.
          *
          * @return string The absolute endpoint URL.
          */
-        public static function url($endpoint)
+        public static function url($endpoint, $query_string = '')
         {
         }
     }
@@ -31351,7 +31346,7 @@ namespace {
         /**
          * Get shipping tax.
          *
-         * @return array
+         * @return float
          */
         public function get_shipping_tax()
         {
@@ -33924,7 +33919,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '7.1.1';
+        public $version = '7.2.0';
         /**
          * WooCommerce Schema version.
          *
@@ -34522,7 +34517,7 @@ namespace {
         }
     }
     /**
-     * Main Command for WooCommere CLI.
+     * Main Command for WooCommerce CLI.
      *
      * Since a lot of WC operations can be handled via the REST API, we base our CLI
      * off of Restful to generate commands for each WooCommerce REST API endpoint
@@ -66316,6 +66311,24 @@ namespace Automattic\WooCommerce\Admin\Features\Navigation {
 }
 namespace Automattic\WooCommerce\Admin\Features {
     /**
+     * Loads assets related to the new product management experience page.
+     */
+    class NewProductManagementExperience
+    {
+        /**
+         * Constructor
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Enqueue styles needed for the rich text editor.
+         */
+        public function enqueue_styles()
+        {
+        }
+    }
+    /**
      * Contains backend logic for the onboarding profile and checklist feature.
      *
      * @deprecated since 6.3.0, use WooCommerce\Internal\Admin\Onboarding.
@@ -66442,6 +66455,8 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
          * Name of the snooze option.
          *
          * @var string
+         *
+         * @deprecated 7.2.0
          */
         const SNOOZED_OPTION = 'woocommerce_task_list_remind_me_later_tasks';
         /**
@@ -66559,6 +66574,8 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
         /**
          * Level.
          *
+         * @deprecated 7.2.0
+         *
          * @return string
          */
         public function get_level()
@@ -66615,6 +66632,8 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
         /**
          * Check if a task is snoozeable.
          *
+         * @deprecated 7.2.0
+         *
          * @return bool
          */
         public function is_snoozeable()
@@ -66623,6 +66642,8 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
         /**
          * Get the snoozed until datetime.
          *
+         * @deprecated 7.2.0
+         *
          * @return string
          */
         public function get_snoozed_until()
@@ -66630,6 +66651,8 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
         }
         /**
          * Bool for task snoozed.
+         *
+         * @deprecated 7.2.0
          *
          * @return bool
          */
@@ -66640,6 +66663,9 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
          * Snooze the task.
          *
          * @param string $duration Duration to snooze. day|hour|week.
+         *
+         * @deprecated 7.2.0
+         *
          * @return bool
          */
         public function snooze($duration = 'day')
@@ -66647,6 +66673,8 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
         }
         /**
          * Undo task snooze.
+         *
+         * @deprecated 7.2.0
          *
          * @return bool
          */
@@ -66690,6 +66718,8 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
         /**
          * Check if task is disabled.
          *
+         * @deprecated 7.2.0
+         *
          * @return bool
          */
         public function is_disabled()
@@ -66709,6 +66739,14 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
          * @return bool
          */
         public function is_visited()
+        {
+        }
+        /**
+         * Check if should record event when task is viewed
+         *
+         * @return bool
+         */
+        public function get_record_view_event() : bool
         {
         }
         /**
@@ -67022,11 +67060,15 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
         /**
          * Array of TaskListSection.
          *
+         * @deprecated 7.2.0
+         *
          * @var array
          */
         private $sections = array();
         /**
          * Key value map of task class and id used for sections.
+         *
+         * @deprecated 7.2.0
          *
          * @var array
          */
@@ -67123,6 +67165,8 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
         /**
          * Get task list sections.
          *
+         * @deprecated 7.2.0
+         *
          * @return array
          */
         public function get_sections()
@@ -67177,6 +67221,8 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
     }
     /**
      * Task List section class.
+     *
+     * @deprecated 7.2.0
      */
     class TaskListSection
     {
@@ -67270,7 +67316,7 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
          *
          * @var array
          */
-        const DEFAULT_TASKS = array('StoreDetails', 'Purchase', 'Products', 'WooCommercePayments', 'Payments', 'Tax', 'Shipping', 'Marketing', 'Appearance', 'AdditionalPayments', 'ReviewShippingOptions', 'GetMobileApp');
+        const DEFAULT_TASKS = array('StoreDetails', 'Purchase', 'Products', 'WooCommercePayments', 'Payments', 'Tax', 'Shipping', 'Marketing', 'Appearance', 'AdditionalPayments', 'ReviewShippingOptions', 'GetMobileApp', 'TourInAppMarketplace');
         /**
          * Get class instance.
          */
@@ -67315,7 +67361,7 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
          * Add a task list.
          *
          * @param array $args Task list properties.
-         * @return WP_Error|TaskList
+         * @return \WP_Error|TaskList
          */
         public static function add_list($args)
         {
@@ -67325,7 +67371,7 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
          *
          * @param string $list_id List ID to add the task to.
          * @param array  $args Task properties.
-         * @return WP_Error|Task
+         * @return \WP_Error|Task
          */
         public static function add_task($list_id, $args)
         {
@@ -67429,6 +67475,11 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
     class Payments extends \Automattic\WooCommerce\Admin\Features\OnboardingTasks\Task
     {
         /**
+         * Used to cache is_complete() method result.
+         * @var null
+         */
+        private $is_complete_result = null;
+        /**
          * ID.
          *
          * @return string
@@ -67490,6 +67541,11 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
      */
     class AdditionalPayments extends \Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks\Payments
     {
+        /**
+         * Used to cache is_complete() method result.
+         * @var null
+         */
+        private $is_complete_result = null;
         /**
          * ID.
          *
@@ -68327,6 +68383,11 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
     class Tax extends \Automattic\WooCommerce\Admin\Features\OnboardingTasks\Task
     {
         /**
+         * Used to cache is_complete() method result.
+         * @var null
+         */
+        private $is_complete_result = null;
+        /**
          * Constructor
          *
          * @param TaskList $task_list Parent task list.
@@ -68410,6 +68471,68 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
          * @return array
          */
         public static function get_automated_support_countries()
+        {
+        }
+    }
+    /**
+     * Tour In-App Marketplace task
+     */
+    class TourInAppMarketplace extends \Automattic\WooCommerce\Admin\Features\OnboardingTasks\Task
+    {
+        /**
+         * ID.
+         *
+         * @return string
+         */
+        public function get_id()
+        {
+        }
+        /**
+         * Title.
+         *
+         * @return string
+         */
+        public function get_title()
+        {
+        }
+        /**
+         * Content.
+         *
+         * @return string
+         */
+        public function get_content()
+        {
+        }
+        /**
+         * Time.
+         *
+         * @return string
+         */
+        public function get_time()
+        {
+        }
+        /**
+         * Task completion.
+         *
+         * @return bool
+         */
+        public function is_complete()
+        {
+        }
+        /**
+         * Action URL.
+         *
+         * @return string
+         */
+        public function get_action_url()
+        {
+        }
+        /**
+         * Check if should record event when task is viewed
+         *
+         * @return bool
+         */
+        public function get_record_view_event() : bool
         {
         }
     }
@@ -69352,26 +69475,6 @@ namespace Automattic\WooCommerce\Admin\Notes {
          * @var string
          */
         protected static $facade_over_classname = 'Automattic\\WooCommerce\\Internal\\Admin\\Notes\\GivingFeedbackNotes';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '4.8.0';
-    }
-    /**
-     * WC_Admin_Notes_Insight_First_Sale.
-     *
-     * @deprecated since 4.8.0, use InsightFirstSale
-     */
-    class WC_Admin_Notes_Insight_First_Sale extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Internal\\Admin\\Notes\\InsightFirstSale';
         /**
          * The version that this class was deprecated in.
          *
