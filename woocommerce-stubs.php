@@ -14247,6 +14247,12 @@ namespace {
         {
         }
         /**
+         * Creates the React mount point for the embedded banner.
+         */
+        public function conflict_error()
+        {
+        }
+        /**
          * Add this page to settings.
          *
          * @param array $pages Existing pages.
@@ -32793,6 +32799,18 @@ namespace {
         {
         }
         /**
+         * Checks whether a block template for a given taxonomy exists.
+         *
+         * **Note:** This checks both the `templates` and `block-templates` directories
+         * as both conventions should be supported.
+         *
+         * @param object $taxonomy Object taxonomy to check.
+         * @return boolean
+         */
+        private static function taxonomy_has_block_template($taxonomy) : bool
+        {
+        }
+        /**
          * Checks whether a block template with that name exists.
          *
          * **Note: ** This checks both the `templates` and `block-templates` directories
@@ -33919,7 +33937,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '7.2.3';
+        public $version = '7.3.0';
         /**
          * WooCommerce Schema version.
          *
@@ -48509,6 +48527,18 @@ namespace {
         {
         }
         /**
+         * Get formatted item data, not including orders count nor total spent.
+         * This method is needed because v3 API doesn't return those two fields.
+         *
+         * @internal This method could disappear or have its name or signature changed in future releases.
+         *
+         * @param  WC_Data $object WC_Data instance.
+         * @return array
+         */
+        protected function get_formatted_item_data_core($object)
+        {
+        }
+        /**
          * Prepare a single customer output for response.
          *
          * @param  WP_User         $user_data User object.
@@ -55440,6 +55470,14 @@ namespace {
          * Send a Tracks event for WooCommerce settings page views.
          */
         public function track_settings_page_view()
+        {
+        }
+        /**
+         * Adds the tracking scripts for product setting pages.
+         *
+         * @param string $hook Page hook.
+         */
+        public function possibly_add_settings_tracking_scripts($hook)
         {
         }
     }
@@ -77128,7 +77166,7 @@ namespace {
      *
      * @param string $element The name of the element.
      *
-     * @since 7.1.0
+     * @since 7.0.1
      * @return string
      */
     function wc_wp_theme_get_element_class_name($element)
@@ -79941,9 +79979,10 @@ namespace {
      * Return the orders count of a specific order status.
      *
      * @param string $status Status.
+     * @param string $type   (Optional) Order type. Leave empty to include all 'for order-count' order types. @{see wc_get_order_types()}.
      * @return int
      */
-    function wc_orders_count($status)
+    function wc_orders_count($status, string $type = '')
     {
     }
     /**
@@ -80434,23 +80473,6 @@ namespace {
      * @return string
      */
     function wc_product_post_type_link($permalink, $post)
-    {
-    }
-    /**
-     * Filter to add upload tips under the product image thumbnail.
-     *
-     * @param  string $content The HTML markup for the admin post thumbnail.
-     * @return string
-     */
-    function wc_product_post_thumbnail_html($content)
-    {
-    }
-    /**
-     * Action to add the filter to add upload tips under the product image thumbnail.
-     *
-     * @param WP_Screen $current_screen Current WP_Screen object.
-     */
-    function wc_add_product_post_thumbnail_html_filter($current_screen)
     {
     }
     /**

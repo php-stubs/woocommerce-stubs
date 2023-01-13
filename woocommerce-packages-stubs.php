@@ -5864,6 +5864,29 @@ namespace Automattic\WooCommerce\Blocks {
         {
         }
         /**
+         * This function is used on the `pre_get_block_template` hook to return the fallback template from the db in case
+         * the template is eligible for it.
+         *
+         * @param \WP_Block_Template|null $template Block template object to short-circuit the default query,
+         *                                          or null to allow WP to run its normal queries.
+         * @param string                  $id Template unique identifier (example: theme_slug//template_slug).
+         * @param string                  $template_type wp_template or wp_template_part.
+         *
+         * @return object|null
+         */
+        public function get_block_template_fallback($template, $id, $template_type)
+        {
+        }
+        /**
+         * Adds the `archive-product` template to the `taxonomy-product_cat`, `taxonomy-product_tag`, `taxonomy-attribute`
+         * templates to be able to fall back to it.
+         *
+         * @param array $template_hierarchy A list of template candidates, in descending order of priority.
+         */
+        public function add_archive_product_to_eligible_for_fallback_templates($template_hierarchy)
+        {
+        }
+        /**
          * Checks the old and current themes and determines if the "wc_blocks_use_blockified_product_grid_block_as_template"
          * option need to be updated accordingly.
          *
@@ -5891,9 +5914,9 @@ namespace Automattic\WooCommerce\Blocks {
         /**
          * Add the block template objects to be used.
          *
-         * @param array $query_result Array of template objects.
-         * @param array $query Optional. Arguments to retrieve templates.
-         * @param array $template_type wp_template or wp_template_part.
+         * @param array  $query_result Array of template objects.
+         * @param array  $query Optional. Arguments to retrieve templates.
+         * @param string $template_type wp_template or wp_template_part.
          * @return array
          */
         public function add_block_templates($query_result, $query, $template_type)
@@ -5902,8 +5925,8 @@ namespace Automattic\WooCommerce\Blocks {
         /**
          * Gets the templates saved in the database.
          *
-         * @param array $slugs An array of slugs to retrieve templates for.
-         * @param array $template_type wp_template or wp_template_part.
+         * @param array  $slugs An array of slugs to retrieve templates for.
+         * @param string $template_type wp_template or wp_template_part.
          *
          * @return int[]|\WP_Post[] An array of found templates.
          */
@@ -5926,8 +5949,8 @@ namespace Automattic\WooCommerce\Blocks {
         /**
          * Get and build the block template objects from the block template files.
          *
-         * @param array $slugs An array of slugs to retrieve templates for.
-         * @param array $template_type wp_template or wp_template_part.
+         * @param array  $slugs An array of slugs to retrieve templates for.
+         * @param string $template_type wp_template or wp_template_part.
          *
          * @return array WP_Block_Template[] An array of block template objects.
          */
@@ -5937,11 +5960,22 @@ namespace Automattic\WooCommerce\Blocks {
         /**
          * Gets the directory where templates of a specific template type can be found.
          *
-         * @param array $template_type wp_template or wp_template_part.
+         * @param string $template_type wp_template or wp_template_part.
          *
          * @return string
          */
         protected function get_templates_directory($template_type = 'wp_template')
+        {
+        }
+        /**
+         * Returns the path of a template on the Blocks template folder.
+         *
+         * @param string $template_slug Block template slug e.g. single-product.
+         * @param string $template_type wp_template or wp_template_part.
+         *
+         * @return string
+         */
+        public function get_template_path_from_woocommerce($template_slug, $template_type = 'wp_template')
         {
         }
         /**
@@ -6835,6 +6869,30 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @var string
          */
         protected $block_name = 'cart-accepted-payment-methods-block';
+    }
+    /**
+     * CartCrossSellsBlock class.
+     */
+    class CartCrossSellsBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'cart-cross-sells-block';
+    }
+    /**
+     * CartCrossSellsProductsBlock class.
+     */
+    class CartCrossSellsProductsBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'cart-cross-sells-products-block';
     }
     /**
      * CartExpressPaymentBlock class.
@@ -8535,6 +8593,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
     }
     // phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_tax_query
     // phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+    // phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_meta_key
     /**
      * ProductQuery class.
      */
@@ -8553,11 +8612,31 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          */
         protected $parsed_block;
         /**
+         * Orderby options not natively supported by WordPress REST API
+         *
+         * @var array
+         */
+        protected $custom_order_opts = array('popularity', 'rating');
+        /**
          * All the query args related to the filter by attributes block.
          *
          * @var array
          */
         protected $attributes_filter_query_args = array();
+        /** This is a feature flag to enable the custom inherit Global Query implementation.
+         * This is not intended to be a permanent feature flag, but rather a temporary.
+         * It is also necessary to enable this feature flag on the PHP side: `assets/js/blocks/product-query/utils.tsx:83`.
+         * https://github.com/woocommerce/woocommerce-blocks/pull/7382
+         *
+         * @var boolean
+         */
+        protected $is_custom_inherit_global_query_implementation_enabled = false;
+        /**
+         * All query args from WP_Query.
+         *
+         * @var array
+         */
+        protected $valid_query_vars;
         /**
          * Initialize this block type.
          *
@@ -8605,7 +8684,8 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
-         * Return the product ids based on the attributes.
+         * Return the product ids based on the attributes and global query.
+         * This is used to allow the filter blocks to render data that matches with variations. More details here: https://github.com/woocommerce/woocommerce-blocks/issues/7245
          *
          * @param array $parsed_block The block being rendered.
          * @return array
@@ -8616,11 +8696,23 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         /**
          * Merge in the first parameter the keys "post_in", "meta_query" and "tax_query" of the second parameter.
          *
-         * @param array $a The first query.
-         * @param array $b The second query.
+         * @param array[] ...$queries Query arrays to be merged.
          * @return array
          */
-        private function merge_queries($a, $b)
+        private function merge_queries(...$queries)
+        {
+        }
+        /**
+         * Extends allowed `collection_params` for the REST API
+         *
+         * By itself, the REST API doesn't accept custom `orderby` values,
+         * even if they are supported by a custom post type.
+         *
+         * @param array $params  A list of allowed `orderby` values.
+         *
+         * @return array
+         */
+        public function extend_rest_query_allowed_params($params)
         {
         }
         /**
@@ -8629,6 +8721,26 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @return array
          */
         private function get_on_sale_products_query()
+        {
+        }
+        /**
+         * Return query params to support custom sort values
+         *
+         * @param string $orderby  Sort order option.
+         *
+         * @return array
+         */
+        private function get_custom_orderby_query($orderby)
+        {
+        }
+        /**
+         * Return the `tax_query` for the requested attributes
+         *
+         * @param array $attributes  Attributes and their terms.
+         *
+         * @return array
+         */
+        private function get_product_attributes_query($attributes = array())
         {
         }
         /**
@@ -8719,12 +8831,80 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
-         * Intersect arrays neither of them are empty, otherwise merge them.
+         * Return or initialize $valid_query_vars.
          *
-         * @param array ...$arrays Arrays.
          * @return array
          */
-        private function intersect_arrays_when_not_empty(...$arrays)
+        private function get_valid_query_vars()
+        {
+        }
+        /**
+         * Merge two array recursively but replace the non-array values instead of
+         * merging them. The merging strategy:
+         *
+         * - If keys from merge array doesn't exist in the base array, create them.
+         * - For array items with numeric keys, we merge them as normal.
+         * - For array items with string keys:
+         *
+         *   - If the value isn't array, we'll use the value comming from the merge array.
+         *     $base = ['orderby' => 'date']
+         *     $new  = ['orderby' => 'meta_value_num']
+         *     Result: ['orderby' => 'meta_value_num']
+         *
+         *   - If the value is array, we'll use recursion to merge each key.
+         *     $base = ['meta_query' => [
+         *       [
+         *         'key'     => '_stock_status',
+         *         'compare' => 'IN'
+         *         'value'   =>  ['instock', 'onbackorder']
+         *       ]
+         *     ]]
+         *     $new  = ['meta_query' => [
+         *       [
+         *         'relation' => 'AND',
+         *         [...<max_price_query>],
+         *         [...<min_price_query>],
+         *       ]
+         *     ]]
+         *     Result: ['meta_query' => [
+         *       [
+         *         'key'     => '_stock_status',
+         *         'compare' => 'IN'
+         *         'value'   =>  ['instock', 'onbackorder']
+         *       ],
+         *       [
+         *         'relation' => 'AND',
+         *         [...<max_price_query>],
+         *         [...<min_price_query>],
+         *       ]
+         *     ]]
+         *
+         *     $base = ['post__in' => [1, 2, 3, 4, 5]]
+         *     $new  = ['post__in' => [3, 4, 5, 6, 7]]
+         *     Result: ['post__in' => [1, 2, 3, 4, 5, 3, 4, 5, 6, 7]]
+         *
+         * @param array $base First array.
+         * @param array $new  Second array.
+         */
+        private function array_merge_recursive_replace_non_array_properties($base, $new)
+        {
+        }
+        /**
+         * Get product-related query variables from the global query.
+         *
+         * @param array $parsed_block The Product Query that being rendered.
+         *
+         * @return array
+         */
+        private function get_global_query($parsed_block)
+        {
+        }
+        /**
+         * Return a query that filters products by rating.
+         *
+         * @return array
+         */
+        private function get_filter_by_rating_query()
         {
         }
     }
@@ -8810,11 +8990,29 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          */
         protected $api_version = '2';
         /**
-         * Register script and style assets for the block type before it is registered.
+         * Overwrite parent method to prevent script registration.
          *
-         * This registers the scripts; it does not enqueue them.
+         * It is necessary to register and enqueues assets during the render
+         * phase because we want to load assets only if the block has the content.
          */
         protected function register_block_type_assets()
+        {
+        }
+        /**
+         * Register the context.
+         */
+        protected function get_block_type_uses_context()
+        {
+        }
+        /**
+         * Include and render the block.
+         *
+         * @param array    $attributes Block attributes. Default empty array.
+         * @param string   $content    Block content. Default empty string.
+         * @param WP_Block $block      Block instance.
+         * @return string Rendered block type output.
+         */
+        protected function render($attributes, $content, $block)
         {
         }
     }
@@ -8844,11 +9042,29 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
-         * Register script and style assets for the block type before it is registered.
+         * Overwrite parent method to prevent script registration.
          *
-         * This registers the scripts; it does not enqueue them.
+         * It is necessary to register and enqueues assets during the render
+         * phase because we want to load assets only if the block has the content.
          */
         protected function register_block_type_assets()
+        {
+        }
+        /**
+         * Register the context.
+         */
+        protected function get_block_type_uses_context()
+        {
+        }
+        /**
+         * Include and render the block.
+         *
+         * @param array    $attributes Block attributes. Default empty array.
+         * @param string   $content    Block content. Default empty string.
+         * @param WP_Block $block      Block instance.
+         * @return string Rendered block type output.
+         */
+        protected function render($attributes, $content, $block)
         {
         }
     }
@@ -8926,6 +9142,39 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * This registers the scripts; it does not enqueue them.
          */
         protected function register_block_type_assets()
+        {
+        }
+        /**
+         * Register the context.
+         */
+        protected function get_block_type_uses_context()
+        {
+        }
+        /**
+         * Get stock text based on stock. For example:
+         * - In stock
+         * - Out of stock
+         * - Available on backorder
+         * - 2 left in stock
+         *
+         * @param [bool]     $is_in_stock Whether the product is in stock.
+         * @param [bool]     $is_low_stock Whether the product is low in stock.
+         * @param [int|null] $low_stock_amount The amount of stock that is considered low.
+         * @param [bool]     $is_on_backorder Whether the product is on backorder.
+         * @return string Stock text.
+         */
+        protected static function getTextBasedOnStock($is_in_stock, $is_low_stock, $low_stock_amount, $is_on_backorder)
+        {
+        }
+        /**
+         * Include and render the block.
+         *
+         * @param array    $attributes Block attributes. Default empty array.
+         * @param string   $content    Block content. Default empty string.
+         * @param WP_Block $block      Block instance.
+         * @return string Rendered block type output.
+         */
+        protected function render($attributes, $content, $block)
         {
         }
     }
@@ -9131,6 +9380,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @var string
          */
         protected $block_name = 'rating-filter';
+        const RATING_QUERY_VAR = 'rating_filter';
     }
     /**
      * ReviewsByCategory class.
@@ -16458,7 +16708,7 @@ namespace Automattic\WooCommerce\Blocks\Templates {
      */
     class ProductAttributeTemplate
     {
-        const SLUG = 'archive-product';
+        const SLUG = 'taxonomy-product_attribute';
         /**
          * Constructor.
          */
@@ -16472,7 +16722,7 @@ namespace Automattic\WooCommerce\Blocks\Templates {
         {
         }
         /**
-         * Render the Archive Product Template for product attributes.
+         * Renders the Product by Attribute template for product attributes taxonomy pages.
          *
          * @param array $templates Templates that match the product attributes taxonomy.
          */
@@ -16517,6 +16767,7 @@ namespace Automattic\WooCommerce\Blocks\Utils {
      */
     class BlockTemplateUtils
     {
+        const ELIGIBLE_FOR_ARCHIVE_PRODUCT_FALLBACK = array('taxonomy-product_cat', 'taxonomy-product_tag', \Automattic\WooCommerce\Blocks\Templates\ProductAttributeTemplate::SLUG);
         /**
          * Directory names for block templates
          *
@@ -16710,10 +16961,10 @@ namespace Automattic\WooCommerce\Blocks\Utils {
         {
         }
         /**
-         * Checks if we can fallback to the `archive-product` template for a given slug
+         * Checks if we can fall back to the `archive-product` template for a given slug.
          *
-         * `taxonomy-product_cat` and `taxonomy-product_tag` templates can generally use the
-         * `archive-product` as a fallback if there are no specific overrides.
+         * `taxonomy-product_cat`, `taxonomy-product_tag`, `taxonomy-product_attribute` templates can
+         *  generally use the `archive-product` as a fallback if there are no specific overrides.
          *
          * @param string $template_slug Slug to check for fallbacks.
          * @return boolean
@@ -16722,9 +16973,41 @@ namespace Automattic\WooCommerce\Blocks\Utils {
         {
         }
         /**
+         * Checks if we can fall back to an `archive-product` template stored on the db for a given slug.
+         *
+         * @param string $template_slug Slug to check for fallbacks.
+         * @param array  $db_templates Templates that have already been found on the db.
+         * @return boolean
+         */
+        public static function template_is_eligible_for_product_archive_fallback_from_db($template_slug, $db_templates)
+        {
+        }
+        /**
+         * Gets the `archive-product` fallback template stored on the db for a given slug.
+         *
+         * @param string $template_slug Slug to check for fallbacks.
+         * @param array  $db_templates Templates that have already been found on the db.
+         * @return boolean|object
+         */
+        public static function get_fallback_template_from_db($template_slug, $db_templates)
+        {
+        }
+        /**
+         * Checks if we can fall back to the `archive-product` file template for a given slug in the current theme.
+         *
+         * `taxonomy-product_cat`, `taxonomy-product_tag`, `taxonomy-attribute` templates can
+         *  generally use the `archive-product` as a fallback if there are no specific overrides.
+         *
+         * @param string $template_slug Slug to check for fallbacks.
+         * @return boolean
+         */
+        public static function template_is_eligible_for_product_archive_fallback_from_theme($template_slug)
+        {
+        }
+        /**
          * Sets the `has_theme_file` to `true` for templates with fallbacks
          *
-         * There are cases (such as tags and categories) in which fallback templates
+         * There are cases (such as tags, categories and attributes) in which fallback templates
          * can be used; so, while *technically* the theme doesn't have a specific file
          * for them, it is important that we tell Gutenberg that we do, in fact,
          * have a theme file (i.e. the fallback one).
@@ -16768,6 +17051,15 @@ namespace Automattic\WooCommerce\Blocks\Utils {
          * @return boolean
          */
         public static function should_use_blockified_product_grid_templates()
+        {
+        }
+        /**
+         * Returns whether the passed `$template` has a title, and it's different from the slug.
+         *
+         * @param object $template The template object.
+         * @return boolean
+         */
+        public static function template_has_title($template)
         {
         }
     }
@@ -16839,6 +17131,16 @@ namespace Automattic\WooCommerce\Blocks\Utils {
         {
         }
         /**
+         * Get class and style for font-style from attributes.
+         *
+         * @param array $attributes Block attributes.
+         *
+         * @return (array | null)
+         */
+        public static function get_font_style_class_and_style($attributes)
+        {
+        }
+        /**
          * Get class and style for font-family from attributes.
          *
          * @param array $attributes Block attributes.
@@ -16891,6 +17193,12 @@ namespace Automattic\WooCommerce\Blocks\Utils {
         /**
          * Get class and style for border-color from attributes.
          *
+         * Data passed to this function is not always consistent. It can be:
+         * Linked - preset color: $attributes['borderColor'] => 'luminous-vivid-orange'.
+         * Linked - custom color: $attributes['style']['border']['color'] => '#681228'.
+         * Unlinked - preset color: $attributes['style']['border']['top']['color'] => 'var:preset|color|luminous-vivid-orange'
+         * Unlinked - custom color: $attributes['style']['border']['top']['color'] => '#681228'.
+         *
          * @param array $attributes Block attributes.
          *
          * @return (array | null)
@@ -16926,6 +17234,29 @@ namespace Automattic\WooCommerce\Blocks\Utils {
          * @return (array | null)
          */
         public static function get_align_class_and_style($attributes)
+        {
+        }
+        /**
+         * Get class and style for text align from attributes.
+         *
+         * @param array $attributes Block attributes.
+         *
+         * @return (array | null)
+         */
+        public static function get_text_align_class_and_style($attributes)
+        {
+        }
+        /**
+         * If spacing value is in preset format, convert it to a CSS var. Else return same value
+         * For example:
+         * "var:preset|spacing|50" -> "var(--wp--preset--spacing--50)"
+         * "50px" -> "50px"
+         *
+         * @param string $spacing_value value to be processed.
+         *
+         * @return (string)
+         */
+        public static function get_spacing_value($spacing_value)
         {
         }
         /**
@@ -16989,6 +17320,19 @@ namespace Automattic\WooCommerce\Blocks\Utils {
          * @return string CSS value for color preset.
          */
         public static function get_preset_value($preset_name)
+        {
+        }
+        /**
+         * If color value is in preset format, convert it to a CSS var. Else return same value
+         * For example:
+         * "var:preset|color|pale-pink" -> "var(--wp--preset--color--pale-pink)"
+         * "#98b66e" -> "#98b66e"
+         *
+         * @param string $color_value value to be processed.
+         *
+         * @return (string)
+         */
+        public static function get_color_value($color_value)
         {
         }
     }
