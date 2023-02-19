@@ -11,8 +11,6 @@ namespace {
      */
     class ActionScheduler_ActionClaim
     {
-        private $id = '';
-        private $action_ids = array();
         public function __construct($id, array $action_ids)
         {
         }
@@ -29,13 +27,15 @@ namespace {
     class ActionScheduler_ActionFactory
     {
         /**
-         * @param string $status The action's status in the data store
-         * @param string $hook The hook to trigger when this action runs
-         * @param array $args Args to pass to callbacks when the hook is triggered
-         * @param ActionScheduler_Schedule $schedule The action's schedule
-         * @param string $group A group to put the action in
+         * Return stored actions for given params.
          *
-         * @return ActionScheduler_Action An instance of the stored action
+         * @param string                   $status The action's status in the data store.
+         * @param string                   $hook The hook to trigger when this action runs.
+         * @param array                    $args Args to pass to callbacks when the hook is triggered.
+         * @param ActionScheduler_Schedule $schedule The action's schedule.
+         * @param string                   $group A group to put the action in.
+         *
+         * @return ActionScheduler_Action An instance of the stored action.
          */
         public function get_stored_action($status, $hook, array $args = array(), \ActionScheduler_Schedule $schedule = \null, $group = '')
         {
@@ -43,61 +43,119 @@ namespace {
         /**
          * Enqueue an action to run one time, as soon as possible (rather a specific scheduled time).
          *
-         * This method creates a new action with the NULLSchedule. This schedule maps to a MySQL datetime string of
-         * 0000-00-00 00:00:00. This is done to create a psuedo "async action" type that is fully backward compatible.
-         * Existing queries to claim actions claim by date, meaning actions scheduled for 0000-00-00 00:00:00 will
-         * always be claimed prior to actions scheduled for a specific date. This makes sure that any async action is
-         * given priority in queue processing. This has the added advantage of making sure async actions can be
-         * claimed by both the existing WP Cron and WP CLI runners, as well as a new async request runner.
+         * This method creates a new action using the NullSchedule. In practice, this results in an action scheduled to
+         * execute "now". Therefore, it will generally run as soon as possible but is not prioritized ahead of other actions
+         * that are already past-due.
          *
-         * @param string $hook The hook to trigger when this action runs
-         * @param array $args Args to pass when the hook is triggered
-         * @param string $group A group to put the action in
+         * @param string $hook The hook to trigger when this action runs.
+         * @param array  $args Args to pass when the hook is triggered.
+         * @param string $group A group to put the action in.
          *
-         * @return int The ID of the stored action
+         * @return int The ID of the stored action.
          */
         public function async($hook, $args = array(), $group = '')
         {
         }
         /**
-         * @param string $hook The hook to trigger when this action runs
-         * @param array $args Args to pass when the hook is triggered
-         * @param int $when Unix timestamp when the action will run
-         * @param string $group A group to put the action in
+         * Same as async, but also supports $unique param.
          *
-         * @return int The ID of the stored action
+         * @param string $hook The hook to trigger when this action runs.
+         * @param array  $args Args to pass when the hook is triggered.
+         * @param string $group A group to put the action in.
+         * @param bool   $unique Whether to ensure the action is unique.
+         *
+         * @return int The ID of the stored action.
+         */
+        public function async_unique($hook, $args = array(), $group = '', $unique = \true)
+        {
+        }
+        /**
+         * Create single action.
+         *
+         * @param string $hook  The hook to trigger when this action runs.
+         * @param array  $args  Args to pass when the hook is triggered.
+         * @param int    $when  Unix timestamp when the action will run.
+         * @param string $group A group to put the action in.
+         *
+         * @return int The ID of the stored action.
          */
         public function single($hook, $args = array(), $when = \null, $group = '')
         {
         }
         /**
+         * Create single action only if there is no pending or running action with same name and params.
+         *
+         * @param string $hook The hook to trigger when this action runs.
+         * @param array  $args Args to pass when the hook is triggered.
+         * @param int    $when Unix timestamp when the action will run.
+         * @param string $group A group to put the action in.
+         * @param bool   $unique Whether action scheduled should be unique.
+         *
+         * @return int The ID of the stored action.
+         */
+        public function single_unique($hook, $args = array(), $when = \null, $group = '', $unique = \true)
+        {
+        }
+        /**
          * Create the first instance of an action recurring on a given interval.
          *
-         * @param string $hook The hook to trigger when this action runs
-         * @param array $args Args to pass when the hook is triggered
-         * @param int $first Unix timestamp for the first run
-         * @param int $interval Seconds between runs
-         * @param string $group A group to put the action in
+         * @param string $hook The hook to trigger when this action runs.
+         * @param array  $args Args to pass when the hook is triggered.
+         * @param int    $first Unix timestamp for the first run.
+         * @param int    $interval Seconds between runs.
+         * @param string $group A group to put the action in.
          *
-         * @return int The ID of the stored action
+         * @return int The ID of the stored action.
          */
         public function recurring($hook, $args = array(), $first = \null, $interval = \null, $group = '')
         {
         }
         /**
+         * Create the first instance of an action recurring on a given interval only if there is no pending or running action with same name and params.
+         *
+         * @param string $hook The hook to trigger when this action runs.
+         * @param array  $args Args to pass when the hook is triggered.
+         * @param int    $first Unix timestamp for the first run.
+         * @param int    $interval Seconds between runs.
+         * @param string $group A group to put the action in.
+         * @param bool   $unique Whether action scheduled should be unique.
+         *
+         * @return int The ID of the stored action.
+         */
+        public function recurring_unique($hook, $args = array(), $first = \null, $interval = \null, $group = '', $unique = \true)
+        {
+        }
+        /**
          * Create the first instance of an action recurring on a Cron schedule.
          *
-         * @param string $hook The hook to trigger when this action runs
-         * @param array $args Args to pass when the hook is triggered
-         * @param int $base_timestamp The first instance of the action will be scheduled
+         * @param string $hook The hook to trigger when this action runs.
+         * @param array  $args Args to pass when the hook is triggered.
+         * @param int    $base_timestamp The first instance of the action will be scheduled
          *        to run at a time calculated after this timestamp matching the cron
          *        expression. This can be used to delay the first instance of the action.
-         * @param int $schedule A cron definition string
-         * @param string $group A group to put the action in
+         * @param int    $schedule A cron definition string.
+         * @param string $group A group to put the action in.
          *
-         * @return int The ID of the stored action
+         * @return int The ID of the stored action.
          */
         public function cron($hook, $args = array(), $base_timestamp = \null, $schedule = \null, $group = '')
+        {
+        }
+        /**
+         * Create the first instance of an action recurring on a Cron schedule only if there is no pending or running action with same name and params.
+         *
+         * @param string $hook The hook to trigger when this action runs.
+         * @param array  $args Args to pass when the hook is triggered.
+         * @param int    $base_timestamp The first instance of the action will be scheduled
+         *        to run at a time calculated after this timestamp matching the cron
+         *        expression. This can be used to delay the first instance of the action.
+         * @param int    $schedule A cron definition string.
+         * @param string $group A group to put the action in.
+         * @param bool   $unique Whether action scheduled should be unique.
+         *
+         * @return int The ID of the stored action.
+         **/
+        public function cron_unique($hook, $args = array(), $base_timestamp = \null, $schedule = \null, $group = '', $unique = \true)
         {
         }
         /**
@@ -128,11 +186,23 @@ namespace {
         {
         }
         /**
-         * @param ActionScheduler_Action $action
+         * Save action to database.
+         *
+         * @param ActionScheduler_Action $action Action object to save.
          *
          * @return int The ID of the stored action
          */
         protected function store(\ActionScheduler_Action $action)
+        {
+        }
+        /**
+         * Store action if it's unique.
+         *
+         * @param ActionScheduler_Action $action Action object to store.
+         *
+         * @return int ID of the created action. Will be 0 if action was not created.
+         */
+        protected function store_unique_action(\ActionScheduler_Action $action)
         {
         }
     }
@@ -269,8 +339,6 @@ namespace {
      */
     class ActionScheduler_AdminView extends \ActionScheduler_AdminView_Deprecated
     {
-        private static $admin_view = \NULL;
-        private static $screen_id = 'tools_page_action-scheduler';
         /** @var ActionScheduler_ListTable */
         protected $list_table;
         /**
@@ -326,6 +394,24 @@ namespace {
          * @return ActionScheduler_ListTable
          */
         protected function get_list_table()
+        {
+        }
+        /**
+         * Action: admin_notices
+         *
+         * Maybe check past-due actions, and print notice.
+         *
+         * @uses $this->check_pastdue_actions()
+         */
+        public function maybe_check_pastdue_actions()
+        {
+        }
+        /**
+         * Check past-due actions, and print notice.
+         *
+         * @todo update $link_url to "Past-due" filter when released (see issue #510, PR #511)
+         */
+        protected function check_pastdue_actions()
         {
         }
         /**
@@ -462,12 +548,6 @@ namespace {
         const STATUS_COMPLETE = 'complete';
         /** Migration minimum required PHP version. */
         const MIN_PHP_VERSION = '5.5';
-        /** @var ActionScheduler_DataController */
-        private static $instance;
-        /** @var int */
-        private static $sleep_time = 0;
-        /** @var int */
-        private static $free_ticks = 50;
         /**
          * Get a flag indicating whether the migration environment dependencies are met.
          *
@@ -637,7 +717,7 @@ namespace {
      * Facilitates catching Exceptions unique to Action Scheduler.
      *
      * @package ActionScheduler
-     * @since %VERSION%
+     * @since 2.1.0
      */
     interface ActionScheduler_Exception
     {
@@ -647,11 +727,6 @@ namespace {
      */
     class ActionScheduler_FatalErrorMonitor
     {
-        /** @var ActionScheduler_ActionClaim */
-        private $claim = \NULL;
-        /** @var ActionScheduler_Store */
-        private $store = \NULL;
-        private $action_id = 0;
         public function __construct(\ActionScheduler_Store $store)
         {
         }
@@ -1159,12 +1234,6 @@ namespace {
          */
         protected static $did_notification = \false;
         /**
-         * Array of seconds for common time periods, like week or month, alongside an internationalised string representation, i.e. "Day" or "Days"
-         *
-         * @var array
-         */
-        private static $time_periods;
-        /**
          * Sets the current data store object into `store->action` and initialises the object.
          *
          * @param ActionScheduler_Store $store
@@ -1183,22 +1252,6 @@ namespace {
          * @return int
          */
         public function set_items_per_page_option($status, $option, $value)
-        {
-        }
-        /**
-         * Convert an interval of seconds into a two part human friendly string.
-         *
-         * The WordPress human_time_diff() function only calculates the time difference to one degree, meaning
-         * even if an action is 1 day and 11 hours away, it will display "1 day". This function goes one step
-         * further to display two degrees of accuracy.
-         *
-         * Inspired by the Crontrol::interval() function by Edward Dale: https://wordpress.org/plugins/wp-crontrol/
-         *
-         * @param int $interval A interval in seconds.
-         * @param int $periods_to_include Depth of time periods to include, e.g. for an interval of 70, and $periods_to_include of 2, both minutes and seconds would be included. With a value of 1, only minutes would be included.
-         * @return string A human friendly string representation of the interval.
-         */
-        private static function human_interval($interval, $periods_to_include = 2)
         {
         }
         /**
@@ -1410,8 +1463,6 @@ namespace {
      */
     abstract class ActionScheduler_Lock
     {
-        /** @var ActionScheduler_Lock */
-        private static $locker = \NULL;
         /** @var int */
         protected static $lock_duration = \MINUTE_IN_SECONDS;
         /**
@@ -1505,14 +1556,6 @@ namespace {
     {
         /** @var int */
         protected $batch_size;
-        /** @var ActionScheduler_Store */
-        private $store = \null;
-        /**
-         * 31 days in seconds.
-         *
-         * @var int
-         */
-        private $month_in_seconds = 2678400;
         /**
          * ActionScheduler_QueueCleaner constructor.
          *
@@ -1593,15 +1636,6 @@ namespace {
         protected $monitor;
         /** @var ActionScheduler_Store */
         protected $store;
-        /**
-         * The created time.
-         *
-         * Represents when the queue runner was constructed and used when calculating how long a PHP request has been running.
-         * For this reason it should be as close as possible to the PHP request start time.
-         *
-         * @var int
-         */
-        private $created_time;
         /**
          * ActionScheduler_Abstract_QueueRunner constructor.
          *
@@ -1733,8 +1767,6 @@ namespace {
         const WP_CRON_SCHEDULE = 'every_minute';
         /** @var ActionScheduler_AsyncRequest_QueueRunner */
         protected $async_request;
-        /** @var ActionScheduler_QueueRunner  */
-        private static $runner = \null;
         /**
          * @return ActionScheduler_QueueRunner
          * @codeCoverageIgnore
@@ -1822,12 +1854,10 @@ namespace {
         {
         }
         /**
-         * Running large batches can eat up memory, as WP adds data to its object cache.
+         * Flush the cache if possible (intended for use after a batch of actions has been processed).
          *
-         * If using a persistent object store, this has the side effect of flushing that
-         * as well, so this is disabled by default. To enable:
-         *
-         * add_filter( 'action_scheduler_queue_runner_flush_cache', '__return_true' );
+         * This is useful because running large batches can eat up memory and because invalid data can accrue in the
+         * runtime cache, which may lead to unexpected results.
          */
         protected function clear_caches()
         {
@@ -1841,11 +1871,6 @@ namespace {
      */
     class ActionScheduler_Versions
     {
-        /**
-         * @var ActionScheduler_Versions
-         */
-        private static $instance = \NULL;
-        private $versions = array();
         public function register($version_string, $initialization_callback)
         {
         }
@@ -2018,11 +2043,6 @@ namespace {
      */
     abstract class ActionScheduler
     {
-        private static $plugin_file = '';
-        /** @var ActionScheduler_ActionFactory */
-        private static $factory = \NULL;
-        /** @var bool */
-        private static $data_store_initialized = \false;
         public static function factory()
         {
         }
@@ -2122,9 +2142,6 @@ namespace {
         public final function __wakeup()
         {
         }
-        private final function __construct()
-        {
-        }
         /** Deprecated **/
         public static function get_datetime_object($when = \null, $timezone = 'UTC')
         {
@@ -2176,12 +2193,6 @@ namespace {
      */
     abstract class ActionScheduler_Abstract_Schedule extends \ActionScheduler_Schedule_Deprecated
     {
-        /**
-         * The date & time the schedule is set to run.
-         *
-         * @var DateTime
-         */
-        private $scheduled_date = \NULL;
         /**
          * Timestamp equivalent of @see $this->scheduled_date
          *
@@ -2240,17 +2251,6 @@ namespace {
      */
     abstract class ActionScheduler_Abstract_RecurringSchedule extends \ActionScheduler_Abstract_Schedule
     {
-        /**
-         * The date & time the first instance of this schedule was setup to run (which may not be this instance).
-         *
-         * Schedule objects are attached to an action object. Each schedule stores the run date for that
-         * object as the start date - @see $this->start - and logic to calculate the next run date after
-         * that - @see $this->calculate_next(). The $first_date property also keeps a record of when the very
-         * first instance of this chain of schedules ran.
-         *
-         * @var DateTime
-         */
-        private $first_date = \NULL;
         /**
          * Timestamp equivalent of @see $this->first_date
          *
@@ -2362,35 +2362,6 @@ namespace {
          */
         protected abstract function get_table_definition($table);
         /**
-         * Determine if the database schema is out of date
-         * by comparing the integer found in $this->schema_version
-         * with the option set in the WordPress options table
-         *
-         * @return bool
-         */
-        private function schema_update_required()
-        {
-        }
-        /**
-         * Update the option in WordPress to indicate that
-         * our schema is now up to date
-         *
-         * @return void
-         */
-        private function mark_schema_update_complete()
-        {
-        }
-        /**
-         * Update the schema for the given table
-         *
-         * @param string $table The name of the table to update
-         *
-         * @return void
-         */
-        private function update_table($table)
-        {
-        }
-        /**
          * @param string $table
          *
          * @return string The full name of the table, including the
@@ -2414,7 +2385,6 @@ namespace {
      */
     abstract class ActionScheduler_Logger
     {
-        private static $logger = \NULL;
         /**
          * @return ActionScheduler_Logger
          */
@@ -2558,8 +2528,6 @@ namespace {
         const STATUS_FAILED = 'failed';
         const STATUS_CANCELED = 'canceled';
         const DEFAULT_CLASS = 'ActionScheduler_wpPostStore';
-        /** @var ActionScheduler_Store */
-        private static $store = \NULL;
         /** @var int */
         protected static $max_args_length = 191;
         /**
@@ -2593,7 +2561,7 @@ namespace {
         /**
          * Query for action count or list of action IDs.
          *
-         * @since x.x.x $query['status'] accepts array of statuses instead of a single status.
+         * @since 3.3.0 $query['status'] accepts array of statuses instead of a single status.
          *
          * @param array  $query {
          *      Query filtering options.
@@ -2620,7 +2588,7 @@ namespace {
         /**
          * Run query to get a single action ID.
          *
-         * @since x.x.x
+         * @since 3.3.0
          *
          * @see ActionScheduler_Store::query_actions for $query arg usage but 'per_page' and 'offset' can't be used.
          *
@@ -2637,6 +2605,16 @@ namespace {
          * @return array
          */
         public abstract function action_counts();
+        /**
+         * Get additional action counts.
+         *
+         * - add past-due actions
+         *
+         * @return array
+         */
+        public function extra_action_counts()
+        {
+        }
         /**
          * @param string $action_id
          */
@@ -2786,18 +2764,6 @@ namespace {
         {
         }
         /**
-         * Cancel a set of action IDs.
-         *
-         * @since 3.0.0
-         *
-         * @param array $action_ids List of action IDs.
-         *
-         * @return void
-         */
-        private function bulk_cancel_actions($action_ids)
-        {
-        }
-        /**
          * @return array
          */
         public function get_status_labels()
@@ -2837,7 +2803,6 @@ namespace {
      */
     abstract class ActionScheduler_TimezoneHelper
     {
-        private static $local_timezone = \NULL;
         /**
          * Set a DateTime's timezone to the WordPress site's timezone, or a UTC offset
          * if no timezone string is available.
@@ -2895,6 +2860,15 @@ namespace {
         public function __construct($hook, array $args = array(), \ActionScheduler_Schedule $schedule = \NULL, $group = '')
         {
         }
+        /**
+         * Executes the action.
+         *
+         * If no callbacks are registered, an exception will be thrown and the action will not be
+         * fired. This is useful to help detect cases where the code responsible for setting up
+         * a scheduled action no longer exists.
+         *
+         * @throws Exception If no callbacks are registered for this action.
+         */
         public function execute()
         {
         }
@@ -3015,16 +2989,6 @@ namespace {
         {
         }
         /**
-         * Create an action log entry from a database record.
-         *
-         * @param object $record Log entry database record object.
-         *
-         * @return ActionScheduler_LogEntry
-         */
-        private function create_entry_from_db_record($record)
-        {
-        }
-        /**
          * Retrieve the an action's log entries from the database.
          *
          * @param int $action_id Action ID.
@@ -3068,15 +3032,6 @@ namespace {
      */
     class ActionScheduler_DBStore extends \ActionScheduler_Store
     {
-        /**
-         * Used to share information about the before_date property of claims internally.
-         *
-         * This is used in preference to passing the same information as a method param
-         * for backwards-compatibility reasons.
-         *
-         * @var DateTime|null
-         */
-        private $claim_before_date = \null;
         /** @var int */
         protected static $max_args_length = 8000;
         /** @var int */
@@ -3090,15 +3045,27 @@ namespace {
         {
         }
         /**
-         * Save an action.
+         * Save an action, checks if this is a unique action before actually saving.
+         *
+         * @param ActionScheduler_Action $action         Action object.
+         * @param \DateTime              $scheduled_date Optional schedule date. Default null.
+         *
+         * @return int                  Action ID.
+         * @throws RuntimeException     Throws exception when saving the action fails.
+         */
+        public function save_unique_action(\ActionScheduler_Action $action, \DateTime $scheduled_date = \null)
+        {
+        }
+        /**
+         * Save an action. Can save duplicate action as well, prefer using `save_unique_action` instead.
          *
          * @param ActionScheduler_Action $action Action object.
-         * @param DateTime              $date Optional schedule date. Default null.
+         * @param \DateTime              $scheduled_date Optional schedule date. Default null.
          *
          * @return int Action ID.
          * @throws RuntimeException     Throws exception when saving the action fails.
          */
-        public function save_action(\ActionScheduler_Action $action, \DateTime $date = \null)
+        public function save_action(\ActionScheduler_Action $action, \DateTime $scheduled_date = \null)
         {
         }
         /**
@@ -3171,7 +3138,7 @@ namespace {
         /**
          * Returns the SQL statement to query (or count) actions.
          *
-         * @since x.x.x $query['status'] accepts array of statuses instead of a single status.
+         * @since 3.3.0 $query['status'] accepts array of statuses instead of a single status.
          *
          * @param array  $query Filtering options.
          * @param string $select_or_count  Whether the SQL should select and return the IDs or just the row count.
@@ -3185,7 +3152,7 @@ namespace {
         /**
          * Query for action count or list of action IDs.
          *
-         * @since x.x.x $query['status'] accepts array of statuses instead of a single status.
+         * @since 3.3.0 $query['status'] accepts array of statuses instead of a single status.
          *
          * @see ActionScheduler_Store::query_actions for $query arg usage.
          *
@@ -3412,21 +3379,6 @@ namespace {
     class ActionScheduler_HybridStore extends \ActionScheduler_Store
     {
         const DEMARKATION_OPTION = 'action_scheduler_hybrid_store_demarkation';
-        private $primary_store;
-        private $secondary_store;
-        private $migration_runner;
-        /**
-         * @var int The dividing line between IDs of actions created
-         *          by the primary and secondary stores.
-         *
-         * Methods that accept an action ID will compare the ID against
-         * this to determine which store will contain that ID. In almost
-         * all cases, the ID should come from the primary store, but if
-         * client code is bypassing the API functions and fetching IDs
-         * from elsewhere, then there is a chance that an unmigrated ID
-         * might be requested.
-         */
-        private $demarkation_id = 0;
         /**
          * ActionScheduler_HybridStore constructor.
          *
@@ -3455,19 +3407,6 @@ namespace {
          * @codeCoverageIgnore
          */
         public function set_autoincrement($table_name, $table_suffix)
-        {
-        }
-        /**
-         * Store the demarkation id in WP options.
-         *
-         * @param int $id The ID to set as the demarkation point between the two stores
-         *                Leave null to use the next ID from the WP posts table.
-         *
-         * @return int The new ID.
-         *
-         * @codeCoverageIgnore
-         */
-        private function set_demarkation_id($id = \null)
         {
         }
         /**
@@ -3516,14 +3455,6 @@ namespace {
          * @return ActionScheduler_ActionClaim
          */
         public function stake_claim($max_actions = 10, \DateTime $before_date = \null, $hooks = array(), $group = '')
-        {
-        }
-        /**
-         * Migrate a list of actions to the table data store.
-         *
-         * @param array $action_ids List of action IDs.
-         */
-        private function migrate($action_ids)
         {
         }
         /**
@@ -3777,15 +3708,6 @@ namespace {
         const SCHEDULE_META_KEY = '_action_manager_schedule';
         const DEPENDENCIES_MET = 'as-post-store-dependencies-met';
         /**
-         * Used to share information about the before_date property of claims internally.
-         *
-         * This is used in preference to passing the same information as a method param
-         * for backwards-compatibility reasons.
-         *
-         * @var DateTime|null
-         */
-        private $claim_before_date = \null;
-        /**
          * Local Timezone.
          *
          * @var DateTimeZone
@@ -3958,7 +3880,7 @@ namespace {
         /**
          * Query for action count or list of action IDs.
          *
-         * @since x.x.x $query['status'] accepts array of statuses instead of a single status.
+         * @since 3.3.0 $query['status'] accepts array of statuses instead of a single status.
          *
          * @see ActionScheduler_Store::query_actions for $query arg usage.
          *
@@ -4138,17 +4060,6 @@ namespace {
         {
         }
         /**
-         * Get post column
-         *
-         * @param string $action_id Action ID.
-         * @param string $column_name Column Name.
-         *
-         * @return string|null
-         */
-        private function get_post_column($action_id, $column_name)
-        {
-        }
-        /**
          * Log Execution.
          *
          * @param string $action_id Action ID.
@@ -4281,12 +4192,6 @@ namespace Action_Scheduler\Migration {
      */
     class ActionMigrator
     {
-        /** var ActionScheduler_Store */
-        private $source;
-        /** var ActionScheduler_Store */
-        private $destination;
-        /** var LogMigrator */
-        private $log_migrator;
         /**
          * ActionMigrator constructor.
          *
@@ -4350,8 +4255,6 @@ namespace Action_Scheduler\Migration {
      */
     class BatchFetcher
     {
-        /** var ActionScheduler_Store */
-        private $store;
         /**
          * BatchFetcher constructor.
          *
@@ -4370,16 +4273,6 @@ namespace Action_Scheduler\Migration {
         public function fetch($count = 10)
         {
         }
-        /**
-         * Generate a list of prioritized of action search parameters.
-         *
-         * @param int $count Number of actions to find.
-         *
-         * @return array
-         */
-        private function get_query_strategies($count)
-        {
-        }
     }
     /**
      * Class Config
@@ -4392,18 +4285,6 @@ namespace Action_Scheduler\Migration {
      */
     class Config
     {
-        /** @var ActionScheduler_Store */
-        private $source_store;
-        /** @var ActionScheduler_Logger */
-        private $source_logger;
-        /** @var ActionScheduler_Store */
-        private $destination_store;
-        /** @var ActionScheduler_Logger */
-        private $destination_logger;
-        /** @var Progress bar */
-        private $progress_bar;
-        /** @var bool */
-        private $dry_run = false;
         /**
          * Config constructor.
          */
@@ -4520,15 +4401,6 @@ namespace Action_Scheduler\Migration {
      */
     class Controller
     {
-        private static $instance;
-        /** @var Action_Scheduler\Migration\Scheduler */
-        private $migration_scheduler;
-        /** @var string */
-        private $store_classname;
-        /** @var string */
-        private $logger_classname;
-        /** @var bool */
-        private $migrate_custom_store;
         /**
          * Controller constructor.
          *
@@ -4594,12 +4466,6 @@ namespace Action_Scheduler\Migration {
         {
         }
         /**
-         * Add store classes. Hook migration.
-         */
-        private function hook()
-        {
-        }
-        /**
          * Possibly hook the migration scheduler action.
          *
          * @author Jeremy Pry
@@ -4659,10 +4525,6 @@ namespace Action_Scheduler\Migration {
      */
     class LogMigrator
     {
-        /** @var ActionScheduler_Logger */
-        private $source;
-        /** @var ActionScheduler_Logger */
-        private $destination;
         /**
          * ActionMigrator constructor.
          *
@@ -4712,22 +4574,6 @@ namespace Action_Scheduler\Migration {
      */
     class Runner
     {
-        /** @var ActionScheduler_Store */
-        private $source_store;
-        /** @var ActionScheduler_Store */
-        private $destination_store;
-        /** @var ActionScheduler_Logger */
-        private $source_logger;
-        /** @var ActionScheduler_Logger */
-        private $destination_logger;
-        /** @var BatchFetcher */
-        private $batch_fetcher;
-        /** @var ActionMigrator */
-        private $action_migrator;
-        /** @var LogMigrator */
-        private $log_migrator;
-        /** @var ProgressBar */
-        private $progress_bar;
         /**
          * Runner constructor.
          *
@@ -4824,30 +4670,6 @@ namespace Action_Scheduler\Migration {
         public function unschedule_migration()
         {
         }
-        /**
-         * Get migration batch schedule interval.
-         *
-         * @return int Seconds between migration runs. Defaults to 0 seconds to allow chaining migration via Async Runners.
-         */
-        private function get_schedule_interval()
-        {
-        }
-        /**
-         * Get migration batch size.
-         *
-         * @return int Number of actions to migrate in each batch. Defaults to 250.
-         */
-        private function get_batch_size()
-        {
-        }
-        /**
-         * Get migration runner object.
-         *
-         * @return Runner
-         */
-        private function get_migration_runner()
-        {
-        }
     }
 }
 namespace {
@@ -4856,10 +4678,6 @@ namespace {
      */
     class ActionScheduler_SimpleSchedule extends \ActionScheduler_Abstract_Schedule
     {
-        /**
-         * Deprecated property @see $this->__wakeup() for details.
-         **/
-        private $timestamp = \NULL;
         /**
          * @param DateTime $after
          *
@@ -4910,10 +4728,6 @@ namespace {
     class ActionScheduler_CanceledSchedule extends \ActionScheduler_SimpleSchedule
     {
         /**
-         * Deprecated property @see $this->__wakeup() for details.
-         **/
-        private $timestamp = \NULL;
-        /**
          * @param DateTime $after
          *
          * @return DateTime|null
@@ -4956,14 +4770,6 @@ namespace {
      */
     class ActionScheduler_CronSchedule extends \ActionScheduler_Abstract_RecurringSchedule implements \ActionScheduler_Schedule
     {
-        /**
-         * Deprecated property @see $this->__wakeup() for details.
-         **/
-        private $start_timestamp = \NULL;
-        /**
-         * Deprecated property @see $this->__wakeup() for details.
-         **/
-        private $cron = \NULL;
         /**
          * Wrapper for parent constructor to accept a cron expression string and map it to a CronExpression for this
          * objects $recurrence property.
@@ -5022,14 +4828,6 @@ namespace {
     class ActionScheduler_IntervalSchedule extends \ActionScheduler_Abstract_RecurringSchedule implements \ActionScheduler_Schedule
     {
         /**
-         * Deprecated property @see $this->__wakeup() for details.
-         **/
-        private $start_timestamp = \NULL;
-        /**
-         * Deprecated property @see $this->__wakeup() for details.
-         **/
-        private $interval_in_seconds = \NULL;
-        /**
          * Calculate when this schedule should start after a given date & time using
          * the number of seconds between recurrences.
          *
@@ -5075,6 +4873,8 @@ namespace {
      */
     class ActionScheduler_NullSchedule extends \ActionScheduler_SimpleSchedule
     {
+        /** @var DateTime|null */
+        protected $scheduled_date;
         /**
          * Make the $date param optional and default to null.
          *
@@ -5274,18 +5074,6 @@ namespace Automattic\WooCommerce\Blocks\Assets {
     class Api
     {
         /**
-         * Stores inline scripts already enqueued.
-         *
-         * @var array
-         */
-        private $inline_scripts = [];
-        /**
-         * Reference to the Package instance
-         *
-         * @var Package
-         */
-        private $package;
-        /**
          * Constructor for class
          *
          * @param Package $package An instance of Package.
@@ -5372,12 +5160,10 @@ namespace Automattic\WooCommerce\Blocks\Assets {
         {
         }
         /**
-         * Returns the appropriate asset path for loading either legacy builds or
-         * current builds.
+         * Returns the appropriate asset path for current builds.
          *
          * @param   string $filename  Filename for asset path (without extension).
          * @param   string $type      File type (.css or .js).
-         *
          * @return  string             The generated path.
          */
         public function get_block_asset_build_path($filename, $type = 'js')
@@ -5404,37 +5190,6 @@ namespace Automattic\WooCommerce\Blocks\Assets {
      */
     class AssetDataRegistry
     {
-        /**
-         * Contains registered data.
-         *
-         * @var array
-         */
-        private $data = [];
-        /**
-         * Contains preloaded API data.
-         *
-         * @var array
-         */
-        private $preloaded_api_requests = [];
-        /**
-         * Lazy data is an array of closures that will be invoked just before
-         * asset data is generated for the enqueued script.
-         *
-         * @var array
-         */
-        private $lazy_data = [];
-        /**
-         * Asset handle for registered data.
-         *
-         * @var string
-         */
-        private $handle = 'wc-settings';
-        /**
-         * Asset API interface for various asset registration.
-         *
-         * @var API
-         */
-        private $api;
         /**
          * Constructor
          *
@@ -5634,23 +5389,11 @@ namespace Automattic\WooCommerce\Blocks {
     final class AssetsController
     {
         /**
-         * Asset API interface for various asset registration.
-         *
-         * @var AssetApi
-         */
-        private $api;
-        /**
          * Constructor.
          *
          * @param AssetApi $asset_api  Asset API interface for various asset registration.
          */
         public function __construct(\Automattic\WooCommerce\Blocks\Assets\Api $asset_api)
-        {
-        }
-        /**
-         * Initialize class features.
-         */
-        protected function init()
         {
         }
         /**
@@ -5672,77 +5415,12 @@ namespace Automattic\WooCommerce\Blocks {
         {
         }
         /**
-         * Get resource hints during prefetch requests.
-         *
-         * @return array Array of URLs.
-         */
-        private function get_prefetch_resource_hints()
-        {
-        }
-        /**
-         * Get resource hints during prerender requests.
-         *
-         * @return array Array of URLs.
-         */
-        private function get_prerender_resource_hints()
-        {
-        }
-        /**
-         * Get resource hint for a block by name.
-         *
-         * @param string $filename Block filename.
-         * @return array
-         */
-        private function get_block_asset_resource_hints($filename = '')
-        {
-        }
-        /**
-         * Get the src of all script dependencies (handles).
-         *
-         * @param array $dependencies Array of dependency handles.
-         * @return string[] Array of src strings.
-         */
-        private function get_script_dependency_src_array(array $dependencies)
-        {
-        }
-        /**
-         * Returns an absolute url to relative links for WordPress core scripts.
-         *
-         * @param string $src Original src that can be relative.
-         * @return string Correct full path string.
-         */
-        private function get_absolute_url($src)
-        {
-        }
-        /**
          * Add body classes to the frontend and within admin.
          *
          * @param string|array $classes Array or string of CSS classnames.
          * @return string|array Modified classnames.
          */
         public function add_theme_body_class($classes)
-        {
-        }
-        /**
-         * Get the file modified time as a cache buster if we're in dev mode.
-         *
-         * @param string $file Local path to the file.
-         * @return string The cache buster value to use for the given file.
-         */
-        protected function get_file_version($file)
-        {
-        }
-        /**
-         * Registers a style according to `wp_register_style`.
-         *
-         * @param string  $handle Name of the stylesheet. Should be unique.
-         * @param string  $src    Full URL of the stylesheet, or path of the stylesheet relative to the WordPress root directory.
-         * @param array   $deps   Optional. An array of registered stylesheet handles this stylesheet depends on. Default empty array.
-         * @param string  $media  Optional. The media for which this stylesheet has been defined. Default 'all'. Accepts media types like
-         *                        'all', 'print' and 'screen', or media queries like '(orientation: portrait)' and '(max-width: 640px)'.
-         * @param boolean $rtl   Optional. Whether or not to register RTL styles.
-         */
-        protected function register_style($handle, $src, $deps = [], $media = 'all', $rtl = false)
         {
         }
         /**
@@ -5798,12 +5476,6 @@ namespace Automattic\WooCommerce\Blocks {
         const SLUG_REGEX = '/^[A-z0-9\\/_-]+$/';
         const COMMA_SEPARATED_REGEX = '/[\\s,]+/';
         /**
-         * Path to the patterns directory.
-         *
-         * @var string $patterns_path
-         */
-        private $patterns_path;
-        /**
          * Constructor for class
          *
          * @param Package $package An instance of Package.
@@ -5825,24 +5497,6 @@ namespace Automattic\WooCommerce\Blocks {
      */
     class BlockTemplatesController
     {
-        /**
-         * Holds the Package instance
-         *
-         * @var Package
-         */
-        private $package;
-        /**
-         * Holds the path for the directory where the block templates will be kept.
-         *
-         * @var string
-         */
-        private $templates_directory;
-        /**
-         * Holds the path for the directory where the block template parts will be kept.
-         *
-         * @var string
-         */
-        private $template_parts_directory;
         /**
          * Directory which contains all templates
          *
@@ -7350,6 +7004,18 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         protected $block_name = 'checkout-payment-block';
     }
     /**
+     * CheckoutPickupOptionsBlock class.
+     */
+    class CheckoutPickupOptionsBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'checkout-pickup-options-block';
+    }
+    /**
      * CheckoutShippingAddressBlock class.
      */
     class CheckoutShippingAddressBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
@@ -7360,6 +7026,18 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @var string
          */
         protected $block_name = 'checkout-shipping-address-block';
+    }
+    /**
+     * CheckoutShippingMethodBlock class.
+     */
+    class CheckoutShippingMethodBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'checkout-shipping-method-block';
     }
     /**
      * CheckoutShippingMethodsBlock class.
@@ -7473,6 +7151,33 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         }
     }
     /**
+     * CustomerAccount class.
+     */
+    class CustomerAccount extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    {
+        const TEXT_ONLY = 'text_only';
+        const ICON_ONLY = 'icon_only';
+        const DISPLAY_ALT = 'alt';
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'customer-account';
+        /**
+         * Render the block.
+         *
+         * @param array    $attributes Block attributes.
+         * @param string   $content Block content.
+         * @param WP_Block $block Block instance.
+         *
+         * @return string Rendered block output.
+         */
+        protected function render($attributes, $content, $block)
+        {
+        }
+    }
+    /**
      * EmptyCartBlock class.
      */
     class EmptyCartBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
@@ -7558,28 +7263,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
-         * Returns the url the item's image
-         *
-         * @param array                $attributes Block attributes. Default empty array.
-         * @param \WP_Term|\WC_Product $item       Item object.
-         *
-         * @return string
-         */
-        private function get_image_url($attributes, $item)
-        {
-        }
-        /**
-         * Renders the featured image as a div background.
-         *
-         * @param array  $attributes Block attributes. Default empty array.
-         * @param string $image_url  Item image url.
-         *
-         * @return string
-         */
-        private function render_bg_image($attributes, $image_url)
-        {
-        }
-        /**
          * Get the styles for the wrapper element (background image, color).
          *
          * @param array  $attributes Block attributes. Default empty array.
@@ -7588,18 +7271,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @return string
          */
         public function get_bg_styles($attributes, $image_url)
-        {
-        }
-        /**
-         * Renders the featured image
-         *
-         * @param array                $attributes Block attributes. Default empty array.
-         * @param \WC_Product|\WP_Term $item       Item object.
-         * @param string               $image_url  Item image url.
-         *
-         * @return string
-         */
-        private function render_image($attributes, $item, string $image_url)
         {
         }
         /**
@@ -7618,26 +7289,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @return string
          */
         public function get_classes($attributes)
-        {
-        }
-        /**
-         * Renders the block overlay
-         *
-         * @param array $attributes Block attributes. Default empty array.
-         *
-         * @return string
-         */
-        private function render_overlay($attributes)
-        {
-        }
-        /**
-         * Returns whether the focal point is defined for the block.
-         *
-         * @param array $attributes Block attributes. Default empty array.
-         *
-         * @return bool
-         */
-        private function hasFocalPoint($attributes) : bool
         {
         }
         /**
@@ -8429,46 +8080,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
-         * Get the block's attributes.
-         *
-         * @param array $attributes Block attributes. Default empty array.
-         * @return array  Block attributes merged with defaults.
-         */
-        private function parse_attributes($attributes)
-        {
-        }
-        /**
-         * Render on Sale Badge.
-         *
-         * @param \WC_Product $product Product object.
-         * @param array       $attributes Attributes.
-         * @return string
-         */
-        private function render_on_sale_badge($product, $attributes)
-        {
-        }
-        /**
-         * Render anchor.
-         *
-         * @param \WC_Product $product       Product object.
-         * @param string      $on_sale_badge Return value from $render_image.
-         * @param string      $product_image Return value from $render_on_sale_badge.
-         * @param array       $attributes    Attributes.
-         * @return string
-         */
-        private function render_anchor($product, $on_sale_badge, $product_image, $attributes)
-        {
-        }
-        /**
-         * Render Image.
-         *
-         * @param \WC_Product $product Product object.
-         * @return string
-         */
-        private function render_image($product)
-        {
-        }
-        /**
          * Extra data passed through from server to client for block.
          *
          * @param array $attributes  Any attributes that currently are available from the block.
@@ -8648,15 +8259,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
-         * Check if a given block
-         *
-         * @param array $parsed_block The block being rendered.
-         * @return boolean
-         */
-        private function is_woocommerce_variation($parsed_block)
-        {
-        }
-        /**
          * Update the query for the product query block.
          *
          * @param string|null $pre_render   The pre-rendered content. Default null.
@@ -8684,25 +8286,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
-         * Return the product ids based on the attributes and global query.
-         * This is used to allow the filter blocks to render data that matches with variations. More details here: https://github.com/woocommerce/woocommerce-blocks/issues/7245
-         *
-         * @param array $parsed_block The block being rendered.
-         * @return array
-         */
-        private function get_products_ids_by_attributes($parsed_block)
-        {
-        }
-        /**
-         * Merge in the first parameter the keys "post_in", "meta_query" and "tax_query" of the second parameter.
-         *
-         * @param array[] ...$queries Query arrays to be merged.
-         * @return array
-         */
-        private function merge_queries(...$queries)
-        {
-        }
-        /**
          * Extends allowed `collection_params` for the REST API
          *
          * By itself, the REST API doesn't accept custom `orderby` values,
@@ -8716,195 +8299,12 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
-         * Return a query for on sale products.
-         *
-         * @return array
-         */
-        private function get_on_sale_products_query()
-        {
-        }
-        /**
-         * Return query params to support custom sort values
-         *
-         * @param string $orderby  Sort order option.
-         *
-         * @return array
-         */
-        private function get_custom_orderby_query($orderby)
-        {
-        }
-        /**
-         * Return the `tax_query` for the requested attributes
-         *
-         * @param array $attributes  Attributes and their terms.
-         *
-         * @return array
-         */
-        private function get_product_attributes_query($attributes = array())
-        {
-        }
-        /**
-         * Return a query for products depending on their stock status.
-         *
-         * @param array $stock_statii An array of acceptable stock statii.
-         * @return array
-         */
-        private function get_stock_status_query($stock_statii)
-        {
-        }
-        /**
-         * Set the query vars that are used by filter blocks.
-         *
-         * @return array
-         */
-        private function get_query_vars_from_filter_blocks()
-        {
-        }
-        /**
          * Set the query vars that are used by filter blocks.
          *
          * @param array $public_query_vars Public query vars.
          * @return array
          */
         public function set_query_vars($public_query_vars)
-        {
-        }
-        /**
-         * Get all the query args related to the filter by attributes block.
-         *
-         * @return array
-         * [color] => Array
-         *   (
-         *        [filter] => filter_color
-         *        [query_type] => query_type_color
-         *    )
-         *
-         * [size] => Array
-         *    (
-         *        [filter] => filter_size
-         *        [query_type] => query_type_size
-         *    )
-         * )
-         */
-        private function get_filter_by_attributes_query_vars()
-        {
-        }
-        /**
-         * Return queries that are generated by query args.
-         *
-         * @return array
-         */
-        private function get_queries_by_applied_filters()
-        {
-        }
-        /**
-         * Return queries that are generated by attributes
-         *
-         * @param array $parsed_block The Product Query that being rendered.
-         * @return array
-         */
-        private function get_queries_by_attributes($parsed_block)
-        {
-        }
-        /**
-         * Return a query that filters products by price.
-         *
-         * @return array
-         */
-        private function get_filter_by_price_query()
-        {
-        }
-        /**
-         * Return a query that filters products by attributes.
-         *
-         * @return array
-         */
-        private function get_filter_by_attributes_query()
-        {
-        }
-        /**
-         * Return a query that filters products by stock status.
-         *
-         * @return array
-         */
-        private function get_filter_by_stock_status_query()
-        {
-        }
-        /**
-         * Return or initialize $valid_query_vars.
-         *
-         * @return array
-         */
-        private function get_valid_query_vars()
-        {
-        }
-        /**
-         * Merge two array recursively but replace the non-array values instead of
-         * merging them. The merging strategy:
-         *
-         * - If keys from merge array doesn't exist in the base array, create them.
-         * - For array items with numeric keys, we merge them as normal.
-         * - For array items with string keys:
-         *
-         *   - If the value isn't array, we'll use the value comming from the merge array.
-         *     $base = ['orderby' => 'date']
-         *     $new  = ['orderby' => 'meta_value_num']
-         *     Result: ['orderby' => 'meta_value_num']
-         *
-         *   - If the value is array, we'll use recursion to merge each key.
-         *     $base = ['meta_query' => [
-         *       [
-         *         'key'     => '_stock_status',
-         *         'compare' => 'IN'
-         *         'value'   =>  ['instock', 'onbackorder']
-         *       ]
-         *     ]]
-         *     $new  = ['meta_query' => [
-         *       [
-         *         'relation' => 'AND',
-         *         [...<max_price_query>],
-         *         [...<min_price_query>],
-         *       ]
-         *     ]]
-         *     Result: ['meta_query' => [
-         *       [
-         *         'key'     => '_stock_status',
-         *         'compare' => 'IN'
-         *         'value'   =>  ['instock', 'onbackorder']
-         *       ],
-         *       [
-         *         'relation' => 'AND',
-         *         [...<max_price_query>],
-         *         [...<min_price_query>],
-         *       ]
-         *     ]]
-         *
-         *     $base = ['post__in' => [1, 2, 3, 4, 5]]
-         *     $new  = ['post__in' => [3, 4, 5, 6, 7]]
-         *     Result: ['post__in' => [1, 2, 3, 4, 5, 3, 4, 5, 6, 7]]
-         *
-         * @param array $base First array.
-         * @param array $new  Second array.
-         */
-        private function array_merge_recursive_replace_non_array_properties($base, $new)
-        {
-        }
-        /**
-         * Get product-related query variables from the global query.
-         *
-         * @param array $parsed_block The Product Query that being rendered.
-         *
-         * @return array
-         */
-        private function get_global_query($parsed_block)
-        {
-        }
-        /**
-         * Return a query that filters products by rating.
-         *
-         * @return array
-         */
-        private function get_filter_by_rating_query()
         {
         }
     }
@@ -9523,30 +8923,12 @@ namespace Automattic\WooCommerce\Blocks {
     final class BlockTypesController
     {
         /**
-         * Instance of the asset API.
-         *
-         * @var AssetApi
-         */
-        protected $asset_api;
-        /**
-         * Instance of the asset data registry.
-         *
-         * @var AssetDataRegistry
-         */
-        protected $asset_data_registry;
-        /**
          * Constructor.
          *
          * @param AssetApi          $asset_api Instance of the asset API.
          * @param AssetDataRegistry $asset_data_registry Instance of the asset data registry.
          */
         public function __construct(\Automattic\WooCommerce\Blocks\Assets\Api $asset_api, \Automattic\WooCommerce\Blocks\Assets\AssetDataRegistry $asset_data_registry)
-        {
-        }
-        /**
-         * Initialize class features.
-         */
-        protected function init()
         {
         }
         /**
@@ -9581,14 +8963,6 @@ namespace Automattic\WooCommerce\Blocks {
         public function hide_legacy_widgets_with_block_equivalent($widget_types)
         {
         }
-        /**
-         * Get list of block types.
-         *
-         * @return array
-         */
-        protected function get_block_types()
-        {
-        }
     }
 }
 namespace Automattic\WooCommerce\Blocks\Domain {
@@ -9599,24 +8973,6 @@ namespace Automattic\WooCommerce\Blocks\Domain {
      */
     class Bootstrap
     {
-        /**
-         * Holds the Dependency Injection Container
-         *
-         * @var Container
-         */
-        private $container;
-        /**
-         * Holds the Package instance
-         *
-         * @var Package
-         */
-        private $package;
-        /**
-         * Holds the Migration instance
-         *
-         * @var Migration
-         */
-        private $migration;
         /**
          * Constructor
          *
@@ -9686,30 +9042,6 @@ namespace Automattic\WooCommerce\Blocks\Domain {
      */
     class Package
     {
-        /**
-         * Holds the current version of the blocks plugin.
-         *
-         * @var string
-         */
-        private $version;
-        /**
-         * Holds the main path to the blocks plugin directory.
-         *
-         * @var string
-         */
-        private $path;
-        /**
-         * Holds locally the plugin_dir_url to avoid recomputing it.
-         *
-         * @var string
-         */
-        private $plugin_dir_url;
-        /**
-         * Holds the feature gating class instance.
-         *
-         * @var FeatureGating
-         */
-        private $feature_gating;
         /**
          * Constructor
          *
@@ -9798,12 +9130,6 @@ namespace Automattic\WooCommerce\Blocks\Domain\Services {
     class CreateAccount
     {
         /**
-         * Reference to the Package instance
-         *
-         * @var Package
-         */
-        private $package;
-        /**
          * Constructor.
          *
          * @param Package $package An instance of (Woo Blocks) Package.
@@ -9841,12 +9167,6 @@ namespace Automattic\WooCommerce\Blocks\Domain\Services {
     {
         const DB_STATUS = 'wc-checkout-draft';
         const STATUS = 'checkout-draft';
-        /**
-         * Holds the Package instance
-         *
-         * @var Package
-         */
-        private $package;
         /**
          * Constructor
          *
@@ -9898,14 +9218,6 @@ namespace Automattic\WooCommerce\Blocks\Domain\Services {
         {
         }
         /**
-         * Returns the properties of this post status for registration.
-         *
-         * @return array
-         */
-        private function get_post_status_properties()
-        {
-        }
-        /**
          * Remove draft status from the 'status' argument of an $args array.
          *
          * @param array $args Array of arguments containing statuses in the status key.
@@ -9933,26 +9245,6 @@ namespace Automattic\WooCommerce\Blocks\Domain\Services {
          * @internal
          */
         public function delete_expired_draft_orders()
-        {
-        }
-        /**
-         * Since it's possible for third party code to clobber the `$wp_post_statuses` global,
-         * we need to do a final check here to make sure the draft post status is
-         * registered with the global so that it is not removed by WP_Query status
-         * validation checks.
-         */
-        private function ensure_draft_status_registered()
-        {
-        }
-        /**
-         * Asserts whether incoming order results are expected given the query
-         * this service class executes.
-         *
-         * @param WC_Order[] $order_results The order results being asserted.
-         * @param int        $expected_batch_size The expected batch size for the results.
-         * @throws Exception If any assertions fail, an exception is thrown.
-         */
-        private function assert_order_results($order_results, $expected_batch_size)
         {
         }
     }
@@ -10065,21 +9357,9 @@ namespace Automattic\WooCommerce\Blocks\Domain\Services {
      */
     class FeatureGating
     {
-        /**
-         * Current flag value.
-         *
-         * @var int
-         */
-        private $flag;
         const EXPERIMENTAL_FLAG = 3;
         const FEATURE_PLUGIN_FLAG = 2;
         const CORE_FLAG = 1;
-        /**
-         * Current environment
-         *
-         * @var string
-         */
-        private $environment;
         const PRODUCTION_ENVIRONMENT = 'production';
         const DEVELOPMENT_ENVIRONMENT = 'development';
         const TEST_ENVIRONMENT = 'test';
@@ -10220,14 +9500,6 @@ namespace Automattic\WooCommerce\Blocks\Domain\Services {
          * Enqueue the Google Tag Manager script if prerequisites are met.
          */
         public function enqueue_scripts()
-        {
-        }
-        /**
-         * Get settings from the GA integration extension.
-         *
-         * @return array
-         */
-        private function get_google_analytics_settings()
         {
         }
         /**
@@ -10491,15 +9763,6 @@ namespace Automattic\WooCommerce\Blocks {
     class Migration
     {
         /**
-         * DB updates and callbacks that need to be run per version.
-         *
-         * Please note that these functions are invoked when WooCommerce Blocks is updated from a previous version,
-         * but NOT when WooCommerce Blocks is newly installed.
-         *
-         * @var array
-         */
-        private $db_upgrades = array();
-        /**
          * Runs all the necessary migrations.
          *
          * @var array
@@ -10617,18 +9880,6 @@ namespace Automattic\WooCommerce\Blocks\Payments {
     class Api
     {
         /**
-         * Reference to the PaymentMethodRegistry instance.
-         *
-         * @var PaymentMethodRegistry
-         */
-        private $payment_method_registry;
-        /**
-         * Reference to the AssetDataRegistry instance.
-         *
-         * @var AssetDataRegistry
-         */
-        private $asset_registry;
-        /**
          * Constructor
          *
          * @param PaymentMethodRegistry $payment_method_registry An instance of Payment Method Registry.
@@ -10651,15 +9902,6 @@ namespace Automattic\WooCommerce\Blocks\Payments {
          * @return array
          */
         public function add_payment_method_script_dependencies($dependencies, $handle)
-        {
-        }
-        /**
-         * Returns true if the payment gateway is enabled.
-         *
-         * @param object $gateway Payment gateway.
-         * @return boolean
-         */
-        private function is_payment_gateway_enabled($gateway)
         {
         }
         /**
@@ -10841,18 +10083,6 @@ namespace Automattic\WooCommerce\Blocks\Payments\Integrations {
     final class BankTransfer extends \Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodType
     {
         /**
-         * Payment method name/id/slug (matches id in WC_Gateway_BACS in core).
-         *
-         * @var string
-         */
-        protected $name = 'bacs';
-        /**
-         * An instance of the Asset Api
-         *
-         * @var Api
-         */
-        private $asset_api;
-        /**
          * Constructor
          *
          * @param Api $asset_api An instance of Api.
@@ -10899,18 +10129,6 @@ namespace Automattic\WooCommerce\Blocks\Payments\Integrations {
     final class CashOnDelivery extends \Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodType
     {
         /**
-         * Payment method name/id/slug (matches id in WC_Gateway_COD in core).
-         *
-         * @var string
-         */
-        protected $name = 'cod';
-        /**
-         * An instance of the Asset Api
-         *
-         * @var Api
-         */
-        private $asset_api;
-        /**
          * Constructor
          *
          * @param Api $asset_api An instance of Api.
@@ -10930,22 +10148,6 @@ namespace Automattic\WooCommerce\Blocks\Payments\Integrations {
          * @return boolean
          */
         public function is_active()
-        {
-        }
-        /**
-         * Return enable_for_virtual option.
-         *
-         * @return boolean True if store allows COD payment for orders containing only virtual products.
-         */
-        private function get_enable_for_virtual()
-        {
-        }
-        /**
-         * Return enable_for_methods option.
-         *
-         * @return array Array of shipping methods (string ids) that allow COD. (If empty, all support COD.)
-         */
-        private function get_enable_for_methods()
         {
         }
         /**
@@ -10972,18 +10174,6 @@ namespace Automattic\WooCommerce\Blocks\Payments\Integrations {
      */
     final class Cheque extends \Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodType
     {
-        /**
-         * Payment method name defined by payment methods extending this class.
-         *
-         * @var string
-         */
-        protected $name = 'cheque';
-        /**
-         * An instance of the Asset Api
-         *
-         * @var Api
-         */
-        private $asset_api;
         /**
          * Constructor
          *
@@ -11030,18 +10220,6 @@ namespace Automattic\WooCommerce\Blocks\Payments\Integrations {
      */
     final class PayPal extends \Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodType
     {
-        /**
-         * Payment method name defined by payment methods extending this class.
-         *
-         * @var string
-         */
-        protected $name = 'paypal';
-        /**
-         * An instance of the Asset Api
-         *
-         * @var Api
-         */
-        private $asset_api;
         /**
          * Constructor
          *
@@ -11099,12 +10277,6 @@ namespace Automattic\WooCommerce\Blocks\Payments {
     final class PaymentMethodRegistry extends \Automattic\WooCommerce\Blocks\Integrations\IntegrationRegistry
     {
         /**
-         * Integration identifier is used to construct hook names and is given when the integration registry is initialized.
-         *
-         * @var string
-         */
-        protected $registry_identifier = 'payment_method_type';
-        /**
          * Retrieves all registered payment methods that are also active.
          *
          * @return PaymentMethodTypeInterface[]
@@ -11143,12 +10315,6 @@ namespace Automattic\WooCommerce\Blocks\Registry {
     abstract class AbstractDependencyType
     {
         /**
-         * Holds a callable or value provided for this type.
-         *
-         * @var mixed
-         */
-        private $callable_or_value;
-        /**
          * Constructor
          *
          * @param mixed $callable_or_value  A callable or value for the dependency
@@ -11185,12 +10351,6 @@ namespace Automattic\WooCommerce\Blocks\Registry {
      */
     class Container
     {
-        /**
-         * A map of Dependency Type objects used to resolve dependencies.
-         *
-         * @var AbstractDependencyType[]
-         */
-        private $registry = [];
         /**
          * Public api for adding a factory to the container.
          *
@@ -11278,12 +10438,6 @@ namespace Automattic\WooCommerce\Blocks\Registry {
     class SharedType extends \Automattic\WooCommerce\Blocks\Registry\AbstractDependencyType
     {
         /**
-         * Holds a cached instance of the value stored (or returned) internally.
-         *
-         * @var mixed
-         */
-        private $shared_instance;
-        /**
          * Returns the internal stored and shared value after initial generation.
          *
          * @param Container $container An instance of the dependency injection
@@ -11292,6 +10446,162 @@ namespace Automattic\WooCommerce\Blocks\Registry {
          * @return mixed
          */
         public function get(\Automattic\WooCommerce\Blocks\Registry\Container $container)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Blocks\Shipping {
+    /**
+     * Local Pickup Shipping Method.
+     */
+    class PickupLocation extends \WC_Shipping_Method
+    {
+        /**
+         * Constructor.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Init function.
+         */
+        public function init()
+        {
+        }
+        /**
+         * Calculate shipping.
+         *
+         * @param array $package Package information.
+         */
+        public function calculate_shipping($package = array())
+        {
+        }
+        /**
+         * See if the method is available.
+         *
+         * @param array $package Package information.
+         * @return bool
+         */
+        public function is_available($package)
+        {
+        }
+        /**
+         * Translates meta data for the shipping method.
+         *
+         * @param string $label Meta label.
+         * @param string $name Meta key.
+         * @param mixed  $product Product if applicable.
+         * @return string
+         */
+        public function translate_meta_data($label, $name, $product)
+        {
+        }
+        /**
+         * Admin options screen.
+         *
+         * See also WC_Shipping_Method::admin_options().
+         */
+        public function admin_options()
+        {
+        }
+    }
+    /**
+     * ShippingController class.
+     *
+     * @internal
+     */
+    class ShippingController
+    {
+        /**
+         * Instance of the asset API.
+         *
+         * @var AssetApi
+         */
+        protected $asset_api;
+        /**
+         * Instance of the asset data registry.
+         *
+         * @var AssetDataRegistry
+         */
+        protected $asset_data_registry;
+        /**
+         * Constructor.
+         *
+         * @param AssetApi          $asset_api Instance of the asset API.
+         * @param AssetDataRegistry $asset_data_registry Instance of the asset data registry.
+         */
+        public function __construct(\Automattic\WooCommerce\Blocks\Assets\Api $asset_api, \Automattic\WooCommerce\Blocks\Assets\AssetDataRegistry $asset_data_registry)
+        {
+        }
+        /**
+         * Initialization method.
+         */
+        public function init()
+        {
+        }
+        /**
+         * Register Local Pickup settings for rest api.
+         */
+        public function register_settings()
+        {
+        }
+        /**
+         * Hydrate client settings
+         */
+        public function hydrate_client_settings()
+        {
+        }
+        /**
+         * Load admin scripts.
+         */
+        public function admin_scripts()
+        {
+        }
+        /**
+         * Registers the Local Pickup shipping method used by the Checkout Block.
+         */
+        public function register_local_pickup()
+        {
+        }
+        /**
+         * Declares the Pickup Location shipping method as a Local Pickup method for WooCommerce.
+         *
+         * @param array $methods Shipping method ids.
+         * @return array
+         */
+        public function register_local_pickup_method($methods)
+        {
+        }
+        /**
+         * Everytime we save or update local pickup settings, we flush the shipping
+         * transient group.
+         *
+         * @param array $settings The setting array we're saving.
+         * @return array $settings The setting array we're saving.
+         */
+        public function flush_cache($settings)
+        {
+        }
+        /**
+         * Filter the location used for taxes based on the chosen pickup location.
+         *
+         * @param array $address Location args.
+         * @return array
+         */
+        public function filter_taxable_address($address)
+        {
+        }
+        /**
+         * Local Pickup requires all packages to support local pickup. This is because the entire order must be picked up
+         * so that all packages get the same tax rates applied during checkout.
+         *
+         * If a shipping package does not support local pickup (e.g. if disabled by an extension), this filters the option
+         * out for all packages. This will in turn disable the "pickup" toggle in Block Checkout.
+         *
+         * @param array $packages Array of shipping packages.
+         * @return array
+         */
+        public function filter_shipping_packages($packages)
         {
         }
     }
@@ -11324,6 +10634,15 @@ namespace Automattic\WooCommerce\StoreApi {
          * @param string $logged_in_cookie The value for the logged in cookie.
          */
         public function set_logged_in_cookie($logged_in_cookie)
+        {
+        }
+        /**
+         * Applies Rate Limiting to the request, and passes through any errors from other authentication methods used before this one.
+         *
+         * @param \WP_Error|mixed $result Error from another authentication handler, null if we should handle it, or another value if not.
+         * @return \WP_Error|null|bool
+         */
+        protected function apply_rate_limiting($result)
         {
         }
         /**
@@ -11635,12 +10954,6 @@ namespace Automattic\WooCommerce\StoreApi {
      */
     class Formatters
     {
-        /**
-         * Holds an array of formatter class instances.
-         *
-         * @var array
-         */
-        private $formatters = [];
         /**
          * Get a new instance of a formatter class.
          *
@@ -13093,12 +12406,6 @@ namespace Automattic\WooCommerce\StoreApi\Routes\V1 {
          */
         const SCHEMA_TYPE = 'checkout';
         /**
-         * Holds the current order being processed.
-         *
-         * @var \WC_Order
-         */
-        private $order = null;
-        /**
          * Get the path of this REST route.
          *
          * @return string
@@ -13183,145 +12490,6 @@ namespace Automattic\WooCommerce\StoreApi\Routes\V1 {
          * @return \WP_Error WP Error object.
          */
         protected function get_route_error_response_from_object($error_object, $http_status_code = 500, $additional_data = [])
-        {
-        }
-        /**
-         * Adds additional data to the \WP_Error object.
-         *
-         * @param \WP_Error $error The error object to add the cart to.
-         * @param array     $data The data to add to the error object.
-         * @param int       $http_status_code The HTTP status code this error should return.
-         * @param bool      $include_cart Whether the cart should be included in the error data.
-         * @returns \WP_Error The \WP_Error with the cart added.
-         */
-        private function add_data_to_error_object($error, $data, $http_status_code, bool $include_cart = false)
-        {
-        }
-        /**
-         * Create or update a draft order based on the cart.
-         *
-         * @param \WP_REST_Request $request Full details about the request.
-         * @throws RouteException On error.
-         */
-        private function create_or_update_draft_order(\WP_REST_Request $request)
-        {
-        }
-        /**
-         * Updates the current customer session using data from the request (e.g. address data).
-         *
-         * Address session data is synced to the order itself later on by OrderController::update_order_from_cart()
-         *
-         * @param \WP_REST_Request $request Full details about the request.
-         */
-        private function update_customer_from_request(\WP_REST_Request $request)
-        {
-        }
-        /**
-         * Update the current order using the posted values from the request.
-         *
-         * @param \WP_REST_Request $request Full details about the request.
-         */
-        private function update_order_from_request(\WP_REST_Request $request)
-        {
-        }
-        /**
-         * For orders which do not require payment, just update status.
-         *
-         * @param \WP_REST_Request $request Request object.
-         * @param PaymentResult    $payment_result Payment result object.
-         */
-        private function process_without_payment(\WP_REST_Request $request, \Automattic\WooCommerce\StoreApi\Payments\PaymentResult $payment_result)
-        {
-        }
-        /**
-         * Fires an action hook instructing active payment gateways to process the payment for an order and provide a result.
-         *
-         * @throws RouteException On error.
-         *
-         * @param \WP_REST_Request $request Request object.
-         * @param PaymentResult    $payment_result Payment result object.
-         */
-        private function process_payment(\WP_REST_Request $request, \Automattic\WooCommerce\StoreApi\Payments\PaymentResult $payment_result)
-        {
-        }
-        /**
-         * Gets the chosen payment method ID from the request.
-         *
-         * @throws RouteException On error.
-         * @param \WP_REST_Request $request Request object.
-         * @return string
-         */
-        private function get_request_payment_method_id(\WP_REST_Request $request)
-        {
-        }
-        /**
-         * Gets the chosen payment method from the request.
-         *
-         * @throws RouteException On error.
-         * @param \WP_REST_Request $request Request object.
-         * @return \WC_Payment_Gateway|null
-         */
-        private function get_request_payment_method(\WP_REST_Request $request)
-        {
-        }
-        /**
-         * Gets and formats payment request data.
-         *
-         * @param \WP_REST_Request $request Request object.
-         * @return array
-         */
-        private function get_request_payment_data(\WP_REST_Request $request)
-        {
-        }
-        /**
-         * Order processing relating to customer account.
-         *
-         * Creates a customer account as needed (based on request & store settings) and  updates the order with the new customer ID.
-         * Updates the order with user details (e.g. address).
-         *
-         * @throws RouteException API error object with error details.
-         * @param \WP_REST_Request $request Request object.
-         */
-        private function process_customer(\WP_REST_Request $request)
-        {
-        }
-        /**
-         * Check request options and store (shop) config to determine if a user account should be created as part of order
-         * processing.
-         *
-         * @param \WP_REST_Request $request The current request object being handled.
-         * @return boolean True if a new user account should be created.
-         */
-        private function should_create_customer_account(\WP_REST_Request $request)
-        {
-        }
-        /**
-         * Create a new account for a customer.
-         *
-         * The account is created with a generated username. The customer is sent
-         * an email notifying them about the account and containing a link to set
-         * their (initial) password.
-         *
-         * Intended as a replacement for wc_create_new_customer in WC core.
-         *
-         * @throws \Exception If an error is encountered when creating the user account.
-         *
-         * @param string $user_email The email address to use for the new account.
-         * @param string $first_name The first name to use for the new account.
-         * @param string $last_name  The last name to use for the new account.
-         *
-         * @return int User id if successful
-         */
-        private function create_customer_account($user_email, $first_name, $last_name)
-        {
-        }
-        /**
-         * Convert an account creation error to an exception.
-         *
-         * @param \WP_Error $error An error object.
-         * @return \Exception.
-         */
-        private function map_create_account_error(\WP_Error $error)
         {
         }
     }
@@ -13861,12 +13029,6 @@ namespace Automattic\WooCommerce\StoreApi {
          */
         protected $schemas = [];
         /**
-         * Stores Rest Extending instance
-         *
-         * @var ExtendSchema
-         */
-        private $extend;
-        /**
          * Constructor.
          *
          * @param ExtendSchema $extend Rest Extending instance.
@@ -13901,36 +13063,6 @@ namespace Automattic\WooCommerce\StoreApi\Schemas {
      */
     final class ExtendSchema
     {
-        /**
-         * List of Store API schema that is allowed to be extended by extensions.
-         *
-         * @var string[]
-         */
-        private $endpoints = [\Automattic\WooCommerce\StoreApi\Schemas\V1\CartItemSchema::IDENTIFIER, \Automattic\WooCommerce\StoreApi\Schemas\V1\CartSchema::IDENTIFIER, \Automattic\WooCommerce\StoreApi\Schemas\V1\CheckoutSchema::IDENTIFIER, \Automattic\WooCommerce\StoreApi\Schemas\V1\ProductSchema::IDENTIFIER];
-        /**
-         * Holds the formatters class instance.
-         *
-         * @var Formatters
-         */
-        private $formatters;
-        /**
-         * Data to be extended
-         *
-         * @var array
-         */
-        private $extend_data = [];
-        /**
-         * Data to be extended
-         *
-         * @var array
-         */
-        private $callback_methods = [];
-        /**
-         * Array of payment requirements
-         *
-         * @var array
-         */
-        private $payment_requirements = [];
         /**
          * Constructor
          *
@@ -14037,26 +13169,6 @@ namespace Automattic\WooCommerce\StoreApi\Schemas {
          * @throws \Exception If a registered callback throws an error, or silently logs it.
          */
         public function get_payment_requirements(array $requirements = ['products'])
-        {
-        }
-        /**
-         * Throws error and/or silently logs it.
-         *
-         * @param string|\Throwable $exception_or_error Error message or \Exception.
-         * @throws \Exception An error to throw if we have debug enabled and user is admin.
-         */
-        private function throw_exception($exception_or_error)
-        {
-        }
-        /**
-         * Format schema for an extension.
-         *
-         * @param string $namespace Error message or \Exception.
-         * @param array  $schema An error to throw if we have debug enabled and user is admin.
-         * @param string $schema_type How should data be shaped.
-         * @return array Formatted schema.
-         */
-        private function format_extensions_properties($namespace, $schema, $schema_type)
         {
         }
     }
@@ -15437,24 +14549,6 @@ namespace Automattic\WooCommerce\StoreApi {
     final class SessionHandler extends \WC_Session
     {
         /**
-         * Token from HTTP headers.
-         *
-         * @var string
-         */
-        protected $token;
-        /**
-         * Table name for session data.
-         *
-         * @var string Custom session table name
-         */
-        protected $table;
-        /**
-         * Expiration timestamp.
-         *
-         * @var int
-         */
-        protected $session_expiration;
-        /**
          * Constructor for the session class.
          */
         public function __construct()
@@ -15464,12 +14558,6 @@ namespace Automattic\WooCommerce\StoreApi {
          * Init hooks and session data.
          */
         public function init()
-        {
-        }
-        /**
-         * Process the token header to load the correct session.
-         */
-        protected function init_session_from_token()
         {
         }
         /**
@@ -15592,29 +14680,6 @@ namespace Automattic\WooCommerce\StoreApi\Utilities {
         {
         }
         /**
-         * Generates the error message for out of stock products and adds product names to it.
-         *
-         * @param string $singular The message to use when only one product is in the list.
-         * @param string $plural The message to use when more than one product is in the list.
-         * @param array  $items The list of cart items whose names should be inserted into the message.
-         * @returns string The translated and correctly pluralised message.
-         */
-        private function add_product_names_to_message($singular, $plural, $items)
-        {
-        }
-        /**
-         * Takes a string describing the type of stock extension, whether there is a single product or multiple products
-         * causing this exception and returns an appropriate error message.
-         *
-         * @param string $exception_type     The type of exception encountered.
-         * @param string $singular_or_plural Whether to get the error message for a single product or multiple.
-         *
-         * @return string
-         */
-        private function get_error_message_for_stock_exception_type($exception_type, $singular_or_plural)
-        {
-        }
-        /**
          * Validate cart and check for errors.
          *
          * @throws InvalidCartException Exception if invalid data is detected in the cart.
@@ -15628,19 +14693,6 @@ namespace Automattic\WooCommerce\StoreApi\Utilities {
          * @throws InvalidCartException Exception if invalid data is detected due to insufficient stock levels.
          */
         public function validate_cart_items()
-        {
-        }
-        /**
-         * This method will take arrays of exceptions relating to stock, and will convert them to a WP_Error object.
-         *
-         * @param TooManyInCartException[]     $too_many_in_cart_products     Array of TooManyInCartExceptions.
-         * @param NotPurchasableException[]    $not_purchasable_products      Array of NotPurchasableExceptions.
-         * @param PartialOutOfStockException[] $partial_out_of_stock_products Array of PartialOutOfStockExceptions.
-         * @param OutOfStockException[]        $out_of_stock_products         Array of OutOfStockExceptions.
-         *
-         * @return WP_Error  The WP_Error object returned. Will have errors if any exceptions were in the args. It will be empty if they do not.
-         */
-        private function stock_exceptions_to_wp_errors($too_many_in_cart_products, $not_purchasable_products, $partial_out_of_stock_products, $out_of_stock_products)
         {
         }
         /**
@@ -15740,15 +14792,6 @@ namespace Automattic\WooCommerce\StoreApi\Utilities {
          * @return array
          */
         public function get_shipping_packages($calculate_rates = true)
-        {
-        }
-        /**
-         * We want to make local pickup always avaiable without checking for a shipping zone or address.
-         *
-         * @param array $shipping_methods Package we're checking against right now.
-         * @return array $shipping_methods Shipping methods with local pickup.
-         */
-        public function enable_local_pickup_without_address($shipping_methods)
         {
         }
         /**
@@ -15917,18 +14960,6 @@ namespace Automattic\WooCommerce\StoreApi\Utilities {
     final class JsonWebToken
     {
         /**
-         * JWT header type.
-         *
-         * @var string
-         */
-        private static $type = 'JWT';
-        /**
-         * JWT algorithm to generate signature.
-         *
-         * @var string
-         */
-        private static $algorithm = 'HS256';
-        /**
          * Generates a token from provided data and secret.
          *
          * @param array  $payload Payload data.
@@ -15960,55 +14991,6 @@ namespace Automattic\WooCommerce\StoreApi\Utilities {
          * @return object
          */
         public static function get_parts(string $token)
-        {
-        }
-        /**
-         * Generates the json formatted header for our HS256 JWT token.
-         *
-         * @return string|bool
-         */
-        private static function generate_header()
-        {
-        }
-        /**
-         * Generates a sha256 signature for the provided string using the provided secret.
-         *
-         * @param string $string Header + Payload token substring.
-         * @param string $secret The secret used to generate the signature.
-         *
-         * @return false|string
-         */
-        private static function generate_signature(string $string, string $secret)
-        {
-        }
-        /**
-         * Generates the payload in json formatted string.
-         *
-         * @param array $payload Payload data.
-         *
-         * @return string|bool
-         */
-        private static function generate_payload(array $payload)
-        {
-        }
-        /**
-         * Encodes a string to url safe base64.
-         *
-         * @param string $string The string to be encoded.
-         *
-         * @return string
-         */
-        private static function to_base_64_url(string $string)
-        {
-        }
-        /**
-         * Decodes a string encoded using url safe base64, supporting auto padding.
-         *
-         * @param string $string the string to be decoded.
-         *
-         * @return string
-         */
-        private static function from_base_64_url(string $string)
         {
         }
     }
@@ -16400,18 +15382,6 @@ namespace Automattic\WooCommerce\StoreApi\Utilities {
         {
         }
         /**
-         * Generate calculate query by stock status.
-         *
-         * @param string $status status to calculate.
-         * @param string $product_query_sql product query for current filter state.
-         * @param array  $stock_status_options available stock status options.
-         *
-         * @return false|string
-         */
-        private function generate_stock_status_count_query($status, $product_query_sql, $stock_status_options)
-        {
-        }
-        /**
          * Get attribute counts for the current products.
          *
          * @param \WP_REST_Request $request The request object.
@@ -16476,40 +15446,6 @@ namespace Automattic\WooCommerce\StoreApi\Utilities {
          * @return \WP_Error|true
          */
         public function validate_cart_item_quantity($quantity, $cart_item)
-        {
-        }
-        /**
-         * Get the limit for the total number of a product allowed in the cart.
-         *
-         * This is based on product properties, including remaining stock, and defaults to a maximum of 9999 of any product
-         * in the cart at once.
-         *
-         * @param \WC_Product $product Product instance.
-         * @return int
-         */
-        protected function get_product_quantity_limit(\WC_Product $product)
-        {
-        }
-        /**
-         * Returns the remaining stock for a product if it has stock.
-         *
-         * This also factors in draft orders.
-         *
-         * @param \WC_Product $product Product instance.
-         * @return integer|null
-         */
-        protected function get_remaining_stock(\WC_Product $product)
-        {
-        }
-        /**
-         * Get a quantity for a product or cart item by running it through a filter hook.
-         *
-         * @param int|null          $value Value to filter.
-         * @param string            $value_type Type of value. Used for filter suffix.
-         * @param \WC_Product|array $cart_item_or_product Either a cart item or a product instance.
-         * @return mixed
-         */
-        protected function filter_value($value, string $value_type, $cart_item_or_product)
         {
         }
     }
@@ -17452,6 +16388,8 @@ namespace {
     }
     /**
      * General API functions for scheduling actions
+     *
+     * @package ActionScheduler.
      */
     /**
      * Enqueue an action to run one time, as soon as possible
@@ -17459,45 +16397,49 @@ namespace {
      * @param string $hook The hook to trigger.
      * @param array  $args Arguments to pass when the hook triggers.
      * @param string $group The group to assign this job to.
+     * @param bool   $unique Whether the action should be unique.
+     *
      * @return int The action ID.
      */
-    function as_enqueue_async_action($hook, $args = array(), $group = '')
+    function as_enqueue_async_action($hook, $args = array(), $group = '', $unique = \false)
     {
     }
     /**
      * Schedule an action to run one time
      *
-     * @param int $timestamp When the job will run.
+     * @param int    $timestamp When the job will run.
      * @param string $hook The hook to trigger.
-     * @param array $args Arguments to pass when the hook triggers.
+     * @param array  $args Arguments to pass when the hook triggers.
      * @param string $group The group to assign this job to.
+     * @param bool   $unique Whether the action should be unique.
      *
      * @return int The action ID.
      */
-    function as_schedule_single_action($timestamp, $hook, $args = array(), $group = '')
+    function as_schedule_single_action($timestamp, $hook, $args = array(), $group = '', $unique = \false)
     {
     }
     /**
      * Schedule a recurring action
      *
-     * @param int $timestamp When the first instance of the job will run.
-     * @param int $interval_in_seconds How long to wait between runs.
+     * @param int    $timestamp When the first instance of the job will run.
+     * @param int    $interval_in_seconds How long to wait between runs.
      * @param string $hook The hook to trigger.
-     * @param array $args Arguments to pass when the hook triggers.
+     * @param array  $args Arguments to pass when the hook triggers.
      * @param string $group The group to assign this job to.
+     * @param bool   $unique Whether the action should be unique.
      *
      * @return int The action ID.
      */
-    function as_schedule_recurring_action($timestamp, $interval_in_seconds, $hook, $args = array(), $group = '')
+    function as_schedule_recurring_action($timestamp, $interval_in_seconds, $hook, $args = array(), $group = '', $unique = \false)
     {
     }
     /**
      * Schedule an action that recurs on a cron-like schedule.
      *
-     * @param int $base_timestamp The first instance of the action will be scheduled
-     *        to run at a time calculated after this timestamp matching the cron
-     *        expression. This can be used to delay the first instance of the action.
-     * @param string $schedule A cron-link schedule string
+     * @param int    $timestamp The first instance of the action will be scheduled
+     *           to run at a time calculated after this timestamp matching the cron
+     *           expression. This can be used to delay the first instance of the action.
+     * @param string $schedule A cron-link schedule string.
      * @see http://en.wikipedia.org/wiki/Cron
      *   *    *    *    *    *    *
      *   ┬    ┬    ┬    ┬    ┬    ┬
@@ -17509,12 +16451,13 @@ namespace {
      *   |    +-------------------- hour (0 - 23)
      *   +------------------------- min (0 - 59)
      * @param string $hook The hook to trigger.
-     * @param array $args Arguments to pass when the hook triggers.
+     * @param array  $args Arguments to pass when the hook triggers.
      * @param string $group The group to assign this job to.
+     * @param bool   $unique Whether the action should be unique.
      *
      * @return int The action ID.
      */
-    function as_schedule_cron_action($timestamp, $schedule, $hook, $args = array(), $group = '')
+    function as_schedule_cron_action($timestamp, $schedule, $hook, $args = array(), $group = '', $unique = \false)
     {
     }
     /**
@@ -17528,7 +16471,7 @@ namespace {
      * by this method also.
      *
      * @param string $hook The hook that the job will trigger.
-     * @param array $args Args that would have been passed to the job.
+     * @param array  $args Args that would have been passed to the job.
      * @param string $group The group the job is assigned to.
      *
      * @return int|null The scheduled action ID if a scheduled action was found, or null if no matching action found.
@@ -17540,7 +16483,7 @@ namespace {
      * Cancel all occurrences of a scheduled action.
      *
      * @param string $hook The hook that the job will trigger.
-     * @param array $args Args that would have been passed to the job.
+     * @param array  $args Args that would have been passed to the job.
      * @param string $group The group the job is assigned to.
      */
     function as_unschedule_all_actions($hook, $args = array(), $group = '')
@@ -17555,9 +16498,9 @@ namespace {
      * returned. Or there may be no async, in-progress or pending action for this hook, in which case,
      * boolean false will be the return value.
      *
-     * @param string $hook
-     * @param array $args
-     * @param string $group
+     * @param string $hook Name of the hook to search for.
+     * @param array  $args Arguments of the action to be searched.
+     * @param string $group Group of the action to be searched.
      *
      * @return int|bool The timestamp for the next occurrence of a pending scheduled action, true for an async or in-progress action or false if there is no matching action.
      */
@@ -17570,7 +16513,7 @@ namespace {
      * It's recommended to use this function when you need to know whether a specific action is currently scheduled
      * (pending or in-progress).
      *
-     * @since x.x.x
+     * @since 3.3.0
      *
      * @param string $hook  The hook of the action.
      * @param array  $args  Args that have been passed to the action. Null will matches any args.
@@ -17584,20 +16527,20 @@ namespace {
     /**
      * Find scheduled actions
      *
-     * @param array $args Possible arguments, with their default values:
-     *        'hook' => '' - the name of the action that will be triggered
-     *        'args' => NULL - the args array that will be passed with the action
-     *        'date' => NULL - the scheduled date of the action. Expects a DateTime object, a unix timestamp, or a string that can parsed with strtotime(). Used in UTC timezone.
-     *        'date_compare' => '<=' - operator for testing "date". accepted values are '!=', '>', '>=', '<', '<=', '='
-     *        'modified' => NULL - the date the action was last updated. Expects a DateTime object, a unix timestamp, or a string that can parsed with strtotime(). Used in UTC timezone.
-     *        'modified_compare' => '<=' - operator for testing "modified". accepted values are '!=', '>', '>=', '<', '<=', '='
-     *        'group' => '' - the group the action belongs to
-     *        'status' => '' - ActionScheduler_Store::STATUS_COMPLETE or ActionScheduler_Store::STATUS_PENDING
-     *        'claimed' => NULL - TRUE to find claimed actions, FALSE to find unclaimed actions, a string to find a specific claim ID
-     *        'per_page' => 5 - Number of results to return
-     *        'offset' => 0
-     *        'orderby' => 'date' - accepted values are 'hook', 'group', 'modified', 'date' or 'none'
-     *        'order' => 'ASC'
+     * @param array  $args Possible arguments, with their default values.
+     *         'hook' => '' - the name of the action that will be triggered.
+     *         'args' => NULL - the args array that will be passed with the action.
+     *         'date' => NULL - the scheduled date of the action. Expects a DateTime object, a unix timestamp, or a string that can parsed with strtotime(). Used in UTC timezone.
+     *         'date_compare' => '<=' - operator for testing "date". accepted values are '!=', '>', '>=', '<', '<=', '='.
+     *         'modified' => NULL - the date the action was last updated. Expects a DateTime object, a unix timestamp, or a string that can parsed with strtotime(). Used in UTC timezone.
+     *         'modified_compare' => '<=' - operator for testing "modified". accepted values are '!=', '>', '>=', '<', '<=', '='.
+     *         'group' => '' - the group the action belongs to.
+     *         'status' => '' - ActionScheduler_Store::STATUS_COMPLETE or ActionScheduler_Store::STATUS_PENDING.
+     *         'claimed' => NULL - TRUE to find claimed actions, FALSE to find unclaimed actions, a string to find a specific claim ID.
+     *         'per_page' => 5 - Number of results to return.
+     *         'offset' => 0.
+     *         'orderby' => 'date' - accepted values are 'hook', 'group', 'modified', 'date' or 'none'.
+     *         'order' => 'ASC'.
      *
      * @param string $return_format OBJECT, ARRAY_A, or ids.
      *
@@ -17618,7 +16561,7 @@ namespace {
      * timezone when instantiating datetimes rather than leaving it up to
      * the PHP default.
      *
-     * @param mixed $date_string A date/time string. Valid formats are explained in http://php.net/manual/en/datetime.formats.php.
+     * @param mixed  $date_string A date/time string. Valid formats are explained in http://php.net/manual/en/datetime.formats.php.
      * @param string $timezone A timezone identifier, like UTC or Europe/Lisbon. The list of valid identifiers is available http://php.net/manual/en/timezones.php.
      *
      * @return ActionScheduler_DateTime

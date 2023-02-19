@@ -16,6 +16,7 @@ test -d "source/woocommerce"
 
 # Exclude globals.
 "$(dirname "$0")/vendor/bin/generate-stubs" \
+    --include-inaccessible-class-nodes \
     --force \
     --finder=finder.php \
     --header="$HEADER" \
