@@ -8,14 +8,14 @@ These stubs can help plugin and theme developers leverage static analysis tools
 like [PHPStan](https://github.com/phpstan/phpstan),
 which is not able to parse WooCommerce as it is not clean OOP code.
 
-Stubs are generated directly from the [source](https://github.com/woocommerce/woocommerce)
-using [giacocorsiglia/stubs-generator](https://github.com/GiacoCorsiglia/php-stubs-generator).
+The stubs are generated directly from the [source](https://github.com/woocommerce/woocommerce)
+using [php-stubs/generator](https://github.com/php-stubs/generator).
 
-### Requirements
+## Requirements
 
 - PHP >=7.1
 
-### Installation
+## Installation
 
 Require this package as a development dependency with [Composer](https://getcomposer.org).
 
@@ -25,14 +25,13 @@ composer require --dev php-stubs/woocommerce-stubs
 
 Alternatively you may download `woocommerce-stubs.php` directly.
 
-### Usage in PHPStan
+## Usage in PHPStan
 
-Include all stubs in PHPStan configuration file.
+Include stubs in PHPStan configuration file.
 
 ```yaml
 parameters:
     bootstrapFiles:
-        - %rootDir%/../../php-stubs/wordpress-stubs/wordpress-stubs.php
-        - %rootDir%/../../php-stubs/woocommerce-stubs/woocommerce-stubs.php
-        #- %rootDir%/../../php-stubs/woocommerce-stubs/woocommerce-packages-stubs.php
+        - vendor/php-stubs/woocommerce-stubs/woocommerce-stubs.php
+        #- vendor/php-stubs/woocommerce-stubs/woocommerce-packages-stubs.php
 ```
