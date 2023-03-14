@@ -1831,6 +1831,24 @@ namespace {
         {
         }
         /**
+         * Get date_modified.
+         *
+         * @param  string $context View or edit context.
+         * @return WC_DateTime|NULL object if the date is set or null if there is no date.
+         */
+        public function get_date_paid($context = 'view')
+        {
+        }
+        /**
+         * Get date_modified.
+         *
+         * @param  string $context View or edit context.
+         * @return WC_DateTime|NULL object if the date is set or null if there is no date.
+         */
+        public function get_date_completed($context = 'view')
+        {
+        }
+        /**
          * Return the order statuses without wc- internal prefix.
          *
          * @param  string $context View or edit context.
@@ -21484,13 +21502,13 @@ namespace {
          *
          * @var array
          */
-        protected $deprecated_hooks = array('woocommerce_structured_data_order' => 'woocommerce_email_order_schema_markup', 'woocommerce_add_to_cart_fragments' => 'add_to_cart_fragments', 'woocommerce_add_to_cart_redirect' => 'add_to_cart_redirect', 'woocommerce_product_get_width' => 'woocommerce_product_width', 'woocommerce_product_get_height' => 'woocommerce_product_height', 'woocommerce_product_get_length' => 'woocommerce_product_length', 'woocommerce_product_get_weight' => 'woocommerce_product_weight', 'woocommerce_product_get_sku' => 'woocommerce_get_sku', 'woocommerce_product_get_price' => 'woocommerce_get_price', 'woocommerce_product_get_regular_price' => 'woocommerce_get_regular_price', 'woocommerce_product_get_sale_price' => 'woocommerce_get_sale_price', 'woocommerce_product_get_tax_class' => 'woocommerce_product_tax_class', 'woocommerce_product_get_stock_quantity' => 'woocommerce_get_stock_quantity', 'woocommerce_product_get_attributes' => 'woocommerce_get_product_attributes', 'woocommerce_product_get_gallery_image_ids' => 'woocommerce_product_gallery_attachment_ids', 'woocommerce_product_get_review_count' => 'woocommerce_product_review_count', 'woocommerce_product_get_downloads' => 'woocommerce_product_files', 'woocommerce_order_get_currency' => 'woocommerce_get_currency', 'woocommerce_order_get_discount_total' => 'woocommerce_order_amount_discount_total', 'woocommerce_order_get_discount_tax' => 'woocommerce_order_amount_discount_tax', 'woocommerce_order_get_shipping_total' => 'woocommerce_order_amount_shipping_total', 'woocommerce_order_get_shipping_tax' => 'woocommerce_order_amount_shipping_tax', 'woocommerce_order_get_cart_tax' => 'woocommerce_order_amount_cart_tax', 'woocommerce_order_get_total' => 'woocommerce_order_amount_total', 'woocommerce_order_get_total_tax' => 'woocommerce_order_amount_total_tax', 'woocommerce_order_get_total_discount' => 'woocommerce_order_amount_total_discount', 'woocommerce_order_get_subtotal' => 'woocommerce_order_amount_subtotal', 'woocommerce_order_get_tax_totals' => 'woocommerce_order_tax_totals', 'woocommerce_get_order_refund_get_amount' => 'woocommerce_refund_amount', 'woocommerce_get_order_refund_get_reason' => 'woocommerce_refund_reason', 'default_checkout_billing_country' => 'default_checkout_country', 'default_checkout_billing_state' => 'default_checkout_state', 'default_checkout_billing_postcode' => 'default_checkout_postcode', 'woocommerce_system_status_environment_rows' => 'woocommerce_debug_posting', 'woocommerce_credit_card_type_labels' => 'wocommerce_credit_card_type_labels', 'woocommerce_settings_tabs_advanced' => 'woocommerce_settings_tabs_api', 'woocommerce_settings_advanced' => 'woocommerce_settings_api', 'woocommerce_csv_importer_check_import_file_path' => 'woocommerce_product_csv_importer_check_import_file_path');
+        protected $deprecated_hooks = array('woocommerce_account_orders_columns' => 'woocommerce_my_account_my_orders_columns', 'woocommerce_structured_data_order' => 'woocommerce_email_order_schema_markup', 'woocommerce_add_to_cart_fragments' => 'add_to_cart_fragments', 'woocommerce_add_to_cart_redirect' => 'add_to_cart_redirect', 'woocommerce_product_get_width' => 'woocommerce_product_width', 'woocommerce_product_get_height' => 'woocommerce_product_height', 'woocommerce_product_get_length' => 'woocommerce_product_length', 'woocommerce_product_get_weight' => 'woocommerce_product_weight', 'woocommerce_product_get_sku' => 'woocommerce_get_sku', 'woocommerce_product_get_price' => 'woocommerce_get_price', 'woocommerce_product_get_regular_price' => 'woocommerce_get_regular_price', 'woocommerce_product_get_sale_price' => 'woocommerce_get_sale_price', 'woocommerce_product_get_tax_class' => 'woocommerce_product_tax_class', 'woocommerce_product_get_stock_quantity' => 'woocommerce_get_stock_quantity', 'woocommerce_product_get_attributes' => 'woocommerce_get_product_attributes', 'woocommerce_product_get_gallery_image_ids' => 'woocommerce_product_gallery_attachment_ids', 'woocommerce_product_get_review_count' => 'woocommerce_product_review_count', 'woocommerce_product_get_downloads' => 'woocommerce_product_files', 'woocommerce_order_get_currency' => 'woocommerce_get_currency', 'woocommerce_order_get_discount_total' => 'woocommerce_order_amount_discount_total', 'woocommerce_order_get_discount_tax' => 'woocommerce_order_amount_discount_tax', 'woocommerce_order_get_shipping_total' => 'woocommerce_order_amount_shipping_total', 'woocommerce_order_get_shipping_tax' => 'woocommerce_order_amount_shipping_tax', 'woocommerce_order_get_cart_tax' => 'woocommerce_order_amount_cart_tax', 'woocommerce_order_get_total' => 'woocommerce_order_amount_total', 'woocommerce_order_get_total_tax' => 'woocommerce_order_amount_total_tax', 'woocommerce_order_get_total_discount' => 'woocommerce_order_amount_total_discount', 'woocommerce_order_get_subtotal' => 'woocommerce_order_amount_subtotal', 'woocommerce_order_get_tax_totals' => 'woocommerce_order_tax_totals', 'woocommerce_get_order_refund_get_amount' => 'woocommerce_refund_amount', 'woocommerce_get_order_refund_get_reason' => 'woocommerce_refund_reason', 'default_checkout_billing_country' => 'default_checkout_country', 'default_checkout_billing_state' => 'default_checkout_state', 'default_checkout_billing_postcode' => 'default_checkout_postcode', 'woocommerce_system_status_environment_rows' => 'woocommerce_debug_posting', 'woocommerce_credit_card_type_labels' => 'wocommerce_credit_card_type_labels', 'woocommerce_settings_tabs_advanced' => 'woocommerce_settings_tabs_api', 'woocommerce_settings_advanced' => 'woocommerce_settings_api', 'woocommerce_csv_importer_check_import_file_path' => 'woocommerce_product_csv_importer_check_import_file_path');
         /**
          * Array of versions on each hook has been deprecated.
          *
          * @var array
          */
-        protected $deprecated_version = array('woocommerce_email_order_schema_markup' => '3.0.0', 'add_to_cart_fragments' => '3.0.0', 'add_to_cart_redirect' => '3.0.0', 'woocommerce_product_width' => '3.0.0', 'woocommerce_product_height' => '3.0.0', 'woocommerce_product_length' => '3.0.0', 'woocommerce_product_weight' => '3.0.0', 'woocommerce_get_sku' => '3.0.0', 'woocommerce_get_price' => '3.0.0', 'woocommerce_get_regular_price' => '3.0.0', 'woocommerce_get_sale_price' => '3.0.0', 'woocommerce_product_tax_class' => '3.0.0', 'woocommerce_get_stock_quantity' => '3.0.0', 'woocommerce_get_product_attributes' => '3.0.0', 'woocommerce_product_gallery_attachment_ids' => '3.0.0', 'woocommerce_product_review_count' => '3.0.0', 'woocommerce_product_files' => '3.0.0', 'woocommerce_get_currency' => '3.0.0', 'woocommerce_order_amount_discount_total' => '3.0.0', 'woocommerce_order_amount_discount_tax' => '3.0.0', 'woocommerce_order_amount_shipping_total' => '3.0.0', 'woocommerce_order_amount_shipping_tax' => '3.0.0', 'woocommerce_order_amount_cart_tax' => '3.0.0', 'woocommerce_order_amount_total' => '3.0.0', 'woocommerce_order_amount_total_tax' => '3.0.0', 'woocommerce_order_amount_total_discount' => '3.0.0', 'woocommerce_order_amount_subtotal' => '3.0.0', 'woocommerce_order_tax_totals' => '3.0.0', 'woocommerce_refund_amount' => '3.0.0', 'woocommerce_refund_reason' => '3.0.0', 'default_checkout_country' => '3.0.0', 'default_checkout_state' => '3.0.0', 'default_checkout_postcode' => '3.0.0', 'woocommerce_debug_posting' => '3.0.0', 'wocommerce_credit_card_type_labels' => '3.0.0', 'woocommerce_settings_tabs_api' => '3.4.0', 'woocommerce_settings_api' => '3.4.0', 'woocommerce_product_csv_importer_check_import_file_path' => '6.5.0');
+        protected $deprecated_version = array('woocommerce_my_account_my_orders_columns' => '2.6.0', 'woocommerce_email_order_schema_markup' => '3.0.0', 'add_to_cart_fragments' => '3.0.0', 'add_to_cart_redirect' => '3.0.0', 'woocommerce_product_width' => '3.0.0', 'woocommerce_product_height' => '3.0.0', 'woocommerce_product_length' => '3.0.0', 'woocommerce_product_weight' => '3.0.0', 'woocommerce_get_sku' => '3.0.0', 'woocommerce_get_price' => '3.0.0', 'woocommerce_get_regular_price' => '3.0.0', 'woocommerce_get_sale_price' => '3.0.0', 'woocommerce_product_tax_class' => '3.0.0', 'woocommerce_get_stock_quantity' => '3.0.0', 'woocommerce_get_product_attributes' => '3.0.0', 'woocommerce_product_gallery_attachment_ids' => '3.0.0', 'woocommerce_product_review_count' => '3.0.0', 'woocommerce_product_files' => '3.0.0', 'woocommerce_get_currency' => '3.0.0', 'woocommerce_order_amount_discount_total' => '3.0.0', 'woocommerce_order_amount_discount_tax' => '3.0.0', 'woocommerce_order_amount_shipping_total' => '3.0.0', 'woocommerce_order_amount_shipping_tax' => '3.0.0', 'woocommerce_order_amount_cart_tax' => '3.0.0', 'woocommerce_order_amount_total' => '3.0.0', 'woocommerce_order_amount_total_tax' => '3.0.0', 'woocommerce_order_amount_total_discount' => '3.0.0', 'woocommerce_order_amount_subtotal' => '3.0.0', 'woocommerce_order_tax_totals' => '3.0.0', 'woocommerce_refund_amount' => '3.0.0', 'woocommerce_refund_reason' => '3.0.0', 'default_checkout_country' => '3.0.0', 'default_checkout_state' => '3.0.0', 'default_checkout_postcode' => '3.0.0', 'woocommerce_debug_posting' => '3.0.0', 'wocommerce_credit_card_type_labels' => '3.0.0', 'woocommerce_settings_tabs_api' => '3.4.0', 'woocommerce_settings_api' => '3.4.0', 'woocommerce_product_csv_importer_check_import_file_path' => '6.5.0');
         /**
          * Hook into the new hook so we can handle deprecated hooks once fired.
          *
@@ -23431,7 +23449,7 @@ namespace {
          *
          * @var array
          */
-        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_admin_update_0201_order_status_index', 'wc_admin_update_0230_rename_gross_total', 'wc_admin_update_0251_remove_unsnooze_action', 'wc_update_400_db_version'), '4.4.0' => array('wc_update_440_insert_attribute_terms_for_variable_products', 'wc_admin_update_110_remove_facebook_note', 'wc_admin_update_130_remove_dismiss_action_from_tracking_opt_in_note', 'wc_update_440_db_version'), '4.5.0' => array('wc_update_450_sanitize_coupons_code', 'wc_update_450_db_version'), '5.0.0' => array('wc_update_500_fix_product_review_count', 'wc_admin_update_160_remove_facebook_note', 'wc_admin_update_170_homescreen_layout', 'wc_update_500_db_version'), '5.6.0' => array('wc_update_560_create_refund_returns_page', 'wc_update_560_db_version'), '6.0.0' => array('wc_update_600_migrate_rate_limit_options', 'wc_admin_update_270_delete_report_downloads', 'wc_admin_update_271_update_task_list_options', 'wc_admin_update_280_order_status', 'wc_admin_update_290_update_apperance_task_option', 'wc_admin_update_290_delete_default_homepage_layout_option', 'wc_update_600_db_version'), '6.3.0' => array('wc_update_630_create_product_attributes_lookup_table', 'wc_admin_update_300_update_is_read_from_last_read', 'wc_update_630_db_version'), '6.4.0' => array('wc_update_640_add_primary_key_to_product_attributes_lookup_table', 'wc_admin_update_340_remove_is_primary_from_note_action', 'wc_update_640_db_version'), '6.5.0' => array('wc_update_650_approved_download_directories'), '6.5.1' => array('wc_update_651_approved_download_directories'), '6.7.0' => array('wc_update_670_purge_comments_count_cache', 'wc_update_670_delete_deprecated_remote_inbox_notifications_option'), '7.0.0' => array('wc_update_700_remove_download_log_fk', 'wc_update_700_remove_recommended_marketing_plugins_transient'), '7.2.1' => array('wc_update_721_adjust_new_zealand_states', 'wc_update_721_adjust_ukraine_states'), '7.2.2' => array('wc_update_722_adjust_new_zealand_states', 'wc_update_722_adjust_ukraine_states'));
+        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_admin_update_0201_order_status_index', 'wc_admin_update_0230_rename_gross_total', 'wc_admin_update_0251_remove_unsnooze_action', 'wc_update_400_db_version'), '4.4.0' => array('wc_update_440_insert_attribute_terms_for_variable_products', 'wc_admin_update_110_remove_facebook_note', 'wc_admin_update_130_remove_dismiss_action_from_tracking_opt_in_note', 'wc_update_440_db_version'), '4.5.0' => array('wc_update_450_sanitize_coupons_code', 'wc_update_450_db_version'), '5.0.0' => array('wc_update_500_fix_product_review_count', 'wc_admin_update_160_remove_facebook_note', 'wc_admin_update_170_homescreen_layout', 'wc_update_500_db_version'), '5.6.0' => array('wc_update_560_create_refund_returns_page', 'wc_update_560_db_version'), '6.0.0' => array('wc_update_600_migrate_rate_limit_options', 'wc_admin_update_270_delete_report_downloads', 'wc_admin_update_271_update_task_list_options', 'wc_admin_update_280_order_status', 'wc_admin_update_290_update_apperance_task_option', 'wc_admin_update_290_delete_default_homepage_layout_option', 'wc_update_600_db_version'), '6.3.0' => array('wc_update_630_create_product_attributes_lookup_table', 'wc_admin_update_300_update_is_read_from_last_read', 'wc_update_630_db_version'), '6.4.0' => array('wc_update_640_add_primary_key_to_product_attributes_lookup_table', 'wc_admin_update_340_remove_is_primary_from_note_action', 'wc_update_640_db_version'), '6.5.0' => array('wc_update_650_approved_download_directories'), '6.5.1' => array('wc_update_651_approved_download_directories'), '6.7.0' => array('wc_update_670_purge_comments_count_cache', 'wc_update_670_delete_deprecated_remote_inbox_notifications_option'), '7.0.0' => array('wc_update_700_remove_download_log_fk', 'wc_update_700_remove_recommended_marketing_plugins_transient'), '7.2.1' => array('wc_update_721_adjust_new_zealand_states', 'wc_update_721_adjust_ukraine_states'), '7.2.2' => array('wc_update_722_adjust_new_zealand_states', 'wc_update_722_adjust_ukraine_states'), '7.5.0' => array('wc_update_750_add_columns_to_order_stats_table', 'wc_update_750_disable_new_product_management_experience'));
         /**
          * Hook in tabs.
          */
@@ -33997,7 +34015,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '7.4.1';
+        public $version = '7.5.0';
         /**
          * WooCommerce Schema version.
          *
@@ -34025,6 +34043,12 @@ namespace {
          * @var WC_Query
          */
         public $query = \null;
+        /**
+         * API instance
+         *
+         * @var WC_API
+         */
+        public $api;
         /**
          * Product factory instance.
          *
@@ -62637,6 +62661,12 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Orders {
     class DataStore extends \Automattic\WooCommerce\Admin\API\Reports\DataStore implements \Automattic\WooCommerce\Admin\API\Reports\DataStoreInterface
     {
         /**
+         * Dynamically sets the date column name based on configuration
+         */
+        public function __construct()
+        {
+        }
+        /**
          * Table used to get the data.
          *
          * @var string
@@ -62876,6 +62906,12 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Orders\Stats {
          * @var string
          */
         protected $context = 'orders_stats';
+        /**
+         * Dynamically sets the date column name based on configuration
+         */
+        public function __construct()
+        {
+        }
         /**
          * Assign report columns once full table name has been assigned.
          */
@@ -65938,7 +65974,7 @@ namespace Automattic\WooCommerce\Admin\Features {
          *
          * @var array
          */
-        protected static $optional_features = array('multichannel-marketing' => array('default' => 'no'), 'navigation' => array('default' => 'no'), 'settings' => array('default' => 'no'), 'new-product-management-experience' => array('default' => 'no'), 'analytics' => array('default' => 'yes'), 'remote-inbox-notifications' => array('default' => 'yes'));
+        protected static $optional_features = array('multichannel-marketing' => array('default' => 'no'), 'navigation' => array('default' => 'no'), 'settings' => array('default' => 'no'), 'analytics' => array('default' => 'yes'), 'remote-inbox-notifications' => array('default' => 'yes'));
         /**
          * Beta features
          *
@@ -66784,6 +66820,12 @@ namespace Automattic\WooCommerce\Admin\Features {
          * Constructor
          */
         public function __construct()
+        {
+        }
+        /**
+         * Maybe show disabled notice.
+         */
+        public function maybe_show_disabled_notice()
         {
         }
         /**
@@ -69122,6 +69164,34 @@ namespace Automattic\WooCommerce\Admin\Features\PaymentGatewaySuggestions {
     class DefaultPaymentGateways
     {
         /**
+         * Priority is used to determine which payment gateway to recommend first.
+         * The lower the number, the higher the priority.
+         *
+         * @var array
+         */
+        private static $recommendation_priority = array(
+            'woocommerce_payments' => 1,
+            'woocommerce_payments:with-in-person-payments' => 1,
+            'woocommerce_payments:without-in-person-payments' => 1,
+            'stripe' => 2,
+            'woo-mercado-pago-custom' => 3,
+            // PayPal Payments.
+            'ppcp-gateway' => 4,
+            'mollie_wc_gateway_banktransfer' => 5,
+            'razorpay' => 5,
+            'payfast' => 5,
+            'payubiz' => 6,
+            'square_credit_card' => 6,
+            'klarna_payments' => 6,
+            // Klarna Checkout.
+            'kco' => 6,
+            'paystack' => 6,
+            'eway' => 7,
+            'amazon_payments_advanced' => 7,
+            'affirm' => 8,
+            'afterpay' => 9,
+        );
+        /**
          * Get default specs.
          *
          * @return array Default specs.
@@ -69162,6 +69232,16 @@ namespace Automattic\WooCommerce\Admin\Features\PaymentGatewaySuggestions {
          * @return array Rules to match.
          */
         public static function get_rules_for_cbd($should_have)
+        {
+        }
+        /**
+         * Get recommendation priority for a given payment gateway by id.
+         * If no priority is set or the id is not found, return null.
+         *
+         * @param string $id Payment gateway id.
+         * @return int Priority.
+         */
+        private static function get_recommendation_priority($id)
         {
         }
     }
@@ -76321,6 +76401,44 @@ namespace Automattic\WooCommerce\Utilities {
          * from the WordPress plugins page.
          */
         public static function allow_activating_plugins_with_incompatible_features() : void
+        {
+        }
+    }
+    /**
+     * A class of utilities for dealing with internationalization.
+     */
+    final class I18nUtil
+    {
+        /**
+         * A cache for the i18n units data.
+         *
+         * @var array $units
+         */
+        private static $units;
+        /**
+         * Get the translated label for a weight unit of measure.
+         *
+         * This will return the original input string if it isn't found in the units array. This way a custom unit of
+         * measure can be used even if it's not getting translated.
+         *
+         * @param string $weight_unit The abbreviated weight unit in English, e.g. kg.
+         *
+         * @return string
+         */
+        public static function get_weight_unit_label($weight_unit)
+        {
+        }
+        /**
+         * Get the translated label for a dimensions unit of measure.
+         *
+         * This will return the original input string if it isn't found in the units array. This way a custom unit of
+         * measure can be used even if it's not getting translated.
+         *
+         * @param string $dimensions_unit The abbreviated dimension unit in English, e.g. cm.
+         *
+         * @return string
+         */
+        public static function get_dimensions_unit_label($dimensions_unit)
         {
         }
     }
