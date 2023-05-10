@@ -297,6 +297,16 @@ namespace {
         {
         }
         /**
+         * Delete meta data with a matching value.
+         *
+         * @since 7.7.0
+         * @param string $key   Meta key.
+         * @param mixed  $value Meta value. Entries will only be removed that match the value.
+         */
+        public function delete_meta_data_value($key, $value)
+        {
+        }
+        /**
          * Delete meta data.
          *
          * @since 2.6.0
@@ -8253,26 +8263,6 @@ namespace {
         public static function reset_admin_notices()
         {
         }
-        // phpcs:disable Generic.Commenting.Todo.TaskFound
-        /**
-         * Add an admin notice about the bump of the required PHP version in WooCommerce 7.7
-         * if the current PHP version is too old.
-         *
-         * TODO: Remove this method in WooCommerce 7.7.
-         */
-        private static function maybe_add_php73_required_notice()
-        {
-        }
-        /**
-         * Remove the admin notice about the bump of the required PHP version in WooCommerce 7.7
-         * if the current PHP version is good.
-         *
-         * TODO: Remove this method in WooCommerce 7.7.
-         */
-        private static function maybe_remove_php73_required_notice()
-        {
-        }
-        // phpcs:enable Generic.Commenting.Todo.TaskFound
         /**
          * Show a notice.
          *
@@ -8576,6 +8566,12 @@ namespace {
          * Pointers for creating a product.
          */
         public function create_product_tutorial()
+        {
+        }
+        /**
+         * Pointers for creating a variable product.
+         */
+        public function create_variable_product_tutorial()
         {
         }
         /**
@@ -12524,6 +12520,15 @@ namespace {
         {
         }
         /**
+         * Filter callback for finding non-variation attributes.
+         *
+         * @param  WC_Product_Attribute $attribute Product attribute.
+         * @return bool
+         */
+        private static function filter_non_variation_attributes($attribute)
+        {
+        }
+        /**
          * Show options for the variable product type.
          */
         public static function output_variations()
@@ -14756,6 +14761,30 @@ namespace {
          * Save attributes via ajax.
          */
         public static function save_attributes()
+        {
+        }
+        /**
+         * Save attributes and variations via ajax.
+         */
+        public static function add_attributes_and_variations()
+        {
+        }
+        /**
+         * Create product with attributes from POST data.
+         *
+         * @param  array $data Attribute data.
+         * @return mixed Product class.
+         */
+        private static function create_product_with_attributes($data)
+        {
+        }
+        /**
+         * Create all product variations from existing attributes.
+         *
+         * @param mixed $product Product class.
+         * @returns int Number of variations created.
+         */
+        private static function create_all_product_variations($product)
         {
         }
         /**
@@ -23520,7 +23549,7 @@ namespace {
          *
          * @var array
          */
-        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_admin_update_0201_order_status_index', 'wc_admin_update_0230_rename_gross_total', 'wc_admin_update_0251_remove_unsnooze_action', 'wc_update_400_db_version'), '4.4.0' => array('wc_update_440_insert_attribute_terms_for_variable_products', 'wc_admin_update_110_remove_facebook_note', 'wc_admin_update_130_remove_dismiss_action_from_tracking_opt_in_note', 'wc_update_440_db_version'), '4.5.0' => array('wc_update_450_sanitize_coupons_code', 'wc_update_450_db_version'), '5.0.0' => array('wc_update_500_fix_product_review_count', 'wc_admin_update_160_remove_facebook_note', 'wc_admin_update_170_homescreen_layout', 'wc_update_500_db_version'), '5.6.0' => array('wc_update_560_create_refund_returns_page', 'wc_update_560_db_version'), '6.0.0' => array('wc_update_600_migrate_rate_limit_options', 'wc_admin_update_270_delete_report_downloads', 'wc_admin_update_271_update_task_list_options', 'wc_admin_update_280_order_status', 'wc_admin_update_290_update_apperance_task_option', 'wc_admin_update_290_delete_default_homepage_layout_option', 'wc_update_600_db_version'), '6.3.0' => array('wc_update_630_create_product_attributes_lookup_table', 'wc_admin_update_300_update_is_read_from_last_read', 'wc_update_630_db_version'), '6.4.0' => array('wc_update_640_add_primary_key_to_product_attributes_lookup_table', 'wc_admin_update_340_remove_is_primary_from_note_action', 'wc_update_640_db_version'), '6.5.0' => array('wc_update_650_approved_download_directories'), '6.5.1' => array('wc_update_651_approved_download_directories'), '6.7.0' => array('wc_update_670_purge_comments_count_cache', 'wc_update_670_delete_deprecated_remote_inbox_notifications_option'), '7.0.0' => array('wc_update_700_remove_download_log_fk', 'wc_update_700_remove_recommended_marketing_plugins_transient'), '7.2.1' => array('wc_update_721_adjust_new_zealand_states', 'wc_update_721_adjust_ukraine_states'), '7.2.2' => array('wc_update_722_adjust_new_zealand_states', 'wc_update_722_adjust_ukraine_states'), '7.5.0' => array('wc_update_750_add_columns_to_order_stats_table', 'wc_update_750_disable_new_product_management_experience'));
+        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_admin_update_0201_order_status_index', 'wc_admin_update_0230_rename_gross_total', 'wc_admin_update_0251_remove_unsnooze_action', 'wc_update_400_db_version'), '4.4.0' => array('wc_update_440_insert_attribute_terms_for_variable_products', 'wc_admin_update_110_remove_facebook_note', 'wc_admin_update_130_remove_dismiss_action_from_tracking_opt_in_note', 'wc_update_440_db_version'), '4.5.0' => array('wc_update_450_sanitize_coupons_code', 'wc_update_450_db_version'), '5.0.0' => array('wc_update_500_fix_product_review_count', 'wc_admin_update_160_remove_facebook_note', 'wc_admin_update_170_homescreen_layout', 'wc_update_500_db_version'), '5.6.0' => array('wc_update_560_create_refund_returns_page', 'wc_update_560_db_version'), '6.0.0' => array('wc_update_600_migrate_rate_limit_options', 'wc_admin_update_270_delete_report_downloads', 'wc_admin_update_271_update_task_list_options', 'wc_admin_update_280_order_status', 'wc_admin_update_290_update_apperance_task_option', 'wc_admin_update_290_delete_default_homepage_layout_option', 'wc_update_600_db_version'), '6.3.0' => array('wc_update_630_create_product_attributes_lookup_table', 'wc_admin_update_300_update_is_read_from_last_read', 'wc_update_630_db_version'), '6.4.0' => array('wc_update_640_add_primary_key_to_product_attributes_lookup_table', 'wc_admin_update_340_remove_is_primary_from_note_action', 'wc_update_640_db_version'), '6.5.0' => array('wc_update_650_approved_download_directories'), '6.5.1' => array('wc_update_651_approved_download_directories'), '6.7.0' => array('wc_update_670_purge_comments_count_cache', 'wc_update_670_delete_deprecated_remote_inbox_notifications_option'), '7.0.0' => array('wc_update_700_remove_download_log_fk', 'wc_update_700_remove_recommended_marketing_plugins_transient'), '7.2.1' => array('wc_update_721_adjust_new_zealand_states', 'wc_update_721_adjust_ukraine_states'), '7.2.2' => array('wc_update_722_adjust_new_zealand_states', 'wc_update_722_adjust_ukraine_states'), '7.5.0' => array('wc_update_750_add_columns_to_order_stats_table', 'wc_update_750_disable_new_product_management_experience'), '7.7.0' => array('wc_update_770_remove_multichannel_marketing_feature_options'));
         /**
          * Hook in tabs.
          */
@@ -34098,7 +34127,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '7.6.1';
+        public $version = '7.7.0';
         /**
          * WooCommerce Schema version.
          *
@@ -55961,6 +55990,12 @@ namespace {
          */
         private static $install_steps = array('get_product_info', 'download_product', 'unpack_product', 'move_product', 'activate_product');
         /**
+         * An instance of the WP_Upgrader class to be used for installation.
+         *
+         * @var \WP_Upgrader $wp_upgrader
+         */
+        private static $wp_upgrader;
+        /**
          * Get the product install state.
          *
          * @since 3.7.0
@@ -56104,7 +56139,7 @@ namespace {
          * @param int $product_id Product ID.
          * @return \WP_Error|null
          */
-        private static function activate_plugin($product_id)
+        public static function activate_plugin($product_id)
         {
         }
         /**
@@ -56134,7 +56169,7 @@ namespace {
          * @param string $dir Directory name of the plugin.
          * @return bool|string
          */
-        private static function get_wporg_plugin_main_file($dir)
+        public static function get_wporg_plugin_main_file($dir)
         {
         }
         /**
@@ -56144,7 +56179,15 @@ namespace {
          * @param string $dir Directory name of the plugin.
          * @return bool|array
          */
-        private static function get_plugin_info($dir)
+        public static function get_plugin_info($dir)
+        {
+        }
+        /**
+         * Get an instance of WP_Upgrader to use for installing plugins.
+         *
+         * @return WP_Upgrader
+         */
+        public static function get_wp_upgrader()
         {
         }
     }
@@ -56229,60 +56272,704 @@ namespace {
         }
     }
     /**
-     * WCCOM Site Installer Errors Class
+     * WC_WCCOM_Site_Installation_Manager class
+     */
+    class WC_WCCOM_Site_Installation_Manager
+    {
+        const STEPS = array('get_product_info', 'download_product', 'unpack_product', 'move_product', 'activate_product');
+        /**
+         * The product ID.
+         *
+         * @var int
+         */
+        protected $product_id;
+        /**
+         * The idempotency key.
+         *
+         * @var string
+         */
+        protected $idempotency_key;
+        /**
+         * Constructor.
+         *
+         * @param int    $product_id The product ID.
+         * @param string $idempotency_key The idempotency key.
+         */
+        public function __construct(int $product_id, string $idempotency_key)
+        {
+        }
+        /**
+         * Run the installation.
+         *
+         * @param string $run_until_step The step to run until.
+         * @return bool
+         * @throws WC_REST_WCCOM_Site_Installer_Error If installation failed to run.
+         */
+        public function run_installation(string $run_until_step) : bool
+        {
+        }
+        /**
+         * Get the next step to run.
+         *
+         * @return bool
+         * @throws WC_REST_WCCOM_Site_Installer_Error If the installation cannot be rest.
+         */
+        public function reset_installation() : bool
+        {
+        }
+        /**
+         * Check if the installation can be run.
+         *
+         * @param string                           $run_until_step Run until this step.
+         * @param WC_WCCOM_Site_Installation_State $state Installation state.
+         * @return void
+         * @throws WC_REST_WCCOM_Site_Installer_Error If the installation cannot be run.
+         */
+        protected function can_run_installation($run_until_step, $state)
+        {
+        }
+        /**
+         * Get the next step to run.
+         *
+         * @param WC_WCCOM_Site_Installation_State $state Installation state.
+         * @return string
+         */
+        protected function get_next_step($state) : string
+        {
+        }
+        /**
+         * Get the steps to run.
+         *
+         * @param string $start_step The step to start from.
+         * @param string $end_step  The step to end at.
+         * @return string[]
+         */
+        protected function get_installation_steps(string $start_step, string $end_step)
+        {
+        }
+        /**
+         * Run the step.
+         *
+         * @param string                           $step_name Step name.
+         * @param WC_WCCOM_Site_Installation_State $state Installation state.
+         * @return void
+         * @throws WC_REST_WCCOM_Site_Installer_Error If the step fails.
+         */
+        protected function run_step($step_name, $state)
+        {
+        }
+    }
+    /**
+     * WC_WCCOM_Site_Installation_State_Storage class
+     */
+    class WC_WCCOM_Site_Installation_State_Storage
+    {
+        /**
+         * Get state from storage.
+         *
+         * @param int $product_id The product ID.
+         * @return WC_WCCOM_Site_Installation_State|null
+         */
+        public static function get_state($product_id) : ?\WC_WCCOM_Site_Installation_State
+        {
+        }
+        /**
+         * Save state to storage.
+         *
+         * @param WC_WCCOM_Site_Installation_State $state The state to save.
+         * @return bool
+         */
+        public static function save_state(\WC_WCCOM_Site_Installation_State $state) : bool
+        {
+        }
+        /**
+         * Delete state from storage.
+         *
+         * @param WC_WCCOM_Site_Installation_State $state The state to delete.
+         * @return bool
+         */
+        public static function delete_state(\WC_WCCOM_Site_Installation_State $state) : bool
+        {
+        }
+        /**
+         * Get the storage key for a product ID.
+         *
+         * @param int $product_id The product ID.
+         * @return string
+         */
+        protected static function get_storage_key($product_id) : string
+        {
+        }
+    }
+    /**
+     * WC_WCCOM_Site_Installation_State class
+     */
+    class WC_WCCOM_Site_Installation_State
+    {
+        /**
+         * The product ID.
+         *
+         * @var string
+         */
+        protected $product_id;
+        /**
+         * The idempotency key.
+         *
+         * @var string
+         */
+        protected $idempotency_key;
+        /**
+         * The last step name.
+         *
+         * @var string
+         */
+        protected $last_step_name;
+        /**
+         * The last step status.
+         *
+         * @var string
+         */
+        protected $last_step_status;
+        /**
+         * The last step error.
+         *
+         * @var string
+         */
+        protected $last_step_error;
+        /**
+         * The product type.
+         *
+         * @var string
+         */
+        protected $product_type;
+        /**
+         * The product name.
+         *
+         * @var string
+         */
+        protected $product_name;
+        /**
+         * The product slug.
+         *
+         * @var string
+         */
+        protected $download_url;
+        /**
+         * The path to the downloaded file.
+         *
+         * @var string
+         */
+        protected $download_path;
+        /**
+         * The path to the unpacked file.
+         *
+         * @var string
+         */
+        protected $unpacked_path;
+        /**
+         * The path to the installed file.
+         *
+         * @var string
+         */
+        protected $installed_path;
+        /**
+         * The plugin info for the already installed plugin.
+         *
+         * @var array
+         */
+        protected $already_installed_plugin_info;
+        /**
+         * The timestamp of the installation start.
+         *
+         * @var int
+         */
+        protected $started_date;
+        const STEP_STATUS_IN_PROGRESS = 'in-progress';
+        const STEP_STATUS_FAILED = 'failed';
+        const STEP_STATUS_COMPLETED = 'completed';
+        /**
+         * Constructor.
+         *
+         * @param string $product_id The product ID.
+         */
+        protected function __construct($product_id)
+        {
+        }
+        /**
+         * Initiate an existing installation state.
+         *
+         * @param int    $product_id The product ID.
+         * @param string $idempotency_key The idempotency key.
+         * @param string $last_step_name The last step name.
+         * @param string $last_step_status The last step status.
+         * @param string $last_step_error The last step error.
+         * @param int    $started_date The timestamp of the installation start.
+         * @return WC_WCCOM_Site_Installation_State The instance.
+         */
+        public static function initiate_existing($product_id, $idempotency_key, $last_step_name, $last_step_status, $last_step_error, $started_date)
+        {
+        }
+        /**
+         * Initiate a new installation state.
+         *
+         * @param init   $product_id The product ID.
+         * @param string $idempotency_key The idempotency key.
+         * @return WC_WCCOM_Site_Installation_State The instance.
+         */
+        public static function initiate_new($product_id, $idempotency_key)
+        {
+        }
+        /**
+         * Get the product ID.
+         *
+         * @return string
+         */
+        public function get_product_id()
+        {
+        }
+        /**
+         * Get the idempotency key.
+         *
+         * @return string
+         */
+        public function get_idempotency_key()
+        {
+        }
+        /**
+         * Get the timestamp of the installation start.
+         *
+         * @return int
+         */
+        public function get_last_step_name()
+        {
+        }
+        /**
+         * Get the last step status.
+         *
+         * @return string
+         */
+        public function get_last_step_status()
+        {
+        }
+        /**
+         * Get the last step error.
+         *
+         * @return int
+         */
+        public function get_last_step_error()
+        {
+        }
+        /**
+         * Initiate a step.
+         *
+         * @param string $step_name Step name.
+         * @return void
+         */
+        public function initiate_step($step_name)
+        {
+        }
+        /**
+         * Capture a successful installation of a step.
+         *
+         * @param string $step_name The step name.
+         */
+        public function complete_step($step_name)
+        {
+        }
+        /**
+         * Capture an installation failure.
+         *
+         * @param string $step_name  The step name.
+         * @param string $error_code The error code.
+         */
+        public function capture_failure($step_name, $error_code)
+        {
+        }
+        /**
+         * Get the product type.
+         *
+         * @return string
+         */
+        public function get_product_type()
+        {
+        }
+        /**
+         * Set the product type.
+         *
+         * @param string $product_type The product type.
+         */
+        public function set_product_type($product_type)
+        {
+        }
+        /**
+         * Get the product name.
+         *
+         * @return string
+         */
+        public function get_product_name()
+        {
+        }
+        /**
+         * Set the product name.
+         *
+         * @param string $product_name The product name.
+         */
+        public function set_product_name($product_name)
+        {
+        }
+        /**
+         * Get the download URL.
+         *
+         * @return string
+         */
+        public function get_download_url()
+        {
+        }
+        /**
+         * Set the download URL.
+         *
+         * @param string $download_url The download URL.
+         */
+        public function set_download_url($download_url)
+        {
+        }
+        /**
+         * Get the path to the downloaded file.
+         *
+         * @return string
+         */
+        public function get_download_path()
+        {
+        }
+        /**
+         * Set the path to the downloaded file.
+         *
+         * @param string $download_path The path to the downloaded file.
+         */
+        public function set_download_path($download_path)
+        {
+        }
+        /**
+         * Get the path to the unpacked file.
+         *
+         * @return string
+         */
+        public function get_unpacked_path()
+        {
+        }
+        /**
+         * Set the path to the unpacked file.
+         *
+         * @param string $unpacked_path The path to the unpacked file.
+         */
+        public function set_unpacked_path($unpacked_path)
+        {
+        }
+        /**
+         * Get the path to the installed file.
+         *
+         * @return string
+         */
+        public function get_installed_path()
+        {
+        }
+        /**
+         * Set the path to the installed file.
+         *
+         * @param string $installed_path The path to the installed file.
+         */
+        public function set_installed_path($installed_path)
+        {
+        }
+        /**
+         * Get the plugin info for the already installed plugin.
+         *
+         * @return array
+         */
+        public function get_already_installed_plugin_info()
+        {
+        }
+        /**
+         * Set the plugin info for the already installed plugin.
+         *
+         * @param array $plugin_info The plugin info.
+         */
+        public function set_already_installed_plugin_info($plugin_info)
+        {
+        }
+        /**
+         * Get the timestamp of the installation start.
+         *
+         * @return int
+         */
+        public function get_started_date()
+        {
+        }
+    }
+    interface WC_WCCOM_Site_Installation_Step
+    {
+        /**
+         * Constructor.
+         *
+         * @param array $state The current installation state.
+         */
+        public function __construct($state);
+        /**
+         * Run the step installation process.
+         */
+        public function run();
+    }
+    /**
+     * WC_WCCOM_Site_Installation_Step_Activate_Product Class
+     */
+    class WC_WCCOM_Site_Installation_Step_Activate_Product implements \WC_WCCOM_Site_Installation_Step
+    {
+        /**
+         * The current installation state.
+         *
+         * @var WC_WCCOM_Site_Installation_State
+         */
+        protected $state;
+        /**
+         * Constructor.
+         *
+         * @param array $state The current installation state.
+         */
+        public function __construct($state)
+        {
+        }
+        /**
+         * Run the step installation process.
+         */
+        public function run()
+        {
+        }
+        /**
+         * Activate plugin.
+         *
+         * @param int $product_id Product ID.
+         */
+        private function activate_plugin($product_id)
+        {
+        }
+        /**
+         * Activate theme.
+         *
+         * @param int $product_id Product ID.
+         */
+        private function activate_theme($product_id)
+        {
+        }
+        /**
+         * Get WP.org product directory name.
+         *
+         * @return string|false
+         */
+        private function get_wporg_product_dir_name()
+        {
+        }
+    }
+    /**
+     * WC_WCCOM_Site_Installation_Step_Download_Product class
+     */
+    class WC_WCCOM_Site_Installation_Step_Download_Product implements \WC_WCCOM_Site_Installation_Step
+    {
+        /**
+         * The current installation state.
+         *
+         * @var WC_WCCOM_Site_Installation_State
+         */
+        protected $state;
+        /**
+         * Constructor.
+         *
+         * @param array $state The current installation state.
+         */
+        public function __construct($state)
+        {
+        }
+        /**
+         * Run the step installation process.
+         *
+         * @throws Installer_Error Installer Error.
+         */
+        public function run()
+        {
+        }
+    }
+    /**
+     * WC_WCCOM_Site_Installation_Step_Get_Product_Info class
+     */
+    class WC_WCCOM_Site_Installation_Step_Get_Product_Info implements \WC_WCCOM_Site_Installation_Step
+    {
+        /**
+         * The current installation state.
+         *
+         * @var WC_WCCOM_Site_Installation_State
+         */
+        protected $state;
+        /**
+         * Constructor.
+         *
+         * @param array $state The current installation state.
+         */
+        public function __construct($state)
+        {
+        }
+        /**
+         * Run the step installation process.
+         *
+         * @throws Installer_Error Installer Error.
+         * @return array
+         */
+        public function run()
+        {
+        }
+        /**
+         * Get download URL for wporg product.
+         *
+         * @param array $data Product data.
+         *
+         * @return string|null
+         * @throws Installer_Error Installer Error.
+         */
+        protected function get_wporg_download_url($data)
+        {
+        }
+        /**
+         * Get download URL for wccom product.
+         *
+         * @param int $product_id Product ID.
+         *
+         * @return string
+         * @throws Installer_Error Installer Error.
+         */
+        protected function get_wccom_download_url($product_id)
+        {
+        }
+    }
+    /**
+     * WC_WCCOM_Site_Installation_Step_Move_Product class
+     */
+    class WC_WCCOM_Site_Installation_Step_Move_Product implements \WC_WCCOM_Site_Installation_Step
+    {
+        /**
+         * The current installation state.
+         *
+         * @var WC_WCCOM_Site_Installation_State
+         */
+        protected $state;
+        /**
+         * Constructor.
+         *
+         * @param array $state The current installation state.
+         */
+        public function __construct($state)
+        {
+        }
+        /**
+         * Run the step installation process.
+         */
+        public function run()
+        {
+        }
+    }
+    /**
+     * WC_WCCOM_Site_Installation_Step_Unpack_Product class
+     */
+    class WC_WCCOM_Site_Installation_Step_Unpack_Product implements \WC_WCCOM_Site_Installation_Step
+    {
+        /**
+         * The current installation state.
+         *
+         * @var WC_WCCOM_Site_Installation_State
+         */
+        protected $state;
+        /**
+         * Constructor.
+         *
+         * @param array $state The current installation state.
+         */
+        public function __construct($state)
+        {
+        }
+        /**
+         * Run the step installation process.
+         */
+        public function run()
+        {
+        }
+    }
+    /**
+     * WCCOM Site Installer Error Codes Class
      *
      * Stores data for errors, returned by installer API.
      */
-    class WC_REST_WCCOM_Site_Installer_Errors
+    class WC_REST_WCCOM_Site_Installer_Error_Codes
+    {
+        const NOT_AUTHENTICATED = 'not_authenticated';
+        const NO_ACCESS_TOKEN = 'no_access_token';
+        const NO_SIGNATURE = 'no_signature';
+        const SITE_NOT_CONNECTED = 'site_not_connnected';
+        const INVALID_TOKEN = 'invalid_token';
+        const REQUEST_VERIFICATION_FAILED = 'request_verification_failed';
+        const USER_NOT_FOUND = 'user_not_found';
+        const NO_PERMISSION = 'forbidden';
+        const IDEMPOTENCY_KEY_MISMATCH = 'idempotency_key_mismatch';
+        const NO_INITIATED_INSTALLATION_FOUND = 'no_initiated_installation_found';
+        const ALL_INSTALLATION_STEPS_RUN = 'all_installation_steps_run';
+        const REQUESTED_STEP_ALREADY_RUN = 'requested_step_already_run';
+        const PLUGIN_ALREADY_INSTALLED = 'plugin_already_installed';
+        const INSTALLATION_ALREADY_RUNNING = 'installation_already_running';
+        const INSTALLATION_FAILED = 'installation_failed';
+        const FILESYSTEM_REQUIREMENTS_NOT_MET = 'filesystem_requirements_not_met';
+        const FAILED_GETTING_PRODUCT_INFO = 'product_info_failed';
+        const INVALID_PRODUCT_INFO_RESPONSE = 'invalid_product_info_response';
+        const WCCOM_PRODUCT_MISSING_SUBSCRIPTION = 'wccom_product_missing_subscription';
+        const WCCOM_PRODUCT_MISSING_PACKAGE = 'wccom_product_missing_package';
+        const WPORG_PRODUCT_MISSING_DOWNLOAD_LINK = 'wporg_product_missing_download_link';
+        const MISSING_DOWNLOAD_PATH = 'missing_download_path';
+        const MISSING_UNPACKED_PATH = 'missing_unpacked_path';
+        const UNKNOWN_FILENAME = 'unknown_filename';
+        const PLUGIN_ACTIVATION_ERROR = 'plugin_activation_error';
+        const UNEXPECTED_ERROR = 'unexpected_error';
+        const FAILED_TO_RESET_INSTALLATION_STATE = 'failed_to_reset_installation_state';
+        const ERROR_MESSAGES = array(self::NOT_AUTHENTICATED => 'Authentication required', self::NO_ACCESS_TOKEN => 'No access token provided', self::NO_SIGNATURE => 'No signature provided', self::SITE_NOT_CONNECTED => 'Site not connected to WooCommerce.com', self::INVALID_TOKEN => 'Invalid access token provided', self::REQUEST_VERIFICATION_FAILED => 'Request verification by signature failed', self::USER_NOT_FOUND => 'Token owning user not found', self::NO_PERMISSION => 'You do not have permission to install plugin or theme', self::IDEMPOTENCY_KEY_MISMATCH => 'Idempotency key mismatch', self::NO_INITIATED_INSTALLATION_FOUND => 'No initiated installation for the product found', self::ALL_INSTALLATION_STEPS_RUN => 'All installation steps have been run', self::REQUESTED_STEP_ALREADY_RUN => 'Requested step has already been run', self::PLUGIN_ALREADY_INSTALLED => 'The plugin has already been installed', self::INSTALLATION_ALREADY_RUNNING => 'The installation of the plugin is already running', self::INSTALLATION_FAILED => 'The installation of the plugin failed', self::FILESYSTEM_REQUIREMENTS_NOT_MET => 'The filesystem requirements are not met', self::FAILED_GETTING_PRODUCT_INFO => 'Failed to retrieve product info from woocommerce.com', self::INVALID_PRODUCT_INFO_RESPONSE => 'Invalid product info response from woocommerce.com', self::WCCOM_PRODUCT_MISSING_SUBSCRIPTION => 'Product subscription is missing', self::WCCOM_PRODUCT_MISSING_PACKAGE => 'Could not find product package', self::MISSING_DOWNLOAD_PATH => 'Download path is missing', self::MISSING_UNPACKED_PATH => 'Unpacked path is missing', self::UNKNOWN_FILENAME => 'Unknown product filename', self::PLUGIN_ACTIVATION_ERROR => 'Plugin activation error', self::UNEXPECTED_ERROR => 'Unexpected error', self::FAILED_TO_RESET_INSTALLATION_STATE => 'Failed to reset installation state');
+        const HTTP_CODES = array(self::NOT_AUTHENTICATED => 401, self::NO_ACCESS_TOKEN => 400, self::NO_SIGNATURE => 400, self::SITE_NOT_CONNECTED => 401, self::INVALID_TOKEN => 401, self::REQUEST_VERIFICATION_FAILED => 400, self::USER_NOT_FOUND => 401, self::NO_PERMISSION => 403, self::IDEMPOTENCY_KEY_MISMATCH => 400, self::NO_INITIATED_INSTALLATION_FOUND => 400, self::ALL_INSTALLATION_STEPS_RUN => 400, self::REQUESTED_STEP_ALREADY_RUN => 400, self::UNEXPECTED_ERROR => 500);
+    }
+    /**
+     * WCCOM Site Installer Error Class
+     */
+    class WC_REST_WCCOM_Site_Installer_Error extends \Exception
     {
         /**
-         * Not unauthenticated generic error
+         * Constructor for the Installer Error class.
+         *
+         * @param string $error_code Error code.
+         * @param string $error_message Error message.
+         * @param int    $http_code HTTP status code.
          */
-        const NOT_AUTHENTICATED_CODE = 'not_authenticated';
-        const NOT_AUTHENTICATED_MESSAGE = 'Authentication required';
-        const NOT_AUTHENTICATED_HTTP_CODE = 401;
+        public function __construct($error_code, $error_message = \null, $http_code = \null)
+        {
+        }
         /**
-         * No access token provided
+         * Get the error code.
          */
-        const NO_ACCESS_TOKEN_CODE = 'no_access_token';
-        const NO_ACCESS_TOKEN_MESSAGE = 'No access token provided';
-        const NO_ACCESS_TOKEN_HTTP_CODE = 400;
+        public function get_error_code()
+        {
+        }
         /**
-         * No signature provided
+         * Get the error message.
          */
-        const NO_SIGNATURE_CODE = 'no_signature';
-        const NO_SIGNATURE_MESSAGE = 'No signature provided';
-        const NO_SIGNATURE_HTTP_CODE = 400;
+        public function get_error_message()
+        {
+        }
         /**
-         * Site not connected to WooCommerce.com
+         * Get the HTTP status code.
          */
-        const SITE_NOT_CONNECTED_CODE = 'site_not_connnected';
-        const SITE_NOT_CONNECTED_MESSAGE = 'Site not connected to WooCommerce.com';
-        const SITE_NOT_CONNECTED_HTTP_CODE = 401;
-        /**
-         * Provided access token is not valid
-         */
-        const INVALID_TOKEN_CODE = 'invalid_token';
-        const INVALID_TOKEN_MESSAGE = 'Invalid access token provided';
-        const INVALID_TOKEN_HTTP_CODE = 401;
-        /**
-         * Request verification by provided signature failed
-         */
-        const REQUEST_VERIFICATION_FAILED_CODE = 'request_verification_failed';
-        const REQUEST_VERIFICATION_FAILED_MESSAGE = 'Request verification by signature failed';
-        const REQUEST_VERIFICATION_FAILED_HTTP_CODE = 400;
-        /**
-         * User doesn't exist
-         */
-        const USER_NOT_FOUND_CODE = 'user_not_found';
-        const USER_NOT_FOUND_MESSAGE = 'Token owning user not found';
-        const USER_NOT_FOUND_HTTP_CODE = 401;
-        /**
-         * No permissions error
-         */
-        const NO_PERMISSION_CODE = 'forbidden';
-        const NO_PERMISSION_MESSAGE = 'You do not have permission to install plugin or theme';
-        const NO_PERMISSION_HTTP_CODE = 403;
+        public function get_http_code()
+        {
+        }
     }
     /**
      * Widget cart class.
@@ -66096,54 +66783,6 @@ namespace Automattic\WooCommerce\Admin {
 }
 namespace Automattic\WooCommerce\Admin\Features {
     /**
-     * Loads assets related to the new product management experience page.
-     */
-    class BlockEditorFeatureEnabled
-    {
-        const FEATURE_ID = 'block-editor-feature-enabled';
-        /**
-         * Option name used to toggle this feature.
-         */
-        const TOGGLE_OPTION_NAME = 'woocommerce_' . self::FEATURE_ID . '_enabled';
-        /**
-         * Constructor
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Enqueue scripts needed for the product form block editor.
-         */
-        public function enqueue_scripts()
-        {
-        }
-        /**
-         * Enqueue styles needed for the rich text editor.
-         */
-        public function enqueue_styles()
-        {
-        }
-        /**
-         * Update the edit product links when the new experience is enabled.
-         *
-         * @param string $link    The edit link.
-         * @param int    $post_id Post ID.
-         * @return string
-         */
-        public function update_edit_product_link($link, $post_id)
-        {
-        }
-        /**
-         * Updates the product endpoint to use WooCommerce REST API.
-         *
-         * @param array $post_args Args for the product post type.
-         * @return array
-         */
-        public function add_rest_base_config($post_args)
-        {
-        }
-    }
-    /**
      * Features Class.
      */
     class Features
@@ -66159,13 +66798,13 @@ namespace Automattic\WooCommerce\Admin\Features {
          *
          * @var array
          */
-        protected static $optional_features = array('multichannel-marketing' => array('default' => 'no'), 'navigation' => array('default' => 'no'), 'settings' => array('default' => 'no'), 'analytics' => array('default' => 'yes'), 'remote-inbox-notifications' => array('default' => 'yes'));
+        protected static $optional_features = array('navigation' => array('default' => 'no'), 'settings' => array('default' => 'no'), 'analytics' => array('default' => 'yes'), 'remote-inbox-notifications' => array('default' => 'yes'));
         /**
          * Beta features
          *
          * @var array
          */
-        protected static $beta_features = array('multichannel-marketing', 'navigation', 'new-product-management-experience', 'block-editor-feature-enabled', 'settings');
+        protected static $beta_features = array('navigation', 'new-product-management-experience', 'product-block-editor', 'settings');
         /**
          * Get class instance.
          */
@@ -66314,54 +66953,6 @@ namespace Automattic\WooCommerce\Admin\Features {
          * See https://wp.me/p90Yrv-2HY for details.
          */
         private function register_internal_class_aliases()
-        {
-        }
-    }
-}
-namespace Automattic\WooCommerce\Admin\Features\MultichannelMarketing {
-    /**
-     * Contains logic for Multichannel Marketing.
-     */
-    class Init
-    {
-        /**
-         * Option name used to toggle this feature.
-         */
-        const TOGGLE_OPTION_NAME = 'woocommerce_multichannel_marketing_enabled';
-        /**
-         * Determines if the feature has been toggled on or off.
-         *
-         * @var boolean
-         */
-        protected static $is_updated = false;
-        /**
-         * Hook into WooCommerce.
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Add the feature toggle to the features settings.
-         *
-         * @param array $features Feature sections.
-         * @return array
-         */
-        public static function add_feature_toggle($features)
-        {
-        }
-        /**
-         * Reloads the page when the option is toggled to make sure all Multichannel Marketing features are loaded.
-         *
-         * @param string $old_value Old value.
-         * @param string $value     New value.
-         */
-        public static function reload_page_on_toggle($old_value, $value)
-        {
-        }
-        /**
-         * Reload the page if the setting has been updated.
-         */
-        public static function maybe_reload_page()
         {
         }
     }
@@ -69349,6 +69940,7 @@ namespace Automattic\WooCommerce\Admin\Features\PaymentGatewaySuggestions {
     class DefaultPaymentGateways
     {
         /**
+         * This is the default priority for countries that are not in the $recommendation_priority_map.
          * Priority is used to determine which payment gateway to recommend first.
          * The lower the number, the higher the priority.
          *
@@ -69375,6 +69967,8 @@ namespace Automattic\WooCommerce\Admin\Features\PaymentGatewaySuggestions {
             'amazon_payments_advanced' => 7,
             'affirm' => 8,
             'afterpay' => 9,
+            'zipmoney' => 10,
+            'payoneer-checkout' => 11,
         );
         /**
          * Get default specs.
@@ -69420,13 +70014,24 @@ namespace Automattic\WooCommerce\Admin\Features\PaymentGatewaySuggestions {
         {
         }
         /**
-         * Get recommendation priority for a given payment gateway by id.
-         * If no priority is set or the id is not found, return null.
+         * Get recommendation priority for a given payment gateway by id and country.
+         * If country is not supported, return null.
+         *
+         * @param string $gateway_id Payment gateway id.
+         * @param string $country_code Store country code.
+         * @return int|null Priority. Priority is 0-indexed, so 0 is the highest priority.
+         */
+        private static function get_recommendation_priority($gateway_id, $country_code)
+        {
+        }
+        /**
+         * Get the default recommendation priority for a payment gateway.
+         * This is used when a country is not in the $recommendation_priority_map array.
          *
          * @param string $id Payment gateway id.
          * @return int Priority.
          */
-        private static function get_recommendation_priority($id)
+        private static function get_default_recommendation_priority($id)
         {
         }
     }
@@ -69566,6 +70171,114 @@ namespace Automattic\WooCommerce\Admin\Features\PaymentGatewaySuggestions {
          * @param string $gateway_id Gateway ID.
          */
         public static function handle_successfull_connection($gateway_id)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Admin\Features\ProductBlockEditor {
+    /**
+     * Product block registration and style registration functionality.
+     */
+    class BlockRegistry
+    {
+        /**
+         * The directory where blocks are stored after build.
+         */
+        const BLOCKS_DIR = 'product-editor/blocks';
+        /**
+         * Array of all available product blocks.
+         */
+        const PRODUCT_BLOCKS = ['woocommerce/product-name', 'woocommerce/product-pricing', 'woocommerce/product-section', 'woocommerce/product-tab'];
+        /**
+         * Get a file path for a given block file.
+         *
+         * @param string $path File path.
+         */
+        private function get_file_path($path)
+        {
+        }
+        /**
+         * Initialize all blocks.
+         */
+        public function init()
+        {
+        }
+        /**
+         * Register all the product blocks.
+         */
+        private function register_product_blocks()
+        {
+        }
+        /**
+         * Register product related block categories.
+         *
+         * @param array[]                 $block_categories Array of categories for block types.
+         * @param WP_Block_Editor_Context $editor_context   The current block editor context.
+         */
+        public function register_categories($block_categories, $editor_context)
+        {
+        }
+        /**
+         * Get the block name without the "woocommerce/" prefix.
+         *
+         * @param string $block_name Block name.
+         *
+         * @return string
+         */
+        private function remove_block_prefix($block_name)
+        {
+        }
+        /**
+         * Register a single block.
+         *
+         * @param string $block_name Block name.
+         *
+         * @return WP_Block_Type|false The registered block type on success, or false on failure.
+         */
+        private function register_block($block_name)
+        {
+        }
+    }
+    /**
+     * Loads assets related to the product block editor.
+     */
+    class Init
+    {
+        const FEATURE_ID = 'product-block-editor';
+        /**
+         * Option name used to toggle this feature.
+         */
+        const TOGGLE_OPTION_NAME = 'woocommerce_' . self::FEATURE_ID . '_enabled';
+        /**
+         * The context name used to identify the editor.
+         */
+        const EDITOR_CONTEXT_NAME = 'woocommerce/edit-product';
+        /**
+         * Constructor
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Enqueue scripts needed for the product form block editor.
+         */
+        public function enqueue_scripts()
+        {
+        }
+        /**
+         * Enqueue styles needed for the rich text editor.
+         */
+        public function enqueue_styles()
+        {
+        }
+        /**
+         * Update the edit product links when the new experience is enabled.
+         *
+         * @param string $link    The edit link.
+         * @param int    $post_id Post ID.
+         * @return string
+         */
+        public function update_edit_product_link($link, $post_id)
         {
         }
     }
@@ -74390,7 +75103,7 @@ namespace Automattic\WooCommerce\Admin {
          * Update the import stat totals and counts.
          *
          * @param int|bool $days Number of days to import.
-         * @param bool     $skip_existing Skip exisiting records.
+         * @param bool     $skip_existing Skip existing records.
          */
         public static function reset_import_stats($days, $skip_existing)
         {
@@ -74407,7 +75120,7 @@ namespace Automattic\WooCommerce\Admin {
          * Get the import totals for all syncs.
          *
          * @param int|bool $days Number of days to import.
-         * @param bool     $skip_existing Skip exisiting records.
+         * @param bool     $skip_existing Skip existing records.
          * @return array
          */
         public static function get_import_totals($days, $skip_existing)
@@ -75336,10 +76049,22 @@ namespace Automattic\WooCommerce\DataBase\Migrations\CustomOrderTable {
          * default: 0
          * ---
          *
+         * [--end-at=<order_id>]
+         * : Order ID to end at.
+         * ---
+         * default: -1
+         * ---
+         *
+         * [--verbose]
+         * : Whether to output errors as they happen in batch, or output them all together at the end.
+         * ---
+         * default: false
+         * ---
+         *
          * ## EXAMPLES
          *
          *     # Verify migrated order data, 500 orders at a time.
-         *     wp wc cot verify_cot_data --batch-size=500 --start-from=0
+         *     wp wc cot verify_cot_data --batch-size=500 --start-from=0 --end-at=10000
          *
          * @param array $args Positional arguments passed to the command.
          * @param array $assoc_args Associative arguments (options) passed to the command.
@@ -75351,11 +76076,12 @@ namespace Automattic\WooCommerce\DataBase\Migrations\CustomOrderTable {
          * Helper method to get count for orders needing verification.
          *
          * @param int  $order_id_start Order ID to start from.
+         * @param int  $order_id_end   Order ID to end at.
          * @param bool $log Whether to also log an error message.
          *
          * @return int Order count.
          */
-        private function get_verify_order_count(int $order_id_start, $log = true) : int
+        private function get_verify_order_count(int $order_id_start, int $order_id_end, $log = true) : int
         {
         }
         /**
@@ -75926,6 +76652,28 @@ namespace Automattic\WooCommerce\Database\Migrations {
          * @return string SELECT statement.
          */
         protected function build_verification_query($source_ids)
+        {
+        }
+        /**
+         * Fill source metadata for given IDs for verification. This will return filled data in following format:
+         * [
+         *    {
+         *      $source_table_$source_column: $value,
+         *      ...,
+         *      $destination_table_$destination_column: $value,
+         *      ...
+         *      meta_source_{$destination_column_name1}: $meta_value,
+         *      ...
+         *    },
+         *   ...
+         * ]
+         *
+         * @param array $results    Entity data from both source and destination table.
+         * @param array $source_ids List of source IDs.
+         *
+         * @return array Filled $results param with source metadata.
+         */
+        private function fill_source_metadata($results, $source_ids)
         {
         }
         /**
@@ -76957,6 +77705,22 @@ namespace Automattic\WooCommerce\Utilities {
          * @return string Link for new order.
          */
         public static function get_order_admin_new_url() : string
+        {
+        }
+        /**
+         * Get the name of the database table that's currently in use for orders.
+         *
+         * @return string
+         */
+        public static function get_table_for_orders()
+        {
+        }
+        /**
+         * Get the name of the database table that's currently in use for orders.
+         *
+         * @return string
+         */
+        public static function get_table_for_order_meta()
         {
         }
     }

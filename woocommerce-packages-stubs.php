@@ -5628,6 +5628,14 @@ namespace Automattic\WooCommerce\Blocks\Assets {
         {
         }
         /**
+         * Checks if the current URL is the Site Editor.
+         *
+         * @return boolean
+         */
+        protected function is_site_editor()
+        {
+        }
+        /**
          * Exposes core data via the wcSettings global. This data is shared throughout the client.
          *
          * Settings that are used by various components or multiple blocks should be added here. Note, that settings here are
@@ -8415,6 +8423,40 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         public function register_empty_cart_message_block_pattern()
         {
         }
+        /**
+         * Returns whether the mini cart should be rendered or not.
+         *
+         * @param array $attributes Block attributes.
+         *
+         * @return bool
+         */
+        public function should_not_render_mini_cart(array $attributes)
+        {
+        }
+    }
+    /**
+     * MiniCartCartButtonBlock class.
+     */
+    class MiniCartCartButtonBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'mini-cart-cart-button-block';
+    }
+    /**
+     * MiniCartCheckoutButtonBlock class.
+     */
+    class MiniCartCheckoutButtonBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'mini-cart-checkout-button-block';
     }
     /**
      * Mini Cart class.
@@ -8840,41 +8882,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         }
     }
     /**
-     * ProductCategoryList class.
-     */
-    class ProductCategoryList extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
-    {
-        /**
-         * Block name.
-         *
-         * @var string
-         */
-        protected $block_name = 'product-category-list';
-        /**
-         * API version name.
-         *
-         * @var string
-         */
-        protected $api_version = '2';
-        /**
-         * Get block supports. Shared with the frontend.
-         * IMPORTANT: If you change anything here, make sure to update the JS file too.
-         *
-         * @return array
-         */
-        protected function get_block_type_supports()
-        {
-        }
-        /**
-         * Register script and style assets for the block type before it is registered.
-         *
-         * This registers the scripts; it does not enqueue them.
-         */
-        protected function register_block_type_assets()
-        {
-        }
-    }
-    /**
      * ProductDetails class.
      */
     class ProductDetails extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
@@ -9239,7 +9246,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @param array           $args    Query args.
          * @param WP_REST_Request $request Request.
          */
-        public function update_rest_query($args, $request)
+        public function update_rest_query($args, $request) : array
         {
         }
         /**
@@ -9617,6 +9624,36 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         }
     }
     /**
+     * ProductReviews class.
+     */
+    class ProductReviews extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'product-reviews';
+        /**
+         * It isn't necessary register block assets because it is a server side block.
+         */
+        protected function register_block_type_assets()
+        {
+        }
+        /**
+         * Render the block.
+         *
+         * @param array    $attributes Block attributes.
+         * @param string   $content Block content.
+         * @param WP_Block $block Block instance.
+         *
+         * @return string Rendered block output.
+         */
+        protected function render($attributes, $content, $block)
+        {
+        }
+    }
+    /**
      * ProductSKU class.
      */
     class ProductSKU extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
@@ -9896,41 +9933,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         }
     }
     /**
-     * ProductTagList class.
-     */
-    class ProductTagList extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
-    {
-        /**
-         * Block name.
-         *
-         * @var string
-         */
-        protected $block_name = 'product-tag-list';
-        /**
-         * API version name.
-         *
-         * @var string
-         */
-        protected $api_version = '2';
-        /**
-         * Get block supports. Shared with the frontend.
-         * IMPORTANT: If you change anything here, make sure to update the JS file too.
-         *
-         * @return array
-         */
-        protected function get_block_type_supports()
-        {
-        }
-        /**
-         * Register script and style assets for the block type before it is registered.
-         *
-         * This registers the scripts; it does not enqueue them.
-         */
-        protected function register_block_type_assets()
-        {
-        }
-    }
-    /**
      * ProductTitle class.
      */
     class ProductTitle extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
@@ -10077,6 +10079,36 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         public function build_query($query)
         {
         }
+        /**
+         * If there are no related products, return an empty string.
+         *
+         * @param string $content The block content.
+         * @param array  $block The block.
+         *
+         * @return string The block content.
+         */
+        public function render_block(string $content, array $block)
+        {
+        }
+        /**
+         * Determines whether the block is a related products block.
+         *
+         * @param array $block The block.
+         *
+         * @return bool Whether the block is a related products block.
+         */
+        private function is_related_products_block($block)
+        {
+        }
+        /**
+         * Get related products ids.
+         * The logic is copied from the core function woocommerce_related_products. https://github.com/woocommerce/woocommerce/blob/ca49caabcba84ce9f60a03c6d3534ec14b350b80/plugins/woocommerce/includes/wc-template-functions.php/#L2039-L2074
+         *
+         * @return array Products ids.
+         */
+        private function get_related_products_ids()
+        {
+        }
     }
     /**
      * ReviewsByCategory class.
@@ -10154,28 +10186,86 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          */
         protected $block_name = 'single-product';
         /**
-         * Enqueue frontend assets for this block, just in time for rendering.
+         * Product ID of the current product to be displayed in the Single Product block.
+         * This is used to replace the global post for the Single Product inner blocks.
          *
-         * @param array $attributes  Any attributes that currently are available from the block.
+         * @var int
          */
-        protected function enqueue_assets(array $attributes)
+        protected $product_id = 0;
+        /**
+         * Single Product inner blocks names.
+         * This is used to map all the inner blocks for a Single Product block.
+         *
+         * @var array
+         */
+        protected $single_product_inner_blocks_names = [];
+        /**
+         * Initialize the block and Hook into the `render_block_context` filter
+         * to update the context with the correct data.
+         *
+         * @var string
+         */
+        protected function initialize()
         {
         }
         /**
-         * Get the editor script handle for this block type.
+         * Render the Single Product block
+         *
+         * @param array    $attributes Block attributes.
+         * @param string   $content Block content.
+         * @param WP_Block $block Block instance.
+         *
+         * @return string Rendered block output.
+         */
+        protected function render($attributes, $content, $block)
+        {
+        }
+        /**
+         * Update the context by injecting the correct post data
+         * for each one of the Single Product inner blocks.
+         *
+         * @param array    $context Block context.
+         * @param array    $block Block attributes.
+         * @param WP_Block $parent_block Block instance.
+         *
+         * @return array Updated block context.
+         */
+        public function update_context($context, $block, $parent_block)
+        {
+        }
+        /**
+         * Extract the inner block names for the Single Product block. This way it's possible
+         * to map all the inner blocks for a Single Product block and manipulate the data as needed.
+         *
+         * @param array $block The Single Product block or its inner blocks.
+         * @param array $result Array of inner block names.
+         *
+         * @return array Array containing all the inner block names of a Single Product block.
+         */
+        protected function extract_single_product_inner_block_names($block, &$result = [])
+        {
+        }
+        /**
+         * Replace the global post for the Single Product inner blocks and reset it after.
+         *
+         * This is needed because some of the inner blocks may use the global post
+         * instead of fetching the product through the `productId` attribute, so even if the
+         * `productId` is passed to the inner block, it will still use the global post.
+         *
+         * @param array $block Block attributes.
+         * @param array $context Block context.
+         */
+        protected function replace_post_for_single_product_inner_block($block, &$context)
+        {
+        }
+        /**
+         * Get the frontend script handle for this block type.
          *
          * @param string $key Data to get, or default to everything.
-         * @return array|string;
-         */
-        protected function get_block_type_editor_script($key = null)
-        {
-        }
-        /**
-         * Hydrate the Single Product block with data from the API.
          *
-         * @param int $product_id ID of the product.
+         * @return null This block has no frontend script.
          */
-        protected function hydrate_from_api(int $product_id)
+        protected function get_block_type_script($key = null)
         {
         }
     }
@@ -10970,6 +11060,67 @@ namespace Automattic\WooCommerce\Blocks\Domain\Services {
         {
         }
     }
+    /**
+     * Service class for adding new-style Notices to WooCommerce core.
+     *
+     * @internal
+     */
+    class Notices
+    {
+        /**
+         * Holds the Package instance
+         *
+         * @var Package
+         */
+        private $package;
+        /**
+         * Templates used for notices.
+         *
+         * @var array
+         */
+        private $notice_templates = array('notices/error.php', 'notices/notice.php', 'notices/success.php');
+        /**
+         * Constructor
+         *
+         * @param Package $package An instance of the package class.
+         */
+        public function __construct(\Automattic\WooCommerce\Blocks\Domain\Package $package)
+        {
+        }
+        /**
+         * Set all hooks related to adding Checkout Draft order functionality to Woo Core. This is only enabled if the user
+         * is using the new block based cart/checkout.
+         */
+        public function init()
+        {
+        }
+        /**
+         * Allow SVG icon in notices.
+         *
+         * @param array $allowed_tags Allowed tags.
+         * @return array
+         */
+        public function add_kses_notice_allowed_tags($allowed_tags)
+        {
+        }
+        /**
+         * Replaces core notice templates with those from blocks.
+         *
+         * The new notice templates match block components with matching icons and styling. The only difference is that core
+         * only has notices for info, success, and error notices, whereas blocks has notices for info, success, error,
+         * warning, and a default notice type.
+         *
+         * @param string $template Located template path.
+         * @param string $template_name Template name.
+         * @param array  $args Template arguments.
+         * @param string $template_path Template path.
+         * @param string $default_path Default path.
+         * @return string
+         */
+        public function get_notices_template($template, $template_name, $args, $template_path, $default_path)
+        {
+        }
+    }
 }
 namespace Automattic\WooCommerce\Blocks {
     /**
@@ -11248,7 +11399,7 @@ namespace {
     }
     class Woo_Directive_Store
     {
-        private static array $store = array();
+        private static $store = array();
         static function get_data()
         {
         }
@@ -12203,6 +12354,44 @@ namespace Automattic\WooCommerce\Blocks\Shipping {
         {
         }
         /**
+         * Overrides the option to force shipping calculations NOT to wait until an address is entered, but only if the
+         * Checkout page contains the Checkout Block.
+         *
+         * @param boolean $value Whether shipping cost calculation requires address to be entered.
+         * @return boolean Whether shipping cost calculation should require an address to be entered before calculating.
+         */
+        public function override_cost_requires_address_option($value)
+        {
+        }
+        /**
+         * Force shipping to be enabled if the Checkout block is in use on the Checkout page.
+         *
+         * @param boolean $enabled Whether shipping is currently enabled.
+         * @return boolean Whether shipping should continue to be enabled/disabled.
+         */
+        public function force_shipping_enabled($enabled)
+        {
+        }
+        /**
+         * Inject collection details onto the order received page.
+         *
+         * @param string    $return Return value.
+         * @param \WC_Order $order Order object.
+         * @return string
+         */
+        public function show_local_pickup_details($return, $order)
+        {
+        }
+        /**
+         * If the Checkout block Remove shipping settings from WC Core's admin panels that are now block settings.
+         *
+         * @param array $settings The default WC shipping settings.
+         * @return array|mixed The filtered settings with relevant items removed.
+         */
+        public function remove_shipping_settings($settings)
+        {
+        }
+        /**
          * Register Local Pickup settings for rest api.
          */
         public function register_settings()
@@ -12233,6 +12422,15 @@ namespace Automattic\WooCommerce\Blocks\Shipping {
          * @return array
          */
         public function register_local_pickup_method($methods)
+        {
+        }
+        /**
+         * Hides the shipping address on the order confirmation page when local pickup is selected.
+         *
+         * @param array $pickup_methods Method ids.
+         * @return array
+         */
+        public function hide_shipping_address_for_local_pickup($pickup_methods)
         {
         }
         /**
@@ -12994,6 +13192,15 @@ namespace Automattic\WooCommerce\StoreApi\Routes\V1 {
          * @return \WP_REST_Response
          */
         public function get_response(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Get the route response based on the type of request.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_response_by_request_method(\WP_REST_Request $request)
         {
         }
         /**
@@ -14129,6 +14336,16 @@ namespace Automattic\WooCommerce\StoreApi\Routes\V1 {
          * @return array An array of endpoints.
          */
         public function get_args()
+        {
+        }
+        /**
+         * Get the route response based on the type of request.
+         *
+         * @param \WP_REST_Request $request Request object.
+         *
+         * @return \WP_REST_Response
+         */
+        public function get_response(\WP_REST_Request $request)
         {
         }
         /**
@@ -16008,6 +16225,12 @@ namespace Automattic\WooCommerce\StoreApi\Schemas\V1 {
          */
         protected $shipping_address_schema;
         /**
+         * Image Attachment schema instance.
+         *
+         * @var ImageAttachmentSchema
+         */
+        protected $image_attachment_schema;
+        /**
          * Constructor.
          *
          * @param ExtendSchema     $extend Rest Extending instance.
@@ -17402,6 +17625,28 @@ namespace Automattic\WooCommerce\StoreApi\Utilities {
         public function get_rating_counts($request)
         {
         }
+        /**
+         * Gets product by metas.
+         *
+         * @since TBD
+         * @param array $metas Array of metas to query.
+         * @return array $results
+         */
+        public function get_product_by_metas($metas = array())
+        {
+        }
+        /**
+         * Gets product by filtered terms.
+         *
+         * @since TBD
+         * @param string $taxonomy Taxonomy name.
+         * @param array  $term_ids Term IDs.
+         * @param string $query_type or | and.
+         * @return array Product IDs.
+         */
+        public function get_product_by_filtered_terms($taxonomy = '', $term_ids = array(), $query_type = 'or')
+        {
+        }
     }
     /**
      * QuantityLimits class.
@@ -17749,12 +17994,6 @@ namespace Automattic\WooCommerce\Blocks\Templates {
          */
         protected $hook_data;
         /**
-         * Constructor.
-         */
-        public function __construct()
-        {
-        }
-        /**
          * Update the render block data to inject our custom attribute needed to
          * determine which blocks belong to an inherited Products block.
          *
@@ -18071,6 +18310,25 @@ namespace Automattic\WooCommerce\Blocks\Templates {
          * @return array Array of blocks grouped by template part.
          */
         private static function group_blocks($parsed_blocks)
+        {
+        }
+        /**
+         * Inject the hooks after the div wrapper.
+         *
+         * @param string $block_content Block Content.
+         * @param array  $hooks Hooks to inject.
+         * @return array
+         */
+        private function inject_hooks_after_the_wrapper($block_content, $hooks)
+        {
+        }
+        /**
+         * Plain custom HTML block is parsed as block with an empty blockName with a filled innerHTML.
+         *
+         * @param array $block Parse block.
+         * @return bool
+         */
+        private static function is_custom_html($block)
         {
         }
     }
@@ -18427,6 +18685,28 @@ namespace Automattic\WooCommerce\Blocks\Utils {
          * @return WP_Post[]|int[] Array of post objects or post IDs.
          */
         public function get_cached_posts($transient_version = '')
+        {
+        }
+    }
+    /**
+     * Class containing utility methods for dealing with the Cart and Checkout blocks.
+     */
+    class CartCheckoutUtils
+    {
+        /**
+         * Checks if the default cart page is using the Cart block.
+         *
+         * @return bool true if the WC cart page is using the Cart block.
+         */
+        public static function is_cart_block_default()
+        {
+        }
+        /**
+         * Checks if the default checkout page is using the Checkout block.
+         *
+         * @return bool true if the WC checkout page is using the Checkout block.
+         */
+        public static function is_checkout_block_default()
         {
         }
     }
