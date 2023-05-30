@@ -34127,7 +34127,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '7.7.0';
+        public $version = '7.7.1';
         /**
          * WooCommerce Schema version.
          *
@@ -70279,6 +70279,15 @@ namespace Automattic\WooCommerce\Admin\Features\ProductBlockEditor {
          * @return string
          */
         public function update_edit_product_link($link, $post_id)
+        {
+        }
+        /**
+         * Enqueue styles needed for the rich text editor.
+         *
+         * @param array $args Array of post type arguments.
+         * @return array Array of post type arguments.
+         */
+        public function add_product_template($args)
         {
         }
     }
