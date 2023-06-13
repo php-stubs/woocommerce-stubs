@@ -6994,6 +6994,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         protected function enqueue_data(array $attributes = [])
         {
         }
+        /**
+         * Get the frontend script handle for this block type.
+         *
+         * @param string $key Data to get, or default to everything.
+         */
+        protected function get_block_type_script($key = null)
+        {
+        }
     }
     /**
      * CatalogSorting class.
@@ -8580,6 +8588,30 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         protected $block_name = 'mini-cart-title-block';
     }
     /**
+     * MiniCartTitleItemsCounterBlock class.
+     */
+    class MiniCartTitleItemsCounterBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'mini-cart-title-items-counter-block';
+    }
+    /**
+     * MiniCartTitleLabelBlock class.
+     */
+    class MiniCartTitleLabelBlock extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractInnerBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'mini-cart-title-label-block';
+    }
+    /**
      * PriceFilter class.
      */
     class PriceFilter extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
@@ -8992,9 +9024,10 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * Render Image.
          *
          * @param \WC_Product $product Product object.
+         * @param array       $attributes Parsed attributes.
          * @return string
          */
-        private function render_image($product)
+        private function render_image($product, $attributes)
         {
         }
         /**
@@ -9309,6 +9342,17 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
+         * Apply the query only to a subset of products
+         *
+         * @param array $query  The query.
+         * @param array $ids  Array of selected product ids.
+         *
+         * @return array
+         */
+        private function filter_query_to_only_include_ids($query, $ids)
+        {
+        }
+        /**
          * Return the `tax_query` for the requested attributes
          *
          * @param array $attributes  Attributes and their terms.
@@ -9554,6 +9598,15 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
+         * Get the block's attributes.
+         *
+         * @param array $attributes Block attributes. Default empty array.
+         * @return array  Block attributes merged with defaults.
+         */
+        private function parse_attributes($attributes)
+        {
+        }
+        /**
          * Overwrite parent method to prevent script registration.
          *
          * It is necessary to register and enqueues assets during the render
@@ -9566,17 +9619,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * Register the context.
          */
         protected function get_block_type_uses_context()
-        {
-        }
-        /**
-         * Filter the output from wc_get_rating_html.
-         *
-         * @param string $html   Star rating markup. Default empty string.
-         * @param float  $rating Rating being shown.
-         * @param int    $count  Total number of ratings.
-         * @return string
-         */
-        public function filter_rating_html($html, $rating, $count)
         {
         }
         /**
@@ -9809,15 +9851,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          */
         protected $api_version = '2';
         /**
-         * Get block supports. Shared with the frontend.
-         * IMPORTANT: If you change anything here, make sure to update the JS file too.
-         *
-         * @return array
-         */
-        protected function get_block_type_supports()
-        {
-        }
-        /**
          * Register script and style assets for the block type before it is registered.
          *
          * This registers the scripts; it does not enqueue them.
@@ -10027,6 +10060,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          */
         protected $block_name = 'rating-filter';
         const RATING_QUERY_VAR = 'rating_filter';
+        /**
+         * Get the frontend script handle for this block type.
+         *
+         * @param string $key Data to get, or default to everything.
+         */
+        protected function get_block_type_script($key = null)
+        {
+        }
     }
     /**
      * RelatedProducts class.
@@ -10104,9 +10145,10 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * Get related products ids.
          * The logic is copied from the core function woocommerce_related_products. https://github.com/woocommerce/woocommerce/blob/ca49caabcba84ce9f60a03c6d3534ec14b350b80/plugins/woocommerce/includes/wc-template-functions.php/#L2039-L2074
          *
+         * @param number $product_per_page Products per page.
          * @return array Products ids.
          */
-        private function get_related_products_ids()
+        private function get_related_products_ids($product_per_page = 5)
         {
         }
     }
@@ -10295,6 +10337,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * Get Stock status query variables values.
          */
         public static function get_stock_status_query_var_values()
+        {
+        }
+        /**
+         * Get the frontend script handle for this block type.
+         *
+         * @param string $key Data to get, or default to everything.
+         */
+        protected function get_block_type_script($key = null)
         {
         }
     }
@@ -12338,6 +12388,12 @@ namespace Automattic\WooCommerce\Blocks\Shipping {
          * @var AssetDataRegistry
          */
         protected $asset_data_registry;
+        /**
+         * Whether local pickup is enabled.
+         *
+         * @var bool
+         */
+        private $local_pickup_enabled;
         /**
          * Constructor.
          *
@@ -14480,6 +14536,16 @@ namespace Automattic\WooCommerce\StoreApi\Routes\V1 {
         {
         }
         /**
+         * Gets the chosen payment method title from the request.
+         *
+         * @throws RouteException On error.
+         * @param \WP_REST_Request $request Request object.
+         * @return string
+         */
+        private function get_request_payment_method_title(\WP_REST_Request $request)
+        {
+        }
+        /**
          * Gets the chosen payment method from the request.
          *
          * @throws RouteException On error.
@@ -15015,6 +15081,66 @@ namespace Automattic\WooCommerce\StoreApi\Routes\V1 {
          * @return \WP_REST_Response
          */
         protected function get_route_response(\WP_REST_Request $request)
+        {
+        }
+    }
+    /**
+     * ProductsBySlug class.
+     */
+    class ProductsBySlug extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
+    {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'products-by-slug';
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'product';
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Get a single item.
+         *
+         * @throws RouteException On error.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_response(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Get a product  by slug.
+         *
+         * @param string $slug The slug of the product.
+         */
+        public function get_product_by_slug($slug)
+        {
+        }
+        /**
+         * Get a product variation by slug.
+         *
+         * @param string $slug The slug of the product variation.
+         */
+        private function get_product_variation_by_slug($slug)
         {
         }
     }
@@ -17210,6 +17336,14 @@ namespace Automattic\WooCommerce\StoreApi\Utilities {
     class LocalPickupUtils
     {
         /**
+         * Checks if WC Blocks local pickup is enabled.
+         *
+         * @return bool True if local pickup is enabled.
+         */
+        public static function is_local_pickup_enabled()
+        {
+        }
+        /**
          * Gets a list of payment method ids that support the 'local-pickup' feature.
          *
          * @return string[] List of payment method ids that support the 'local-pickup' feature.
@@ -17607,13 +17741,34 @@ namespace Automattic\WooCommerce\StoreApi\Utilities {
         {
         }
         /**
-         * Get attribute counts for the current products.
+         * Get terms list for a given taxonomy.
          *
-         * @param \WP_REST_Request $request The request object.
-         * @param array            $attributes Attributes to count, either names or ids.
-         * @return array termId=>count pairs.
+         * @param string $taxonomy Taxonomy name.
+         *
+         * @return array
          */
-        public function get_attribute_counts($request, $attributes = [])
+        public function get_terms_list(string $taxonomy)
+        {
+        }
+        /**
+         * Get the empty terms list for a given taxonomy.
+         *
+         * @param string $taxonomy Taxonomy name.
+         *
+         * @return array
+         */
+        public function get_empty_terms_list(string $taxonomy)
+        {
+        }
+        /**
+         * Get attribute and meta counts.
+         *
+         * @param WP_REST_Request $request Request data.
+         * @param string          $filtered_attribute The attribute to count.
+         *
+         * @return array
+         */
+        public function get_attribute_counts($request, $filtered_attribute)
         {
         }
         /**
@@ -18643,6 +18798,17 @@ namespace Automattic\WooCommerce\Blocks\Utils {
          * @return boolean
          */
         public static function template_has_legacy_template_block($template)
+        {
+        }
+        /**
+         * Gets the templates saved in the database.
+         *
+         * @param array  $slugs An array of slugs to retrieve templates for.
+         * @param string $template_type wp_template or wp_template_part.
+         *
+         * @return int[]|\WP_Post[] An array of found templates.
+         */
+        public static function get_block_templates_from_db($slugs = array(), $template_type = 'wp_template')
         {
         }
     }

@@ -1740,7 +1740,7 @@ namespace {
         /**
          * This method overwrites the base class's clone method to make it a no-op. In base class WC_Data, we are unsetting the meta_id to clone.
          * It seems like this was done to avoid conflicting the metadata when duplicating products. However, doing that does not seems necessary for orders.
-         * In-fact, when we do that for orders, we lose the capability to clone orders with custom meta data by caching plugins. This is because, when we clone an order object for caching, it will clone the metadata without the ID. Unfortunately, when this cached object with nulled meta ID is retreived, WC_Data will consider it as a new meta and will insert it as a new meta-data causing duplicates.
+         * In-fact, when we do that for orders, we lose the capability to clone orders with custom meta data by caching plugins. This is because, when we clone an order object for caching, it will clone the metadata without the ID. Unfortunately, when this cached object with nulled meta ID is retrieved, WC_Data will consider it as a new meta and will insert it as a new meta-data causing duplicates.
          *
          * Eventually, we should move away from overwriting the __clone method in base class itself, since it's easily possible to still duplicate the product without having to hook into the __clone method.
          *
@@ -4801,7 +4801,7 @@ namespace {
          *     position - integer sort order.
          *     visible - If visible on frontend.
          *     variation - If used for variations.
-         * Indexed by unqiue key to allow clearing old ones after a set.
+         * Indexed by unique key to allow clearing old ones after a set.
          *
          * @since 3.0.0
          * @param array $raw_attributes Array of WC_Product_Attribute objects.
@@ -5354,6 +5354,14 @@ namespace {
          * @return string
          */
         public function single_add_to_cart_text()
+        {
+        }
+        /**
+         * Get the aria-describedby description for the add to cart button.
+         *
+         * @return string
+         */
+        public function add_to_cart_aria_describedby()
         {
         }
         /**
@@ -6748,7 +6756,7 @@ namespace {
         /**
          * Install WooCommerce Payments from the Extensions screens.
          *
-         * @param string $section Optional. Extenstions tab.
+         * @param string $section Optional. Extensions tab.
          *
          * @return void
          */
@@ -10527,7 +10535,7 @@ namespace {
         {
         }
         /**
-         * Get translations updates informations.
+         * Get translations updates information.
          *
          * Scans through all subscriptions for the connected user, as well
          * as all Woo extensions without a subscription, and obtains update
@@ -12464,6 +12472,32 @@ namespace {
         }
     }
     /**
+     * WC_Meta_Box_Product_Categories Class.
+     */
+    class WC_Meta_Box_Product_Categories
+    {
+        /**
+         * Output the metabox.
+         *
+         * @param WP_Post $post Current post object.
+         * @param array   $box {
+         *     Categories meta box arguments.
+         *
+         *     @type string   $id       Meta box 'id' attribute.
+         *     @type string   $title    Meta box title.
+         *     @type callable $callback Meta box display callback.
+         *     @type array    $args {
+         *         Extra meta box arguments.
+         *
+         *         @type string $taxonomy Taxonomy. Default 'category'.
+         *     }
+         * }
+         */
+        public static function output($post, $box)
+        {
+        }
+    }
+    /**
      * WC_Meta_Box_Product_Data Class.
      */
     class WC_Meta_Box_Product_Data
@@ -14329,7 +14363,7 @@ namespace {
         {
         }
         /**
-         * Get settings for the detault section.
+         * Get settings for the default section.
          *
          * @return array
          */
@@ -14962,6 +14996,12 @@ namespace {
         {
         }
         /**
+         * Search for categories and return json.
+         */
+        public static function json_search_categories_tree()
+        {
+        }
+        /**
          * Search for taxonomy terms and return json.
          */
         public static function json_search_taxonomy_terms()
@@ -15403,6 +15443,28 @@ namespace {
          * @return void
          */
         private static function order_delete_meta() : void
+        {
+        }
+        /**
+         * Hooked to 'heartbeat_received' on the edit order page to refresh the lock on an order being edited by the current user.
+         *
+         * @param array $response The heartbeat response to be sent.
+         * @param array $data     Data sent through the heartbeat.
+         * @return array Response to be sent.
+         */
+        private static function order_refresh_lock($response, $data) : array
+        {
+        }
+        /**
+         * Hooked to 'heartbeat_received' on the orders screen to refresh the locked status of orders in the list table.
+         *
+         * @since 7.8.0
+         *
+         * @param array $response The heartbeat response to be sent.
+         * @param array $data     Data sent through the heartbeat.
+         * @return array Response to be sent.
+         */
+        private static function check_locked_orders($response, $data) : array
         {
         }
     }
@@ -19678,7 +19740,7 @@ namespace {
          * Set the minimum spend amount.
          *
          * @since 3.0.0
-         * @param float $amount Minium amount.
+         * @param float $amount Minimum amount.
          */
         public function set_minimum_amount($amount)
         {
@@ -29313,6 +29375,14 @@ namespace {
         |--------------------------------------------------------------------------
         */
         /**
+         * Get the aria-describedby description for the add to cart button.
+         *
+         * @return string
+         */
+        public function add_to_cart_aria_describedby()
+        {
+        }
+        /**
          * Get the add to cart button text.
          *
          * @return string
@@ -33338,6 +33408,19 @@ namespace {
         {
         }
         /**
+         * Extract the group key for an associative array of objects which have unique ids in the key.
+         * A 'group_key' property is introduced in the object.
+         * For example, two objects with keys like 'WooDataPay ** #123' and 'WooDataPay ** #78' would
+         * both have a group_key of 'WooDataPay **' after this function call.
+         *
+         * @param array  $objects     The array of objects that need to be grouped.
+         * @param string $default_key The property that will be the default group_key.
+         * @return array Contains the objects with a group_key property.
+         */
+        private static function extract_group_key($objects, $default_key)
+        {
+        }
+        /**
          * Get order details by gateway.
          *
          * @return array
@@ -34127,7 +34210,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '7.7.2';
+        public $version = '7.8.0';
         /**
          * WooCommerce Schema version.
          *
@@ -35812,7 +35895,7 @@ namespace {
         {
         }
         /**
-         * Helper method to update order metadata from intialized order object.
+         * Helper method to update order metadata from initialized order object.
          *
          * @param WC_Abstract_Order $order Order object.
          */
@@ -41062,6 +41145,17 @@ namespace {
          * @return string
          */
         public function get_default_additional_content()
+        {
+        }
+        /**
+         * Return content from the additional_content field.
+         *
+         * Displayed above the footer.
+         *
+         * @since 3.7.0
+         * @return string
+         */
+        public function get_additional_content()
         {
         }
         /**
@@ -55587,6 +55681,34 @@ namespace {
         {
         }
         /**
+         * Get the IDs of the possible product type options.
+         *
+         * @return array
+         */
+        private static function get_possible_product_type_options_ids()
+        {
+        }
+        /**
+         * Get the product type options for a product.
+         *
+         * @param int $post_id The ID of the product.
+         *
+         * @return array
+         */
+        private static function get_product_type_options($post_id)
+        {
+        }
+        /**
+         * Get a comma-separated string of the product type options that are enabled.
+         *
+         * @param array $product_type_options The product type options.
+         *
+         * @return string
+         */
+        private static function get_product_type_options_string($product_type_options)
+        {
+        }
+        /**
          * Send a Tracks event when a product is published.
          *
          * @param int          $post_id     Post ID.
@@ -55674,6 +55796,18 @@ namespace {
          */
         protected $updated_options = array();
         /**
+         * List of option names that are dropdown menus.
+         *
+         * @var array
+         */
+        protected $dropdown_menu_options = array();
+        /**
+         * List of options that have been modified.
+         *
+         * @var array
+         */
+        protected $modified_options = array();
+        /**
          * Toggled options.
          *
          * @var array
@@ -55683,6 +55817,15 @@ namespace {
          * Init tracking.
          */
         public function init()
+        {
+        }
+        /**
+         * Adds the option to the allowed and updated options directly.
+         * Currently used for settings that don't use update_option.
+         *
+         * @param array $option WooCommerce option that should be updated.
+         */
+        public function add_option_to_list_and_track_setting_change($option)
         {
         }
         /**
@@ -57967,7 +58110,7 @@ namespace Automattic\WooCommerce\Admin\API {
         {
         }
         /**
-         * Boostrap REST API.
+         * Bootstrap REST API.
          */
         public function __construct()
         {
@@ -58943,11 +59086,100 @@ namespace Automattic\WooCommerce\Admin\API {
         /**
          * Return available payment methods.
          *
-         * @param \WP_REST_Request $request Request data.
+         * @param WP_REST_Request $request Request data.
          *
-         * @return \WP_Error|\WP_REST_Response
+         * @return WP_Error|WP_REST_Response
          */
         public function get_available_extensions($request)
+        {
+        }
+    }
+    /**
+     * Onboarding Plugins controller.
+     *
+     * @internal
+     * @extends WC_REST_Data_Controller
+     */
+    class OnboardingPlugins extends \WC_REST_Data_Controller
+    {
+        /**
+         * Endpoint namespace.
+         *
+         * @var string
+         */
+        protected $namespace = 'wc-admin';
+        /**
+         * Route base.
+         *
+         * @var string
+         */
+        protected $rest_base = 'onboarding/plugins';
+        /**
+         * Register routes.
+         */
+        public function register_routes()
+        {
+        }
+        /**
+         * Install and activate a plugin.
+         *
+         * @param WP_REST_Request $request WP Request object.
+         *
+         * @return WP_REST_Response
+         */
+        public function install_and_activate(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Queue plugin install request.
+         *
+         * @param WP_REST_Request $request WP_REST_Request object.
+         *
+         * @return array
+         */
+        public function install_async(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Returns current status of given job.
+         *
+         * @param WP_REST_Request $request WP_REST_Request object.
+         *
+         * @return array|WP_REST_Response
+         */
+        public function get_scheduled_installs(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Check whether the current user has permission to install plugins
+         *
+         * @return WP_Error|boolean
+         */
+        public function can_install_plugins()
+        {
+        }
+        /**
+         * Check whether the current user has permission to install and activate plugins
+         *
+         * @return WP_Error|boolean
+         */
+        public function can_install_and_activate_plugins()
+        {
+        }
+        /**
+         * JSON Schema for both install-async and scheduled-installs endpoints.
+         *
+         * @return array
+         */
+        public function get_install_async_schema()
+        {
+        }
+        /**
+         * JSON Schema for install-and-activate endpoint.
+         *
+         * @return array
+         */
+        public function get_install_activate_schema()
         {
         }
     }
@@ -59204,6 +59436,8 @@ namespace Automattic\WooCommerce\Admin\API {
         /**
          * Check if a given request has access to manage woocommerce.
          *
+         * @deprecated 7.8.0 snooze task is deprecated.
+         *
          * @param  WP_REST_Request $request Full details about the request.
          * @return WP_Error|boolean
          */
@@ -59355,6 +59589,8 @@ namespace Automattic\WooCommerce\Admin\API {
         /**
          * Snooze an onboarding task.
          *
+         * @deprecated 7.8.0 snooze task is deprecated.
+         *
          * @param WP_REST_Request $request Request data.
          *
          * @return WP_REST_Response|WP_Error
@@ -59364,6 +59600,8 @@ namespace Automattic\WooCommerce\Admin\API {
         }
         /**
          * Undo snooze of a single task.
+         *
+         * @deprecated 7.8.0 undo snooze task is deprecated.
          *
          * @param WP_REST_Request $request Full details about the request.
          * @return WP_REST_Request|WP_Error
@@ -60235,7 +60473,7 @@ namespace Automattic\WooCommerce\Admin\API {
         /**
          * Check whether the request is for products low in stock.
          *
-         * It matches requests with paramaters:
+         * It matches requests with parameters:
          *
          * low_in_stock = true
          * page = 1
@@ -66781,6 +67019,42 @@ namespace Automattic\WooCommerce\Admin {
         }
     }
 }
+namespace Automattic\WooCommerce\Admin\Features\AsyncProductEditorCategoryField {
+    /**
+     * Loads assets related to the async category field for the product editor.
+     */
+    class Init
+    {
+        const FEATURE_ID = 'async-product-editor-category-field';
+        /**
+         * Constructor
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Adds meta_box_cb callback arguments for custom metabox.
+         *
+         * @param array $args Category taxonomy args.
+         * @return array $args category taxonomy args.
+         */
+        public function add_metabox_args($args)
+        {
+        }
+        /**
+         * Enqueue scripts needed for the product form block editor.
+         */
+        public function enqueue_scripts()
+        {
+        }
+        /**
+         * Enqueue styles needed for the rich text editor.
+         */
+        public function enqueue_styles()
+        {
+        }
+    }
+}
 namespace Automattic\WooCommerce\Admin\Features {
     /**
      * Features Class.
@@ -66804,7 +67078,7 @@ namespace Automattic\WooCommerce\Admin\Features {
          *
          * @var array
          */
-        protected static $beta_features = array('navigation', 'new-product-management-experience', 'product-block-editor', 'settings');
+        protected static $beta_features = array('navigation', 'new-product-management-experience', 'settings');
         /**
          * Get class instance.
          */
@@ -68137,7 +68411,7 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
         {
         }
         /**
-         * Additonal info.
+         * Additional info.
          *
          * @return string
          */
@@ -68644,7 +68918,7 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
         {
         }
         /**
-         * Temporarily store the active task to persist across page loads when neccessary.
+         * Temporarily store the active task to persist across page loads when necessary.
          * Most tasks do not need this.
          */
         public static function set_active_task()
@@ -70188,7 +70462,7 @@ namespace Automattic\WooCommerce\Admin\Features\ProductBlockEditor {
         /**
          * Array of all available product blocks.
          */
-        const PRODUCT_BLOCKS = ['woocommerce/product-name', 'woocommerce/product-pricing', 'woocommerce/product-section', 'woocommerce/product-tab'];
+        const PRODUCT_BLOCKS = ['woocommerce/conditional', 'woocommerce/product-category-field', 'woocommerce/product-checkbox-field', 'woocommerce/product-collapsible', 'woocommerce/product-description-field', 'woocommerce/product-images-field', 'woocommerce/product-inventory-email-field', 'woocommerce/product-sku-field', 'woocommerce/product-name-field', 'woocommerce/product-pricing-field', 'woocommerce/product-radio-field', 'woocommerce/product-regular-price-field', 'woocommerce/product-sale-price-field', 'woocommerce/product-schedule-sale-fields', 'woocommerce/product-section', 'woocommerce/product-shipping-class-field', 'woocommerce/product-shipping-dimensions-fields', 'woocommerce/product-summary-field', 'woocommerce/product-tab', 'woocommerce/product-inventory-quantity-field', 'woocommerce/product-toggle-field'];
         /**
          * Get a file path for a given block file.
          *
@@ -70244,11 +70518,6 @@ namespace Automattic\WooCommerce\Admin\Features\ProductBlockEditor {
      */
     class Init
     {
-        const FEATURE_ID = 'product-block-editor';
-        /**
-         * Option name used to toggle this feature.
-         */
-        const TOGGLE_OPTION_NAME = 'woocommerce_' . self::FEATURE_ID . '_enabled';
         /**
          * The context name used to identify the editor.
          */
@@ -70279,6 +70548,14 @@ namespace Automattic\WooCommerce\Admin\Features\ProductBlockEditor {
          * @return string
          */
         public function update_edit_product_link($link, $post_id)
+        {
+        }
+        /**
+         * Get the resolved assets needed for the iframe editor.
+         *
+         * @return array Styles and scripts.
+         */
+        private function get_resolved_assets()
         {
         }
         /**
@@ -71113,7 +71390,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
          * @param string $type Comma separated list of note types.
          * @param string $status Comma separated list of statuses.
          * @param string $context Optional argument that the woocommerce_note_where_clauses filter can use to determine whether to apply extra conditions. Extensions should define their own contexts and use them to avoid adding to notes where clauses when not needed.
-         * @return array An array of objects containing a note id.
+         * @return string Count of objects with given type, status and context.
          */
         public function get_notes_count($type = array(), $status = array(), $context = self::WC_ADMIN_NOTE_OPER_GLOBAL)
         {
@@ -73008,16 +73285,31 @@ namespace Automattic\WooCommerce\Admin {
         /**
          * Install an array of plugins.
          *
-         * @param array $plugins Plugins to install.
+         * @param array                     $plugins Plugins to install.
+         * @param PluginsInstallLogger|null $logger an optional logger.
+         *
          * @return array
          */
-        public static function install_plugins($plugins)
+        public static function install_plugins($plugins, \Automattic\WooCommerce\Admin\PluginsInstallLoggers\PluginsInstallLogger $logger = null)
+        {
+        }
+        /**
+         * Callback regsitered by OnboardingPlugins::install_async.
+         *
+         * It is used to call install_plugins with a custom logger.
+         *
+         * @param array  $plugins A list of plugins to install.
+         * @param string $job_id An unique job I.D.
+         * @return bool
+         */
+        public function install_plugins_async_callback(array $plugins, string $job_id)
         {
         }
         /**
          * Schedule plugin installation.
          *
          * @param array $plugins Plugins to install.
+         *
          * @return string Job ID.
          */
         public static function schedule_install_plugins($plugins)
@@ -73027,6 +73319,7 @@ namespace Automattic\WooCommerce\Admin {
          * Activate the requested plugins.
          *
          * @param array $plugins Plugins.
+         *
          * @return WP_Error|array Plugin Status
          */
         public static function activate_plugins($plugins)
@@ -73036,6 +73329,7 @@ namespace Automattic\WooCommerce\Admin {
          * Schedule plugin activation.
          *
          * @param array $plugins Plugins to activate.
+         *
          * @return string Job ID.
          */
         public static function schedule_activate_plugins($plugins)
@@ -73045,6 +73339,7 @@ namespace Automattic\WooCommerce\Admin {
          * Installation status.
          *
          * @param int $job_id Job ID.
+         *
          * @return array Job data.
          */
         public static function get_installation_status($job_id = null)
@@ -73054,6 +73349,7 @@ namespace Automattic\WooCommerce\Admin {
          * Gets the plugin data for the first action.
          *
          * @param array $actions Array of AS actions.
+         *
          * @return array Array of action data.
          */
         public static function get_action_data($actions)
@@ -73063,12 +73359,130 @@ namespace Automattic\WooCommerce\Admin {
          * Activation status.
          *
          * @param int $job_id Job ID.
+         *
          * @return array Array of action data.
          */
         public static function get_activation_status($job_id = null)
         {
         }
     }
+}
+namespace Automattic\WooCommerce\Admin\PluginsInstallLoggers {
+    /**
+     * A logger used in PluginsHelper::install_plugins to log the installation progress.
+     */
+    interface PluginsInstallLogger
+    {
+        /**
+         * Called when a plugin install requested.
+         *
+         * @param string $plugin_name plugin name.
+         * @return mixed
+         */
+        public function install_requested(string $plugin_name);
+        /**
+         * Called when a plugin installed successfully.
+         *
+         * @param string $plugin_name plugin name.
+         * @param int    $duration # of seconds it took to install $plugin_name.
+         * @return mixed
+         */
+        public function installed(string $plugin_name, int $duration);
+        /**
+         * Called when an error occurred while installing a plugin.
+         *
+         * @param string      $plugin_name plugin name.
+         * @param string|null $error_message error message.
+         * @return mixed
+         */
+        public function add_error(string $plugin_name, string $error_message = null);
+        /**
+         * Called when all plugins are processed.
+         *
+         * @return mixed
+         */
+        public function complete();
+    }
+    /**
+     * A logger to log plugin installation progress in real time to an option.
+     */
+    class AsyncPluginsInstallLogger implements \Automattic\WooCommerce\Admin\PluginsInstallLoggers\PluginsInstallLogger
+    {
+        /**
+         * Variable to store logs.
+         *
+         * @var string $option_name option name to store logs.
+         */
+        private $option_name;
+        /**
+         * Constructor.
+         *
+         * @param string $option_name option name.
+         */
+        public function __construct(string $option_name)
+        {
+        }
+        /**
+         * Update the option.
+         *
+         * @param array $data New data.
+         *
+         * @return bool
+         */
+        private function update(array $data)
+        {
+        }
+        /**
+         * Retreive the option.
+         *
+         * @return false|mixed|void
+         */
+        private function get()
+        {
+        }
+        /**
+         * Add requested plugin.
+         *
+         * @param string $plugin_name plugin name.
+         *
+         * @return void
+         */
+        public function install_requested(string $plugin_name)
+        {
+        }
+        /**
+         * Add installed plugin.
+         *
+         * @param string $plugin_name plugin name.
+         * @param int    $duration time took to install plugin.
+         *
+         * @return void
+         */
+        public function installed(string $plugin_name, int $duration)
+        {
+        }
+        /**
+         * Add an error.
+         *
+         * @param string      $plugin_name plugin name.
+         * @param string|null $error_message error message.
+         *
+         * @return void
+         */
+        public function add_error(string $plugin_name, string $error_message = null)
+        {
+        }
+        /**
+         * Record completed_time.
+         *
+         * @return void
+         */
+        public function complete()
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Admin {
     /**
      * Class PluginsInstaller
      */
@@ -76070,6 +76484,11 @@ namespace Automattic\WooCommerce\DataBase\Migrations\CustomOrderTable {
          * default: false
          * ---
          *
+         * [--order-types]
+         * : Comma seperated list of order types that needs to be verified. For example, --order-types=shop_order,shop_order_refund
+         * ---
+         * default: Output of function `wc_get_order_types( 'cot-migration' )`
+         *
          * ## EXAMPLES
          *
          *     # Verify migrated order data, 500 orders at a time.
@@ -76084,13 +76503,14 @@ namespace Automattic\WooCommerce\DataBase\Migrations\CustomOrderTable {
         /**
          * Helper method to get count for orders needing verification.
          *
-         * @param int  $order_id_start Order ID to start from.
-         * @param int  $order_id_end   Order ID to end at.
-         * @param bool $log Whether to also log an error message.
+         * @param int   $order_id_start Order ID to start from.
+         * @param int   $order_id_end Order ID to end at.
+         * @param array $order_types List of order types to verify.
+         * @param bool  $log Whether to also log an error message.
          *
          * @return int Order count.
          */
-        private function get_verify_order_count(int $order_id_start, int $order_id_end, $log = true) : int
+        private function get_verify_order_count(int $order_id_start, int $order_id_end, array $order_types, bool $log = true) : int
         {
         }
         /**
@@ -79263,7 +79683,7 @@ namespace {
     /**
      * Given an element name, returns a class name.
      *
-     * If the WP-related function is not defined, return empty string.
+     * If the WP-related function is not defined or current theme is not a FSE theme, return empty string.
      *
      * @param string $element The name of the element.
      *
@@ -81901,8 +82321,9 @@ namespace {
      * @param string $message The text to display in the notice.
      * @param string $notice_type Optional. The singular name of the notice type - either error, success or notice.
      * @param array  $data        Optional notice data. @since 3.9.0.
+     * @param bool   $return      true to return rather than echo. @since 7.7.0.
      */
-    function wc_print_notice($message, $notice_type = 'success', $data = array())
+    function wc_print_notice($message, $notice_type = 'success', $data = array(), $return = \false)
     {
     }
     /**
@@ -83562,7 +83983,7 @@ namespace {
     {
     }
     /**
-     * See if the checkbox is enabled or not based on the existance of the terms page and checkbox text.
+     * See if the checkbox is enabled or not based on the existence of the terms page and checkbox text.
      *
      * @since 3.4.0
      * @return bool
@@ -84689,7 +85110,7 @@ namespace {
      *
      * @param int    $the_term Term ID.
      * @param int    $next_id  The id of the next sibling element in save hierarchy level.
-     * @param string $taxonomy Taxnomy.
+     * @param string $taxonomy Taxonomy.
      * @param int    $index    Term index (default: 0).
      * @param mixed  $terms    List of terms. (default: null).
      * @return int
@@ -84765,7 +85186,7 @@ namespace {
     {
     }
     /**
-     * Get full list of product visibilty term ids.
+     * Get full list of product visibility term ids.
      *
      * @since  3.0.0
      * @return int[]
