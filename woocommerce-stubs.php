@@ -34210,7 +34210,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '7.8.0';
+        public $version = '7.8.1';
         /**
          * WooCommerce Schema version.
          *
@@ -54114,6 +54114,18 @@ namespace {
          * Show the checkout.
          */
         private static function checkout()
+        {
+        }
+        /**
+         * Tries to determine if the user's email address should be verified before rendering either the 'order received' or
+         * 'order pay' pages. This should only be applied to guest orders.
+         *
+         * @param WC_Order $order   The order for which a need for email verification is being determined.
+         * @param string   $context The context in which email verification is being tested.
+         *
+         * @return bool
+         */
+        private static function guest_should_verify_email(\WC_Order $order, string $context) : bool
         {
         }
     }
@@ -78502,6 +78514,16 @@ namespace {
      * @return string
      */
     function wc_get_current_admin_url()
+    {
+    }
+    /**
+     * Get default product type options.
+     *
+     * @internal
+     * @since 7.9.0
+     * @return array
+     */
+    function wc_get_default_product_type_options()
     {
     }
     /**

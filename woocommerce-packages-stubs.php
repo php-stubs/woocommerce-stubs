@@ -6994,14 +6994,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         protected function enqueue_data(array $attributes = [])
         {
         }
-        /**
-         * Get the frontend script handle for this block type.
-         *
-         * @param string $key Data to get, or default to everything.
-         */
-        protected function get_block_type_script($key = null)
-        {
-        }
     }
     /**
      * CatalogSorting class.
@@ -10337,14 +10329,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * Get Stock status query variables values.
          */
         public static function get_stock_status_query_var_values()
-        {
-        }
-        /**
-         * Get the frontend script handle for this block type.
-         *
-         * @param string $key Data to get, or default to everything.
-         */
-        protected function get_block_type_script($key = null)
         {
         }
     }
