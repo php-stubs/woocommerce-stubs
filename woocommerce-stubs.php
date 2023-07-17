@@ -5681,6 +5681,25 @@ namespace {
          */
         public $countries = array();
         /**
+         * Shipping method order.
+         *
+         * @var int
+         */
+        public $method_order;
+        /**
+         * Whether the shipping method has settings or not. Preferably, use {@see has_settings()} instead.
+         *
+         * @var bool
+         */
+        public $has_settings;
+        /**
+         * When the method supports the settings modal, this is the admin settings HTML.
+         * Preferably, use {@see get_admin_options_html()} instead.
+         *
+         * @var string|bool
+         */
+        public $settings_html;
+        /**
          * Constructor.
          *
          * @param int $instance_id Instance ID.
@@ -8271,6 +8290,26 @@ namespace {
         public static function reset_admin_notices()
         {
         }
+        // phpcs:disable Generic.Commenting.Todo.TaskFound
+        /**
+         * Add an admin notice about the bump of the required PHP version in WooCommerce 8.2
+         * if the current PHP version is too old.
+         *
+         * TODO: Remove this method in WooCommerce 8.2.
+         */
+        private static function maybe_add_php74_required_notice()
+        {
+        }
+        /**
+         * Remove the admin notice about the bump of the required PHP version in WooCommerce 8.2
+         * if the current PHP version is good.
+         *
+         * TODO: Remove this method in WooCommerce 8.2.
+         */
+        private static function maybe_remove_php74_required_notice()
+        {
+        }
+        // phpcs:enable Generic.Commenting.Todo.TaskFound
         /**
          * Show a notice.
          *
@@ -15408,6 +15447,12 @@ namespace {
         /**
          * Handle submissions from assets/js/wc-shipping-zone-methods.js Backbone model.
          */
+        public static function shipping_zone_remove_method()
+        {
+        }
+        /**
+         * Handle submissions from assets/js/wc-shipping-zone-methods.js Backbone model.
+         */
         public static function shipping_zone_methods_save_changes()
         {
         }
@@ -16653,6 +16698,12 @@ namespace {
          */
         protected $totals = array('fees_total' => 0, 'fees_total_tax' => 0, 'items_subtotal' => 0, 'items_subtotal_tax' => 0, 'items_total' => 0, 'items_total_tax' => 0, 'total' => 0, 'shipping_total' => 0, 'shipping_tax_total' => 0, 'discounts_total' => 0);
         /**
+         * Cache of tax rates for a given tax class.
+         *
+         * @var array
+         */
+        protected $item_tax_rates;
+        /**
          * Sets up the items provided, and calculate totals.
          *
          * @since 3.2.0
@@ -16958,6 +17009,7 @@ namespace {
     /**
      * Legacy cart class.
      */
+    #[\AllowDynamicProperties]
     abstract class WC_Legacy_Cart
     {
         /**
@@ -18834,6 +18886,15 @@ namespace {
          * @var array
          */
         public $address_formats = array();
+        /**
+         * Cache of geographical regions.
+         *
+         * Only to be used by the get_* and load_* methods, as other methods may expect the regions to be
+         * loaded on demand.
+         *
+         * @var array
+         */
+        private $geo_cache = array();
         /**
          * Auto-load in-accessible properties on demand.
          *
@@ -26288,6 +26349,13 @@ namespace {
          */
         protected $legacy_datastore_props = array('_recorded_sales', '_recorded_coupon_usage_counts', '_download_permissions_granted', '_order_stock_reduced', '_new_order_email_sent');
         /**
+         * Refunds for an order. Use {@see get_refunds()} instead.
+         *
+         * @deprecated 2.2.0
+         * @var stdClass|WC_Order[]
+         */
+        public $refunds;
+        /**
          * When a payment is complete this function is called.
          *
          * Most of the time this should mark an order as 'processing' so that admin can process/post the items.
@@ -26697,7 +26765,7 @@ namespace {
         {
         }
         /**
-         * Get transaction d.
+         * Get transaction id.
          *
          * @param  string $context What the value is for. Valid values are view and edit.
          * @return string
@@ -27640,6 +27708,14 @@ namespace {
          * @return bool
          */
         public function is_created_via($modus)
+        {
+        }
+        /**
+         * Attempts to restore the specified order back to its original status (after having been trashed).
+         *
+         * @return bool If the operation was successful.
+         */
+        public function untrash() : bool
         {
         }
     }
@@ -33256,11 +33332,13 @@ namespace {
         {
         }
     }
+    // phpcs:disable Squiz.Classes.ClassFileName.NoMatch, Squiz.Classes.ValidClassName.NotCamelCaps -- Backwards compatibility.
     /**
      * WooCommerce Tracker Class
      */
     class WC_Tracker
     {
+        // phpcs:enable
         /**
          * URL to the WooThemes Tracker API endpoint.
          *
@@ -33466,6 +33544,14 @@ namespace {
          * @return array
          */
         private static function get_active_shipping_methods()
+        {
+        }
+        /**
+         * Get an array of slugs for WC features that are enabled on the site.
+         *
+         * @return string[]
+         */
+        private static function get_enabled_features()
         {
         }
         /**
@@ -34210,7 +34296,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '7.8.2';
+        public $version = '7.9.0';
         /**
          * WooCommerce Schema version.
          *
@@ -34346,6 +34432,14 @@ namespace {
          * @since 3.6.0
          */
         public function on_plugins_loaded()
+        {
+        }
+        /**
+         * Initiali Jetpack Connection Config.
+         *
+         * @return void
+         */
+        public function init_jetpack_connection_config()
         {
         }
         /**
@@ -37424,6 +37518,16 @@ namespace {
         private function prime_raw_meta_cache_for_orders($order_ids, $query_vars)
         {
         }
+        /**
+         * Attempts to restore the specified order back to its original status (after having been trashed).
+         *
+         * @param WC_Order $order The order to be untrashed.
+         *
+         * @return bool If the operation was successful.
+         */
+        public function untrash_order(\WC_Order $order) : bool
+        {
+        }
     }
     /**
      * Order Item Type Data Store Interface
@@ -39842,6 +39946,12 @@ namespace {
          */
         public $replace = array();
         /**
+         * E-mail type: plain, html or multipart.
+         *
+         * @var string
+         */
+        public $email_type;
+        /**
          * Constructor.
          */
         public function __construct()
@@ -41964,6 +42074,18 @@ namespace {
          */
         public $locale;
         /**
+         * Gateway instructions that will be added to the thank you page and emails.
+         *
+         * @var string
+         */
+        public $instructions;
+        /**
+         * Account details.
+         *
+         * @var array
+         */
+        public $account_details;
+        /**
          * Constructor for the gateway.
          */
         public function __construct()
@@ -42045,6 +42167,12 @@ namespace {
      */
     class WC_Gateway_Cheque extends \WC_Payment_Gateway
     {
+        /**
+         * Gateway instructions that will be added to the thank you page and emails.
+         *
+         * @var string
+         */
+        public $instructions;
         /**
          * Constructor for the gateway.
          */
@@ -42160,6 +42288,24 @@ namespace {
      */
     class WC_Gateway_COD extends \WC_Payment_Gateway
     {
+        /**
+         * Gateway instructions that will be added to the thank you page and emails.
+         *
+         * @var string
+         */
+        public $instructions;
+        /**
+         * Enable for shipping methods.
+         *
+         * @var array
+         */
+        public $enable_for_methods;
+        /**
+         * Enable for virtual products.
+         *
+         * @var bool
+         */
+        public $enable_for_virtual;
         /**
          * Constructor for the gateway.
          */
@@ -42290,6 +42436,36 @@ namespace {
          * @var WC_Logger
          */
         public static $log = \false;
+        /**
+         * Whether the test mode is enabled.
+         *
+         * @var bool
+         */
+        public $testmode;
+        /**
+         * Whether the debug mode is enabled.
+         *
+         * @var bool
+         */
+        public $debug;
+        /**
+         * Email address to send payments to.
+         *
+         * @var string
+         */
+        public $email;
+        /**
+         * Receiver email.
+         *
+         * @var string
+         */
+        public $receiver_email;
+        /**
+         * Identity token.
+         *
+         * @var string
+         */
+        public $identity_token;
         /**
          * Constructor for the gateway.
          */
@@ -53466,6 +53642,18 @@ namespace {
          */
         protected $fee_cost = '';
         /**
+         * Shipping method cost.
+         *
+         * @var string
+         */
+        public $cost;
+        /**
+         * Shipping method type.
+         *
+         * @var string
+         */
+        public $type;
+        /**
          * Constructor.
          *
          * @param int $instance_id Shipping method instance ID.
@@ -53560,6 +53748,14 @@ namespace {
          */
         public $requires = '';
         /**
+         * Ignore discounts.
+         *
+         * If set, free shipping would be available based on pre-discount order amount.
+         *
+         * @var string
+         */
+        public $ignore_discounts;
+        /**
          * Constructor.
          *
          * @param int $instance_id Shipping method instance.
@@ -53632,6 +53828,25 @@ namespace {
          * @var string
          */
         protected $fee_cost = '';
+        /**
+         * Shipping method cost.
+         *
+         * @var string
+         */
+        public $cost;
+        /**
+         * Shipping method type.
+         *
+         * @var string
+         */
+        public $type;
+        /**
+         * Shipping method options.
+         *
+         * @deprecated 2.4.0
+         * @var string
+         */
+        public $options;
         /**
          * Constructor.
          */
@@ -53878,6 +54093,12 @@ namespace {
     class WC_Shipping_Local_Pickup extends \WC_Shipping_Method
     {
         /**
+         * Shipping method cost.
+         *
+         * @var string
+         */
+        public $cost;
+        /**
          * Constructor.
          *
          * @param int $instance_id Instance ID.
@@ -53917,6 +54138,20 @@ namespace {
      */
     class WC_Shipping_Legacy_Local_Delivery extends \WC_Shipping_Local_Pickup
     {
+        /**
+         * Shipping method fee type.
+         *
+         * How to calculate delivery charges.
+         *
+         * @var string
+         */
+        public $type;
+        /**
+         * Allowed post/zip codes for the shipping method.
+         *
+         * @var string
+         */
+        public $codes;
         /**
          * Constructor.
          */
@@ -53970,6 +54205,12 @@ namespace {
      */
     class WC_Shipping_Legacy_Local_Pickup extends \WC_Shipping_Method
     {
+        /**
+         * Allowed post/zip codes for the shipping method.
+         *
+         * @var string
+         */
+        public $codes;
         /**
          * Constructor.
          */
@@ -55059,6 +55300,7 @@ namespace {
     /**
      * WC_Tracks_Event class.
      */
+    #[\AllowDynamicProperties]
     class WC_Tracks_Event
     {
         /**
@@ -55819,6 +56061,18 @@ namespace {
          * @var array
          */
         protected $modified_options = array();
+        /**
+         * List of options that have been deleted.
+         *
+         * @var array
+         */
+        protected $deleted_options = array();
+        /**
+         * List of options that have been added.
+         *
+         * @var array
+         */
+        protected $added_options = array();
         /**
          * Toggled options.
          *
@@ -57728,6 +57982,53 @@ namespace Automattic\WooCommerce\Admin\API\Reports {
         public function prepare_item_for_export($item);
     }
     /**
+     * WC REST API Reports controller extended
+     * to be shared as a generic base for all Analytics controllers.
+     *
+     * @internal
+     * @extends WC_REST_Reports_Controller
+     */
+    abstract class GenericController extends \WC_REST_Reports_Controller
+    {
+        /**
+         * Endpoint namespace.
+         *
+         * @var string
+         */
+        protected $namespace = 'wc-analytics';
+        /**
+         * Add pagination headers and links.
+         *
+         * @param WP_REST_Request        $request   Request data.
+         * @param WP_REST_Response|array $response  Response data.
+         * @param int                    $total     Total results.
+         * @param int                    $page      Current page.
+         * @param int                    $max_pages Total amount of pages.
+         * @return WP_REST_Response
+         */
+        public function add_pagination_headers($request, $response, int $total, int $page, int $max_pages)
+        {
+        }
+        /**
+         * Get the query params for collections.
+         *
+         * @return array
+         */
+        public function get_collection_params()
+        {
+        }
+        /**
+         * Prepare a report object for serialization.
+         *
+         * @param array           $report  Report data.
+         * @param WP_REST_Request $request Request object.
+         * @return WP_REST_Response
+         */
+        public function prepare_item_for_response($report, $request)
+        {
+        }
+    }
+    /**
      * ExportableTraits class.
      */
     trait ExportableTraits
@@ -57748,20 +58049,14 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Customers {
      * REST API Reports customers controller class.
      *
      * @internal
-     * @extends WC_REST_Reports_Controller
+     * @extends GenericController
      */
-    class Controller extends \WC_REST_Reports_Controller implements \Automattic\WooCommerce\Admin\API\Reports\ExportableInterface
+    class Controller extends \Automattic\WooCommerce\Admin\API\Reports\GenericController implements \Automattic\WooCommerce\Admin\API\Reports\ExportableInterface
     {
         /**
          * Exportable traits.
          */
         use \Automattic\WooCommerce\Admin\API\Reports\ExportableTraits;
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc-analytics';
         /**
          * Route base.
          *
@@ -58105,6 +58400,7 @@ namespace Automattic\WooCommerce\Admin\API {
      *
      * @internal
      */
+    #[\AllowDynamicProperties]
     class Init
     {
         /**
@@ -58841,12 +59137,6 @@ namespace Automattic\WooCommerce\Admin\API {
          */
         protected $rest_base = 'admin/notes';
         /**
-         * Allowed promo notes for experimental-activate-promo.
-         *
-         * @var array
-         */
-        protected $allowed_promo_notes = array('wcpay-promo-2022-us-incentive-20-off');
-        /**
          * Register the routes for admin notes.
          */
         public function register_routes()
@@ -59149,7 +59439,7 @@ namespace Automattic\WooCommerce\Admin\API {
          *
          * @return array
          */
-        public function install_async(\WP_REST_Request $request)
+        public function install_and_activate_async(\WP_REST_Request $request)
         {
         }
         /**
@@ -59160,6 +59450,17 @@ namespace Automattic\WooCommerce\Admin\API {
          * @return array|WP_REST_Response
          */
         public function get_scheduled_installs(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Return Jetpack authorization URL.
+         *
+         * @param WP_REST_Request $request WP_REST_Request object.
+         *
+         * @return array
+         * @throws \Exception If there is an error registering the site.
+         */
+        public function get_jetpack_authorization_url(\WP_REST_Request $request)
         {
         }
         /**
@@ -60710,22 +61011,10 @@ namespace Automattic\WooCommerce\Admin\API\Reports {
      * REST API Reports controller class.
      *
      * @internal
-     * @extends WC_REST_Reports_Controller
+     * @extends GenericController
      */
-    class Controller extends \WC_REST_Reports_Controller
+    class Controller extends \Automattic\WooCommerce\Admin\API\Reports\GenericController
     {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc-analytics';
-        /**
-         * Route base.
-         *
-         * @var string
-         */
-        protected $rest_base = 'reports';
         /**
          * Get all reports.
          *
@@ -61024,6 +61313,12 @@ namespace Automattic\WooCommerce\Admin\API\Reports {
          * @var array
          */
         protected $column_types = array();
+        /**
+         * SQL columns to select in the db query.
+         *
+         * @var array
+         */
+        protected $report_columns = array();
         // @todo This does not really belong here, maybe factor out the comparison as separate class?
         /**
          * Order by property, used in the cmp function.
@@ -61809,16 +62104,10 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Coupons {
      * REST API Reports coupons controller class.
      *
      * @internal
-     * @extends WC_REST_Reports_Controller
+     * @extends GenericController
      */
-    class Controller extends \WC_REST_Reports_Controller implements \Automattic\WooCommerce\Admin\API\Reports\ExportableInterface
+    class Controller extends \Automattic\WooCommerce\Admin\API\Reports\GenericController implements \Automattic\WooCommerce\Admin\API\Reports\ExportableInterface
     {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc-analytics';
         /**
          * Route base.
          *
@@ -61846,7 +62135,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Coupons {
         /**
          * Prepare a report object for serialization.
          *
-         * @param stdClass        $report  Report data.
+         * @param array           $report  Report data.
          * @param WP_REST_Request $request Request object.
          * @return WP_REST_Response
          */
@@ -62060,21 +62349,53 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Coupons {
         }
     }
 }
+namespace Automattic\WooCommerce\Admin\API\Reports {
+    /**
+     * Generic base for all Stats controllers.
+     *
+     * @internal
+     * @extends GenericController
+     */
+    abstract class GenericStatsController extends \Automattic\WooCommerce\Admin\API\Reports\GenericController
+    {
+        /**
+         * Get the query params for collections.
+         * Adds intervals to the generic list.
+         *
+         * @return array
+         */
+        public function get_collection_params()
+        {
+        }
+        /**
+         * Get the Report's item properties schema.
+         * Will be used by `get_item_schema` as `totals` and `subtotals`.
+         *
+         * @return array
+         */
+        protected abstract function get_item_properties_schema();
+        /**
+         * Get the Report's schema, conforming to JSON Schema.
+         *
+         * Please note, it does not call add_additional_fields_schema,
+         * as you may want to update the `title` first.
+         *
+         * @return array
+         */
+        public function get_item_schema()
+        {
+        }
+    }
+}
 namespace Automattic\WooCommerce\Admin\API\Reports\Coupons\Stats {
     /**
      * REST API Reports coupons stats controller class.
      *
      * @internal
-     * @extends WC_REST_Reports_Controller
+     * @extends GenericStatsController
      */
-    class Controller extends \WC_REST_Reports_Controller
+    class Controller extends \Automattic\WooCommerce\Admin\API\Reports\GenericStatsController
     {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc-analytics';
         /**
          * Route base.
          *
@@ -62107,6 +62428,15 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Coupons\Stats {
          * @return WP_REST_Response
          */
         public function prepare_item_for_response($report, $request)
+        {
+        }
+        /**
+         * Get the Report's item properties schema.
+         * Will be used by `get_item_schema` as `totals` and `subtotals`.
+         *
+         * @return array
+         */
+        protected function get_item_properties_schema()
         {
         }
         /**
@@ -63252,16 +63582,10 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Downloads\Stats {
      * REST API Reports downloads stats controller class.
      *
      * @internal
-     * @extends WC_REST_Reports_Controller
+     * @extends GenericStatsController
      */
-    class Controller extends \WC_REST_Reports_Controller
+    class Controller extends \Automattic\WooCommerce\Admin\API\Reports\GenericStatsController
     {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc-analytics';
         /**
          * Route base.
          *
@@ -63289,7 +63613,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Downloads\Stats {
         /**
          * Prepare a report object for serialization.
          *
-         * @param Array           $report  Report data.
+         * @param array           $report  Report data.
          * @param WP_REST_Request $request Request object.
          * @return WP_REST_Response
          */
@@ -63297,7 +63621,17 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Downloads\Stats {
         {
         }
         /**
+         * Get the Report's item properties schema.
+         * Will be used by `get_item_schema` as `totals` and `subtotals`.
+         *
+         * @return array
+         */
+        protected function get_item_properties_schema()
+        {
+        }
+        /**
          * Get the Report's schema, conforming to JSON Schema.
+         * It does not have the segments as in GenericStatsController.
          *
          * @return array
          */
@@ -64208,16 +64542,10 @@ namespace Automattic\WooCommerce\Admin\API\Reports\PerformanceIndicators {
      * REST API Reports Performance indicators controller class.
      *
      * @internal
-     * @extends WC_REST_Reports_Controller
+     * @extends GenericController
      */
-    class Controller extends \WC_REST_Reports_Controller
+    class Controller extends \Automattic\WooCommerce\Admin\API\Reports\GenericController
     {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc-analytics';
         /**
          * Route base.
          *
@@ -64361,7 +64689,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\PerformanceIndicators {
         /**
          * Prepare a report object for serialization.
          *
-         * @param stdClass        $stat_data    Report data.
+         * @param array           $stat_data    Report data.
          * @param WP_REST_Request $request Request object.
          * @return WP_REST_Response
          */
@@ -64431,16 +64759,10 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Products {
      * REST API Reports products controller class.
      *
      * @internal
-     * @extends WC_REST_Reports_Controller
+     * @extends GenericController
      */
-    class Controller extends \WC_REST_Reports_Controller implements \Automattic\WooCommerce\Admin\API\Reports\ExportableInterface
+    class Controller extends \Automattic\WooCommerce\Admin\API\Reports\GenericController implements \Automattic\WooCommerce\Admin\API\Reports\ExportableInterface
     {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc-analytics';
         /**
          * Route base.
          *
@@ -64697,16 +65019,10 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Products\Stats {
      * REST API Reports products stats controller class.
      *
      * @internal
-     * @extends WC_REST_Reports_Controller
+     * @extends GenericStatsController
      */
-    class Controller extends \WC_REST_Reports_Controller
+    class Controller extends \Automattic\WooCommerce\Admin\API\Reports\GenericStatsController
     {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc-analytics';
         /**
          * Route base.
          *
@@ -64737,11 +65053,20 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Products\Stats {
         /**
          * Prepare a report object for serialization.
          *
-         * @param Array           $report  Report data.
+         * @param array           $report  Report data.
          * @param WP_REST_Request $request Request object.
          * @return WP_REST_Response
          */
         public function prepare_item_for_response($report, $request)
+        {
+        }
+        /**
+         * Get the Report's item properties schema.
+         * Will be used by `get_item_schema` as `totals` and `subtotals`.
+         *
+         * @return array
+         */
+        protected function get_item_properties_schema()
         {
         }
         /**
@@ -64950,20 +65275,14 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Revenue\Stats {
      * REST API Reports revenue stats controller class.
      *
      * @internal
-     * @extends WC_REST_Reports_Controller
+     * @extends GenericStatsController
      */
-    class Controller extends \WC_REST_Reports_Controller implements \Automattic\WooCommerce\Admin\API\Reports\ExportableInterface
+    class Controller extends \Automattic\WooCommerce\Admin\API\Reports\GenericStatsController implements \Automattic\WooCommerce\Admin\API\Reports\ExportableInterface
     {
         /**
          * Exportable traits.
          */
         use \Automattic\WooCommerce\Admin\API\Reports\ExportableTraits;
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc-analytics';
         /**
          * Route base.
          *
@@ -65002,11 +65321,20 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Revenue\Stats {
         /**
          * Prepare a report object for serialization.
          *
-         * @param Array           $report  Report data.
+         * @param array           $report  Report data.
          * @param WP_REST_Request $request Request object.
          * @return WP_REST_Response
          */
         public function prepare_item_for_response($report, $request)
+        {
+        }
+        /**
+         * Get the Report's item properties schema.
+         * Will be used by `get_item_schema` as `totals` and `subtotals`.
+         *
+         * @return array
+         */
+        protected function get_item_properties_schema()
         {
         }
         /**
@@ -65049,16 +65377,10 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Stock {
      * REST API Reports stock controller class.
      *
      * @internal
-     * @extends WC_REST_Reports_Controller
+     * @extends GenericController
      */
-    class Controller extends \WC_REST_Reports_Controller implements \Automattic\WooCommerce\Admin\API\Reports\ExportableInterface
+    class Controller extends \Automattic\WooCommerce\Admin\API\Reports\GenericController implements \Automattic\WooCommerce\Admin\API\Reports\ExportableInterface
     {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc-analytics';
         /**
          * Route base.
          *
@@ -65329,20 +65651,14 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Taxes {
      * REST API Reports taxes controller class.
      *
      * @internal
-     * @extends WC_REST_Reports_Controller
+     * @extends GenericController
      */
-    class Controller extends \WC_REST_Reports_Controller implements \Automattic\WooCommerce\Admin\API\Reports\ExportableInterface
+    class Controller extends \Automattic\WooCommerce\Admin\API\Reports\GenericController implements \Automattic\WooCommerce\Admin\API\Reports\ExportableInterface
     {
         /**
          * Exportable traits.
          */
         use \Automattic\WooCommerce\Admin\API\Reports\ExportableTraits;
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc-analytics';
         /**
          * Route base.
          *
@@ -65548,16 +65864,10 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Taxes\Stats {
      * REST API Reports taxes stats controller class.
      *
      * @internal
-     * @extends WC_REST_Reports_Controller
+     * @extends GenericStatsController
      */
-    class Controller extends \WC_REST_Reports_Controller
+    class Controller extends \Automattic\WooCommerce\Admin\API\Reports\GenericStatsController
     {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc-analytics';
         /**
          * Route base.
          *
@@ -65606,6 +65916,15 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Taxes\Stats {
          * @return WP_REST_Response
          */
         public function prepare_item_for_response($report, $request)
+        {
+        }
+        /**
+         * Get the Report's item properties schema.
+         * Will be used by `get_item_schema` as `totals` and `subtotals`.
+         *
+         * @return array
+         */
+        protected function get_item_properties_schema()
         {
         }
         /**
@@ -66285,16 +66604,10 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Variations\Stats {
      * REST API Reports variations stats controller class.
      *
      * @internal
-     * @extends WC_REST_Reports_Controller
+     * @extends GenericStatsController
      */
-    class Controller extends \WC_REST_Reports_Controller
+    class Controller extends \Automattic\WooCommerce\Admin\API\Reports\GenericStatsController
     {
-        /**
-         * Endpoint namespace.
-         *
-         * @var string
-         */
-        protected $namespace = 'wc-analytics';
         /**
          * Route base.
          *
@@ -66325,11 +66638,20 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Variations\Stats {
         /**
          * Prepare a report object for serialization.
          *
-         * @param Array           $report  Report data.
+         * @param array           $report  Report data.
          * @param WP_REST_Request $request Request object.
          * @return WP_REST_Response
          */
         public function prepare_item_for_response($report, $request)
+        {
+        }
+        /**
+         * Get the Report's item properties schema.
+         * Will be used by `get_item_schema` as `totals` and `subtotals`.
+         *
+         * @return array
+         */
+        protected function get_item_properties_schema()
         {
         }
         /**
@@ -69123,9 +69445,16 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
     {
         /**
          * Used to cache is_complete() method result.
+         *
          * @var null
          */
         private $is_complete_result = null;
+        /**
+         * Used to cache can_view() method result.
+         *
+         * @var null
+         */
+        private $can_view_result = null;
         /**
          * ID.
          *
@@ -69175,11 +69504,38 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
         {
         }
         /**
-         * Check if the store has any enabled gateways.
+         * Check if the store has any enabled gateways in other category.
          *
          * @return bool
          */
-        public static function has_gateways()
+        private static function has_enabled_other_category_gateways()
+        {
+        }
+        /**
+         * Check if the store has any enabled gateways in additional category.
+         *
+         * @return bool
+         */
+        private static function has_enabled_additional_gateways()
+        {
+        }
+        /**
+         * Check if the store has any enabled gateways based on the given criteria.
+         *
+         * @param callable|null $filter A callback function to filter the gateways.
+         * @return bool
+         */
+        private static function has_enabled_gateways($filter = null)
+        {
+        }
+        /**
+         * Get the list of gateways to suggest.
+         *
+         * @param string $filter_by Filter by category. "category_additional" or "category_other".
+         *
+         * @return array
+         */
+        private static function get_suggestion_gateways($filter_by = 'category_additional')
         {
         }
     }
@@ -70122,6 +70478,12 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
     class WooCommercePayments extends \Automattic\WooCommerce\Admin\Features\OnboardingTasks\Task
     {
         /**
+         * Used to cache is_complete() method result.
+         *
+         * @var null
+         */
+        private $is_complete_result = null;
+        /**
          * ID.
          *
          * @return string
@@ -70288,6 +70650,14 @@ namespace Automattic\WooCommerce\Admin\Features\PaymentGatewaySuggestions {
          * @return object Rules to match.
          */
         public static function get_rules_for_selling_venues($selling_venues)
+        {
+        }
+        /**
+         * Get rules for when selling offline for core profiler.
+         *
+         * @return object Rules to match.
+         */
+        public static function get_rules_selling_offline()
         {
         }
         /**
@@ -70535,6 +70905,18 @@ namespace Automattic\WooCommerce\Admin\Features\ProductBlockEditor {
          */
         const EDITOR_CONTEXT_NAME = 'woocommerce/edit-product';
         /**
+         * Supported post types.
+         *
+         * @var array
+         */
+        private $supported_post_types = array('simple');
+        /**
+         * Redirection controller.
+         *
+         * @var RedirectionController
+         */
+        private $redirection_controller;
+        /**
          * Constructor
          */
         public function __construct()
@@ -70577,6 +70959,108 @@ namespace Automattic\WooCommerce\Admin\Features\ProductBlockEditor {
          * @return array Array of post type arguments.
          */
         public function add_product_template($args)
+        {
+        }
+        /**
+         * Sets the current screen to the block editor if a wc-admin page.
+         */
+        public function set_current_screen_to_block_editor_if_wc_admin()
+        {
+        }
+    }
+    /**
+     * Handle redirecting to the old or new editor based on features and support.
+     */
+    class RedirectionController
+    {
+        /**
+         * Supported post types.
+         *
+         * @var array
+         */
+        private $supported_post_types;
+        /**
+         * Set up the hooks used for redirection.
+         *
+         * @param array $supported_post_types Array of supported post types.
+         */
+        public function __construct($supported_post_types)
+        {
+        }
+        /**
+         * Check if the current screen is the legacy add product screen.
+         */
+        protected function is_legacy_add_new_screen() : bool
+        {
+        }
+        /**
+         * Check if the current screen is the legacy edit product screen.
+         */
+        protected function is_legacy_edit_screen() : bool
+        {
+        }
+        /**
+         * Check if a product is supported by the new experience.
+         *
+         * @param integer $product_id Product ID.
+         */
+        protected function is_product_supported($product_id) : bool
+        {
+        }
+        /**
+         * Redirects from old product form to the new product form if the
+         * feature `product_block_editor` is enabled.
+         */
+        public function maybe_redirect_to_new_editor() : void
+        {
+        }
+        /**
+         * Redirects from new product form to the old product form if the
+         * feature `product_block_editor` is enabled.
+         */
+        public function maybe_redirect_to_old_editor() : void
+        {
+        }
+        /**
+         * Get the parsed WooCommerce Admin path.
+         */
+        protected function get_parsed_route() : array
+        {
+        }
+        /**
+         * Redirect non supported product types to legacy editor.
+         */
+        public function redirect_non_supported_product_types() : void
+        {
+        }
+    }
+    /**
+     * Add tracks for the product block editor.
+     */
+    class Tracks
+    {
+        /**
+         * Initialize the tracks.
+         */
+        public function init()
+        {
+        }
+        /**
+         * Check if a URL is a product editor page.
+         *
+         * @param string $url Url to check.
+         * @return boolean
+         */
+        protected function is_product_editor_page($url)
+        {
+        }
+        /**
+         * Update the product source if we're on the product editor page.
+         *
+         * @param string $source Source of product.
+         * @return string
+         */
+        public function add_product_source($source)
         {
         }
     }
@@ -73306,15 +73790,15 @@ namespace Automattic\WooCommerce\Admin {
         {
         }
         /**
-         * Callback regsitered by OnboardingPlugins::install_async.
+         * Callback regsitered by OnboardingPlugins::install_and_activate_async.
          *
-         * It is used to call install_plugins with a custom logger.
+         * It is used to call install_plugins and activate_plugins with a custom logger.
          *
          * @param array  $plugins A list of plugins to install.
          * @param string $job_id An unique job I.D.
          * @return bool
          */
-        public function install_plugins_async_callback(array $plugins, string $job_id)
+        public static function install_and_activate_plugins_async_callback(array $plugins, string $job_id)
         {
         }
         /**
@@ -73330,11 +73814,12 @@ namespace Automattic\WooCommerce\Admin {
         /**
          * Activate the requested plugins.
          *
-         * @param array $plugins Plugins.
+         * @param array                     $plugins Plugins.
+         * @param PluginsInstallLogger|null $logger Logger.
          *
          * @return WP_Error|array Plugin Status
          */
-        public static function activate_plugins($plugins)
+        public static function activate_plugins($plugins, \Automattic\WooCommerce\Admin\PluginsInstallLoggers\PluginsInstallLogger $logger = null)
         {
         }
         /**
@@ -73400,6 +73885,13 @@ namespace Automattic\WooCommerce\Admin\PluginsInstallLoggers {
          * @return mixed
          */
         public function installed(string $plugin_name, int $duration);
+        /**
+         * Called when a plugin activated successfully.
+         *
+         * @param string $plugin_name plugin name.
+         * @return mixed
+         */
+        public function activated(string $plugin_name);
         /**
          * Called when an error occurred while installing a plugin.
          *
@@ -73471,6 +73963,16 @@ namespace Automattic\WooCommerce\Admin\PluginsInstallLoggers {
          * @return void
          */
         public function installed(string $plugin_name, int $duration)
+        {
+        }
+        /**
+         * Change status to activated.
+         *
+         * @param string $plugin_name plugin name.
+         *
+         * @return void
+         */
+        public function activated(string $plugin_name)
         {
         }
         /**
@@ -74012,6 +74514,18 @@ namespace Automattic\WooCommerce\Admin\RemoteInboxNotifications {
         {
         }
         /**
+         * Retrieves the option value and handles logging if necessary.
+         *
+         * @param object $rule         The specific rule being processed.
+         * @param mixed  $default      The default value.
+         * @param bool   $is_contains  Indicates whether the operation is "contains".
+         *
+         * @return mixed The option value.
+         */
+        private function get_option_value($rule, $default, $is_contains)
+        {
+        }
+        /**
          * Validates the rule.
          *
          * @param object $rule The rule to validate.
@@ -74028,6 +74542,12 @@ namespace Automattic\WooCommerce\Admin\RemoteInboxNotifications {
      */
     class OrRuleProcessor implements \Automattic\WooCommerce\Admin\RemoteInboxNotifications\RuleProcessorInterface
     {
+        /**
+         * Rule evaluator to use.
+         *
+         * @var RuleEvaluator
+         */
+        private $rule_evaluator;
         /**
          * Constructor.
          *
@@ -74146,6 +74666,12 @@ namespace Automattic\WooCommerce\Admin\RemoteInboxNotifications {
      */
     class PluginVersionRuleProcessor implements \Automattic\WooCommerce\Admin\RemoteInboxNotifications\RuleProcessorInterface
     {
+        /**
+         * Plugins provider instance.
+         *
+         * @var PluginsProviderInterface
+         */
+        private $plugins_provider;
         /**
          * Constructor.
          *
@@ -74416,6 +74942,12 @@ namespace Automattic\WooCommerce\Admin\RemoteInboxNotifications {
      */
     class RuleEvaluator
     {
+        /**
+         * GetRuleProcessor to use.
+         *
+         * @var GetRuleProcessor
+         */
+        private $get_rule_processor;
         /**
          * Constructor.
          *
@@ -74899,6 +75431,36 @@ namespace Automattic\WooCommerce\Admin\RemoteInboxNotifications\Transformers {
          * @return mixed|null
          */
         public function get($array, $path, $default = null)
+        {
+        }
+        /**
+         * Validate Transformer arguments.
+         *
+         * @param stdClass|null $arguments arguments to validate.
+         *
+         * @return mixed
+         */
+        public function validate(\stdClass $arguments = null)
+        {
+        }
+    }
+    /**
+     * Prepare site URL for comparison.
+     *
+     * @package Automattic\WooCommerce\Admin\RemoteInboxNotifications\Transformers
+     */
+    class PrepareUrl implements \Automattic\WooCommerce\Admin\RemoteInboxNotifications\TransformerInterface
+    {
+        /**
+         * Prepares the site URL by removing the protocol and trailing slash.
+         *
+         * @param mixed         $value a value to transform.
+         * @param stdClass|null $arguments arguments.
+         * @param string|null   $default default value.
+         *
+         * @return mixed|null
+         */
+        public function transform($value, \stdClass $arguments = null, $default = null)
         {
         }
         /**
@@ -76500,6 +77062,11 @@ namespace Automattic\WooCommerce\DataBase\Migrations\CustomOrderTable {
          * : Comma seperated list of order types that needs to be verified. For example, --order-types=shop_order,shop_order_refund
          * ---
          * default: Output of function `wc_get_order_types( 'cot-migration' )`
+         *
+         * [--re-migrate]
+         * : Attempt to re-migrate orders that failed verification. You should only use this option when you have never run the site with HPOS as authoritative source of order data yet, or you have manually checked the reported errors, otherwise, you risk stale data overwriting the more recent data.
+         * This option can only be enabled when --verbose flag is also set.
+         * default: false
          *
          * ## EXAMPLES
          *
@@ -78146,6 +78713,36 @@ namespace Automattic\WooCommerce\Utilities {
          * @return string Link for new order.
          */
         public static function get_order_admin_new_url() : string
+        {
+        }
+        /**
+         * Check if the current admin screen is an order list table.
+         *
+         * @param string $order_type Optional. The order type to check for. Default shop_order.
+         *
+         * @return bool
+         */
+        public static function is_order_list_table_screen($order_type = 'shop_order') : bool
+        {
+        }
+        /**
+         * Check if the current admin screen is for editing an order.
+         *
+         * @param string $order_type Optional. The order type to check for. Default shop_order.
+         *
+         * @return bool
+         */
+        public static function is_order_edit_screen($order_type = 'shop_order') : bool
+        {
+        }
+        /**
+         * Check if the current admin screen is adding a new order.
+         *
+         * @param string $order_type Optional. The order type to check for. Default shop_order.
+         *
+         * @return bool
+         */
+        public static function is_new_order_screen($order_type = 'shop_order') : bool
         {
         }
         /**
@@ -81502,6 +82099,7 @@ namespace {
     function get_woocommerce_term_meta($term_id, $key, $single = \true)
     {
     }
+    // Once WooCommerce requires PHP 7.4, the "$x = $x ?? ''" constructs can be replaced with "$x ??= ''".
     /**
      * Converts a string (e.g. 'yes' or 'no') to a bool.
      *

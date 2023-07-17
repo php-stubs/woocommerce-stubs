@@ -36,6 +36,7 @@ namespace {
          * @param array                    $args Args to pass to callbacks when the hook is triggered.
          * @param ActionScheduler_Schedule $schedule The action's schedule.
          * @param string                   $group A group to put the action in.
+         * @param int                      $priority The action priority.
          *
          * @return ActionScheduler_Action An instance of the stored action.
          */
@@ -185,6 +186,35 @@ namespace {
          * @throws InvalidArgumentException If $action is not a recurring action.
          */
         public function repeat($action)
+        {
+        }
+        /**
+         * Creates a scheduled action.
+         *
+         * This general purpose method can be used in place of specific methods such as async(),
+         * async_unique(), single() or single_unique(), etc.
+         *
+         * @internal Not intended for public use, should not be overriden by subclasses.
+         * @throws   Exception May be thrown if invalid options are passed.
+         *
+         * @param array $options {
+         *     Describes the action we wish to schedule.
+         *
+         *     @type string     $type      Must be one of 'async', 'cron', 'recurring', or 'single'.
+         *     @type string     $hook      The hook to be executed.
+         *     @type array      $arguments Arguments to be passed to the callback.
+         *     @type string     $group     The action group.
+         *     @type bool       $unique    If the action should be unique.
+         *     @type int        $when      Timestamp. Indicates when the action, or first instance of the action in the case
+         *                                 of recurring or cron actions, becomes due.
+         *     @type int|string $pattern   Recurrence pattern. This is either an interval in seconds for recurring actions
+         *                                 or a cron expression for cron actions.
+         *     @type int        $priority  Lower values means higher priority. Should be in the range 0-255.
+         * }
+         *
+         * @return int
+         */
+        public function create(array $options = array())
         {
         }
         /**
@@ -1604,6 +1634,10 @@ namespace {
          */
         private $month_in_seconds = 2678400;
         /**
+         * @var string[] Default list of statuses purged by the cleaner process.
+         */
+        private $default_statuses_to_purge = [\ActionScheduler_Store::STATUS_COMPLETE, \ActionScheduler_Store::STATUS_CANCELED];
+        /**
          * ActionScheduler_QueueCleaner constructor.
          *
          * @param ActionScheduler_Store $store      The store instance.
@@ -1612,7 +1646,33 @@ namespace {
         public function __construct(\ActionScheduler_Store $store = \null, $batch_size = 20)
         {
         }
+        /**
+         * Default queue cleaner process used by queue runner.
+         *
+         * @return array
+         */
         public function delete_old_actions()
+        {
+        }
+        /**
+         * Delete selected actions limited by status and date.
+         *
+         * @param string[] $statuses_to_purge List of action statuses to purge. Defaults to canceled, complete.
+         * @param DateTime $cutoff_date Date limit for selecting actions. Defaults to 31 days ago.
+         * @param int|null $batch_size Maximum number of actions per status to delete. Defaults to 20.
+         * @param string $context Calling process context. Defaults to `old`.
+         * @return array Actions deleted.
+         */
+        public function clean_actions(array $statuses_to_purge, \DateTime $cutoff_date, $batch_size = \null, $context = 'old')
+        {
+        }
+        /**
+         * @param int[] $actions_to_delete List of action IDs to delete.
+         * @param int $lifespan Minimum scheduled age in seconds of the actions being deleted.
+         * @param string $context Context of the delete request.
+         * @return array Deleted action IDs.
+         */
+        private function delete_actions(array $actions_to_delete, $lifespan = \null, $context = 'old')
         {
         }
         /**
@@ -1710,6 +1770,19 @@ namespace {
          *        Generally, this should be capitalised and not localised as it's a proper noun.
          */
         public function process_action($action_id, $context = '')
+        {
+        }
+        /**
+         * Marks actions as either having failed execution or failed validation, as appropriate.
+         *
+         * @param int       $action_id    Action ID.
+         * @param Exception $e            Exception instance.
+         * @param string    $context      Execution context.
+         * @param bool      $valid_action If the action is valid.
+         *
+         * @return void
+         */
+        private function handle_action_error($action_id, $e, $context, $valid_action)
         {
         }
         /**
@@ -2438,7 +2511,7 @@ namespace {
         /**
          * @var array Names of tables that will be registered by this class.
          */
-        protected $tables = [];
+        protected $tables = array();
         /**
          * Can optionally be used by concrete classes to carry out additional initialization work
          * as needed.
@@ -3003,6 +3076,18 @@ namespace {
         /** @var ActionScheduler_Schedule */
         protected $schedule = \NULL;
         protected $group = '';
+        /**
+         * Priorities are conceptually similar to those used for regular WordPress actions.
+         * Like those, a lower priority takes precedence over a higher priority and the default
+         * is 10.
+         *
+         * Unlike regular WordPress actions, the priority of a scheduled action is strictly an
+         * integer and should be kept within the bounds 0-255 (anything outside the bounds will
+         * be brought back into the acceptable range).
+         *
+         * @var int
+         */
+        protected $priority = 10;
         public function __construct($hook, array $args = array(), \ActionScheduler_Schedule $schedule = \NULL, $group = '')
         {
         }
@@ -3058,6 +3143,24 @@ namespace {
          * @return bool If the action has been finished
          */
         public function is_finished()
+        {
+        }
+        /**
+         * Sets the priority of the action.
+         *
+         * @param int $priority Priority level (lower is higher priority). Should be in the range 0-255.
+         *
+         * @return void
+         */
+        public function set_priority($priority)
+        {
+        }
+        /**
+         * Gets the action priority.
+         *
+         * @return int
+         */
+        public function get_priority()
         {
         }
     }
@@ -3201,6 +3304,8 @@ namespace {
         protected static $max_args_length = 8000;
         /** @var int */
         protected static $max_index_length = 191;
+        /** @var array List of claim filters. */
+        protected $claim_filters = ['group' => '', 'hooks' => '', 'exclude-groups' => ''];
         /**
          * Initialize the data store
          *
@@ -3300,12 +3405,12 @@ namespace {
         /**
          * Get a group's ID based on its name/slug.
          *
-         * @param string $slug The string name of a group.
-         * @param bool   $create_if_not_exists Whether to create the group if it does not already exist. Default, true - create the group.
+         * @param string|array $slugs                The string name of a group, or names for several groups.
+         * @param bool         $create_if_not_exists Whether to create the group if it does not already exist. Default, true - create the group.
          *
-         * @return int The group's ID, if it exists or is created, or 0 if it does not exist and is not created.
+         * @return array The group IDs, if they exist or were successfully created. May be empty.
          */
-        protected function get_group_id($slug, $create_if_not_exists = \true)
+        protected function get_group_ids($slugs, $create_if_not_exists = \true)
         {
         }
         /**
@@ -3478,6 +3583,25 @@ namespace {
         {
         }
         /**
+         * Set a claim filter.
+         *
+         * @param string $filter_name Claim filter name.
+         * @param mixed $filter_values Values to filter.
+         * @return void
+         */
+        public function set_claim_filter($filter_name, $filter_values)
+        {
+        }
+        /**
+         * Get the claim filter value.
+         *
+         * @param string $filter_name Claim filter name.
+         * @return mixed
+         */
+        public function get_claim_filter($filter_name)
+        {
+        }
+        /**
          * Mark actions claimed.
          *
          * @param string    $claim_id Claim Id.
@@ -3548,6 +3672,8 @@ namespace {
         }
         /**
          * Add execution message to action log.
+         *
+         * @throws Exception If the action status cannot be updated to self::STATUS_RUNNING ('in-progress').
          *
          * @param int $action_id Action ID.
          *
@@ -4328,6 +4454,8 @@ namespace {
         }
         /**
          * Log Execution.
+         *
+         * @throws Exception If the action status cannot be updated to self::STATUS_RUNNING ('in-progress').
          *
          * @param string $action_id Action ID.
          */
@@ -5332,7 +5460,7 @@ namespace {
         /**
          * @var int Increment this value to trigger a schema update.
          */
-        protected $schema_version = 6;
+        protected $schema_version = 7;
         public function __construct()
         {
         }
@@ -5625,14 +5753,6 @@ namespace Automattic\WooCommerce\Blocks\Assets {
          * Hook into WP asset registration for enqueueing asset data.
          */
         protected function init()
-        {
-        }
-        /**
-         * Checks if the current URL is the Site Editor.
-         *
-         * @return boolean
-         */
-        protected function is_site_editor()
         {
         }
         /**
@@ -6836,6 +6956,29 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          */
         protected $block_name = 'add-to-cart-form';
         /**
+         * Initializes the AddToCartForm block and hooks into the `wc_add_to_cart_message_html` filter
+         * to prevent displaying the Cart Notice when the block is inside the Single Product block
+         * and the Add to Cart button is clicked.
+         *
+         * It also hooks into the `woocommerce_add_to_cart_redirect` filter to prevent redirecting
+         * to another page when the block is inside the Single Product block and the Add to Cart button
+         * is clicked.
+         *
+         * @return void
+         */
+        protected function initialize()
+        {
+        }
+        /**
+         * Get the block's attributes.
+         *
+         * @param array $attributes Block attributes. Default empty array.
+         * @return array  Block attributes merged with defaults.
+         */
+        private function parse_attributes($attributes)
+        {
+        }
+        /**
          * Render the block.
          *
          * @param array    $attributes Block attributes.
@@ -6845,6 +6988,38 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @return string | void Rendered block output.
          */
         protected function render($attributes, $content, $block)
+        {
+        }
+        /**
+         * Add a hidden input to the Add to Cart form to indicate that it is a descendent of a Single Product block.
+         *
+         * @param string $product The Add to Cart Form HTML.
+         * @param string $is_descendent_of_single_product_block Indicates if block is descendent of Single Product block.
+         *
+         * @return string The Add to Cart Form HTML with the hidden input.
+         */
+        protected function add_is_descendent_of_single_product_block_hidden_input_to_product_form($product, $is_descendent_of_single_product_block)
+        {
+        }
+        /**
+         * Filter the add to cart message to prevent the Notice from being displayed when the Add to Cart form is a descendent of a Single Product block
+         * and the Add to Cart button is clicked.
+         *
+         * @param string $message Message to be displayed when product is added to the cart.
+         */
+        public function add_to_cart_message_html_filter($message)
+        {
+        }
+        /**
+         * Hooks into the `woocommerce_add_to_cart_redirect` filter to prevent redirecting
+         * to another page when the block is inside the Single Product block and the Add to Cart button
+         * is clicked.
+         *
+         * @param string $url The URL to redirect to after the product is added to the cart.
+         * @param object $product The product being added to the cart.
+         * @return string The filtered redirect URL.
+         */
+        public function add_to_cart_redirect_filter($url, $product)
         {
         }
         /**
@@ -7092,15 +7267,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          *                           not in the post content on editor load.
          */
         protected function enqueue_data(array $attributes = [])
-        {
-        }
-        /**
-         * Removes accents from an array of values, sorts by the values, then returns the original array values sorted.
-         *
-         * @param array $array Array of values to sort.
-         * @return array Sorted array.
-         */
-        protected function deep_sort_with_accents($array)
         {
         }
         /**
@@ -7425,15 +7591,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * Are we currently on the admin block editor screen?
          */
         protected function is_block_editor()
-        {
-        }
-        /**
-         * Removes accents from an array of values, sorts by the values, then returns the original array values sorted.
-         *
-         * @param array $array Array of values to sort.
-         * @return array Sorted array.
-         */
-        protected function deep_sort_with_accents($array)
         {
         }
         /**
@@ -8224,7 +8381,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         }
     }
     /**
-     * Mini Cart class.
+     * Mini-Cart class.
      *
      * @internal
      */
@@ -8365,7 +8522,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
-         * Append frontend scripts when rendering the Mini Cart block.
+         * Append frontend scripts when rendering the Mini-Cart block.
          *
          * @param array    $attributes Block attributes.
          * @param string   $content    Block content.
@@ -8376,7 +8533,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
-         * Render the markup for the Mini Cart block.
+         * Render the markup for the Mini-Cart block.
          *
          * @param array $attributes Block attributes.
          *
@@ -8424,7 +8581,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
-         * Returns whether the mini cart should be rendered or not.
+         * Returns whether the Mini-Cart should be rendered or not.
          *
          * @param array $attributes Block attributes.
          *
@@ -8459,7 +8616,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         protected $block_name = 'mini-cart-checkout-button-block';
     }
     /**
-     * Mini Cart class.
+     * Mini-Cart Contents class.
      *
      * @internal
      */
@@ -8492,7 +8649,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
-         * Render the markup for the Mini Cart contents block.
+         * Render the markup for the Mini-Cart Contents block.
          *
          * @param array    $attributes Block attributes.
          * @param string   $content    Block content.
@@ -8511,7 +8668,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
-         * Get list of Mini Cart block & its inner-block types.
+         * Get list of Mini-Cart Contents block & its inner-block types.
          *
          * @return array;
          */
@@ -8697,21 +8854,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          */
         protected $block_name = 'product-button';
         /**
-         * API version name.
-         *
-         * @var string
-         */
-        protected $api_version = '2';
-        /**
-         * Get block supports. Shared with the frontend.
-         * IMPORTANT: If you change anything here, make sure to update the JS file too.
-         *
-         * @return array
-         */
-        protected function get_block_type_supports()
-        {
-        }
-        /**
          * It is necessary to register and enqueue assets during the render phase because we want to load assets only if the block has the content.
          */
         protected function register_block_type_assets()
@@ -8751,7 +8893,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          *
          * @var array
          */
-        protected $defaults = array('hasCount' => true, 'hasImage' => false, 'hasEmpty' => false, 'isDropdown' => false, 'isHierarchical' => true);
+        protected $defaults = array('hasCount' => true, 'hasImage' => false, 'hasEmpty' => false, 'isDropdown' => false, 'isHierarchical' => true, 'showChildrenOnly' => false);
         /**
          * Get block attributes.
          *
@@ -8793,9 +8935,10 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * Build hierarchical tree of categories.
          *
          * @param array $categories List of terms.
+         * @param bool  $children_only Is the block rendering only the children of the current category.
          * @return array
          */
-        protected function build_category_tree($categories)
+        protected function build_category_tree($categories, $children_only)
         {
         }
         /**
@@ -8902,6 +9045,242 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @return array
          */
         protected function get_block_type_attributes()
+        {
+        }
+    }
+    /**
+     * ProductCollection class.
+     */
+    class ProductCollection extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'product-collection';
+        /**
+         * All query args from WP_Query.
+         *
+         * @var array
+         */
+        protected $valid_query_vars;
+        /**
+         * Orderby options not natively supported by WordPress REST API
+         *
+         * @var array
+         */
+        protected $custom_order_opts = array('popularity', 'rating');
+        /**
+         * Get the frontend script handle for this block type.
+         *
+         * @param string $key Data to get, or default to everything.
+         */
+        protected function get_block_type_script($key = null)
+        {
+        }
+        /**
+         * Initialize this block type.
+         *
+         * - Hook into WP lifecycle.
+         * - Register the block with WordPress.
+         * - Hook into pre_render_block to update the query.
+         */
+        protected function initialize()
+        {
+        }
+        /**
+         * Update the query for the product query block in Editor.
+         *
+         * @param array           $args    Query args.
+         * @param WP_REST_Request $request Request.
+         */
+        public function update_rest_query($args, $request) : array
+        {
+        }
+        /**
+         * Get final query args based on provided values
+         *
+         * @param array $common_query_values Common query values.
+         * @param array $query               Query from block context.
+         */
+        private function get_final_query_args($common_query_values, $query)
+        {
+        }
+        /**
+         * Return a custom query based on attributes, filters and global WP_Query.
+         *
+         * @param WP_Query $query The WordPress Query.
+         * @param WP_Block $block The block being rendered.
+         * @param int      $page  The page number.
+         *
+         * @return array
+         */
+        public function build_query($query, $block, $page)
+        {
+        }
+        /**
+         * Extends allowed `collection_params` for the REST API
+         *
+         * By itself, the REST API doesn't accept custom `orderby` values,
+         * even if they are supported by a custom post type.
+         *
+         * @param array $params  A list of allowed `orderby` values.
+         *
+         * @return array
+         */
+        public function extend_rest_query_allowed_params($params)
+        {
+        }
+        /**
+         * Merge in the first parameter the keys "post_in", "meta_query" and "tax_query" of the second parameter.
+         *
+         * @param array[] ...$queries Query arrays to be merged.
+         * @return array
+         */
+        private function merge_queries(...$queries)
+        {
+        }
+        /**
+         * Return query params to support custom sort values
+         *
+         * @param string $orderby  Sort order option.
+         *
+         * @return array
+         */
+        private function get_custom_orderby_query($orderby)
+        {
+        }
+        /**
+         * Return a query for on sale products.
+         *
+         * @param bool $is_on_sale Whether to query for on sale products.
+         *
+         * @return array
+         */
+        private function get_on_sale_products_query($is_on_sale)
+        {
+        }
+        /**
+         * Return or initialize $valid_query_vars.
+         *
+         * @return array
+         */
+        private function get_valid_query_vars()
+        {
+        }
+        /**
+         * Merge two array recursively but replace the non-array values instead of
+         * merging them. The merging strategy:
+         *
+         * - If keys from merge array doesn't exist in the base array, create them.
+         * - For array items with numeric keys, we merge them as normal.
+         * - For array items with string keys:
+         *
+         *   - If the value isn't array, we'll use the value comming from the merge array.
+         *     $base = ['orderby' => 'date']
+         *     $new  = ['orderby' => 'meta_value_num']
+         *     Result: ['orderby' => 'meta_value_num']
+         *
+         *   - If the value is array, we'll use recursion to merge each key.
+         *     $base = ['meta_query' => [
+         *       [
+         *         'key'     => '_stock_status',
+         *         'compare' => 'IN'
+         *         'value'   =>  ['instock', 'onbackorder']
+         *       ]
+         *     ]]
+         *     $new  = ['meta_query' => [
+         *       [
+         *         'relation' => 'AND',
+         *         [...<max_price_query>],
+         *         [...<min_price_query>],
+         *       ]
+         *     ]]
+         *     Result: ['meta_query' => [
+         *       [
+         *         'key'     => '_stock_status',
+         *         'compare' => 'IN'
+         *         'value'   =>  ['instock', 'onbackorder']
+         *       ],
+         *       [
+         *         'relation' => 'AND',
+         *         [...<max_price_query>],
+         *         [...<min_price_query>],
+         *       ]
+         *     ]]
+         *
+         *     $base = ['post__in' => [1, 2, 3, 4, 5]]
+         *     $new  = ['post__in' => [3, 4, 5, 6, 7]]
+         *     Result: ['post__in' => [1, 2, 3, 4, 5, 3, 4, 5, 6, 7]]
+         *
+         * @param array $base First array.
+         * @param array $new  Second array.
+         */
+        private function array_merge_recursive_replace_non_array_properties($base, $new)
+        {
+        }
+        /**
+         * Return a query for products depending on their stock status.
+         *
+         * @param array $stock_statuses An array of acceptable stock statuses.
+         * @return array
+         */
+        private function get_stock_status_query($stock_statuses)
+        {
+        }
+        /**
+         * Return a query for product visibility depending on their stock status.
+         *
+         * @param array $stock_query Stock status query.
+         *
+         * @return array Tax query for product visibility.
+         */
+        private function get_product_visibility_query($stock_query)
+        {
+        }
+        /**
+         * Merge tax_queries from various queries.
+         *
+         * @param array ...$queries Query arrays to be merged.
+         * @return array
+         */
+        private function merge_tax_queries(...$queries)
+        {
+        }
+        /**
+         * Return the `tax_query` for the requested attributes
+         *
+         * @param array $attributes  Attributes and their terms.
+         *
+         * @return array
+         */
+        private function get_product_attributes_query($attributes = array())
+        {
+        }
+        /**
+         * Return a query to filter products by taxonomies (product categories, product tags, etc.)
+         *
+         * For example:
+         * User could provide "Product Categories" using "Filters" ToolsPanel available in Inspector Controls.
+         * We use this function to extract its query from $tax_query.
+         *
+         * For example, this is how the query for product categories will look like in $tax_query array:
+         * Array
+         *    (
+         *        [taxonomy] => product_cat
+         *        [terms] => Array
+         *            (
+         *                [0] => 36
+         *            )
+         *    )
+         *
+         * For product tags, taxonomy would be "product_tag"
+         *
+         * @param array $tax_query Query to filter products by taxonomies.
+         * @return array Query to filter products by taxonomies.
+         */
+        private function get_filter_by_taxonomies_query($tax_query) : array
         {
         }
     }
@@ -9064,7 +9443,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         /**
          *  Register the context
          *
-         * @var string
+         * @return string[]
          */
         protected function get_block_type_uses_context()
         {
@@ -9239,6 +9618,16 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
+         * Extra data passed through from server to client for block.
+         *
+         * @param array $attributes  Any attributes that currently are available from the block.
+         *                           Note, this will be empty in the editor context when the block is
+         *                           not in the post content on editor load.
+         */
+        protected function enqueue_data(array $attributes = [])
+        {
+        }
+        /**
          * Check if a given block
          *
          * @param array $parsed_block The block being rendered.
@@ -9281,16 +9670,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @return array
          */
         public function build_query($query)
-        {
-        }
-        /**
-         * Return the product ids based on the attributes and global query.
-         * This is used to allow the filter blocks to render data that matches with variations. More details here: https://github.com/woocommerce/woocommerce-blocks/issues/7245
-         *
-         * @param array $parsed_block The block being rendered.
-         * @return array
-         */
-        private function get_products_ids_by_attributes($parsed_block)
         {
         }
         /**
@@ -9954,6 +10333,48 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          *                           not in the post content on editor load.
          */
         protected function enqueue_data(array $attributes = [])
+        {
+        }
+    }
+    /**
+     * ProductTemplate class.
+     */
+    class ProductTemplate extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'product-template';
+        /**
+         * Get the frontend script handle for this block type.
+         *
+         * @param string $key Data to get, or default to everything.
+         */
+        protected function get_block_type_script($key = null)
+        {
+        }
+        /**
+         * Render the block.
+         *
+         * @param array    $attributes Block attributes.
+         * @param string   $content Block content.
+         * @param WP_Block $block Block instance.
+         *
+         * @return string | void Rendered block output.
+         */
+        protected function render($attributes, $content, $block)
+        {
+        }
+        /**
+         * Determines whether a block list contains a block that uses the featured image.
+         *
+         * @param WP_Block_List $inner_blocks Inner block instance.
+         *
+         * @return bool Whether the block list contains a block that uses the featured image.
+         */
+        protected function block_core_post_template_uses_featured_image($inner_blocks)
         {
         }
     }
@@ -11500,7 +11921,7 @@ namespace Automattic\WooCommerce\Blocks {
          *
          * @var array
          */
-        private $db_upgrades = array();
+        private $db_upgrades = array('10.3.0' => array('wc_blocks_update_1030_blockified_product_grid_block'));
         /**
          * Runs all the necessary migrations.
          *
@@ -11512,7 +11933,7 @@ namespace Automattic\WooCommerce\Blocks {
         /**
          * Set a flag to indicate if the blockified Product Grid Block should be rendered by default.
          */
-        public static function wc_blocks_update_710_blockified_product_grid_block()
+        public static function wc_blocks_update_1030_blockified_product_grid_block()
         {
         }
     }
@@ -12514,9 +12935,62 @@ namespace Automattic\WooCommerce\StoreApi {
     class Authentication
     {
         /**
-         * Hook into WP lifecycle events.
+         * Hook into WP lifecycle events. This is hooked by the StoreAPI class on `rest_api_init`.
          */
         public function init()
+        {
+        }
+        /**
+         * Add allowed cors headers for store API headers.
+         *
+         * @param array $allowed_headers Allowed headers.
+         * @return array
+         */
+        public function allowed_cors_headers($allowed_headers)
+        {
+        }
+        /**
+         * Add CORS headers to a response object.
+         *
+         * These checks prevent access to the Store API from non-allowed origins. By default, the WordPress REST API allows
+         * access from any origin. Because some Store API routes return PII, we need to add our own CORS headers.
+         *
+         * Allowed origins can be changed using the WordPress `allowed_http_origins` or `allowed_http_origin` filters if
+         * access needs to be granted to other domains.
+         *
+         * Users of valid Cart Tokens are also allowed access from any origin.
+         *
+         * @param bool              $value  Whether the request has already been served.
+         * @param \WP_HTTP_Response $result  Result to send to the client. Usually a `WP_REST_Response`.
+         * @param \WP_REST_Request  $request Request used to generate the response.
+         * @return bool
+         */
+        public function send_cors_headers($value, $result, $request)
+        {
+        }
+        /**
+         * Is the request a preflight request? Checks the request method
+         *
+         * @return boolean
+         */
+        protected function is_preflight()
+        {
+        }
+        /**
+         * Checks if we're using a cart token to access the Store API.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @return boolean
+         */
+        protected function has_valid_cart_token(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Gets the secret for the cart token using wp_salt.
+         *
+         * @return string
+         */
+        protected function get_cart_token_secret()
         {
         }
         /**
@@ -18168,6 +18642,9 @@ namespace Automattic\WooCommerce\Blocks\Templates {
          *       <function-name> => <priority>,
          *        ...
          *     ],
+         *     permanently_removed_actions => [
+         *         <function-name>
+         *    ]
          *  ],
          * ]
          * Where:
@@ -18177,6 +18654,7 @@ namespace Automattic\WooCommerce\Blocks\Templates {
          * - hooked is an array of functions hooked to the hook that will be
          *   replaced. The key is the function name and the value is the
          *   priority.
+         * - permanently_removed_actions is an array of functions that we do not want to re-add after they have been removed to avoid duplicate content with the Products block and its inner blocks.
          */
         protected function set_hook_data()
         {
@@ -18194,6 +18672,20 @@ namespace Automattic\WooCommerce\Blocks\Templates {
          * @param array $block Parsed block data.
          */
         private function inner_blocks_walker(&$block)
+        {
+        }
+        /**
+         * Restore default hooks except the ones that are not supposed to be re-added.
+         */
+        private function restore_default_hooks()
+        {
+        }
+        /**
+         * Check if the block is a Products block that inherits query from template.
+         *
+         * @param array $block Parsed block data.
+         */
+        private function is_products_block_with_inherit_query($block)
         {
         }
         /**
@@ -18859,6 +19351,23 @@ namespace Automattic\WooCommerce\Blocks\Utils {
         public static function is_checkout_block_default()
         {
         }
+        /**
+         * Gets country codes, names, states, and locale information.
+         *
+         * @return array
+         */
+        public static function get_country_data()
+        {
+        }
+        /**
+         * Removes accents from an array of values, sorts by the values, then returns the original array values sorted.
+         *
+         * @param array $array Array of values to sort.
+         * @return array Sorted array.
+         */
+        protected static function deep_sort_with_accents($array)
+        {
+        }
     }
     /**
      * StyleAttributesUtils class used for getting class and style from attributes.
@@ -19247,10 +19756,11 @@ namespace {
      * @param array  $args Arguments to pass when the hook triggers.
      * @param string $group The group to assign this job to.
      * @param bool   $unique Whether the action should be unique.
+     * @param int    $priority Lower values take precedence over higher values. Defaults to 10, with acceptable values falling in the range 0-255.
      *
      * @return int The action ID.
      */
-    function as_enqueue_async_action($hook, $args = array(), $group = '', $unique = \false)
+    function as_enqueue_async_action($hook, $args = array(), $group = '', $unique = \false, $priority = 10)
     {
     }
     /**
@@ -19261,10 +19771,11 @@ namespace {
      * @param array  $args Arguments to pass when the hook triggers.
      * @param string $group The group to assign this job to.
      * @param bool   $unique Whether the action should be unique.
+     * @param int    $priority Lower values take precedence over higher values. Defaults to 10, with acceptable values falling in the range 0-255.
      *
      * @return int The action ID.
      */
-    function as_schedule_single_action($timestamp, $hook, $args = array(), $group = '', $unique = \false)
+    function as_schedule_single_action($timestamp, $hook, $args = array(), $group = '', $unique = \false, $priority = 10)
     {
     }
     /**
@@ -19276,10 +19787,11 @@ namespace {
      * @param array  $args Arguments to pass when the hook triggers.
      * @param string $group The group to assign this job to.
      * @param bool   $unique Whether the action should be unique.
+     * @param int    $priority Lower values take precedence over higher values. Defaults to 10, with acceptable values falling in the range 0-255.
      *
      * @return int The action ID.
      */
-    function as_schedule_recurring_action($timestamp, $interval_in_seconds, $hook, $args = array(), $group = '', $unique = \false)
+    function as_schedule_recurring_action($timestamp, $interval_in_seconds, $hook, $args = array(), $group = '', $unique = \false, $priority = 10)
     {
     }
     /**
@@ -19303,10 +19815,11 @@ namespace {
      * @param array  $args Arguments to pass when the hook triggers.
      * @param string $group The group to assign this job to.
      * @param bool   $unique Whether the action should be unique.
+     * @param int    $priority Lower values take precedence over higher values. Defaults to 10, with acceptable values falling in the range 0-255.
      *
      * @return int The action ID.
      */
-    function as_schedule_cron_action($timestamp, $schedule, $hook, $args = array(), $group = '', $unique = \false)
+    function as_schedule_cron_action($timestamp, $schedule, $hook, $args = array(), $group = '', $unique = \false, $priority = 10)
     {
     }
     /**
