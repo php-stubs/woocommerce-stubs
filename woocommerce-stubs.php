@@ -23660,6 +23660,7 @@ namespace {
      */
     class WC_Install
     {
+        use \Automattic\WooCommerce\Internal\Traits\AccessiblePrivateMethods;
         /**
          * DB updates and callbacks that need to be run per version.
          *
@@ -23674,9 +23675,23 @@ namespace {
          */
         private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_admin_update_0201_order_status_index', 'wc_admin_update_0230_rename_gross_total', 'wc_admin_update_0251_remove_unsnooze_action', 'wc_update_400_db_version'), '4.4.0' => array('wc_update_440_insert_attribute_terms_for_variable_products', 'wc_admin_update_110_remove_facebook_note', 'wc_admin_update_130_remove_dismiss_action_from_tracking_opt_in_note', 'wc_update_440_db_version'), '4.5.0' => array('wc_update_450_sanitize_coupons_code', 'wc_update_450_db_version'), '5.0.0' => array('wc_update_500_fix_product_review_count', 'wc_admin_update_160_remove_facebook_note', 'wc_admin_update_170_homescreen_layout', 'wc_update_500_db_version'), '5.6.0' => array('wc_update_560_create_refund_returns_page', 'wc_update_560_db_version'), '6.0.0' => array('wc_update_600_migrate_rate_limit_options', 'wc_admin_update_270_delete_report_downloads', 'wc_admin_update_271_update_task_list_options', 'wc_admin_update_280_order_status', 'wc_admin_update_290_update_apperance_task_option', 'wc_admin_update_290_delete_default_homepage_layout_option', 'wc_update_600_db_version'), '6.3.0' => array('wc_update_630_create_product_attributes_lookup_table', 'wc_admin_update_300_update_is_read_from_last_read', 'wc_update_630_db_version'), '6.4.0' => array('wc_update_640_add_primary_key_to_product_attributes_lookup_table', 'wc_admin_update_340_remove_is_primary_from_note_action', 'wc_update_640_db_version'), '6.5.0' => array('wc_update_650_approved_download_directories'), '6.5.1' => array('wc_update_651_approved_download_directories'), '6.7.0' => array('wc_update_670_purge_comments_count_cache', 'wc_update_670_delete_deprecated_remote_inbox_notifications_option'), '7.0.0' => array('wc_update_700_remove_download_log_fk', 'wc_update_700_remove_recommended_marketing_plugins_transient'), '7.2.1' => array('wc_update_721_adjust_new_zealand_states', 'wc_update_721_adjust_ukraine_states'), '7.2.2' => array('wc_update_722_adjust_new_zealand_states', 'wc_update_722_adjust_ukraine_states'), '7.5.0' => array('wc_update_750_add_columns_to_order_stats_table', 'wc_update_750_disable_new_product_management_experience'), '7.7.0' => array('wc_update_770_remove_multichannel_marketing_feature_options'));
         /**
+         * Option name used to track new installations of WooCommerce.
+         *
+         * @var string
+         */
+        const NEWLY_INSTALLED_OPTION = 'woocommerce_newly_installed';
+        /**
          * Hook in tabs.
          */
         public static function init()
+        {
+        }
+        /**
+         * Trigger `woocommerce_newly_installed` action for new installations.
+         *
+         * @since 8.0.0
+         */
+        private static function newly_installed()
         {
         }
         /**
@@ -26136,7 +26151,7 @@ namespace {
          *
          * @var array
          */
-        protected $legacy_datastore_props = array('_refunded_by', '_refunded_payment');
+        protected $legacy_datastore_props = array('_refund_amount', '_refund_reason', '_refunded_by', '_refunded_payment');
         /**
          * Get internal type (post type.)
          *
@@ -34296,7 +34311,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '7.9.0';
+        public $version = '8.0.1';
         /**
          * WooCommerce Schema version.
          *
@@ -35795,6 +35810,17 @@ namespace {
         {
         }
         /**
+         * Check if an order exists by id.
+         *
+         * @since 8.0.0
+         *
+         * @param int $order_id The order id to check.
+         * @return bool True if an order exists with the given name.
+         */
+        public function order_exists($order_id) : bool
+        {
+        }
+        /**
          * Method to read an order from the database.
          *
          * @param WC_Order $order Order object.
@@ -35802,6 +35828,15 @@ namespace {
          * @throws Exception If passed order is invalid.
          */
         public function read(&$order)
+        {
+        }
+        /**
+         * Set the properties of an object and log the first error found while doing so.
+         *
+         * @param $order WC_Order $order Order object.
+         * @param array          $props The properties to set.
+         */
+        private function set_order_props(&$order, array $props)
         {
         }
         /**
@@ -70844,7 +70879,7 @@ namespace Automattic\WooCommerce\Admin\Features\ProductBlockEditor {
         /**
          * Array of all available product blocks.
          */
-        const PRODUCT_BLOCKS = ['woocommerce/conditional', 'woocommerce/product-category-field', 'woocommerce/product-checkbox-field', 'woocommerce/product-collapsible', 'woocommerce/product-description-field', 'woocommerce/product-images-field', 'woocommerce/product-inventory-email-field', 'woocommerce/product-sku-field', 'woocommerce/product-name-field', 'woocommerce/product-pricing-field', 'woocommerce/product-radio-field', 'woocommerce/product-regular-price-field', 'woocommerce/product-sale-price-field', 'woocommerce/product-schedule-sale-fields', 'woocommerce/product-section', 'woocommerce/product-shipping-class-field', 'woocommerce/product-shipping-dimensions-fields', 'woocommerce/product-summary-field', 'woocommerce/product-tab', 'woocommerce/product-inventory-quantity-field', 'woocommerce/product-toggle-field'];
+        const PRODUCT_BLOCKS = ['woocommerce/conditional', 'woocommerce/product-category-field', 'woocommerce/product-checkbox-field', 'woocommerce/product-collapsible', 'woocommerce/product-description-field', 'woocommerce/product-images-field', 'woocommerce/product-inventory-email-field', 'woocommerce/product-sku-field', 'woocommerce/product-name-field', 'woocommerce/product-pricing-field', 'woocommerce/product-radio-field', 'woocommerce/product-regular-price-field', 'woocommerce/product-sale-price-field', 'woocommerce/product-schedule-sale-fields', 'woocommerce/product-section', 'woocommerce/product-shipping-class-field', 'woocommerce/product-shipping-dimensions-fields', 'woocommerce/product-summary-field', 'woocommerce/product-tab', 'woocommerce/product-inventory-quantity-field', 'woocommerce/product-toggle-field', 'woocommerce/product-variations-fields'];
         /**
          * Get a file path for a given block file.
          *
@@ -70932,6 +70967,12 @@ namespace Automattic\WooCommerce\Admin\Features\ProductBlockEditor {
          * Enqueue styles needed for the rich text editor.
          */
         public function enqueue_styles()
+        {
+        }
+        /**
+         * Dequeue conflicting styles.
+         */
+        public function dequeue_conflicting_styles()
         {
         }
         /**
@@ -71375,6 +71416,14 @@ namespace Automattic\WooCommerce\Admin\Marketing {
          * @return array|bool
          */
         protected static function get_mailpoet_extension_data()
+        {
+        }
+        /**
+         * Get Klaviyo extension data.
+         *
+         * @return array|bool
+         */
+        protected static function get_klaviyo_extension_data()
         {
         }
         /**
@@ -77179,16 +77228,42 @@ namespace Automattic\WooCommerce\Database\Migrations {
          *
          * @param array $entity_ids Order ids to migrate.
          * @return array An array containing the keys 'errors' (array of strings) and 'exception' (exception object or null).
+         *
+         * @deprecated 8.0.0 Use `fetch_sanitized_migration_data` and `process_migration_data` instead.
          */
         public function process_migration_batch_for_ids(array $entity_ids) : array
         {
         }
+        // phpcs:disable Squiz.Commenting.FunctionComment.InvalidNoReturn, Squiz.Commenting.FunctionCommentThrowTag.Missing -- Methods are not marked abstract for back compat.
+        /**
+         * Return data to be migrated for a batch of entities.
+         *
+         * @param array $entity_ids Ids of entities to migrate.
+         *
+         * @return array[] Data to be migrated. Would be of the form: array( 'data' => array( ... ), 'errors' => array( ... ) ).
+         */
+        public function fetch_sanitized_migration_data(array $entity_ids)
+        {
+        }
+        /**
+         * Process migration data for a batch of entities.
+         *
+         * @param array $data Data to be migrated. Should be of the form: array( 'data' => array( ... ) ) as returned by the `fetch_sanitized_migration_data` method.
+         *
+         * @return array Array of errors and exception if any.
+         */
+        public function process_migration_data(array $data)
+        {
+        }
+        // phpcs:enable
         /**
          * The core method that actually performs the migration for the supplied batch of order ids.
          * It doesn't need to deal with database errors nor with exceptions.
          *
          * @param array $entity_ids Order ids to migrate.
          * @return void
+         *
+         * @deprecated 8.0.0 Use `fetch_sanitized_migration_data` and `process_migration_data` instead.
          */
         protected abstract function process_migration_batch_for_ids_core(array $entity_ids) : void;
         /**
@@ -77255,11 +77330,31 @@ namespace Automattic\WooCommerce\Database\Migrations {
         {
         }
         /**
+         * Return data to be migrated for a batch of entities.
+         *
+         * @param array $entity_ids Ids of entities to migrate.
+         *
+         * @return array[] Data to be migrated. Would be of the form: array( 'data' => array( ... ), 'errors' => array( ... ) ).
+         */
+        public function fetch_sanitized_migration_data($entity_ids)
+        {
+        }
+        /**
          * Migrate a batch of entities from the posts table to the corresponding table.
          *
          * @param array $entity_ids Ids of entities ro migrate.
          */
         protected function process_migration_batch_for_ids_core(array $entity_ids) : void
+        {
+        }
+        /**
+         * Process migration data for a batch of entities.
+         *
+         * @param array $data Data to be migrated. Should be of the form: array( 'data' => array( ... ) ) as returned by the `fetch_sanitized_migration_data` method.
+         *
+         * @return array Array of errors and exception if any.
+         */
+        public function process_migration_data(array $data)
         {
         }
         /**
@@ -77293,7 +77388,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          *   ...,
          * )
          */
-        private function fetch_data_for_migration_for_ids(array $entity_ids) : array
+        public function fetch_data_for_migration_for_ids(array $entity_ids) : array
         {
         }
         /**
@@ -77508,6 +77603,16 @@ namespace Automattic\WooCommerce\Database\Migrations {
         {
         }
         /**
+         * Return data to be migrated for a batch of entities.
+         *
+         * @param array $entity_ids Ids of entities to migrate.
+         *
+         * @return array[] Data to be migrated. Would be of the form: array( 'data' => array( ... ), 'errors' => array( ... ) ).
+         */
+        public function fetch_sanitized_migration_data($entity_ids)
+        {
+        }
+        /**
          * Migrate a batch of entities from the posts table to the corresponding table.
          *
          * @param array $entity_ids Ids of entities to migrate.
@@ -77515,6 +77620,16 @@ namespace Automattic\WooCommerce\Database\Migrations {
          * @return void
          */
         protected function process_migration_batch_for_ids_core(array $entity_ids) : void
+        {
+        }
+        /**
+         * Process migration data for a batch of entities.
+         *
+         * @param array $data Data to be migrated. Should be of the form: array( 'data' => array( ... ) ) as returned by the `fetch_sanitized_migration_data` method.
+         *
+         * @return array Array of errors and exception if any.
+         */
+        public function process_migration_data(array $data)
         {
         }
         /**
@@ -77900,7 +78015,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
         /**
          * Array of objects used to perform the migration.
          *
-         * @var array
+         * @var TableMigrator[]
          */
         private $all_migrators;
         /**
@@ -77930,21 +78045,25 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
         {
         }
         /**
-         * Start a database transaction if the configuration mandates so.
+         * Log migration errors if any.
          *
-         * @return bool|null True if transaction started, false if transactions won't be used, null if transaction failed to start.
+         * @param array           $order_post_ids List of post IDs of the orders to migrate.
+         * @param array           $errors List of errors to log.
+         * @param \Exception|null $exception Exception to log.
+         * @param bool|null       $using_transactions Whether transactions were used.
+         * @param string          $name Name of the migrator.
          */
-        private function maybe_start_transaction() : ?bool
+        private function handle_migration_error(array $order_post_ids, array $errors, ?\Exception $exception, ?bool $using_transactions, string $name)
         {
         }
         /**
-         * Verify that a given database transaction isolation level name is valid, and throw an exception if not.
+         * Start a database transaction if the configuration mandates so.
          *
-         * @param string $transaction_isolation_level Transaction isolation level name to check.
-         * @return void
-         * @throws \Exception Invalid transaction isolation level name.
+         * @return bool|null True if transaction started, false if transactions won't be used, null if transaction failed to start.
+         *
+         * @throws \Exception If the transaction isolation level is invalid.
          */
-        private function verify_transaction_isolation_level(string $transaction_isolation_level) : void
+        private function maybe_start_transaction() : ?bool
         {
         }
         /**
@@ -77966,21 +78085,12 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
         /**
          * Execute a database query and log any errors.
          *
-         * @param string $query The SQL query to execute.
+         * @param string $query          The SQL query to execute.
+         * @param bool   $supress_errors Whether to suppress errors.
+         *
          * @return bool True if the query succeeded, false if there were errors.
          */
-        private function db_query(string $query) : bool
-        {
-        }
-        /**
-         * Performs one step of the migration for a set of order posts using one given migration class.
-         * All database errors and exceptions are logged.
-         *
-         * @param object $migration_class The migration class to use, must have a `process_migration_batch_for_ids(array of ids)` method.
-         * @param array  $order_post_ids List of post IDs of the orders to migrate.
-         * @return bool True if errors were logged, false otherwise.
-         */
-        private function do_orders_migration_step(object $migration_class, array $order_post_ids) : bool
+        private function db_query(string $query, bool $supress_errors = false) : bool
         {
         }
         /**
@@ -78847,6 +78957,17 @@ namespace Automattic\WooCommerce\Utilities {
         private function handle_plugin_de_activation() : void
         {
         }
+        /**
+         * Util function to generate warning string for incompatible features based on active plugins.
+         *
+         * @param string $feature_id Feature id.
+         * @param array  $plugin_feature_info Array of plugin feature info. See FeaturesControllers->get_compatible_plugins_for_feature() for details.
+         *
+         * @return string Warning string.
+         */
+        public function generate_incompatible_plugin_feature_warning(string $feature_id, array $plugin_feature_info) : string
+        {
+        }
     }
     /**
      * A class of utilities for dealing with strings.
@@ -78914,6 +79035,27 @@ namespace Automattic\WooCommerce\Utilities {
          * @return bool True if the string is null, is empty, or contains only whitespace characters.
          */
         public static function is_null_or_whitespace(?string $value)
+        {
+        }
+        /**
+         * Convert an array of values to a list suitable for a SQL "IN" statement
+         * (so comma separated and delimited by parenthesis).
+         * e.g.: [1,2,3] --> (1,2,3)
+         *
+         * @param array $values The values to convert.
+         * @return string A parenthesized and comma-separated string generated from the values.
+         * @throws \InvalidArgumentException Empty values array passed.
+         */
+        public static function to_sql_list(array $values)
+        {
+        }
+        /**
+         * Get the name of a class without the namespace.
+         *
+         * @param string $class_name The full class name.
+         * @return string The class name without the namespace.
+         */
+        public static function class_name_without_namespace(string $class_name)
         {
         }
     }

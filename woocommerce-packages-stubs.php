@@ -5670,13 +5670,14 @@ namespace Automattic\WooCommerce\Blocks\Assets {
          * @since 2.5.0
          * @since 2.6.0 Change src to be relative source.
          *
-         * @param string $handle       Name of the stylesheet. Should be unique.
-         * @param string $relative_src Relative source of the stylesheet to the plugin path.
-         * @param array  $deps         Optional. An array of registered stylesheet handles this stylesheet depends on. Default empty array.
-         * @param string $media        Optional. The media for which this stylesheet has been defined. Default 'all'. Accepts media types like
-         *                             'all', 'print' and 'screen', or media queries like '(orientation: portrait)' and '(max-width: 640px)'.
+         * @param string  $handle       Name of the stylesheet. Should be unique.
+         * @param string  $relative_src Relative source of the stylesheet to the plugin path.
+         * @param array   $deps         Optional. An array of registered stylesheet handles this stylesheet depends on. Default empty array.
+         * @param string  $media        Optional. The media for which this stylesheet has been defined. Default 'all'. Accepts media types like
+         *                              'all', 'print' and 'screen', or media queries like '(orientation: portrait)' and '(max-width: 640px)'.
+         * @param boolean $rtl   Optional. Whether or not to register RTL styles.
          */
-        public function register_style($handle, $relative_src, $deps = [], $media = 'all')
+        public function register_style($handle, $relative_src, $deps = [], $media = 'all', $rtl = false)
         {
         }
         /**
@@ -5966,6 +5967,12 @@ namespace Automattic\WooCommerce\Blocks {
         {
         }
         /**
+         * Register and enqueue assets for exclusive usage within the Site Editor.
+         */
+        public function register_and_enqueue_site_editor_assets()
+        {
+        }
+        /**
          * Defines resource hints to help speed up the loading of some critical blocks.
          *
          * These will not impact page loading times negatively because they are loaded once the current page is idle.
@@ -6170,6 +6177,15 @@ namespace Automattic\WooCommerce\Blocks {
         {
         }
         /**
+         * Renders the `core/template-part` block on the server.
+         *
+         * @param array $attributes The block attributes.
+         * @return string The render.
+         */
+        public function render_woocommerce_template_part($attributes)
+        {
+        }
+        /**
          * This function is used on the `pre_get_block_template` hook to return the fallback template from the db in case
          * the template is eligible for it.
          *
@@ -6323,6 +6339,79 @@ namespace Automattic\WooCommerce\Blocks {
          * @return string
          */
         public function update_product_archive_title($post_type_name, $post_type)
+        {
+        }
+        /**
+         * Migrates page content to templates if needed.
+         */
+        public function maybe_migrate_content()
+        {
+        }
+        /**
+         * Check if a page has been migrated to a template.
+         *
+         * @param string $page_id Page ID.
+         * @return boolean
+         */
+        protected function has_migrated_page($page_id)
+        {
+        }
+        /**
+         * Prepare default page template.
+         *
+         * @param \WP_Post $page Page object.
+         * @return string
+         */
+        protected function get_default_migrate_page_template($page)
+        {
+        }
+        /**
+         * Migrates a page to a template if needed.
+         *
+         * @param string   $page_id Page ID.
+         * @param \WP_Post $page Page object.
+         */
+        protected function migrate_page($page_id, $page)
+        {
+        }
+        /**
+         * Returns the requested template part.
+         *
+         * @param string $part The part to return.
+         *
+         * @return string
+         */
+        protected function get_block_template_part($part)
+        {
+        }
+        /**
+         * Replaces page settings in WooCommerce with text based permalinks which point to a template.
+         *
+         * @param array $settings Settings pages.
+         * @return array
+         */
+        public function template_permalink_settings($settings)
+        {
+        }
+        /**
+         * Syncs entered permalink with the pages and returns the correct value.
+         *
+         * @param string $value     Value of the option.
+         * @param string $option    Name of the option.
+         * @return string
+         */
+        public function update_template_permalink($value, $option)
+        {
+        }
+        /**
+         * Syncs the provided permalink with the actual WP page.
+         *
+         * @param WP_Post|null $page The page object, or null if it does not exist.
+         * @param string       $page_slug The identifier for the page e.g. cart, checkout.
+         * @param string       $permalink The new permalink to use.
+         * @return string THe actual permalink assigned to the page. May differ from $permalink if it was already taken.
+         */
+        protected function sync_endpoint_with_page($page, $page_slug, $permalink)
         {
         }
     }
@@ -6495,8 +6584,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         /**
          * Get the frontend style handle for this block type.
          *
-         * @see $this->register_block_type()
-         * @return string|null
+         * @return string[]|null
          */
         protected function get_block_type_style()
         {
@@ -6679,6 +6767,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @return array|string|null
          */
         protected function get_block_type_script($key = null)
+        {
+        }
+        /**
+         * Get the frontend style handle for this block type.
+         *
+         * @return null
+         */
+        protected function get_block_type_style()
         {
         }
     }
@@ -6931,6 +7027,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         protected function enqueue_data(array $attributes = [])
         {
         }
+        /**
+         * Get the frontend style handle for this block type.
+         *
+         * @return string[]
+         */
+        protected function get_block_type_style()
+        {
+        }
     }
     /**
      * ActiveFilters class.
@@ -7016,10 +7120,9 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * is clicked.
          *
          * @param string $url The URL to redirect to after the product is added to the cart.
-         * @param object $product The product being added to the cart.
          * @return string The filtered redirect URL.
          */
-        public function add_to_cart_redirect_filter($url, $product)
+        public function add_to_cart_redirect_filter($url)
         {
         }
         /**
@@ -7028,6 +7131,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @param string $key Data to get, or default to everything.
          */
         protected function get_block_type_script($key = null)
+        {
+        }
+        /**
+         * Get the frontend style handle for this block type.
+         *
+         * @return null
+         */
+        protected function get_block_type_style()
         {
         }
         /**
@@ -7169,6 +7280,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         protected function enqueue_data(array $attributes = [])
         {
         }
+        /**
+         * Get the frontend style handle for this block type.
+         *
+         * @return string[]
+         */
+        protected function get_block_type_style()
+        {
+        }
     }
     /**
      * CatalogSorting class.
@@ -7222,6 +7341,21 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          */
         protected $chunks_folder = 'cart-blocks';
         /**
+         * Initialize this block type.
+         *
+         * - Hook into WP lifecycle.
+         * - Register the block with WordPress.
+         */
+        protected function initialize()
+        {
+        }
+        /**
+         * Register block pattern for Empty Cart Message to make it translatable.
+         */
+        public function register_patterns()
+        {
+        }
+        /**
          * Get the editor script handle for this block type.
          *
          * @param string $key Data to get, or default to everything.
@@ -7238,6 +7372,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @return array|string
          */
         protected function get_block_type_script($key = null)
+        {
+        }
+        /**
+         * Get the frontend style handle for this block type.
+         *
+         * @return string[]
+         */
+        protected function get_block_type_style()
         {
         }
         /**
@@ -7540,6 +7682,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @return array|string
          */
         protected function get_block_type_script($key = null)
+        {
+        }
+        /**
+         * Get the frontend style handle for this block type.
+         *
+         * @return string[]
+         */
+        protected function get_block_type_style()
         {
         }
         /**
@@ -7913,6 +8063,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
+         * Enqueue assets used for rendering the block in editor context.
+         *
+         * This is needed if a block is not yet within the post content--`render` and `enqueue_assets` may not have ran.
+         */
+        public function enqueue_block_assets()
+        {
+        }
+        /**
          * Render method for the Classic Template block. This method will determine which template to render.
          *
          * @param array    $attributes Block attributes.
@@ -7921,6 +8079,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @return string | void Rendered block type output.
          */
         protected function render($attributes, $content, $block)
+        {
+        }
+        /**
+         * Render method for rendering the order confirmation template.
+         *
+         * @return string Rendered block type output.
+         */
+        protected function render_order_received()
         {
         }
         /**
@@ -7958,6 +8124,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @return array
          */
         public function filter_products_by_stock($meta_query)
+        {
+        }
+        /**
+         * Get the frontend style handle for this block type.
+         *
+         * @return null
+         */
+        protected function get_block_type_style()
         {
         }
     }
@@ -8343,6 +8517,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @var string
          */
         protected $block_name = 'filter-wrapper';
+        /**
+         * Get the frontend style handle for this block type.
+         *
+         * @return null
+         */
+        protected function get_block_type_style()
+        {
+        }
     }
     /**
      * HandpickedProducts class.
@@ -8456,6 +8638,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
+         * Get the frontend style handle for this block type.
+         *
+         * @return string[]
+         */
+        protected function get_block_type_style()
+        {
+        }
+        /**
          * Extra data passed through from server to client for block.
          *
          * @param array $attributes  Any attributes that currently are available from the block.
@@ -8463,20 +8653,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          *                           not in the post content on editor load.
          */
         protected function enqueue_data(array $attributes = [])
-        {
-        }
-        /**
-         * Function to enqueue `wc-settings` script and dequeue it later on so when
-         * AssetDataRegistry runs, it appears enqueued- This allows the necessary
-         * data to be printed to the page.
-         */
-        public function enqueue_wc_settings()
-        {
-        }
-        /**
-         * Function to dequeue `wc-settings` script.
-         */
-        public function dequeue_wc_settings()
         {
         }
         /**
@@ -8516,9 +8692,11 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         /**
          * Returns the markup for render the tax label.
          *
+         * @param array $attributes Block attributes.
+         *
          * @return string
          */
-        protected function get_include_tax_label_markup()
+        protected function get_include_tax_label_markup($attributes)
         {
         }
         /**
@@ -8558,14 +8736,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @return array;
          */
         protected function get_tax_label()
-        {
-        }
-        /**
-         * Get Cart Payload.
-         *
-         * @return object;
-         */
-        protected function get_cart_payload()
         {
         }
         /**
@@ -8646,6 +8816,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @return null
          */
         protected function get_block_type_script($key = null)
+        {
+        }
+        /**
+         * Get the frontend style handle for this block type.
+         *
+         * @return string[]
+         */
+        protected function get_block_type_style()
         {
         }
         /**
@@ -9066,6 +9244,12 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          */
         protected $valid_query_vars;
         /**
+         * All the query args related to the filter by attributes block.
+         *
+         * @var array
+         */
+        protected $attributes_filter_query_args = array();
+        /**
          * Orderby options not natively supported by WordPress REST API
          *
          * @var array
@@ -9077,6 +9261,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @param string $key Data to get, or default to everything.
          */
         protected function get_block_type_script($key = null)
+        {
+        }
+        /**
+         * Get the frontend style handle for this block type.
+         *
+         * @return null
+         */
+        protected function get_block_type_style()
         {
         }
         /**
@@ -9095,16 +9287,20 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @param array           $args    Query args.
          * @param WP_REST_Request $request Request.
          */
-        public function update_rest_query($args, $request) : array
+        public function update_rest_query_in_editor($args, $request) : array
         {
         }
         /**
-         * Get final query args based on provided values
+         * Add support for filter blocks:
+         * - Price filter block
+         * - Attributes filter block
+         * - Rating filter block
+         * - In stock filter block etc.
          *
-         * @param array $common_query_values Common query values.
-         * @param array $query               Query from block context.
+         * @param array $pre_render   The pre-rendered block.
+         * @param array $parsed_block The parsed block.
          */
-        private function get_final_query_args($common_query_values, $query)
+        public function add_support_for_filter_blocks($pre_render, $parsed_block)
         {
         }
         /**
@@ -9116,7 +9312,27 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          *
          * @return array
          */
-        public function build_query($query, $block, $page)
+        public function build_frontend_query($query, $block, $page)
+        {
+        }
+        /**
+         * Get the final query arguments for the frontend.
+         *
+         * @param array $query The query arguments.
+         * @param int   $page  The page number.
+         * @param bool  $is_exclude_applied_filters Whether to exclude the applied filters or not.
+         */
+        private function get_final_frontend_query($query, $page = 1, $is_exclude_applied_filters = false)
+        {
+        }
+        /**
+         * Get final query args based on provided values
+         *
+         * @param array $common_query_values Common query values.
+         * @param array $query               Query from block context.
+         * @param bool  $is_exclude_applied_filters Whether to exclude the applied filters or not.
+         */
+        private function get_final_query_args($common_query_values, $query, $is_exclude_applied_filters = false)
         {
         }
         /**
@@ -9283,6 +9499,77 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         private function get_filter_by_taxonomies_query($tax_query) : array
         {
         }
+        /**
+         * Apply the query only to a subset of products
+         *
+         * @param array $query  The query.
+         * @param array $ids  Array of selected product ids.
+         *
+         * @return array
+         */
+        private function filter_query_to_only_include_ids($query, $ids)
+        {
+        }
+        /**
+         * Return queries that are generated by query args.
+         *
+         * @return array
+         */
+        private function get_queries_by_applied_filters()
+        {
+        }
+        /**
+         * Return a query that filters products by price.
+         *
+         * @return array
+         */
+        private function get_filter_by_price_query()
+        {
+        }
+        /**
+         * Return a query that filters products by attributes.
+         *
+         * @return array
+         */
+        private function get_filter_by_attributes_query()
+        {
+        }
+        /**
+         * Get all the query args related to the filter by attributes block.
+         *
+         * @return array
+         * [color] => Array
+         *   (
+         *        [filter] => filter_color
+         *        [query_type] => query_type_color
+         *    )
+         *
+         * [size] => Array
+         *    (
+         *        [filter] => filter_size
+         *        [query_type] => query_type_size
+         *    )
+         * )
+         */
+        private function get_filter_by_attributes_query_vars()
+        {
+        }
+        /**
+         * Return a query that filters products by stock status.
+         *
+         * @return array
+         */
+        private function get_filter_by_stock_status_query()
+        {
+        }
+        /**
+         * Return a query that filters products by rating.
+         *
+         * @return array
+         */
+        private function get_filter_by_rating_query()
+        {
+        }
     }
     /**
      * ProductDetails class.
@@ -9319,6 +9606,26 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @return string The tabs html to be rendered by the block
          */
         protected function render_tabs()
+        {
+        }
+    }
+    /**
+     * ProductGallery class.
+     */
+    class ProductGallery extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'product-gallery';
+        /**
+         * Get the frontend style handle for this block type.
+         *
+         * @return null
+         */
+        protected function get_block_type_style()
         {
         }
     }
@@ -9535,6 +9842,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
+         * Get the frontend style handle for this block type.
+         *
+         * @return null
+         */
+        protected function get_block_type_style()
+        {
+        }
+        /**
          * Overwrite parent method to prevent script registration.
          *
          * It is necessary to register and enqueues assets during the render
@@ -9615,6 +9930,15 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * - Hook into pre_render_block to update the query.
          */
         protected function initialize()
+        {
+        }
+        /**
+         * Post Template support for grid view was introduced in Gutenberg 16 / WordPress 6.3
+         * Fixed in:
+         * - https://github.com/woocommerce/woocommerce-blocks/pull/9916
+         * - https://github.com/woocommerce/woocommerce-blocks/pull/10360
+         */
+        private function check_if_post_template_has_support_for_grid_view()
         {
         }
         /**
@@ -9975,6 +10299,67 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @return array  Block attributes merged with defaults.
          */
         private function parse_attributes($attributes)
+        {
+        }
+        /**
+         * Overwrite parent method to prevent script registration.
+         *
+         * It is necessary to register and enqueues assets during the render
+         * phase because we want to load assets only if the block has the content.
+         */
+        protected function register_block_type_assets()
+        {
+        }
+        /**
+         * Get the frontend style handle for this block type.
+         *
+         * @return null
+         */
+        protected function get_block_type_style()
+        {
+        }
+        /**
+         * Register the context.
+         */
+        protected function get_block_type_uses_context()
+        {
+        }
+        /**
+         * Include and render the block.
+         *
+         * @param array    $attributes Block attributes. Default empty array.
+         * @param string   $content    Block content. Default empty string.
+         * @param WP_Block $block      Block instance.
+         * @return string Rendered block type output.
+         */
+        protected function render($attributes, $content, $block)
+        {
+        }
+    }
+    /**
+     * ProductRating class.
+     */
+    class ProductRatingStars extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'product-rating-stars';
+        /**
+         * API version name.
+         *
+         * @var string
+         */
+        protected $api_version = '2';
+        /**
+         * Get block supports. Shared with the frontend.
+         * IMPORTANT: If you change anything here, make sure to update the JS file too.
+         *
+         * @return array
+         */
+        protected function get_block_type_supports()
         {
         }
         /**
@@ -10481,6 +10866,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         protected function get_block_type_script($key = null)
         {
         }
+        /**
+         * Get the frontend style handle for this block type.
+         *
+         * @return string[]
+         */
+        protected function get_block_type_style()
+        {
+        }
     }
     /**
      * RelatedProducts class.
@@ -10513,6 +10906,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * It isn't necessary register block assets because it is a server side block.
          */
         protected function register_block_type_assets()
+        {
+        }
+        /**
+         * Get the frontend style handle for this block type.
+         *
+         * @return null
+         */
+        protected function get_block_type_style()
         {
         }
         /**
@@ -10664,6 +11065,24 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
+         * Restore the global post variable right before generating the render output for the post title and/or post excerpt blocks.
+         *
+         * This is required due to the changes made via the replace_post_for_single_product_inner_block method.
+         * It is a temporary fix to ensure these blocks work as expected until Gutenberg versions 15.2 and 15.6 are part of the core of WordPress.
+         *
+         * @see https://github.com/WordPress/gutenberg/pull/48001
+         * @see https://github.com/WordPress/gutenberg/pull/49495
+         *
+         * @param  string    $block_content  The block content.
+         * @param  array     $parsed_block  The full block, including name and attributes.
+         * @param  \WP_Block $block_instance  The block instance.
+         *
+         * @return mixed
+         */
+        public function restore_global_post($block_content, $parsed_block, $block_instance)
+        {
+        }
+        /**
          * Render the Single Product block
          *
          * @param array    $attributes Block attributes.
@@ -10752,6 +11171,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         public static function get_stock_status_query_var_values()
         {
         }
+        /**
+         * Get the frontend style handle for this block type.
+         *
+         * @return string[]
+         */
+        protected function get_block_type_style()
+        {
+        }
     }
     /**
      * StoreNotices class.
@@ -10782,6 +11209,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @param string $key Data to get, or default to everything.
          */
         protected function get_block_type_script($key = null)
+        {
+        }
+        /**
+         * Get the frontend style handle for this block type.
+         *
+         * @return null
+         */
+        protected function get_block_type_style()
         {
         }
     }
@@ -11785,88 +12220,46 @@ namespace Automattic\WooCommerce\Blocks\Integrations {
 }
 namespace {
     /**
-     * Context data implementation.
+     * Manages the initial state of the Interactivity API store in the server and
+     * its serialization so it can be restored in the browser upon hydration.
      *
-     * @package block-hydration-experiments
+     * It's a private class, exposed by other functions, like `wc_store`.
+     *
+     * @access private
      */
-    /**
-     * This is a data structure to hold the current context.
-     *
-     * Whenever encountering a `woo-context` directive, we need to update
-     * the context with the data found in that directive. Conversely,
-     * when "leaving" that context (by encountering a closing tag), we
-     * need to reset the context to its previous state. This means that
-     * we actually need sort of a stack to keep track of all nested contexts.
-     *
-     * Example:
-     *
-     * <woo-context data='{ "foo": 123 }'>
-     *     <!-- foo should be 123 here. -->
-     *     <woo-context data='{ "foo": 456 }'>
-     *         <!-- foo should be 456 here. -->
-     *     </woo-context>
-     *     <!-- foo should be reset to 123 here. -->
-     * </woo-context>
-     */
-    class Woo_Directive_Context
+    class WC_Interactivity_Store
     {
         /**
-         * The stack used to store contexts internally.
+         * Store.
          *
-         * @var array An array of contexts.
+         * @var array
          */
-        protected $stack = array(array());
-        /**
-         * Constructor.
-         *
-         * Accepts a context as an argument to initialize this with.
-         *
-         * @param array $context A context.
-         */
-        function __construct($context = array())
-        {
-        }
-        /**
-         * Return the current context.
-         *
-         * @return array The current context.
-         */
-        public function get_context()
-        {
-        }
-        /**
-         * Set the current context.
-         *
-         * @param array $context The context to be set.
-         * @return void
-         */
-        public function set_context($context)
-        {
-        }
-        /**
-         * Reset the context to its previous state.
-         *
-         * @return void
-         */
-        public function rewind_context()
-        {
-        }
-    }
-    class Woo_Directive_Store
-    {
         private static $store = array();
+        /**
+         * Get store data.
+         *
+         * @return array
+         */
         static function get_data()
         {
         }
+        /**
+         * Merge data.
+         *
+         * @param array $data The data that will be merged with the exsisting store.
+         */
         static function merge_data($data)
         {
         }
-        static function serialize()
-        {
-        }
+        /**
+         * Reset the store data.
+         */
         static function reset()
         {
         }
+        /**
+         * Render the store data.
+         */
         static function render()
         {
         }
@@ -12726,6 +13119,18 @@ namespace Automattic\WooCommerce\Blocks\Shipping {
     class PickupLocation extends \WC_Shipping_Method
     {
         /**
+         * Pickup locations.
+         *
+         * @var array
+         */
+        protected $pickup_locations = [];
+        /**
+         * Cost
+         *
+         * @var string
+         */
+        protected $cost = '';
+        /**
          * Constructor.
          */
         public function __construct()
@@ -12735,6 +13140,15 @@ namespace Automattic\WooCommerce\Blocks\Shipping {
          * Init function.
          */
         public function init()
+        {
+        }
+        /**
+         * Checks if a given address is complete.
+         *
+         * @param array $address Address.
+         * @return bool
+         */
+        protected function has_valid_pickup_location($address)
         {
         }
         /**
@@ -18502,6 +18916,89 @@ namespace Automattic\WooCommerce\StoreApi\Utilities {
 }
 namespace Automattic\WooCommerce\Blocks\Templates {
     /**
+     * AbstractPageTemplate class.
+     *
+     * Shared logic for page templates.
+     *
+     * @internal
+     */
+    abstract class AbstractPageTemplate
+    {
+        /**
+         * Page Template functionality is only initialized when using a block theme.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Initialization method.
+         */
+        protected function init()
+        {
+        }
+        /**
+         * Returns the template slug.
+         *
+         * @return string
+         */
+        public static abstract function get_slug();
+        /**
+         * Returns the page object assigned to this template/page.
+         *
+         * @return \WP_Post|null Post object or null.
+         */
+        public static abstract function get_placeholder_page();
+        /**
+         * Should return the title of the page.
+         *
+         * @return string
+         */
+        public static abstract function get_template_title();
+        /**
+         * Should return true on pages/endpoints/routes where the template should be shown.
+         *
+         * @return boolean
+         */
+        protected abstract function is_active_template();
+        /**
+         * Returns the URL to edit the template.
+         *
+         * @return string
+         */
+        protected function get_edit_template_url()
+        {
+        }
+        /**
+         * When the page should be displaying the template, add it to the hierarchy.
+         *
+         * This places the template name e.g. `cart`, at the beginning of the template hierarchy array. The hook priority
+         * is 1 to ensure it runs first; other consumers e.g. extensions, could therefore inject their own template instead
+         * of this one when using the default priority of 10.
+         *
+         * @param array $templates Templates that match the pages_template_hierarchy.
+         */
+        public function page_template_hierarchy($templates)
+        {
+        }
+        /**
+         * Redirect the edit page screen to the template editor.
+         *
+         * @param \WP_Screen $current_screen Current screen information.
+         */
+        public function page_template_editor_redirect(\WP_Screen $current_screen)
+        {
+        }
+        /**
+         * Filter the page title when the template is active.
+         *
+         * @param string $title Page title.
+         * @return string
+         */
+        public function page_template_title($title)
+        {
+        }
+    }
+    /**
      * AbstractTemplateCompatibility class.
      *
      * To bridge the gap on compatibility with PHP hooks and blockified templates.
@@ -18698,6 +19195,95 @@ namespace Automattic\WooCommerce\Blocks\Templates {
         }
     }
     /**
+     * CartTemplate class.
+     *
+     * @internal
+     */
+    class CartTemplate extends \Automattic\WooCommerce\Blocks\Templates\AbstractPageTemplate
+    {
+        /**
+         * Template slug.
+         *
+         * @return string
+         */
+        public static function get_slug()
+        {
+        }
+        /**
+         * Returns the page object assigned to this template/page.
+         *
+         * @return \WP_Post|null Post object or null.
+         */
+        public static function get_placeholder_page()
+        {
+        }
+        /**
+         * True when viewing the cart page or cart endpoint.
+         *
+         * @return boolean
+         */
+        protected function is_active_template()
+        {
+        }
+        /**
+         * Should return the title of the page.
+         *
+         * @return string
+         */
+        public static function get_template_title()
+        {
+        }
+    }
+    /**
+     * CheckoutHeader Template class.
+     *
+     * @internal
+     */
+    class CheckoutHeaderTemplate
+    {
+        const SLUG = 'checkout-header';
+    }
+    /**
+     * CheckoutTemplate class.
+     *
+     * @internal
+     */
+    class CheckoutTemplate extends \Automattic\WooCommerce\Blocks\Templates\AbstractPageTemplate
+    {
+        /**
+         * Template slug.
+         *
+         * @return string
+         */
+        public static function get_slug()
+        {
+        }
+        /**
+         * Returns the page object assigned to this template/page.
+         *
+         * @return \WP_Post|null Post object or null.
+         */
+        public static function get_placeholder_page()
+        {
+        }
+        /**
+         * Should return the title of the page.
+         *
+         * @return string
+         */
+        public static function get_template_title()
+        {
+        }
+        /**
+         * True when viewing the checkout page or checkout endpoint.
+         *
+         * @return boolean
+         */
+        public function is_active_template()
+        {
+        }
+    }
+    /**
      * ClassicTemplatesCompatibility class.
      *
      * To bridge the gap on compatibility with widget blocks and classic PHP core templates.
@@ -18764,6 +19350,46 @@ namespace Automattic\WooCommerce\Blocks\Templates {
     class MiniCartTemplate
     {
         const SLUG = 'mini-cart';
+    }
+    /**
+     * OrderConfirmationTemplate class.
+     *
+     * @internal
+     */
+    class OrderConfirmationTemplate extends \Automattic\WooCommerce\Blocks\Templates\AbstractPageTemplate
+    {
+        /**
+         * Template slug.
+         *
+         * @return string
+         */
+        public static function get_slug()
+        {
+        }
+        /**
+         * Returns the page object assigned to this template/page.
+         *
+         * @return \WP_Post|null Post object or null.
+         */
+        public static function get_placeholder_page()
+        {
+        }
+        /**
+         * True when viewing the Order Received endpoint.
+         *
+         * @return boolean
+         */
+        protected function is_active_template()
+        {
+        }
+        /**
+         * Should return the title of the page.
+         *
+         * @return string
+         */
+        public static function get_template_title()
+        {
+        }
     }
     /**
      * ProductAttributeTemplate class.
@@ -18924,10 +19550,9 @@ namespace Automattic\WooCommerce\Blocks\Templates {
          * woocommerce/product-gallery-image, woocommerce/product-details, woocommerce/add-to-cart-form]
          *
          * @param array $parsed_blocks Array of parsed block objects.
-         * @param array $single_product_template_blocks Array of single product template blocks.
          * @return bool True if the template has a single product template block, false otherwise.
          */
-        private static function has_single_product_template_blocks($parsed_blocks, $single_product_template_blocks)
+        private static function has_single_product_template_blocks($parsed_blocks)
         {
         }
         /**
@@ -18960,6 +19585,15 @@ namespace Automattic\WooCommerce\Blocks\Templates {
          * @return bool
          */
         private static function is_custom_html($block)
+        {
+        }
+        /**
+         * Serialize template.
+         *
+         * @param array $parsed_blocks Parsed blocks.
+         * @return string
+         */
+        private static function serialize_blocks($parsed_blocks)
         {
         }
     }
@@ -19370,6 +20004,20 @@ namespace Automattic\WooCommerce\Blocks\Utils {
         }
     }
     /**
+     * WooSettingsUtils class
+     */
+    class SettingsUtils
+    {
+        /**
+         * Input field for permalink settings/pages.
+         *
+         * @param array $value Input value.
+         */
+        public static function permalink_input_field($value)
+        {
+        }
+    }
+    /**
      * StyleAttributesUtils class used for getting class and style from attributes.
      */
     class StyleAttributesUtils
@@ -19627,6 +20275,25 @@ namespace Automattic\WooCommerce\Blocks\Utils {
          * @return array
          */
         public static function get_classes_and_styles_by_attributes($attributes, $properties = array())
+        {
+        }
+    }
+    /**
+     * Utils class
+     */
+    class Utils
+    {
+        /**
+         * Compare the current WordPress version with a given version. It's a wrapper around `version-compare`
+         * that additionally takes into account the suffix (like `-RC1`).
+         * For example: version 6.3 is considered lower than 6.3-RC2, so you can do
+         * wp_version_compare( '6.3', '>=' ) and that will return true for 6.3-RC2.
+         *
+         * @param string      $version The version to compare against.
+         * @param string|null $operator Optional. The comparison operator. Defaults to null.
+         * @return bool|int Returns true if the current WordPress version satisfies the comparison, false otherwise.
+         */
+        public static function wp_version_compare($version, $operator = null)
         {
         }
     }
@@ -19931,60 +20598,35 @@ namespace {
     function as_get_datetime_object($date_string = \null, $timezone = 'UTC')
     {
     }
-    function process_woo_bind($tags, $context)
-    {
-    }
-    function process_woo_class($tags, $context)
-    {
-    }
-    function process_woo_context_attribute($tags, $context)
-    {
-    }
-    function process_woo_style($tags, $context)
-    {
-    }
-    function process_woo_context_tag($tags, $context)
-    {
-    }
-    function woo_directives_store($data)
-    {
-    }
-    function woo_directives_evaluate(string $path, array $context = array())
-    {
-    }
-    function woo_directives_set_style($style, $name, $value)
-    {
-    }
-    function woo_process_directives($tags, $prefix, $tag_directives, $attribute_directives)
-    {
-    }
-    // See e.g. https://github.com/WordPress/gutenberg/pull/47573.
-    function woo_directives_is_html_void_element($tag_name)
+    /**
+     * Print client-side navigation meta tag (hard-coded for now).
+     */
+    function woocommerce_interactivity_add_client_side_navigation_meta_tag()
     {
     }
     /**
-     * Register the Interactivity API scripts. These files are enqueued when a block
-     * defines `woo-directives-runtime` as a dependency.
+     * Move interactive scripts to the footer. This is a temporary measure to make
+     * it work with `wc_store` and it should be replaced with deferred scripts or
+     * modules.
      */
-    function woo_directives_register_scripts()
-    {
-    }
-    function woo_directives_get_client_side_navigation()
-    {
-    }
-    function woo_directives_add_client_side_navigation_meta_tag()
-    {
-    }
-    function woo_directives_mark_interactive_blocks($block_content, $block, $instance)
+    function woocommerce_interactivity_move_interactive_scripts_to_the_footer()
     {
     }
     /**
-     * Add a flag to mark inner blocks of isolated interactive blocks.
+     * Register the Interactivity API runtime and make it available to be enqueued
+     * as a dependency in interactive blocks.
      */
-    function woo_directives_inner_blocks($parsed_block, $source_block, $parent_block)
+    function woocommerce_interactivity_register_runtime()
     {
     }
-    function woo_process_directives_in_block($block_content)
+    /**
+     * Merge data with the exsisting store.
+     *
+     * @param array $data Data that will be merged with the exsisting store.
+     *
+     * @return $data The current store data.
+     */
+    function wc_store($data = \null)
     {
     }
     /**
