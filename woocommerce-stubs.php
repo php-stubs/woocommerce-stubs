@@ -15497,7 +15497,7 @@ namespace {
          * @param array $data     Data sent through the heartbeat.
          * @return array Response to be sent.
          */
-        private static function order_refresh_lock($response, $data) : array
+        private static function order_refresh_lock($response, $data)
         {
         }
         /**
@@ -15509,7 +15509,7 @@ namespace {
          * @param array $data     Data sent through the heartbeat.
          * @return array Response to be sent.
          */
-        private static function check_locked_orders($response, $data) : array
+        private static function check_locked_orders($response, $data)
         {
         }
     }
@@ -23673,7 +23673,7 @@ namespace {
          *
          * @var array
          */
-        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_admin_update_0201_order_status_index', 'wc_admin_update_0230_rename_gross_total', 'wc_admin_update_0251_remove_unsnooze_action', 'wc_update_400_db_version'), '4.4.0' => array('wc_update_440_insert_attribute_terms_for_variable_products', 'wc_admin_update_110_remove_facebook_note', 'wc_admin_update_130_remove_dismiss_action_from_tracking_opt_in_note', 'wc_update_440_db_version'), '4.5.0' => array('wc_update_450_sanitize_coupons_code', 'wc_update_450_db_version'), '5.0.0' => array('wc_update_500_fix_product_review_count', 'wc_admin_update_160_remove_facebook_note', 'wc_admin_update_170_homescreen_layout', 'wc_update_500_db_version'), '5.6.0' => array('wc_update_560_create_refund_returns_page', 'wc_update_560_db_version'), '6.0.0' => array('wc_update_600_migrate_rate_limit_options', 'wc_admin_update_270_delete_report_downloads', 'wc_admin_update_271_update_task_list_options', 'wc_admin_update_280_order_status', 'wc_admin_update_290_update_apperance_task_option', 'wc_admin_update_290_delete_default_homepage_layout_option', 'wc_update_600_db_version'), '6.3.0' => array('wc_update_630_create_product_attributes_lookup_table', 'wc_admin_update_300_update_is_read_from_last_read', 'wc_update_630_db_version'), '6.4.0' => array('wc_update_640_add_primary_key_to_product_attributes_lookup_table', 'wc_admin_update_340_remove_is_primary_from_note_action', 'wc_update_640_db_version'), '6.5.0' => array('wc_update_650_approved_download_directories'), '6.5.1' => array('wc_update_651_approved_download_directories'), '6.7.0' => array('wc_update_670_purge_comments_count_cache', 'wc_update_670_delete_deprecated_remote_inbox_notifications_option'), '7.0.0' => array('wc_update_700_remove_download_log_fk', 'wc_update_700_remove_recommended_marketing_plugins_transient'), '7.2.1' => array('wc_update_721_adjust_new_zealand_states', 'wc_update_721_adjust_ukraine_states'), '7.2.2' => array('wc_update_722_adjust_new_zealand_states', 'wc_update_722_adjust_ukraine_states'), '7.5.0' => array('wc_update_750_add_columns_to_order_stats_table', 'wc_update_750_disable_new_product_management_experience'), '7.7.0' => array('wc_update_770_remove_multichannel_marketing_feature_options'));
+        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_admin_update_0201_order_status_index', 'wc_admin_update_0230_rename_gross_total', 'wc_admin_update_0251_remove_unsnooze_action', 'wc_update_400_db_version'), '4.4.0' => array('wc_update_440_insert_attribute_terms_for_variable_products', 'wc_admin_update_110_remove_facebook_note', 'wc_admin_update_130_remove_dismiss_action_from_tracking_opt_in_note', 'wc_update_440_db_version'), '4.5.0' => array('wc_update_450_sanitize_coupons_code', 'wc_update_450_db_version'), '5.0.0' => array('wc_update_500_fix_product_review_count', 'wc_admin_update_160_remove_facebook_note', 'wc_admin_update_170_homescreen_layout', 'wc_update_500_db_version'), '5.6.0' => array('wc_update_560_create_refund_returns_page', 'wc_update_560_db_version'), '6.0.0' => array('wc_update_600_migrate_rate_limit_options', 'wc_admin_update_270_delete_report_downloads', 'wc_admin_update_271_update_task_list_options', 'wc_admin_update_280_order_status', 'wc_admin_update_290_update_apperance_task_option', 'wc_admin_update_290_delete_default_homepage_layout_option', 'wc_update_600_db_version'), '6.3.0' => array('wc_update_630_create_product_attributes_lookup_table', 'wc_admin_update_300_update_is_read_from_last_read', 'wc_update_630_db_version'), '6.4.0' => array('wc_update_640_add_primary_key_to_product_attributes_lookup_table', 'wc_admin_update_340_remove_is_primary_from_note_action', 'wc_update_640_db_version'), '6.5.0' => array('wc_update_650_approved_download_directories'), '6.5.1' => array('wc_update_651_approved_download_directories'), '6.7.0' => array('wc_update_670_purge_comments_count_cache', 'wc_update_670_delete_deprecated_remote_inbox_notifications_option'), '7.0.0' => array('wc_update_700_remove_download_log_fk', 'wc_update_700_remove_recommended_marketing_plugins_transient'), '7.2.1' => array('wc_update_721_adjust_new_zealand_states', 'wc_update_721_adjust_ukraine_states'), '7.2.2' => array('wc_update_722_adjust_new_zealand_states', 'wc_update_722_adjust_ukraine_states'), '7.5.0' => array('wc_update_750_add_columns_to_order_stats_table', 'wc_update_750_disable_new_product_management_experience'), '7.7.0' => array('wc_update_770_remove_multichannel_marketing_feature_options'), '8.1.0' => array('wc_update_810_migrate_transactional_metadata_for_hpos'));
         /**
          * Option name used to track new installations of WooCommerce.
          *
@@ -34311,7 +34311,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '8.0.3';
+        public $version = '8.1.0';
         /**
          * WooCommerce Schema version.
          *
@@ -36028,7 +36028,7 @@ namespace {
          *
          * @param WC_Abstract_Order $order Order object.
          */
-        private function update_order_meta_from_object($order)
+        protected function update_order_meta_from_object($order)
         {
         }
     }
@@ -43840,6 +43840,17 @@ namespace {
          * @return string|null
          */
         public function parse_date_field($value)
+        {
+        }
+        /**
+         * Parse dates from a CSV.
+         * Dates can be Unix timestamps or in any format supported by strtotime().
+         *
+         * @param string $value Field value.
+         *
+         * @return string|null
+         */
+        public function parse_datetime_field($value)
         {
         }
         /**
@@ -52723,6 +52734,15 @@ namespace {
         {
         }
         /**
+         * Deletes all unmatched variations (aka duplicates).
+         *
+         * @param  WC_Product $product Variable product.
+         * @return int        Number of deleted variations.
+         */
+        private function delete_unmatched_product_variations($product)
+        {
+        }
+        /**
          * Generate all variations for a given product.
          *
          * @param WP_REST_Request $request Full details about the request.
@@ -59430,6 +59450,9 @@ namespace Automattic\WooCommerce\Admin\API {
         public function get_available_extensions($request)
         {
         }
+        private function replace_jetpack_with_jetpack_boost_for_treatment(array $extensions)
+        {
+        }
     }
     /**
      * Onboarding Plugins controller.
@@ -59736,7 +59759,7 @@ namespace Automattic\WooCommerce\Admin\API {
         /**
          * Duration to milisecond mapping.
          *
-         * @var string
+         * @var array
          */
         protected $duration_to_ms = array('day' => DAY_IN_SECONDS * 1000, 'hour' => HOUR_IN_SECONDS * 1000, 'week' => WEEK_IN_SECONDS * 1000);
         /**
@@ -61331,6 +61354,12 @@ namespace Automattic\WooCommerce\Admin\API\Reports {
          */
         protected $cache_timeout = 3600;
         /**
+         * Cache identifier.
+         *
+         * @var string
+         */
+        protected $cache_key = '';
+        /**
          * Table used as a data store for this report.
          *
          * @var string
@@ -62771,6 +62800,82 @@ namespace Automattic\WooCommerce\Admin\API\Reports {
          * @param stdClass $data Response data.
          */
         protected function fill_in_missing_interval_segments(&$data)
+        {
+        }
+        /**
+         * Calculate segments for totals where the segmenting property is bound to product (e.g. category, product_id, variation_id).
+         *
+         * @param array  $segmenting_selections SELECT part of segmenting SQL query--one for 'product_level' and one for 'order_level'.
+         * @param string $segmenting_from FROM part of segmenting SQL query.
+         * @param string $segmenting_where WHERE part of segmenting SQL query.
+         * @param string $segmenting_groupby GROUP BY part of segmenting SQL query.
+         * @param string $segmenting_dimension_name Name of the segmenting dimension.
+         * @param string $table_name Name of SQL table which is the stats table for orders.
+         * @param array  $totals_query Array of SQL clauses for totals query.
+         * @param string $unique_orders_table Name of temporary SQL table that holds unique orders.
+         *
+         * @return array
+         */
+        protected function get_product_related_totals_segments($segmenting_selections, $segmenting_from, $segmenting_where, $segmenting_groupby, $segmenting_dimension_name, $table_name, $totals_query, $unique_orders_table)
+        {
+        }
+        /**
+         * Calculate segments for intervals where the segmenting property is bound to product (e.g. category, product_id, variation_id).
+         *
+         * @param array  $segmenting_selections SELECT part of segmenting SQL query--one for 'product_level' and one for 'order_level'.
+         * @param string $segmenting_from FROM part of segmenting SQL query.
+         * @param string $segmenting_where WHERE part of segmenting SQL query.
+         * @param string $segmenting_groupby GROUP BY part of segmenting SQL query.
+         * @param string $segmenting_dimension_name Name of the segmenting dimension.
+         * @param string $table_name Name of SQL table which is the stats table for orders.
+         * @param array  $intervals_query Array of SQL clauses for intervals query.
+         * @param string $unique_orders_table Name of temporary SQL table that holds unique orders.
+         *
+         * @return array
+         */
+        protected function get_product_related_intervals_segments($segmenting_selections, $segmenting_from, $segmenting_where, $segmenting_groupby, $segmenting_dimension_name, $table_name, $intervals_query, $unique_orders_table)
+        {
+        }
+        /**
+         * Calculate segments for totals query where the segmenting property is bound to order (e.g. coupon or customer type).
+         *
+         * @param string $segmenting_select SELECT part of segmenting SQL query.
+         * @param string $segmenting_from FROM part of segmenting SQL query.
+         * @param string $segmenting_where WHERE part of segmenting SQL query.
+         * @param string $segmenting_groupby GROUP BY part of segmenting SQL query.
+         * @param string $table_name Name of SQL table which is the stats table for orders.
+         * @param array  $totals_query Array of SQL clauses for intervals query.
+         *
+         * @return array
+         */
+        protected function get_order_related_totals_segments($segmenting_select, $segmenting_from, $segmenting_where, $segmenting_groupby, $table_name, $totals_query)
+        {
+        }
+        /**
+         * Calculate segments for intervals query where the segmenting property is bound to order (e.g. coupon or customer type).
+         *
+         * @param string $segmenting_select SELECT part of segmenting SQL query.
+         * @param string $segmenting_from FROM part of segmenting SQL query.
+         * @param string $segmenting_where WHERE part of segmenting SQL query.
+         * @param string $segmenting_groupby GROUP BY part of segmenting SQL query.
+         * @param string $table_name Name of SQL table which is the stats table for orders.
+         * @param array  $intervals_query Array of SQL clauses for intervals query.
+         *
+         * @return array
+         */
+        protected function get_order_related_intervals_segments($segmenting_select, $segmenting_from, $segmenting_where, $segmenting_groupby, $table_name, $intervals_query)
+        {
+        }
+        /**
+         * Return array of segments formatted for REST response.
+         *
+         * @param string $type Type of segments to return--'totals' or 'intervals'.
+         * @param array  $query_params SQL query parameter array.
+         * @param string $table_name Name of main SQL table for the data store (used as basis for JOINS).
+         *
+         * @return array
+         */
+        protected function get_segments($type, $query_params, $table_name)
         {
         }
         /**
@@ -67067,6 +67172,127 @@ namespace Automattic\WooCommerce\Admin\API {
         }
     }
 }
+namespace Automattic\WooCommerce\Admin\BlockTemplates {
+    /**
+     * Interface for block configuration used to specify blocks in BlockTemplate.
+     */
+    interface BlockInterface
+    {
+        /**
+         * Key for the block name in the block configuration.
+         */
+        public const NAME_KEY = 'blockName';
+        /**
+         * Key for the block ID in the block configuration.
+         */
+        public const ID_KEY = 'id';
+        /**
+         * Key for the internal order in the block configuration.
+         */
+        public const ORDER_KEY = 'order';
+        /**
+         * Key for the block attributes in the block configuration.
+         */
+        public const ATTRIBUTES_KEY = 'attributes';
+        /**
+         * Get the block name.
+         */
+        public function get_name() : string;
+        /**
+         * Get the block ID.
+         */
+        public function get_id() : string;
+        /**
+         * Get the block order.
+         */
+        public function get_order() : int;
+        /**
+         * Set the block order.
+         *
+         * @param int $order The block order.
+         */
+        public function set_order(int $order);
+        /**
+         * Get the block attributes.
+         */
+        public function get_attributes() : array;
+        /**
+         * Set the block attributes.
+         *
+         * @param array $attributes The block attributes.
+         */
+        public function set_attributes(array $attributes);
+        /**
+         * Get the parent container that the block belongs to.
+         */
+        public function &get_parent() : ?\Automattic\WooCommerce\Admin\BlockTemplates\ContainerInterface;
+        /**
+         * Get the root template that the block belongs to.
+         */
+        public function &get_root_template() : \Automattic\WooCommerce\Admin\BlockTemplates\BlockTemplateInterface;
+        /**
+         * Get the block configuration as a formatted template.
+         *
+         * @return array The block configuration as a formatted template.
+         */
+        public function get_formatted_template() : array;
+    }
+    /**
+     * Interface for block containers.
+     */
+    interface ContainerInterface
+    {
+        /**
+         * Get the root template that the block belongs to.
+         */
+        public function &get_root_template() : \Automattic\WooCommerce\Admin\BlockTemplates\BlockTemplateInterface;
+        /**
+         * Get the block configuration as a formatted template.
+         */
+        public function get_formatted_template() : array;
+    }
+    /**
+     * Interface for block containers.
+     */
+    interface BlockContainerInterface extends \Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface, \Automattic\WooCommerce\Admin\BlockTemplates\ContainerInterface
+    {
+    }
+    /**
+     * Interface for block-based template.
+     */
+    interface BlockTemplateInterface extends \Automattic\WooCommerce\Admin\BlockTemplates\ContainerInterface
+    {
+        /**
+         * Get the template ID.
+         */
+        public function get_id() : string;
+        /**
+         * Get the template title.
+         */
+        public function get_title() : string;
+        /**
+         * Get the template description.
+         */
+        public function get_description() : string;
+        /**
+         * Get the template area.
+         */
+        public function get_area() : string;
+        /**
+         * Get a block by ID.
+         *
+         * @param string $block_id The block ID.
+         */
+        public function get_block(string $block_id) : ?\Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface;
+        /**
+         * Generate a block ID based on a base.
+         *
+         * @param string $id_base The base to use when generating an ID.
+         * @return string
+         */
+        public function generate_block_id(string $id_base) : string;
+    }
+}
 namespace Automattic\WooCommerce\Admin\Composer {
     /**
      * Main package class.
@@ -67310,6 +67536,18 @@ namespace Automattic\WooCommerce\Admin {
          * @var object
          */
         protected $instance;
+        /**
+         * The name of the non-deprecated class that this facade covers.
+         *
+         * @var string
+         */
+        protected static $facade_over_classname;
+        /**
+         * The version that this class was deprecated in.
+         *
+         * @var string
+         */
+        protected static $deprecated_in_version = '';
         /**
          * Constructor.
          */
@@ -67713,6 +67951,12 @@ namespace Automattic\WooCommerce\Admin\Features\Navigation {
          * @var int
          */
         const META_NAME = 'navigation_favorites';
+        /**
+         * Favorites instance.
+         *
+         * @var Favorites|null
+         */
+        protected static $instance = null;
         /**
          * Get class instance.
          */
@@ -68751,6 +68995,24 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
          */
         public $id = '';
         /**
+         * Additional info.
+         *
+         * @var string|null
+         */
+        public $additional_info = '';
+        /**
+         * Content.
+         *
+         * @var string
+         */
+        public $content = '';
+        /**
+         * Whether the task is complete or not.
+         *
+         * @var boolean
+         */
+        public $is_complete = false;
+        /**
          * Snoozeable.
          *
          * @var boolean
@@ -68762,6 +69024,30 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
          * @var boolean
          */
         public $is_dismissable = false;
+        /**
+         * Whether the store is capable of viewing the task.
+         *
+         * @var bool
+         */
+        public $can_view = true;
+        /**
+         * Level.
+         *
+         * @var int
+         */
+        public $level = 3;
+        /**
+         * Time.
+         *
+         * @var string|null
+         */
+        public $time;
+        /**
+         * Title.
+         *
+         * @var string
+         */
+        public $title = '';
         /**
          * Constructor.
          *
@@ -69248,7 +69534,10 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
          */
         protected static $default_tasks_loaded = false;
         /**
-         * Array of default tasks.
+         * The contents of this array is used in init_tasks() to run their init() methods.
+         * If the classes do not have an init() method then nothing is executed.
+         * Beyond that, adding tasks to this list has no effect, see init_default_lists() for the list of tasks.
+         * that are added for each task list.
          *
          * @var array
          */
@@ -69645,6 +69934,68 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
          * Check if the site has a homepage set up.
          */
         public static function has_homepage()
+        {
+        }
+    }
+    /**
+     * Customize Your Store Task
+     */
+    class CustomizeStore extends \Automattic\WooCommerce\Admin\Features\OnboardingTasks\Task
+    {
+        /**
+         * ID.
+         *
+         * @return string
+         */
+        public function get_id()
+        {
+        }
+        /**
+         * Title.
+         *
+         * @return string
+         */
+        public function get_title()
+        {
+        }
+        /**
+         * Content.
+         *
+         * @return string
+         */
+        public function get_content()
+        {
+        }
+        /**
+         * Time.
+         *
+         * @return string
+         */
+        public function get_time()
+        {
+        }
+        /**
+         * Task completion.
+         *
+         * @return bool
+         */
+        public function is_complete()
+        {
+        }
+        /**
+         * Task visibility.
+         *
+         * @return bool
+         */
+        public function can_view()
+        {
+        }
+        /**
+         * Action URL.
+         *
+         * @return string
+         */
+        public function get_action_url()
         {
         }
     }
@@ -70879,7 +71230,7 @@ namespace Automattic\WooCommerce\Admin\Features\ProductBlockEditor {
         /**
          * Array of all available product blocks.
          */
-        const PRODUCT_BLOCKS = ['woocommerce/conditional', 'woocommerce/product-category-field', 'woocommerce/product-checkbox-field', 'woocommerce/product-collapsible', 'woocommerce/product-description-field', 'woocommerce/product-images-field', 'woocommerce/product-inventory-email-field', 'woocommerce/product-sku-field', 'woocommerce/product-name-field', 'woocommerce/product-pricing-field', 'woocommerce/product-radio-field', 'woocommerce/product-regular-price-field', 'woocommerce/product-sale-price-field', 'woocommerce/product-schedule-sale-fields', 'woocommerce/product-section', 'woocommerce/product-shipping-class-field', 'woocommerce/product-shipping-dimensions-fields', 'woocommerce/product-summary-field', 'woocommerce/product-tab', 'woocommerce/product-inventory-quantity-field', 'woocommerce/product-toggle-field', 'woocommerce/product-variations-fields'];
+        const PRODUCT_BLOCKS = ['woocommerce/conditional', 'woocommerce/product-catalog-visibility-field', 'woocommerce/product-category-field', 'woocommerce/product-checkbox-field', 'woocommerce/product-collapsible', 'woocommerce/product-description-field', 'woocommerce/product-images-field', 'woocommerce/product-inventory-email-field', 'woocommerce/product-sku-field', 'woocommerce/product-name-field', 'woocommerce/product-pricing-field', 'woocommerce/product-radio-field', 'woocommerce/product-regular-price-field', 'woocommerce/product-sale-price-field', 'woocommerce/product-schedule-sale-fields', 'woocommerce/product-section', 'woocommerce/product-shipping-class-field', 'woocommerce/product-shipping-dimensions-fields', 'woocommerce/product-summary-field', 'woocommerce/product-tab', 'woocommerce/product-inventory-quantity-field', 'woocommerce/product-toggle-field', 'woocommerce/product-variation-items-field', 'woocommerce/product-variations-fields', 'woocommerce/product-password-field', 'woocommerce/product-has-variations-notice'];
         /**
          * Get a file path for a given block file.
          *
@@ -71000,6 +71351,15 @@ namespace Automattic\WooCommerce\Admin\Features\ProductBlockEditor {
          * @return array Array of post type arguments.
          */
         public function add_product_template($args)
+        {
+        }
+        /**
+         * Adds fields so that we can store user preferences for the variations block.
+         *
+         * @param array $user_data_fields User data fields.
+         * @return array
+         */
+        public function add_user_data_fields($user_data_fields)
         {
         }
         /**
@@ -74461,6 +74821,12 @@ namespace Automattic\WooCommerce\Admin\RemoteInboxNotifications {
     class NotRuleProcessor implements \Automattic\WooCommerce\Admin\RemoteInboxNotifications\RuleProcessorInterface
     {
         /**
+         * The rule evaluator to use.
+         *
+         * @var RuleEvaluator
+         */
+        protected $rule_evaluator;
+        /**
          * Constructor.
          *
          * @param RuleEvaluator $rule_evaluator The rule evaluator to use.
@@ -74633,6 +74999,12 @@ namespace Automattic\WooCommerce\Admin\RemoteInboxNotifications {
     class OrderCountRuleProcessor implements \Automattic\WooCommerce\Admin\RemoteInboxNotifications\RuleProcessorInterface
     {
         /**
+         * The orders provider.
+         *
+         * @var OrdersProvider
+         */
+        protected $orders_provider;
+        /**
          * Constructor.
          *
          * @param object $orders_provider The orders provider.
@@ -74757,6 +75129,12 @@ namespace Automattic\WooCommerce\Admin\RemoteInboxNotifications {
     class PluginsActivatedRuleProcessor implements \Automattic\WooCommerce\Admin\RemoteInboxNotifications\RuleProcessorInterface
     {
         /**
+         * The plugins provider.
+         *
+         * @var PluginsProviderInterface
+         */
+        protected $plugins_provider;
+        /**
          * Constructor.
          *
          * @param PluginsProviderInterface $plugins_provider The plugins provider.
@@ -74793,6 +75171,12 @@ namespace Automattic\WooCommerce\Admin\RemoteInboxNotifications {
     class ProductCountRuleProcessor implements \Automattic\WooCommerce\Admin\RemoteInboxNotifications\RuleProcessorInterface
     {
         /**
+         * The product query.
+         *
+         * @var WC_Product_Query
+         */
+        protected $product_query;
+        /**
          * Constructor.
          *
          * @param object $product_query The product query.
@@ -74828,6 +75212,12 @@ namespace Automattic\WooCommerce\Admin\RemoteInboxNotifications {
     class PublishAfterTimeRuleProcessor implements \Automattic\WooCommerce\Admin\RemoteInboxNotifications\RuleProcessorInterface
     {
         /**
+         * The DateTime provider.
+         *
+         * @var DateTimeProviderInterface
+         */
+        protected $date_time_provider;
+        /**
          * Constructor.
          *
          * @param DateTimeProviderInterface $date_time_provider The DateTime provider.
@@ -74862,6 +75252,12 @@ namespace Automattic\WooCommerce\Admin\RemoteInboxNotifications {
      */
     class PublishBeforeTimeRuleProcessor implements \Automattic\WooCommerce\Admin\RemoteInboxNotifications\RuleProcessorInterface
     {
+        /**
+         * The DateTime provider.
+         *
+         * @var DateTimeProviderInterface
+         */
+        protected $date_time_provider;
         /**
          * Constructor.
          *
@@ -75546,6 +75942,12 @@ namespace Automattic\WooCommerce\Admin\RemoteInboxNotifications {
     class WCAdminActiveForRuleProcessor implements \Automattic\WooCommerce\Admin\RemoteInboxNotifications\RuleProcessorInterface
     {
         /**
+         * Provides the amount of time wcadmin has been active for.
+         *
+         * @var WCAdminActiveForProvider
+         */
+        protected $wcadmin_active_for_provider;
+        /**
          * Constructor
          *
          * @param object $wcadmin_active_for_provider Provides the amount of time wcadmin has been active for.
@@ -75610,6 +76012,24 @@ namespace Automattic\WooCommerce\Admin {
      */
     class ReportCSVEmail extends \WC_Email
     {
+        /**
+         * Report labels.
+         *
+         * @var array
+         */
+        protected $report_labels;
+        /**
+         * Report type (e.g. 'customers').
+         *
+         * @var string
+         */
+        protected $report_type;
+        /**
+         * Download URL.
+         *
+         * @var string
+         */
+        protected $download_url;
         /**
          * Constructor.
          */
@@ -76912,7 +77332,7 @@ namespace Automattic\WooCommerce {
          *
          * @var string[]
          */
-        private $service_providers = array(\Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\AssignDefaultCategoryServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\DownloadPermissionsAdjusterServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OptionSanitizerServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrdersDataStoreServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductAttributesLookupServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductDownloadsServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductReviewsServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProxiesServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\RestockRefundedItemsAdjusterServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\UtilsClassesServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\COTMigrationServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrdersControllersServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ObjectCacheServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\BatchProcessingServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrderMetaBoxServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrderAdminServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\FeaturesServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\MarketingServiceProvider::class);
+        private $service_providers = array(\Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\AssignDefaultCategoryServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\DownloadPermissionsAdjusterServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OptionSanitizerServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrdersDataStoreServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductAttributesLookupServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductDownloadsServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductReviewsServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProxiesServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\RestockRefundedItemsAdjusterServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\UtilsClassesServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\COTMigrationServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrdersControllersServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ObjectCacheServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\BatchProcessingServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrderMetaBoxServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrderAdminServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\FeaturesServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\MarketingServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\BlockTemplatesServiceProvider::class);
         /**
          * The underlying container.
          *
