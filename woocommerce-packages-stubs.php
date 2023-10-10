@@ -6708,9 +6708,11 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @internal This prevents the block script being enqueued on all pages. It is only enqueued as needed. Note that
          * we intentionally do not pass 'script' to register_block_type.
          *
-         * @param array $attributes  Any attributes that currently are available from the block.
+         * @param array    $attributes  Any attributes that currently are available from the block.
+         * @param string   $content    The block content.
+         * @param WP_Block $block    The block object.
          */
-        protected function enqueue_assets(array $attributes)
+        protected function enqueue_assets(array $attributes, $content, $block)
         {
         }
         /**
@@ -7411,6 +7413,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
+         * Dequeues the scripts added by WC Core to the Cart page.
+         *
+         * @return void
+         */
+        public function dequeue_woocommerce_core_scripts()
+        {
+        }
+        /**
          * Register block pattern for Empty Cart Message to make it translatable.
          */
         public function register_patterns()
@@ -7446,9 +7456,11 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         /**
          * Enqueue frontend assets for this block, just in time for rendering.
          *
-         * @param array $attributes  Any attributes that currently are available from the block.
+         * @param array    $attributes  Any attributes that currently are available from the block.
+         * @param string   $content    The block content.
+         * @param WP_Block $block    The block object.
          */
-        protected function enqueue_assets(array $attributes)
+        protected function enqueue_assets(array $attributes, $content, $block)
         {
         }
         /**
@@ -7730,6 +7742,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
+         * Dequeues the scripts added by WC Core to the Checkout page.
+         *
+         * @return void
+         */
+        public function dequeue_woocommerce_core_scripts()
+        {
+        }
+        /**
          * Register block pattern for Empty Cart Message to make it translatable.
          */
         public function register_patterns()
@@ -7765,9 +7785,11 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         /**
          * Enqueue frontend assets for this block, just in time for rendering.
          *
-         * @param array $attributes  Any attributes that currently are available from the block.
+         * @param array    $attributes  Any attributes that currently are available from the block.
+         * @param string   $content    The block content.
+         * @param WP_Block $block    The block object.
          */
-        protected function enqueue_assets(array $attributes)
+        protected function enqueue_assets(array $attributes, $content, $block)
         {
         }
         /**
@@ -8904,9 +8926,11 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         /**
          * Enqueue frontend assets for this block, just in time for rendering.
          *
-         * @param array $attributes  Any attributes that currently are available from the block.
+         * @param array    $attributes  Any attributes that currently are available from the block.
+         * @param string   $content    The block content.
+         * @param WP_Block $block    The block object.
          */
-        protected function enqueue_assets(array $attributes)
+        protected function enqueue_assets(array $attributes, $content, $block)
         {
         }
         /**
@@ -9167,9 +9191,11 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         /**
          * Enqueue frontend assets for this block, just in time for rendering.
          *
-         * @param array $attributes  Any attributes that currently are available from the block.
+         * @param array    $attributes  Any attributes that currently are available from the block.
+         * @param string   $content    The block content.
+         * @param WP_Block $block    The block object.
          */
-        protected function enqueue_assets(array $attributes)
+        protected function enqueue_assets(array $attributes, $content, $block)
         {
         }
         /**
@@ -9824,6 +9850,25 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         protected function get_block_type_style()
         {
         }
+        /**
+         * Include and render the block.
+         *
+         * @param array    $attributes Block attributes. Default empty array.
+         * @param string   $content    Block content. Default empty string.
+         * @param WP_Block $block      Block instance.
+         * @return string Rendered block type output.
+         */
+        protected function render($attributes, $content, $block)
+        {
+        }
+        /**
+         * Get the Interactivity API's view script handle for this block type.
+         *
+         * @param string $key Data to get, or default to everything.
+         */
+        protected function get_block_type_script($key = null)
+        {
+        }
     }
     /**
      * ProductGalleryLargeImage class.
@@ -9836,6 +9881,102 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @var string
          */
         protected $block_name = 'product-gallery-large-image';
+        /**
+         *  Register the context
+         *
+         * @return string[]
+         */
+        protected function get_block_type_uses_context()
+        {
+        }
+        /**
+         * Enqueue frontend assets for this block, just in time for rendering.
+         *
+         * @param array    $attributes  Any attributes that currently are available from the block.
+         * @param string   $content    The block content.
+         * @param WP_Block $block    The block object.
+         */
+        protected function enqueue_assets(array $attributes, $content, $block)
+        {
+        }
+        /**
+         * Include and render the block.
+         *
+         * @param array    $attributes Block attributes. Default empty array.
+         * @param string   $content    Block content. Default empty string.
+         * @param WP_Block $block      Block instance.
+         * @return string Rendered block type output.
+         */
+        protected function render($attributes, $content, $block)
+        {
+        }
+        /**
+         * Get the HTML that adds interactivity to the image. This is used for the hover zoom effect.
+         *
+         * @param string $image_html The image HTML.
+         * @return array
+         */
+        private function get_html_with_interactivity($image_html)
+        {
+        }
+    }
+    /**
+     * ProductGalleryLargeImage class.
+     */
+    class ProductGalleryLargeImageNextPrevious extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'product-gallery-large-image-next-previous';
+        /**
+         * It isn't necessary register block assets because it is a server side block.
+         */
+        protected function register_block_type_assets()
+        {
+        }
+        /**
+         *  Register the context
+         *
+         * @return string[]
+         */
+        protected function get_block_type_uses_context()
+        {
+        }
+        /**
+         *  Return class suffix
+         *
+         * @param array $context Block context.
+         * @return string
+         */
+        private function get_class_suffix($context)
+        {
+        }
+        /**
+         * Include and render the block.
+         *
+         * @param array    $attributes Block attributes. Default empty array.
+         * @param string   $content    Block content. Default empty string.
+         * @param WP_Block $block      Block instance.
+         * @return string Rendered block type output.
+         */
+        protected function render($attributes, $content, $block)
+        {
+        }
+    }
+    /**
+     * ProductGalleryPager class.
+     */
+    class ProductGalleryPager extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'product-gallery-pager';
         /**
          * It isn't necessary register block assets because it is a server side block.
          */
@@ -9859,6 +10000,48 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @return string Rendered block type output.
          */
         protected function render($attributes, $content, $block)
+        {
+        }
+        /**
+         * Renders the pager based on the given display mode.
+         *
+         * @param string $pager_display_mode The display mode for the pager. Possible values are 'dots', 'digits', and 'off'.
+         *
+         * @return string|null The rendered pager HTML, or null if the pager is disabled.
+         */
+        private function render_pager($pager_display_mode)
+        {
+        }
+        /**
+         * Renders the digits pager HTML.
+         *
+         * @return string The rendered digits pager HTML.
+         */
+        private function render_digits_pager()
+        {
+        }
+        /**
+         * Renders the dots pager HTML.
+         *
+         * @return string The rendered dots pager HTML.
+         */
+        private function render_dots_pager()
+        {
+        }
+        /**
+         * Returns the dot icon SVG code.
+         *
+         * @return string The dot icon SVG code.
+         */
+        private function get_dot_icon()
+        {
+        }
+        /**
+         * Returns the selected dot icon SVG code.
+         *
+         * @return string The selected dot icon SVG code.
+         */
+        private function get_selected_dot_icon()
         {
         }
     }
@@ -21317,6 +21500,43 @@ namespace Automattic\WooCommerce\Blocks\Utils {
          * @return bool|int Returns true if the current WordPress version satisfies the comparison, false otherwise.
          */
         public static function wp_version_compare($version, $operator = null)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Blocks\Verticals {
+    /**
+     * Verticals API client.
+     */
+    class Client
+    {
+        const ENDPOINT = 'https://public-api.wordpress.com/wpcom/v2/site-verticals';
+        /**
+         * Make a request to the Verticals API.
+         *
+         * @param string $url The endpoint URL.
+         *
+         * @return array|\WP_Error The response body, or WP_Error if the request failed.
+         */
+        private function request(string $url)
+        {
+        }
+        /**
+         * Returns a list of verticals that have images.
+         *
+         * @return array|\WP_Error Array of verticals, or WP_Error if the request failed.
+         */
+        public function get_verticals()
+        {
+        }
+        /**
+         * Returns the list of images for the given vertical ID.
+         *
+         * @param int $vertical_id The vertical ID.
+         *
+         * @return array|\WP_Error Array of images, or WP_Error if the request failed.
+         */
+        public function get_vertical_images(int $vertical_id)
         {
         }
     }

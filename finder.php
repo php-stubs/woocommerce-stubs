@@ -23,6 +23,13 @@ return \StubsGenerator\Finder::create()
             ->depth('< 1')
             ->path('AccessiblePrivateMethods.php')
     )
+    ->append(
+        \StubsGenerator\Finder::create()
+            ->in(['source/woocommerce/src/Internal/Admin/BlockTemplates'])
+            ->files()
+            ->depth('< 1')
+            //->path('AbstractBlockTemplate.php')
+    )
 /*
     ->append(
         \StubsGenerator\Finder::create()

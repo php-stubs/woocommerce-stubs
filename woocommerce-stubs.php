@@ -1392,7 +1392,7 @@ namespace {
         /**
          * Set the customer address.
          * @param array $address Address data.
-         * @param string $type billing or shipping.
+         * @param string $type Type of address; 'billing' or 'shipping'.
          */
         public function set_address($address, $type = 'billing')
         {
@@ -6516,6 +6516,14 @@ namespace {
         {
         }
         /**
+         * Fetch featured products from WCCOM's the Featured 2.0 Endpoint and cache the data for a day.
+         *
+         * @return array|WP_Error
+         */
+        public static function fetch_featured()
+        {
+        }
+        /**
          * Check if the error is due to an SSL error
          *
          * @param string $error_message Error message.
@@ -7879,6 +7887,15 @@ namespace {
         {
         }
         /**
+         * Registers the wc-addons page within the WooCommerce menu.
+         * Temporary measure till we convert the whole page to React.
+         *
+         * @return void
+         */
+        public function addons_my_subscriptions()
+        {
+        }
+        /**
          * Highlights the correct top level admin menu item for post type add screens.
          */
         public function menu_highlight()
@@ -8092,150 +8109,11 @@ namespace {
         {
         }
     }
-}
-namespace Automattic\WooCommerce\Internal\Traits {
-    /**
-     * This trait allows making private methods of a class accessible from outside.
-     * This is useful to define hook handlers with the [$this, 'method'] or [__CLASS__, 'method'] syntax
-     * without having to make the method public (and thus having to keep it forever for backwards compatibility).
-     *
-     * Example:
-     *
-     * class Foobar {
-     *   use AccessiblePrivateMethods;
-     *
-     *   public function __construct() {
-     *     self::add_action('some_action', [$this, 'handle_some_action']);
-     *   }
-     *
-     *   public static function init() {
-     *     self::add_filter('some_filter', [__CLASS__, 'handle_some_filter']);
-     *   }
-     *
-     *   private function handle_some_action() {
-     *   }
-     *
-     *   private static function handle_some_filter() {
-     *   }
-     * }
-     *
-     * For this to work the callback must be an array and the first element of the array must be either '$this', '__CLASS__',
-     * or another instance of the same class; otherwise the method won't be marked as accessible
-     * (but the corresponding WordPress 'add_action' and 'add_filter' functions will still be called).
-     *
-     * No special procedure is needed to remove hooks set up with these methods, the regular 'remove_action'
-     * and 'remove_filter' functions provided by WordPress can be used as usual.
-     */
-    trait AccessiblePrivateMethods
-    {
-        //phpcs:disable PSR2.Classes.PropertyDeclaration.Underscore
-        /**
-         * List of instance methods marked as externally accessible.
-         *
-         * @var array
-         */
-        private $_accessible_private_methods = array();
-        /**
-         * List of static methods marked as externally accessible.
-         *
-         * @var array
-         */
-        private static $_accessible_static_private_methods = array();
-        //phpcs:enable PSR2.Classes.PropertyDeclaration.Underscore
-        /**
-         * Register a WordPress action.
-         * If the callback refers to a private or protected instance method in this class, the method is marked as externally accessible.
-         *
-         * $callback can be a standard callable, or a string representing the name of a method in this class.
-         *
-         * @param string          $hook_name       The name of the action to add the callback to.
-         * @param callable|string $callback        The callback to be run when the action is called.
-         * @param int             $priority        Optional. Used to specify the order in which the functions
-         *                                         associated with a particular action are executed.
-         *                                         Lower numbers correspond with earlier execution,
-         *                                         and functions with the same priority are executed
-         *                                         in the order in which they were added to the action. Default 10.
-         * @param int             $accepted_args   Optional. The number of arguments the function accepts. Default 1.
-         */
-        protected static function add_action(string $hook_name, $callback, int $priority = 10, int $accepted_args = 1) : void
-        {
-        }
-        /**
-         * Register a WordPress filter.
-         * If the callback refers to a private or protected instance method in this class, the method is marked as externally accessible.
-         *
-         * $callback can be a standard callable, or a string representing the name of a method in this class.
-         *
-         * @param string          $hook_name       The name of the filter to add the callback to.
-         * @param callable|string $callback        The callback to be run when the filter is called.
-         * @param int             $priority        Optional. Used to specify the order in which the functions
-         *                                         associated with a particular filter are executed.
-         *                                         Lower numbers correspond with earlier execution,
-         *                                         and functions with the same priority are executed
-         *                                         in the order in which they were added to the filter. Default 10.
-         * @param int             $accepted_args   Optional. The number of arguments the function accepts. Default 1.
-         */
-        protected static function add_filter(string $hook_name, $callback, int $priority = 10, int $accepted_args = 1) : void
-        {
-        }
-        /**
-         * Do the required processing to a callback before invoking the WordPress 'add_action' or 'add_filter' function.
-         *
-         * @param callable $callback The callback to process.
-         * @return void
-         */
-        protected static function process_callback_before_hooking($callback) : void
-        {
-        }
-        /**
-         * Register a private or protected instance method of this class as externally accessible.
-         *
-         * @param string $method_name Method name.
-         * @return bool True if the method has been marked as externally accessible, false if the method doesn't exist.
-         */
-        protected function mark_method_as_accessible(string $method_name) : bool
-        {
-        }
-        /**
-         * Register a private or protected static method of this class as externally accessible.
-         *
-         * @param string $method_name Method name.
-         * @return bool True if the method has been marked as externally accessible, false if the method doesn't exist.
-         */
-        protected static function mark_static_method_as_accessible(string $method_name) : bool
-        {
-        }
-        /**
-         * Undefined/inaccessible instance method call handler.
-         *
-         * @param string $name Called method name.
-         * @param array  $arguments Called method arguments.
-         * @return mixed
-         * @throws \Error The called instance method doesn't exist or is private/protected and not marked as externally accessible.
-         */
-        public function __call($name, $arguments)
-        {
-        }
-        /**
-         * Undefined/inaccessible static method call handler.
-         *
-         * @param string $name Called method name.
-         * @param array  $arguments Called method arguments.
-         * @return mixed
-         * @throws \Error The called static method doesn't exist or is private/protected and not marked as externally accessible.
-         */
-        public static function __callStatic($name, $arguments)
-        {
-        }
-    }
-}
-namespace {
     /**
      * WC_Admin_Notices Class.
      */
     class WC_Admin_Notices
     {
-        use \Automattic\WooCommerce\Internal\Traits\AccessiblePrivateMethods;
         /**
          * Stores notices.
          *
@@ -8247,7 +8125,7 @@ namespace {
          *
          * @var array
          */
-        private static $core_notices = array('update' => 'update_notice', 'template_files' => 'template_file_check_notice', 'legacy_shipping' => 'legacy_shipping_notice', 'no_shipping_methods' => 'no_shipping_methods_notice', 'regenerating_thumbnails' => 'regenerating_thumbnails_notice', 'regenerating_lookup_table' => 'regenerating_lookup_table_notice', 'no_secure_connection' => 'secure_connection_notice', \WC_PHP_MIN_REQUIREMENTS_NOTICE => 'wp_php_min_requirements_notice', 'maxmind_license_key' => 'maxmind_missing_license_key_notice', 'redirect_download_method' => 'redirect_download_method_notice', 'uploads_directory_is_unprotected' => 'uploads_directory_is_unprotected_notice', 'base_tables_missing' => 'base_tables_missing_notice', 'download_directories_sync_complete' => 'download_directories_sync_complete');
+        private static $core_notices = array('update' => 'update_notice', 'template_files' => 'template_file_check_notice', 'legacy_shipping' => 'legacy_shipping_notice', 'no_shipping_methods' => 'no_shipping_methods_notice', 'regenerating_thumbnails' => 'regenerating_thumbnails_notice', 'regenerating_lookup_table' => 'regenerating_lookup_table_notice', 'no_secure_connection' => 'secure_connection_notice', 'maxmind_license_key' => 'maxmind_missing_license_key_notice', 'redirect_download_method' => 'redirect_download_method_notice', 'uploads_directory_is_unprotected' => 'uploads_directory_is_unprotected_notice', 'base_tables_missing' => 'base_tables_missing_notice', 'download_directories_sync_complete' => 'download_directories_sync_complete');
         /**
          * Constructor.
          */
@@ -8290,26 +8168,6 @@ namespace {
         public static function reset_admin_notices()
         {
         }
-        // phpcs:disable Generic.Commenting.Todo.TaskFound
-        /**
-         * Add an admin notice about the bump of the required PHP version in WooCommerce 8.2
-         * if the current PHP version is too old.
-         *
-         * TODO: Remove this method in WooCommerce 8.2.
-         */
-        private static function maybe_add_php74_required_notice()
-        {
-        }
-        /**
-         * Remove the admin notice about the bump of the required PHP version in WooCommerce 8.2
-         * if the current PHP version is good.
-         *
-         * TODO: Remove this method in WooCommerce 8.2.
-         */
-        private static function maybe_remove_php74_required_notice()
-        {
-        }
-        // phpcs:enable Generic.Commenting.Todo.TaskFound
         /**
          * Show a notice.
          *
@@ -8437,6 +8295,8 @@ namespace {
         }
         /**
          * Notice about WordPress and PHP minimum requirements.
+         * 
+         * @deprecated 8.2.0 WordPress and PHP minimum requirements notices are no longer shown.
          *
          * @since 3.6.5
          * @return void
@@ -10300,6 +10160,65 @@ namespace {
          * @return string
          */
         public function include_admin_body_class($classes)
+        {
+        }
+    }
+    /**
+     * WC_Helper Class
+     *
+     * The main entry-point for all things related to the Helper.
+     * The Helper manages the connection between the store and
+     * an account on WooCommerce.com.
+     */
+    class WC_Helper_Admin
+    {
+        /**
+         * Loads the class, runs on init
+         *
+         * @return void
+         */
+        public static function load()
+        {
+        }
+        /**
+         * Pushes settings onto the WooCommerce Admin global settings object (wcSettings).
+         *
+         * @param mixed $settings The settings object we're amending.
+         *
+         * @return mixed $settings
+         */
+        public static function add_marketplace_settings($settings)
+        {
+        }
+        /**
+         * Generates the URL for connecting or disconnecting the store to/from WooCommerce.com.
+         * Approach taken from existing helper code that isn't exposed.
+         *
+         * @return string
+         */
+        public static function get_connection_url()
+        {
+        }
+        /**
+         * Registers the REST routes for the featured products endpoint.
+         * This endpoint is used by the WooCommerce > Extensions > Discover
+         * page.
+         */
+        public static function register_rest_routes()
+        {
+        }
+        /**
+         * The Extensions page can only be accessed by users with the manage_woocommerce
+         * capability. So the API mimics that behavior.
+         */
+        public static function get_permission()
+        {
+        }
+        /**
+         * Fetch featured procucts from WooCommerce.com and serve them
+         * as JSON.
+         */
+        public static function get_featured()
         {
         }
     }
@@ -16426,13 +16345,6 @@ namespace {
          */
         private $fees = array();
         /**
-         * Reference to cart object.
-         *
-         * @since 3.2.0
-         * @var WC_Cart
-         */
-        private $cart;
-        /**
          * New fees are made out of these props.
          *
          * @var array
@@ -16441,11 +16353,11 @@ namespace {
         /**
          * Constructor. Reference to the cart.
          *
+         * @param null $deprecated Deprecated since WooCommerce 8.2.0.
+         *
          * @since 3.2.0
-         * @throws Exception If missing WC_Cart object.
-         * @param WC_Cart $cart Cart object.
          */
-        public function __construct(&$cart)
+        public function __construct($deprecated = \null)
         {
         }
         /**
@@ -16530,7 +16442,15 @@ namespace {
          *
          * @param WC_Cart $cart Cart object to calculate totals for.
          */
-        public function __construct(&$cart)
+        public function __construct($cart)
+        {
+        }
+        /**
+         * Sets the cart instance.
+         *
+         * @param WC_Cart $cart Cart object.
+         */
+        public function set_cart(\WC_Cart $cart)
         {
         }
         /**
@@ -18585,7 +18505,7 @@ namespace {
          * Get a posted address field after sanitization and validation.
          *
          * @param string $key  Field key.
-         * @param string $type Type of address. Available options: 'billing' or 'shipping'.
+         * @param string $type Type of address; 'billing' or 'shipping'.
          * @return string
          */
         public function get_posted_address_data($key, $type = 'billing')
@@ -20817,11 +20737,11 @@ namespace {
          *
          * @since  3.0.0
          * @param  string $prop Name of prop to get.
-         * @param  string $address billing or shipping.
-         * @param  string $context What the value is for. Valid values are 'view' and 'edit'. What the value is for. Valid values are view and edit.
+         * @param  string $address_type Type of address; 'billing' or 'shipping'.
+         * @param  string $context What the value is for. Valid values are 'view' and 'edit'.
          * @return mixed
          */
-        protected function get_address_prop($prop, $address = 'billing', $context = 'view')
+        protected function get_address_prop($prop, $address_type = 'billing', $context = 'view')
         {
         }
         /**
@@ -21181,11 +21101,11 @@ namespace {
          * Sets a prop for a setter method.
          *
          * @since 3.0.0
-         * @param string $prop    Name of prop to set.
-         * @param string $address Name of address to set. billing or shipping.
-         * @param mixed  $value   Value of the prop.
+         * @param string $prop         Name of prop to set.
+         * @param string $address_type Type of address; 'billing' or 'shipping'.
+         * @param mixed  $value        Value of the prop.
          */
-        protected function set_address_prop($prop, $address, $value)
+        protected function set_address_prop($prop, $address_type, $value)
         {
         }
         /**
@@ -23655,6 +23575,144 @@ namespace {
         {
         }
     }
+}
+namespace Automattic\WooCommerce\Internal\Traits {
+    /**
+     * This trait allows making private methods of a class accessible from outside.
+     * This is useful to define hook handlers with the [$this, 'method'] or [__CLASS__, 'method'] syntax
+     * without having to make the method public (and thus having to keep it forever for backwards compatibility).
+     *
+     * Example:
+     *
+     * class Foobar {
+     *   use AccessiblePrivateMethods;
+     *
+     *   public function __construct() {
+     *     self::add_action('some_action', [$this, 'handle_some_action']);
+     *   }
+     *
+     *   public static function init() {
+     *     self::add_filter('some_filter', [__CLASS__, 'handle_some_filter']);
+     *   }
+     *
+     *   private function handle_some_action() {
+     *   }
+     *
+     *   private static function handle_some_filter() {
+     *   }
+     * }
+     *
+     * For this to work the callback must be an array and the first element of the array must be either '$this', '__CLASS__',
+     * or another instance of the same class; otherwise the method won't be marked as accessible
+     * (but the corresponding WordPress 'add_action' and 'add_filter' functions will still be called).
+     *
+     * No special procedure is needed to remove hooks set up with these methods, the regular 'remove_action'
+     * and 'remove_filter' functions provided by WordPress can be used as usual.
+     */
+    trait AccessiblePrivateMethods
+    {
+        //phpcs:disable PSR2.Classes.PropertyDeclaration.Underscore
+        /**
+         * List of instance methods marked as externally accessible.
+         *
+         * @var array
+         */
+        private $_accessible_private_methods = array();
+        /**
+         * List of static methods marked as externally accessible.
+         *
+         * @var array
+         */
+        private static $_accessible_static_private_methods = array();
+        //phpcs:enable PSR2.Classes.PropertyDeclaration.Underscore
+        /**
+         * Register a WordPress action.
+         * If the callback refers to a private or protected instance method in this class, the method is marked as externally accessible.
+         *
+         * $callback can be a standard callable, or a string representing the name of a method in this class.
+         *
+         * @param string          $hook_name       The name of the action to add the callback to.
+         * @param callable|string $callback        The callback to be run when the action is called.
+         * @param int             $priority        Optional. Used to specify the order in which the functions
+         *                                         associated with a particular action are executed.
+         *                                         Lower numbers correspond with earlier execution,
+         *                                         and functions with the same priority are executed
+         *                                         in the order in which they were added to the action. Default 10.
+         * @param int             $accepted_args   Optional. The number of arguments the function accepts. Default 1.
+         */
+        protected static function add_action(string $hook_name, $callback, int $priority = 10, int $accepted_args = 1) : void
+        {
+        }
+        /**
+         * Register a WordPress filter.
+         * If the callback refers to a private or protected instance method in this class, the method is marked as externally accessible.
+         *
+         * $callback can be a standard callable, or a string representing the name of a method in this class.
+         *
+         * @param string          $hook_name       The name of the filter to add the callback to.
+         * @param callable|string $callback        The callback to be run when the filter is called.
+         * @param int             $priority        Optional. Used to specify the order in which the functions
+         *                                         associated with a particular filter are executed.
+         *                                         Lower numbers correspond with earlier execution,
+         *                                         and functions with the same priority are executed
+         *                                         in the order in which they were added to the filter. Default 10.
+         * @param int             $accepted_args   Optional. The number of arguments the function accepts. Default 1.
+         */
+        protected static function add_filter(string $hook_name, $callback, int $priority = 10, int $accepted_args = 1) : void
+        {
+        }
+        /**
+         * Do the required processing to a callback before invoking the WordPress 'add_action' or 'add_filter' function.
+         *
+         * @param callable $callback The callback to process.
+         * @return void
+         */
+        protected static function process_callback_before_hooking($callback) : void
+        {
+        }
+        /**
+         * Register a private or protected instance method of this class as externally accessible.
+         *
+         * @param string $method_name Method name.
+         * @return bool True if the method has been marked as externally accessible, false if the method doesn't exist.
+         */
+        protected function mark_method_as_accessible(string $method_name) : bool
+        {
+        }
+        /**
+         * Register a private or protected static method of this class as externally accessible.
+         *
+         * @param string $method_name Method name.
+         * @return bool True if the method has been marked as externally accessible, false if the method doesn't exist.
+         */
+        protected static function mark_static_method_as_accessible(string $method_name) : bool
+        {
+        }
+        /**
+         * Undefined/inaccessible instance method call handler.
+         *
+         * @param string $name Called method name.
+         * @param array  $arguments Called method arguments.
+         * @return mixed
+         * @throws \Error The called instance method doesn't exist or is private/protected and not marked as externally accessible.
+         */
+        public function __call($name, $arguments)
+        {
+        }
+        /**
+         * Undefined/inaccessible static method call handler.
+         *
+         * @param string $name Called method name.
+         * @param array  $arguments Called method arguments.
+         * @return mixed
+         * @throws \Error The called static method doesn't exist or is private/protected and not marked as externally accessible.
+         */
+        public static function __callStatic($name, $arguments)
+        {
+        }
+    }
+}
+namespace {
     /**
      * WC_Install Class.
      */
@@ -23901,6 +23959,22 @@ namespace {
          * Sets up the default options used on the settings page.
          */
         private static function create_options()
+        {
+        }
+        /**
+         * Enable HPOS by default for new shops.
+         *
+         * @since 8.2.0
+         */
+        public static function maybe_enable_hpos()
+        {
+        }
+        /**
+         * Checks whether HPOS should be enabled for new shops.
+         *
+         * @return bool
+         */
+        private static function should_enable_hpos_for_new_shop()
         {
         }
         /**
@@ -26564,11 +26638,11 @@ namespace {
          *
          * @since  3.0.0
          * @param  string $prop Name of prop to get.
-         * @param  string $address billing or shipping.
+         * @param  string $address_type Type of address; 'billing' or 'shipping'.
          * @param  string $context What the value is for. Valid values are view and edit.
          * @return mixed
          */
-        protected function get_address_prop($prop, $address = 'billing', $context = 'view')
+        protected function get_address_prop($prop, $address_type = 'billing', $context = 'view')
         {
         }
         /**
@@ -26856,10 +26930,10 @@ namespace {
          * Note: Merges raw data with get_prop data so changes are returned too.
          *
          * @since  2.4.0
-         * @param  string $type Billing or shipping. Anything else besides 'billing' will return shipping address.
+         * @param  string $address_type Type of address; 'billing' or 'shipping'.
          * @return array The stored address after filter.
          */
-        public function get_address($type = 'billing')
+        public function get_address($address_type = 'billing')
         {
         }
         /**
@@ -26978,10 +27052,10 @@ namespace {
          *
          * @since 3.0.0
          * @param string $prop Name of prop to set.
-         * @param string $address Name of address to set. billing or shipping.
+         * @param string $address_type Type of address; 'billing' or 'shipping'.
          * @param mixed  $value Value of the prop.
          */
-        protected function set_address_prop($prop, $address, $value)
+        protected function set_address_prop($prop, $address_type, $value)
         {
         }
         /**
@@ -34311,7 +34385,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '8.1.1';
+        public $version = '8.2.0';
         /**
          * WooCommerce Schema version.
          *
@@ -41612,18 +41686,9 @@ namespace {
         {
         }
         /**
-         * Write to the CSV file, ensuring escaping works across versions of
-         * PHP.
+         * Write to the CSV file.
          *
-         * PHP 5.5.4 uses '\' as the default escape character. This is not RFC-4180 compliant.
-         * \0 disables the escape character.
-         *
-         * @see https://bugs.php.net/bug.php?id=43225
-         * @see https://bugs.php.net/bug.php?id=50686
-         * @see https://github.com/woocommerce/woocommerce/issues/19514
          * @since 3.4.0
-         * @see https://github.com/woocommerce/woocommerce/issues/24579
-         * @since 3.9.0
          * @param resource $buffer Resource we are writing to.
          * @param array    $export_row Row to export.
          */
@@ -46466,9 +46531,9 @@ namespace {
         /**
          * Update address.
          *
-         * @param WC_Order $order
-         * @param array $posted
-         * @param string $type
+         * @param WC_Order $order  Order object.
+         * @param array    $posted Request data.
+         * @param string   $type   Type of address; 'billing' or 'shipping'.
          */
         protected function update_address($order, $posted, $type = 'billing')
         {
@@ -49282,7 +49347,7 @@ namespace {
          *
          * @param WC_Order $order  Order data.
          * @param array    $posted Posted data.
-         * @param string   $type   Address type.
+         * @param string   $type   Type of address; 'billing' or 'shipping'.
          */
         protected function update_address($order, $posted, $type = 'billing')
         {
@@ -52359,6 +52424,25 @@ namespace {
          * @var string
          */
         protected $namespace = 'wc/v3';
+        /**
+         * Generates a unique slug for a given attribute name. We do this so that we can 
+         * create more than one attribute with the same name.
+         *
+         * @param string $attribute_name The attribute name to generate a slug for.
+         * @return string The auto-generated slug
+         */
+        private function generate_unique_slug($attribute_name)
+        {
+        }
+        /**
+         * Create a single attribute.
+         *
+         * @param WP_REST_Request $request Full details about the request.
+         * @return WP_REST_Request|WP_Error
+         */
+        public function create_item($request)
+        {
+        }
     }
     /**
      * REST API Product Categories controller class.
@@ -54473,7 +54557,7 @@ namespace {
         /**
          * Edit address page.
          *
-         * @param string $load_address Type of address to load.
+         * @param string $load_address Type of address; 'billing' or 'shipping'.
          */
         public static function edit_address($load_address = 'billing')
         {
@@ -59551,6 +59635,12 @@ namespace Automattic\WooCommerce\Admin\API {
          * @return array
          */
         public function get_install_activate_schema()
+        {
+        }
+        public function log_plugins_install_error($slug, $api, $result, $upgrader)
+        {
+        }
+        public function log_plugins_install_api_error($slug, $api)
         {
         }
     }
@@ -67225,11 +67315,21 @@ namespace Automattic\WooCommerce\Admin\BlockTemplates {
         /**
          * Get the parent container that the block belongs to.
          */
-        public function &get_parent() : ?\Automattic\WooCommerce\Admin\BlockTemplates\ContainerInterface;
+        public function &get_parent() : \Automattic\WooCommerce\Admin\BlockTemplates\ContainerInterface;
         /**
          * Get the root template that the block belongs to.
          */
         public function &get_root_template() : \Automattic\WooCommerce\Admin\BlockTemplates\BlockTemplateInterface;
+        /**
+         * Remove the block from its parent.
+         */
+        public function remove();
+        /**
+         * Check if the block is detached from its parent or root template.
+         *
+         * @return bool True if the block is detached from its parent or root template.
+         */
+        public function is_detached() : bool;
         /**
          * Get the block configuration as a formatted template.
          *
@@ -67250,6 +67350,24 @@ namespace Automattic\WooCommerce\Admin\BlockTemplates {
          * Get the block configuration as a formatted template.
          */
         public function get_formatted_template() : array;
+        /**
+         * Get a block by ID.
+         *
+         * @param string $block_id The block ID.
+         */
+        public function get_block(string $block_id) : ?\Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface;
+        /**
+         * Removes a block from the container.
+         *
+         * @param string $block_id The block ID.
+         *
+         * @throws \UnexpectedValueException If the block container is not an ancestor of the block.
+         */
+        public function remove_block(string $block_id);
+        /**
+         * Removes all blocks from the container.
+         */
+        public function remove_blocks();
     }
     /**
      * Interface for block containers.
@@ -67278,12 +67396,6 @@ namespace Automattic\WooCommerce\Admin\BlockTemplates {
          * Get the template area.
          */
         public function get_area() : string;
-        /**
-         * Get a block by ID.
-         *
-         * @param string $block_id The block ID.
-         */
-        public function get_block(string $block_id) : ?\Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface;
         /**
          * Generate a block ID based on a base.
          *
@@ -68752,6 +68864,14 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
         {
         }
         /**
+         * Badge.
+         *
+         * @return string
+         */
+        public function get_badge()
+        {
+        }
+        /**
          * Level.
          *
          * @deprecated 7.2.0
@@ -69541,7 +69661,7 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
          *
          * @var array
          */
-        const DEFAULT_TASKS = array('StoreDetails', 'Purchase', 'Products', 'WooCommercePayments', 'Payments', 'Tax', 'Shipping', 'Marketing', 'Appearance', 'AdditionalPayments', 'ReviewShippingOptions', 'GetMobileApp', 'TourInAppMarketplace');
+        const DEFAULT_TASKS = array('StoreDetails', 'Products', 'WooCommercePayments', 'Payments', 'Tax', 'Shipping', 'Marketing', 'Appearance', 'AdditionalPayments', 'ReviewShippingOptions', 'GetMobileApp');
         /**
          * Get class instance.
          */
@@ -69869,11 +69989,9 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
     class Appearance extends \Automattic\WooCommerce\Admin\Features\OnboardingTasks\Task
     {
         /**
-         * Constructor
-         *
-         * @param TaskList $task_list Parent task list.
+         * Constructor.
          */
-        public function __construct($task_list)
+        public function __construct()
         {
         }
         /**
@@ -69909,31 +70027,11 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
         {
         }
         /**
-         * Addtional data.
+         * Action label.
          *
-         * @return array
+         * @return string
          */
-        public function get_additional_data()
-        {
-        }
-        /**
-         * Add media scripts for image uploader.
-         */
-        public function add_media_scripts()
-        {
-        }
-        /**
-         * Adds a return to task list notice when completing the task.
-         *
-         * @param string $hook Page hook.
-         */
-        public function possibly_add_return_notice_script($hook)
-        {
-        }
-        /**
-         * Check if the site has a homepage set up.
-         */
-        public static function has_homepage()
+        public function get_action_label()
         {
         }
     }
@@ -69942,6 +70040,14 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
      */
     class CustomizeStore extends \Automattic\WooCommerce\Admin\Features\OnboardingTasks\Task
     {
+        /**
+         * Constructor
+         *
+         * @param TaskList $task_list Parent task list.
+         */
+        public function __construct($task_list)
+        {
+        }
         /**
          * ID.
          *
@@ -69991,11 +70097,15 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
         {
         }
         /**
-         * Action URL.
-         *
-         * @return string
+         * Possibly add site editor scripts.
          */
-        public function get_action_url()
+        public function possibly_add_site_editor_scripts()
+        {
+        }
+        /**
+         * Mark task as complete.
+         */
+        public function mark_task_as_complete()
         {
         }
     }
@@ -70886,6 +70996,14 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
         {
         }
         /**
+         * Badge.
+         *
+         * @return string
+         */
+        public function get_badge()
+        {
+        }
+        /**
          * Content.
          *
          * @return string
@@ -71230,7 +71348,7 @@ namespace Automattic\WooCommerce\Admin\Features\ProductBlockEditor {
         /**
          * Array of all available product blocks.
          */
-        const PRODUCT_BLOCKS = ['woocommerce/conditional', 'woocommerce/product-catalog-visibility-field', 'woocommerce/product-category-field', 'woocommerce/product-checkbox-field', 'woocommerce/product-collapsible', 'woocommerce/product-description-field', 'woocommerce/product-images-field', 'woocommerce/product-inventory-email-field', 'woocommerce/product-sku-field', 'woocommerce/product-name-field', 'woocommerce/product-pricing-field', 'woocommerce/product-radio-field', 'woocommerce/product-regular-price-field', 'woocommerce/product-sale-price-field', 'woocommerce/product-schedule-sale-fields', 'woocommerce/product-section', 'woocommerce/product-shipping-class-field', 'woocommerce/product-shipping-dimensions-fields', 'woocommerce/product-summary-field', 'woocommerce/product-tab', 'woocommerce/product-inventory-quantity-field', 'woocommerce/product-toggle-field', 'woocommerce/product-variation-items-field', 'woocommerce/product-variations-fields', 'woocommerce/product-password-field', 'woocommerce/product-has-variations-notice'];
+        const PRODUCT_BLOCKS = ['woocommerce/conditional', 'woocommerce/product-catalog-visibility-field', 'woocommerce/product-checkbox-field', 'woocommerce/product-collapsible', 'woocommerce/product-description-field', 'woocommerce/product-images-field', 'woocommerce/product-inventory-email-field', 'woocommerce/product-sku-field', 'woocommerce/product-name-field', 'woocommerce/product-pricing-field', 'woocommerce/product-radio-field', 'woocommerce/product-regular-price-field', 'woocommerce/product-sale-price-field', 'woocommerce/product-schedule-sale-fields', 'woocommerce/product-section', 'woocommerce/product-shipping-class-field', 'woocommerce/product-shipping-dimensions-fields', 'woocommerce/product-summary-field', 'woocommerce/product-tab', 'woocommerce/product-tag-field', 'woocommerce/product-inventory-quantity-field', 'woocommerce/product-toggle-field', 'woocommerce/product-variation-items-field', 'woocommerce/product-variations-fields', 'woocommerce/product-password-field', 'woocommerce/product-has-variations-notice', 'woocommerce/product-taxonomy-field'];
         /**
          * Get a file path for a given block file.
          *
@@ -71337,14 +71455,6 @@ namespace Automattic\WooCommerce\Admin\Features\ProductBlockEditor {
         {
         }
         /**
-         * Get the resolved assets needed for the iframe editor.
-         *
-         * @return array Styles and scripts.
-         */
-        private function get_resolved_assets()
-        {
-        }
-        /**
          * Enqueue styles needed for the rich text editor.
          *
          * @param array $args Array of post type arguments.
@@ -71369,6 +71479,643 @@ namespace Automattic\WooCommerce\Admin\Features\ProductBlockEditor {
         {
         }
     }
+}
+namespace Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTemplates {
+    /**
+     * Interface for block containers.
+     */
+    interface ProductFormTemplateInterface extends \Automattic\WooCommerce\Admin\BlockTemplates\BlockTemplateInterface
+    {
+        /**
+         * Adds a new group block.
+         *
+         * @param array $block_config block config.
+         * @return BlockInterface new block section.
+         */
+        public function add_group(array $block_config) : \Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTemplates\GroupInterface;
+        /**
+         * Gets Group block by id.
+         *
+         * @param string $group_id group id.
+         * @return GroupInterface|null
+         */
+        public function get_group_by_id(string $group_id) : ?\Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTemplates\GroupInterface;
+        /**
+         * Gets Section block by id.
+         *
+         * @param string $section_id section id.
+         * @return SectionInterface|null
+         */
+        public function get_section_by_id(string $section_id) : ?\Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTemplates\SectionInterface;
+        /**
+         * Gets Block by id.
+         *
+         * @param string $block_id block id.
+         * @return BlockInterface|null
+         */
+        public function get_block_by_id(string $block_id) : ?\Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface;
+    }
+}
+namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
+    /**
+     * Trait for block containers.
+     */
+    trait BlockContainerTrait
+    {
+        /**
+         * The inner blocks.
+         *
+         * @var BlockInterface[]
+         */
+        private $inner_blocks = [];
+        // phpcs doesn't take into account exceptions thrown by called methods.
+        // phpcs:disable Squiz.Commenting.FunctionCommentThrowTag.WrongNumber
+        /**
+         * Add a block to the block container.
+         *
+         * @param BlockInterface $block The block.
+         *
+         * @throws \ValueError If the block configuration is invalid.
+         * @throws \ValueError If a block with the specified ID already exists in the template.
+         * @throws \UnexpectedValueException If the block container is not the parent of the block.
+         * @throws \UnexpectedValueException If the block container's root template is not the same as the block's root template.
+         */
+        protected function &add_inner_block(\Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface $block) : \Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface
+        {
+        }
+        // phpcs:enable Squiz.Commenting.FunctionCommentThrowTag.WrongNumber
+        /**
+         * Checks if a block is a descendant of the block container.
+         *
+         * @param BlockInterface $block The block.
+         */
+        private function is_block_descendant(\Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface $block) : bool
+        {
+        }
+        /**
+         * Get a block by ID.
+         *
+         * @param string $block_id The block ID.
+         */
+        public function get_block(string $block_id) : ?\Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface
+        {
+        }
+        /**
+         * Remove a block from the block container.
+         *
+         * @param string $block_id The block ID.
+         *
+         * @throws \UnexpectedValueException If the block container is not an ancestor of the block.
+         */
+        public function remove_block(string $block_id)
+        {
+        }
+        /**
+         * Remove all blocks from the block container.
+         */
+        public function remove_blocks()
+        {
+        }
+        /**
+         * Remove a block from the block container's inner blocks. This is an internal method and should not be called directly
+         * except for from the BlockContainerTrait's remove_block() method.
+         *
+         * @param BlockInterface $block The block.
+         */
+        public function remove_inner_block(\Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface $block)
+        {
+        }
+        /**
+         * Get the inner blocks sorted by order.
+         */
+        private function get_inner_blocks_sorted_by_order() : array
+        {
+        }
+        /**
+         * Get the inner blocks as a formatted template.
+         */
+        public function get_formatted_template() : array
+        {
+        }
+        /**
+         * Do the `woocommerce_block_template_after_add_block` action.
+         * Handle exceptions thrown by the action.
+         *
+         * @param BlockInterface $block The block.
+         */
+        private function do_after_add_block_action(\Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface $block)
+        {
+        }
+        /**
+         * Do the `woocommerce_block_template_area_{template_area}_after_add_block_{block_id}` action.
+         * Handle exceptions thrown by the action.
+         *
+         * @param BlockInterface $block The block.
+         */
+        private function do_after_add_specific_block_action(\Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface $block)
+        {
+        }
+        /**
+         * Do the `woocommerce_block_template_after_remove_block` action.
+         * Handle exceptions thrown by the action.
+         *
+         * @param BlockInterface $block The block.
+         */
+        private function do_after_remove_block_action(\Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface $block)
+        {
+        }
+        /**
+         * Do the `woocommerce_block_template_area_{template_area}_after_remove_block_{block_id}` action.
+         * Handle exceptions thrown by the action.
+         *
+         * @param BlockInterface $block The block.
+         */
+        private function do_after_remove_specific_block_action(\Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface $block)
+        {
+        }
+        /**
+         * Handle an exception thrown by an action.
+         *
+         * @param string         $message    The message.
+         * @param string         $action_tag The action tag.
+         * @param BlockInterface $block      The block.
+         * @param \Exception     $e          The exception.
+         */
+        private function handle_exception_doing_action(string $message, string $action_tag, \Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface $block, \Exception $e)
+        {
+        }
+    }
+    /**
+     * Block template class.
+     */
+    abstract class AbstractBlockTemplate implements \Automattic\WooCommerce\Admin\BlockTemplates\BlockTemplateInterface
+    {
+        use \Automattic\WooCommerce\Internal\Admin\BlockTemplates\BlockContainerTrait;
+        /**
+         * Get the template ID.
+         */
+        public abstract function get_id() : string;
+        /**
+         * Get the template title.
+         */
+        public function get_title() : string
+        {
+        }
+        /**
+         * Get the template description.
+         */
+        public function get_description() : string
+        {
+        }
+        /**
+         * Get the template area.
+         */
+        public function get_area() : string
+        {
+        }
+        /**
+         * The block cache.
+         *
+         * @var BlockInterface[]
+         */
+        private $block_cache = [];
+        /**
+         * Get a block by ID.
+         *
+         * @param string $block_id The block ID.
+         */
+        public function get_block(string $block_id) : ?\Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface
+        {
+        }
+        /**
+         * Caches a block in the template. This is an internal method and should not be called directly
+         * except for from the BlockContainerTrait's add_inner_block() method.
+         *
+         * @param BlockInterface $block The block to cache.
+         *
+         * @throws \ValueError If a block with the specified ID already exists in the template.
+         * @throws \ValueError If the block template that the block belongs to is not this template.
+         *
+         * @ignore
+         */
+        public function cache_block(\Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface &$block)
+        {
+        }
+        /**
+         * Uncaches a block in the template. This is an internal method and should not be called directly
+         * except for from the BlockContainerTrait's remove_block() method.
+         *
+         * @param string $block_id The block ID.
+         *
+         * @ignore
+         */
+        public function uncache_block(string $block_id)
+        {
+        }
+        /**
+         * Generate a block ID based on a base.
+         *
+         * @param string $id_base The base to use when generating an ID.
+         * @return string
+         */
+        public function generate_block_id(string $id_base) : string
+        {
+        }
+        /**
+         * Get the root template.
+         */
+        public function &get_root_template() : \Automattic\WooCommerce\Admin\BlockTemplates\BlockTemplateInterface
+        {
+        }
+        /**
+         * Get the inner blocks as a formatted template.
+         */
+        public function get_formatted_template() : array
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTemplates {
+    /**
+     * Block template class.
+     */
+    abstract class AbstractProductFormTemplate extends \Automattic\WooCommerce\Internal\Admin\BlockTemplates\AbstractBlockTemplate implements \Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTemplates\ProductFormTemplateInterface
+    {
+        /**
+         * Get the template area.
+         */
+        public function get_area() : string
+        {
+        }
+        /**
+         * Get a group block by ID.
+         *
+         * @param string $group_id The group block ID.
+         * @throws \UnexpectedValueException If block is not of type GroupInterface.
+         */
+        public function get_group_by_id(string $group_id) : ?\Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTemplates\GroupInterface
+        {
+        }
+        /**
+         * Get a section block by ID.
+         *
+         * @param string $section_id The section block ID.
+         * @throws \UnexpectedValueException If block is not of type SectionInterface.
+         */
+        public function get_section_by_id(string $section_id) : ?\Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTemplates\SectionInterface
+        {
+        }
+        /**
+         * Get a block by ID.
+         *
+         * @param string $block_id The block block ID.
+         */
+        public function get_block_by_id(string $block_id) : ?\Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface
+        {
+        }
+        /**
+         * Add a custom block type to this template.
+         *
+         * @param array $block_config The block data.
+         */
+        public function add_group(array $block_config) : \Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTemplates\GroupInterface
+        {
+        }
+    }
+    /**
+     * Interface for block containers.
+     */
+    interface GroupInterface extends \Automattic\WooCommerce\Admin\BlockTemplates\BlockContainerInterface
+    {
+        /**
+         * Adds a new section block.
+         *
+         * @param array $block_config block config.
+         * @return SectionInterface new block section.
+         */
+        public function add_section(array $block_config) : \Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTemplates\SectionInterface;
+        /**
+         * Adds a new block to the section block.
+         *
+         * @param array $block_config block config.
+         */
+        public function add_block(array $block_config) : \Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface;
+    }
+}
+namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
+    /**
+     * Block configuration used to specify blocks in BlockTemplate.
+     */
+    class AbstractBlock implements \Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface
+    {
+        /**
+         * The block name.
+         *
+         * @var string
+         */
+        private $name;
+        /**
+         * The block ID.
+         *
+         * @var string
+         */
+        private $id;
+        /**
+         * The block order.
+         *
+         * @var int
+         */
+        private $order = 10;
+        /**
+         * The block attributes.
+         *
+         * @var array
+         */
+        private $attributes = [];
+        /**
+         * The block template that this block belongs to.
+         *
+         * @var BlockTemplate
+         */
+        private $root_template;
+        /**
+         * The parent container.
+         *
+         * @var ContainerInterface
+         */
+        private $parent;
+        /**
+         * Block constructor.
+         *
+         * @param array                        $config The block configuration.
+         * @param BlockTemplateInterface       $root_template The block template that this block belongs to.
+         * @param BlockContainerInterface|null $parent The parent block container.
+         *
+         * @throws \ValueError If the block configuration is invalid.
+         * @throws \ValueError If the parent block container does not belong to the same template as the block.
+         */
+        public function __construct(array $config, \Automattic\WooCommerce\Admin\BlockTemplates\BlockTemplateInterface &$root_template, \Automattic\WooCommerce\Admin\BlockTemplates\ContainerInterface &$parent = null)
+        {
+        }
+        /**
+         * Validate block configuration.
+         *
+         * @param array                   $config The block configuration.
+         * @param BlockTemplateInterface  $root_template The block template that this block belongs to.
+         * @param ContainerInterface|null $parent The parent block container.
+         *
+         * @throws \ValueError If the block configuration is invalid.
+         * @throws \ValueError If the parent block container does not belong to the same template as the block.
+         */
+        protected function validate(array $config, \Automattic\WooCommerce\Admin\BlockTemplates\BlockTemplateInterface &$root_template, \Automattic\WooCommerce\Admin\BlockTemplates\ContainerInterface &$parent = null)
+        {
+        }
+        /**
+         * Get the block name.
+         */
+        public function get_name() : string
+        {
+        }
+        /**
+         * Get the block ID.
+         */
+        public function get_id() : string
+        {
+        }
+        /**
+         * Get the block order.
+         */
+        public function get_order() : int
+        {
+        }
+        /**
+         * Set the block order.
+         *
+         * @param int $order The block order.
+         */
+        public function set_order(int $order)
+        {
+        }
+        /**
+         * Get the block attributes.
+         */
+        public function get_attributes() : array
+        {
+        }
+        /**
+         * Set the block attributes.
+         *
+         * @param array $attributes The block attributes.
+         */
+        public function set_attributes(array $attributes)
+        {
+        }
+        /**
+         * Get the template that this block belongs to.
+         */
+        public function &get_root_template() : \Automattic\WooCommerce\Admin\BlockTemplates\BlockTemplateInterface
+        {
+        }
+        /**
+         * Get the parent block container.
+         */
+        public function &get_parent() : \Automattic\WooCommerce\Admin\BlockTemplates\ContainerInterface
+        {
+        }
+        /**
+         * Remove the block from its parent.
+         */
+        public function remove()
+        {
+        }
+        /**
+         * Check if the block is detached from its parent block container or the template it belongs to.
+         *
+         * @return bool True if the block is detached from its parent block container or the template it belongs to.
+         */
+        public function is_detached() : bool
+        {
+        }
+        /**
+         * Get the block configuration as a formatted template.
+         *
+         * @return array The block configuration as a formatted template.
+         */
+        public function get_formatted_template() : array
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTemplates {
+    /**
+     * Class for Product block.
+     */
+    class ProductBlock extends \Automattic\WooCommerce\Internal\Admin\BlockTemplates\AbstractBlock implements \Automattic\WooCommerce\Admin\BlockTemplates\ContainerInterface
+    {
+        use \Automattic\WooCommerce\Internal\Admin\BlockTemplates\BlockContainerTrait;
+        /**
+         * Adds block to the section block.
+         *
+         * @param array $block_config The block data.
+         */
+        public function &add_block(array $block_config) : \Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface
+        {
+        }
+    }
+    /**
+     * Class for Group block.
+     */
+    class Group extends \Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTemplates\ProductBlock implements \Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTemplates\GroupInterface
+    {
+        use \Automattic\WooCommerce\Internal\Admin\BlockTemplates\BlockContainerTrait;
+        /**
+         * Group Block constructor.
+         *
+         * @param array                   $config The block configuration.
+         * @param BlockTemplateInterface  $root_template The block template that this block belongs to.
+         * @param ContainerInterface|null $parent The parent block container.
+         *
+         * @throws \ValueError If the block configuration is invalid.
+         * @throws \ValueError If the parent block container does not belong to the same template as the block.
+         * @throws \InvalidArgumentException If blockName key and value are passed into block configuration.
+         */
+        public function __construct(array $config, \Automattic\WooCommerce\Admin\BlockTemplates\BlockTemplateInterface &$root_template, \Automattic\WooCommerce\Admin\BlockTemplates\ContainerInterface &$parent = null)
+        {
+        }
+        /**
+         * Add a section block type to this template.
+         *
+         * @param array $block_config The block data.
+         */
+        public function add_section(array $block_config) : \Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTemplates\SectionInterface
+        {
+        }
+    }
+    /**
+     * Interface for block containers.
+     */
+    interface SectionInterface extends \Automattic\WooCommerce\Admin\BlockTemplates\BlockContainerInterface
+    {
+        /**
+         * Adds a new section block.
+         *
+         * @param array $block_config block config.
+         * @return SectionInterface new block section.
+         */
+        public function add_section(array $block_config) : \Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTemplates\SectionInterface;
+        /**
+         * Adds a new block to the section block.
+         *
+         * @param array $block_config block config.
+         */
+        public function add_block(array $block_config) : \Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface;
+    }
+    /**
+     * Class for Section block.
+     */
+    class Section extends \Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTemplates\ProductBlock implements \Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTemplates\SectionInterface
+    {
+        /**
+         * Section Block constructor.
+         *
+         * @param array                   $config The block configuration.
+         * @param BlockTemplateInterface  $root_template The block template that this block belongs to.
+         * @param ContainerInterface|null $parent The parent block container.
+         *
+         * @throws \ValueError If the block configuration is invalid.
+         * @throws \ValueError If the parent block container does not belong to the same template as the block.
+         * @throws \InvalidArgumentException If blockName key and value are passed into block configuration.
+         */
+        public function __construct(array $config, \Automattic\WooCommerce\Admin\BlockTemplates\BlockTemplateInterface &$root_template, \Automattic\WooCommerce\Admin\BlockTemplates\ContainerInterface &$parent = null)
+        {
+        }
+        /**
+         * Add a section block type to this template.
+         *
+         * @param array $block_config The block data.
+         */
+        public function add_section(array $block_config) : \Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTemplates\SectionInterface
+        {
+        }
+    }
+    /**
+     * Simple Product Template.
+     */
+    class SimpleProductTemplate extends \Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTemplates\AbstractProductFormTemplate implements \Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTemplates\ProductFormTemplateInterface
+    {
+        /**
+         * The context name used to identify the editor.
+         */
+        const GROUP_IDS = array('GENERAL' => 'general', 'ORGANIZATION' => 'organization', 'PRICING' => 'pricing', 'INVENTORY' => 'inventory', 'SHIPPING' => 'shipping', 'VARIATIONS' => 'variations');
+        /**
+         * SimpleProductTemplate constructor.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Get the template ID.
+         */
+        public function get_id() : string
+        {
+        }
+        /**
+         * Get the template title.
+         */
+        public function get_title() : string
+        {
+        }
+        /**
+         * Get the template description.
+         */
+        public function get_description() : string
+        {
+        }
+        /**
+         * Adds the group blocks to the template.
+         */
+        private function add_group_blocks()
+        {
+        }
+        /**
+         * Adds the general group blocks to the template.
+         */
+        private function add_general_group_blocks()
+        {
+        }
+        /**
+         * Adds the organization group blocks to the template.
+         */
+        private function add_organization_group_blocks()
+        {
+        }
+        /**
+         * Adds the pricing group blocks to the template.
+         */
+        private function add_pricing_group_blocks()
+        {
+        }
+        /**
+         * Adds the inventory group blocks to the template.
+         */
+        private function add_inventory_group_blocks()
+        {
+        }
+        /**
+         * Adds the shipping group blocks to the template.
+         */
+        private function add_shipping_group_blocks()
+        {
+        }
+        /**
+         * Adds the variation group blocks to the template.
+         */
+        private function add_variation_group_blocks()
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Admin\Features\ProductBlockEditor {
     /**
      * Handle redirecting to the old or new editor based on features and support.
      */
@@ -74312,9 +75059,10 @@ namespace Automattic\WooCommerce\Admin\PluginsInstallLoggers {
         /**
          * Called when all plugins are processed.
          *
+         * @param array $data return data from install_plugins().
          * @return mixed
          */
-        public function complete();
+        public function complete($data = array());
     }
     /**
      * A logger to log plugin installation progress in real time to an option.
@@ -74398,9 +75146,26 @@ namespace Automattic\WooCommerce\Admin\PluginsInstallLoggers {
         /**
          * Record completed_time.
          *
+         * @param array $data return data from install_plugins().
          * @return void
          */
-        public function complete()
+        public function complete($data = array())
+        {
+        }
+        private function get_plugin_track_key($id)
+        {
+        }
+        /**
+         * Returns time frame for a given time in milliseconds.
+         *
+         * @param int $timeInMs - time in milliseconds
+         *
+         * @return string - Time frame.
+         */
+        function get_timeframe($timeInMs)
+        {
+        }
+        private function track($data)
         {
         }
     }
@@ -77332,7 +78097,7 @@ namespace Automattic\WooCommerce {
          *
          * @var string[]
          */
-        private $service_providers = array(\Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\AssignDefaultCategoryServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\DownloadPermissionsAdjusterServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OptionSanitizerServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrdersDataStoreServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductAttributesLookupServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductDownloadsServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductReviewsServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProxiesServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\RestockRefundedItemsAdjusterServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\UtilsClassesServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\COTMigrationServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrdersControllersServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ObjectCacheServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\BatchProcessingServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrderMetaBoxServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrderAdminServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\FeaturesServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\MarketingServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\BlockTemplatesServiceProvider::class);
+        private $service_providers = array(\Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\AssignDefaultCategoryServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\DownloadPermissionsAdjusterServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OptionSanitizerServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrdersDataStoreServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductAttributesLookupServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductDownloadsServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductReviewsServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProxiesServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\RestockRefundedItemsAdjusterServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\UtilsClassesServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\COTMigrationServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrdersControllersServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ObjectCacheServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\BatchProcessingServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrderMetaBoxServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrderAdminServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\FeaturesServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\MarketingServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\MarketplaceServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\BlockTemplatesServiceProvider::class);
         /**
          * The underlying container.
          *
@@ -77431,12 +78196,6 @@ namespace Automattic\WooCommerce\DataBase\Migrations\CustomOrderTable {
         {
         }
         /**
-         * Helper method to log warning that feature is not yet production ready.
-         */
-        private function log_production_warning()
-        {
-        }
-        /**
          * Count how many orders have yet to be migrated into the custom orders table.
          *
          * ## EXAMPLES
@@ -77474,6 +78233,7 @@ namespace Automattic\WooCommerce\DataBase\Migrations\CustomOrderTable {
         {
         }
         /**
+         * [Deprecated] Use `wp wc cot sync` instead.
          * Copy order data into the postmeta table.
          *
          * Note that this could dramatically increase the size of your postmeta table, but is recommended
@@ -77580,6 +78340,58 @@ namespace Automattic\WooCommerce\DataBase\Migrations\CustomOrderTable {
          * @return array Normalized data.
          */
         private function normalize_raw_meta_data(array $data) : array
+        {
+        }
+        /**
+         * Set custom order tables (HPOS) to authoritative if: 1). HPOS and posts tables are in sync, or, 2). This is a new shop (in this case also create tables). Additionally, all installed WC plugins should be compatible.
+         *
+         * ## OPTIONS
+         *
+         * [--for-new-shop]
+         * : Enable only if this is a new shop, irrespective of whether tables are in sync.
+         * ---
+         * default: false
+         * ---
+         *
+         * [--with-sync]
+         * : Also enables sync (if it's currently not enabled).
+         * ---
+         * default: false
+         * ---
+         *
+         * ### EXAMPLES
+         *
+         *      # Enable HPOS on new shops.
+         *      wp wc cot enable --for-new-shop
+         *
+         * @param array $args Positional arguments passed to the command.
+         * @param array $assoc_args Associative arguments (options) passed to the command.
+         *
+         * @return void
+         */
+        public function enable(array $args = array(), array $assoc_args = array())
+        {
+        }
+        /**
+         * Disables custom order tables (HPOS) and posts to authoritative if HPOS and post tables are in sync.
+         *
+         * ## OPTIONS
+         *
+         * [--with-sync]
+         * : Also disables sync (if it's currently enabled).
+         * ---
+         * default: false
+         * ---
+         *
+         * ### EXAMPLES
+         *
+         *  # Disable HPOS.
+         *  wp wc cot disable
+         *
+         * @param array $args Positional arguments passed to the command.
+         * @param array $assoc_args Associative arguments (options) passed to the command.
+         */
+        public function disable($args, $assoc_args)
         {
         }
     }
@@ -78296,7 +79108,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
     class PostToOrderAddressTableMigrator extends \Automattic\WooCommerce\Database\Migrations\MetaToCustomTableMigrator
     {
         /**
-         * Type of addresses being migrated, could be billing|shipping.
+         * Type of addresses being migrated; 'billing' or 'shipping'.
          *
          * @var $type
          */
@@ -78304,7 +79116,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
         /**
          * PostToOrderAddressTableMigrator constructor.
          *
-         * @param string $type Type of addresses being migrated, could be billing|shipping.
+         * @param string $type Type of address being migrated; 'billing' or 'shipping'.
          */
         public function __construct($type)
         {
@@ -78646,6 +79458,149 @@ namespace Automattic\WooCommerce\Database\Migrations {
          * @return void
          */
         private static function migrate_country_states_for_tax_rates(string $country_code, array $old_to_new_states_mapping) : void
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
+    /**
+     * Generic block with container properties to be used in BlockTemplate.
+     */
+    class Block extends \Automattic\WooCommerce\Internal\Admin\BlockTemplates\AbstractBlock implements \Automattic\WooCommerce\Admin\BlockTemplates\BlockContainerInterface
+    {
+        use \Automattic\WooCommerce\Internal\Admin\BlockTemplates\BlockContainerTrait;
+        /**
+         * Add an inner block to this block.
+         *
+         * @param array $block_config The block data.
+         */
+        public function &add_block(array $block_config) : \Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface
+        {
+        }
+    }
+    /**
+     * Block template class.
+     */
+    class BlockTemplate extends \Automattic\WooCommerce\Internal\Admin\BlockTemplates\AbstractBlockTemplate
+    {
+        /**
+         * Get the template ID.
+         */
+        public function get_id() : string
+        {
+        }
+        /**
+         * Add an inner block to this template.
+         *
+         * @param array $block_config The block data.
+         */
+        public function add_block(array $block_config) : \Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface
+        {
+        }
+    }
+    /**
+     * Logger for block template modifications.
+     */
+    class BlockTemplateLogger
+    {
+        /**
+         * Singleton instance.
+         *
+         * @var BlockTemplateLogger
+         */
+        protected static $instance = null;
+        /**
+         * Logger instance.
+         *
+         * @var \WC_Logger
+         */
+        protected $logger = null;
+        /**
+         * Get the singleton instance.
+         */
+        public static function get_instance() : \Automattic\WooCommerce\Internal\Admin\BlockTemplates\BlockTemplateLogger
+        {
+        }
+        /**
+         * Constructor.
+         */
+        protected function __construct()
+        {
+        }
+        /**
+         * Log an informational message.
+         *
+         * @param string $message Message to log.
+         * @param array  $info    Additional info to log.
+         */
+        public function info(string $message, array $info = [])
+        {
+        }
+        /**
+         * Log a warning message.
+         *
+         * @param string $message Message to log.
+         * @param array  $info    Additional info to log.
+         */
+        public function warning(string $message, array $info = [])
+        {
+        }
+        /**
+         * Log an error message.
+         *
+         * @param string $message Message to log.
+         * @param array  $info    Additional info to log.
+         */
+        public function error(string $message, array $info = [])
+        {
+        }
+        /**
+         * Format a message for logging.
+         *
+         * @param string $message Message to log.
+         * @param array  $info    Additional info to log.
+         */
+        private function format_message(string $message, array $info = []) : string
+        {
+        }
+        /**
+         * Format info for logging.
+         *
+         * @param array $info Info to log.
+         */
+        private function format_info(array $info) : array
+        {
+        }
+        /**
+         * Format an exception for logging.
+         *
+         * @param \Exception $exception Exception to format.
+         */
+        private function format_exception(\Exception $exception) : array
+        {
+        }
+        /**
+         * Format an exception trace for logging.
+         *
+         * @param array $trace Exception trace to format.
+         */
+        private function format_exception_trace(array $trace) : array
+        {
+        }
+        /**
+         * Format a block template for logging.
+         *
+         * @param BlockTemplateInterface $template Template to format.
+         */
+        private function format_template(\Automattic\WooCommerce\Admin\BlockTemplates\BlockTemplateInterface $template) : string
+        {
+        }
+        /**
+         * Format a block for logging.
+         *
+         * @param BlockInterface $block Block to format.
+         */
+        private function format_block(\Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface $block) : string
         {
         }
     }
@@ -80064,11 +81019,9 @@ namespace {
      * Get account formatted address.
      *
      * @since  3.2.0
-     * @param  string $address_type Address type.
-     *                              Accepts: 'billing' or 'shipping'.
-     *                              Default to 'billing'.
+     * @param  string $address_type Type of address; 'billing' or 'shipping'.
      * @param  int    $customer_id  Customer ID.
-     *                              Default to 0.
+     *                              Defaults to 0.
      * @return string
      */
     function wc_get_account_formatted_address($address_type = 'billing', $customer_id = 0)
@@ -80624,7 +81577,7 @@ namespace {
     {
     }
     /**
-     * Is_checkout - Returns true when viewing the checkout page.
+     * Is_checkout - Returns true when viewing the checkout page, or when processing AJAX requests for updating or processing the checkout.
      *
      * @return bool
      */
@@ -85927,7 +86880,7 @@ namespace {
     /**
      * My Account > Edit address template.
      *
-     * @param string $type Address type.
+     * @param string $type Type of address; 'billing' or 'shipping'.
      */
     function woocommerce_account_edit_address($type)
     {
