@@ -34460,7 +34460,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '8.3.0';
+        public $version = '8.3.1';
         /**
          * WooCommerce Schema version.
          *
@@ -36531,6 +36531,16 @@ namespace {
          * @return string Tentative usages query.
          */
         private function get_tentative_usage_query_for_user($coupon_id, $user_aliases)
+        {
+        }
+        /**
+         * This function clears coupon data from the WP cache after certain operations which, for performance reasons,
+         * are done via SQL queries.
+         *
+         * @param \WC_Coupon $coupon The coupon object.
+         * @return void
+         */
+        private function refresh_coupon_data(&$coupon)
         {
         }
         /**

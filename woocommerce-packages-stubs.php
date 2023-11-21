@@ -21237,6 +21237,26 @@ namespace Automattic\WooCommerce\StoreApi\Utilities {
         {
         }
         /**
+         * Get user email from user id.
+         *
+         * @param integer $user_id User ID.
+         * @return string Email or empty string.
+         */
+        private function get_email_from_user_id($user_id)
+        {
+        }
+        /**
+         * Get the usage count for a coupon based on a list of aliases (ids, emails).
+         *
+         * @param \WC_Coupon $coupon Coupon object applied to the cart.
+         * @param array      $aliases List of aliases to check.
+         *
+         * @return integer
+         */
+        private function get_usage_per_aliases($coupon, $aliases)
+        {
+        }
+        /**
          * Check there is a shipping method if it requires shipping.
          *
          * @throws RouteException Exception if invalid data is detected.
