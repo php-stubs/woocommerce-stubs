@@ -36,6 +36,7 @@ namespace {
          * @param array                    $args Args to pass to callbacks when the hook is triggered.
          * @param ActionScheduler_Schedule $schedule The action's schedule.
          * @param string                   $group A group to put the action in.
+         * phpcs:ignore Squiz.Commenting.FunctionComment.ExtraParamComment
          * @param int                      $priority The action priority.
          *
          * @return ActionScheduler_Action An instance of the stored action.
@@ -195,7 +196,6 @@ namespace {
          * async_unique(), single() or single_unique(), etc.
          *
          * @internal Not intended for public use, should not be overriden by subclasses.
-         * @throws   Exception May be thrown if invalid options are passed.
          *
          * @param array $options {
          *     Describes the action we wish to schedule.
@@ -212,7 +212,7 @@ namespace {
          *     @type int        $priority  Lower values means higher priority. Should be in the range 0-255.
          * }
          *
-         * @return int
+         * @return int The action ID. Zero if there was an error scheduling the action.
          */
         public function create(array $options = array())
         {
@@ -3283,7 +3283,7 @@ namespace {
         {
         }
         /**
-         * Retrieve the an action's log entries from the database.
+         * Retrieve an action's log entries from the database.
          *
          * @param int $action_id Action ID.
          *
@@ -6327,6 +6327,7 @@ namespace Automattic\WooCommerce\Blocks {
     {
         const SLUG_REGEX = '/^[A-z0-9\\/_-]+$/';
         const COMMA_SEPARATED_REGEX = '/[\\s,]+/';
+        const PATTERNS_AI_DATA_POST_TYPE = 'patterns_ai_data';
         /**
          * Path to the patterns directory.
          *
@@ -6392,6 +6393,17 @@ namespace Automattic\WooCommerce\Blocks {
          * @return bool|string|\WP_Error
          */
         public function update_patterns_content($value)
+        {
+        }
+        /**
+         * Filter the patterns dictionary to get the pattern data corresponding to the pattern slug.
+         *
+         * @param array  $dictionary The patterns dictionary.
+         * @param string $slug The pattern slug.
+         *
+         * @return array|null
+         */
+        private function get_pattern_from_dictionary($dictionary, $slug)
         {
         }
     }
@@ -8415,12 +8427,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          */
         protected $block_name = 'collection-filters';
         /**
-         * Mapping inner blocks to CollectionData API parameters.
-         *
-         * @var array
-         */
-        protected $collection_data_params_mapping = array('calculate_price_range' => 'woocommerce/collection-price-filter', 'calculate_stock_status_counts' => 'woocommerce/collection-stock-filter', 'calculate_attribute_counts' => 'woocommerce/collection-attribute-filter', 'calculate_rating_counts' => 'woocommerce/collection-rating-filter');
-        /**
          * Cache the current response from the API.
          *
          * @var array
@@ -8432,16 +8438,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @return null
          */
         protected function get_block_type_style()
-        {
-        }
-        /**
-         * Get the frontend script handle for this block type.
-         *
-         * @param string $key Data to get, or default to everything.
-         *
-         * @return null This block has no frontend script.
-         */
-        protected function get_block_type_script($key = null)
         {
         }
         /**
@@ -8492,7 +8488,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          *
          * @return array
          */
-        private function get_inner_blocks_recursive($inner_blocks, &$results = array())
+        private function get_inner_collection_data_params($inner_blocks, &$results = array())
         {
         }
         /**
@@ -8530,13 +8526,48 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         protected function render($attributes, $content, $block)
         {
         }
+    }
+    /**
+     * CollectionStockFilter class.
+     */
+    final class CollectionStockFilter extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    {
         /**
-         * Get the price slider HTML.
+         * Block name.
          *
-         * @param array $store_data The data passing to Interactivity Store.
-         * @param array $attributes Block attributes.
+         * @var string
          */
-        private function get_price_slider($store_data, $attributes)
+        protected $block_name = 'collection-stock-filter';
+        const STOCK_STATUS_QUERY_VAR = 'filter_stock_status';
+        /**
+         * Extra data passed through from server to client for block.
+         *
+         * @param array $stock_statuses  Any stock statuses that currently are available from the block.
+         *                               Note, this will be empty in the editor context when the block is
+         *                               not in the post content on editor load.
+         */
+        protected function enqueue_data(array $stock_statuses = [])
+        {
+        }
+        /**
+         * Include and render the block.
+         *
+         * @param array    $attributes Block attributes. Default empty array.
+         * @param string   $content    Block content. Default empty string.
+         * @param WP_Block $block      Block instance.
+         * @return string Rendered block type output.
+         */
+        protected function render($attributes, $content, $block)
+        {
+        }
+        /**
+         * Stock filter HTML
+         *
+         * @param array $stock_counts       An array of stock counts.
+         * @param array $attributes Block attributes. Default empty array.
+         * @return string Rendered block type output.
+         */
+        private function get_stock_filter_html($stock_counts, $attributes)
         {
         }
     }
@@ -10667,6 +10698,19 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
+         * Generates a tax query to filter products based on their "featured" status.
+         * If the `$featured` parameter is true, the function will return a tax query
+         * that filters products to only those marked as featured.
+         * If `$featured` is false, an empty array is returned, meaning no filtering will be applied.
+         *
+         * @param bool $featured A flag indicating whether to filter products based on featured status.
+         *
+         * @return array A tax query for fetching featured products if `$featured` is true; otherwise, an empty array.
+         */
+        private function get_featured_query($featured)
+        {
+        }
+        /**
          * Merge tax_queries from various queries.
          *
          * @param array ...$queries Query arrays to be merged.
@@ -10779,6 +10823,75 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @return array
          */
         private function get_filter_by_rating_query()
+        {
+        }
+        /**
+         * Constructs a date query for product filtering based on a specified time frame.
+         *
+         * @param array $time_frame {
+         *     Associative array with 'operator' (in or not-in) and 'value' (date string).
+         *
+         *     @type string $operator Determines the inclusion or exclusion of the date range.
+         *     @type string $value    The date around which the range is applied.
+         * }
+         * @return array Date query array; empty if parameters are invalid.
+         */
+        private function get_date_query(array $time_frame) : array
+        {
+        }
+    }
+    /**
+     * ProductCollectionNoResults class.
+     */
+    class ProductCollectionNoResults extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'product-collection-no-results';
+        /**
+         * Render the block.
+         *
+         * @param array    $attributes Block attributes.
+         * @param string   $content Block content.
+         * @param WP_Block $block Block instance.
+         *
+         * @return string | void Rendered block output.
+         */
+        protected function render($attributes, $content, $block)
+        {
+        }
+        /**
+         * Get the frontend script handle for this block type.
+         *
+         * @param string $key Data to get, or default to everything.
+         */
+        protected function get_block_type_script($key = null)
+        {
+        }
+        /**
+         * Get the frontend style handle for this block type.
+         *
+         * @return null
+         */
+        protected function get_block_type_style()
+        {
+        }
+        /**
+         * Set the URL attributes for "clearing any filters" and "Store's home" links.
+         *
+         * @param string $content Block content.
+         */
+        protected function modify_anchor_tag_urls($content)
+        {
+        }
+        /**
+         * Get current URL without filter query parameters which will be used
+         * for the "clear any filters" link.
+         */
+        protected function get_current_url_without_filters()
         {
         }
     }
@@ -11151,6 +11264,52 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @return string[]
          */
         protected function get_block_type_uses_context()
+        {
+        }
+        /**
+         * Generate the View All markup.
+         *
+         * @param int $remaining_thumbnails_count The number of thumbnails that are not displayed.
+         *
+         * @return string
+         */
+        protected function generate_view_all_html($remaining_thumbnails_count)
+        {
+        }
+        /**
+         * Inject View All markup into the product thumbnail HTML.
+         *
+         * @param string $thumbnail_html The thumbnail HTML.
+         * @param string $view_all_html  The view all HTML.
+         *
+         * @return string
+         */
+        protected function inject_view_all($thumbnail_html, $view_all_html)
+        {
+        }
+        /**
+         * Check if the thumbnails should be limited.
+         *
+         * @param string $mode                 Mode of the gallery. Expected values: 'standard'.
+         * @param int    $thumbnails_count     Current count of processed thumbnails.
+         * @param int    $number_of_thumbnails Number of thumbnails configured to display.
+         *
+         * @return bool
+         */
+        protected function should_limit_thumbnails($mode, $thumbnails_count, $number_of_thumbnails)
+        {
+        }
+        /**
+         * Check if View All markup should be displayed.
+         *
+         * @param string $mode                   Mode of the gallery. Expected values: 'standard'.
+         * @param int    $thumbnails_count       Current count of processed thumbnails.
+         * @param array  $product_gallery_images Array of product gallery image HTML strings.
+         * @param int    $number_of_thumbnails   Number of thumbnails configured to display.
+         *
+         * @return bool
+         */
+        protected function should_display_view_all($mode, $thumbnails_count, $product_gallery_images, $number_of_thumbnails)
         {
         }
         /**
@@ -12863,6 +13022,17 @@ namespace Automattic\WooCommerce\Blocks {
         {
         }
         /**
+         * Check if the current post has a block with a specific attribute value.
+         *
+         * @param string $block_id The block ID to check for.
+         * @param string $attribute The attribute to check.
+         * @param string $value The value to check for.
+         * @return boolean
+         */
+        private function has_block_variation($block_id, $attribute, $value)
+        {
+        }
+        /**
          * Register blocks, hooking up assets and render functions as needed.
          */
         public function register_blocks()
@@ -13643,171 +13813,6 @@ namespace Automattic\WooCommerce\Blocks\Domain\Services {
         }
     }
     /**
-     * Service class to integrate Blocks with the Jetpack WooCommerce Analytics extension,
-     */
-    class JetpackWooCommerceAnalytics
-    {
-        /**
-         * Instance of the asset API.
-         *
-         * @var AssetApi
-         */
-        protected $asset_api;
-        /**
-         * Instance of the asset data registry.
-         *
-         * @var AssetDataRegistry
-         */
-        protected $asset_data_registry;
-        /**
-         * Instance of the block templates controller.
-         *
-         * @var BlockTemplatesController
-         */
-        protected $block_templates_controller;
-        /**
-         * Whether the required Jetpack WooCommerce Analytics classes are available.
-         *
-         * @var bool
-         */
-        protected $is_compatible;
-        /**
-         * Constructor.
-         *
-         * @param AssetApi                 $asset_api Instance of the asset API.
-         * @param AssetDataRegistry        $asset_data_registry Instance of the asset data registry.
-         * @param BlockTemplatesController $block_templates_controller Instance of the block templates controller.
-         */
-        public function __construct(\Automattic\WooCommerce\Blocks\Assets\Api $asset_api, \Automattic\WooCommerce\Blocks\Assets\AssetDataRegistry $asset_data_registry, \Automattic\WooCommerce\Blocks\BlockTemplatesController $block_templates_controller)
-        {
-        }
-        /**
-         * Hook into WP.
-         */
-        public function init()
-        {
-        }
-        /**
-         * Gets product categories or varation attributes as a formatted concatenated string
-         *
-         * @param object $product WC_Product.
-         * @return string
-         */
-        public function get_product_categories_concatenated($product)
-        {
-        }
-        /**
-         * Gather relevant product information. Taken from Jetpack WooCommerce Analytics Module.
-         *
-         * @param \WC_Product $product product.
-         * @return array
-         */
-        public function get_product_details($product)
-        {
-        }
-        /**
-         * Save the order received page view event properties to the asset data registry. The front end will consume these
-         * later.
-         *
-         * @param int $order_id The order ID.
-         *
-         * @return void
-         */
-        public function output_order_received_page_view_properties($order_id)
-        {
-        }
-        /**
-         * Check compatibility with Jetpack WooCommerce Analytics.
-         *
-         * @return void
-         */
-        public function check_compatibility()
-        {
-        }
-        /**
-         * Initialize if compatible.
-         */
-        public function init_if_compatible()
-        {
-        }
-        /**
-         * Register scripts.
-         */
-        public function register_assets()
-        {
-        }
-        /**
-         * Enqueue the Google Tag Manager script if prerequisites are met.
-         */
-        public function enqueue_scripts()
-        {
-        }
-        /**
-         * Enqueue the Google Tag Manager script if prerequisites are met.
-         */
-        public function register_script_data()
-        {
-        }
-        /**
-         * Get the current user id
-         *
-         * @return int
-         */
-        private function get_user_id()
-        {
-        }
-        /**
-         * Default event properties which should be included with all events.
-         *
-         * @return array Array of standard event props.
-         */
-        public function get_common_properties()
-        {
-        }
-        /**
-         * Get info about the cart & checkout pages, in particular whether the store is using shortcodes or Gutenberg blocks.
-         * This info is cached in a transient.
-         *
-         * @return array
-         */
-        public function get_cart_checkout_info()
-        {
-        }
-        /**
-         * Get the additional blocks used in a post or template.
-         *
-         * @param string $content The post content.
-         * @param array  $exclude The blocks to exclude.
-         *
-         * @return array The additional blocks.
-         */
-        private function get_additional_blocks($content, $exclude = array())
-        {
-        }
-        /**
-         * Get the nested blocks from a block array.
-         *
-         * @param array    $blocks  The blocks array to find nested blocks inside.
-         * @param string[] $exclude Blocks to exclude, won't find nested blocks within any of the supplied blocks.
-         *
-         * @return array
-         */
-        private function get_nested_blocks($blocks, $exclude = array())
-        {
-        }
-        /**
-         * Track local pickup settings changes via Store API
-         *
-         * @param bool              $served Whether the request has already been served.
-         * @param \WP_REST_Response $result The response object.
-         * @param \WP_REST_Request  $request The request object.
-         * @return bool
-         */
-        public function track_local_pickup($served, $result, $request)
-        {
-        }
-    }
-    /**
      * Service class for adding new-style Notices to WooCommerce core.
      *
      * @internal
@@ -14292,6 +14297,25 @@ namespace {
         }
     }
 }
+namespace Automattic\WooCommerce\Blocks\InteractivityComponents {
+    /**
+     * Dropdown class. This is a component for reuse with interactivity API.
+     *
+     * @package Automattic\WooCommerce\Blocks\InteractivityComponents
+     */
+    class Dropdown
+    {
+        /**
+         * Render the dropdown.
+         *
+         * @param mixed $props The properties to render the dropdown with.
+         * @return string|false
+         */
+        public static function render($props)
+        {
+        }
+    }
+}
 namespace Automattic\WooCommerce\Blocks {
     /**
      * Library class.
@@ -14470,10 +14494,6 @@ namespace Automattic\WooCommerce\Blocks\Patterns {
     class PatternUpdater
     {
         /**
-         * The patterns content option name.
-         */
-        const WC_BLOCKS_PATTERNS_CONTENT = 'wc_blocks_patterns_content';
-        /**
          * Creates the patterns content for the given vertical.
          *
          * @param Connection      $ai_connection The AI connection.
@@ -14587,13 +14607,31 @@ namespace Automattic\WooCommerce\Blocks\Patterns {
         {
         }
         /**
+         * Returns the post that has the generated data by the AI for the patterns.
+         *
+         * @return WP_Post|null
+         */
+        public static function get_patterns_ai_data_post()
+        {
+        }
+        /**
+         * Upsert the patterns AI data.
+         *
+         * @param array $patterns_dictionary The patterns dictionary.
+         *
+         * @return WP_Error|null
+         */
+        public static function upsert_patterns_ai_data_post($patterns_dictionary)
+        {
+        }
+        /**
          * Get the Patterns Dictionary.
          *
          * @param string|null $pattern_slug The pattern slug.
          *
          * @return mixed|WP_Error|null
          */
-        private static function get_patterns_dictionary($pattern_slug = null)
+        public static function get_patterns_dictionary($pattern_slug = null)
         {
         }
     }
@@ -14610,18 +14648,17 @@ namespace Automattic\WooCommerce\Blocks\Patterns {
          * @param array      $images The array of images.
          * @param string     $business_description The business description.
          *
-         * @return bool|WP_Error True if the content was generated successfully, WP_Error otherwise.
+         * @return array|WP_Error The generated content for the products. An error if the content could not be generated.
          */
         public function generate_content($ai_connection, $token, $images, $business_description)
         {
         }
         /**
-         * Update the dummy products with the content from the information list.
+         * Return all dummy products that were not modified by the store owner.
          *
-         * @param array $dummy_products_to_update The dummy products to update.
-         * @param array $products_information_list The products information list.
+         * @return array|WP_Error An array with the dummy products that need to have their content updated by AI.
          */
-        public function update_dummy_products($dummy_products_to_update, $products_information_list)
+        public function fetch_dummy_products_to_update()
         {
         }
         /**
@@ -15658,6 +15695,17 @@ namespace Automattic\WooCommerce\Blocks\Shipping {
         public function filter_shipping_packages($packages)
         {
         }
+        /**
+         * Track local pickup settings changes via Store API
+         *
+         * @param bool              $served Whether the request has already been served.
+         * @param \WP_REST_Response $result The response object.
+         * @param \WP_REST_Request  $request The request object.
+         * @return bool
+         */
+        public function track_local_pickup($served, $result, $request)
+        {
+        }
     }
 }
 namespace Automattic\WooCommerce\StoreApi {
@@ -16577,6 +16625,253 @@ namespace Automattic\WooCommerce\StoreApi\Routes\V1 {
          * @return array Query parameters for the collection.
          */
         public function get_collection_params()
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\StoreApi\Routes\V1\AI {
+    /**
+     * BusinessDescription class.
+     *
+     * @internal
+     */
+    class BusinessDescription extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
+    {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'ai/business-description';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'ai/business-description';
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Update the last business description.
+         *
+         * @param  \WP_REST_Request $request Request object.
+         *
+         * @return bool|string|\WP_Error|\WP_REST_Response
+         */
+        protected function get_route_post_response(\WP_REST_Request $request)
+        {
+        }
+    }
+    /**
+     * Patterns class.
+     */
+    class Images extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
+    {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'ai/images';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'ai/images';
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Generate Images from Pexels
+         *
+         * @param  \WP_REST_Request $request Request object.
+         *
+         * @return bool|string|\WP_Error|\WP_REST_Response
+         */
+        protected function get_route_post_response(\WP_REST_Request $request)
+        {
+        }
+    }
+    /**
+     * Middleware class.
+     *
+     * @internal
+     */
+    class Middleware
+    {
+        /**
+         * Ensure that the user is allowed to make this request.
+         *
+         * @throws RouteException If the user is not allowed to make this request.
+         * @return boolean
+         */
+        public static function is_authorized()
+        {
+        }
+    }
+    /**
+     * Patterns class.
+     *
+     * @internal
+     */
+    class Patterns extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
+    {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'ai/patterns';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'ai/patterns';
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Update patterns with the content and images powered by AI.
+         *
+         * @param  \WP_REST_Request $request Request object.
+         *
+         * @return bool|string|\WP_Error|\WP_REST_Response
+         */
+        protected function get_route_post_response(\WP_REST_Request $request)
+        {
+        }
+    }
+    /**
+     * Product class.
+     *
+     * @internal
+     */
+    class Product extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
+    {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'ai/product';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'ai/product';
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Update product with the content and image powered by AI.
+         *
+         * @param  \WP_REST_Request $request Request object.
+         *
+         * @return bool|string|\WP_Error|\WP_REST_Response
+         */
+        protected function get_route_post_response(\WP_REST_Request $request)
+        {
+        }
+    }
+    /**
+     * Products class.
+     *
+     * @internal
+     */
+    class Products extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
+    {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'ai/products';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'ai/products';
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Generate the content for the products.
+         *
+         * @param  \WP_REST_Request $request Request object.
+         *
+         * @return bool|string|\WP_Error|\WP_REST_Response
+         */
+        protected function get_route_post_response(\WP_REST_Request $request)
         {
         }
     }
@@ -18005,60 +18300,6 @@ namespace Automattic\WooCommerce\StoreApi\Routes\V1 {
         }
     }
     /**
-     * Patterns class.
-     */
-    class Patterns extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
-    {
-        /**
-         * The route identifier.
-         *
-         * @var string
-         */
-        const IDENTIFIER = 'patterns';
-        /**
-         * The schema item identifier.
-         *
-         * @var string
-         */
-        const SCHEMA_TYPE = 'patterns';
-        /**
-         * Get the path of this REST route.
-         *
-         * @return string
-         */
-        public function get_path()
-        {
-        }
-        /**
-         * Get method arguments for this REST route.
-         *
-         * @return array An array of endpoints.
-         */
-        public function get_args()
-        {
-        }
-        /**
-         * Permission callback.
-         *
-         * @throws RouteException If the user is not allowed to make this request.
-         *
-         * @return true|\WP_Error
-         */
-        public function is_authorized()
-        {
-        }
-        /**
-         * Ensure the content and images in patterns are powered by AI.
-         *
-         * @param  \WP_REST_Request $request Request object.
-         *
-         * @return bool|string|\WP_Error|\WP_REST_Response
-         */
-        protected function get_route_post_response(\WP_REST_Request $request)
-        {
-        }
-    }
-    /**
      * ProductAttributeTerms class.
      */
     class ProductAttributeTerms extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractTermsRoute
@@ -19057,6 +19298,200 @@ namespace Automattic\WooCommerce\StoreApi\Schemas\V1 {
         {
         }
     }
+}
+namespace Automattic\WooCommerce\StoreApi\Schemas\V1\AI {
+    /**
+     * BusinessDescriptionSchema class.
+     *
+     * @internal
+     */
+    class BusinessDescriptionSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'ai/business-description';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'ai/business-description';
+        /**
+         * Business Description schema properties.
+         *
+         * @return array
+         */
+        public function get_properties()
+        {
+        }
+        /**
+         * Get the Business Description response.
+         *
+         * @param array $item Item to get response for.
+         *
+         * @return array
+         */
+        public function get_item_response($item)
+        {
+        }
+    }
+    /**
+     * ImagesSchema class.
+     *
+     * @internal
+     */
+    class ImagesSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'ai/images';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'ai/images';
+        /**
+         * Images schema properties.
+         *
+         * @return array
+         */
+        public function get_properties()
+        {
+        }
+        /**
+         * Get the Images response.
+         *
+         * @param array $item Item to get response for.
+         *
+         * @return array
+         */
+        public function get_item_response($item)
+        {
+        }
+    }
+    /**
+     * PatternsSchema class.
+     *
+     * @internal
+     */
+    class PatternsSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'ai/patterns';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'ai/patterns';
+        /**
+         * Patterns schema properties.
+         *
+         * @return array
+         */
+        public function get_properties()
+        {
+        }
+        /**
+         * Get the Patterns response.
+         *
+         * @param array $item Item to get response for.
+         *
+         * @return array
+         */
+        public function get_item_response($item)
+        {
+        }
+    }
+    /**
+     * ProductSchema class.
+     *
+     * @internal
+     */
+    class ProductSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'ai/product';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'ai/product';
+        /**
+         * Patterns schema properties.
+         *
+         * @return array
+         */
+        public function get_properties()
+        {
+        }
+        /**
+         * Get the Product response.
+         *
+         * @param array $item Item to get response for.
+         *
+         * @return array
+         */
+        public function get_item_response($item)
+        {
+        }
+    }
+    /**
+     * ProductsSchema class.
+     *
+     * @internal
+     */
+    class ProductsSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'ai/products';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'ai/products';
+        /**
+         * Products schema properties.
+         *
+         * @return array
+         */
+        public function get_properties()
+        {
+        }
+        /**
+         * Get the Products response.
+         *
+         * @param array $item Item to get response for.
+         *
+         * @return array
+         */
+        public function get_item_response($item)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\StoreApi\Schemas\V1 {
     /**
      * AddressSchema class.
      *
@@ -20198,42 +20633,6 @@ namespace Automattic\WooCommerce\StoreApi\Schemas\V1 {
          * @return array
          */
         protected function get_totals($order)
-        {
-        }
-    }
-    /**
-     * OrderSchema class.
-     */
-    class PatternsSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
-    {
-        /**
-         * The schema item name.
-         *
-         * @var string
-         */
-        protected $title = 'patterns';
-        /**
-         * The schema item identifier.
-         *
-         * @var string
-         */
-        const IDENTIFIER = 'patterns';
-        /**
-         * Patterns schema properties.
-         *
-         * @return array
-         */
-        public function get_properties()
-        {
-        }
-        /**
-         * Get the Patterns response.
-         *
-         * @param array $item Item to get response for.
-         *
-         * @return array
-         */
-        public function get_item_response($item)
         {
         }
     }
@@ -22721,7 +23120,8 @@ namespace Automattic\WooCommerce\Blocks\Utils {
         }
         /**
          * Build a unified template object based on a theme file.
-         * Important: This method is an almost identical duplicate from wp-includes/block-template-utils.php as it was not intended for public use. It has been modified to build templates from plugins rather than themes.
+         *
+         * @internal Important: This method is an almost identical duplicate from wp-includes/block-template-utils.php as it was not intended for public use. It has been modified to build templates from plugins rather than themes.
          *
          * @param array|object $template_file Theme file.
          * @param string       $template_type wp_template or wp_template_part.
@@ -23089,11 +23489,28 @@ namespace Automattic\WooCommerce\Blocks\Utils {
         }
     }
     /**
+     * Utility methods used for the Product Collection block.
+     * {@internal This class and its methods are not intended for public use.}
+     */
+    class ProductCollectionUtils
+    {
+        /**
+         * Prepare and execute a query for the Product Collection block.
+         * This method is used by the Product Collection block and the No Results block.
+         *
+         * @param WP_Block $block Block instance.
+         */
+        public static function prepare_and_execute_query($block)
+        {
+        }
+    }
+    /**
      * Utility methods used for the Product Gallery block.
      * {@internal This class and its methods are not intended for public use.}
      */
     class ProductGalleryUtils
     {
+        const CROP_IMAGE_SIZE_NAME = '_woo_blocks_product_gallery_crop_full';
         /**
          * When requesting a full-size image, this function may return an array with a single image.
          * However, when requesting a non-full-size image, it will always return an array with multiple images.
@@ -23105,9 +23522,10 @@ namespace Automattic\WooCommerce\Blocks\Utils {
          * @param string $size Image size.
          * @param array  $attributes Attributes.
          * @param string $wrapper_class Wrapper class.
+         * @param bool   $crop_images Whether to crop images.
          * @return array
          */
-        public static function get_product_gallery_images($post_id, $size = 'full', $attributes = array(), $wrapper_class = '')
+        public static function get_product_gallery_images($post_id, $size = 'full', $attributes = array(), $wrapper_class = '', $crop_images = false)
         {
         }
         /**
@@ -23119,6 +23537,16 @@ namespace Automattic\WooCommerce\Blocks\Utils {
          * @return array An array of unique image IDs for the product gallery.
          */
         public static function get_product_gallery_image_ids($product, $max_number_of_visible_images = 8, $only_visible = false)
+        {
+        }
+        /**
+         * Generates the intermediate image sizes only when needed.
+         *
+         * @param int    $attachment_id Attachment ID.
+         * @param string $size Image size.
+         * @return void
+         */
+        public static function maybe_generate_intermediate_image($attachment_id, $size)
         {
         }
     }
@@ -23556,7 +23984,7 @@ namespace {
      * @param bool   $unique Whether the action should be unique.
      * @param int    $priority Lower values take precedence over higher values. Defaults to 10, with acceptable values falling in the range 0-255.
      *
-     * @return int The action ID.
+     * @return int The action ID. Zero if there was an error scheduling the action.
      */
     function as_enqueue_async_action($hook, $args = array(), $group = '', $unique = \false, $priority = 10)
     {
@@ -23571,7 +23999,7 @@ namespace {
      * @param bool   $unique Whether the action should be unique.
      * @param int    $priority Lower values take precedence over higher values. Defaults to 10, with acceptable values falling in the range 0-255.
      *
-     * @return int The action ID.
+     * @return int The action ID. Zero if there was an error scheduling the action.
      */
     function as_schedule_single_action($timestamp, $hook, $args = array(), $group = '', $unique = \false, $priority = 10)
     {
@@ -23587,7 +24015,7 @@ namespace {
      * @param bool   $unique Whether the action should be unique.
      * @param int    $priority Lower values take precedence over higher values. Defaults to 10, with acceptable values falling in the range 0-255.
      *
-     * @return int The action ID.
+     * @return int The action ID. Zero if there was an error scheduling the action.
      */
     function as_schedule_recurring_action($timestamp, $interval_in_seconds, $hook, $args = array(), $group = '', $unique = \false, $priority = 10)
     {
@@ -23615,7 +24043,7 @@ namespace {
      * @param bool   $unique Whether the action should be unique.
      * @param int    $priority Lower values take precedence over higher values. Defaults to 10, with acceptable values falling in the range 0-255.
      *
-     * @return int The action ID.
+     * @return int The action ID. Zero if there was an error scheduling the action.
      */
     function as_schedule_cron_action($timestamp, $schedule, $hook, $args = array(), $group = '', $unique = \false, $priority = 10)
     {
