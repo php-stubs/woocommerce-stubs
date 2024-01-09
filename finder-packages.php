@@ -1,7 +1,8 @@
 <?php
 
 return \StubsGenerator\Finder::create()
-    ->in(['source/woocommerce/packages/*/src'])
+    // No more from 8.5 on
+    // ->in(['source/woocommerce/packages/*/src'])
     // Action Scheduler.
     ->append(
         \StubsGenerator\Finder::create()
