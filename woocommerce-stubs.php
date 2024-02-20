@@ -35014,7 +35014,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '8.6.0';
+        public $version = '8.6.1';
         /**
          * WooCommerce Schema version.
          *
@@ -78729,6 +78729,12 @@ namespace Automattic\WooCommerce\Blocks\Assets {
     class Api
     {
         /**
+         * Stores the prefixed WC version. Used because the WC Blocks version has not been updated since the monorepo merge.
+         *
+         * @var string
+         */
+        public $wc_version;
+        /**
          * Stores inline scripts already enqueued.
          *
          * @var array
@@ -87311,7 +87317,7 @@ namespace Automattic\WooCommerce\Blocks\Domain\Services {
          * @param string            $context The context to show the fields for.
          * @return array
          */
-        public function admin_address_fields($fields, $order, $context = 'edit')
+        public function admin_address_fields($fields, $order = null, $context = 'edit')
         {
         }
         /**
@@ -87322,7 +87328,7 @@ namespace Automattic\WooCommerce\Blocks\Domain\Services {
          * @param string            $context The context to show the fields for.
          * @return array
          */
-        public function admin_contact_fields($fields, $order, $context = 'edit')
+        public function admin_contact_fields($fields, $order = null, $context = 'edit')
         {
         }
         /**
@@ -87333,7 +87339,7 @@ namespace Automattic\WooCommerce\Blocks\Domain\Services {
          * @param string            $context The context to show the fields for.
          * @return array
          */
-        public function admin_additional_fields($fields, $order, $context = 'edit')
+        public function admin_additional_fields($fields, $order = null, $context = 'edit')
         {
         }
     }
