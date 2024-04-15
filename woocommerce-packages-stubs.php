@@ -1037,6 +1037,16 @@ namespace {
         {
         }
         /**
+         * Querystring arguments to persist between form submissions.
+         *
+         * @since 3.7.3
+         *
+         * @return string[]
+         */
+        protected function get_request_query_args_to_persist()
+        {
+        }
+        /**
          * Return the sortable column specified for this request to order the results by, if any.
          *
          * @return string
@@ -5649,7 +5659,7 @@ namespace {
      * @param string $hook The hook to trigger.
      * @param array  $args Arguments to pass when the hook triggers.
      * @param string $group The group to assign this job to.
-     * @param bool   $unique Whether the action should be unique.
+     * @param bool   $unique Whether the action should be unique. It will not be scheduled if another pending or running action has the same hook and group parameters.
      * @param int    $priority Lower values take precedence over higher values. Defaults to 10, with acceptable values falling in the range 0-255.
      *
      * @return int The action ID. Zero if there was an error scheduling the action.
@@ -5664,7 +5674,7 @@ namespace {
      * @param string $hook The hook to trigger.
      * @param array  $args Arguments to pass when the hook triggers.
      * @param string $group The group to assign this job to.
-     * @param bool   $unique Whether the action should be unique.
+     * @param bool   $unique Whether the action should be unique. It will not be scheduled if another pending or running action has the same hook and group parameters.
      * @param int    $priority Lower values take precedence over higher values. Defaults to 10, with acceptable values falling in the range 0-255.
      *
      * @return int The action ID. Zero if there was an error scheduling the action.
@@ -5680,7 +5690,7 @@ namespace {
      * @param string $hook The hook to trigger.
      * @param array  $args Arguments to pass when the hook triggers.
      * @param string $group The group to assign this job to.
-     * @param bool   $unique Whether the action should be unique.
+     * @param bool   $unique Whether the action should be unique. It will not be scheduled if another pending or running action has the same hook and group parameters.
      * @param int    $priority Lower values take precedence over higher values. Defaults to 10, with acceptable values falling in the range 0-255.
      *
      * @return int The action ID. Zero if there was an error scheduling the action.
@@ -5708,7 +5718,7 @@ namespace {
      * @param string $hook The hook to trigger.
      * @param array  $args Arguments to pass when the hook triggers.
      * @param string $group The group to assign this job to.
-     * @param bool   $unique Whether the action should be unique.
+     * @param bool   $unique Whether the action should be unique. It will not be scheduled if another pending or running action has the same hook and group parameters.
      * @param int    $priority Lower values take precedence over higher values. Defaults to 10, with acceptable values falling in the range 0-255.
      *
      * @return int The action ID. Zero if there was an error scheduling the action.
