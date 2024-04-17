@@ -20172,9 +20172,14 @@ namespace {
         /**
          * Error message.
          *
+         * This property should not be considered public API, and should not be accessed directly.
+         * It is being added to supress PHP > 8.0 warnings against dynamic property creation, and all access
+         * should be through the getter and setter methods, namely `get_error_message()` and `set_error_message()`.
+         * In the future, the access modifier may be changed back to protected.
+         *
          * @var string
          */
-        protected $error_message;
+        public $error_message;
         /**
          * Sorting.
          *
@@ -20744,6 +20749,16 @@ namespace {
          * @return string
          */
         public function get_error_message()
+        {
+        }
+        /**
+         * Sets the error_message string.
+         *
+         * @param string $message Message string.
+         *
+         * @return void
+         */
+        public function set_error_message(string $message)
         {
         }
         /**
@@ -35463,7 +35478,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '8.8.1';
+        public $version = '8.8.2';
         /**
          * WooCommerce Schema version.
          *
