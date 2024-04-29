@@ -35478,7 +35478,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '8.8.2';
+        public $version = '8.8.3';
         /**
          * WooCommerce Schema version.
          *
@@ -83613,11 +83613,11 @@ namespace Automattic\WooCommerce\Blocks\Utils {
         /**
          * Callback for `hooked_block_types` to auto-inject the mini-cart block into headers after navigation.
          *
-         * @param array                    $hooked_blocks An array of block slugs hooked into a given context.
-         * @param string                   $position      Position of the block insertion point.
-         * @param string                   $anchor_block  The block acting as the anchor for the inserted block.
-         * @param \WP_Block_Template|array $context       Where the block is embedded.
-         * @since 8.6.0
+         * @param array                             $hooked_blocks An array of block slugs hooked into a given context.
+         * @param string                            $position      Position of the block insertion point.
+         * @param string                            $anchor_block  The block acting as the anchor for the inserted block.
+         * @param array|\WP_Post|\WP_Block_Template $context       Where the block is embedded.
+         * @since 8.5.0
          * @return array An array of block slugs hooked into a given context.
          */
         public function register_hooked_block($hooked_blocks, $position, $anchor_block, $context)
@@ -83633,23 +83633,46 @@ namespace Automattic\WooCommerce\Blocks\Utils {
         {
         }
         /**
+         * Given a provided context, returns the content of the context.
+         *
+         * @param array|\WP_Post|\WP_Block_Template $context Where the block is embedded.
+         * @since 8.5.0
+         * @return string
+         */
+        protected function get_context_content($context)
+        {
+        }
+        /**
          * Given a provided context, returns whether the context refers to header content.
          *
-         * @param array|\WP_Block_Template $context Where the block is embedded.
-         * @param string                   $area The area to check against before inserting.
+         * @param array|\WP_Post|\WP_Block_Template $context Where the block is embedded.
+         * @param string                            $area The area to check against before inserting.
+         * @since 8.5.0
          * @return boolean
          */
         protected function is_template_part_or_pattern($context, $area)
         {
         }
         /**
-         * Returns whether the pattern is excluded or not
+         * Given a provided context, returns whether the context refers to the target area and isn't marked as excluded.
          *
-         * @param array|\WP_Block_Template $context Where the block is embedded.
-         * @param array                    $pattern_exclude_list List of pattern slugs to exclude.
+         * @param array|\WP_Post|\WP_Block_Template $context the context to check.
+         * @param string                            $area The area to check against before inserting.
+         * @since 8.5.0
          * @return boolean
          */
-        protected function pattern_is_excluded($context, $pattern_exclude_list = array())
+        protected function is_target_area($context, $area)
+        {
+        }
+        /**
+         * Returns whether the pattern is excluded or not
+         *
+         * @since 8.5.0
+         *
+         * @param array|\WP_Block_Template $context Where the block is embedded.
+         * @return boolean
+         */
+        protected function pattern_is_excluded($context)
         {
         }
     }
