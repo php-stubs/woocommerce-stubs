@@ -30,6 +30,20 @@ return \StubsGenerator\Finder::create()
             ->depth('< 1')
             //->path('AbstractBlockTemplate.php')
     )
+    ->append(
+        \StubsGenerator\Finder::create()
+            ->in(['source/woocommerce/src/Internal/Traits'])
+            ->files()
+            ->depth('< 1')
+            ->path('OrderAttributionMeta.php')
+    )
+    ->append(
+        \StubsGenerator\Finder::create()
+            ->in(['source/woocommerce/lib/packages/Detection'])
+            ->files()
+            ->depth('< 1')
+            ->path('MobileDetect.php')
+    )
 /*
     ->append(
         \StubsGenerator\Finder::create()
