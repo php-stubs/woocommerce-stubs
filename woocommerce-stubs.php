@@ -436,7 +436,7 @@ namespace {
          * Sets a prop for a setter method.
          *
          * This stores changes in a special array so we can track what needs saving
-         * the the DB later.
+         * the DB later.
          *
          * @since 3.0.0
          * @param string $prop Name of prop to set.
@@ -1023,6 +1023,7 @@ namespace {
         /**
          * Validate Textarea Field.
          *
+         * @since 9.0.0 No longer allows storing IFRAME, which was allowed for "ShareThis" integration no longer found in core.
          * @param  string $key Field key.
          * @param  string $value Posted Value.
          * @return string
@@ -3106,8 +3107,11 @@ namespace {
         {
         }
         /**
-         * If There are no payment fields show the description if set.
-         * Override this in your gateway if you have some.
+         * Default payment fields display. Override this in your gateway to customize displayed fields.
+         *
+         * By default this renders the payment gateway description.
+         *
+         * @since 1.5.7
          */
         public function payment_fields()
         {
@@ -6518,25 +6522,7 @@ namespace {
     class WC_Admin_Addons
     {
         /**
-         * Get featured for the addons screen
-         *
-         * @deprecated 5.9.0 No longer used in In-App Marketplace
-         *
-         * @return array of objects
-         */
-        public static function get_featured()
-        {
-        }
-        /**
-         * Render featured products and banners using WCCOM's the Featured 2.0 Endpoint
-         *
-         * @return void
-         */
-        public static function render_featured()
-        {
-        }
-        /**
-         * Fetch featured products from WCCOM's the Featured 2.0 Endpoint and cache the data for a day.
+         * Fetch featured products from WCCOM's the Featured 3.0 Endpoint and cache the data for a day.
          *
          * @return array|WP_Error
          */
@@ -6551,30 +6537,6 @@ namespace {
          * @return bool True if SSL error, false otherwise
          */
         public static function is_ssl_error($error_message)
-        {
-        }
-        /**
-         * Build url parameter string
-         *
-         * @param  string $category Addon (sub) category.
-         * @param  string $term     Search terms.
-         * @param  string $country  Store country.
-         *
-         * @return string url parameter string
-         */
-        public static function build_parameter_string($category, $term, $country)
-        {
-        }
-        /**
-         * Call API to get extensions
-         *
-         * @param  string $category Addon (sub) category.
-         * @param  string $term     Search terms.
-         * @param  string $country  Store country.
-         *
-         * @return object|WP_Error  Object with products and promotions properties, or WP_Error
-         */
-        public static function get_extension_data($category, $term, $country)
         {
         }
         /**
@@ -6593,151 +6555,6 @@ namespace {
          * @return object|bool
          */
         public static function get_section($section_id)
-        {
-        }
-        /**
-         * Get section content for the addons screen.
-         *
-         * @deprecated 5.9.0 No longer used in In-App Marketplace
-         *
-         * @param  string $section_id Required section ID.
-         *
-         * @return array
-         */
-        public static function get_section_data($section_id)
-        {
-        }
-        /**
-         * Handles the outputting of a contextually aware Storefront link (points to child themes if Storefront is already active).
-         *
-         * @deprecated 5.9.0 No longer used in In-App Marketplace
-         */
-        public static function output_storefront_button()
-        {
-        }
-        /**
-         * Handles the outputting of a banner block.
-         *
-         * @deprecated 5.9.0 No longer used in In-App Marketplace
-         *
-         * @param object $block Banner data.
-         */
-        public static function output_banner_block($block)
-        {
-        }
-        /**
-         * Handles the outputting of a column.
-         *
-         * @deprecated 5.9.0 No longer used in In-App Marketplace
-         *
-         * @param object $block Column data.
-         */
-        public static function output_column($block)
-        {
-        }
-        /**
-         * Handles the outputting of a column block.
-         *
-         * @deprecated 5.9.0 No longer used in In-App Marketplace
-         *
-         * @param object $block Column block data.
-         */
-        public static function output_column_block($block)
-        {
-        }
-        /**
-         * Handles the outputting of a small light block.
-         *
-         * @deprecated 5.9.0 No longer used in In-App Marketplace
-         *
-         * @param object $block Block data.
-         */
-        public static function output_small_light_block($block)
-        {
-        }
-        /**
-         * Handles the outputting of a small dark block.
-         *
-         * @deprecated 5.9.0 No longer used in In-App Marketplace
-         *
-         * @param object $block Block data.
-         */
-        public static function output_small_dark_block($block)
-        {
-        }
-        /**
-         * Handles the outputting of the WooCommerce Services banner block.
-         *
-         * @deprecated 5.9.0 No longer used in In-App Marketplace
-         *
-         * @param object $block Block data.
-         */
-        public static function output_wcs_banner_block($block = array())
-        {
-        }
-        /**
-         * Handles the outputting of the WooCommerce Pay banner block.
-         *
-         * @deprecated 5.9.0 No longer used in In-App Marketplace
-         *
-         * @param object $block Block data.
-         */
-        public static function output_wcpay_banner_block($block = array())
-        {
-        }
-        /**
-         * Output the HTML for the promotion block.
-         *
-         * @param array $promotion Array of promotion block data.
-         * @return void
-         */
-        public static function output_search_promotion_block(array $promotion)
-        {
-        }
-        /**
-         * Handles the output of a full-width block.
-         *
-         * @deprecated 5.9.0 No longer used in In-App Marketplace
-         *
-         * @param array $section Section data.
-         */
-        public static function output_promotion_block($section)
-        {
-        }
-        /**
-         * Handles the outputting of featured sections
-         *
-         * @param array $sections Section data.
-         */
-        public static function output_featured_sections($sections)
-        {
-        }
-        /**
-         * Handles the outputting of featured page
-         *
-         * @param array $blocks Featured page's blocks.
-         */
-        private static function output_featured($blocks)
-        {
-        }
-        /**
-         * Render a group block including products
-         *
-         * @param mixed $block Block of the page for rendering.
-         *
-         * @return void
-         */
-        private static function output_group($block)
-        {
-        }
-        /**
-         * Render a banner contains a product
-         *
-         * @param mixed $block Block of the page for rendering.
-         *
-         * @return void
-         */
-        private static function output_banner($block)
         {
         }
         /**
@@ -6769,45 +6586,11 @@ namespace {
         {
         }
         /**
-         * Output HTML for a promotion action.
-         *
-         * @param array $action Array of action properties.
+         * Process requests to legacy marketplace menu and redirect to correct in-app pages.
          *
          * @return void
          */
-        public static function output_promotion_action(array $action)
-        {
-        }
-        /**
-         * Output HTML for a promotion action if data couldn't be fetched.
-         *
-         * @param string $message Error message.
-         *
-         * @return void
-         */
-        public static function output_empty($message = '')
-        {
-        }
-        /**
-         * Handles output of the addons page in admin.
-         */
-        public static function output()
-        {
-        }
-        /**
-         * Install WooCommerce Services from Extensions screens.
-         */
-        public static function install_woocommerce_services_addon()
-        {
-        }
-        /**
-         * Install WooCommerce Payments from the Extensions screens.
-         *
-         * @param string $section Optional. Extensions tab.
-         *
-         * @return void
-         */
-        public static function install_woocommerce_payments_addon($section = '_featured')
+        public static function handle_legacy_marketplace_redirects()
         {
         }
         /**
@@ -6822,67 +6605,12 @@ namespace {
         {
         }
         /**
-         * Determine which class should be used for a rating star:
-         * - golden
-         * - half-filled (50/50 golden and gray)
-         * - gray
-         *
-         * Consider ratings from 3.0 to 4.0 as an example
-         * 3.0 will produce 3 stars
-         * 3.1 to 3.5 will produce 3 stars and a half star
-         * 3.6 to 4.0 will product 4 stars
-         *
-         * @param float $rating Rating of a product.
-         * @param int   $index  Index of a star in a row.
-         *
-         * @return string CSS class to use.
-         */
-        public static function get_star_class($rating, $index)
-        {
-        }
-        /**
          * Take an action object and return the URL based on properties of the action.
          *
          * @param object $action Action object.
          * @return string URL.
          */
         public static function get_action_url($action) : string
-        {
-        }
-        /**
-         * Format the promotion data ready for display, ie fetch locales and actions.
-         *
-         * @param array $promotions Array of promotoin objects.
-         * @return array Array of formatted promotions ready for output.
-         */
-        public static function format_promotions(array $promotions) : array
-        {
-        }
-        /**
-         * Map data from different endpoints to a universal format
-         *
-         * Search and featured products has a slightly different products' field names.
-         * Mapping converts different data structures into a universal one for further processing.
-         *
-         * @param mixed $data Product Card Data.
-         *
-         * @return object Converted data.
-         */
-        public static function map_product_card_data($data)
-        {
-        }
-        /**
-         * Render a product card
-         *
-         * There's difference in data structure (e.g. field names) between endpoints such as search and
-         * featured. Inner mapping helps to use universal field names for further work.
-         *
-         * @param mixed  $data       Product data.
-         * @param string $block_type Block type that's different from the default product card, e.g. a banner.
-         *
-         * @return void
-         */
-        public static function render_product_card($data, $block_type = \null)
         {
         }
         /**
@@ -7922,10 +7650,9 @@ namespace {
      */
     class WC_Admin_Marketplace_Promotions
     {
-        const TRANSIENT_NAME = 'woocommerce_marketplace_promotions';
-        const SCHEDULED_ACTION_HOOK = 'woocommerce_marketplace_fetch_promotions';
+        const TRANSIENT_NAME = 'woocommerce_marketplace_promotions_v2';
+        const TRANSIENT_LIFE_SPAN = \DAY_IN_SECONDS;
         const PROMOTIONS_API_URL = 'https://woocommerce.com/wp-json/wccom-extensions/3.0/promotions';
-        const SCHEDULED_ACTION_INTERVAL = 12 * \HOUR_IN_SECONDS;
         /**
          * The user's locale, for example en_US.
          *
@@ -7933,7 +7660,7 @@ namespace {
          */
         public static string $locale;
         /**
-         * On all admin pages, schedule an action to fetch promotions data.
+         * On all admin pages, try go get Marketplace promotions every day.
          * Shows notice and adds menu badge to WooCommerce Extensions item
          * if the promotions API requests them.
          *
@@ -7946,24 +7673,38 @@ namespace {
         {
         }
         /**
-         * Schedule the action to fetch promotions data.
+         * Fetch promotions from the API and store them in a transient.
+         * Fetching can be suppressed by the `woocommerce_marketplace_suppress_promotions` filter.
+         *
+         * @return void
          */
-        public static function schedule_promotion_fetch()
+        private static function maybe_update_promotions()
+        {
+        }
+        /**
+         * Get active Marketplace promotions from the transient.
+         * Use `woocommerce_marketplace_suppress_promotions` filter to suppress promotions.
+         *
+         * @since 9.0
+         */
+        public static function get_active_promotions()
         {
         }
         /**
          * Get promotions to show in the Woo in-app marketplace and load them into a transient
          * with a 12-hour life. Run as a recurring scheduled action.
          *
-         * @return void
+         * @return array
          */
-        public static function fetch_marketplace_promotions()
+        private static function fetch_marketplace_promotions()
         {
         }
         /**
          * If there's an active promotion of the format `menu_bubble`,
          * add a filter to show a bubble on the Extensions item in the
          * WooCommerce menu.
+         *
+         * Use `woocommerce_marketplace_suppress_promotions` filter to suppress the bubble.
          *
          * @return void
          * @throws Exception  If we are unable to create a DateTime from the date_to_gmt.
@@ -7990,7 +7731,7 @@ namespace {
          *
          * @return array
          */
-        private static function get_active_promotions($promotions = array())
+        private static function filter_out_inactive_promotions($promotions = array())
         {
         }
         /**
@@ -8019,11 +7760,20 @@ namespace {
         {
         }
         /**
-         * When WooCommerce is deactivated, clear the scheduled action.
+         * Clear the scheduled action that was used to fetch promotions in WooCommerce 8.8.
+         * It's no longer needed as a transient is used to store the data.
          *
          * @return void
          */
         public static function clear_scheduled_event()
+        {
+        }
+        /**
+         * We can't clear deprecated action from AS when it's running,
+         * so we schedule a new single action to clear the deprecated
+         * `woocommerce_marketplace_fetch_promotions` action.
+         */
+        public static function clear_deprecated_action()
         {
         }
     }
@@ -8561,27 +8311,19 @@ namespace {
         public static function reset_admin_notices()
         {
         }
-        // phpcs:disable Generic.Commenting.Todo.TaskFound
         /**
-         * Add an admin notice about the removal of the Legacy REST API if the said API is enabled,
-         * and a notice about soon to be unsupported webhooks with Legacy API payload if at least one of these exist.
-         *
-         * TODO: Change this method in WooCommerce 9.0 so that it checks if the Legacy REST API extension is installed, and if not, it points to the extension URL in the WordPress plugins directory.
+         * Add an admin notice about unsupported webhooks with Legacy API payload if at least one of these exist
+         * and the Legacy REST API plugin is not installed.
          */
         private static function maybe_add_legacy_api_removal_notice()
         {
         }
         /**
-         * Remove the admin notice about the removal of the Legacy REST API if the said API is disabled
-         * or if the Legacy REST API extension is installed, and remove the notice about Legacy webhooks
-         * if no such webhooks exist anymore or if the Legacy REST API extension is installed.
-         *
-         * TODO: Change this method in WooCommerce 9.0 so that the notice get removed if the Legacy REST API extension is installed and active.
+         * Remove the admin notice about the unsupported webhooks if the Legacy REST API plugin is installed.
          */
         private static function maybe_remove_legacy_api_removal_notice()
         {
         }
-        // phpcs:enable Generic.Commenting.Todo.TaskFound
         /**
          * Show a notice.
          *
@@ -10428,6 +10170,25 @@ namespace {
         public function prepare_items()
         {
         }
+        /**
+         * Get how many of the existing webhooks are configured to use the legacy payload format.
+         *
+         * @since 9.0.0
+         *
+         * @return int Count of existing webhooks are configured to use the legacy payload format.
+         */
+        public function get_legacy_api_webhooks_count()
+        {
+        }
+        /**
+         * Check if a given webhook is configured to use the legacy payload format.
+         *
+         * @param WC_Webhook $webhook Webhook object.
+         * @return bool True if the webhook is configured to use the legacy payload format.
+         */
+        private function uses_legacy_rest_api($webhook)
+        {
+        }
     }
     /**
      * WC_Admin_Webhooks.
@@ -10506,6 +10267,13 @@ namespace {
          * Table list output.
          */
         private static function table_list_output()
+        {
+        }
+        /**
+         * Display a warning message if the Legacy REST API extension is not installed
+         * and there are webhooks configured to use the legacy payload format.
+         */
+        private static function maybe_display_legacy_rest_api_warning()
         {
         }
         /**
@@ -11035,6 +10803,12 @@ namespace {
         {
         }
         /**
+         * Add the hook for modifying default WPCore update notices on the plugins management page.
+         */
+        public static function setup_message_for_expired_and_expiring_subscriptions()
+        {
+        }
+        /**
          * Runs in a cron thread, or in a visitor thread if triggered
          * by _maybe_update_plugins(), or in an auto-update thread.
          *
@@ -11082,6 +10856,17 @@ namespace {
          * @return void.
          */
         public static function add_install_marketplace_plugin_message($plugin_data, $response)
+        {
+        }
+        /**
+         * Runs on in_plugin_update_message-{file-name}, show a message if plugins subscription expired or expiring soon.
+         *
+         * @param object $plugin_data An array of plugin metadata.
+         * @param object $response  An object of metadata about the available plugin update.
+         *
+         * @return void.
+         */
+        public static function display_notice_for_expired_and_expiring_subscriptions($plugin_data, $response)
         {
         }
         /**
@@ -16362,231 +16147,6 @@ namespace {
         }
     }
     /**
-     * Legacy API.
-     */
-    class WC_Legacy_API
-    {
-        use \Automattic\WooCommerce\Internal\Traits\AccessiblePrivateMethods;
-        /**
-         * This is the major version for the REST API and takes
-         * first-order position in endpoint URLs.
-         *
-         * @deprecated 2.6.0
-         * @var string
-         */
-        const VERSION = '3.1.0';
-        /**
-         * The REST API server.
-         *
-         * @deprecated 2.6.0
-         * @var WC_API_Server
-         */
-        public $server;
-        /**
-         * REST API authentication class instance.
-         *
-         * @deprecated 2.6.0
-         * @var WC_API_Authentication
-         */
-        public $authentication;
-        /**
-         * Init the legacy API.
-         */
-        public function init()
-        {
-        }
-        /**
-         * Add new query vars.
-         *
-         * @since 2.0
-         * @param array $vars Vars.
-         * @return string[]
-         */
-        public function add_query_vars($vars)
-        {
-        }
-        /**
-         * Write a log entry and update the last usage options, for a Legacy REST API request.
-         *
-         * @param string      $route The Legacy REST API route requested.
-         * @param string|null $user_agent The content of the user agent HTTP header in the request, null if not available.
-         */
-        private function maybe_log_rest_api_request(string $route, ?string $user_agent)
-        {
-        }
-        /**
-         * Add new endpoints.
-         *
-         * @since 2.0
-         */
-        public static function add_endpoint()
-        {
-        }
-        /**
-         * Handle REST API requests.
-         *
-         * @since 2.2
-         * @deprecated 2.6.0
-         */
-        public function handle_rest_api_requests()
-        {
-        }
-        /**
-         * Display an admin notice with information about the last Legacy REST API usage,
-         * if the corresponding transient is available and unless the Legacy REST API
-         * extension is installed or the user has dismissed the notice.
-         */
-        private function maybe_display_legacy_wc_api_usage_notice() : void
-        {
-        }
-        /**
-         * Include required files for REST API request.
-         *
-         * @since 2.1
-         * @deprecated 2.6.0
-         */
-        public function includes()
-        {
-        }
-        /**
-         * Register available API resources.
-         *
-         * @since 2.1
-         * @deprecated 2.6.0
-         * @param WC_API_Server $server the REST server.
-         */
-        public function register_resources($server)
-        {
-        }
-        /**
-         * Handle legacy v1 REST API requests.
-         *
-         * @since 2.2
-         * @deprecated 2.6.0
-         */
-        private function handle_v1_rest_api_request()
-        {
-        }
-        /**
-         * Handle legacy v2 REST API requests.
-         *
-         * @since 2.4
-         * @deprecated 2.6.0
-         */
-        private function handle_v2_rest_api_request()
-        {
-        }
-        /**
-         * Rest API Init.
-         *
-         * @deprecated 3.7.0 - REST API classes autoload.
-         */
-        public function rest_api_init()
-        {
-        }
-        /**
-         * Include REST API classes.
-         *
-         * @deprecated 3.7.0 - REST API classes autoload.
-         */
-        public function rest_api_includes()
-        {
-        }
-        /**
-         * Register REST API routes.
-         *
-         * @deprecated 3.7.0
-         */
-        public function register_rest_routes()
-        {
-        }
-    }
-    /**
-     * WC_API class.
-     */
-    class WC_API extends \WC_Legacy_API
-    {
-        /**
-         * Init the API by setting up action and filter hooks.
-         */
-        public function init()
-        {
-        }
-        /**
-         * Get the version of the REST API package being ran. Since API package was merged into core, this now follows WC version.
-         *
-         * @since 3.7.0
-         * @return string|null
-         */
-        public function get_rest_api_package_version()
-        {
-        }
-        /**
-         * Get the version of the REST API package being ran.
-         *
-         * @since 3.7.0
-         * @return string
-         */
-        public function get_rest_api_package_path()
-        {
-        }
-        /**
-         * Return if the rest API classes were already loaded.
-         *
-         * @since 3.7.0
-         * @return boolean
-         */
-        protected function is_rest_api_loaded()
-        {
-        }
-        /**
-         * Get data from a WooCommerce API endpoint.
-         *
-         * @since 3.7.0
-         * @param string $endpoint Endpoint.
-         * @param array  $params Params to pass with request.
-         * @return array|\WP_Error
-         */
-        public function get_endpoint_data($endpoint, $params = array())
-        {
-        }
-        /**
-         * Add new query vars.
-         *
-         * @since 2.0
-         * @param array $vars Query vars.
-         * @return string[]
-         */
-        public function add_query_vars($vars)
-        {
-        }
-        /**
-         * WC API for payment gateway IPNs, etc.
-         *
-         * @since 2.0
-         */
-        public static function add_endpoint()
-        {
-        }
-        /**
-         * API request - Trigger any API requests.
-         *
-         * @since   2.0
-         * @version 2.4
-         */
-        public function handle_api_requests()
-        {
-        }
-        /**
-         * Register WC settings from WP-API to the REST API.
-         *
-         * @since  3.0.0
-         */
-        public function register_wp_admin_settings()
-        {
-        }
-    }
-    /**
      * Auth class.
      */
     class WC_Auth
@@ -18941,7 +18501,9 @@ namespace {
          *
          * @param array $check_emails Array of customer email addresses.
          * @param array $restrictions Array of allowed email addresses.
+         *
          * @return bool
+         * @deprecated 9.0.0 In favor of static method Automattic\WooCommerce\Utilities\DiscountsUtil::is_coupon_emails_allowed.
          */
         public function is_coupon_emails_allowed($check_emails, $restrictions)
         {
@@ -24657,7 +24219,7 @@ namespace {
          *
          * @var array
          */
-        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_admin_update_0201_order_status_index', 'wc_admin_update_0230_rename_gross_total', 'wc_admin_update_0251_remove_unsnooze_action', 'wc_update_400_db_version'), '4.4.0' => array('wc_update_440_insert_attribute_terms_for_variable_products', 'wc_admin_update_110_remove_facebook_note', 'wc_admin_update_130_remove_dismiss_action_from_tracking_opt_in_note', 'wc_update_440_db_version'), '4.5.0' => array('wc_update_450_sanitize_coupons_code', 'wc_update_450_db_version'), '5.0.0' => array('wc_update_500_fix_product_review_count', 'wc_admin_update_160_remove_facebook_note', 'wc_admin_update_170_homescreen_layout', 'wc_update_500_db_version'), '5.6.0' => array('wc_update_560_create_refund_returns_page', 'wc_update_560_db_version'), '6.0.0' => array('wc_update_600_migrate_rate_limit_options', 'wc_admin_update_270_delete_report_downloads', 'wc_admin_update_271_update_task_list_options', 'wc_admin_update_280_order_status', 'wc_admin_update_290_update_apperance_task_option', 'wc_admin_update_290_delete_default_homepage_layout_option', 'wc_update_600_db_version'), '6.3.0' => array('wc_update_630_create_product_attributes_lookup_table', 'wc_admin_update_300_update_is_read_from_last_read', 'wc_update_630_db_version'), '6.4.0' => array('wc_update_640_add_primary_key_to_product_attributes_lookup_table', 'wc_admin_update_340_remove_is_primary_from_note_action', 'wc_update_640_db_version'), '6.5.0' => array('wc_update_650_approved_download_directories'), '6.5.1' => array('wc_update_651_approved_download_directories'), '6.7.0' => array('wc_update_670_purge_comments_count_cache', 'wc_update_670_delete_deprecated_remote_inbox_notifications_option'), '7.0.0' => array('wc_update_700_remove_download_log_fk', 'wc_update_700_remove_recommended_marketing_plugins_transient'), '7.2.1' => array('wc_update_721_adjust_new_zealand_states', 'wc_update_721_adjust_ukraine_states'), '7.2.2' => array('wc_update_722_adjust_new_zealand_states', 'wc_update_722_adjust_ukraine_states'), '7.5.0' => array('wc_update_750_add_columns_to_order_stats_table', 'wc_update_750_disable_new_product_management_experience'), '7.7.0' => array('wc_update_770_remove_multichannel_marketing_feature_options'), '8.1.0' => array('wc_update_810_migrate_transactional_metadata_for_hpos'), '8.6.0' => array('wc_update_860_remove_recommended_marketing_plugins_transient'), '8.7.0' => array('wc_update_870_prevent_listing_of_transient_files_directory'), '8.9.0' => array('wc_update_890_update_connect_to_woocommerce_note', 'wc_update_890_update_paypal_standard_load_eligibility'), '8.9.1' => array('wc_update_891_create_plugin_autoinstall_history_option'));
+        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_admin_update_0201_order_status_index', 'wc_admin_update_0230_rename_gross_total', 'wc_admin_update_0251_remove_unsnooze_action', 'wc_update_400_db_version'), '4.4.0' => array('wc_update_440_insert_attribute_terms_for_variable_products', 'wc_admin_update_110_remove_facebook_note', 'wc_admin_update_130_remove_dismiss_action_from_tracking_opt_in_note', 'wc_update_440_db_version'), '4.5.0' => array('wc_update_450_sanitize_coupons_code', 'wc_update_450_db_version'), '5.0.0' => array('wc_update_500_fix_product_review_count', 'wc_admin_update_160_remove_facebook_note', 'wc_admin_update_170_homescreen_layout', 'wc_update_500_db_version'), '5.6.0' => array('wc_update_560_create_refund_returns_page', 'wc_update_560_db_version'), '6.0.0' => array('wc_update_600_migrate_rate_limit_options', 'wc_admin_update_270_delete_report_downloads', 'wc_admin_update_271_update_task_list_options', 'wc_admin_update_280_order_status', 'wc_admin_update_290_update_apperance_task_option', 'wc_admin_update_290_delete_default_homepage_layout_option', 'wc_update_600_db_version'), '6.3.0' => array('wc_update_630_create_product_attributes_lookup_table', 'wc_admin_update_300_update_is_read_from_last_read', 'wc_update_630_db_version'), '6.4.0' => array('wc_update_640_add_primary_key_to_product_attributes_lookup_table', 'wc_admin_update_340_remove_is_primary_from_note_action', 'wc_update_640_db_version'), '6.5.0' => array('wc_update_650_approved_download_directories'), '6.5.1' => array('wc_update_651_approved_download_directories'), '6.7.0' => array('wc_update_670_purge_comments_count_cache', 'wc_update_670_delete_deprecated_remote_inbox_notifications_option'), '7.0.0' => array('wc_update_700_remove_download_log_fk', 'wc_update_700_remove_recommended_marketing_plugins_transient'), '7.2.1' => array('wc_update_721_adjust_new_zealand_states', 'wc_update_721_adjust_ukraine_states'), '7.2.2' => array('wc_update_722_adjust_new_zealand_states', 'wc_update_722_adjust_ukraine_states'), '7.5.0' => array('wc_update_750_add_columns_to_order_stats_table', 'wc_update_750_disable_new_product_management_experience'), '7.7.0' => array('wc_update_770_remove_multichannel_marketing_feature_options'), '8.1.0' => array('wc_update_810_migrate_transactional_metadata_for_hpos'), '8.6.0' => array('wc_update_860_remove_recommended_marketing_plugins_transient'), '8.7.0' => array('wc_update_870_prevent_listing_of_transient_files_directory'), '8.9.0' => array('wc_update_890_update_connect_to_woocommerce_note', 'wc_update_890_update_paypal_standard_load_eligibility'), '8.9.1' => array('wc_update_891_create_plugin_autoinstall_history_option'), '9.0.0' => array('wc_update_900_add_launch_your_store_tour_option'));
         /**
          * Option name used to track new installations of WooCommerce.
          *
@@ -24755,6 +24317,12 @@ namespace {
          * Install WC.
          */
         public static function install()
+        {
+        }
+        /**
+         * Core function that performs the WooCommerce install.
+         */
+        private static function install_core()
         {
         }
         /**
@@ -24947,6 +24515,14 @@ namespace {
          * In this case we check if the plugin was autoinstalled in such a way, and if so we activate it if the conditions are fulfilled.
          */
         private static function maybe_install_legacy_api_plugin()
+        {
+        }
+        /**
+         * If in a previous version of WooCommerce the Legacy REST API plugin was installed manually but the core Legacy REST API was kept disabled,
+         * now the Legacy API is still disabled and can't be manually enabled from settings UI (the plugin, which is now in control, won't allow that),
+         * which is weird and confusing. So we detect this case and explicitly enable it.
+         */
+        private static function maybe_activate_legacy_api_enabled_option()
         {
         }
         /**
@@ -30656,6 +30232,8 @@ namespace {
         */
         /**
          * Get the aria-describedby description for the add to cart button.
+         * Note that this is to provide the description, not the describedby attribute
+         * itself.
          *
          * @return string
          */
@@ -35101,18 +34679,6 @@ namespace {
         {
         }
         /**
-         * Get Legacy API payload.
-         *
-         * @since  3.0.0
-         * @param  string $resource    Resource type.
-         * @param  int    $resource_id Resource ID.
-         * @param  string $event       Event type.
-         * @return array
-         */
-        private function get_legacy_api_payload($resource, $resource_id, $event)
-        {
-        }
-        /**
          * Get WP API integration payload.
          *
          * @since  3.0.0
@@ -35127,9 +34693,10 @@ namespace {
         /**
          * Build the payload data for the webhook.
          *
-         * @since  2.2.0
-         * @param  mixed $resource_id First hook argument, typically the resource ID.
+         * @param mixed $resource_id First hook argument, typically the resource ID.
          * @return mixed              Payload data.
+         * @throws \Exception The webhook is configured to use the Legacy REST API, but the Legacy REST API plugin is not available.
+         * @since  2.2.0
          */
         public function build_payload($resource_id)
         {
@@ -35512,12 +35079,13 @@ namespace {
      */
     final class WooCommerce
     {
+        use \Automattic\WooCommerce\Internal\Traits\AccessiblePrivateMethods;
         /**
          * WooCommerce version.
          *
          * @var string
          */
-        public $version = '8.9.1';
+        public $version = '9.0.0';
         /**
          * WooCommerce Schema version.
          *
@@ -35547,6 +35115,8 @@ namespace {
         public $query = \null;
         /**
          * API instance
+         *
+         * @deprecated 9.0.0 The Legacy REST API has been removed from WooCommerce core. This property will be null unless the WooCommerce Legacy REST API plugin is installed.
          *
          * @var WC_API
          */
@@ -35728,6 +35298,14 @@ namespace {
          * @return bool
          */
         public function is_rest_api_request()
+        {
+        }
+        /**
+         * Returns true if the request is a store REST API request.
+         *
+         * @return bool
+         */
+        public function is_store_api_request()
         {
         }
         /**
@@ -36037,6 +35615,28 @@ namespace {
          * @return mixed The value of the global.
          */
         public function get_global(string $global_name)
+        {
+        }
+        /**
+         * Register WC settings from WP-API to the REST API.
+         *
+         * This method used to be part of the now removed Legacy REST API.
+         *
+         * @since 9.0.0
+         */
+        private function register_wp_admin_settings()
+        {
+        }
+        /**
+         * Converts the WooCommerce slug to the correct slug for the current version.
+         * This ensures that when the plugin is installed in a different folder name, the correct slug is used so that dependent plugins can be installed/activated.
+         *
+         * @since 9.0.0
+         * @param string $slug The plugin slug to convert.
+         *
+         * @return string
+         */
+        public function convert_woocommerce_slug($slug)
         {
         }
     }
@@ -36373,10 +35973,10 @@ namespace {
          * Generates command information and tells WP CLI about all
          * commands available from a route.
          *
-         * @param string $rest_command WC-API command.
-         * @param string $route Path to route endpoint.
-         * @param array  $route_data Command data.
-         * @param array  $command_args WP-CLI command arguments.
+         * @param WC_CLI_REST_Command $rest_command WC-API command.
+         * @param string              $route Path to route endpoint.
+         * @param array               $route_data Command data.
+         * @param array               $command_args WP-CLI command arguments.
          */
         private static function register_route_commands($rest_command, $route, $route_data, $command_args = array())
         {
@@ -46762,6 +46362,7 @@ namespace {
          * Validate textarea based settings.
          *
          * @since 3.0.0
+         * @since 9.0.0 No longer allows storing IFRAME, which was allowed for "ShareThis" integration no longer found in core.
          * @param string $value Value.
          * @param array  $setting Setting.
          * @return string
@@ -54271,6 +53872,91 @@ namespace {
         }
     }
     /**
+     * REST API Order Refunds controller class.
+     *
+     * @package WooCommerce\RestApi
+     * @extends WC_REST_Order_Refunds_Controller
+     */
+    class WC_REST_Refunds_Controller extends \WC_REST_Order_Refunds_Controller
+    {
+        /**
+         * Endpoint namespace.
+         *
+         * @var string
+         */
+        protected $namespace = 'wc/v3';
+        /**
+         * Route base.
+         *
+         * @var string
+         */
+        protected $rest_base = 'refunds';
+        /**
+         * Post type.
+         *
+         * @var string
+         */
+        protected $post_type = 'shop_order_refund';
+        /**
+         * Register the routes for order refunds.
+         */
+        public function register_routes()
+        {
+        }
+        /**
+         * Prepare objects query.
+         *
+         * @since  9.0.0
+         * @param  WP_REST_Request $request Full details about the request.
+         * @return array
+         */
+        protected function prepare_objects_query($request)
+        {
+        }
+        /**
+         * Prepare a single order output for response.
+         *
+         * @since  9.0.0
+         *
+         * @param  WC_Order_Refund $refund  Refund data.
+         * @param  WP_REST_Request $request Request object.
+         *
+         * @return WP_Error|WP_REST_Response
+         */
+        public function prepare_object_for_response($refund, $request)
+        {
+        }
+        /**
+         * Get formatted item data.
+         *
+         * @since  9.0.0
+         * @param  WC_Order_Refund $refund The refund object.
+         * @return array
+         */
+        protected function get_formatted_item_data($refund)
+        {
+        }
+        /**
+         * Prepare links for the request.
+         *
+         * @param WC_Order_Refund $refund  Refund data.
+         * @param WP_REST_Request $request Request object.
+         * @return array                   Links for the given post.
+         */
+        protected function prepare_links($refund, $request)
+        {
+        }
+        /**
+         * Get the refund schema, conforming to JSON Schema.
+         *
+         * @since  9.0.0
+         * @return array
+         */
+        public function get_item_schema()
+        {
+        }
+    }
+    /**
      * REST API Reports controller class.
      *
      * @package WooCommerce\RestApi
@@ -60849,6 +60535,16 @@ namespace Automattic\WooCommerce\Admin\API {
         public function initialize_coming_soon()
         {
         }
+        /**
+         * Update woocommerce_admin_launch_your_store_survey_completed to yes or no
+         *
+         * @param \WP_REST_Request $request WP_REST_Request object.
+         *
+         * @return \WP_REST_Response
+         */
+        public function update_survey_status(\WP_REST_Request $request)
+        {
+        }
     }
     /**
      * Leaderboards controller.
@@ -61650,7 +61346,7 @@ namespace Automattic\WooCommerce\Admin\API {
         {
         }
         /**
-         * Prepare an array with the the requested updates.
+         * Prepare an array with the requested updates.
          *
          * @param WP_REST_Request $request  Request object.
          * @return array A list of the requested updates values.
@@ -61763,6 +61459,50 @@ namespace Automattic\WooCommerce\Admin\API {
          * @return WP_REST_Request|WP_Error
          */
         public function trigger_note_action($request)
+        {
+        }
+    }
+    /**
+     * Notice Controller.
+     *
+     * @internal
+     * @extends WC_REST_Data_Controller
+     */
+    class Notice extends \WC_REST_Data_Controller
+    {
+        /**
+         * Endpoint namespace.
+         *
+         * @var string
+         */
+        protected $namespace = 'wc-admin';
+        /**
+         * Route base.
+         *
+         * @var string
+         */
+        protected $rest_base = 'notice';
+        /**
+         * Register the routes for admin notes.
+         */
+        public function register_routes()
+        {
+        }
+        /**
+         * Save notice dismiss information in user meta.
+         *
+         * @param WP_REST_Request $request Request object.
+         * @return WP_REST_Response|WP_Error
+         */
+        public function dissmiss_notice($request)
+        {
+        }
+        /**
+         * Check user has the necessary permissions to perform this action.
+         *
+         * @return bool
+         */
+        public function get_permission() : bool
         {
         }
     }
@@ -66677,6 +66417,9 @@ namespace Automattic\WooCommerce\Internal\Traits {
             'utm_content' => 'current.cnt',
             'utm_id' => 'current.id',
             'utm_term' => 'current.trm',
+            'utm_source_platform' => 'current.plt',
+            'utm_creative_format' => 'current.fmt',
+            'utm_marketing_tactic' => 'current.tct',
             // additional fields.
             'session_entry' => 'current_add.ep',
             'session_start_time' => 'current_add.fd',
@@ -70695,6 +70438,16 @@ namespace Automattic\WooCommerce\Admin\Features {
          * @return void
          */
         public function save_site_visibility_options()
+        {
+        }
+        /**
+         * Append coming soon prop tracks globally.
+         *
+         * @param array $event_properties Event properties array.
+         *
+         * @return array
+         */
+        public function append_coming_soon_global_tracks($event_properties)
         {
         }
         /**
@@ -74790,6 +74543,15 @@ namespace Automattic\WooCommerce\Admin\Features\ProductBlockEditor {
         public function register_metadata_attribute($args)
         {
         }
+        /**
+         * Filters woocommerce block types.
+         *
+         * @param string[] $block_types Array of woocommerce block types.
+         * @return array
+         */
+        public function get_block_types($block_types)
+        {
+        }
     }
     /**
      * The Product Template that represents the relation between the Product and
@@ -77813,6 +77575,24 @@ namespace Automattic\WooCommerce\Admin {
     class PluginsHelper
     {
         /**
+         * Indicates whether the expiration notice for subscriptions can be displayed.
+         *
+         * @var bool
+         */
+        public static $can_show_expiring_subs_notice = true;
+        /**
+         * The URL for the WooCommerce subscription page.
+         */
+        const WOO_SUBSCRIPTION_PAGE_URL = 'https://woocommerce.com/my-account/my-subscriptions/';
+        /**
+         * Meta key for dismissing expired subscription notices.
+         */
+        const DISMISS_EXPIRED_SUBS_NOTICE = 'woo_subscription_expired_notice_dismiss';
+        /**
+         * Meta key for dismissing expiring subscription notices
+         */
+        const DISMISS_EXPIRING_SUBS_NOTICE = 'woo_subscription_expiring_notice_dismiss';
+        /**
          * Initialize hooks.
          */
         public static function init()
@@ -77985,11 +77765,75 @@ namespace Automattic\WooCommerce\Admin {
         {
         }
         /**
-         * Enqueue scripts for connect notice in plugin list page.
+         * Enqueue scripts for notices in plugin list page.
          *
          * @return void
          */
-        public static function maybe_enqueue_scripts_for_connect_notice_in_plugins()
+        public static function maybe_enqueue_scripts_for_notices_in_plugins()
+        {
+        }
+        /**
+         * Show notice about to expired subscription on WC settings page.
+         *
+         * @return void
+         */
+        public static function maybe_show_expired_subscriptions_notice()
+        {
+        }
+        /**
+         * Show notice about to expiring subscription on WC settings page.
+         *
+         * @return void
+         */
+        public static function maybe_show_expiring_subscriptions_notice()
+        {
+        }
+        /**
+         * Enqueue scripts for woo subscription notice.
+         *
+         * @return void
+         */
+        public static function maybe_enqueue_scripts_for_subscription_notice()
+        {
+        }
+        /**
+         * Construct the subscritpion notice data based on user subscriptions data.
+         *
+         * @param array  $all_subs all subscription data.
+         * @param array  $subs_to_show filtered subscriptions as condition.
+         * @param int    $total total subscription count.
+         * @param array  $messages message.
+         * @param string $type type of notice, whether it is for expiring or expired subscription.
+         * @return array notice data to return. Contains type, parsed_message and product_id.
+         */
+        public static function get_subscriptions_notice_data(array $all_subs, array $subs_to_show, int $total, array $messages, string $type)
+        {
+        }
+        /**
+         * Get formatted notice information for expiring subscription.
+         *
+         * @param boolean $allowed_link whether the notice description should include a link.
+         * @return array notice information.
+         */
+        public static function get_expiring_subscription_notice($allowed_link = true)
+        {
+        }
+        /**
+         * Get formatted notice information for expired subscription.
+         *
+         * @param boolean $allowed_link whether the notice description should include a link.
+         * @return array notice information.
+         */
+        public static function get_expired_subscription_notice($allowed_link = true)
+        {
+        }
+        /**
+         * Determine whether a specific notice should be shown to the current user.
+         *
+         * @param string $dismiss_notice_meta User meta that includes the timestamp when a store notice was dismissed.
+         * @return bool True if the notice should be shown, false otherwise.
+         */
+        public static function should_show_notice($dismiss_notice_meta)
         {
         }
     }
@@ -84819,6 +84663,24 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         protected function register_block_type_assets()
         {
         }
+        /**
+         * Get the frontend style handle for this block type.
+         *
+         * @return null
+         */
+        protected function get_block_type_style()
+        {
+        }
+        /**
+         * Get the frontend script handle for this block type.
+         *
+         * @see $this->register_block_type()
+         * @param string $key Data to get, or default to everything.
+         * @return array|string|null
+         */
+        protected function get_block_type_script($key = null)
+        {
+        }
     }
 }
 namespace Automattic\WooCommerce\Blocks\Utils {
@@ -87058,6 +86920,15 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
+         * Get query args for preview mode. These query args will be used with WP_Query to fetch the products.
+         *
+         * @param array           $args    Query args.
+         * @param WP_REST_Request $request Request.
+         */
+        private function get_preview_query_args($args, $request)
+        {
+        }
+        /**
          * Extends allowed `collection_params` for the REST API
          *
          * By itself, the REST API doesn't accept custom `orderby` values,
@@ -87525,6 +87396,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
+         * Check array for checked item.
+         *
+         * @param array $items Items to check.
+         */
+        private function hasSelectedFilter($items)
+        {
+        }
+        /**
          * Render the block.
          *
          * @param array    $attributes Block attributes.
@@ -87694,6 +87573,37 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @param string   $query_type Query type, accept 'and' or 'or'.
          */
         private function get_attribute_counts($block, $slug, $query_type)
+        {
+        }
+    }
+    /**
+     * Product Filter: Clear Button Block.
+     */
+    final class ProductFilterClearButton extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'product-filter-clear-button';
+        /**
+         * Get the frontend style handle for this block type.
+         *
+         * @return null
+         */
+        protected function get_block_type_style()
+        {
+        }
+        /**
+         * Include and render the block.
+         *
+         * @param array    $attributes Block attributes. Default empty array.
+         * @param string   $content    Block content. Default empty string.
+         * @param WP_Block $block      Block instance.
+         * @return string Rendered block type output.
+         */
+        protected function render($attributes, $content, $block)
         {
         }
     }
@@ -87936,6 +87846,45 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @param WP_Block $block Block instance.
          */
         private function get_stock_status_counts($block)
+        {
+        }
+    }
+    /**
+     * ProductFilters class.
+     */
+    class ProductFilters extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'product-filters';
+        /**
+         *  Register the context
+         *
+         * @return string[]
+         */
+        protected function get_block_type_uses_context()
+        {
+        }
+        /**
+         * Get the frontend style handle for this block type.
+         *
+         * @return null
+         */
+        protected function get_block_type_style()
+        {
+        }
+        /**
+         * Include and render the block.
+         *
+         * @param array    $attributes Block attributes. Default empty array.
+         * @param string   $content    Block content. Default empty string.
+         * @param WP_Block $block      Block instance.
+         * @return string Rendered block type output.
+         */
+        protected function render($attributes, $content, $block)
         {
         }
     }
@@ -90264,7 +90213,7 @@ namespace Automattic\WooCommerce\Blocks\Domain {
         {
         }
         /**
-         * Returns an instance of the the FeatureGating class.
+         * Returns an instance of the FeatureGating class.
          *
          * @return FeatureGating
          */
@@ -96196,6 +96145,12 @@ namespace Automattic\WooCommerce\DataBase\Migrations\CustomOrderTable {
          * @return bool Whether the COT feature is enabled.
          */
         private function is_enabled($log = true) : bool
+        {
+        }
+        /**
+         * Free some in-memory usage.
+         */
+        private function free_in_memory_usage()
         {
         }
         /**
@@ -105886,6 +105841,23 @@ namespace Automattic\WooCommerce\Utilities {
         }
     }
     /**
+     * The DiscountsUtil class provides utilities to assist discounts calculation and validation.
+     */
+    class DiscountsUtil
+    {
+        /**
+         * Checks if the given email address(es) matches the ones specified on the coupon.
+         *
+         * @param array $check_emails Array of customer email addresses.
+         * @param array $restrictions Array of allowed email addresses.
+         *
+         * @return bool
+         */
+        public static function is_coupon_emails_allowed($check_emails, $restrictions)
+        {
+        }
+    }
+    /**
      * Class with methods that allow to retrieve information about the existing WooCommerce features,
      * also has methods for WooCommerce plugins to declare (in)compatibility with the features.
      */
@@ -106115,6 +106087,22 @@ namespace Automattic\WooCommerce\Utilities {
          * @return float The value rounded to the given precision as a float, or the supplied default value.
          */
         public static function round($val, int $precision = 0, int $mode = PHP_ROUND_HALF_UP) : float
+        {
+        }
+        /**
+         * Get the sum of an array of values using the built-in array_sum function, but sanitize the array values
+         * first to ensure they are all floats.
+         *
+         * This is needed because in PHP 8.3 non-numeric values that cannot be cast as an int or a float will
+         * cause an E_WARNING to be emitted. Prior to PHP 8.3 these values were just ignored.
+         *
+         * Note that, unlike the built-in array_sum, this one will always return a float, never an int.
+         *
+         * @param array $arr The array of values to sum.
+         *
+         * @return float
+         */
+        public static function array_sum(array $arr) : float
         {
         }
     }
@@ -106403,6 +106391,25 @@ namespace Automattic\WooCommerce\Utilities {
         }
     }
     /**
+     * Utility methods related to the REST API.
+     */
+    class RestApiUtil
+    {
+        /**
+         * Get data from a WooCommerce API endpoint.
+         * This method used to be part of the WooCommerce Legacy REST API.
+         *
+         * @since 9.0.0
+         *
+         * @param string $endpoint Endpoint.
+         * @param array  $params Params to pass with request.
+         * @return array|\WP_Error
+         */
+        public function get_endpoint_data($endpoint, $params = array())
+        {
+        }
+    }
+    /**
      * A class of utilities for dealing with strings.
      */
     final class StringUtil
@@ -106489,6 +106496,15 @@ namespace Automattic\WooCommerce\Utilities {
          * @return string The class name without the namespace.
          */
         public static function class_name_without_namespace(string $class_name)
+        {
+        }
+        /**
+         * Normalize the slashes (/ and \) of a local filesystem path by converting them to DIRECTORY_SEPARATOR.
+         *
+         * @param string|null $path Path to normalize.
+         * @return string|null Normalized path, or null if the input was null.
+         */
+        public static function normalize_local_path_slashes(?string $path)
         {
         }
     }
@@ -108175,7 +108191,14 @@ namespace {
     {
     }
     /**
-     * Get the URL to the WooCommerce REST API.
+     * Get the URL to the WooCommerce Legacy REST API.
+     *
+     * Note that as of WooCommerce 9.0 the WooCommerce Legacy REST API has been moved to a dedicated extension,
+     * and the implementation of its root endpoint in WooCommerce core is now just a stub that will always return an error.
+     * See the setup_legacy_api_stub method in includes/class-woocommerce.php and:
+     * https://developer.woocommerce.com/2023/10/03/the-legacy-rest-api-will-move-to-a-dedicated-extension-in-woocommerce-9-0/
+     *
+     * @deprecated 9.0.0 The Legacy REST API has been removed from WooCommerce core.
      *
      * @since 2.1
      * @param string $path an endpoint to include in the URL.
@@ -110717,8 +110740,6 @@ namespace {
      * post types are types of orders, and having them treated as such.
      *
      * $args are passed to register_post_type, but there are a few specific to this function:
-     *      - exclude_from_orders_screen (bool) Whether or not this order type also get shown in the main.
-     *      orders screen.
      *      - add_order_meta_boxes (bool) Whether or not the order type gets shop_order meta boxes.
      *      - exclude_from_order_count (bool) Whether or not this order type is excluded from counts.
      *      - exclude_from_order_views (bool) Whether or not this order type is visible by customers when.
@@ -111692,9 +111713,10 @@ namespace {
      * @since 8.5.0
      * @param int        $attachment_id Media attachment ID.
      * @param WC_Product $product Optional product object.
+     * @param bool       $save_product If true, the changes in the product will be saved before the method returns.
      * @return void
      */
-    function wc_product_attach_featured_image($attachment_id, $product = \null)
+    function wc_product_attach_featured_image($attachment_id, $product = \null, $save_product = \true)
     {
     }
     /**
