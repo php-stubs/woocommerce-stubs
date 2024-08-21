@@ -35112,7 +35112,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '9.1.0';
+        public $version = '9.1.4';
         /**
          * WooCommerce Schema version.
          *
@@ -57204,11 +57204,13 @@ namespace {
         /**
          * Send a Tracks event when a product is published.
          *
-         * @param int        $product_id  Product ID.
-         * @param WC_Product $product     Product object.
-         * @param array      $changes     Product changes.
+         * @param int          $post_id     Post ID.
+         * @param WP_Post      $post        Post object.
+         * @param bool         $update      Whether this is an existing post being updated.
+         * @param null|WP_Post $post_before Null for new posts, the WP_Post object prior
+         *                                  to the update for updated posts.
          */
-        public function track_product_published($product_id, $product, $changes = \null)
+        public function track_product_published($post_id, $post, $update, $post_before)
         {
         }
         /**
