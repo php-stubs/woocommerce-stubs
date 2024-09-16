@@ -13,6 +13,8 @@ return \StubsGenerator\Finder::create()
         \StubsGenerator\Finder::create()
             ->in(['source/woocommerce/src'])
             ->notPath('Internal')
+            // Uses woocommerce/blueprint
+            ->notPath('Admin/Features/Blueprint')
             ->sortByName(true)
     )
     // WC_Query uses this internal trait

@@ -7467,6 +7467,14 @@ namespace {
         public function do_ajax_product_import()
         {
         }
+        /**
+         * Track importer/exporter view.
+         *
+         * @return void
+         */
+        public function track_importer_exporter_view()
+        {
+        }
     }
     class WC_Admin_Log_Table_List extends \WP_List_Table
     {
@@ -7734,8 +7742,8 @@ namespace {
         /**
          * From the array of promotions, select those of a given format.
          *
-         * @param ? array  $promotions  Array of data about promotions of all formats.
-         * @param ? string $format      Format we want to filter for.
+         * @param ?array  $promotions  Array of data about promotions of all formats.
+         * @param ?string $format      Format we want to filter for.
          *
          * @return array
          */
@@ -11238,6 +11246,14 @@ namespace {
         {
         }
         /**
+         * Get the user's unconnected subscriptions.
+         *
+         * @return array
+         */
+        public static function get_unconnected_subscriptions()
+        {
+        }
+        /**
          * Get subscription state of a given product ID.
          *
          * @since TBD
@@ -11410,6 +11426,12 @@ namespace {
          * Flush subscriptions cache.
          */
         public static function _flush_subscriptions_cache()
+        {
+        }
+        /**
+         * Flush product-usage-notice-rules cache.
+         */
+        public static function flush_product_usage_notice_rules_cache()
         {
         }
         /**
@@ -11861,6 +11883,18 @@ namespace {
         {
         }
         /**
+         * Runs before controller actions to check that the file used during the import is valid.
+         *
+         * @since 9.3.0
+         *
+         * @param string $path Path to test.
+         *
+         * @throws \Exception When file validation fails.
+         */
+        protected static function check_file_path(string $path) : void
+        {
+        }
+        /**
          * Get all the valid filetypes for a CSV file.
          *
          * @return array
@@ -11922,6 +11956,14 @@ namespace {
          * Dispatch current step and show correct view.
          */
         public function dispatch()
+        {
+        }
+        /**
+         * Processes AJAX requests related to a product CSV import.
+         *
+         * @since 9.3.0
+         */
+        public static function dispatch_ajax()
         {
         }
         /**
@@ -14984,6 +15026,14 @@ namespace {
         {
         }
         /**
+         * Get settings for the Blueprint section.
+         *
+         * @return array
+         */
+        protected function get_settings_for_blueprint_section()
+        {
+        }
+        /**
          * Form method.
          *
          * @deprecated 3.4.4
@@ -15150,6 +15200,81 @@ namespace {
          * Output the settings.
          */
         public function output()
+        {
+        }
+    }
+    /**
+     * WC_Settings_Payment_Gateways_React.
+     */
+    class WC_Settings_Payment_Gateways_React extends \WC_Settings_Page
+    {
+        /**
+         * Get the whitelist of sections to render using React.
+         *
+         * @return array List of section identifiers.
+         */
+        private function get_reactify_render_sections()
+        {
+        }
+        /**
+         * Constructor.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Output the settings.
+         */
+        public function output()
+        {
+        }
+        /**
+         * Check if the given section should be rendered using React.
+         *
+         * @param string $section The section to check.
+         * @return bool Whether the section should be rendered using React.
+         */
+        private function should_render_react_section($section)
+        {
+        }
+        /**
+         * Render the React section.
+         *
+         * @param string $section The section to render.
+         */
+        private function render_react_section($section)
+        {
+        }
+        /**
+         * Render the classic gateway settings page.
+         *
+         * @param array  $payment_gateways The payment gateways.
+         * @param string $current_section The current section.
+         */
+        private function render_classic_gateway_settings_page($payment_gateways, $current_section)
+        {
+        }
+        /**
+         * Run the 'admin_options' method on a given gateway.
+         * This method exists to easy unit testing.
+         *
+         * @param object $gateway The gateway object to run the method on.
+         */
+        protected function run_gateway_admin_options($gateway)
+        {
+        }
+        /**
+         * Don't show any section links.
+         *
+         * @return array
+         */
+        public function get_sections()
+        {
+        }
+        /**
+         * Save settings.
+         */
+        public function save()
         {
         }
     }
@@ -19297,6 +19422,12 @@ namespace {
          * Sets up and hooks WP CLI to our CLI code.
          */
         private function hooks()
+        {
+        }
+        /**
+         * Include Blueprint CLI if it's available.
+         */
+        private function maybe_include_blueprint_cli()
         {
         }
     }
@@ -24467,7 +24598,7 @@ namespace {
          *
          * @var array
          */
-        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_admin_update_0201_order_status_index', 'wc_admin_update_0230_rename_gross_total', 'wc_admin_update_0251_remove_unsnooze_action', 'wc_update_400_db_version'), '4.4.0' => array('wc_update_440_insert_attribute_terms_for_variable_products', 'wc_admin_update_110_remove_facebook_note', 'wc_admin_update_130_remove_dismiss_action_from_tracking_opt_in_note', 'wc_update_440_db_version'), '4.5.0' => array('wc_update_450_sanitize_coupons_code', 'wc_update_450_db_version'), '5.0.0' => array('wc_update_500_fix_product_review_count', 'wc_admin_update_160_remove_facebook_note', 'wc_admin_update_170_homescreen_layout', 'wc_update_500_db_version'), '5.6.0' => array('wc_update_560_create_refund_returns_page', 'wc_update_560_db_version'), '6.0.0' => array('wc_update_600_migrate_rate_limit_options', 'wc_admin_update_270_delete_report_downloads', 'wc_admin_update_271_update_task_list_options', 'wc_admin_update_280_order_status', 'wc_admin_update_290_update_apperance_task_option', 'wc_admin_update_290_delete_default_homepage_layout_option', 'wc_update_600_db_version'), '6.3.0' => array('wc_update_630_create_product_attributes_lookup_table', 'wc_admin_update_300_update_is_read_from_last_read', 'wc_update_630_db_version'), '6.4.0' => array('wc_update_640_add_primary_key_to_product_attributes_lookup_table', 'wc_admin_update_340_remove_is_primary_from_note_action', 'wc_update_640_db_version'), '6.5.0' => array('wc_update_650_approved_download_directories'), '6.5.1' => array('wc_update_651_approved_download_directories'), '6.7.0' => array('wc_update_670_purge_comments_count_cache', 'wc_update_670_delete_deprecated_remote_inbox_notifications_option'), '7.0.0' => array('wc_update_700_remove_download_log_fk', 'wc_update_700_remove_recommended_marketing_plugins_transient'), '7.2.1' => array('wc_update_721_adjust_new_zealand_states', 'wc_update_721_adjust_ukraine_states'), '7.2.2' => array('wc_update_722_adjust_new_zealand_states', 'wc_update_722_adjust_ukraine_states'), '7.5.0' => array('wc_update_750_add_columns_to_order_stats_table', 'wc_update_750_disable_new_product_management_experience'), '7.7.0' => array('wc_update_770_remove_multichannel_marketing_feature_options'), '8.1.0' => array('wc_update_810_migrate_transactional_metadata_for_hpos'), '8.6.0' => array('wc_update_860_remove_recommended_marketing_plugins_transient'), '8.7.0' => array('wc_update_870_prevent_listing_of_transient_files_directory'), '8.9.0' => array('wc_update_890_update_connect_to_woocommerce_note', 'wc_update_890_update_paypal_standard_load_eligibility'), '8.9.1' => array('wc_update_891_create_plugin_autoinstall_history_option'), '9.1.0' => array('wc_update_910_add_launch_your_store_tour_option', 'wc_update_910_remove_obsolete_user_meta'), '9.2.0' => array('wc_update_920_add_wc_hooked_blocks_version_option'));
+        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_admin_update_0201_order_status_index', 'wc_admin_update_0230_rename_gross_total', 'wc_admin_update_0251_remove_unsnooze_action', 'wc_update_400_db_version'), '4.4.0' => array('wc_update_440_insert_attribute_terms_for_variable_products', 'wc_admin_update_110_remove_facebook_note', 'wc_admin_update_130_remove_dismiss_action_from_tracking_opt_in_note', 'wc_update_440_db_version'), '4.5.0' => array('wc_update_450_sanitize_coupons_code', 'wc_update_450_db_version'), '5.0.0' => array('wc_update_500_fix_product_review_count', 'wc_admin_update_160_remove_facebook_note', 'wc_admin_update_170_homescreen_layout', 'wc_update_500_db_version'), '5.6.0' => array('wc_update_560_create_refund_returns_page', 'wc_update_560_db_version'), '6.0.0' => array('wc_update_600_migrate_rate_limit_options', 'wc_admin_update_270_delete_report_downloads', 'wc_admin_update_271_update_task_list_options', 'wc_admin_update_280_order_status', 'wc_admin_update_290_update_apperance_task_option', 'wc_admin_update_290_delete_default_homepage_layout_option', 'wc_update_600_db_version'), '6.3.0' => array('wc_update_630_create_product_attributes_lookup_table', 'wc_admin_update_300_update_is_read_from_last_read', 'wc_update_630_db_version'), '6.4.0' => array('wc_update_640_add_primary_key_to_product_attributes_lookup_table', 'wc_admin_update_340_remove_is_primary_from_note_action', 'wc_update_640_db_version'), '6.5.0' => array('wc_update_650_approved_download_directories'), '6.5.1' => array('wc_update_651_approved_download_directories'), '6.7.0' => array('wc_update_670_purge_comments_count_cache', 'wc_update_670_delete_deprecated_remote_inbox_notifications_option'), '7.0.0' => array('wc_update_700_remove_download_log_fk', 'wc_update_700_remove_recommended_marketing_plugins_transient'), '7.2.1' => array('wc_update_721_adjust_new_zealand_states', 'wc_update_721_adjust_ukraine_states'), '7.2.2' => array('wc_update_722_adjust_new_zealand_states', 'wc_update_722_adjust_ukraine_states'), '7.5.0' => array('wc_update_750_add_columns_to_order_stats_table', 'wc_update_750_disable_new_product_management_experience'), '7.7.0' => array('wc_update_770_remove_multichannel_marketing_feature_options'), '8.1.0' => array('wc_update_810_migrate_transactional_metadata_for_hpos'), '8.6.0' => array('wc_update_860_remove_recommended_marketing_plugins_transient'), '8.7.0' => array('wc_update_870_prevent_listing_of_transient_files_directory'), '8.9.0' => array('wc_update_890_update_connect_to_woocommerce_note', 'wc_update_890_update_paypal_standard_load_eligibility'), '8.9.1' => array('wc_update_891_create_plugin_autoinstall_history_option'), '9.1.0' => array('wc_update_910_add_launch_your_store_tour_option', 'wc_update_910_remove_obsolete_user_meta'), '9.2.0' => array('wc_update_920_add_wc_hooked_blocks_version_option'), '9.3.0' => array('wc_update_930_add_woocommerce_coming_soon_option', 'wc_update_930_migrate_user_meta_for_launch_your_store_tour'));
         /**
          * Option name used to track new installations of WooCommerce.
          *
@@ -24729,6 +24860,16 @@ namespace {
          * @since 8.2.0
          */
         public static function maybe_enable_hpos()
+        {
+        }
+        /**
+         * Add the woocommerce_coming_soon option for new shops.
+         *
+         * Ensure that the option is set for all shops, even if core profiler is disabled on the host.
+         *
+         * @since 9.3.0
+         */
+        public static function add_coming_soon_option()
         {
         }
         /**
@@ -30455,6 +30596,14 @@ namespace {
         public function add_to_cart_description()
         {
         }
+        /**
+         * Get the add to cart button success message - used to update the mini cart live region.
+         *
+         * @return string
+         */
+        public function add_to_cart_success_message()
+        {
+        }
     }
     /**
      * Variable product class.
@@ -34444,6 +34593,9 @@ namespace {
          * However, there are version of JP where \Automattic\Jetpack\Status exists, but does *not* contain is_staging_site method,
          * so with those, code still needs to use the previous check as a fallback.
          *
+         * After upgrading Jetpack Status to v3.3.2 is_staging_site is also deprecated and in_safe_mode is the new replacement.
+         * So we check this first of all.
+         *
          * @return bool
          */
         private static function is_jetpack_staging_site()
@@ -35363,7 +35515,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '9.2.3';
+        public $version = '9.3.1';
         /**
          * WooCommerce Schema version.
          *
@@ -35946,6 +36098,16 @@ namespace {
          * @return string
          */
         public function convert_woocommerce_slug($slug)
+        {
+        }
+        /**
+         * Register the remote log handler.
+         *
+         * @param \WC_Log_Handler[] $handlers The handlers to register.
+         *
+         * @return \WC_Log_Handler[]
+         */
+        private function register_remote_log_handler($handlers)
         {
         }
     }
@@ -46277,6 +46439,76 @@ namespace {
         }
     }
     /**
+     * WC_Product_Usage_Rule_Set.
+     */
+    class WC_Product_Usage_Rule_Set
+    {
+        /**
+         * Set of product feature restriction rules.
+         *
+         * @var array|null $rules
+         */
+        protected $rules;
+        /**
+         * Constructor
+         *
+         * @param array $rules product feature restriction rules.
+         */
+        public function __construct($rules)
+        {
+        }
+        /**
+         * Retrieve the value of a rule by name
+         *
+         * @param string $rule_name name of the rule to retrieve value.
+         * @return mixed|null
+         */
+        public function get_rule(string $rule_name)
+        {
+        }
+    }
+    /**
+     * Product usagee
+     */
+    class WC_Product_Usage
+    {
+        /**
+         * Load Product Usage class.
+         *
+         * @since 9.3.0
+         */
+        public static function load()
+        {
+        }
+        /**
+         * Include support files.
+         *
+         * @since 9.3.0
+         */
+        protected static function includes()
+        {
+        }
+        /**
+         * Get product usage rule if it needs to be applied to the given product id.
+         *
+         * @param int $product_id product id to get feature restriction rules.
+         * @since 9.3.0
+         */
+        public static function get_rules_for_product(int $product_id) : ?\WC_Product_Usage_Rule_Set
+        {
+        }
+        /**
+         * Get the product usage rule for a product.
+         *
+         * @param int $product_id product id to get feature restriction rules.
+         * @return array|null
+         * @since 9.3.0
+         */
+        private static function get_product_usage_restriction_rule(int $product_id) : ?array
+        {
+        }
+    }
+    /**
      * WC Action Queue
      *
      * A job queue using WordPress actions.
@@ -53588,6 +53820,21 @@ namespace {
         {
         }
         /**
+         * Wrapper method to remove order items.
+         * When updating, the item ID provided is checked to ensure it is associated
+         * with the order.
+         *
+         * @param WC_Order $order     The order to remove the item from.
+         * @param string   $item_type The item type (from the request, not from the item, e.g. 'line_items' rather than 'line_item').
+         * @param int      $item_id   The ID of the item to remove.
+         *
+         * @return void
+         * @throws WC_REST_Exception If item ID is not associated with order.
+         */
+        protected function remove_item(\WC_Order $order, string $item_type, int $item_id) : void
+        {
+        }
+        /**
          * Save an object data.
          *
          * @since  3.0.0
@@ -60510,6 +60757,311 @@ namespace Automattic\WooCommerce\Vendor\Detection {
         }
     }
 }
+namespace Automattic\WooCommerce\Admin\API\AI {
+    /**
+     * AI Endpoint base controller
+     *
+     * @internal
+     */
+    abstract class AIEndpoint
+    {
+        /**
+         * Endpoint namespace.
+         *
+         * @var string
+         */
+        protected $namespace = 'wc-admin';
+        /**
+         * Route base.
+         *
+         * @var string
+         */
+        protected $rest_base = 'ai';
+        /**
+         * Endpoint.
+         *
+         * @var string
+         */
+        protected $endpoint;
+        /**
+         * Register routes.
+         *
+         * @param array $args Optional. Either an array of options for the endpoint,
+         * or an array of arrays for multiple methods. Default empty array.
+         */
+        public function register($args)
+        {
+        }
+        /**
+         * Return schema properties.
+         *
+         * @return array
+         */
+        public function get_schema()
+        {
+        }
+    }
+    /**
+     * Store Title controller
+     *
+     * @internal
+     */
+    class BusinessDescription extends \Automattic\WooCommerce\Admin\API\AI\AIEndpoint
+    {
+        /**
+         * Endpoint.
+         *
+         * @var string
+         */
+        protected $endpoint = 'business-description';
+        /**
+         * Register routes.
+         */
+        public function register_routes()
+        {
+        }
+        /**
+         * Update the business description.
+         *
+         * @param WP_REST_Request $request Request object.
+         * @return WP_REST_Response|WP_Error Response object.
+         */
+        public function update_business_description($request)
+        {
+        }
+        /**
+         * Get the Business Description response.
+         *
+         * @return array
+         */
+        public function get_schema()
+        {
+        }
+    }
+    /**
+     * Images controller
+     *
+     * @internal
+     */
+    class Images extends \Automattic\WooCommerce\Admin\API\AI\AIEndpoint
+    {
+        /**
+         * Endpoint.
+         *
+         * @var string
+         */
+        protected $endpoint = 'images';
+        /**
+         * Register routes.
+         */
+        public function register_routes()
+        {
+        }
+        /**
+         * Generate Images from Pexels
+         *
+         * @param WP_REST_Request $request Request object.
+         *
+         * @return WP_Error|WP_REST_Response
+         */
+        public function generate_images(\WP_REST_Request $request)
+        {
+        }
+    }
+    /**
+     * Middleware class.
+     *
+     * @internal
+     */
+    class Middleware
+    {
+        /**
+         * Ensure that the user is allowed to make this request.
+         *
+         * @return boolean|WP_Error
+         * @throws RouteException If the user is not allowed to make this request.
+         */
+        public static function is_authorized()
+        {
+        }
+    }
+    /**
+     * Patterns controller
+     *
+     * @internal
+     */
+    class Patterns extends \Automattic\WooCommerce\Admin\API\AI\AIEndpoint
+    {
+        /**
+         * Endpoint.
+         *
+         * @var string
+         */
+        protected $endpoint = 'patterns';
+        /**
+         * Register routes.
+         */
+        public function register_routes()
+        {
+        }
+        /**
+         * Update patterns with the content and images powered by AI.
+         *
+         * @param  WP_REST_Request $request Request object.
+         *
+         * @return WP_Error|WP_REST_Response
+         */
+        public function update_patterns(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Remove patterns generated by AI.
+         *
+         * @return WP_Error|WP_REST_Response
+         */
+        public function delete_patterns()
+        {
+        }
+    }
+    /**
+     * Product controller
+     *
+     * @internal
+     */
+    class Product extends \Automattic\WooCommerce\Admin\API\AI\AIEndpoint
+    {
+        /**
+         * The endpoint response option name.
+         *
+         * @var string
+         */
+        const AI_CONTENT_GENERATED = 'ai_content_generated';
+        /**
+         * Endpoint.
+         *
+         * @var string
+         */
+        protected $endpoint = 'product';
+        /**
+         * Register routes.
+         */
+        public function register_routes()
+        {
+        }
+        /**
+         * Update product with the content and images powered by AI.
+         *
+         * @param  WP_REST_Request $request Request object.
+         *
+         * @return WP_REST_Response
+         */
+        public function update_product(\WP_REST_Request $request)
+        {
+        }
+    }
+    /**
+     * Store Info controller
+     *
+     * @internal
+     */
+    class StoreInfo extends \Automattic\WooCommerce\Admin\API\AI\AIEndpoint
+    {
+        /**
+         * Endpoint.
+         *
+         * @var string
+         */
+        protected $endpoint = 'store-info';
+        /**
+         * Register routes.
+         */
+        public function register_routes()
+        {
+        }
+        /**
+         * Update the store title powered by AI.
+         *
+         * @return WP_Error|WP_REST_Response
+         */
+        public function get_response()
+        {
+        }
+        /**
+         * Get the Business Description response.
+         *
+         * @return array
+         */
+        public function get_schema()
+        {
+        }
+    }
+    /**
+     * Store Title controller
+     *
+     * @internal
+     */
+    class StoreTitle extends \Automattic\WooCommerce\Admin\API\AI\AIEndpoint
+    {
+        /**
+         * The store title option name.
+         *
+         * @var string
+         */
+        const STORE_TITLE_OPTION_NAME = 'blogname';
+        /**
+         * The AI generated store title option name.
+         *
+         * @var string
+         */
+        const AI_STORE_TITLE_OPTION_NAME = 'ai_generated_site_title';
+        /**
+         * The default store title.
+         *
+         * @var string
+         */
+        const DEFAULT_TITLE = 'Site Title';
+        /**
+         * Endpoint.
+         *
+         * @var string
+         */
+        protected $endpoint = 'store-title';
+        /**
+         * Register routes.
+         */
+        public function register_routes()
+        {
+        }
+        /**
+         * Update the store title powered by AI.
+         *
+         * @param  WP_REST_Request $request Request object.
+         *
+         * @return WP_Error|WP_REST_Response
+         */
+        public function update_store_title($request)
+        {
+        }
+        /**
+         * Generate the store title powered by AI.
+         *
+         * @param string $business_description The business description for a given store.
+         *
+         * @return string|WP_Error|WP_REST_Response The store title generated by AI.
+         */
+        private function generate_ai_title($business_description)
+        {
+        }
+        /**
+         * Get the Business Description response.
+         *
+         * @return array
+         */
+        public function get_schema()
+        {
+        }
+    }
+}
 namespace Automattic\WooCommerce\Admin\API {
     /**
      * Coupons controller.
@@ -60614,10 +61166,45 @@ namespace Automattic\WooCommerce\Admin\API\Reports {
         public function prepare_item_for_export($item);
     }
     /**
-     * WC REST API Reports controller extended
-     * to be shared as a generic base for all Analytics controllers.
+     * {@see WC_REST_Reports_Controller WC REST API Reports Controller} extended to be shared as a generic base for all Analytics reports controllers.
      *
-     * @internal
+     * Handles pagination HTTP headers and links, basic, conventional params.
+     * Does all the REST API plumbing as `WC_REST_Controller`.
+     *
+     *
+     * Minimalistic example:
+     * <pre><code class="language-php">class MyController extends GenericController {
+     *     /** Route of your new REST endpoint. &ast;/
+     *     protected $rest_base = 'reports/my-thing';
+     *     /**
+     *      * Provide JSON schema for the response item.
+     *      * @override WC_REST_Reports_Controller::get_item_schema()
+     *      &ast;/
+     *     public function get_item_schema() {
+     *         $schema = array(
+     *             '$schema'    => 'http://json-schema.org/draft-04/schema#',
+     *             'title'      => 'report_my_thing',
+     *             'type'       => 'object',
+     *             'properties' => array(
+     *                 'product_id' => array(
+     *                     'type'        => 'integer',
+     *                     'readonly'    => true,
+     *                     'context'     => array( 'view', 'edit' ),
+     *                 'description' => __( 'Product ID.', 'my_extension' ),
+     *                 ),
+     *             ),
+     *         );
+     *         // Add additional fields from `get_additional_fields` method and apply `woocommerce_rest_' . $schema['title'] . '_schema` filter.
+     *         return $this->add_additional_fields_schema( $schema );
+     *     }
+     * }
+     * </code></pre>
+     *
+     * The above Controller will get the data from a {@see DataStore data store} registered as `$rest_base` (`reports/my-thing`).
+     * (To change this behavior, override the `get_datastore_data()` method).
+     *
+     * To use the controller, please register it with the filter `woocommerce_admin_rest_controllers` filter.
+     *
      * @extends WC_REST_Reports_Controller
      */
     abstract class GenericController extends \WC_REST_Reports_Controller
@@ -60631,18 +61218,28 @@ namespace Automattic\WooCommerce\Admin\API\Reports {
         /**
          * Add pagination headers and links.
          *
-         * @param WP_REST_Request        $request   Request data.
-         * @param WP_REST_Response|array $response  Response data.
-         * @param int                    $total     Total results.
-         * @param int                    $page      Current page.
-         * @param int                    $max_pages Total amount of pages.
-         * @return WP_REST_Response
+         * @param \WP_REST_Request        $request   Request data.
+         * @param \WP_REST_Response|array $response  Response data.
+         * @param int                     $total     Total results.
+         * @param int                     $page      Current page.
+         * @param int                     $max_pages Total amount of pages.
+         * @return \WP_REST_Response
          */
         public function add_pagination_headers($request, $response, int $total, int $page, int $max_pages)
         {
         }
         /**
-         * Get the query params for collections.
+         * Get data from `{$this->rest_base}` store, based on the given query vars.
+         *
+         * @throws Exception When the data store is not found {@see WC_Data_Store WC_Data_Store}.
+         * @param array $query_args Query arguments.
+         * @return mixed Results from the data store.
+         */
+        protected function get_datastore_data($query_args = array())
+        {
+        }
+        /**
+         * Get the query params definition for collections.
          *
          * @return array
          */
@@ -60650,13 +61247,47 @@ namespace Automattic\WooCommerce\Admin\API\Reports {
         {
         }
         /**
-         * Prepare a report object for serialization.
+         * Get the report data.
          *
-         * @param array           $report  Report data.
-         * @param WP_REST_Request $request Request object.
+         * Prepares query params, fetches the report data from the Query object,
+         * prepares it for the response, and packs it into the convention-conforming response object.
+         *
+         * @throws \WP_Error When the queried data is invalid.
+         * @param \WP_REST_Request $request Request data.
+         * @return \WP_Error|\WP_REST_Response
+         */
+        public function get_items($request)
+        {
+        }
+        /**
+         * Prepare a report data item for serialization.
+         *
+         * This method is called by `get_items` to prepare a single report data item for serialization.
+         * Calls `add_additional_fields_to_object` and `filter_response_by_context`,
+         * then wpraps the data with `rest_ensure_response`.
+         *
+         * You can extend it to add or filter some fields.
+         *
+         * @override WP_REST_Posts_Controller::prepare_item_for_response()
+         *
+         * @param mixed           $report_item Report data item as returned from Data Store.
+         * @param WP_REST_Request $request     Request object.
          * @return WP_REST_Response
          */
-        public function prepare_item_for_response($report, $request)
+        public function prepare_item_for_response($report_item, $request)
+        {
+        }
+        /**
+         * Maps query arguments from the REST request, to be fed to Query.
+         *
+         * `WP_REST_Request` does not expose a method to return all params covering defaults,
+         * as it does for `$request['param']` accessor.
+         * Therefore, we re-implement defaults resolution.
+         *
+         * @param \WP_REST_Request $request Full request object.
+         * @return array Simplified array of params.
+         */
+        protected function prepare_reports_query($request)
         {
         }
     }
@@ -60696,21 +61327,23 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Customers {
          */
         protected $rest_base = 'reports/customers';
         /**
+         * Get data from Query.
+         *
+         * @override GenericController::get_datastore_data()
+         *
+         * @param array $query_args Query arguments.
+         * @return mixed Results from the data store.
+         */
+        protected function get_datastore_data($query_args = array())
+        {
+        }
+        /**
          * Maps query arguments from the REST request.
          *
          * @param array $request Request array.
          * @return array
          */
         protected function prepare_reports_query($request)
-        {
-        }
-        /**
-         * Get all reports.
-         *
-         * @param WP_REST_Request $request Request data.
-         * @return array|WP_Error
-         */
-        public function get_items($request)
         {
         }
         /**
@@ -60723,11 +61356,11 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Customers {
         {
         }
         /**
-         * Prepare a report object for serialization.
+         * Prepare a report data item for serialization.
          *
-         * @param array           $report  Report data.
-         * @param WP_REST_Request $request Request object.
-         * @return WP_REST_Response
+         * @param array            $report  Report data item as returned from Data Store.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
          */
         public function prepare_item_for_response($report, $request)
         {
@@ -63906,22 +64539,16 @@ namespace Automattic\WooCommerce\Admin\API\Reports {
         }
     }
     /**
-     * REST API Reports controller class.
+     * Trait to contain shared methods for reports Controllers that use order and orders statuses.
      *
-     * @internal
-     * @extends GenericController
+     * If your analytics controller needs to work with orders,
+     * you will most probably need to use at least {@see get_order_statuses() get_order_statuses()}
+     * to filter only "actionable" statuses to produce consistent results among other analytics.
+     *
+     * @see GenericController
      */
-    class Controller extends \Automattic\WooCommerce\Admin\API\Reports\GenericController
+    trait OrderAwareControllerTrait
     {
-        /**
-         * Get all reports.
-         *
-         * @param WP_REST_Request $request Request data.
-         * @return array|WP_Error
-         */
-        public function get_items($request)
-        {
-        }
         /**
          * Get the order number for an order. If no filter is present for `woocommerce_order_number`, we can just return the ID.
          * Returns the parent order number if the order is actually a refund.
@@ -63952,36 +64579,9 @@ namespace Automattic\WooCommerce\Admin\API\Reports {
         {
         }
         /**
-         * Prepare a report object for serialization.
-         *
-         * @param stdClass        $report  Report data.
-         * @param WP_REST_Request $request Request object.
-         * @return WP_REST_Response
-         */
-        public function prepare_item_for_response($report, $request)
-        {
-        }
-        /**
-         * Get the Report's schema, conforming to JSON Schema.
-         *
-         * @return array
-         */
-        public function get_item_schema()
-        {
-        }
-        /**
-         * Get the query params for collections.
-         *
-         * @return array
-         */
-        public function get_collection_params()
-        {
-        }
-        /**
          * Get order statuses without prefixes.
          * Includes unregistered statuses that have been marked "actionable".
          *
-         * @internal
          * @return array
          */
         public static function get_order_statuses()
@@ -64003,16 +64603,28 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Categories {
      * REST API Reports categories controller class.
      *
      * @internal
-     * @extends \Automattic\WooCommerce\Admin\API\Reports\Controller
+     * @extends \Automattic\WooCommerce\Admin\API\Reports\GenericController
      */
-    class Controller extends \Automattic\WooCommerce\Admin\API\Reports\Controller implements \Automattic\WooCommerce\Admin\API\Reports\ExportableInterface
+    class Controller extends \Automattic\WooCommerce\Admin\API\Reports\GenericController implements \Automattic\WooCommerce\Admin\API\Reports\ExportableInterface
     {
+        use \Automattic\WooCommerce\Admin\API\Reports\OrderAwareControllerTrait;
         /**
          * Route base.
          *
          * @var string
          */
         protected $rest_base = 'reports/categories';
+        /**
+         * Get data from `'categories'` Query.
+         *
+         * @override GenericController::get_datastore_data()
+         *
+         * @param array $query_args Query arguments.
+         * @return mixed Results from the data store.
+         */
+        protected function get_datastore_data($query_args = array())
+        {
+        }
         /**
          * Maps query arguments from the REST request.
          *
@@ -64023,20 +64635,11 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Categories {
         {
         }
         /**
-         * Get all reports.
+         * Prepare a report data item for serialization.
          *
-         * @param WP_REST_Request $request Request data.
-         * @return array|WP_Error
-         */
-        public function get_items($request)
-        {
-        }
-        /**
-         * Prepare a report object for serialization.
-         *
-         * @param stdClass        $report  Report data.
-         * @param WP_REST_Request $request Request object.
-         * @return WP_REST_Response
+         * @param mixed            $report  Report data item as returned from Data Store.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
          */
         public function prepare_item_for_response($report, $request)
         {
@@ -64044,7 +64647,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Categories {
         /**
          * Prepare links for the request.
          *
-         * @param \Automattic\WooCommerce\Admin\API\Reports\Query $object Object data.
+         * @param \Automattic\WooCommerce\Admin\API\Reports\GenericQuery $object Object data.
          * @return array
          */
         protected function prepare_links($object)
@@ -64186,9 +64789,55 @@ namespace Automattic\WooCommerce\Admin\API\Reports {
         }
     }
     /**
-     * Admin\API\Reports\DataStore: Common parent for custom report data stores.
+     * Common parent for custom report data stores.
+     *
+     * We use Report DataStores to separate DB data retrieval logic from the REST API controllers.
+     *
+     * Handles caching, data normalization, intervals-related methods, and other common functionality.
+     * So, in your custom report DataStore class that extends this class
+     * you can focus on specifics by overriding the `get_noncached_data` method.
+     *
+     * Minimalistic example:
+     * <pre><code class="language-php">class MyDataStore extends DataStore implements DataStoreInterface {
+     *     /** Cache identifier, used by the `DataStore` class to handle caching for you. &ast;/
+     *     protected $cache_key = 'my_thing';
+     *     /** Data store context used to pass to filters. &ast;/
+     *     protected $context = 'my_thing';
+     *     /** Table used to get the data. &ast;/
+     *     protected static $table_name = 'my_table';
+     *     /**
+     *      * Method that overrides the `DataStore::get_noncached_data()` to return the report data.
+     *      * Will be called by `get_data` if there is no data in cache.
+     *      &ast;/
+     *     public function get_noncached_data( $query ) {
+     *         // Do your magic.
+     *
+     *         // Then return your data in conforming object structure.
+     *         return (object) array(
+     *             'data' => $product_data,
+     *             'total' => 1,
+     *             'page_no' => 1,
+     *             'pages' => 1,
+     *         );
+     *     }
+     * }
+     * </code></pre>
+     *
+     * Please use the `woocommerce_data_stores` filter to add your custom data store to the list of available ones.
+     * Then, your store could be accessed by Controller classes ({@see GenericController::get_datastore_data() GenericController::get_datastore_data()})
+     * or using {@link \WC_Data_Store::load() \WC_Data_Store::load()}.
+     *
+     * We recommend registering using the REST base name of your Controller as the key, e.g.:
+     * <pre><code class="language-php">add_filter( 'woocommerce_data_stores', function( $stores ) {
+     *     $stores['reports/my-thing'] = 'MyExtension\Admin\Analytics\Rest_API\MyDataStore';
+     * } );
+     * </code></pre>
+     * This way, `GenericController` will pick it up automatically.
+     *
+     * Note that this class is NOT {@link https://developer.woocommerce.com/docs/how-to-manage-woocommerce-data-stores/ a CRUD data store}.
+     * It does not implement the {@see WC_Object_Data_Store_Interface WC_Object_Data_Store_Interface} nor extend WC_Data & WC_Data_Store_WP classes.
      */
-    class DataStore extends \Automattic\WooCommerce\Admin\API\Reports\SqlQuery
+    class DataStore extends \Automattic\WooCommerce\Admin\API\Reports\SqlQuery implements \Automattic\WooCommerce\Admin\API\Reports\DataStoreInterface
     {
         /**
          * Cache group for the reports.
@@ -64254,6 +64903,8 @@ namespace Automattic\WooCommerce\Admin\API\Reports {
         /**
          * Data store context used to pass to filters.
          *
+         * @override SqlQuery
+         *
          * @var string
          */
         protected $context = 'reports';
@@ -64295,14 +64946,48 @@ namespace Automattic\WooCommerce\Admin\API\Reports {
         protected $debug_cache_data = array();
         /**
          * Class constructor.
+         *
+         * @override SqlQuery::__construct()
          */
         public function __construct()
+        {
+        }
+        /**
+         * Get the data based on args.
+         *
+         * Returns the report data based on parameters supplied by the user.
+         * Fetches it from cache or returns `get_noncached_data` result.
+         *
+         * @param array $query_args Query parameters.
+         * @return stdClass|WP_Error
+         */
+        public function get_data($query_args)
+        {
+        }
+        /**
+         * Get the default query arguments to be used by get_data().
+         * These defaults are only partially applied when used via REST API, as that has its own defaults.
+         *
+         * @return array Query parameters.
+         */
+        public function get_default_query_vars()
         {
         }
         /**
          * Get table name from database class.
          */
         public static function get_db_table_name()
+        {
+        }
+        /**
+         * Returns the report data based on normalized parameters.
+         * Will be called by `get_data` if there is no data in cache.
+         *
+         * @see get_data
+         * @param array $query_args Query parameters.
+         * @return stdClass|WP_Error Data object `{ totals: *, intervals: array, total: int, pages: int, page_no: int }`, or error.
+         */
+        public function get_noncached_data($query_args)
         {
         }
         /**
@@ -64859,11 +65544,15 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Categories {
         /**
          * Table used to get the data.
          *
+         * @override ReportsDataStore::$table_name
+         *
          * @var string
          */
         protected static $table_name = 'wc_order_product_lookup';
         /**
          * Cache identifier.
+         *
+         * @override ReportsDataStore::$cache_key
          *
          * @var string
          */
@@ -64883,17 +65572,23 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Categories {
         /**
          * Mapping columns to data type to return correct response types.
          *
+         * @override ReportsDataStore::$column_types
+         *
          * @var array
          */
         protected $column_types = array('category_id' => 'intval', 'items_sold' => 'intval', 'net_revenue' => 'floatval', 'orders_count' => 'intval', 'products_count' => 'intval');
         /**
          * Data store context used to pass to filters.
          *
+         * @override ReportsDataStore::$context
+         *
          * @var string
          */
         protected $context = 'categories';
         /**
          * Assign report columns once full table name has been assigned.
+         *
+         * @override ReportsDataStore::assign_report_columns()
          */
         protected function assign_report_columns()
         {
@@ -64918,6 +65613,8 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Categories {
         }
         /**
          * Maps ordering specified by the user to columns in the database/fields in the data.
+         *
+         * @override ReportsDataStore::normalize_order_by()
          *
          * @param string $order_by Sorting criterion.
          * @return string
@@ -64955,16 +65652,33 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Categories {
         {
         }
         /**
-         * Returns the report data based on parameters supplied by the user.
+         * Get the default query arguments to be used by get_data().
+         * These defaults are only partially applied when used via REST API, as that has its own defaults.
          *
-         * @param array $query_args  Query parameters.
-         * @return stdClass|WP_Error Data.
+         * @override ReportsDataStore::get_default_query_vars()
+         *
+         * @return array Query parameters.
          */
-        public function get_data($query_args)
+        public function get_default_query_vars()
+        {
+        }
+        /**
+         * Returns the report data based on normalized parameters.
+         * Will be called by `get_data` if there is no data in cache.
+         *
+         * @see get_data
+         * @override ReportsDataStore::get_noncached_data()
+         *
+         * @param array $query_args Query parameters.
+         * @return stdClass|WP_Error Data object `{ totals: *, intervals: array, total: int, pages: int, page_no: int }`, or error.
+         */
+        public function get_noncached_data($query_args)
         {
         }
         /**
          * Initialize query objects.
+         *
+         * @override ReportsDataStore::initialize_queries()
          */
         protected function initialize_queries()
         {
@@ -64974,11 +65688,15 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Categories {
 namespace Automattic\WooCommerce\Admin\API\Reports {
     /**
      * Admin\API\Reports\Query
+     *
+     * @deprecated 9.3.0 Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
      */
     abstract class Query extends \WC_Object_Query
     {
         /**
          * Get report data matching the current query vars.
+         *
+         * @deprecated 9.3.0 Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
          *
          * @return array|object of WC_Product objects
          */
@@ -64989,13 +65707,17 @@ namespace Automattic\WooCommerce\Admin\API\Reports {
 }
 namespace Automattic\WooCommerce\Admin\API\Reports\Categories {
     /**
-     * API\Reports\Query
+     * API\Reports\Categories\Query
+     *
+     * @deprecated 9.3.0 Categories\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
      */
     class Query extends \Automattic\WooCommerce\Admin\API\Reports\Query
     {
         const REPORT_NAME = 'report-categories';
         /**
          * Valid fields for Categories report.
+         *
+         * @deprecated 9.3.0 Categories\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
          *
          * @return array
          */
@@ -65005,9 +65727,62 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Categories {
         /**
          * Get categories data based on the current query vars.
          *
+         * @deprecated 9.3.0 Categories\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
+         *
          * @return array
          */
         public function get_data()
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Admin\API\Reports {
+    /**
+     * Reports controller class.
+     *
+     * Controller that handles the endpoint that returns all available analytics endpoints.
+     *
+     * @internal
+     * @extends GenericController
+     */
+    class Controller extends \Automattic\WooCommerce\Admin\API\Reports\GenericController
+    {
+        use \Automattic\WooCommerce\Admin\API\Reports\OrderAwareControllerTrait;
+        /**
+         * Get all reports.
+         *
+         * @param WP_REST_Request $request Request data.
+         * @return array|WP_Error
+         */
+        public function get_items($request)
+        {
+        }
+        /**
+         * Prepare a report object for serialization.
+         *
+         * @param stdClass        $report  Report data.
+         * @param WP_REST_Request $request Request object.
+         * @return WP_REST_Response
+         */
+        public function prepare_item_for_response($report, $request)
+        {
+        }
+        /**
+         * Get the Report's schema, conforming to JSON Schema.
+         *
+         * @override WP_REST_Controller::get_item_schema()
+         *
+         * @return array
+         */
+        public function get_item_schema()
+        {
+        }
+        /**
+         * Get the query params for collections.
+         *
+         * @return array
+         */
+        public function get_collection_params()
         {
         }
     }
@@ -65028,6 +65803,17 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Coupons {
          */
         protected $rest_base = 'reports/coupons';
         /**
+         * Get data from `'coupons'` Query.
+         *
+         * @override GenericController::get_datastore_data()
+         *
+         * @param array $query_args Query arguments.
+         * @return mixed Results from the data store.
+         */
+        protected function get_datastore_data($query_args = array())
+        {
+        }
+        /**
          * Maps query arguments from the REST request.
          *
          * @param array $request Request array.
@@ -65037,20 +65823,11 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Coupons {
         {
         }
         /**
-         * Get all reports.
+         * Prepare a report data item for serialization.
          *
-         * @param WP_REST_Request $request Request data.
-         * @return array|WP_Error
-         */
-        public function get_items($request)
-        {
-        }
-        /**
-         * Prepare a report object for serialization.
-         *
-         * @param array           $report  Report data.
-         * @param WP_REST_Request $request Request object.
-         * @return WP_REST_Response
+         * @param array            $report  Report data item as returned from Data Store.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
          */
         public function prepare_item_for_response($report, $request)
         {
@@ -65106,11 +65883,15 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Coupons {
         /**
          * Table used to get the data.
          *
+         * @override ReportsDataStore::$table_name
+         *
          * @var string
          */
         protected static $table_name = 'wc_order_coupon_lookup';
         /**
          * Cache identifier.
+         *
+         * @override ReportsDataStore::$cache_key
          *
          * @var string
          */
@@ -65118,17 +65899,23 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Coupons {
         /**
          * Mapping columns to data type to return correct response types.
          *
+         * @override ReportsDataStore::$column_types
+         *
          * @var array
          */
         protected $column_types = array('coupon_id' => 'intval', 'amount' => 'floatval', 'orders_count' => 'intval');
         /**
          * Data store context used to pass to filters.
          *
+         * @override ReportsDataStore::$context
+         *
          * @var string
          */
         protected $context = 'coupons';
         /**
          * Assign report columns once full table name has been assigned.
+         *
+         * @override ReportsDataStore::assign_report_columns()
          */
         protected function assign_report_columns()
         {
@@ -65174,6 +65961,8 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Coupons {
         /**
          * Maps ordering specified by the user to columns in the database/fields in the data.
          *
+         * @override ReportsDataStore::normalize_order_by()
+         *
          * @param string $order_by Sorting criterion.
          * @return string
          */
@@ -65190,15 +65979,6 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Coupons {
         {
         }
         /**
-         * Returns the report data based on parameters supplied by the user.
-         *
-         * @param array $query_args  Query parameters.
-         * @return stdClass|WP_Error Data.
-         */
-        public function get_data($query_args)
-        {
-        }
-        /**
          * Get coupon ID for an order.
          *
          * Tries to get the ID from order item meta, then falls back to a query of published coupons.
@@ -65207,6 +65987,30 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Coupons {
          * @return int Coupon ID on success, 0 on failure.
          */
         public static function get_coupon_id(\WC_Order_Item_Coupon $coupon_item)
+        {
+        }
+        /**
+         * Get the default query arguments to be used by get_data().
+         * These defaults are only partially applied when used via REST API, as that has its own defaults.
+         *
+         * @override ReportsDataStore::get_default_query_vars()
+         *
+         * @return array Query parameters.
+         */
+        public function get_default_query_vars()
+        {
+        }
+        /**
+         * Returns the report data based on normalized parameters.
+         * Will be called by `get_data` if there is no data in cache.
+         *
+         * @override ReportsDataStore::get_noncached_data()
+         *
+         * @see get_data
+         * @param array $query_args Query parameters.
+         * @return stdClass|WP_Error Data object `{ totals: *, intervals: array, total: int, pages: int, page_no: int }`, or error.
+         */
+        public function get_noncached_data($query_args)
         {
         }
         /**
@@ -65246,11 +66050,15 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Coupons {
     }
     /**
      * API\Reports\Coupons\Query
+     *
+     * @deprecated 9.3.0 Coupons\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
      */
     class Query extends \Automattic\WooCommerce\Admin\API\Reports\Query
     {
         /**
          * Valid fields for Products report.
+         *
+         * @deprecated 9.3.0 Coupons\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
          *
          * @return array
          */
@@ -65259,6 +66067,8 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Coupons {
         }
         /**
          * Get product data based on the current query vars.
+         *
+         * @deprecated 9.3.0 Coupons\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
          *
          * @return array
          */
@@ -65269,16 +66079,55 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Coupons {
 }
 namespace Automattic\WooCommerce\Admin\API\Reports {
     /**
-     * Generic base for all Stats controllers.
+     * Generic base for all stats controllers.
      *
-     * @internal
+     * {@see GenericController Generic Controller} extended to be shared as a generic base for all Analytics stats controllers.
+     *
+     * Besides the `GenericController` functionality, it adds conventional stats-specific collection params and item schema.
+     * So, you may want to extend only your report-specific {@see get_item_properties_schema() get_item_properties_schema()}`.
+     * It also uses the stats-specific {@see get_items() get_items()} method,
+     * which packs report data into `totals` and `intervals`.
+     *
+     *
+     * Minimalistic example:
+     * <pre><code class="language-php">class StatsController extends GenericStatsController {
+     *     /** Route of your new REST endpoint. &ast;/
+     *     protected $rest_base = 'reports/my-thing/stats';
+     *     /** Define your proeprties schema. &ast;/
+     *     protected function get_item_properties_schema() {
+     *         return array(
+     *             'my_property' => array(
+     *                 'title'       => __( 'My property', 'my-extension' ),
+     *                 'type'        => 'integer',
+     *                 'readonly'    => true,
+     *                 'context'     => array( 'view', 'edit' ),
+     *                 'description' => __( 'Amazing thing.', 'my-extension' ),
+     *                 'indicator'    => true,
+     *              ),
+     *         );
+     *     }
+     *     /** Define overall schema. You can use the defaults,
+     *      * just remember to provide your title and call `add_additional_fields_schema`
+     *      * to run the filters
+     *      &ast;/
+     *     public function get_item_schema() {
+     *         $schema          = parent::get_item_schema();
+     *         $schema['title'] = 'report_my_thing_stats';
+     *
+     *        return $this->add_additional_fields_schema( $schema );
+     *     }
+     * }
+     * </code></pre>
+     *
      * @extends GenericController
      */
     abstract class GenericStatsController extends \Automattic\WooCommerce\Admin\API\Reports\GenericController
     {
         /**
-         * Get the query params for collections.
-         * Adds intervals to the generic list.
+         * Get the query params definition for collections.
+         * Adds `fields` & `intervals` to the generic list.
+         *
+         * @override GenericController::get_collection_params()
          *
          * @return array
          */
@@ -65286,7 +66135,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports {
         {
         }
         /**
-         * Get the Report's item properties schema.
+         * Get the report's item properties schema.
          * Will be used by `get_item_schema` as `totals` and `subtotals`.
          *
          * @return array
@@ -65295,12 +66144,27 @@ namespace Automattic\WooCommerce\Admin\API\Reports {
         /**
          * Get the Report's schema, conforming to JSON Schema.
          *
-         * Please note, it does not call add_additional_fields_schema,
+         * Please note that it does not call add_additional_fields_schema,
          * as you may want to update the `title` first.
          *
          * @return array
          */
         public function get_item_schema()
+        {
+        }
+        /**
+         * Get the report data.
+         *
+         * Prepares query params, fetches the report data from the Query object,
+         * prepares it for the response, and packs it into the convention-conforming response object.
+         *
+         * @override GenericController::get_items()
+         *
+         * @throws \WP_Error When the queried data is invalid.
+         * @param \WP_REST_Request $request Request data.
+         * @return \WP_REST_Response|\WP_Error
+         */
+        public function get_items($request)
         {
         }
     }
@@ -65330,18 +66194,20 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Coupons\Stats {
         {
         }
         /**
-         * Get all reports.
+         * Get data from `'coupons-stats'` Query.
          *
-         * @param WP_REST_Request $request Request data.
-         * @return array|WP_Error
+         * @override GenericController::get_datastore_data()
+         *
+         * @param array $query_args Query arguments.
+         * @return mixed Results from the data store.
          */
-        public function get_items($request)
+        protected function get_datastore_data($query_args = array())
         {
         }
         /**
-         * Prepare a report object for serialization.
+         * Prepare a report data item for serialization.
          *
-         * @param stdClass        $report  Report data.
+         * @param mixed           $report  Report data item as returned from Data Store.
          * @param WP_REST_Request $request Request object.
          * @return WP_REST_Response
          */
@@ -65374,13 +66240,97 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Coupons\Stats {
         {
         }
     }
+}
+namespace Automattic\WooCommerce\Admin\API\Reports {
+    /**
+     * Trait to contain *stats-specific methods for data stores.
+     *
+     * It does preliminary intervals & page calculations
+     * and prepares intervals & totals data structure by implementing the `get_noncached_data()` method.
+     * So, this time, you'll need to prepare `get_noncached_stats_data()` which will be called only if
+     * the requested page is within the date range.
+     *
+     * The trait also exposes the `initialize_queries()` method to initialize the interval and total queries.
+     *
+     * Example:
+     * <pre><code class="language-php">class MyStatsDataStore extends DataStore implements DataStoreInterface {
+     *     // Use the trait.
+     *     use StatsDataStoreTrait;
+     *     // Provide all the necessary properties and methods for a regular DataStore.
+     *     // ...
+     *     /**
+     *      * Return your results with the help of the interval & total methods and queries.
+     *      * @return stdClass|WP_Error $data filled with your results.
+     *      &ast;/
+     *     public function get_noncached_stats_data( $query_args, $params, &$data, $expected_interval_count ) {
+     *         $this->initialize_queries();
+     *         // Do your magic ...
+     *         // ... with a help of things like:
+     *         $this->update_intervals_sql_params( $query_args, $db_interval_count, $expected_interval_count, $table_name );
+     *         $this->total_query->add_sql_clause( 'where_time', $this->get_sql_clause( 'where_time' ) );
+     *
+     *         $totals = $wpdb->get_results(
+     *             $this->total_query->get_query_statement(),
+     *             ARRAY_A
+     *         );
+     *
+     *         $intervals = $wpdb->get_results(
+     *             $this->interval_query->get_query_statement(),
+     *             ARRAY_A
+     *         );
+     *
+     *         $data->totals    = (object) $this->cast_numbers( $totals[0] );
+     *         $data->intervals = $intervals;
+     *
+     *         if ( TimeInterval::intervals_missing( $expected_interval_count, $db_interval_count, $params['per_page'], $query_args['page'], $query_args['order'], $query_args['orderby'], count( $intervals ) ) ) {
+     *             $this->fill_in_missing_intervals( $db_intervals, $query_args['adj_after'], $query_args['adj_before'], $query_args['interval'], $data );
+     *             $this->sort_intervals( $data, $query_args['orderby'], $query_args['order'] );
+     *             $this->remove_extra_records( $data, $query_args['page'], $params['per_page'], $db_interval_count, $expected_interval_count, $query_args['orderby'], $query_args['order'] );
+     *         } else {
+     *             $this->update_interval_boundary_dates( $query_args['after'], $query_args['before'], $query_args['interval'], $data->intervals );
+     *         }
+     *
+     *         return $data;
+     *    }
+     * }
+     * </code></pre>
+     *
+     * @see DataStore
+     */
+    trait StatsDataStoreTrait
+    {
+        /**
+         * Initialize query objects.
+         */
+        protected function initialize_queries()
+        {
+        }
+        /**
+         * Returns the stats report data based on normalized parameters.
+         * Prepares the basic intervals and object structure
+         * Will be called by `get_data` if there is no data in cache.
+         * Will call `get_noncached_stats_data` to fetch the actual data.
+         *
+         * @see get_data
+         * @param array $query_args Query parameters.
+         * @return stdClass|WP_Error Data object, or error.
+         */
+        public function get_noncached_data($query_args)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Admin\API\Reports\Coupons\Stats {
     /**
      * API\Reports\Coupons\Stats\DataStore.
      */
     class DataStore extends \Automattic\WooCommerce\Admin\API\Reports\Coupons\DataStore implements \Automattic\WooCommerce\Admin\API\Reports\DataStoreInterface
     {
+        use \Automattic\WooCommerce\Admin\API\Reports\StatsDataStoreTrait;
         /**
          * Mapping columns to data type to return correct response types.
+         *
+         * @override CouponsDataStore::$column_types
          *
          * @var array
          */
@@ -65388,11 +66338,15 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Coupons\Stats {
         /**
          * SQL columns to select in the db query.
          *
+         * @override CouponsDataStore::$report_columns
+         *
          * @var array
          */
         protected $report_columns;
         /**
          * Data store context used to pass to filters.
+         *
+         * @override CouponsDataStore::$context
          *
          * @var string
          */
@@ -65400,11 +66354,15 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Coupons\Stats {
         /**
          * Cache identifier.
          *
+         * @override CouponsDataStore::get_default_query_vars()
+         *
          * @var string
          */
         protected $cache_key = 'coupons_stats';
         /**
          * Assign report columns once full table name has been assigned.
+         *
+         * @override CouponsDataStore::assign_report_columns()
          */
         protected function assign_report_columns()
         {
@@ -65418,29 +66376,45 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Coupons\Stats {
         {
         }
         /**
-         * Returns the report data based on parameters supplied by the user.
+         * Get the default query arguments to be used by get_data().
+         * These defaults are only partially applied when used via REST API, as that has its own defaults.
          *
-         * @since 3.5.0
-         * @param array $query_args  Query parameters.
-         * @return stdClass|WP_Error Data.
+         * @override CouponsDataStore::get_default_query_vars()
+         *
+         * @return array Query parameters.
          */
-        public function get_data($query_args)
+        public function get_default_query_vars()
         {
         }
         /**
-         * Initialize query objects.
+         * Returns the report data based on normalized parameters.
+         * Will be called by `get_data` if there is no data in cache.
+         *
+         * @override CouponsDataStore::get_noncached_stats_data()
+         *
+         * @see get_data
+         * @see get_noncached_stats_data
+         * @param array    $query_args Query parameters.
+         * @param array    $params            Query limit parameters.
+         * @param stdClass $data                    Reference to the data object to fill.
+         * @param int      $expected_interval_count Number of expected intervals.
+         * @return stdClass|WP_Error Data object `{ totals: *, intervals: array, total: int, pages: int, page_no: int }`, or error.
          */
-        protected function initialize_queries()
+        public function get_noncached_stats_data($query_args, $params, &$data, $expected_interval_count)
         {
         }
     }
     /**
      * API\Reports\Coupons\Stats\Query
+     *
+     * @deprecated 9.3.0 Coupons\Stats\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
      */
     class Query extends \Automattic\WooCommerce\Admin\API\Reports\Query
     {
         /**
          * Valid fields for Products report.
+         *
+         * @deprecated 9.3.0 Coupons\Stats\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
          *
          * @return array
          */
@@ -65449,6 +66423,8 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Coupons\Stats {
         }
         /**
          * Get product data based on the current query vars.
+         *
+         * @deprecated 9.3.0 Coupons\Stats\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
          *
          * @return array
          */
@@ -65926,11 +66902,15 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Customers {
         /**
          * Table used to get the data.
          *
+         * @override ReportsDataStore::$table_name
+         *
          * @var string
          */
         protected static $table_name = 'wc_customer_lookup';
         /**
          * Cache identifier.
+         *
+         * @override ReportsDataStore::$cache_key
          *
          * @var string
          */
@@ -65938,17 +66918,23 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Customers {
         /**
          * Mapping columns to data type to return correct response types.
          *
+         * @override ReportsDataStore::$column_types
+         *
          * @var array
          */
         protected $column_types = array('id' => 'intval', 'user_id' => 'intval', 'orders_count' => 'intval', 'total_spend' => 'floatval', 'avg_order_value' => 'floatval');
         /**
          * Data store context used to pass to filters.
          *
+         * @override ReportsDataStore::$context
+         *
          * @var string
          */
         protected $context = 'customers';
         /**
          * Assign report columns once full table name has been assigned.
+         *
+         * @override ReportsDataStore::assign_report_columns()
          */
         protected function assign_report_columns()
         {
@@ -65985,6 +66971,8 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Customers {
         /**
          * Maps ordering specified by the user to columns in the database/fields in the data.
          *
+         * @override ReportsDataStore::normalize_order_by()
+         *
          * @param string $order_by Sorting criterion.
          * @return string
          */
@@ -65993,6 +66981,8 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Customers {
         }
         /**
          * Fills WHERE clause of SQL request with date-related constraints.
+         *
+         * @override ReportsDataStore::add_time_period_sql_params()
          *
          * @param array  $query_args Parameters supplied by the user.
          * @param string $table_name Name of the db table relevant for the date constraint.
@@ -66009,12 +66999,14 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Customers {
         {
         }
         /**
-         * Returns the report data based on parameters supplied by the user.
+         * Get the default query arguments to be used by get_data().
+         * These defaults are only partially applied when used via REST API, as that has its own defaults.
          *
-         * @param array $query_args  Query parameters.
-         * @return stdClass|WP_Error Data.
+         * @override ReportsDataStore::get_default_query_vars()
+         *
+         * @return array Query parameters.
          */
-        public function get_data($query_args)
+        public function get_default_query_vars()
         {
         }
         /**
@@ -66024,6 +67016,19 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Customers {
          * @return int|bool
          */
         public static function get_existing_customer_id_from_order($order)
+        {
+        }
+        /**
+         * Returns the report data based on normalized parameters.
+         * Will be called by `get_data` if there is no data in cache.
+         *
+         * @override ReportsDataStore::get_noncached_data()
+         *
+         * @see get_data
+         * @param array $query_args Query parameters.
+         * @return stdClass|WP_Error Data object `{ totals: *, intervals: array, total: int, pages: int, page_no: int }`, or error.
+         */
+        public function get_noncached_data($query_args)
         {
         }
         /**
@@ -66152,13 +67157,49 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Customers {
         {
         }
     }
+}
+namespace Automattic\WooCommerce\Admin\API\Reports {
     /**
-     * API\Reports\Customers\Query
+     * A generic class for a report-specific query to be used in Analytics.
+     *
+     * Example usage:
+     * <pre><code class="language-php">$args = array(
+     *          'before'    => '2018-07-19 00:00:00',
+     *          'after'     => '2018-07-05 00:00:00',
+     *          'page'      => 2,
+     *         );
+     * $report = new GenericQuery( $args, 'coupons' );
+     * $mydata = $report->get_data();
+     * </code></pre>
+     *
+     * It uses the name provided in the class property or in the constructor call to load the `report-{name}` data store.
+     *
+     * It's used by the {@see GenericController GenericController}.
+     *
+     * @since 9.3.0
      */
-    class Query extends \Automattic\WooCommerce\Admin\API\Reports\Query
+    class GenericQuery extends \WC_Object_Query
     {
         /**
-         * Valid fields for Customers report.
+         * Specific query name.
+         * Will be used to load the `report-{name}` data store,
+         * and to call `woocommerce_analytics_{snake_case(name)}_*` filters.
+         *
+         * @var string
+         */
+        protected $name;
+        /**
+         * Create a new query.
+         *
+         * @param array  $args Criteria to query on in a format similar to WP_Query.
+         * @param string $name Query name.
+         * @extends WC_Object_Query::_construct
+         */
+        public function __construct($args, $name = null)
+        {
+        }
+        /**
+         * Valid fields for Products report.
          *
          * @return array
          */
@@ -66166,11 +67207,37 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Customers {
         {
         }
         /**
-         * Get product data based on the current query vars.
+         * Get data from `report-{$name}` store, based on the current query vars.
+         * Filters query vars through `woocommerce_analytics_{snake_case(name)}_query_args` filter.
+         * Filters results through `woocommerce_analytics_{snake_case(name)}_select_query` filter.
+         *
+         * @return mixed filtered results from the data store.
+         */
+        public function get_data()
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Admin\API\Reports\Customers {
+    /**
+     * API\Reports\Customers\Query
+     */
+    class Query extends \Automattic\WooCommerce\Admin\API\Reports\GenericQuery
+    {
+        /**
+         * Specific query name.
+         * Will be used to load the `report-{name}` data store,
+         * and to call `woocommerce_analytics_{snake_case(name)}_*` filters.
+         *
+         * @var string
+         */
+        protected $name = 'customers';
+        /**
+         * Valid fields for Customers report.
          *
          * @return array
          */
-        public function get_data()
+        protected function get_default_query_vars()
         {
         }
     }
@@ -66215,11 +67282,11 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Customers\Stats {
         {
         }
         /**
-         * Prepare a report object for serialization.
+         * Prepare a report data item for serialization.
          *
-         * @param Array           $report  Report data.
-         * @param WP_REST_Request $request Request object.
-         * @return WP_REST_Response
+         * @param array            $report  Report data item as returned from Data Store.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
          */
         public function prepare_item_for_response($report, $request)
         {
@@ -66249,11 +67316,15 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Customers\Stats {
         /**
          * Mapping columns to data type to return correct response types.
          *
+         * @override CustomersDataStore::$column_types
+         *
          * @var array
          */
         protected $column_types = array('customers_count' => 'intval', 'avg_orders_count' => 'floatval', 'avg_total_spend' => 'floatval', 'avg_avg_order_value' => 'floatval');
         /**
          * Cache identifier.
+         *
+         * @override CustomersDataStore::$cache_key
          *
          * @var string
          */
@@ -66261,32 +67332,55 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Customers\Stats {
         /**
          * Data store context used to pass to filters.
          *
+         * @override CustomersDataStore::$context
+         *
          * @var string
          */
         protected $context = 'customers_stats';
         /**
          * Assign report columns once full table name has been assigned.
+         *
+         * @override CustomersDataStore::assign_report_columns()
          */
         protected function assign_report_columns()
         {
         }
         /**
-         * Returns the report data based on parameters supplied by the user.
+         * Get the default query arguments to be used by get_data().
+         * These defaults are only partially applied when used via REST API, as that has its own defaults.
          *
-         * @param array $query_args  Query parameters.
-         * @return stdClass|WP_Error Data.
+         * @override CustomersDataStore::get_default_query_vars()
+         *
+         * @return array Query parameters.
          */
-        public function get_data($query_args)
+        public function get_default_query_vars()
+        {
+        }
+        /**
+         * Returns the report data based on normalized parameters.
+         * Will be called by `get_data` if there is no data in cache.
+         *
+         * @override CustomersDataStore::get_noncached_data()
+         *
+         * @see get_data
+         * @param array $query_args Query parameters.
+         * @return stdClass|WP_Error Data object `{ totals: *, intervals: array, total: int, pages: int, page_no: int }`, or error.
+         */
+        public function get_noncached_data($query_args)
         {
         }
     }
     /**
      * API\Reports\Customers\Stats\Query
+     *
+     * @deprecated 9.3.0 Customers\Stats\Query class is deprecated, please use Reports\Customers\Query with a custom name, GenericQuery or \WC_Object_Query instead.
      */
     class Query extends \Automattic\WooCommerce\Admin\API\Reports\Query
     {
         /**
          * Valid fields for Customers report.
+         *
+         * @deprecated 9.3.0 Customers\Stats\Query class is deprecated, please use Reports\Customers\Query with a custom name, GenericQuery or \WC_Object_Query instead.
          *
          * @return array
          */
@@ -66295,6 +67389,8 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Customers\Stats {
         }
         /**
          * Get product data based on the current query vars.
+         *
+         * @deprecated 9.3.0 Customers\Stats\Query class is deprecated, please use Reports\Customers\Query with a custom name, GenericQuery or \WC_Object_Query instead.
          *
          * @return array
          */
@@ -66308,10 +67404,11 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Downloads {
      * REST API Reports downloads controller class.
      *
      * @internal
-     * @extends Automattic\WooCommerce\Admin\API\Reports\Controller
+     * @extends Automattic\WooCommerce\Admin\API\Reports\GenericController
      */
-    class Controller extends \Automattic\WooCommerce\Admin\API\Reports\Controller implements \Automattic\WooCommerce\Admin\API\Reports\ExportableInterface
+    class Controller extends \Automattic\WooCommerce\Admin\API\Reports\GenericController implements \Automattic\WooCommerce\Admin\API\Reports\ExportableInterface
     {
+        use \Automattic\WooCommerce\Admin\API\Reports\OrderAwareControllerTrait;
         /**
          * Route base.
          *
@@ -66319,18 +67416,20 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Downloads {
          */
         protected $rest_base = 'reports/downloads';
         /**
-         * Get items.
+         * Get data from `'downloads'` Query.
          *
-         * @param WP_REST_Request $request Request data.
-         * @return array|WP_Error
+         * @override GenericController::get_datastore_data()
+         *
+         * @param array $query_args Query arguments.
+         * @return mixed Results from the data store.
          */
-        public function get_items($request)
+        protected function get_datastore_data($query_args = array())
         {
         }
         /**
-         * Prepare a report object for serialization.
+         * Prepare a report data item for serialization.
          *
-         * @param Array           $report  Report data.
+         * @param Array           $report  Report data item as returned from Data Store.
          * @param WP_REST_Request $request Request object.
          * @return WP_REST_Response
          */
@@ -66344,6 +67443,15 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Downloads {
          * @return array        Links for the given post.
          */
         protected function prepare_links($object)
+        {
+        }
+        /**
+         * Maps query arguments from the REST request.
+         *
+         * @param array $request Request array.
+         * @return array
+         */
+        protected function prepare_reports_query($request)
         {
         }
         /**
@@ -66388,17 +67496,23 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Downloads {
         /**
          * Table used to get the data.
          *
+         * @override ReportsDataStore::$table_name
+         *
          * @var string
          */
         protected static $table_name = 'wc_download_log';
         /**
          * Cache identifier.
          *
+         * @override ReportsDataStore::$cache_key
+         *
          * @var string
          */
         protected $cache_key = 'downloads';
         /**
          * Mapping columns to data type to return correct response types.
+         *
+         * @override ReportsDataStore::$column_types
          *
          * @var array
          */
@@ -66417,11 +67531,15 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Downloads {
         /**
          * Data store context used to pass to filters.
          *
+         * @override ReportsDataStore::$context
+         *
          * @var string
          */
         protected $context = 'downloads';
         /**
          * Assign report columns once full table name has been assigned.
+         *
+         * @override ReportsDataStore::assign_report_columns()
          */
         protected function assign_report_columns()
         {
@@ -66483,6 +67601,8 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Downloads {
         /**
          * Gets WHERE time clause of SQL request with date-related constraints.
          *
+         * @override ReportsDataStore::add_time_period_sql_params()
+         *
          * @param array  $query_args Parameters supplied by the user.
          * @param string $table_name Name of the db table relevant for the date constraint.
          * @return string
@@ -66499,16 +67619,33 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Downloads {
         {
         }
         /**
-         * Returns the report data based on parameters supplied by the user.
+         * Get the default query arguments to be used by get_data().
+         * These defaults are only partially applied when used via REST API, as that has its own defaults.
          *
-         * @param array $query_args  Query parameters.
-         * @return stdClass|WP_Error Data.
+         * @override ReportsDataStore::get_default_query_vars()
+         *
+         * @return array Query parameters.
          */
-        public function get_data($query_args)
+        public function get_default_query_vars()
+        {
+        }
+        /**
+         * Returns the report data based on normalized parameters.
+         * Will be called by `get_data` if there is no data in cache.
+         *
+         * @override ReportsDataStore::get_noncached_data()
+         *
+         * @see get_data
+         * @param array $query_args Query parameters.
+         * @return stdClass|WP_Error Data object `{ totals: *, intervals: array, total: int, pages: int, page_no: int }`, or error.
+         */
+        public function get_noncached_data($query_args)
         {
         }
         /**
          * Maps ordering specified by the user to columns in the database/fields in the data.
+         *
+         * @override ReportsDataStore::normalize_order_by()
          *
          * @param string $order_by Sorting criterion.
          * @return string
@@ -66550,11 +67687,15 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Downloads\Files {
 namespace Automattic\WooCommerce\Admin\API\Reports\Downloads {
     /**
      * API\Reports\Downloads\Query
+     *
+     * @deprecated 9.3.0 Downloads\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
      */
     class Query extends \Automattic\WooCommerce\Admin\API\Reports\Query
     {
         /**
          * Valid fields for downloads report.
+         *
+         * @deprecated 9.3.0 Downloads\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
          *
          * @return array
          */
@@ -66563,6 +67704,8 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Downloads {
         }
         /**
          * Get downloads data based on the current query vars.
+         *
+         * @deprecated 9.3.0 Downloads\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
          *
          * @return array
          */
@@ -66596,18 +67739,20 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Downloads\Stats {
         {
         }
         /**
-         * Get all reports.
+         * Get data from `'downloads-stats'` Query.
          *
-         * @param WP_REST_Request $request Request data.
-         * @return array|WP_Error
+         * @override GenericController::get_datastore_data()
+         *
+         * @param array $query_args Query arguments.
+         * @return mixed Results from the data store.
          */
-        public function get_items($request)
+        protected function get_datastore_data($query_args = array())
         {
         }
         /**
-         * Prepare a report object for serialization.
+         * Prepare a report data item for serialization.
          *
-         * @param array           $report  Report data.
+         * @param array           $report  Report data item as returned from Data Store.
          * @param WP_REST_Request $request Request object.
          * @return WP_REST_Response
          */
@@ -66646,8 +67791,11 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Downloads\Stats {
      */
     class DataStore extends \Automattic\WooCommerce\Admin\API\Reports\Downloads\DataStore implements \Automattic\WooCommerce\Admin\API\Reports\DataStoreInterface
     {
+        use \Automattic\WooCommerce\Admin\API\Reports\StatsDataStoreTrait;
         /**
          * Mapping columns to data type to return correct response types.
+         *
+         * @override DownloadsDataStore::$column_types
          *
          * @var array
          */
@@ -66655,32 +67803,59 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Downloads\Stats {
         /**
          * Cache identifier.
          *
+         * @override DownloadsDataStore::$cache_key
+         *
          * @var string
          */
         protected $cache_key = 'downloads_stats';
         /**
          * Data store context used to pass to filters.
          *
+         * @override DownloadsDataStore::$context
+         *
          * @var string
          */
         protected $context = 'downloads_stats';
         /**
          * Assign report columns once full table name has been assigned.
+         *
+         * @override DownloadsDataStore::assign_report_columns()
          */
         protected function assign_report_columns()
         {
         }
         /**
-         * Returns the report data based on parameters supplied by the user.
+         * Get the default query arguments to be used by get_data().
+         * These defaults are only partially applied when used via REST API, as that has its own defaults.
          *
-         * @param array $query_args  Query parameters.
-         * @return stdClass|WP_Error Data.
+         * @override DownloadsDataStore::default_query_args()
+         *
+         * @return array Query parameters.
          */
-        public function get_data($query_args)
+        public function get_default_query_vars()
+        {
+        }
+        /**
+         * Returns the report data based on normalized parameters.
+         * Will be called by `get_data` if there is no data in cache.
+         *
+         * @override DownloadsDataStore::get_noncached_data()
+         *
+         * @see get_data
+         * @see get_noncached_stats_data
+         * @param array    $query_args Query parameters.
+         * @param array    $params                  Query limit parameters.
+         * @param stdClass $data                    Reference to the data object to fill.
+         * @param int      $expected_interval_count Number of expected intervals.
+         * @return stdClass|WP_Error Data object `{ totals: *, intervals: array, total: int, pages: int, page_no: int }`, or error.
+         */
+        public function get_noncached_stats_data($query_args, $params, &$data, $expected_interval_count)
         {
         }
         /**
          * Normalizes order_by clause to match to SQL query.
+         *
+         * @override DownloadsDataStore::normalize_order_by()
          *
          * @param string $order_by Order by option requeste by user.
          * @return string
@@ -66688,20 +67863,18 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Downloads\Stats {
         protected function normalize_order_by($order_by)
         {
         }
-        /**
-         * Initialize query objects.
-         */
-        protected function initialize_queries()
-        {
-        }
     }
     /**
      * API\Reports\Downloads\Stats\Query
+     *
+     * @deprecated 9.3.0 Downloads\Stats\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
      */
     class Query extends \Automattic\WooCommerce\Admin\API\Reports\Query
     {
         /**
          * Valid fields for Orders report.
+         *
+         * @deprecated 9.3.0 Downloads\Stats\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
          *
          * @return array
          */
@@ -66710,6 +67883,8 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Downloads\Stats {
         }
         /**
          * Get revenue data based on the current query vars.
+         *
+         * @deprecated 9.3.0 Downloads\Stats\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
          *
          * @return array
          */
@@ -66779,6 +67954,41 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Export {
          * @return WP_Error|WP_REST_Response
          */
         public function export_status($request)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Admin\API\Reports {
+    /**
+     * Trait to call filters on `get_data` methods for data stores.
+     *
+     * It calls the filters `woocommerce_analytics_{$this->context}_query_args` and
+     * `woocommerce_analytics_{$this->context}_select_query` on the `get_data` method.
+     *
+     * Example:
+     * <pre><code class="language-php">class MyStatsDataStore extends DataStore implements DataStoreInterface {
+     *     // Use the trait.
+     *     use FilteredGetDataTrait;
+     *     // Provide all the necessary properties and methods for a regular DataStore.
+     *     // ...
+     * }
+     * </code></pre>
+     *
+     * @see DataStore
+     */
+    trait FilteredGetDataTrait
+    {
+        /**
+         * Get the data based on args.
+         *
+         * Filters query args, calls DataStore::get_data, and returns the filtered data.
+         *
+         * @override ReportsDataStore::get_data()
+         *
+         * @param array $query_args Query parameters.
+         * @return stdClass|WP_Error
+         */
+        public function get_data($query_args)
         {
         }
     }
@@ -66900,16 +68110,28 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Orders {
      * REST API Reports orders controller class.
      *
      * @internal
-     * @extends \Automattic\WooCommerce\Admin\API\Reports\Controller
+     * @extends \Automattic\WooCommerce\Admin\API\Reports\GenericController
      */
-    class Controller extends \Automattic\WooCommerce\Admin\API\Reports\Controller implements \Automattic\WooCommerce\Admin\API\Reports\ExportableInterface
+    class Controller extends \Automattic\WooCommerce\Admin\API\Reports\GenericController implements \Automattic\WooCommerce\Admin\API\Reports\ExportableInterface
     {
+        use \Automattic\WooCommerce\Admin\API\Reports\OrderAwareControllerTrait;
         /**
          * Route base.
          *
          * @var string
          */
         protected $rest_base = 'reports/orders';
+        /**
+         * Get data from Query.
+         *
+         * @override GenericController::get_datastore_data()
+         *
+         * @param array $query_args Query arguments.
+         * @return mixed Results from the data store.
+         */
+        protected function get_datastore_data($query_args = array())
+        {
+        }
         /**
          * Maps query arguments from the REST request.
          *
@@ -66920,20 +68142,11 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Orders {
         {
         }
         /**
-         * Get all reports.
+         * Prepare a report data item for serialization.
          *
-         * @param WP_REST_Request $request Request data.
-         * @return array|WP_Error
-         */
-        public function get_items($request)
-        {
-        }
-        /**
-         * Prepare a report object for serialization.
-         *
-         * @param stdClass        $report  Report data.
-         * @param WP_REST_Request $request Request object.
-         * @return WP_REST_Response
+         * @param array            $report  Report data item as returned from Data Store.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
          */
         public function prepare_item_for_response($report, $request)
         {
@@ -67190,6 +68403,8 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Orders {
         use \Automattic\WooCommerce\Internal\Traits\OrderAttributionMeta;
         /**
          * Dynamically sets the date column name based on configuration
+         *
+         * @override ReportsDataStore::__construct()
          */
         public function __construct()
         {
@@ -67197,11 +68412,15 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Orders {
         /**
          * Table used to get the data.
          *
+         * @override ReportsDataStore::$table_name
+         *
          * @var string
          */
         protected static $table_name = 'wc_order_stats';
         /**
          * Cache identifier.
+         *
+         * @override ReportsDataStore::$cache_key
          *
          * @var string
          */
@@ -67209,17 +68428,23 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Orders {
         /**
          * Mapping columns to data type to return correct response types.
          *
+         * @override ReportsDataStore::$column_types
+         *
          * @var array
          */
         protected $column_types = array('order_id' => 'intval', 'parent_id' => 'intval', 'date_created' => 'strval', 'date_created_gmt' => 'strval', 'status' => 'strval', 'customer_id' => 'intval', 'net_total' => 'floatval', 'total_sales' => 'floatval', 'num_items_sold' => 'intval', 'customer_type' => 'strval');
         /**
          * Data store context used to pass to filters.
          *
+         * @override ReportsDataStore::$context
+         *
          * @var string
          */
         protected $context = 'orders';
         /**
          * Assign report columns once full table name has been assigned.
+         *
+         * @override ReportsDataStore::assign_report_columns()
          */
         protected function assign_report_columns()
         {
@@ -67233,16 +68458,33 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Orders {
         {
         }
         /**
-         * Returns the report data based on parameters supplied by the user.
+         * Get the default query arguments to be used by get_data().
+         * These defaults are only partially applied when used via REST API, as that has its own defaults.
          *
-         * @param array $query_args  Query parameters.
-         * @return stdClass|WP_Error Data.
+         * @override ReportsDataStore::get_default_query_vars()
+         *
+         * @return array Query parameters.
          */
-        public function get_data($query_args)
+        public function get_default_query_vars()
+        {
+        }
+        /**
+         * Returns the report data based on normalized parameters.
+         * Will be called by `get_data` if there is no data in cache.
+         *
+         * @override ReportsDataStore::get_noncached_data()
+         *
+         * @see get_data
+         * @param array $query_args Query parameters.
+         * @return stdClass|WP_Error Data object `{ totals: *, intervals: array, total: int, pages: int, page_no: int }`, or error.
+         */
+        public function get_noncached_data($query_args)
         {
         }
         /**
          * Normalizes order_by clause to match to SQL query.
+         *
+         * @override ReportsDataStore::normalize_order_by()
          *
          * @param string $order_by Order by option requeste by user.
          * @return string
@@ -67332,14 +68574,22 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Orders {
     /**
      * API\Reports\Orders\Query
      */
-    class Query extends \Automattic\WooCommerce\Admin\API\Reports\Query
+    class Query extends \Automattic\WooCommerce\Admin\API\Reports\GenericQuery
     {
         /**
-         * Get order data based on the current query vars.
+         * Specific query name.
+         * Will be used to load the `report-{name}` data store,
+         * and to call `woocommerce_analytics_{snake_case(name)}_*` filters.
+         *
+         * @var string
+         */
+        protected $name = 'orders';
+        /**
+         * Get the default allowed query vars.
          *
          * @return array
          */
-        public function get_data()
+        protected function get_default_query_vars()
         {
         }
     }
@@ -67349,16 +68599,28 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Orders\Stats {
      * REST API Reports orders stats controller class.
      *
      * @internal
-     * @extends \Automattic\WooCommerce\Admin\API\Reports\Controller
+     * @extends \Automattic\WooCommerce\Admin\API\Reports\GenericStatsController
      */
-    class Controller extends \Automattic\WooCommerce\Admin\API\Reports\Controller
+    class Controller extends \Automattic\WooCommerce\Admin\API\Reports\GenericStatsController
     {
+        use \Automattic\WooCommerce\Admin\API\Reports\OrderAwareControllerTrait;
         /**
          * Route base.
          *
          * @var string
          */
         protected $rest_base = 'reports/orders/stats';
+        /**
+         * Get data from Query.
+         *
+         * @override GenericController::get_datastore_data()
+         *
+         * @param array $query_args Query arguments.
+         * @return mixed Results from the data store.
+         */
+        protected function get_datastore_data($query_args = array())
+        {
+        }
         /**
          * Maps query arguments from the REST request.
          *
@@ -67369,22 +68631,22 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Orders\Stats {
         {
         }
         /**
-         * Get all reports.
+         * Prepare a report data item for serialization.
          *
-         * @param WP_REST_Request $request Request data.
-         * @return array|WP_Error
-         */
-        public function get_items($request)
-        {
-        }
-        /**
-         * Prepare a report object for serialization.
-         *
-         * @param Array           $report  Report data.
+         * @param Array           $report  Report data item as returned from Data Store.
          * @param WP_REST_Request $request Request object.
          * @return WP_REST_Response
          */
         public function prepare_item_for_response($report, $request)
+        {
+        }
+        /**
+         * Get the Report's item properties schema.
+         * Will be used by `get_item_schema` as `totals` and `subtotals`.
+         *
+         * @return array
+         */
+        protected function get_item_properties_schema()
         {
         }
         /**
@@ -67409,8 +68671,11 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Orders\Stats {
      */
     class DataStore extends \Automattic\WooCommerce\Admin\API\Reports\DataStore implements \Automattic\WooCommerce\Admin\API\Reports\DataStoreInterface
     {
+        use \Automattic\WooCommerce\Admin\API\Reports\StatsDataStoreTrait;
         /**
          * Table used to get the data.
+         *
+         * @override ReportsDataStore::$table_name
          *
          * @var string
          */
@@ -67422,11 +68687,15 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Orders\Stats {
         /**
          * Cache identifier.
          *
+         * @override ReportsDataStore::$cache_key
+         *
          * @var string
          */
         protected $cache_key = 'orders_stats';
         /**
          * Type for each column to cast values correctly later.
+         *
+         * @override ReportsDataStore::$column_types
          *
          * @var array
          */
@@ -67434,17 +68703,23 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Orders\Stats {
         /**
          * Data store context used to pass to filters.
          *
+         * @override ReportsDataStore::$context
+         *
          * @var string
          */
         protected $context = 'orders_stats';
         /**
          * Dynamically sets the date column name based on configuration
+         *
+         * @override ReportsDataStore::__construct()
          */
         public function __construct()
         {
         }
         /**
          * Assign report columns once full table name has been assigned.
+         *
+         * @override ReportsDataStore::assign_report_columns()
          */
         protected function assign_report_columns()
         {
@@ -67464,12 +68739,31 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Orders\Stats {
         {
         }
         /**
-         * Returns the report data based on parameters supplied by the user.
+         * Get the default query arguments to be used by get_data().
+         * These defaults are only partially applied when used via REST API, as that has its own defaults.
          *
-         * @param array $query_args  Query parameters.
-         * @return stdClass|WP_Error Data.
+         * @override ReportsDataStore::get_default_query_vars()
+         *
+         * @return array Query parameters.
          */
-        public function get_data($query_args)
+        public function get_default_query_vars()
+        {
+        }
+        /**
+         * Returns the report data based on normalized parameters.
+         * Will be called by `get_data` if there is no data in cache.
+         *
+         * @override ReportsDataStore::get_noncached_stats_data()
+         *
+         * @see get_data
+         * @see get_noncached_stats_data
+         * @param array    $query_args Query parameters.
+         * @param array    $params                  Query limit parameters.
+         * @param stdClass $data                    Reference to the data object to fill.
+         * @param int      $expected_interval_count Number of expected intervals.
+         * @return stdClass|WP_Error Data object `{ totals: *, intervals: array, total: int, pages: int, page_no: int }`, or error.
+         */
+        public function get_noncached_stats_data($query_args, $params, &$data, $expected_interval_count)
         {
         }
         /**
@@ -67560,32 +68854,26 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Orders\Stats {
         protected static function set_customer_first_order($customer_id, $order_id)
         {
         }
-        /**
-         * Initialize query objects.
-         */
-        protected function initialize_queries()
-        {
-        }
     }
     /**
      * API\Reports\Orders\Stats\Query
      */
-    class Query extends \Automattic\WooCommerce\Admin\API\Reports\Query
+    class Query extends \Automattic\WooCommerce\Admin\API\Reports\GenericQuery
     {
+        /**
+         * Specific query name.
+         * Will be used to load the `report-{name}` data store,
+         * and to call `woocommerce_analytics_{snake_case(name)}_*` filters.
+         *
+         * @var string
+         */
+        protected $name = 'orders-stats';
         /**
          * Valid fields for Orders report.
          *
          * @return array
          */
         protected function get_default_query_vars()
-        {
-        }
-        /**
-         * Get revenue data based on the current query vars.
-         *
-         * @return array
-         */
-        public function get_data()
         {
         }
     }
@@ -67865,10 +69153,10 @@ namespace Automattic\WooCommerce\Admin\API\Reports\PerformanceIndicators {
         {
         }
         /**
-         * Prepare a report object for serialization.
+         * Prepare a report data item for serialization.
          *
-         * @param array           $stat_data    Report data.
-         * @param WP_REST_Request $request Request object.
+         * @param array           $stat_data Report data item as returned from Data Store.
+         * @param WP_REST_Request $request   Request object.
          * @return WP_REST_Response
          */
         public function prepare_item_for_response($stat_data, $request)
@@ -67954,23 +69242,33 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Products {
          */
         protected $param_mapping = array('categories' => 'category_includes', 'products' => 'product_includes', 'variations' => 'variation_includes');
         /**
-         * Get items.
+         * Get data from `'products'` Query.
          *
-         * @param WP_REST_Request $request Request data.
+         * @override GenericController::get_datastore_data()
          *
-         * @return array|WP_Error
+         * @param array $query_args Query arguments.
+         * @return mixed Results from the data store.
          */
-        public function get_items($request)
+        protected function get_datastore_data($query_args = array())
         {
         }
         /**
-         * Prepare a report object for serialization.
+         * Prepare a report data item for serialization.
          *
-         * @param Array           $report  Report data.
+         * @param Array           $report  Report data item as returned from Data Store.
          * @param WP_REST_Request $request Request object.
          * @return WP_REST_Response
          */
         public function prepare_item_for_response($report, $request)
+        {
+        }
+        /**
+         * Maps query arguments from the REST request.
+         *
+         * @param array $request Request array.
+         * @return array
+         */
+        protected function prepare_reports_query($request)
         {
         }
         /**
@@ -68042,17 +69340,23 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Products {
         /**
          * Table used to get the data.
          *
+         * @override ReportsDataStore::$table_name
+         *
          * @var string
          */
         protected static $table_name = 'wc_order_product_lookup';
         /**
          * Cache identifier.
          *
+         * @override ReportsDataStore::$cache_key
+         *
          * @var string
          */
         protected $cache_key = 'products';
         /**
          * Mapping columns to data type to return correct response types.
+         *
+         * @override ReportsDataStore::$column_types
          *
          * @var array
          */
@@ -68084,11 +69388,15 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Products {
         /**
          * Data store context used to pass to filters.
          *
+         * @override ReportsDataStore::$context
+         *
          * @var string
          */
         protected $context = 'products';
         /**
          * Assign report columns once full table name has been assigned.
+         *
+         * @override ReportsDataStore::assign_report_columns()
          */
         protected function assign_report_columns()
         {
@@ -68120,6 +69428,8 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Products {
         /**
          * Maps ordering specified by the user to columns in the database/fields in the data.
          *
+         * @override ReportsDataStore::normalize_order_by()
+         *
          * @param string $order_by Sorting criterion.
          * @return string
          */
@@ -68138,10 +69448,36 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Products {
         /**
          * Returns the report data based on parameters supplied by the user.
          *
+         * @override ReportsDataStore::get_data()
+         *
          * @param array $query_args  Query parameters.
          * @return stdClass|WP_Error Data.
          */
         public function get_data($query_args)
+        {
+        }
+        /**
+         * Get the default query arguments to be used by get_data().
+         * These defaults are only partially applied when used via REST API, as that has its own defaults.
+         *
+         * @override ReportsDataStore::get_default_query_vars()
+         *
+         * @return array Query parameters.
+         */
+        public function get_default_query_vars()
+        {
+        }
+        /**
+         * Returns the report data based on normalized parameters.
+         * Will be called by `get_data` if there is no data in cache.
+         *
+         * @override ReportsDataStore::get_noncached_data()
+         *
+         * @see get_data
+         * @param array $query_args Query parameters.
+         * @return stdClass|WP_Error Data object `{ totals: *, intervals: array, total: int, pages: int, page_no: int }`, or error.
+         */
+        public function get_noncached_data($query_args)
         {
         }
         /**
@@ -68171,11 +69507,15 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Products {
     }
     /**
      * API\Reports\Products\Query
+     *
+     * @deprecated 9.3.0 Products\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
      */
     class Query extends \Automattic\WooCommerce\Admin\API\Reports\Query
     {
         /**
          * Valid fields for Products report.
+         *
+         * @deprecated 9.3.0 Products\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
          *
          * @return array
          */
@@ -68184,6 +69524,8 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Products {
         }
         /**
          * Get product data based on the current query vars.
+         *
+         * @deprecated 9.3.0 Products\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
          *
          * @return array
          */
@@ -68220,18 +69562,29 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Products\Stats {
         {
         }
         /**
-         * Get all reports.
+         * Get data from `'products-stats'` Query.
          *
-         * @param WP_REST_Request $request Request data.
-         * @return array|WP_Error
+         * @override GenericController::get_datastore_data()
+         *
+         * @param array $query_args Query arguments.
+         * @return mixed Results from the data store.
          */
-        public function get_items($request)
+        protected function get_datastore_data($query_args = array())
         {
         }
         /**
-         * Prepare a report object for serialization.
+         * Maps query arguments from the REST request, to be fed to Query.
          *
-         * @param array           $report  Report data.
+         * @param \WP_REST_Request $request Full request object.
+         * @return array Simplified array of params.
+         */
+        protected function prepare_reports_query($request)
+        {
+        }
+        /**
+         * Prepare a report data item for serialization.
+         *
+         * @param array           $report  Report data item as returned from Data Store.
          * @param WP_REST_Request $request Request object.
          * @return WP_REST_Response
          */
@@ -68279,8 +69632,11 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Products\Stats {
      */
     class DataStore extends \Automattic\WooCommerce\Admin\API\Reports\Products\DataStore implements \Automattic\WooCommerce\Admin\API\Reports\DataStoreInterface
     {
+        use \Automattic\WooCommerce\Admin\API\Reports\StatsDataStoreTrait;
         /**
          * Mapping columns to data type to return correct response types.
+         *
+         * @override ProductsDataStore::$column_types
          *
          * @var array
          */
@@ -68288,17 +69644,23 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Products\Stats {
         /**
          * Cache identifier.
          *
+         * @override ProductsDataStore::$cache_key
+         *
          * @var string
          */
         protected $cache_key = 'products_stats';
         /**
          * Data store context used to pass to filters.
          *
+         * @override ProductsDataStore::$context
+         *
          * @var string
          */
         protected $context = 'products_stats';
         /**
          * Assign report columns once full table name has been assigned.
+         *
+         * @override ProductsDataStore::assign_report_columns()
          */
         protected function assign_report_columns()
         {
@@ -68312,9 +69674,21 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Products\Stats {
         {
         }
         /**
+         * Get the default query arguments to be used by get_data().
+         * These defaults are only partially applied when used via REST API, as that has its own defaults.
+         *
+         * @override ProductsDataStore::get_default_query_vars()
+         *
+         * @return array Query parameters.
+         */
+        public function get_default_query_vars()
+        {
+        }
+        /**
          * Returns the report data based on parameters supplied by the user.
          *
-         * @since 3.5.0
+         * @override ProductsDataStore::get_data()
+         *
          * @param array $query_args  Query parameters.
          * @return stdClass|WP_Error Data.
          */
@@ -68322,7 +69696,26 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Products\Stats {
         {
         }
         /**
+         * Returns the report data based on normalized parameters.
+         * Will be called by `get_data` if there is no data in cache.
+         *
+         * @override ProductsDataStore::get_noncached_data()
+         *
+         * @see get_data
+         * @see get_noncached_stats_data
+         * @param array    $query_args Query parameters.
+         * @param array    $params                  Query limit parameters.
+         * @param stdClass $data                    Reference to the data object to fill.
+         * @param int      $expected_interval_count Number of expected intervals.
+         * @return stdClass|WP_Error Data object `{ totals: *, intervals: array, total: int, pages: int, page_no: int }`, or error.
+         */
+        public function get_noncached_stats_data($query_args, $params, &$data, $expected_interval_count)
+        {
+        }
+        /**
          * Normalizes order_by clause to match to SQL query.
+         *
+         * @override ProductsDataStore::normalize_order_by()
          *
          * @param string $order_by Order by option requeste by user.
          * @return string
@@ -68330,20 +69723,18 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Products\Stats {
         protected function normalize_order_by($order_by)
         {
         }
-        /**
-         * Initialize query objects.
-         */
-        protected function initialize_queries()
-        {
-        }
     }
     /**
      * API\Reports\Products\Stats\Query
+     *
+     * @deprecated 9.3.0 Products\Stats\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
      */
     class Query extends \Automattic\WooCommerce\Admin\API\Reports\Query
     {
         /**
          * Valid fields for Products report.
+         *
+         * @deprecated 9.3.0 Products\Stats\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
          *
          * @return array
          */
@@ -68352,6 +69743,8 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Products\Stats {
         }
         /**
          * Get product data based on the current query vars.
+         *
+         * @deprecated 9.3.0 Products\Stats\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
          *
          * @return array
          */
@@ -68427,8 +69820,13 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Products\Stats {
 namespace Automattic\WooCommerce\Admin\API\Reports\Revenue {
     /**
      * API\Reports\Revenue\Query
+     *
+     * This query uses inconsistent names:
+     *  - `report-revenue-stats` data store
+     *  - `woocommerce_analytics_revenue_*` filters
+     * So, for backward compatibility, we cannot use GenericQuery.
      */
-    class Query extends \Automattic\WooCommerce\Admin\API\Reports\Query
+    class Query extends \WC_Object_Query
     {
         /**
          * Valid fields for Revenue report.
@@ -68477,12 +69875,14 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Revenue\Stats {
         {
         }
         /**
-         * Get all reports.
+         * Get data from RevenueQuery.
          *
-         * @param WP_REST_Request $request Request data.
-         * @return WP_REST_Response|WP_Error
+         * @override GenericController::get_datastore_data()
+         *
+         * @param array $query_args Query arguments.
+         * @return mixed Results from the data store.
          */
-        public function get_items($request)
+        protected function get_datastore_data($query_args = array())
         {
         }
         /**
@@ -68497,9 +69897,9 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Revenue\Stats {
         {
         }
         /**
-         * Prepare a report object for serialization.
+         * Prepare a report data item for serialization.
          *
-         * @param array           $report  Report data.
+         * @param array           $report  Report data item as returned from Data Store.
          * @param WP_REST_Request $request Request object.
          * @return WP_REST_Response
          */
@@ -68659,9 +70059,9 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Stock {
         {
         }
         /**
-         * Prepare a report object for serialization.
+         * Prepare a report data item for serialization.
          *
-         * @param  WC_Product      $product  Report data.
+         * @param  WC_Product      $product Report data item as returned from Data Store.
          * @param  WP_REST_Request $request Request object.
          * @return WP_REST_Response
          */
@@ -68743,9 +70143,9 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Stock\Stats {
         {
         }
         /**
-         * Prepare a report object for serialization.
+         * Prepare a report data item for serialization.
          *
-         * @param  WC_Product      $report  Report data.
+         * @param  WC_Product      $report  Report data item as returned from Data Store.
          * @param  WP_REST_Request $request Request object.
          * @return WP_REST_Response
          */
@@ -68776,6 +70176,8 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Stock\Stats {
     {
         /**
          * Get stock counts for the whole store.
+         *
+         * @override ReportsDataStore::get_data()
          *
          * @param array $query Not used for the stock stats data store, but needed for the interface.
          * @return array Array of counts.
@@ -68811,8 +70213,9 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Stock\Stats {
     }
     /**
      * API\Reports\Stock\Stats\Query
+     * This query takes no arguments, so we do not inherit from GenericQuery.
      */
-    class Query extends \Automattic\WooCommerce\Admin\API\Reports\Query
+    class Query extends \WC_Object_Query
     {
         /**
          * Get product data based on the current query vars.
@@ -68844,6 +70247,17 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Taxes {
          */
         protected $rest_base = 'reports/taxes';
         /**
+         * Get data from `'taxes'` Query.
+         *
+         * @override GenericController::get_datastore_data()
+         *
+         * @param array $query_args Query arguments.
+         * @return mixed Results from the data store.
+         */
+        protected function get_datastore_data($query_args = array())
+        {
+        }
+        /**
          * Maps query arguments from the REST request.
          *
          * @param array $request Request array.
@@ -68853,18 +70267,9 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Taxes {
         {
         }
         /**
-         * Get all reports.
+         * Prepare a report data item for serialization.
          *
-         * @param WP_REST_Request $request Request data.
-         * @return array|WP_Error
-         */
-        public function get_items($request)
-        {
-        }
-        /**
-         * Prepare a report object for serialization.
-         *
-         * @param stdClass        $report  Report data.
+         * @param mixed           $report  Report data item as returned from Data Store.
          * @param WP_REST_Request $request Request object.
          * @return WP_REST_Response
          */
@@ -68922,11 +70327,15 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Taxes {
         /**
          * Table used to get the data.
          *
+         * @override ReportsDataStore::$table_name
+         *
          * @var string
          */
         protected static $table_name = 'wc_order_tax_lookup';
         /**
          * Cache identifier.
+         *
+         * @override ReportsDataStore::$cache_key
          *
          * @var string
          */
@@ -68934,17 +70343,23 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Taxes {
         /**
          * Mapping columns to data type to return correct response types.
          *
+         * @override ReportsDataStore::$column_types
+         *
          * @var array
          */
         protected $column_types = array('tax_rate_id' => 'intval', 'name' => 'strval', 'tax_rate' => 'floatval', 'country' => 'strval', 'state' => 'strval', 'priority' => 'intval', 'total_tax' => 'floatval', 'order_tax' => 'floatval', 'shipping_tax' => 'floatval', 'orders_count' => 'intval');
         /**
          * Data store context used to pass to filters.
          *
+         * @override ReportsDataStore::$context
+         *
          * @var string
          */
         protected $context = 'taxes';
         /**
          * Assign report columns once full table name has been assigned.
+         *
+         * @override ReportsDataStore::assign_report_columns()
          */
         protected function assign_report_columns()
         {
@@ -68973,16 +70388,33 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Taxes {
         {
         }
         /**
-         * Returns the report data based on parameters supplied by the user.
+         * Get the default query arguments to be used by get_data().
+         * These defaults are only partially applied when used via REST API, as that has its own defaults.
          *
-         * @param array $query_args  Query parameters.
-         * @return stdClass|WP_Error Data.
+         * @override ReportsDataStore::get_default_query_vars()
+         *
+         * @return array Query parameters.
          */
-        public function get_data($query_args)
+        public function get_default_query_vars()
+        {
+        }
+        /**
+         * Returns the report data based on normalized parameters.
+         * Will be called by `get_data` if there is no data in cache.
+         *
+         * @override ReportsDataStore::get_noncached_data()
+         *
+         * @see get_data
+         * @param array $query_args Query parameters.
+         * @return stdClass|WP_Error Data object `{ totals: *, intervals: array, total: int, pages: int, page_no: int }`, or error.
+         */
+        public function get_noncached_data($query_args)
         {
         }
         /**
          * Maps ordering specified by the user to columns in the database/fields in the data.
+         *
+         * @override ReportsDataStore::normalize_order_by()
          *
          * @param string $order_by Sorting criterion.
          * @return string
@@ -69016,11 +70448,15 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Taxes {
     }
     /**
      * API\Reports\Taxes\Query
+     *
+     * @deprecated 9.3.0 Taxes\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
      */
     class Query extends \Automattic\WooCommerce\Admin\API\Reports\Query
     {
         /**
          * Valid fields for Taxes report.
+         *
+         * @deprecated 9.3.0 Taxes\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
          *
          * @return array
          */
@@ -69029,6 +70465,8 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Taxes {
         }
         /**
          * Get product data based on the current query vars.
+         *
+         * @deprecated 9.3.0 Taxes\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
          *
          * @return array
          */
@@ -69078,18 +70516,20 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Taxes\Stats {
         {
         }
         /**
-         * Get all reports.
+         * Get data from `'taxes-stats'` Query.
          *
-         * @param WP_REST_Request $request Request data.
-         * @return array|WP_Error
+         * @override GenericController::get_datastore_data()
+         *
+         * @param array $query_args Query arguments.
+         * @return mixed Results from the data store.
          */
-        public function get_items($request)
+        protected function get_datastore_data($query_args = array())
         {
         }
         /**
-         * Prepare a report object for serialization.
+         * Prepare a report data item for serialization.
          *
-         * @param stdClass        $report  Report data.
+         * @param mixed           $report  Report data item as returned from Data Store.
          * @param WP_REST_Request $request Request object.
          * @return WP_REST_Response
          */
@@ -69127,8 +70567,11 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Taxes\Stats {
      */
     class DataStore extends \Automattic\WooCommerce\Admin\API\Reports\DataStore implements \Automattic\WooCommerce\Admin\API\Reports\DataStoreInterface
     {
+        use \Automattic\WooCommerce\Admin\API\Reports\StatsDataStoreTrait;
         /**
          * Table used to get the data.
+         *
+         * @override ReportsDataStore::$table_name
          *
          * @var string
          */
@@ -69136,11 +70579,15 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Taxes\Stats {
         /**
          * Cache identifier.
          *
+         * @override ReportsDataStore::$cache_key
+         *
          * @var string
          */
         protected $cache_key = 'taxes_stats';
         /**
          * Mapping columns to data type to return correct response types.
+         *
+         * @override ReportsDataStore::$column_types
          *
          * @var array
          */
@@ -69148,11 +70595,15 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Taxes\Stats {
         /**
          * Data store context used to pass to filters.
          *
+         * @override ReportsDataStore::$context
+         *
          * @var string
          */
         protected $context = 'taxes_stats';
         /**
          * Assign report columns once full table name has been assigned.
+         *
+         * @override ReportsDataStore::assign_report_columns()
          */
         protected function assign_report_columns()
         {
@@ -69175,28 +70626,45 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Taxes\Stats {
         {
         }
         /**
-         * Returns the report data based on parameters supplied by the user.
+         * Get the default query arguments to be used by get_data().
+         * These defaults are only partially applied when used via REST API, as that has its own defaults.
          *
-         * @param array $query_args  Query parameters.
-         * @return stdClass|WP_Error Data.
+         * @override ReportsDataStore::get_default_query_vars()
+         *
+         * @return array Query parameters.
          */
-        public function get_data($query_args)
+        public function get_default_query_vars()
         {
         }
         /**
-         * Initialize query objects.
+         * Returns the report data based on normalized parameters.
+         * Will be called by `get_data` if there is no data in cache.
+         *
+         * @override ReportsDataStore::get_noncached_data()
+         *
+         * @see get_data
+         * @see get_noncached_stats_data
+         * @param array    $query_args Query parameters.
+         * @param array    $params                  Query limit parameters.
+         * @param stdClass $data                    Reference to the data object to fill.
+         * @param int      $expected_interval_count Number of expected intervals.
+         * @return stdClass|WP_Error Data object `{ totals: *, intervals: array, total: int, pages: int, page_no: int }`, or error.
          */
-        protected function initialize_queries()
+        public function get_noncached_stats_data($query_args, $params, &$data, $expected_interval_count)
         {
         }
     }
     /**
      * API\Reports\Taxes\Stats\Query
+     *
+     * @deprecated 9.3.0 Taxes\Stats\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
      */
     class Query extends \Automattic\WooCommerce\Admin\API\Reports\Query
     {
         /**
          * Valid fields for Taxes report.
+         *
+         * @deprecated 9.3.0 Taxes\Stats\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
          *
          * @return array
          */
@@ -69205,6 +70673,8 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Taxes\Stats {
         }
         /**
          * Get tax stats data based on the current query vars.
+         *
+         * @deprecated 9.3.0 Taxes\Stats\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
          *
          * @return array
          */
@@ -69539,10 +71009,12 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Variations {
      * REST API Reports products controller class.
      *
      * @internal
-     * @extends ReportsController
+     * @extends GenericController
      */
-    class Controller extends \Automattic\WooCommerce\Admin\API\Reports\Controller implements \Automattic\WooCommerce\Admin\API\Reports\ExportableInterface
+    class Controller extends \Automattic\WooCommerce\Admin\API\Reports\GenericController implements \Automattic\WooCommerce\Admin\API\Reports\ExportableInterface
     {
+        // The controller does not use this trait. It's here for API backward compatibility.
+        use \Automattic\WooCommerce\Admin\API\Reports\OrderAwareControllerTrait;
         /**
          * Exportable traits.
          */
@@ -69560,23 +71032,33 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Variations {
          */
         protected $param_mapping = array('variations' => 'variation_includes', 'products' => 'product_includes');
         /**
-         * Get items.
+         * Get data from `'variations'` Query.
          *
-         * @param WP_REST_Request $request Request data.
+         * @override GenericController::get_datastore_data()
          *
-         * @return array|WP_Error
+         * @param array $query_args Query arguments.
+         * @return mixed Results from the data store.
          */
-        public function get_items($request)
+        protected function get_datastore_data($query_args = array())
         {
         }
         /**
-         * Prepare a report object for serialization.
+         * Prepare a report data item for serialization.
          *
-         * @param array           $report  Report data.
+         * @param array           $report  Report data item as returned from Data Store.
          * @param WP_REST_Request $request Request object.
          * @return WP_REST_Response
          */
         public function prepare_item_for_response($report, $request)
+        {
+        }
+        /**
+         * Maps query arguments from the REST request.
+         *
+         * @param array $request Request array.
+         * @return array
+         */
+        protected function prepare_reports_query($request)
         {
         }
         /**
@@ -69639,17 +71121,23 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Variations {
         /**
          * Table used to get the data.
          *
+         * @override ReportsDataStore::$table_name
+         *
          * @var string
          */
         protected static $table_name = 'wc_order_product_lookup';
         /**
          * Cache identifier.
          *
+         * @override ReportsDataStore::$cache_key
+         *
          * @var string
          */
         protected $cache_key = 'variations';
         /**
          * Mapping columns to data type to return correct response types.
+         *
+         * @override ReportsDataStore::$column_types
          *
          * @var array
          */
@@ -69663,11 +71151,15 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Variations {
         /**
          * Data store context used to pass to filters.
          *
+         * @override ReportsDataStore::$context
+         *
          * @var string
          */
         protected $context = 'variations';
         /**
          * Assign report columns once full table name has been assigned.
+         *
+         * @override ReportsDataStore::assign_report_columns()
          */
         protected function assign_report_columns()
         {
@@ -69700,6 +71192,8 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Variations {
         }
         /**
          * Maps ordering specified by the user to columns in the database/fields in the data.
+         *
+         * @override ReportsDataStore::normalize_order_by()
          *
          * @param string $order_by Sorting criterion.
          *
@@ -69738,13 +71232,27 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Variations {
         {
         }
         /**
-         * Returns the report data based on parameters supplied by the user.
+         * Get the default query arguments to be used by get_data().
+         * These defaults are only partially applied when used via REST API, as that has its own defaults.
          *
-         * @param array $query_args Query parameters.
+         * @override ReportsDataStore::get_default_query_vars()
          *
-         * @return stdClass|WP_Error Data.
+         * @return array Query parameters.
          */
-        public function get_data($query_args)
+        public function get_default_query_vars()
+        {
+        }
+        /**
+         * Returns the report data based on normalized parameters.
+         * Will be called by `get_data` if there is no data in cache.
+         *
+         * @override ReportsDataStore::get_noncached_data()
+         *
+         * @see get_data
+         * @param array $query_args Query parameters.
+         * @return stdClass|WP_Error Data object `{ totals: *, intervals: array, total: int, pages: int, page_no: int }`, or error.
+         */
+        public function get_noncached_data($query_args)
         {
         }
         /**
@@ -69756,11 +71264,15 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Variations {
     }
     /**
      * API\Reports\Variations\Query
+     *
+     * @deprecated 9.3.0 Variations\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
      */
     class Query extends \Automattic\WooCommerce\Admin\API\Reports\Query
     {
         /**
          * Valid fields for Products report.
+         *
+         * @deprecated 9.3.0 Variations\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
          *
          * @return array
          */
@@ -69769,6 +71281,8 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Variations {
         }
         /**
          * Get product data based on the current query vars.
+         *
+         * @deprecated 9.3.0 Variations\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
          *
          * @return array
          */
@@ -69805,18 +71319,29 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Variations\Stats {
         {
         }
         /**
-         * Get all reports.
+         * Get data from `'variations-stats'` Query.
          *
-         * @param WP_REST_Request $request Request data.
-         * @return array|WP_Error
+         * @override GenericController::get_datastore_data()
+         *
+         * @param array $query_args Query arguments.
+         * @return mixed Results from the data store.
          */
-        public function get_items($request)
+        protected function get_datastore_data($query_args = array())
         {
         }
         /**
-         * Prepare a report object for serialization.
+         * Maps query arguments from the REST request, to be fed to Query.
          *
-         * @param array           $report  Report data.
+         * @param \WP_REST_Request $request Full request object.
+         * @return array Simplified array of params.
+         */
+        protected function prepare_reports_query($request)
+        {
+        }
+        /**
+         * Prepare a report data item for serialization.
+         *
+         * @param array           $report  Report data item as returned from Data Store.
          * @param WP_REST_Request $request Request object.
          * @return WP_REST_Response
          */
@@ -69863,8 +71388,11 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Variations\Stats {
      */
     class DataStore extends \Automattic\WooCommerce\Admin\API\Reports\Variations\DataStore implements \Automattic\WooCommerce\Admin\API\Reports\DataStoreInterface
     {
+        use \Automattic\WooCommerce\Admin\API\Reports\StatsDataStoreTrait;
         /**
          * Mapping columns to data type to return correct response types.
+         *
+         * @override VariationsDataStore::$column_types
          *
          * @var array
          */
@@ -69872,17 +71400,23 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Variations\Stats {
         /**
          * Cache identifier.
          *
+         * @override VariationsDataStore::$cache_key
+         *
          * @var string
          */
         protected $cache_key = 'variations_stats';
         /**
          * Data store context used to pass to filters.
          *
+         * @override VariationsDataStore::$context
+         *
          * @var string
          */
         protected $context = 'variations_stats';
         /**
          * Assign report columns once full table name has been assigned.
+         *
+         * @override VariationsDataStore::assign_report_columns()
          */
         protected function assign_report_columns()
         {
@@ -69908,17 +71442,37 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Variations\Stats {
         {
         }
         /**
-         * Returns the report data based on parameters supplied by the user.
+         * Get the default query arguments to be used by get_data().
+         * These defaults are only partially applied when used via REST API, as that has its own defaults.
          *
-         * @since 3.5.0
-         * @param array $query_args  Query parameters.
-         * @return stdClass|WP_Error Data.
+         * @override VariationsDataStore::get_default_query_vars()
+         *
+         * @return array Query parameters.
          */
-        public function get_data($query_args)
+        public function get_default_query_vars()
+        {
+        }
+        /**
+         * Returns the report data based on normalized parameters.
+         * Will be called by `get_data` if there is no data in cache.
+         *
+         * @override VariationsDataStore::get_noncached_stats_data()
+         *
+         * @see get_data
+         * @see get_noncached_stats_data
+         * @param array    $query_args Query parameters.
+         * @param array    $params                  Query limit parameters.
+         * @param stdClass $data                    Reference to the data object to fill.
+         * @param int      $expected_interval_count Number of expected intervals.
+         * @return stdClass|WP_Error Data object `{ totals: *, intervals: array, total: int, pages: int, page_no: int }`, or error.
+         */
+        public function get_noncached_stats_data($query_args, $params, &$data, $expected_interval_count)
         {
         }
         /**
          * Normalizes order_by clause to match to SQL query.
+         *
+         * @override VariationsDataStore::normalize_order_by()
          *
          * @param string $order_by Order by option requeste by user.
          * @return string
@@ -69926,20 +71480,18 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Variations\Stats {
         protected function normalize_order_by($order_by)
         {
         }
-        /**
-         * Initialize query objects.
-         */
-        protected function initialize_queries()
-        {
-        }
     }
     /**
      * API\Reports\Variations\Stats\Query
+     *
+     * @deprecated 9.3.0 Variations\Stats\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
      */
     class Query extends \Automattic\WooCommerce\Admin\API\Reports\Query
     {
         /**
          * Valid fields for Products report.
+         *
+         * @deprecated 9.3.0 Variations\Stats\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
          *
          * @return array
          */
@@ -69948,6 +71500,8 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Variations\Stats {
         }
         /**
          * Get variations data based on the current query vars.
+         *
+         * @deprecated 9.3.0 Variations\Stats\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
          *
          * @return array
          */
@@ -70566,6 +72120,14 @@ namespace Automattic\WooCommerce\Admin\RemoteSpecs {
         {
         }
         /**
+         * Gets specs from cache if it exists.
+         *
+         * @return array list of specs.
+         */
+        public function get_cached_specs()
+        {
+        }
+        /**
          * Reads the data sources for specs and persists those specs.
          *
          * @return bool Whether any specs were read.
@@ -71044,7 +72606,7 @@ namespace Automattic\WooCommerce\Admin\Features {
      */
     class LaunchYourStore
     {
-        const BANNER_DISMISS_USER_META_KEY = 'woocommerce_coming_soon_banner_dismissed';
+        const BANNER_DISMISS_USER_META_KEY = 'coming_soon_banner_dismissed';
         /**
          * Constructor.
          */
@@ -71099,8 +72661,19 @@ namespace Automattic\WooCommerce\Admin\Features {
         }
         /**
          * Register user meta fields for Launch Your Store.
+         *
+         * This should be removed in WC 9.4.
          */
         public function register_launch_your_store_user_meta_fields()
+        {
+        }
+        /**
+         * Register user meta fields for Launch Your Store.
+         *
+         * @param array $user_data_fields user data fields.
+         * @return array
+         */
+        public function add_user_data_fields($user_data_fields)
         {
         }
         /**
@@ -71451,53 +73024,17 @@ namespace Automattic\WooCommerce\Admin\Features\Navigation {
          */
         const TOGGLE_OPTION_NAME = 'woocommerce_navigation_enabled';
         /**
-         * Determines if the feature has been toggled on or off.
-         *
-         * @var boolean
-         */
-        protected static $is_updated = false;
-        /**
          * Hook into WooCommerce.
          */
         public function __construct()
         {
         }
         /**
-         * Add the feature toggle to the features settings.
+         * Create a deprecation notice.
          *
-         * @deprecated 7.0 The WooCommerce Admin features are now handled by the WooCommerce features engine (see the FeaturesController class).
-         *
-         * @param array $features Feature sections.
-         * @return array
+         * @param string $fcn The function that is deprecated.
          */
-        public static function add_feature_toggle($features)
-        {
-        }
-        /**
-         * Determine if sufficient versions are present to support Navigation feature
-         */
-        public function is_nav_compatible()
-        {
-        }
-        /**
-         * Reloads the page when the option is toggled to make sure all nav features are loaded.
-         *
-         * @param string $old_value Old value.
-         * @param string $value     New value.
-         */
-        public static function reload_page_on_toggle($old_value, $value)
-        {
-        }
-        /**
-         * Reload the page if the setting has been updated.
-         */
-        public static function maybe_reload_page()
-        {
-        }
-        /**
-         * Enqueue the opt out scripts.
-         */
-        public function maybe_enqueue_opt_out_scripts()
+        public static function deprecation_notice($fcn)
         {
         }
     }
@@ -71566,61 +73103,34 @@ namespace Automattic\WooCommerce\Admin\Features\Navigation {
         }
         /**
          * Init.
+         *
+         * @internal
          */
-        public function init()
+        public final function init()
         {
         }
         /**
          * Convert a WordPress menu callback to a URL.
-         *
-         * @param string $callback Menu callback.
-         * @return string
          */
-        public static function get_callback_url($callback)
+        public static function get_callback_url()
         {
         }
         /**
          * Get the parent key if one exists.
-         *
-         * @param string $callback Callback or URL.
-         * @return string|null
          */
-        public static function get_parent_key($callback)
+        public static function get_parent_key()
         {
         }
         /**
          * Adds a top level menu item to the navigation.
-         *
-         * @param array $args Array containing the necessary arguments.
-         *    $args = array(
-         *      'id'      => (string) The unique ID of the menu item. Required.
-         *      'title'   => (string) Title of the menu item. Required.
-         *      'url'     => (string) URL or callback to be used. Required.
-         *      'order'   => (int) Menu item order.
-         *      'migrate' => (bool) Whether or not to hide the item in the wp admin menu.
-         *      'menuId'  => (string) The ID of the menu to add the category to.
-         *    ).
          */
-        private static function add_category($args)
+        private static function add_category()
         {
         }
         /**
          * Adds a child menu item to the navigation.
-         *
-         * @param array $args Array containing the necessary arguments.
-         *    $args = array(
-         *      'id'              => (string) The unique ID of the menu item. Required.
-         *      'title'           => (string) Title of the menu item. Required.
-         *      'parent'          => (string) Parent menu item ID.
-         *      'capability'      => (string) Capability to view this menu item.
-         *      'url'             => (string) URL or callback to be used. Required.
-         *      'order'           => (int) Menu item order.
-         *      'migrate'         => (bool) Whether or not to hide the item in the wp admin menu.
-         *      'menuId'          => (string) The ID of the menu to add the item to.
-         *      'matchExpression' => (string) A regular expression used to identify if the menu item is active.
-         *    ).
          */
-        private static function add_item($args)
+        private static function add_item()
         {
         }
         /**
@@ -71634,50 +73144,20 @@ namespace Automattic\WooCommerce\Admin\Features\Navigation {
         }
         /**
          * Adds a plugin category.
-         *
-         * @param array $args Array containing the necessary arguments.
-         *    $args = array(
-         *      'id'      => (string) The unique ID of the menu item. Required.
-         *      'title'   => (string) Title of the menu item. Required.
-         *      'url'     => (string) URL or callback to be used. Required.
-         *      'migrate' => (bool) Whether or not to hide the item in the wp admin menu.
-         *      'order'   => (int) Menu item order.
-         *    ).
          */
-        public static function add_plugin_category($args)
+        public static function add_plugin_category()
         {
         }
         /**
          * Adds a plugin item.
-         *
-         * @param array $args Array containing the necessary arguments.
-         *    $args = array(
-         *      'id'              => (string) The unique ID of the menu item. Required.
-         *      'title'           => (string) Title of the menu item. Required.
-         *      'parent'          => (string) Parent menu item ID.
-         *      'capability'      => (string) Capability to view this menu item.
-         *      'url'             => (string) URL or callback to be used. Required.
-         *      'migrate'         => (bool) Whether or not to hide the item in the wp admin menu.
-         *      'order'           => (int) Menu item order.
-         *      'matchExpression' => (string) A regular expression used to identify if the menu item is active.
-         *    ).
          */
-        public static function add_plugin_item($args)
+        public static function add_plugin_item()
         {
         }
         /**
          * Adds a plugin setting item.
-         *
-         * @param array $args Array containing the necessary arguments.
-         *    $args = array(
-         *      'id'         => (string) The unique ID of the menu item. Required.
-         *      'title'      => (string) Title of the menu item. Required.
-         *      'capability' => (string) Capability to view this menu item.
-         *      'url'        => (string) URL or callback to be used. Required.
-         *      'migrate'    => (bool) Whether or not to hide the item in the wp admin menu.
-         *    ).
          */
-        public static function add_setting_item($args)
+        public static function add_setting_item()
         {
         }
         /**
@@ -71892,18 +73372,14 @@ namespace Automattic\WooCommerce\Admin\Features\Navigation {
         }
         /**
          * Register post type for use in WooCommerce Navigation screens.
-         *
-         * @param string $post_type Post type to add.
          */
-        public static function register_post_type($post_type)
+        public static function register_post_type()
         {
         }
         /**
          * Register taxonomy for use in WooCommerce Navigation screens.
-         *
-         * @param string $taxonomy Taxonomy to add.
          */
-        public static function register_taxonomy($taxonomy)
+        public static function register_taxonomy()
         {
         }
     }
@@ -73080,7 +74556,9 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
         /**
          * Return number of setup tasks remaining
          *
-         * @return number
+         * This is not updated immediately when a task is completed, but rather when task is marked as complete in the database to reduce performance impact.
+         *
+         * @return int|null
          */
         public static function setup_tasks_remaining()
         {
@@ -73816,14 +75294,6 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
         {
         }
         /**
-         * Task completion.
-         *
-         * @return bool
-         */
-        public function is_complete()
-        {
-        }
-        /**
          * Task visibility.
          *
          * @return bool
@@ -73834,6 +75304,7 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
         /**
          * Get the marketing plugins.
          *
+         * @deprecated 9.3.0 Removed to improve performance.
          * @return array
          */
         public static function get_plugins()
@@ -73842,6 +75313,7 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
         /**
          * Check if the store has installed marketing extensions.
          *
+         * @deprecated 9.3.0 Removed to improve performance.
          * @return bool
          */
         public static function has_installed_extensions()
@@ -74807,6 +76279,14 @@ namespace Automattic\WooCommerce\Admin\Features\PaymentGatewaySuggestions {
         {
         }
         /**
+         * Gets either cached or default suggestions.
+         *
+         * @return array
+         */
+        public static function get_cached_or_default_suggestions()
+        {
+        }
+        /**
          * Delete the specs transient.
          */
         public static function delete_specs_transient()
@@ -74836,7 +76316,7 @@ namespace Automattic\WooCommerce\Admin\Features\PaymentGatewaySuggestions {
     /**
      * Specs data source poller class for payment gateway suggestions.
      */
-    class PaymentGatewaySuggestionsDataSourcePoller extends \Automattic\WooCommerce\Admin\DataSourcePoller
+    class PaymentGatewaySuggestionsDataSourcePoller extends \Automattic\WooCommerce\Admin\RemoteSpecs\DataSourcePoller
     {
         /**
          * Data Source Poller ID.
@@ -78345,7 +79825,7 @@ namespace Automattic\WooCommerce\Admin {
          *
          * @param string $slug Plugin slug to get path for.
          *
-         * @return string|false
+         * @return string|false The plugin path or false if the plugin is not installed.
          */
         public static function get_plugin_path_from_slug($slug)
         {
@@ -78369,7 +79849,9 @@ namespace Automattic\WooCommerce\Admin {
         /**
          * Get an array of active plugin slugs.
          *
-         * @return array
+         * The list will include both network active and site active plugins.
+         *
+         * @return array The list of active plugin slugs.
          */
         public static function get_active_plugin_slugs()
         {
@@ -83327,6 +84809,10 @@ namespace Automattic\WooCommerce\Blocks {
          * This function is used on the `pre_get_block_template` hook to return the fallback template from the db in case
          * the template is eligible for it.
          *
+         * Currently, the Products by Category, Products by Tag and Products by Attribute templates fall back to the
+         * Product Catalog template. That means that if there are customizations in the Product Catalog template,
+         * they are also reflected in the other templates as long as they haven't been customized as well.
+         *
          * @param \WP_Block_Template|null $template Block template object to short-circuit the default query,
          *                                          or null to allow WP to run its normal queries.
          * @param string                  $id Template unique identifier (example: theme_slug//template_slug).
@@ -83338,12 +84824,11 @@ namespace Automattic\WooCommerce\Blocks {
         {
         }
         /**
-         * Adds the `archive-product` template to the `taxonomy-product_cat`, `taxonomy-product_tag`, `taxonomy-attribute`
-         * templates to be able to fall back to it.
+         * Adds the fallback template to the template hierarchy.
          *
          * @param array $template_hierarchy A list of template candidates, in descending order of priority.
          */
-        public function add_archive_product_to_eligible_for_fallback_templates($template_hierarchy)
+        public function add_fallback_template_to_hierarchy($template_hierarchy)
         {
         }
         /**
@@ -84225,7 +85710,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
-         * It isn't necessary register block assets because it is a server side block.
+         * It isn't necessary to register block assets because it is a server side block.
          */
         protected function register_block_type_assets()
         {
@@ -87616,6 +89101,47 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
+         * Check if next tag is a PC block.
+         *
+         * @param WP_HTML_Tag_processor $p Initial tag processor.
+         *
+         * @return bool Answer if PC block is available.
+         */
+        private function is_next_tag_product_collection($p)
+        {
+        }
+        /**
+         * Set PC block namespace for Interactivity API.
+         *
+         * @param WP_HTML_Tag_processor $p Initial tag processor.
+         */
+        private function set_product_collection_namespace($p)
+        {
+        }
+        /**
+         * Attach the init directive to Product Collection block to call
+         * the onRender callback.
+         *
+         * @param string $block_content The HTML content of the block.
+         * @param string $collection Collection type.
+         *
+         * @return string Updated HTML content.
+         */
+        private function add_rendering_callback($block_content, $collection)
+        {
+        }
+        /**
+         * Attach all the Interactivity API directives responsible
+         * for client-side navigation.
+         *
+         * @param string $block_content The HTML content of the block.
+         *
+         * @return string Updated HTML content.
+         */
+        private function enable_client_side_navigation($block_content)
+        {
+        }
+        /**
          * Enhances the Product Collection block with client-side pagination.
          *
          * This function identifies Product Collection blocks and adds necessary data attributes
@@ -88339,6 +89865,24 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
+         * Extra data passed through from server to client for block.
+         *
+         * @param array $attributes  Any attributes that currently are available from the block.
+         *                           Note, this will be empty in the editor context when the block is
+         *                           not in the post content on editor load.
+         */
+        protected function enqueue_data(array $attributes = array())
+        {
+        }
+        /**
+         * Delete the default attribute id transient when the attribute taxonomies are deleted.
+         *
+         * @param string $transient The transient name.
+         */
+        public function delete_default_attribute_id_transient($transient)
+        {
+        }
+        /**
          * Register the query param keys.
          *
          * @param array $filter_param_keys The active filters data.
@@ -88397,6 +89941,20 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @param string   $query_type Query type, accept 'and' or 'or'.
          */
         private function get_attribute_counts($block, $slug, $query_type)
+        {
+        }
+        /**
+         * Get the attribute if with most term but closest to 30 terms.
+         *
+         * @return object
+         */
+        private function get_default_product_attribute()
+        {
+        }
+        /**
+         * Register pattern for default product attribute.
+         */
+        public function register_block_patterns()
         {
         }
     }
@@ -88764,6 +90322,55 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @var string
          */
         protected $block_name = 'product-filters-overlay-navigation';
+        /**
+         *  Register the context
+         *
+         * @return string[]
+         */
+        protected function get_block_type_uses_context()
+        {
+        }
+        /**
+         * Get the frontend script handle for this block type.
+         *
+         * @see $this->register_block_type()
+         * @param string $key Data to get, or default to everything.
+         * @return array|string|null
+         */
+        protected function get_block_type_script($key = null)
+        {
+        }
+        /**
+         * Include and render the block.
+         *
+         * @param array    $attributes Block attributes. Default empty array.
+         * @param string   $content    Block content. Default empty string.
+         * @param WP_Block $block      Block instance.
+         * @return string Rendered block type output.
+         */
+        protected function render($attributes, $content, $block)
+        {
+        }
+        /**
+         * Gets the icon to render depending on the triggerType attribute.
+         *
+         * @param array $attributes Block attributes.
+         *
+         * @return string Label to render on the block
+         */
+        private function render_icon($attributes)
+        {
+        }
+        /**
+         * Gets the label to render depending on the triggerType.
+         *
+         * @param array $attributes Block attributes.
+         *
+         * @return string Label to render on the block
+         */
+        private function render_label($attributes)
+        {
+        }
     }
     /**
      * ProductGallery class.
@@ -89291,6 +90898,52 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @return string Rendered block type output.
          */
         protected function render($attributes, $content, $block)
+        {
+        }
+    }
+    /**
+     * ProductMeta class.
+     */
+    class ProductMeta extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'product-meta';
+        /**
+         * Get the editor script data for this block type.
+         *
+         * @param string $key Data to get, or default to everything.
+         * @return null
+         */
+        protected function get_block_type_editor_script($key = null)
+        {
+        }
+        /**
+         * Get the editor style handle for this block type.
+         *
+         * @return null
+         */
+        protected function get_block_type_editor_style()
+        {
+        }
+        /**
+         * Get the frontend script handle for this block type.
+         *
+         * @param string $key Data to get, or default to everything.
+         * @return null
+         */
+        protected function get_block_type_script($key = null)
+        {
+        }
+        /**
+         * Get the frontend style handle for this block type.
+         *
+         * @return null
+         */
+        protected function get_block_type_style()
         {
         }
     }
@@ -90341,6 +91994,16 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          */
         protected $block_name = 'product-template';
         /**
+         * Initialize this block type.
+         *
+         * - Hook into WP lifecycle.
+         * - Register the block with WordPress.
+         * - Hook into pre_render_block to update the query.
+         */
+        protected function initialize()
+        {
+        }
+        /**
          * Get the frontend script handle for this block type.
          *
          * @param string $key Data to get, or default to everything.
@@ -90368,6 +92031,17 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @return bool Whether the block list contains a block that uses the featured image.
          */
         protected function block_core_post_template_uses_featured_image($inner_blocks)
+        {
+        }
+        /**
+         * Product Template renders inner blocks manually so we need to skip default
+         * rendering routine for its inner blocks
+         *
+         * @param array $settings Array of determined settings for registering a block type.
+         * @param array $metadata Metadata provided for registering a block type.
+         * @return array
+         */
+        public function add_block_type_metadata_settings($settings, $metadata)
         {
         }
     }
@@ -94473,7 +96147,10 @@ namespace Automattic\WooCommerce\Blocks\Templates {
         {
         }
         /**
-         * Filter the page title when the template is active.
+         * Forces the page title to match the template title when this template is active.
+         *
+         * Only applies when hooked into `pre_get_document_title`. Most templates used for pages will not require this because
+         * the page title should be used instead.
          *
          * @param string $title Page title.
          * @return string
@@ -95596,6 +97273,7 @@ namespace Automattic\WooCommerce\Blocks\Templates {
          * Since that there is a custom logic for the first and last block, we have to inject the hooks manually.
          * The first block supports the following hooks:
          * woocommerce_before_single_product
+         * woocommerce_before_single_product_summary
          *
          * The last block supports the following hooks:
          * woocommerce_after_single_product
@@ -95930,25 +97608,13 @@ namespace Automattic\WooCommerce\Blocks\Utils {
         {
         }
         /**
-         * Checks if we can fall back to the `archive-product` template for a given slug.
-         *
-         * `taxonomy-product_cat`, `taxonomy-product_tag`, `taxonomy-product_attribute` templates can
-         *  generally use the `archive-product` as a fallback if there are no specific overrides.
-         *
-         * @param string $template_slug Slug to check for fallbacks.
-         * @return boolean
-         */
-        public static function template_is_eligible_for_product_archive_fallback($template_slug)
-        {
-        }
-        /**
          * Checks if we can fall back to an `archive-product` template stored on the db for a given slug.
          *
          * @param string $template_slug Slug to check for fallbacks.
          * @param array  $db_templates Templates that have already been found on the db.
          * @return boolean
          */
-        public static function template_is_eligible_for_product_archive_fallback_from_db($template_slug, $db_templates)
+        public static function template_is_eligible_for_fallback_from_db($template_slug, $db_templates)
         {
         }
         /**
@@ -95970,7 +97636,7 @@ namespace Automattic\WooCommerce\Blocks\Utils {
          * @param string $template_slug Slug to check for fallbacks.
          * @return boolean
          */
-        public static function template_is_eligible_for_product_archive_fallback_from_theme($template_slug)
+        public static function template_is_eligible_for_fallback_from_theme($template_slug)
         {
         }
         /**
@@ -97262,7 +98928,7 @@ namespace Automattic\WooCommerce {
          *
          * @var string[]
          */
-        private $service_providers = array(\Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\AssignDefaultCategoryServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\DownloadPermissionsAdjusterServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OptionSanitizerServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrdersDataStoreServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductAttributesLookupServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductDownloadsServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductImageBySKUServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductReviewsServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProxiesServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\RestockRefundedItemsAdjusterServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\UtilsClassesServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\COTMigrationServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrdersControllersServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrderAttributionServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ObjectCacheServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\BatchProcessingServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrderMetaBoxServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrderAdminServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\FeaturesServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\MarketingServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\MarketplaceServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\LayoutTemplatesServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\LoggingServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\EnginesServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ComingSoonServiceProvider::class);
+        private $service_providers = array(\Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\AssignDefaultCategoryServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\DownloadPermissionsAdjusterServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OptionSanitizerServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrdersDataStoreServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductAttributesLookupServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductDownloadsServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductImageBySKUServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProductReviewsServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ProxiesServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\RestockRefundedItemsAdjusterServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\UtilsClassesServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\COTMigrationServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrdersControllersServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrderAttributionServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ObjectCacheServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\BatchProcessingServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrderMetaBoxServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\OrderAdminServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\FeaturesServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\MarketingServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\MarketplaceServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\LayoutTemplatesServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\LoggingServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\EnginesServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ComingSoonServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\StatsServiceProvider::class, \Automattic\WooCommerce\Internal\DependencyManagement\ServiceProviders\ImportExportServiceProvider::class);
         /**
          * The underlying container.
          *
@@ -100537,6 +102203,25 @@ namespace Automattic\WooCommerce\StoreApi\Routes {
         public function get_args();
     }
 }
+namespace Automattic\WooCommerce\StoreApi\Routes\V1\AI {
+    /**
+     * Middleware class.
+     *
+     * @internal
+     */
+    class Middleware
+    {
+        /**
+         * Ensure that the user is allowed to make this request.
+         *
+         * @throws RouteException If the user is not allowed to make this request.
+         * @return boolean
+         */
+        public static function is_authorized()
+        {
+        }
+    }
+}
 namespace Automattic\WooCommerce\StoreApi\Routes\V1 {
     /**
      * AbstractRoute class.
@@ -100758,247 +102443,6 @@ namespace Automattic\WooCommerce\StoreApi\Routes\V1 {
 }
 namespace Automattic\WooCommerce\StoreApi\Routes\V1\AI {
     /**
-     * BusinessDescription class.
-     *
-     * @internal
-     */
-    class BusinessDescription extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
-    {
-        /**
-         * The route identifier.
-         *
-         * @var string
-         */
-        const IDENTIFIER = 'ai/business-description';
-        /**
-         * The schema item identifier.
-         *
-         * @var string
-         */
-        const SCHEMA_TYPE = 'ai/business-description';
-        /**
-         * Get the path of this REST route.
-         *
-         * @return string
-         */
-        public function get_path()
-        {
-        }
-        /**
-         * Get the path of this rest route.
-         *
-         * @return string
-         */
-        public static function get_path_regex()
-        {
-        }
-        /**
-         * Get method arguments for this REST route.
-         *
-         * @return array An array of endpoints.
-         */
-        public function get_args()
-        {
-        }
-        /**
-         * Update the last business description.
-         *
-         * @param  \WP_REST_Request $request Request object.
-         *
-         * @return bool|string|\WP_Error|\WP_REST_Response
-         */
-        protected function get_route_post_response(\WP_REST_Request $request)
-        {
-        }
-    }
-    /**
-     * Patterns class.
-     */
-    class Images extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
-    {
-        /**
-         * The route identifier.
-         *
-         * @var string
-         */
-        const IDENTIFIER = 'ai/images';
-        /**
-         * The schema item identifier.
-         *
-         * @var string
-         */
-        const SCHEMA_TYPE = 'ai/images';
-        /**
-         * Get the path of this REST route.
-         *
-         * @return string
-         */
-        public function get_path()
-        {
-        }
-        /**
-         * Get the path of this rest route.
-         *
-         * @return string
-         */
-        public static function get_path_regex()
-        {
-        }
-        /**
-         * Get method arguments for this REST route.
-         *
-         * @return array An array of endpoints.
-         */
-        public function get_args()
-        {
-        }
-        /**
-         * Generate Images from Pexels
-         *
-         * @param  \WP_REST_Request $request Request object.
-         *
-         * @return bool|string|\WP_Error|\WP_REST_Response
-         */
-        protected function get_route_post_response(\WP_REST_Request $request)
-        {
-        }
-    }
-    /**
-     * Middleware class.
-     *
-     * @internal
-     */
-    class Middleware
-    {
-        /**
-         * Ensure that the user is allowed to make this request.
-         *
-         * @throws RouteException If the user is not allowed to make this request.
-         * @return boolean
-         */
-        public static function is_authorized()
-        {
-        }
-    }
-    /**
-     * Patterns class.
-     *
-     * @internal
-     */
-    class Patterns extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
-    {
-        /**
-         * The route identifier.
-         *
-         * @var string
-         */
-        const IDENTIFIER = 'ai/patterns';
-        /**
-         * The schema item identifier.
-         *
-         * @var string
-         */
-        const SCHEMA_TYPE = 'ai/patterns';
-        /**
-         * Get the path of this REST route.
-         *
-         * @return string
-         */
-        public function get_path()
-        {
-        }
-        /**
-         * Get the path of this rest route.
-         *
-         * @return string
-         */
-        public static function get_path_regex()
-        {
-        }
-        /**
-         * Get method arguments for this REST route.
-         *
-         * @return array An array of endpoints.
-         */
-        public function get_args()
-        {
-        }
-        /**
-         * Update patterns with the content and images powered by AI.
-         *
-         * @param  \WP_REST_Request $request Request object.
-         *
-         * @return WP_Error|\WP_HTTP_Response|\WP_REST_Response
-         */
-        protected function get_route_post_response(\WP_REST_Request $request)
-        {
-        }
-        /**
-         * Remove patterns generated by AI.
-         *
-         * @param  \WP_REST_Request $request Request object.
-         *
-         * @return bool|string|WP_Error|\WP_REST_Response
-         */
-        protected function get_route_delete_response(\WP_REST_Request $request)
-        {
-        }
-    }
-    /**
-     * Product class.
-     *
-     * @internal
-     */
-    class Product extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
-    {
-        /**
-         * The route identifier.
-         *
-         * @var string
-         */
-        const IDENTIFIER = 'ai/product';
-        /**
-         * The schema item identifier.
-         *
-         * @var string
-         */
-        const SCHEMA_TYPE = 'ai/product';
-        /**
-         * Get the path of this REST route.
-         *
-         * @return string
-         */
-        public function get_path()
-        {
-        }
-        /**
-         * Get the path of this rest route.
-         *
-         * @return string
-         */
-        public static function get_path_regex()
-        {
-        }
-        /**
-         * Get method arguments for this REST route.
-         *
-         * @return array An array of endpoints.
-         */
-        public function get_args()
-        {
-        }
-        /**
-         * Update product with the content and image powered by AI.
-         *
-         * @param  \WP_REST_Request $request Request object.
-         *
-         * @return bool|string|\WP_Error|\WP_REST_Response
-         */
-        protected function get_route_post_response(\WP_REST_Request $request)
-        {
-        }
-    }
-    /**
      * Products class.
      *
      * @internal
@@ -101059,136 +102503,6 @@ namespace Automattic\WooCommerce\StoreApi\Routes\V1\AI {
          * @return bool|string|\WP_Error|\WP_REST_Response
          */
         protected function get_route_delete_response(\WP_REST_Request $request)
-        {
-        }
-    }
-    /**
-     * StoreInfo class.
-     *
-     * @internal
-     */
-    class StoreInfo extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
-    {
-        /**
-         * The route identifier.
-         *
-         * @var string
-         */
-        const IDENTIFIER = 'ai/store-info';
-        /**
-         * The schema item identifier.
-         *
-         * @var string
-         */
-        const SCHEMA_TYPE = 'ai/store-info';
-        /**
-         * Get the path of this REST route.
-         *
-         * @return string
-         */
-        public function get_path()
-        {
-        }
-        /**
-         * Get the path of this rest route.
-         *
-         * @return string
-         */
-        public static function get_path_regex()
-        {
-        }
-        /**
-         * Get method arguments for this REST route.
-         *
-         * @return array An array of endpoints.
-         */
-        public function get_args()
-        {
-        }
-        /**
-         * Update the store title powered by AI.
-         *
-         * @param  \WP_REST_Request $request Request object.
-         *
-         * @return bool|string|\WP_Error|\WP_REST_Response
-         */
-        protected function get_route_response(\WP_REST_Request $request)
-        {
-        }
-    }
-    /**
-     * StoreTitle class.
-     *
-     * @internal
-     */
-    class StoreTitle extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
-    {
-        /**
-         * The route identifier.
-         *
-         * @var string
-         */
-        const IDENTIFIER = 'ai/store-title';
-        /**
-         * The schema item identifier.
-         *
-         * @var string
-         */
-        const SCHEMA_TYPE = 'ai/store-title';
-        /**
-         * The store title option name.
-         *
-         * @var string
-         */
-        const STORE_TITLE_OPTION_NAME = 'blogname';
-        /**
-         * The default store title.
-         *
-         * @var string
-         */
-        const DEFAULT_TITLE = 'Site Title';
-        /**
-         * Get the path of this REST route.
-         *
-         * @return string
-         */
-        public function get_path()
-        {
-        }
-        /**
-         * Get the path of this rest route.
-         *
-         * @return string
-         */
-        public static function get_path_regex()
-        {
-        }
-        /**
-         * Get method arguments for this REST route.
-         *
-         * @return array An array of endpoints.
-         */
-        public function get_args()
-        {
-        }
-        /**
-         * Update the store title powered by AI.
-         *
-         * @param  \WP_REST_Request $request Request object.
-         *
-         * @return bool|string|\WP_Error|\WP_REST_Response
-         */
-        protected function get_route_post_response(\WP_REST_Request $request)
-        {
-        }
-        /**
-         * Generate the store title powered by AI.
-         *
-         * @param string $business_description The business description for a given store.
-         *
-         * @return string|\WP_Error|\WP_REST_Response The store title generated by AI.
-         */
-        private function generate_ai_title($business_description)
         {
         }
     }
@@ -101287,6 +102601,12 @@ namespace Automattic\WooCommerce\StoreApi\Routes\V1 {
          */
         protected $additional_fields_controller;
         /**
+         * True when this route has been requested with a valid cart token.
+         *
+         * @var bool|null
+         */
+        protected $has_cart_token = null;
+        /**
          * Constructor.
          *
          * @param SchemaController $schema_controller Schema Controller instance.
@@ -101357,6 +102677,15 @@ namespace Automattic\WooCommerce\StoreApi\Routes\V1 {
          * @return int
          */
         protected function get_cart_token_expiration()
+        {
+        }
+        /**
+         * Checks if the request has a valid cart token.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @return bool
+         */
+        protected function has_cart_token(\WP_REST_Request $request)
         {
         }
         /**
@@ -102434,6 +103763,16 @@ namespace Automattic\WooCommerce\StoreApi\Routes\V1 {
          * @return \WP_REST_Response
          */
         protected function get_route_response(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Validate required additional fields on request.
+         *
+         * @param \WP_REST_Request $request Request object.
+         *
+         * @throws RouteException When a required additional field is missing.
+         */
+        public function validate_required_additional_fields(\WP_REST_Request $request)
         {
         }
         /**
@@ -103943,158 +105282,6 @@ namespace Automattic\WooCommerce\StoreApi\Schemas\V1 {
 }
 namespace Automattic\WooCommerce\StoreApi\Schemas\V1\AI {
     /**
-     * BusinessDescriptionSchema class.
-     *
-     * @internal
-     */
-    class BusinessDescriptionSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
-    {
-        /**
-         * The schema item name.
-         *
-         * @var string
-         */
-        protected $title = 'ai/business-description';
-        /**
-         * The schema item identifier.
-         *
-         * @var string
-         */
-        const IDENTIFIER = 'ai/business-description';
-        /**
-         * Business Description schema properties.
-         *
-         * @return array
-         */
-        public function get_properties()
-        {
-        }
-        /**
-         * Get the Business Description response.
-         *
-         * @param array $item Item to get response for.
-         *
-         * @return array
-         */
-        public function get_item_response($item)
-        {
-        }
-    }
-    /**
-     * ImagesSchema class.
-     *
-     * @internal
-     */
-    class ImagesSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
-    {
-        /**
-         * The schema item name.
-         *
-         * @var string
-         */
-        protected $title = 'ai/images';
-        /**
-         * The schema item identifier.
-         *
-         * @var string
-         */
-        const IDENTIFIER = 'ai/images';
-        /**
-         * Images schema properties.
-         *
-         * @return array
-         */
-        public function get_properties()
-        {
-        }
-        /**
-         * Get the Images response.
-         *
-         * @param array $item Item to get response for.
-         *
-         * @return array
-         */
-        public function get_item_response($item)
-        {
-        }
-    }
-    /**
-     * PatternsSchema class.
-     *
-     * @internal
-     */
-    class PatternsSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
-    {
-        /**
-         * The schema item name.
-         *
-         * @var string
-         */
-        protected $title = 'ai/patterns';
-        /**
-         * The schema item identifier.
-         *
-         * @var string
-         */
-        const IDENTIFIER = 'ai/patterns';
-        /**
-         * Patterns schema properties.
-         *
-         * @return array
-         */
-        public function get_properties()
-        {
-        }
-        /**
-         * Get the Patterns response.
-         *
-         * @param array $item Item to get response for.
-         *
-         * @return array
-         */
-        public function get_item_response($item)
-        {
-        }
-    }
-    /**
-     * ProductSchema class.
-     *
-     * @internal
-     */
-    class ProductSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
-    {
-        /**
-         * The schema item name.
-         *
-         * @var string
-         */
-        protected $title = 'ai/product';
-        /**
-         * The schema item identifier.
-         *
-         * @var string
-         */
-        const IDENTIFIER = 'ai/product';
-        /**
-         * Patterns schema properties.
-         *
-         * @return array
-         */
-        public function get_properties()
-        {
-        }
-        /**
-         * Get the Product response.
-         *
-         * @param array $item Item to get response for.
-         *
-         * @return array
-         */
-        public function get_item_response($item)
-        {
-        }
-    }
-    /**
      * ProductsSchema class.
      *
      * @internal
@@ -104123,72 +105310,6 @@ namespace Automattic\WooCommerce\StoreApi\Schemas\V1\AI {
         }
         /**
          * Get the Products response.
-         *
-         * @param array $item Item to get response for.
-         *
-         * @return array
-         */
-        public function get_item_response($item)
-        {
-        }
-    }
-    /**
-     * StoreInfoSchema class.
-     *
-     * @internal
-     */
-    class StoreInfoSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
-    {
-        /**
-         * The schema item name.
-         *
-         * @var string
-         */
-        protected $title = 'ai/store-info';
-        /**
-         * The schema item identifier.
-         *
-         * @var string
-         */
-        const IDENTIFIER = 'ai/store-info';
-        /**
-         * Store Info schema properties.
-         *
-         * @return array
-         */
-        public function get_properties()
-        {
-        }
-    }
-    /**
-     * StoreTitleSchema class.
-     *
-     * @internal
-     */
-    class StoreTitleSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
-    {
-        /**
-         * The schema item name.
-         *
-         * @var string
-         */
-        protected $title = 'ai/store-title';
-        /**
-         * The schema item identifier.
-         *
-         * @var string
-         */
-        const IDENTIFIER = 'ai/store-title';
-        /**
-         * Business Description schema properties.
-         *
-         * @return array
-         */
-        public function get_properties()
-        {
-        }
-        /**
-         * Get the Business Description response.
          *
          * @param array $item Item to get response for.
          *
@@ -107463,9 +108584,11 @@ namespace Automattic\WooCommerce\Utilities {
         /**
          * Get the directory for storing log files.
          *
+         * @param bool $create_dir Optional. True to attempt to create the log directory if it doesn't exist. Default true.
+         *
          * @return string The full directory path, with trailing slash.
          */
-        public static function get_log_directory() : string
+        public static function get_log_directory(bool $create_dir = true) : string
         {
         }
         /**
@@ -108510,6 +109633,16 @@ namespace {
     {
     }
     /**
+     * Find current item in account menu.
+     *
+     * @since 9.3.0
+     * @param string $endpoint Endpoint.
+     * @return bool
+     */
+    function wc_is_current_account_menu_item($endpoint)
+    {
+    }
+    /**
      * Get account menu item classes.
      *
      * @since 2.6.0
@@ -109536,6 +110669,14 @@ namespace {
     {
     }
     /**
+     * Clear the system status theme info cache.
+     *
+     * @since 9.4.0
+     */
+    function wc_clear_system_status_theme_info_cache()
+    {
+    }
+    /**
      * Get Base Currency Code.
      *
      * @return string
@@ -109783,7 +110924,8 @@ namespace {
     /**
      * Gets the url to the cart page.
      *
-     * @since  2.5.0
+     * @since 2.5.0
+     * @since 9.3.0 To support shortcodes on other pages besides the main cart page, this returns the current URL if it is the cart page.
      *
      * @return string Url to cart page
      */
@@ -112583,12 +113725,24 @@ namespace {
     {
     }
     /**
-     * Hide menu items conditionally.
+     * Hide or adjust menu items conditionally.
      *
      * @param array $items Navigation items.
      * @return array
      */
     function wc_nav_menu_items($items)
+    {
+    }
+    /**
+     * Hide menu items in navigation blocks conditionally.
+     *
+     * Does the same thing as wc_nav_menu_items but for block themes.
+     *
+     * @since 9.3.0
+     * @param \WP_Block_list $inner_blocks Inner blocks.
+     * @return \WP_Block_list
+     */
+    function wc_nav_menu_inner_blocks($inner_blocks)
     {
     }
     /**
@@ -113399,6 +114553,19 @@ namespace {
     {
     }
     /**
+     * Check if a product's stock quantity has reached certain thresholds and trigger appropriate actions.
+     *
+     * This functionality was moved out of `wc_trigger_stock_change_notifications` in order to decouple it from orders,
+     * since stock quantity can also be updated in other ways.
+     *
+     * @param WC_Product $product        The product whose stock level has changed.
+     *
+     * @return void
+     */
+    function wc_trigger_stock_change_actions($product)
+    {
+    }
+    /**
      * Increase stock levels for items within an order.
      *
      * @since 3.0.0
@@ -113545,8 +114712,8 @@ namespace {
      * Set the current visbility for a product in the woocommerce_loop global.
      *
      * @since 4.4.0
-     * @param int  $product_id Product it to cache visbiility for.
-     * @param bool $value The poduct visibility value to cache.
+     * @param int  $product_id Product it to cache visibility for.
+     * @param bool $value The product visibility value to cache.
      */
     function wc_set_loop_product_visibility($product_id, $value)
     {
@@ -114627,12 +115794,19 @@ namespace {
     {
     }
     /**
-     * Get logout endpoint.
+     * Get the redirect URL after logging out. Defaults to the my account page.
+     *
+     * @since 9.3.0
+     * @return string
+     */
+    function wc_get_logout_redirect_url()
+    {
+    }
+    /**
+     * Get logout link.
      *
      * @since  2.6.9
-     *
      * @param string $redirect Redirect URL.
-     *
      * @return string
      */
     function wc_logout_url($redirect = '')
