@@ -12177,6 +12177,16 @@ namespace {
         {
         }
         /**
+         * Check if a given file is inside a given directory.
+         *
+         * @param string $file_path The full path of the file to check.
+         * @param string $directory The path of the directory to check.
+         * @return bool True if the file is inside the directory.
+         */
+        private static function file_is_in_directory(string $file_path, string $directory) : bool
+        {
+        }
+        /**
          * Get all the valid filetypes for a CSV file.
          *
          * @return array
@@ -36561,7 +36571,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '9.4.1';
+        public $version = '9.4.2';
         /**
          * WooCommerce Schema version.
          *
