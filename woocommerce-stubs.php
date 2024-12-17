@@ -7007,6 +7007,255 @@ namespace {
         }
     }
     /**
+     * WC_Brands_Admin class.
+     */
+    class WC_Brands_Admin
+    {
+        /**
+         * Settings array.
+         *
+         * @var array
+         */
+        public $settings_tabs;
+        /**
+         * Admin fields.
+         *
+         * @var array
+         */
+        public $fields = array();
+        /**
+         * __construct function.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Add the settings for the new "Brands" subtab.
+         *
+         * @since  9.4.0
+         *
+         * @param array $settings Settings.
+         * @param array $current_section Current section.
+         */
+        public function add_settings_section($settings, $current_section)
+        {
+        }
+        /**
+         * Add a new "Brands" subtab to the "Products" tab.
+         *
+         * @since  9.4.0
+         * @param array $sections Sections.
+         */
+        public function add_settings_tab($sections)
+        {
+        }
+        /**
+         * Display coupon filter fields relating to brands.
+         *
+         * @since  9.4.0
+         * @return  void
+         */
+        public function add_coupon_brands_fields()
+        {
+        }
+        /**
+         * Save coupon filter fields relating to brands.
+         *
+         * @since  9.4.0
+         * @param int $post_id Post ID.
+         * @return  void
+         */
+        public function save_coupon_brands($post_id)
+        {
+        }
+        /**
+         * Prepare form fields to be used in the various tabs.
+         */
+        public function init_form_fields()
+        {
+        }
+        /**
+         * Enqueue scripts.
+         *
+         * @return void
+         */
+        public function scripts()
+        {
+        }
+        /**
+         * Enqueue styles.
+         *
+         * @return void
+         */
+        public function styles()
+        {
+        }
+        /**
+         * Admin settings function.
+         */
+        public function admin_settings()
+        {
+        }
+        /**
+         * Save admin settings function.
+         */
+        public function save_admin_settings()
+        {
+        }
+        /**
+         * Category thumbnails.
+         */
+        public function add_thumbnail_field()
+        {
+        }
+        /**
+         * Edit thumbnail field row.
+         *
+         * @param WP_Term $term     Current taxonomy term object.
+         */
+        public function edit_thumbnail_field($term)
+        {
+        }
+        /**
+         * Saves thumbnail field.
+         *
+         * @param int $term_id Term ID.
+         *
+         * @return void
+         */
+        public function thumbnail_field_save($term_id)
+        {
+        }
+        /**
+         * Description for brand page.
+         */
+        public function taxonomy_description()
+        {
+        }
+        /**
+         * Sort brands function.
+         *
+         * @param array $sortable Sortable array.
+         */
+        public function sort_brands($sortable)
+        {
+        }
+        /**
+         * Add brands column in second-to-last position.
+         *
+         * @since 9.4.0
+         * @param mixed $columns Columns.
+         * @return array
+         */
+        public function product_columns($columns)
+        {
+        }
+        /**
+         * Columns function.
+         *
+         * @param mixed $columns Columns.
+         */
+        public function columns($columns)
+        {
+        }
+        /**
+         * Column function.
+         *
+         * @param mixed $columns Columns.
+         * @param mixed $column Column.
+         * @param mixed $id ID.
+         */
+        public function column($columns, $column, $id)
+        {
+        }
+        /**
+         * Renders either dropdown or a search field for brands depending on the threshold value of
+         * woocommerce_product_brand_filter_threshold filter.
+         */
+        public function render_product_brand_filter()
+        {
+        }
+        /**
+         * Add brand base permalink setting.
+         */
+        public function add_brand_base_setting()
+        {
+        }
+        /**
+         * Add a slug input box.
+         */
+        public function product_brand_slug_input()
+        {
+        }
+        /**
+         * Save permalnks settings.
+         *
+         * We need to save the options ourselves;
+         * settings api does not trigger save for the permalinks page.
+         */
+        public function save_permalink_settings()
+        {
+        }
+        /**
+         * Validate the product base.
+         *
+         * Must have an additional slug, not just the brand as the base.
+         *
+         * @param array $value Value.
+         */
+        public function validate_product_base($value)
+        {
+        }
+        /**
+         * Add csv column for importing/exporting.
+         *
+         * @param  array $options Mapping options.
+         * @return array $options
+         */
+        public function add_column_to_importer_exporter($options)
+        {
+        }
+        /**
+         * Add default column mapping.
+         *
+         * @param  array $mappings Mappings.
+         * @return array $mappings
+         */
+        public function add_default_column_mapping($mappings)
+        {
+        }
+        /**
+         * Add brands to newly imported product.
+         *
+         * @param WC_Product $product Product being imported.
+         * @param array      $data    Raw CSV data.
+         */
+        public function process_import($product, $data)
+        {
+        }
+        /**
+         * Parse brands field from a CSV during import.
+         *
+         * Based on WC_Product_CSV_Importer::parse_categories_field()
+         *
+         * @param string $value Field value.
+         * @return array
+         */
+        public function parse_brands_field($value)
+        {
+        }
+        /**
+         * Get brands column value for csv export.
+         *
+         * @param string     $value   What will be exported.
+         * @param WC_Product $product Product being exported.
+         * @return string    Brands separated by commas and child brands as "parent > child".
+         */
+        public function get_column_value_brand_ids($value, $product)
+        {
+        }
+    }
+    /**
      * WC_Admin_Customize Class.
      */
     class WC_Admin_Customize
@@ -7759,6 +8008,18 @@ namespace {
          * @return array
          */
         private static function filter_out_inactive_promotions($promotions = array())
+        {
+        }
+        /**
+         * Promos arrive in the array of promotions as an array of arrays with the key 'promos'.
+         * We merge them into the main array.
+         *
+         * @param ?array $promotions  Promotions data received from WCCOM.
+         *                            May have an element with the key 'promos', which contains an array.
+         *
+         * @return array
+         * */
+        private static function merge_promos(?array $promotions = array()) : array
         {
         }
         /**
@@ -10839,8 +11100,16 @@ namespace {
         }
         /**
          * Add the hook for modifying default WPCore update notices on the plugins management page.
+         * This is for plugins with expired or expiring subscriptions.
          */
         public static function setup_message_for_expired_and_expiring_subscriptions()
+        {
+        }
+        /**
+         * Add the hook for modifying default WPCore update notices on the plugins management page.
+         * This is for plugins without a subscription.
+         */
+        public static function setup_message_for_plugins_without_subscription()
         {
         }
         /**
@@ -10902,6 +11171,19 @@ namespace {
          * @return void.
          */
         public static function display_notice_for_expired_and_expiring_subscriptions($plugin_data, $response)
+        {
+        }
+        /**
+         * Runs on in_plugin_update_message-{file-name}, show a message if plugin is without a subscription.
+         * Only Woo local plugins are passed to this function.
+         *
+         * @see setup_message_for_plugins_without_subscription
+         * @param object $plugin_data An array of plugin metadata.
+         * @param object $response  An object of metadata about the available plugin update.
+         *
+         * @return void.
+         */
+        public static function display_notice_for_plugins_without_subscription($plugin_data, $response)
         {
         }
         /**
@@ -11892,6 +12174,16 @@ namespace {
          * @throws \Exception When file validation fails.
          */
         protected static function check_file_path(string $path) : void
+        {
+        }
+        /**
+         * Check if a given file is inside a given directory.
+         *
+         * @param string $file_path The full path of the file to check.
+         * @param string $directory The path of the directory to check.
+         * @return bool True if the file is inside the directory.
+         */
+        private static function file_is_in_directory(string $file_path, string $directory) : bool
         {
         }
         /**
@@ -15661,6 +15953,254 @@ namespace {
         {
         }
     }
+    //phpcs:disable Squiz.Classes.ClassFileName.NoMatch
+    /**
+     * BlockTemplateUtils class used for serving block templates from Woo Blocks.
+     * IMPORTANT: These methods have been duplicated from Gutenberg/lib/full-site-editing/block-templates.php as those functions are not for public usage.
+     *
+     * For internal use only by the Automattic\WooCommerce\Internal\Brands package.
+     *
+     * @version 9.4.0
+     */
+    class BlockTemplateUtilsDuplicated
+    {
+        /**
+         * Directory names for block templates
+         *
+         * Directory names conventions for block templates have changed with Gutenberg 12.1.0,
+         * however, for backwards-compatibility, we also keep the older conventions, prefixed
+         * with `DEPRECATED_`.
+         *
+         * @var array {
+         *     @var string DEPRECATED_TEMPLATES  Old directory name of the block templates directory.
+         *     @var string DEPRECATED_TEMPLATE_PARTS  Old directory name of the block template parts directory.
+         *     @var string TEMPLATES_DIR_NAME  Directory name of the block templates directory.
+         *     @var string TEMPLATE_PARTS_DIR_NAME  Directory name of the block template parts directory.
+         * }
+         */
+        protected const DIRECTORY_NAMES = array('DEPRECATED_TEMPLATES' => 'block-templates', 'DEPRECATED_TEMPLATE_PARTS' => 'block-template-parts', 'TEMPLATES' => 'templates', 'TEMPLATE_PARTS' => 'parts');
+        /**
+         * WooCommerce plugin slug
+         *
+         * This is used to save templates to the DB which are stored against this value in the wp_terms table.
+         *
+         * @var string
+         */
+        protected const PLUGIN_SLUG = 'woocommerce/woocommerce';
+        /**
+         * Returns an array containing the references of
+         * the passed blocks and their inner blocks.
+         *
+         * @param array $blocks array of blocks.
+         *
+         * @return array block references to the passed blocks and their inner blocks.
+         */
+        public static function gutenberg_flatten_blocks(&$blocks)
+        {
+        }
+        /**
+         * Parses wp_template content and injects the current theme's
+         * stylesheet as a theme attribute into each wp_template_part
+         *
+         * @param string $template_content serialized wp_template content.
+         *
+         * @return string Updated wp_template content.
+         */
+        public static function gutenberg_inject_theme_attribute_in_content($template_content)
+        {
+        }
+        /**
+         * Build a unified template object based a post Object.
+         *
+         * @param \WP_Post $post Template post.
+         *
+         * @return \WP_Block_Template|\WP_Error Template.
+         */
+        public static function gutenberg_build_template_result_from_post($post)
+        {
+        }
+        /**
+         * Build a unified template object based on a theme file.
+         *
+         * @param array|object $template_file Theme file.
+         * @param string       $template_type wp_template or wp_template_part.
+         *
+         * @return \WP_Block_Template Template.
+         */
+        public static function gutenberg_build_template_result_from_file($template_file, $template_type)
+        {
+        }
+        /**
+         * Build a new template object so that we can make Woo Blocks default templates available in the current theme should they not have any.
+         *
+         * @param string $template_file Block template file path.
+         * @param string $template_type wp_template or wp_template_part.
+         * @param string $template_slug Block template slug e.g. single-product.
+         * @param bool   $template_is_from_theme If the block template file is being loaded from the current theme instead of Woo Blocks.
+         *
+         * @return object Block template object.
+         */
+        public static function create_new_block_template_object($template_file, $template_type, $template_slug, $template_is_from_theme = \false)
+        {
+        }
+        /**
+         * Converts template slugs into readable titles.
+         *
+         * @param string $template_slug The templates slug (e.g. single-product).
+         * @return string Human friendly title converted from the slug.
+         */
+        public static function convert_slug_to_title($template_slug)
+        {
+        }
+        /**
+         * Gets the first matching template part within themes directories
+         *
+         * Since [Gutenberg 12.1.0](https://github.com/WordPress/gutenberg/releases/tag/v12.1.0), the conventions for
+         * block templates and parts directory has changed from `block-templates` and `block-templates-parts`
+         * to `templates` and `parts` respectively.
+         *
+         * This function traverses all possible combinations of directory paths where a template or part
+         * could be located and returns the first one which is readable, prioritizing the new convention
+         * over the deprecated one, but maintaining that one for backwards compatibility.
+         *
+         * @param string $template_slug  The slug of the template (i.e. without the file extension).
+         * @param string $template_type  Either `wp_template` or `wp_template_part`.
+         *
+         * @return string|null  The matched path or `null` if no match was found.
+         */
+        public static function get_theme_template_path($template_slug, $template_type = 'wp_template')
+        {
+        }
+        /**
+         * Check if the theme has a template. So we know if to load our own in or not.
+         *
+         * @param string $template_name name of the template file without .html extension e.g. 'single-product'.
+         * @return boolean
+         */
+        public static function theme_has_template($template_name)
+        {
+        }
+        /**
+         * Check if the theme has a template. So we know if to load our own in or not.
+         *
+         * @param string $template_name name of the template file without .html extension e.g. 'single-product'.
+         * @return boolean
+         */
+        public static function theme_has_template_part($template_name)
+        {
+        }
+        /**
+         * Checks to see if they are using a compatible version of WP, or if not they have a compatible version of the Gutenberg plugin installed.
+         *
+         * @return boolean
+         */
+        public static function supports_block_templates()
+        {
+        }
+        /**
+         * Returns whether the blockified templates should be used or not.
+         *
+         * First, we need to make sure WordPress version is higher than 6.1 (lowest that supports Products block).
+         * Then, if the option is not stored on the db, we need to check if the current theme is a block one or not.
+         *
+         * @return boolean
+         */
+        public static function should_use_blockified_product_grid_templates()
+        {
+        }
+    }
+    //phpcs:disable Squiz.Classes.ClassFileName.NoMatch, Squiz.Classes.ValidClassName.NotCamelCaps
+    /**
+     * Utils for compatibility with WooCommerce Full Site Editor Blocks
+     *
+     * Important: For internal use only by the Automattic\WooCommerce\Internal\Brands package.
+     *
+     * @version 9.4.0
+     */
+    class WC_Brands_Block_Templates
+    {
+        /**
+         * Constructor.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Get the taxonomy-product_brand template from DB in case a user customized it in FSE
+         *
+         * @return WP_Post|null The taxonomy-product_brand
+         */
+        private function get_product_brand_template_db()
+        {
+        }
+        /**
+         * Fixes a bug regarding taxonomies and FSE.
+         * Without this, the system will always load archive-product.php version instead of taxonomy_product_brand.html
+         * it will show a deprecation error if that happens.
+         *
+         * Triggered by woocommerce_has_block_template filter
+         *
+         * @param bool   $has_template  True if the template is available.
+         * @param string $template_name The name of the template.
+         *
+         * @return bool True if the system is checking archive-product
+         */
+        public function has_block_template($has_template, $template_name)
+        {
+        }
+        /**
+         * Get the block template for Taxonomy Product Brand. First it attempts to load the last version from DB
+         * Otherwise it loads the file based template.
+         *
+         * @param string $template_type The post_type for the template. Normally wp_template or wp_template_part.
+         *
+         * @return WP_Block_Template The taxonomy-product_brand template.
+         */
+        private function get_product_brands_template($template_type)
+        {
+        }
+        /**
+         * Function to check if a template name is woocommerce/taxonomy-product_brand
+         *
+         * Notice depending on the version of WooCommerce this could be:
+         *
+         * woocommerce//taxonomy-product_brand
+         * woocommerce/woocommerce//taxonomy-product_brand
+         *
+         * @param  String $id The string to check if contains the template name.
+         *
+         * @return bool True if the template is woocommerce/taxonomy-product_brand
+         */
+        private function is_taxonomy_product_brand_template($id)
+        {
+        }
+        /**
+         * Get the block template for Taxonomy Product Brand if requested.
+         * Triggered by get_block_file_template action
+         *
+         * @param WP_Block_Template|null $block_template The current Block Template loaded, if any.
+         * @param string                 $id The template id normally in the format theme-slug//template-slug.
+         * @param string                 $template_type The post_type for the template. Normally wp_template or wp_template_part.
+         *
+         * @return WP_Block_Template|null The taxonomy-product_brand template.
+         */
+        public function get_block_file_template($block_template, $id, $template_type)
+        {
+        }
+        /**
+         * Add the Block template in the template query results needed by FSE
+         * Triggered by get_block_templates action
+         *
+         * @param array  $query_result The list of templates to render in the query.
+         * @param array  $query The current query parameters.
+         * @param string $template_type The post_type for the template. Normally wp_template or wp_template_part.
+         *
+         * @return WP_Block_Template[] Array of the matched Block Templates to render.
+         */
+        public function get_block_templates($query_result, $query, $template_type)
+        {
+        }
+    }
     /**
      * WC_Ajax class.
      */
@@ -16820,6 +17360,502 @@ namespace {
          * @return bool
          */
         public function is_memory_exceeded()
+        {
+        }
+    }
+    /**
+     * Brand settings manager.
+     *
+     * This class is responsible for setting and getting brand settings for a coupon.
+     *
+     * Important: For internal use only by the Automattic\WooCommerce\Internal\Brands package.
+     *
+     * @version 9.4.0
+     */
+    class WC_Brands_Brand_Settings_Manager
+    {
+        /**
+         * Brand settings for a coupon.
+         *
+         * @var array
+         */
+        private static $brand_settings = array();
+        /**
+         * Set brand settings for a coupon.
+         *
+         * @param WC_Coupon $coupon Coupon object.
+         */
+        public static function set_brand_settings_on_coupon($coupon)
+        {
+        }
+        /**
+         * Get brand settings for a coupon.
+         *
+         * @param WC_Coupon $coupon Coupon object.
+         * @return array Brand settings (included and excluded brands).
+         */
+        public static function get_brand_settings_on_coupon($coupon)
+        {
+        }
+    }
+    /**
+     * WC_Brands_Coupons class.
+     *
+     * Important: For internal use only by the Automattic\WooCommerce\Internal\Brands package.
+     *
+     * @version 9.4.0
+     */
+    class WC_Brands_Coupons
+    {
+        const E_WC_COUPON_EXCLUDED_BRANDS = 301;
+        /**
+         * Constructor
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Validate the coupon based on included and/or excluded product brands.
+         *
+         * If one of the following conditions are met, an exception will be thrown and
+         * displayed as an error notice on the cart page:
+         *
+         * 1) Coupon has a brand requirement but no products in the cart have the brand.
+         * 2) All products in the cart match the brand exclusion rule.
+         * 3) For a cart discount, there is at least one product in cart that matches exclusion rule.
+         *
+         * @throws Exception Throws Exception for invalid coupons.
+         * @param  bool         $valid  Whether the coupon is valid.
+         * @param  WC_Coupon    $coupon Coupon object.
+         * @param  WC_Discounts $discounts Discounts object.
+         * @return bool         $valid  True if coupon is valid, otherwise Exception will be thrown.
+         */
+        public function is_coupon_valid($valid, $coupon, $discounts = \null)
+        {
+        }
+        /**
+         * Check if a coupon is valid for a product.
+         *
+         * This allows percentage and product discounts to apply to only
+         * the correct products in the cart.
+         *
+         * @param  bool       $valid   Whether the product should get the coupon's discounts.
+         * @param  WC_Product $product WC Product Object.
+         * @param  WC_Coupon  $coupon  Coupon object.
+         * @return bool       $valid
+         */
+        public function is_valid_for_product($valid, $product, $coupon)
+        {
+        }
+        /**
+         * Display a custom error message when a cart discount coupon does not validate
+         * because an excluded brand was found in the cart.
+         *
+         * @param  string $err      The error message.
+         * @param  string $err_code The error code.
+         * @return string
+         */
+        public function brand_exclusion_error($err, $err_code)
+        {
+        }
+        /**
+         * Get a list of brands that are assigned to a specific product
+         *
+         * @param  int $product_id Product id.
+         * @return array brands
+         */
+        private function get_product_brands($product_id)
+        {
+        }
+        /**
+         * Set brand settings as properties on coupon object. These properties are
+         * lists of included product brand IDs and list of excluded brand IDs.
+         *
+         * @param WC_Coupon $coupon Coupon object.
+         *
+         * @return void
+         */
+        private function set_brand_settings_on_coupon($coupon)
+        {
+        }
+        /**
+         * Returns the product (or variant) ID.
+         *
+         * @param  WC_Product $product WC Product Object.
+         * @return int Product ID
+         */
+        private function get_product_id($product)
+        {
+        }
+    }
+    /**
+     * WC_Brands class.
+     *
+     * Important: For internal use only by the Automattic\WooCommerce\Internal\Brands package.
+     *
+     * @version 9.4.0
+     */
+    class WC_Brands
+    {
+        /**
+         * Template URL -- filterable.
+         *
+         * @var mixed|null
+         */
+        public $template_url;
+        /**
+         * __construct function.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Register our hooks
+         */
+        public function register_hooks()
+        {
+        }
+        /**
+         * Add product_brand to the taxonomies overridden for the original term count.
+         *
+         * @param array $taxonomies List of taxonomies.
+         *
+         * @return array
+         */
+        public function add_brands_to_terms($taxonomies)
+        {
+        }
+        /**
+         * Recount the brands after the stock amount changes.
+         *
+         * @param int $product_id Product ID.
+         */
+        public function recount_after_stock_change($product_id)
+        {
+        }
+        /**
+         * Recount all brands.
+         */
+        public function recount_all_brands()
+        {
+        }
+        /**
+         * Update the main product fetch query to filter by selected brands.
+         *
+         * @param array $tax_query array of current taxonomy filters.
+         *
+         * @return array
+         */
+        public function update_product_query_tax_query(array $tax_query)
+        {
+        }
+        /**
+         * Filter to allow product_brand in the permalinks for products.
+         *
+         * @param string  $permalink The existing permalink URL.
+         * @param WP_Post $post The post.
+         * @return string
+         */
+        public function post_type_link($permalink, $post)
+        {
+        }
+        /**
+         * Adds filter for introducing CSS classes.
+         */
+        public function body_class()
+        {
+        }
+        /**
+         * Adds classes to brand taxonomy pages.
+         *
+         * @param array $classes Classes array.
+         */
+        public function add_body_class($classes)
+        {
+        }
+        /**
+         * Enqueues styles.
+         */
+        public function styles()
+        {
+        }
+        /**
+         * Initializes brand taxonomy.
+         */
+        public static function init_taxonomy()
+        {
+        }
+        /**
+         * Initializes brand widgets.
+         */
+        public function init_widgets()
+        {
+        }
+        /**
+         *
+         * Handles template usage so that we can use our own templates instead of the themes.
+         *
+         * Templates are in the 'templates' folder. woocommerce looks for theme
+         * overides in /theme/woocommerce/ by default
+         *
+         * For beginners, it also looks for a woocommerce.php template first. If the user adds
+         * this to the theme (containing a woocommerce() inside) this will be used for all
+         * woocommerce templates.
+         *
+         * @param string $template Template.
+         */
+        public function template_loader($template)
+        {
+        }
+        /**
+         * Displays brand description.
+         */
+        public function brand_description()
+        {
+        }
+        /**
+         * Displays brand.
+         */
+        public function show_brand()
+        {
+        }
+        /**
+         * Add structured data to product page.
+         *
+         * @param  array $markup Markup.
+         * @return array $markup
+         */
+        public function add_structured_data($markup)
+        {
+        }
+        /**
+         * Registers shortcodes.
+         */
+        public function register_shortcodes()
+        {
+        }
+        /**
+         * Displays product brand.
+         *
+         * @param array $atts Attributes from the shortcode.
+         * @return string The generated output.
+         */
+        public function output_product_brand($atts)
+        {
+        }
+        /**
+         * Displays product brand list.
+         *
+         * @param array $atts Attributes from the shortcode.
+         * @return string
+         */
+        public function output_product_brand_list($atts)
+        {
+        }
+        /**
+         * Get the first letter of the brand name, returning lowercase and without accents.
+         *
+         * @param string $name
+         *
+         * @return string
+         * @since  9.4.0
+         */
+        private function get_brand_name_first_character($name)
+        {
+        }
+        /**
+         * Displays brand thumbnails.
+         *
+         * @param mixed $atts
+         * @return void
+         */
+        public function output_product_brand_thumbnails($atts)
+        {
+        }
+        /**
+         * Displays brand thumbnails description.
+         *
+         * @param mixed $atts
+         * @return void
+         */
+        public function output_product_brand_thumbnails_description($atts)
+        {
+        }
+        /**
+         * Displays brand products.
+         *
+         * @param array $atts
+         * @return string
+         */
+        public function output_brand_products($atts)
+        {
+        }
+        /**
+         * Adds the taxonomy query to the WooCommerce products shortcode query arguments.
+         *
+         * @param array  $query_args
+         * @param array  $attributes
+         * @param string $type
+         *
+         * @return array
+         */
+        public static function get_brand_products_query_args($query_args, $attributes, $type)
+        {
+        }
+        /**
+         * Adds the "brand" attribute to the list of WooCommerce products shortcode attributes.
+         *
+         * @param array  $out       The output array of shortcode attributes.
+         * @param array  $pairs     The supported attributes and their defaults.
+         * @param array  $atts      The user defined shortcode attributes.
+         * @param string $shortcode The shortcode name.
+         *
+         * @return array The output array of shortcode attributes.
+         */
+        public static function add_brand_products_shortcode_atts($out, $pairs, $atts, $shortcode)
+        {
+        }
+        /**
+         * Register REST API route for /products/brands.
+         *
+         * @since 9.4.0
+         *
+         * @return void
+         */
+        public function rest_api_register_routes()
+        {
+        }
+        /**
+         * Maybe set brands when requesting PUT /products/<id>.
+         *
+         * @since 9.4.0
+         *
+         * @param WP_Post         $post    Post object
+         * @param WP_REST_Request $request Request object
+         *
+         * @return void
+         */
+        public function rest_api_maybe_set_brands($post, $request)
+        {
+        }
+        /**
+         * Prepare brands in product response.
+         *
+         * @param WP_REST_Response $response   The response object.
+         * @param WP_Post|WC_Data  $post       Post object or WC object.
+         * @version 9.4.0
+         * @return WP_REST_Response
+         */
+        public function rest_api_prepare_brands_to_product($response, $post)
+        {
+        }
+        /**
+         * Add brands in product response.
+         *
+         * @param WC_Data         $product   Inserted product object.
+         * @param WP_REST_Request $request   Request object.
+         * @param boolean         $creating  True when creating object, false when updating.
+         * @version 9.4.0
+         */
+        public function rest_api_add_brands_to_product($product, $request, $creating = \true)
+        {
+        }
+        /**
+         * Filters products by taxonomy product_brand.
+         *
+         * @param array           $args    Request args.
+         * @param WP_REST_Request $request Request data.
+         * @return array Request args.
+         * @version 9.4.0
+         */
+        public function rest_api_filter_products_by_brand($args, $request)
+        {
+        }
+        /**
+         * Documents additional query params for collections of products.
+         *
+         * @param array        $params JSON Schema-formatted collection parameters.
+         * @param WP_Post_Type $post_type   Post type object.
+         * @return array JSON Schema-formatted collection parameters.
+         * @version 9.4.0
+         */
+        public function rest_api_product_collection_params($params, $post_type)
+        {
+        }
+        /**
+         * Injects Brands filters into layered nav links.
+         *
+         * @param  string $term_html Original link html.
+         * @param  mixed  $term      Term that is currently added.
+         * @param  string $link      Original layered nav item link.
+         * @param  number $count     Number of items in that filter.
+         * @return string            Term html.
+         * @version 9.4.0
+         */
+        public function woocommerce_brands_update_layered_nav_link($term_html, $term, $link, $count)
+        {
+        }
+        /**
+         * Temporarily tag a post with meta before it is saved in order
+         * to allow us to be able to use the meta when the product is saved to add
+         * the brands when an ID has been generated.
+         *
+         *
+         * @param WC_Product $duplicate
+         * @return WC_Product $original
+         */
+        public function duplicate_store_temporary_brands($duplicate, $original)
+        {
+        }
+        /**
+         * After product was added check if there are temporary brands and
+         * add them officially and remove the temporary brands.
+         *
+         * @since 9.4.0
+         *
+         * @param int $product_id
+         */
+        public function duplicate_add_product_brand_terms($product_id)
+        {
+        }
+        /**
+         * Remove terms with empty products.
+         *
+         * @param WP_Term[] $terms The terms array that needs to be removed of empty products.
+         *
+         * @return WP_Term[]
+         */
+        private function remove_terms_with_empty_products($terms)
+        {
+        }
+        /**
+         * Invalidates the layered nav counts cache.
+         *
+         * @return void
+         */
+        public function invalidate_wc_layered_nav_counts_cache()
+        {
+        }
+        /**
+         * Reset Layered Nav cached counts on product status change.
+         *
+         * @param $new_status
+         * @param $old_status
+         * @param $post
+         *
+         * @return void
+         */
+        function reset_layered_nav_counts_on_status_change($new_status, $old_status, $post)
+        {
+        }
+        /**
+         * Add a new block to the template.
+         *
+         * @param string                 $template_id Template ID.
+         * @param string                 $template_area Template area.
+         * @param BlockTemplateInterface $template Template instance.
+         */
+        public function wc_brands_on_block_template_register($template_id, $template_area, $template)
         {
         }
     }
@@ -20133,7 +21169,7 @@ namespace {
          * Error message.
          *
          * This property should not be considered public API, and should not be accessed directly.
-         * It is being added to supress PHP > 8.0 warnings against dynamic property creation, and all access
+         * It is being added to suppress PHP > 8.0 warnings against dynamic property creation, and all access
          * should be through the getter and setter methods, namely `get_error_message()` and `set_error_message()`.
          * In the future, the access modifier may be changed back to protected.
          *
@@ -24092,7 +25128,7 @@ namespace {
          */
         public $GEOIP_COUNTRY_CODES3 = array('', 'AP', 'EU', 'AND', 'ARE', 'AFG', 'ATG', 'AIA', 'ALB', 'ARM', 'CUW', 'AGO', 'ATA', 'ARG', 'ASM', 'AUT', 'AUS', 'ABW', 'AZE', 'BIH', 'BRB', 'BGD', 'BEL', 'BFA', 'BGR', 'BHR', 'BDI', 'BEN', 'BMU', 'BRN', 'BOL', 'BRA', 'BHS', 'BTN', 'BVT', 'BWA', 'BLR', 'BLZ', 'CAN', 'CCK', 'COD', 'CAF', 'COG', 'CHE', 'CIV', 'COK', 'CHL', 'CMR', 'CHN', 'COL', 'CRI', 'CUB', 'CPV', 'CXR', 'CYP', 'CZE', 'DEU', 'DJI', 'DNK', 'DMA', 'DOM', 'DZA', 'ECU', 'EST', 'EGY', 'ESH', 'ERI', 'ESP', 'ETH', 'FIN', 'FJI', 'FLK', 'FSM', 'FRO', 'FRA', 'SXM', 'GAB', 'GBR', 'GRD', 'GEO', 'GUF', 'GHA', 'GIB', 'GRL', 'GMB', 'GIN', 'GLP', 'GNQ', 'GRC', 'SGS', 'GTM', 'GUM', 'GNB', 'GUY', 'HKG', 'HMD', 'HND', 'HRV', 'HTI', 'HUN', 'IDN', 'IRL', 'ISR', 'IND', 'IOT', 'IRQ', 'IRN', 'ISL', 'ITA', 'JAM', 'JOR', 'JPN', 'KEN', 'KGZ', 'KHM', 'KIR', 'COM', 'KNA', 'PRK', 'KOR', 'KWT', 'CYM', 'KAZ', 'LAO', 'LBN', 'LCA', 'LIE', 'LKA', 'LBR', 'LSO', 'LTU', 'LUX', 'LVA', 'LBY', 'MAR', 'MCO', 'MDA', 'MDG', 'MHL', 'MKD', 'MLI', 'MMR', 'MNG', 'MAC', 'MNP', 'MTQ', 'MRT', 'MSR', 'MLT', 'MUS', 'MDV', 'MWI', 'MEX', 'MYS', 'MOZ', 'NAM', 'NCL', 'NER', 'NFK', 'NGA', 'NIC', 'NLD', 'NOR', 'NPL', 'NRU', 'NIU', 'NZL', 'OMN', 'PAN', 'PER', 'PYF', 'PNG', 'PHL', 'PAK', 'POL', 'SPM', 'PCN', 'PRI', 'PSE', 'PRT', 'PLW', 'PRY', 'QAT', 'REU', 'ROU', 'RUS', 'RWA', 'SAU', 'SLB', 'SYC', 'SDN', 'SWE', 'SGP', 'SHN', 'SVN', 'SJM', 'SVK', 'SLE', 'SMR', 'SEN', 'SOM', 'SUR', 'STP', 'SLV', 'SYR', 'SWZ', 'TCA', 'TCD', 'ATF', 'TGO', 'THA', 'TJK', 'TKL', 'TKM', 'TUN', 'TON', 'TLS', 'TUR', 'TTO', 'TUV', 'TWN', 'TZA', 'UKR', 'UGA', 'UMI', 'USA', 'URY', 'UZB', 'VAT', 'VCT', 'VEN', 'VGB', 'VIR', 'VNM', 'VUT', 'WLF', 'WSM', 'YEM', 'MYT', 'SRB', 'ZAF', 'ZMB', 'MNE', 'ZWE', 'A1', 'A2', 'O1', 'ALA', 'GGY', 'IMN', 'JEY', 'BLM', 'MAF', 'BES', 'SSD', 'O1');
         /**
-         * Contry names.
+         * Country names.
          *
          * @var array
          */
@@ -24598,7 +25634,7 @@ namespace {
          *
          * @var array
          */
-        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_admin_update_0201_order_status_index', 'wc_admin_update_0230_rename_gross_total', 'wc_admin_update_0251_remove_unsnooze_action', 'wc_update_400_db_version'), '4.4.0' => array('wc_update_440_insert_attribute_terms_for_variable_products', 'wc_admin_update_110_remove_facebook_note', 'wc_admin_update_130_remove_dismiss_action_from_tracking_opt_in_note', 'wc_update_440_db_version'), '4.5.0' => array('wc_update_450_sanitize_coupons_code', 'wc_update_450_db_version'), '5.0.0' => array('wc_update_500_fix_product_review_count', 'wc_admin_update_160_remove_facebook_note', 'wc_admin_update_170_homescreen_layout', 'wc_update_500_db_version'), '5.6.0' => array('wc_update_560_create_refund_returns_page', 'wc_update_560_db_version'), '6.0.0' => array('wc_update_600_migrate_rate_limit_options', 'wc_admin_update_270_delete_report_downloads', 'wc_admin_update_271_update_task_list_options', 'wc_admin_update_280_order_status', 'wc_admin_update_290_update_apperance_task_option', 'wc_admin_update_290_delete_default_homepage_layout_option', 'wc_update_600_db_version'), '6.3.0' => array('wc_update_630_create_product_attributes_lookup_table', 'wc_admin_update_300_update_is_read_from_last_read', 'wc_update_630_db_version'), '6.4.0' => array('wc_update_640_add_primary_key_to_product_attributes_lookup_table', 'wc_admin_update_340_remove_is_primary_from_note_action', 'wc_update_640_db_version'), '6.5.0' => array('wc_update_650_approved_download_directories'), '6.5.1' => array('wc_update_651_approved_download_directories'), '6.7.0' => array('wc_update_670_purge_comments_count_cache', 'wc_update_670_delete_deprecated_remote_inbox_notifications_option'), '7.0.0' => array('wc_update_700_remove_download_log_fk', 'wc_update_700_remove_recommended_marketing_plugins_transient'), '7.2.1' => array('wc_update_721_adjust_new_zealand_states', 'wc_update_721_adjust_ukraine_states'), '7.2.2' => array('wc_update_722_adjust_new_zealand_states', 'wc_update_722_adjust_ukraine_states'), '7.5.0' => array('wc_update_750_add_columns_to_order_stats_table', 'wc_update_750_disable_new_product_management_experience'), '7.7.0' => array('wc_update_770_remove_multichannel_marketing_feature_options'), '8.1.0' => array('wc_update_810_migrate_transactional_metadata_for_hpos'), '8.6.0' => array('wc_update_860_remove_recommended_marketing_plugins_transient'), '8.7.0' => array('wc_update_870_prevent_listing_of_transient_files_directory'), '8.9.0' => array('wc_update_890_update_connect_to_woocommerce_note', 'wc_update_890_update_paypal_standard_load_eligibility'), '8.9.1' => array('wc_update_891_create_plugin_autoinstall_history_option'), '9.1.0' => array('wc_update_910_add_launch_your_store_tour_option', 'wc_update_910_remove_obsolete_user_meta'), '9.2.0' => array('wc_update_920_add_wc_hooked_blocks_version_option'), '9.3.0' => array('wc_update_930_add_woocommerce_coming_soon_option', 'wc_update_930_migrate_user_meta_for_launch_your_store_tour'));
+        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_admin_update_0201_order_status_index', 'wc_admin_update_0230_rename_gross_total', 'wc_admin_update_0251_remove_unsnooze_action', 'wc_update_400_db_version'), '4.4.0' => array('wc_update_440_insert_attribute_terms_for_variable_products', 'wc_admin_update_110_remove_facebook_note', 'wc_admin_update_130_remove_dismiss_action_from_tracking_opt_in_note', 'wc_update_440_db_version'), '4.5.0' => array('wc_update_450_sanitize_coupons_code', 'wc_update_450_db_version'), '5.0.0' => array('wc_update_500_fix_product_review_count', 'wc_admin_update_160_remove_facebook_note', 'wc_admin_update_170_homescreen_layout', 'wc_update_500_db_version'), '5.6.0' => array('wc_update_560_create_refund_returns_page', 'wc_update_560_db_version'), '6.0.0' => array('wc_update_600_migrate_rate_limit_options', 'wc_admin_update_270_delete_report_downloads', 'wc_admin_update_271_update_task_list_options', 'wc_admin_update_280_order_status', 'wc_admin_update_290_update_apperance_task_option', 'wc_admin_update_290_delete_default_homepage_layout_option', 'wc_update_600_db_version'), '6.3.0' => array('wc_update_630_create_product_attributes_lookup_table', 'wc_admin_update_300_update_is_read_from_last_read', 'wc_update_630_db_version'), '6.4.0' => array('wc_update_640_add_primary_key_to_product_attributes_lookup_table', 'wc_admin_update_340_remove_is_primary_from_note_action', 'wc_update_640_db_version'), '6.5.0' => array('wc_update_650_approved_download_directories'), '6.5.1' => array('wc_update_651_approved_download_directories'), '6.7.0' => array('wc_update_670_purge_comments_count_cache', 'wc_update_670_delete_deprecated_remote_inbox_notifications_option'), '7.0.0' => array('wc_update_700_remove_download_log_fk', 'wc_update_700_remove_recommended_marketing_plugins_transient'), '7.2.1' => array('wc_update_721_adjust_new_zealand_states', 'wc_update_721_adjust_ukraine_states'), '7.2.2' => array('wc_update_722_adjust_new_zealand_states', 'wc_update_722_adjust_ukraine_states'), '7.5.0' => array('wc_update_750_add_columns_to_order_stats_table', 'wc_update_750_disable_new_product_management_experience'), '7.7.0' => array('wc_update_770_remove_multichannel_marketing_feature_options'), '8.1.0' => array('wc_update_810_migrate_transactional_metadata_for_hpos'), '8.6.0' => array('wc_update_860_remove_recommended_marketing_plugins_transient'), '8.7.0' => array('wc_update_870_prevent_listing_of_transient_files_directory'), '8.9.0' => array('wc_update_890_update_connect_to_woocommerce_note', 'wc_update_890_update_paypal_standard_load_eligibility'), '8.9.1' => array('wc_update_891_create_plugin_autoinstall_history_option'), '9.1.0' => array('wc_update_910_add_launch_your_store_tour_option', 'wc_update_910_remove_obsolete_user_meta'), '9.2.0' => array('wc_update_920_add_wc_hooked_blocks_version_option'), '9.3.0' => array('wc_update_930_add_woocommerce_coming_soon_option', 'wc_update_930_migrate_user_meta_for_launch_your_store_tour'), '9.4.0' => array('wc_update_940_add_phone_to_order_address_fts_index', 'wc_update_940_remove_help_panel_highlight_shown'));
         /**
          * Option name used to track new installations of WooCommerce.
          *
@@ -33795,6 +34831,26 @@ namespace {
         public function generate_order_data($order, $sent_to_admin = \false, $plain_text = \false)
         {
         }
+        /**
+         * Check if a GTIN is valid.
+         * A valid GTIN is a string containing 8,12,13 or 14 digits.
+         *
+         * @see https://schema.org/gtin
+         * @param string $gtin The GTIN to check.
+         * @return bool True if valid. False otherwise.
+         */
+        public function is_valid_gtin($gtin)
+        {
+        }
+        /**
+         * Prepare a GTIN input removing everything except numbers.
+         *
+         * @param string $gtin The GTIN to prepare.
+         * @return string Empty string if no GTIN is provided or the string with the replacements.
+         */
+        public function prepare_gtin($gtin)
+        {
+        }
     }
     /**
      * Performs tax calculations and loads tax rates
@@ -35515,7 +36571,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '9.3.4';
+        public $version = '9.4.3';
         /**
          * WooCommerce Schema version.
          *
@@ -36188,7 +37244,7 @@ namespace {
          *     # force connecting to WCCOM even if site is already connected.
          *     $ wp wc com connect --force
          *
-         *     # Pass password to comman.
+         *     # Pass password to command.
          *     $ wp wc com connect --password=PASSWORD
          *
          * @param array $args Positional arguments to include when calling the command.
@@ -45611,7 +46667,7 @@ namespace {
          */
         public function cancel_all($hook, $args = array(), $group = '');
         /**
-         * Get the date and time for the next scheduled occurence of an action with a given hook
+         * Get the date and time for the next scheduled occurrence of an action with a given hook
          * (an optionally that matches certain args and group), if any.
          *
          * @param string $hook The hook that the job will trigger.
@@ -51347,6 +52403,27 @@ namespace {
         }
     }
     /**
+     * REST API Brands controller class.
+     *
+     * @package WooCommerce\RestApi
+     * @extends WC_REST_Product_Categories_Controller
+     */
+    class WC_REST_Product_Brands_V2_Controller extends \WC_REST_Product_Categories_V2_Controller
+    {
+        /**
+         * Route base.
+         *
+         * @var string
+         */
+        protected $rest_base = 'products/brands';
+        /**
+         * Taxonomy.
+         *
+         * @var string
+         */
+        protected $taxonomy = 'product_brand';
+    }
+    /**
      * REST API Product Reviews Controller Class.
      *
      * @package WooCommerce\RestApi
@@ -54011,6 +55088,27 @@ namespace {
         }
     }
     /**
+     * REST API Brands controller class.
+     *
+     * @package WooCommerce\RestApi
+     * @extends WC_REST_Product_Categories_Controller
+     */
+    class WC_REST_Product_Brands_Controller extends \WC_REST_Product_Categories_Controller
+    {
+        /**
+         * Route base.
+         *
+         * @var string
+         */
+        protected $rest_base = 'products/brands';
+        /**
+         * Taxonomy.
+         *
+         * @var string
+         */
+        protected $taxonomy = 'product_brand';
+    }
+    /**
      * REST API Product Custom Fields controller class.
      *
      * @package WooCommerce\RestApi
@@ -54239,7 +55337,7 @@ namespace {
         {
         }
         /**
-         * Get the reivew, if the ID is valid.
+         * Get the review, if the ID is valid.
          *
          * @since 3.5.0
          * @param int $id Supplied ID.
@@ -54301,7 +55399,7 @@ namespace {
         {
         }
         /**
-         * Callback fuction for the slug-suggestion endpoint.
+         * Callback function for the slug-suggestion endpoint.
          *
          * @param  WP_REST_Request $request Full details about the request.
          * @return string          The suggested slug.
@@ -59182,6 +60280,287 @@ namespace {
         }
     }
     /**
+     * Brand Description Widget
+     *
+     * When viewing a brand archive, show the current brands description + image
+     *
+     * Important: For internal use only by the Automattic\WooCommerce\Internal\Brands package.
+     *
+     * @package WooCommerce\Widgets
+     * @version 9.4.0
+     */
+    class WC_Widget_Brand_Description extends \WP_Widget
+    {
+        /**
+         * Widget class.
+         *
+         * @var string
+         */
+        public $woo_widget_cssclass;
+        /**
+         * Widget description.
+         *
+         * @var string
+         */
+        public $woo_widget_description;
+        /**
+         * Widget idbase.
+         *
+         * @var string
+         */
+        public $woo_widget_idbase;
+        /**
+         * Widget name.
+         *
+         * @var string
+         */
+        public $woo_widget_name;
+        /** Constructor */
+        public function __construct()
+        {
+        }
+        /**
+         * Echoes the widget content.
+         *
+         * @see WP_Widget
+         *
+         * @param array $args     Display arguments including 'before_title', 'after_title',
+         *                        'before_widget', and 'after_widget'.
+         * @param array $instance The settings for the particular instance of the widget.
+         */
+        public function widget($args, $instance)
+        {
+        }
+        /**
+         * Updates widget instance.
+         *
+         * @see WP_Widget->update
+         *
+         * @param array $new_instance New widget instance.
+         * @param array $old_instance Old widget instance.
+         */
+        public function update($new_instance, $old_instance)
+        {
+        }
+        /**
+         * Outputs the settings update form.
+         *
+         * @param array $instance Current settings.
+         */
+        public function form($instance)
+        {
+        }
+    }
+    /**
+     * Layered Navigation Widget for brands WC 2.6 version
+     *
+     * Important: For internal use only by the Automattic\WooCommerce\Internal\Brands package.
+     *
+     * @package WooCommerce\Widgets
+     * @version 9.4.0
+     * @extends WP_Widget
+     */
+    class WC_Widget_Brand_Nav extends \WC_Widget
+    {
+        /**
+         * Constructor
+         *
+         * @return void
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Filter out all categories and not display them
+         *
+         * @param array $cat_args Category arguments.
+         */
+        public function filter_out_cats($cat_args)
+        {
+        }
+        /**
+         * Return the currently viewed taxonomy name.
+         *
+         * @return string
+         */
+        protected function get_current_taxonomy()
+        {
+        }
+        /**
+         * Return the currently viewed term ID.
+         *
+         * @return int
+         */
+        protected function get_current_term_id()
+        {
+        }
+        /**
+         * Return the currently viewed term slug.
+         *
+         * @return int
+         */
+        protected function get_current_term_slug()
+        {
+        }
+        /**
+         * Widget function.
+         *
+         * @see WP_Widget
+         *
+         * @param array $args Arguments.
+         * @param array $instance Widget instance.
+         * @return void
+         */
+        public function widget($args, $instance)
+        {
+        }
+        /**
+         * Update function.
+         *
+         * @see WP_Widget->update
+         *
+         * @param array $new_instance The new settings for the particular instance of the widget.
+         * @param array $old_instance The old settings for the particular instance of the widget.
+         * @return array
+         */
+        public function update($new_instance, $old_instance)
+        {
+        }
+        /**
+         * Form function.
+         *
+         * @see WP_Widget->form
+         *
+         * @param array $instance Widget instance.
+         * @return void
+         */
+        public function form($instance)
+        {
+        }
+        /**
+         * Get current page URL for layered nav items.
+         *
+         * @param  string $taxonomy Taxonomy.
+         * @return string
+         */
+        protected function get_page_base_url($taxonomy)
+        {
+        }
+        /**
+         * Gets the currently selected attributes
+         *
+         * @return array
+         */
+        public function get_chosen_attributes()
+        {
+        }
+        /**
+         * Show dropdown layered nav.
+         *
+         * @param  array  $terms Terms.
+         * @param  string $taxonomy Taxonomy.
+         * @param  int    $depth Depth.
+         * @return bool Will nav display?
+         */
+        protected function layered_nav_dropdown($terms, $taxonomy, $depth = 0)
+        {
+        }
+        /**
+         * Show list based layered nav.
+         *
+         * @param  array  $terms Terms.
+         * @param  string $taxonomy Taxonomy.
+         * @param  int    $depth Depth.
+         * @return bool   Will nav display?
+         */
+        protected function layered_nav_list($terms, $taxonomy, $depth = 0)
+        {
+        }
+        /**
+         * Count products within certain terms, taking the main WP query into consideration.
+         *
+         * @param  array  $term_ids Term IDs.
+         * @param  string $taxonomy Taxonomy.
+         * @param  string $query_type Query type.
+         * @return array
+         */
+        protected function get_filtered_term_product_counts($term_ids, $taxonomy, $query_type = 'and')
+        {
+        }
+    }
+    /**
+     * Brand Thumbnails Widget
+     *
+     * Show brand images as thumbnails
+     *
+     * Important: For internal use only by the Automattic\WooCommerce\Internal\Brands package.
+     *
+     * @package WooCommerce\Widgets
+     * @version 9.4.0
+     */
+    class WC_Widget_Brand_Thumbnails extends \WP_Widget
+    {
+        /**
+         * Widget CSS class.
+         *
+         * @var string
+         */
+        public $woo_widget_cssclass;
+        /**
+         * Widget description.
+         *
+         * @var string
+         */
+        public $woo_widget_description;
+        /**
+         * Widget id base.
+         *
+         * @var string
+         */
+        public $woo_widget_idbase;
+        /**
+         * Widget name.
+         *
+         * @var string
+         */
+        public $woo_widget_name;
+        /** Constructor */
+        public function __construct()
+        {
+        }
+        /**
+         * Echoes the widget content.
+         *
+         * @see WP_Widget
+         *
+         * @param array $args     Display arguments including 'before_title', 'after_title',
+         *                        'before_widget', and 'after_widget'.
+         * @param array $instance The settings for the particular instance of the widget.
+         */
+        public function widget($args, $instance)
+        {
+        }
+        /**
+         * Update widget instance.
+         *
+         * @param array $new_instance The new settings for the particular instance of the widget.
+         * @param array $old_instance The old settings for the particular instance of the widget.
+         *
+         * @see WP_Widget->update
+         */
+        public function update($new_instance, $old_instance)
+        {
+        }
+        /**
+         * Outputs the settings update form.
+         *
+         * @param array $instance Current settings.
+         */
+        public function form($instance)
+        {
+        }
+    }
+    /**
      * Widget cart class.
      */
     class WC_Widget_Cart extends \WC_Widget
@@ -60432,7 +61811,7 @@ namespace Automattic\WooCommerce\Vendor\Detection {
             'SamsungBrowser' => 'SamsungBrowser/[VER]',
             'Iron' => 'Iron/[VER]',
             // @note: Safari 7534.48.3 is actually Version 5.1.
-            // @note: On BlackBerry the Version is overwriten by the OS.
+            // @note: On BlackBerry the Version is overwritten by the OS.
             'Safari' => ['Version/[VER]', 'Safari/[VER]'],
             'Skyfire' => 'Skyfire/[VER]',
             'Tizen' => 'Tizen/[VER]',
@@ -61249,7 +62628,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports {
         /**
          * Get the report data.
          *
-         * Prepares query params, fetches the report data from the Query object,
+         * Prepares query params, fetches the report data from the data store,
          * prepares it for the response, and packs it into the convention-conforming response object.
          *
          * @throws \WP_Error When the queried data is invalid.
@@ -61278,7 +62657,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports {
         {
         }
         /**
-         * Maps query arguments from the REST request, to be fed to Query.
+         * Maps query arguments from the REST request, to be used to query the datastore.
          *
          * `WP_REST_Request` does not expose a method to return all params covering defaults,
          * as it does for `$request['param']` accessor.
@@ -61288,6 +62667,18 @@ namespace Automattic\WooCommerce\Admin\API\Reports {
          * @return array Simplified array of params.
          */
         protected function prepare_reports_query($request)
+        {
+        }
+        /**
+         * Apply a filter for custom orderby enum.
+         *
+         * @param array $orderby_enum An array of orderby enum options.
+         *
+         * @return array An array of filtered orderby enum options.
+         *
+         * @since 9.4.0
+         */
+        protected function apply_custom_orderby_filters($orderby_enum)
         {
         }
     }
@@ -61327,7 +62718,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Customers {
          */
         protected $rest_base = 'reports/customers';
         /**
-         * Get data from Query.
+         * Get data from Customers\Query.
          *
          * @override GenericController::get_datastore_data()
          *
@@ -62643,7 +64034,7 @@ namespace Automattic\WooCommerce\Admin\API {
          *
          * @param string $url The URL needing a nonce.
          * @param string $action The nonce action.
-         * @param string $name The nonce anme.
+         * @param string $name The nonce name.
          * @return string A fully formed URL.
          */
         private function maybe_add_nonce_to_url(string $url, string $action = '', string $name = '') : string
@@ -62863,6 +64254,14 @@ namespace Automattic\WooCommerce\Admin\API {
          * @throws \Exception If there is an error registering the site.
          */
         public function get_jetpack_authorization_url(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Return a locale string for wpcom.
+         *
+         * @return string
+         */
+        private function get_wpcom_locale()
         {
         }
         /**
@@ -63152,7 +64551,7 @@ namespace Automattic\WooCommerce\Admin\API {
          */
         protected $rest_base = 'onboarding/tasks';
         /**
-         * Duration to milisecond mapping.
+         * Duration to millisecond mapping.
          *
          * @var array
          */
@@ -63873,9 +65272,9 @@ namespace Automattic\WooCommerce\Admin\API {
         {
         }
         /**
-         * Returns a URL that can be used to by WCPay to verify business details.
+         * Returns a URL that can be used by WooPayments to verify business details.
          *
-         * @return WP_Error|array Connect URL.
+         * @return \WP_Error|array Connect URL.
          */
         public function connect_wcpay()
         {
@@ -64425,7 +65824,7 @@ namespace Automattic\WooCommerce\Admin\API {
         }
         /**
          * Return a query string for low in stock products.
-         * The query string incldues the following replacement strings:
+         * The query string includes the following replacement strings:
          * - :selects
          * - :postmeta_join
          * - :postmeta_wheres
@@ -64615,7 +66014,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Categories {
          */
         protected $rest_base = 'reports/categories';
         /**
-         * Get data from `'categories'` Query.
+         * Get data from `'categories'` GenericQuery.
          *
          * @override GenericController::get_datastore_data()
          *
@@ -65689,14 +67088,24 @@ namespace Automattic\WooCommerce\Admin\API\Reports {
     /**
      * Admin\API\Reports\Query
      *
-     * @deprecated 9.3.0 Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
+     * @deprecated 9.3.0 Query class is deprecated. Please use `GenericQuery`, \WC_Object_Query`, or use `DataStore` directly.
      */
     abstract class Query extends \WC_Object_Query
     {
         /**
+         * Create a new query.
+         *
+         * @deprecated 9.3.0 Query class is deprecated. Please use `GenericQuery`, \WC_Object_Query`, or use `DataStore` directly.
+         *
+         * @param array $args Criteria to query on in a format similar to WP_Query.
+         */
+        public function __construct($args = array())
+        {
+        }
+        /**
          * Get report data matching the current query vars.
          *
-         * @deprecated 9.3.0 Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
+         * @deprecated 9.3.0 Query class is deprecated. Please use `GenericQuery`, \WC_Object_Query`, or use `DataStore` directly.
          *
          * @return array|object of WC_Product objects
          */
@@ -65709,7 +67118,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Categories {
     /**
      * API\Reports\Categories\Query
      *
-     * @deprecated 9.3.0 Categories\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
+     * @deprecated 9.3.0 Categories\Query class is deprecated. Please use `GenericQuery`, \WC_Object_Query`, or use `DataStore` directly.
      */
     class Query extends \Automattic\WooCommerce\Admin\API\Reports\Query
     {
@@ -65717,7 +67126,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Categories {
         /**
          * Valid fields for Categories report.
          *
-         * @deprecated 9.3.0 Categories\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
+         * @deprecated 9.3.0 Categories\Query class is deprecated. Please use `GenericQuery`, \WC_Object_Query`, or use `DataStore` directly.
          *
          * @return array
          */
@@ -65727,7 +67136,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Categories {
         /**
          * Get categories data based on the current query vars.
          *
-         * @deprecated 9.3.0 Categories\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
+         * @deprecated 9.3.0 Categories\Query class is deprecated. Please use `GenericQuery`, \WC_Object_Query`, or use `DataStore` directly.
          *
          * @return array
          */
@@ -65803,7 +67212,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Coupons {
          */
         protected $rest_base = 'reports/coupons';
         /**
-         * Get data from `'coupons'` Query.
+         * Get data from `'coupons'` GenericQuery.
          *
          * @override GenericController::get_datastore_data()
          *
@@ -66051,14 +67460,14 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Coupons {
     /**
      * API\Reports\Coupons\Query
      *
-     * @deprecated 9.3.0 Coupons\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
+     * @deprecated 9.3.0 Coupons\Query class is deprecated. Please use `GenericQuery`, \WC_Object_Query`, or use `DataStore` directly.
      */
     class Query extends \Automattic\WooCommerce\Admin\API\Reports\Query
     {
         /**
          * Valid fields for Products report.
          *
-         * @deprecated 9.3.0 Coupons\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
+         * @deprecated 9.3.0 Coupons\Query class is deprecated. Please use `GenericQuery`, \WC_Object_Query`, or use `DataStore` directly.
          *
          * @return array
          */
@@ -66068,7 +67477,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Coupons {
         /**
          * Get product data based on the current query vars.
          *
-         * @deprecated 9.3.0 Coupons\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
+         * @deprecated 9.3.0 Coupons\Query class is deprecated. Please use `GenericQuery`, \WC_Object_Query`, or use `DataStore` directly.
          *
          * @return array
          */
@@ -66155,7 +67564,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports {
         /**
          * Get the report data.
          *
-         * Prepares query params, fetches the report data from the Query object,
+         * Prepares query params, fetches the report data from the data store,
          * prepares it for the response, and packs it into the convention-conforming response object.
          *
          * @override GenericController::get_items()
@@ -66194,7 +67603,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Coupons\Stats {
         {
         }
         /**
-         * Get data from `'coupons-stats'` Query.
+         * Get data from `'coupons-stats'` GenericQuery.
          *
          * @override GenericController::get_datastore_data()
          *
@@ -66407,14 +67816,14 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Coupons\Stats {
     /**
      * API\Reports\Coupons\Stats\Query
      *
-     * @deprecated 9.3.0 Coupons\Stats\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
+     * @deprecated 9.3.0 Coupons\Stats\Query class is deprecated. Please use `GenericQuery`, \WC_Object_Query`, or use `DataStore` directly.
      */
     class Query extends \Automattic\WooCommerce\Admin\API\Reports\Query
     {
         /**
          * Valid fields for Products report.
          *
-         * @deprecated 9.3.0 Coupons\Stats\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
+         * @deprecated 9.3.0 Coupons\Stats\Query class is deprecated. Please use `GenericQuery`, \WC_Object_Query`, or use `DataStore` directly.
          *
          * @return array
          */
@@ -66424,7 +67833,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Coupons\Stats {
         /**
          * Get product data based on the current query vars.
          *
-         * @deprecated 9.3.0 Coupons\Stats\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
+         * @deprecated 9.3.0 Coupons\Stats\Query class is deprecated. Please use `GenericQuery`, \WC_Object_Query`, or use `DataStore` directly.
          *
          * @return array
          */
@@ -67144,10 +68553,10 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Customers {
          * Anonymize the customer data for a single order.
          *
          * @internal
-         * @param int $order_id Order id.
+         * @param int|WC_Order $order Order instance or ID.
          * @return void
          */
-        public static function anonymize_customer($order_id)
+        public static function anonymize_customer($order)
         {
         }
         /**
@@ -67373,14 +68782,14 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Customers\Stats {
     /**
      * API\Reports\Customers\Stats\Query
      *
-     * @deprecated 9.3.0 Customers\Stats\Query class is deprecated, please use Reports\Customers\Query with a custom name, GenericQuery or \WC_Object_Query instead.
+     * @deprecated 9.3.0 Customers\Stats\Query class is deprecated, please use `Reports\Customers\Query` with a custom name, `GenericQuery`, `\WC_Object_Query`, or use `DataStore` directly.
      */
     class Query extends \Automattic\WooCommerce\Admin\API\Reports\Query
     {
         /**
          * Valid fields for Customers report.
          *
-         * @deprecated 9.3.0 Customers\Stats\Query class is deprecated, please use Reports\Customers\Query with a custom name, GenericQuery or \WC_Object_Query instead.
+         * @deprecated 9.3.0 Customers\Stats\Query class is deprecated, please use `Reports\Customers\Query` with a custom name, `GenericQuery`, `\WC_Object_Query`, or use `DataStore` directly.
          *
          * @return array
          */
@@ -67390,7 +68799,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Customers\Stats {
         /**
          * Get product data based on the current query vars.
          *
-         * @deprecated 9.3.0 Customers\Stats\Query class is deprecated, please use Reports\Customers\Query with a custom name, GenericQuery or \WC_Object_Query instead.
+         * @deprecated 9.3.0 Customers\Stats\Query class is deprecated, please use `Reports\Customers\Query` with a custom name, `GenericQuery`, `\WC_Object_Query`, or use `DataStore` directly.
          *
          * @return array
          */
@@ -67416,7 +68825,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Downloads {
          */
         protected $rest_base = 'reports/downloads';
         /**
-         * Get data from `'downloads'` Query.
+         * Get data from `'downloads'` GenericQuery.
          *
          * @override GenericController::get_datastore_data()
          *
@@ -67688,14 +69097,14 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Downloads {
     /**
      * API\Reports\Downloads\Query
      *
-     * @deprecated 9.3.0 Downloads\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
+     * @deprecated 9.3.0 Downloads\Query class is deprecated. Please use `GenericQuery`, \WC_Object_Query`, or use `DataStore` directly.
      */
     class Query extends \Automattic\WooCommerce\Admin\API\Reports\Query
     {
         /**
          * Valid fields for downloads report.
          *
-         * @deprecated 9.3.0 Downloads\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
+         * @deprecated 9.3.0 Downloads\Query class is deprecated. Please use `GenericQuery`, \WC_Object_Query`, or use `DataStore` directly.
          *
          * @return array
          */
@@ -67705,7 +69114,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Downloads {
         /**
          * Get downloads data based on the current query vars.
          *
-         * @deprecated 9.3.0 Downloads\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
+         * @deprecated 9.3.0 Downloads\Query class is deprecated. Please use `GenericQuery`, \WC_Object_Query`, or use `DataStore` directly.
          *
          * @return array
          */
@@ -67739,7 +69148,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Downloads\Stats {
         {
         }
         /**
-         * Get data from `'downloads-stats'` Query.
+         * Get data from `'downloads-stats'` GenericQuery.
          *
          * @override GenericController::get_datastore_data()
          *
@@ -67867,14 +69276,14 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Downloads\Stats {
     /**
      * API\Reports\Downloads\Stats\Query
      *
-     * @deprecated 9.3.0 Downloads\Stats\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
+     * @deprecated 9.3.0 Downloads\Stats\Query class is deprecated. Please use `GenericQuery`, \WC_Object_Query`, or use `DataStore` directly.
      */
     class Query extends \Automattic\WooCommerce\Admin\API\Reports\Query
     {
         /**
          * Valid fields for Orders report.
          *
-         * @deprecated 9.3.0 Downloads\Stats\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
+         * @deprecated 9.3.0 Downloads\Stats\Query class is deprecated. Please use `GenericQuery`, \WC_Object_Query`, or use `DataStore` directly.
          *
          * @return array
          */
@@ -67884,7 +69293,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Downloads\Stats {
         /**
          * Get revenue data based on the current query vars.
          *
-         * @deprecated 9.3.0 Downloads\Stats\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
+         * @deprecated 9.3.0 Downloads\Stats\Query class is deprecated. Please use `GenericQuery`, \WC_Object_Query`, or use `DataStore` directly.
          *
          * @return array
          */
@@ -68122,7 +69531,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Orders {
          */
         protected $rest_base = 'reports/orders';
         /**
-         * Get data from Query.
+         * Get data from Orders\Query.
          *
          * @override GenericController::get_datastore_data()
          *
@@ -68233,7 +69642,7 @@ namespace Automattic\WooCommerce\Internal\Traits {
     trait OrderAttributionMeta
     {
         /**
-         * The default fields and their sourcebuster accesors,
+         * The default fields and their sourcebuster accessors,
          * to show in the source data metabox.
          *
          * @var string[]
@@ -68611,7 +70020,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Orders\Stats {
          */
         protected $rest_base = 'reports/orders/stats';
         /**
-         * Get data from Query.
+         * Get data from Orders\Stats\Query.
          *
          * @override GenericController::get_datastore_data()
          *
@@ -69165,7 +70574,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\PerformanceIndicators {
         /**
          * Prepare links for the request.
          *
-         * @param \Automattic\WooCommerce\Admin\API\Reports\Query $object Object data.
+         * @param object $object data.
          * @return array
          */
         protected function prepare_links($object)
@@ -69242,7 +70651,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Products {
          */
         protected $param_mapping = array('categories' => 'category_includes', 'products' => 'product_includes', 'variations' => 'variation_includes');
         /**
-         * Get data from `'products'` Query.
+         * Get data from `'products'` GenericQuery.
          *
          * @override GenericController::get_datastore_data()
          *
@@ -69508,14 +70917,14 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Products {
     /**
      * API\Reports\Products\Query
      *
-     * @deprecated 9.3.0 Products\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
+     * @deprecated 9.3.0 Products\Query class is deprecated. Please use `GenericQuery`, \WC_Object_Query`, or use `DataStore` directly.
      */
     class Query extends \Automattic\WooCommerce\Admin\API\Reports\Query
     {
         /**
          * Valid fields for Products report.
          *
-         * @deprecated 9.3.0 Products\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
+         * @deprecated 9.3.0 Products\Query class is deprecated. Please use `GenericQuery`, \WC_Object_Query`, or use `DataStore` directly.
          *
          * @return array
          */
@@ -69525,7 +70934,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Products {
         /**
          * Get product data based on the current query vars.
          *
-         * @deprecated 9.3.0 Products\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
+         * @deprecated 9.3.0 Products\Query class is deprecated. Please use `GenericQuery`, \WC_Object_Query`, or use `DataStore` directly.
          *
          * @return array
          */
@@ -69562,7 +70971,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Products\Stats {
         {
         }
         /**
-         * Get data from `'products-stats'` Query.
+         * Get data from `'products-stats'` GenericQuery.
          *
          * @override GenericController::get_datastore_data()
          *
@@ -69573,7 +70982,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Products\Stats {
         {
         }
         /**
-         * Maps query arguments from the REST request, to be fed to Query.
+         * Maps query arguments from the REST request to be used to query the datastore.
          *
          * @param \WP_REST_Request $request Full request object.
          * @return array Simplified array of params.
@@ -69727,14 +71136,14 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Products\Stats {
     /**
      * API\Reports\Products\Stats\Query
      *
-     * @deprecated 9.3.0 Products\Stats\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
+     * @deprecated 9.3.0 Products\Stats\Query class is deprecated. Please use `GenericQuery`, \WC_Object_Query`, or use `DataStore` directly.
      */
     class Query extends \Automattic\WooCommerce\Admin\API\Reports\Query
     {
         /**
          * Valid fields for Products report.
          *
-         * @deprecated 9.3.0 Products\Stats\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
+         * @deprecated 9.3.0 Products\Stats\Query class is deprecated. Please use `GenericQuery`, \WC_Object_Query`, or use `DataStore` directly.
          *
          * @return array
          */
@@ -69744,7 +71153,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Products\Stats {
         /**
          * Get product data based on the current query vars.
          *
-         * @deprecated 9.3.0 Products\Stats\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
+         * @deprecated 9.3.0 Products\Stats\Query class is deprecated. Please use `GenericQuery`, \WC_Object_Query`, or use `DataStore` directly.
          *
          * @return array
          */
@@ -70247,7 +71656,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Taxes {
          */
         protected $rest_base = 'reports/taxes';
         /**
-         * Get data from `'taxes'` Query.
+         * Get data from `'taxes'` GenericQuery.
          *
          * @override GenericController::get_datastore_data()
          *
@@ -70382,6 +71791,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Taxes {
         /**
          * Updates the database query with parameters used for Taxes report: categories and order status.
          *
+         * @see Automattic\WooCommerce\Admin\API\Reports\Taxes\Stats\DataStore::update_sql_query_params()
          * @param array $query_args Query arguments supplied by the user.
          */
         protected function add_sql_query_params($query_args)
@@ -70449,14 +71859,14 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Taxes {
     /**
      * API\Reports\Taxes\Query
      *
-     * @deprecated 9.3.0 Taxes\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
+     * @deprecated 9.3.0 Taxes\Query class is deprecated. Please use `GenericQuery`, \WC_Object_Query`, or use `DataStore` directly.
      */
     class Query extends \Automattic\WooCommerce\Admin\API\Reports\Query
     {
         /**
          * Valid fields for Taxes report.
          *
-         * @deprecated 9.3.0 Taxes\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
+         * @deprecated 9.3.0 Taxes\Query class is deprecated. Please use `GenericQuery`, \WC_Object_Query`, or use `DataStore` directly.
          *
          * @return array
          */
@@ -70466,7 +71876,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Taxes {
         /**
          * Get product data based on the current query vars.
          *
-         * @deprecated 9.3.0 Taxes\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
+         * @deprecated 9.3.0 Taxes\Query class is deprecated. Please use `GenericQuery`, \WC_Object_Query`, or use `DataStore` directly.
          *
          * @return array
          */
@@ -70516,7 +71926,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Taxes\Stats {
         {
         }
         /**
-         * Get data from `'taxes-stats'` Query.
+         * Get data from `'taxes-stats'` GenericQuery.
          *
          * @override GenericController::get_datastore_data()
          *
@@ -70611,6 +72021,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Taxes\Stats {
         /**
          * Updates the database query with parameters used for Taxes Stats report
          *
+         * @see Automattic\WooCommerce\Admin\API\Reports\Taxes\DataStore::add_sql_query_params()
          * @param array $query_args       Query arguments supplied by the user.
          */
         protected function update_sql_query_params($query_args)
@@ -70657,14 +72068,14 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Taxes\Stats {
     /**
      * API\Reports\Taxes\Stats\Query
      *
-     * @deprecated 9.3.0 Taxes\Stats\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
+     * @deprecated 9.3.0 Taxes\Stats\Query class is deprecated. Please use `GenericQuery`, \WC_Object_Query`, or use `DataStore` directly.
      */
     class Query extends \Automattic\WooCommerce\Admin\API\Reports\Query
     {
         /**
          * Valid fields for Taxes report.
          *
-         * @deprecated 9.3.0 Taxes\Stats\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
+         * @deprecated 9.3.0 Taxes\Stats\Query class is deprecated. Please use `GenericQuery`, \WC_Object_Query`, or use `DataStore` directly.
          *
          * @return array
          */
@@ -70674,7 +72085,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Taxes\Stats {
         /**
          * Get tax stats data based on the current query vars.
          *
-         * @deprecated 9.3.0 Taxes\Stats\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
+         * @deprecated 9.3.0 Taxes\Stats\Query class is deprecated. Please use `GenericQuery`, \WC_Object_Query`, or use `DataStore` directly.
          *
          * @return array
          */
@@ -71032,7 +72443,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Variations {
          */
         protected $param_mapping = array('variations' => 'variation_includes', 'products' => 'product_includes');
         /**
-         * Get data from `'variations'` Query.
+         * Get data from `'variations'` GenericQuery.
          *
          * @override GenericController::get_datastore_data()
          *
@@ -71265,14 +72676,14 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Variations {
     /**
      * API\Reports\Variations\Query
      *
-     * @deprecated 9.3.0 Variations\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
+     * @deprecated 9.3.0 Variations\Query class is deprecated. Please use `GenericQuery`, \WC_Object_Query`, or use `DataStore` directly.
      */
     class Query extends \Automattic\WooCommerce\Admin\API\Reports\Query
     {
         /**
          * Valid fields for Products report.
          *
-         * @deprecated 9.3.0 Variations\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
+         * @deprecated 9.3.0 Variations\Query class is deprecated. Please use `GenericQuery`, \WC_Object_Query`, or use `DataStore` directly.
          *
          * @return array
          */
@@ -71282,7 +72693,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Variations {
         /**
          * Get product data based on the current query vars.
          *
-         * @deprecated 9.3.0 Variations\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
+         * @deprecated 9.3.0 Variations\Query class is deprecated. Please use `GenericQuery`, \WC_Object_Query`, or use `DataStore` directly.
          *
          * @return array
          */
@@ -71319,7 +72730,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Variations\Stats {
         {
         }
         /**
-         * Get data from `'variations-stats'` Query.
+         * Get data from `'variations-stats'` GenericQuery.
          *
          * @override GenericController::get_datastore_data()
          *
@@ -71484,14 +72895,14 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Variations\Stats {
     /**
      * API\Reports\Variations\Stats\Query
      *
-     * @deprecated 9.3.0 Variations\Stats\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
+     * @deprecated 9.3.0 Variations\Stats\Query class is deprecated. Please use `GenericQuery`, \WC_Object_Query`, or use `DataStore` directly.
      */
     class Query extends \Automattic\WooCommerce\Admin\API\Reports\Query
     {
         /**
          * Valid fields for Products report.
          *
-         * @deprecated 9.3.0 Variations\Stats\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
+         * @deprecated 9.3.0 Variations\Stats\Query class is deprecated. Please use `GenericQuery`, \WC_Object_Query`, or use `DataStore` directly.
          *
          * @return array
          */
@@ -71501,7 +72912,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Variations\Stats {
         /**
          * Get variations data based on the current query vars.
          *
-         * @deprecated 9.3.0 Variations\Stats\Query class is deprecated, please use GenericQuery or \WC_Object_Query instead.
+         * @deprecated 9.3.0 Variations\Stats\Query class is deprecated. Please use `GenericQuery`, \WC_Object_Query`, or use `DataStore` directly.
          *
          * @return array
          */
@@ -72443,7 +73854,7 @@ namespace Automattic\WooCommerce\Admin\Features {
          *
          * @var array
          */
-        protected static $optional_features = array('navigation' => array('default' => 'no'), 'settings' => array('default' => 'no'), 'analytics' => array('default' => 'yes'), 'remote-inbox-notifications' => array('default' => 'yes'));
+        protected static $optional_features = array('navigation' => array('default' => 'no'), 'analytics' => array('default' => 'yes'), 'remote-inbox-notifications' => array('default' => 'yes'));
         /**
          * Beta features
          *
@@ -73541,7 +74952,7 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
          */
         protected $task_list;
         /**
-         * Duration to milisecond mapping.
+         * Duration to millisecond mapping.
          *
          * @var string
          */
@@ -74642,7 +76053,7 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
         {
         }
         /**
-         * Check if the store has any enabled gateways, other than WooPayments.
+         * Check if the store has any enabled gateways.
          *
          * @return bool
          */
@@ -74821,6 +76232,8 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
     }
     /**
      * Customize Your Store Task
+     *
+     * @internal
      */
     class CustomizeStore extends \Automattic\WooCommerce\Admin\Features\OnboardingTasks\Task
     {
@@ -75433,102 +76846,6 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
         }
     }
     /**
-     * Purchase Task
-     */
-    class Purchase extends \Automattic\WooCommerce\Admin\Features\OnboardingTasks\Task
-    {
-        /**
-         * Constructor
-         *
-         * @param TaskList $task_list Parent task list.
-         */
-        public function __construct($task_list)
-        {
-        }
-        /**
-         * Clear dismissal on onboarding product type changes.
-         *
-         * @param array $old_value Old value.
-         * @param array $new_value New value.
-         */
-        public function clear_dismissal($old_value, $new_value)
-        {
-        }
-        /**
-         * Get the task arguments.
-         * ID.
-         *
-         * @return string
-         */
-        public function get_id()
-        {
-        }
-        /**
-         * Title.
-         *
-         * @return string
-         */
-        public function get_title()
-        {
-        }
-        /**
-         * Content.
-         *
-         * @return string
-         */
-        public function get_content()
-        {
-        }
-        /**
-         * Action label.
-         *
-         * @return string
-         */
-        public function get_action_label()
-        {
-        }
-        /**
-         * Time.
-         *
-         * @return string
-         */
-        public function get_time()
-        {
-        }
-        /**
-         * Task completion.
-         *
-         * @return bool
-         */
-        public function is_complete()
-        {
-        }
-        /**
-         * Dismissable.
-         *
-         * @return bool
-         */
-        public function is_dismissable()
-        {
-        }
-        /**
-         * Task visibility.
-         *
-         * @return bool
-         */
-        public function can_view()
-        {
-        }
-        /**
-         * Get purchaseable and remaining products.
-         *
-         * @return array purchaseable and remaining products and themes.
-         */
-        public static function get_paid_products_and_themes()
-        {
-        }
-    }
-    /**
      * Review Shipping Options Task
      */
     class ReviewShippingOptions extends \Automattic\WooCommerce\Admin\Features\OnboardingTasks\Task
@@ -75815,6 +77132,7 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
     {
         /**
          * Used to cache is_complete() method result.
+         *
          * @var null
          */
         private $is_complete_result = null;
@@ -75881,7 +77199,7 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
         {
         }
         /**
-         * Addtional data.
+         * Additional data.
          *
          * @return array
          */
@@ -75902,6 +77220,14 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
          * @return array
          */
         public static function get_automated_support_countries()
+        {
+        }
+        /**
+         * Get an array of countries that support Stripe tax.
+         *
+         * @return array
+         */
+        private static function get_stripe_tax_support_countries()
         {
         }
     }
@@ -76011,6 +77337,14 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
         {
         }
         /**
+         * Additional data.
+         *
+         * @return mixed
+         */
+        public function get_additional_data()
+        {
+        }
+        /**
          * Time.
          *
          * @return string
@@ -76089,6 +77423,24 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
          * @return bool
          */
         public static function is_supported()
+        {
+        }
+        /**
+         * Get the WooPayments gateway.
+         *
+         * @return \WC_Payments|null
+         */
+        private static function get_gateway()
+        {
+        }
+        /**
+         * Check if the store has any enabled ecommerce gateways, other than WooPayments.
+         *
+         * We exclude offline payment methods from this check.
+         *
+         * @return bool
+         */
+        public static function has_other_ecommerce_gateways() : bool
         {
         }
     }
@@ -76231,6 +77583,12 @@ namespace Automattic\WooCommerce\Admin\Features\PaymentGatewaySuggestions {
     class EvaluateSuggestion
     {
         /**
+         * Stores memoized results of evaluate_specs.
+         *
+         * @var array
+         */
+        protected static $memo = array();
+        /**
          * Evaluates the spec and returns the suggestion.
          *
          * @param object|array $spec        The suggestion to evaluate.
@@ -76250,6 +77608,22 @@ namespace Automattic\WooCommerce\Admin\Features\PaymentGatewaySuggestions {
          * @return array The visible suggestions and errors.
          */
         public static function evaluate_specs($specs, $logger_args = array())
+        {
+        }
+        /**
+         * Resets the memoized results. Useful for testing.
+         */
+        public static function reset_memo()
+        {
+        }
+        /**
+         * Returns a memoization key for the given specs.
+         *
+         * @param array $specs The specs to generate a key for.
+         *
+         * @return string The memoization key.
+         */
+        private static function get_memo_key($specs)
         {
         }
     }
@@ -76758,7 +78132,7 @@ namespace Automattic\WooCommerce\Admin\Features\ProductBlockEditor {
         {
         }
         /**
-         * Create ot update a product_form post for each product form template.
+         * Create or update a product_form post for each product form template.
          * If the post already exists, it will be updated.
          * If the post does not exist, it will be created even if the action is `update`.
          *
@@ -77083,7 +78457,7 @@ namespace Automattic\WooCommerce\Admin\Features\ProductBlockEditor {
         /**
          * Check if a product is supported by the new experience.
          *
-         * @param array $product_templates The registered product teamplates.
+         * @param array $product_templates The registered product templates.
          */
         public function set_product_templates(array $product_templates) : void
         {
@@ -77142,6 +78516,111 @@ namespace Automattic\WooCommerce\Admin\Features\ProductBlockEditor {
          * @return string
          */
         public function add_product_source($source)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Admin\Features\ProductDataViews {
+    /**
+     * Loads assets related to the product block editor.
+     */
+    class Init
+    {
+        /**
+         * Constructor
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Returns true if we are on a JS powered admin page.
+         */
+        private static function is_product_data_view_page()
+        {
+        }
+        /**
+         * Checks for data views support.
+         */
+        private function has_data_views_support()
+        {
+        }
+        /**
+         * Enqueue styles needed for the rich text editor.
+         */
+        public function enqueue_styles()
+        {
+        }
+        /**
+         * Enqueue scripts needed for the product form block editor.
+         */
+        public function enqueue_scripts()
+        {
+        }
+        /**
+         * Replaces the default posts menu item with the new posts dashboard.
+         */
+        public function woocommerce_add_new_products_dashboard()
+        {
+        }
+        /**
+         * Renders the new posts dashboard page.
+         */
+        public function woocommerce_products_dashboard()
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\Admin\Features {
+    /**
+     * Contains backend logic for the Settings feature.
+     */
+    class Settings
+    {
+        /**
+         * Class instance.
+         *
+         * @var Settings instance
+         */
+        protected static $instance = null;
+        /**
+         * Get class instance.
+         */
+        public static function get_instance()
+        {
+        }
+        /**
+         * Hook into WooCommerce.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Add the necessary data to initially load the WooCommerce Settings pages.
+         *
+         * @param array $settings Array of component settings.
+         * @return array Array of component settings.
+         */
+        public static function add_component_settings($settings)
+        {
+        }
+        /**
+         * Registers settings pages.
+         */
+        public function register_pages()
+        {
+        }
+        /**
+         * Replace the Settings page in the original WooCommerce menu.
+         *
+         * @param array $page Page used to replace the original.
+         */
+        protected function replace_settings_page($page)
+        {
+        }
+        /**
+         * Redirect the old settings page URLs to the new ones.
+         */
+        public function redirect_core_settings_pages()
         {
         }
     }
@@ -79017,7 +80496,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @param string $note_action_name Name of action to add a nonce to.
          * @param string $nonce_action The nonce action.
-         * @param string $nonce_name The nonce Name. This is used as the paramater name in the resulting URL for the action.
+         * @param string $nonce_name The nonce Name. This is used as the parameter name in the resulting URL for the action.
          * @return void
          * @throws \Exception If note name cannot be found.
          */
@@ -79703,7 +81182,7 @@ namespace Automattic\WooCommerce\Admin {
         {
         }
         /**
-         * Returns true if we are on a page registed with this controller.
+         * Returns true if we are on a page registered with this controller.
          *
          * @return boolean
          */
@@ -79791,15 +81270,21 @@ namespace Automattic\WooCommerce\Admin {
     class PluginsHelper
     {
         /**
-         * Indicates whether the expiration notice for subscriptions can be displayed.
+         * Subscription notices in Woo screens are shown in clear priority order, first
+         * expired, and if those don't exist, expiring, and finally if none of those exist,
+         * then missing. This keeps track of whether we can show the next set of notices.
          *
          * @var bool
          */
-        public static $can_show_expiring_subs_notice = true;
+        public static $subscription_usage_notices_already_shown = false;
         /**
          * The URL for the WooCommerce subscription page.
          */
         const WOO_SUBSCRIPTION_PAGE_URL = 'https://woocommerce.com/my-account/my-subscriptions/';
+        /**
+         * The URL for the WooCommerce.com cart page.
+         */
+        const WOO_CART_PAGE_URL = 'https://woocommerce.com/cart/';
         /**
          * The URL for the WooCommerce.com add payment method page.
          */
@@ -79812,6 +81297,10 @@ namespace Automattic\WooCommerce\Admin {
          * Meta key for dismissing expiring subscription notices
          */
         const DISMISS_EXPIRING_SUBS_NOTICE = 'woo_subscription_expiring_notice_dismiss';
+        /**
+         * Meta key for dismissing missing subscription notices
+         */
+        const DISMISS_MISSING_SUBS_NOTICE = 'woo_subscription_missing_notice_dismiss';
         /**
          * Initialize hooks.
          */
@@ -79898,7 +81387,7 @@ namespace Automattic\WooCommerce\Admin {
         {
         }
         /**
-         * Callback regsitered by OnboardingPlugins::install_and_activate_async.
+         * Callback registered by OnboardingPlugins::install_and_activate_async.
          *
          * It is used to call install_plugins and activate_plugins with a custom logger.
          *
@@ -80050,6 +81539,14 @@ namespace Automattic\WooCommerce\Admin {
         {
         }
         /**
+         * Get formatted notice information for missing subscription.
+         *
+         * @return array notice information.
+         */
+        public static function get_missing_subscription_notice()
+        {
+        }
+        /**
          * Determine whether a specific notice should be shown to the current user.
          *
          * @param string $dismiss_notice_meta User meta that includes the timestamp when a store notice was dismissed.
@@ -80145,7 +81642,7 @@ namespace Automattic\WooCommerce\Admin\PluginsInstallLoggers {
         {
         }
         /**
-         * Retreive the option.
+         * Retrieve the option.
          *
          * @return false|mixed|void
          */
@@ -80345,456 +81842,6 @@ namespace Automattic\WooCommerce\Admin\PluginsProvider {
 }
 namespace Automattic\WooCommerce\Admin\RemoteInboxNotifications {
     /**
-     * Rule processor that performs a comparison operation against the base
-     * location - country.
-     *
-     * @deprecated 8.8.0
-     */
-    class BaseLocationCountryRuleProcessor extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\BaseLocationCountryRuleProcessor';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
-    }
-    /**
-     * Rule processor that performs a comparison operation against the base
-     * location - state.
-     *
-     * @deprecated 8.8.0
-     */
-    class BaseLocationStateRuleProcessor extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\BaseLocationStateRuleProcessor';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
-    }
-    /**
-     * Compare two operands using the specified operation.
-     *
-     * @deprecated 8.8.0
-     */
-    class ComparisonOperation extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\ComparisonOperation';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
-    }
-    /**
-     * Evaluates the spec and returns a status.
-     *
-     * @deprecated 8.8.0
-     */
-    class EvaluateAndGetStatus extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\EvaluateAndGetStatus';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
-    }
-    /**
-     * Class EvaluationLogger
-     *
-     * @package Automattic\WooCommerce\Admin\RemoteInboxNotifications
-     *
-     * @deprecated 8.8.0
-     */
-    class EvaluationLogger extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\EvaluationLogger';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
-    }
-    /**
-     * Rule processor that fails.
-     *
-     * @deprecated 8.8.0
-     */
-    class FailRuleProcessor extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\FailRuleProcessor';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
-    }
-    /**
-     * Class encapsulating getting the processor for a given rule type.
-     *
-     * @deprecated 8.8.0
-     */
-    class GetRuleProcessor extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\GetRuleProcessor';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
-    }
-    /**
-     * Rule processor that passes (or fails) when the site is on the eCommerce
-     * plan.
-     *
-     * @deprecated 8.8.0
-     */
-    class IsEcommerceRuleProcessor extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\IsEcommerceRuleProcessor';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
-    }
-    /**
-     * Rule processor that passes (or fails) when the site is on a Woo Express plan.
-     * You may optionally pass a plan name to target a specific Woo Express plan.
-     *
-     * @deprecated 8.8.0
-     */
-    class IsWooExpressRuleProcessor extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\IsWooExpressRuleProcessor';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
-    }
-    /**
-     * Rule processor that negates the rules in the rule's operand.
-     *
-     * @deprecated 8.8.0
-     */
-    class NotRuleProcessor extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\NotRuleProcessor';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
-    }
-    /**
-     * Rule processor that compares against the status of another note.
-     *
-     * @deprecated 8.8.0
-     */
-    class NoteStatusRuleProcessor extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\NoteStatusRuleProcessor';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
-    }
-    /**
-     * Rule processor that performs a comparison operation against a value in the
-     * onboarding profile.
-     *
-     * @deprecated 8.8.0
-     */
-    class OnboardingProfileRuleProcessor extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\OnboardingProfileRuleProcessor';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
-    }
-    /**
-     * Rule processor that performs a comparison operation against an option value.
-     *
-     * @deprecated 8.8.0
-     */
-    class OptionRuleProcessor extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\OptionRuleProcessor';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
-    }
-    /**
-     * Rule processor that performs an OR operation on the rule's left and right
-     * operands.
-     *
-     * @deprecated 8.8.0
-     */
-    class OrRuleProcessor extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\OrRuleProcessor';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
-    }
-    /**
-     * Rule processor for publishing based on the number of orders.
-     *
-     * @deprecated 8.8.0
-     */
-    class OrderCountRuleProcessor extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\OrderCountRuleProcessor';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
-    }
-    /**
-     * Provider for order-related queries and operations.
-     *
-     * @deprecated 8.8.0
-     */
-    class OrdersProvider extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\OrdersProvider';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
-    }
-    /**
-     * Rule processor that passes.
-     *
-     * @deprecated 8.8.0
-     */
-    class PassRuleProcessor extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\PassRuleProcessor';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
-    }
-    /**
-     * Rule processor for sending when the provided plugin is activated and
-     * matches the specified version.
-     *
-     * @deprecated 8.8.0
-     */
-    class PluginVersionRuleProcessor extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\PluginVersionRuleProcessor';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
-    }
-    /**
-     * Rule processor for sending when the provided plugins are activated.
-     *
-     * @deprecated 8.8.0
-     */
-    class PluginsActivatedRuleProcessor extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\PluginsActivatedRuleProcessor';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
-    }
-    /**
-     * Rule processor that performs a comparison operation against the number of
-     * products.
-     *
-     * @deprecated 8.8.0
-     */
-    class ProductCountRuleProcessor extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\ProductCountRuleProcessor';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
-    }
-    /**
-     * Rule processor for sending after a specified date/time.
-     *
-     * @deprecated 8.8.0
-     */
-    class PublishAfterTimeRuleProcessor extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\PublishAfterTimeRuleProcessor';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
-    }
-    /**
-     * Rule processor for sending before a specified date/time.
-     *
-     * @deprecated 8.8.0
-     */
-    class PublishBeforeTimeRuleProcessor extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\PublishBeforeTimeRuleProcessor';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
-    }
-    /**
      * Specs data source poller class.
      * This handles polling specs from JSON endpoints, and
      * stores the specs in to the database as an option.
@@ -80954,28 +82001,9 @@ namespace Automattic\WooCommerce\Admin\RemoteInboxNotifications {
         }
     }
     /**
-     * Evaluate the given rules as an AND operation - return false early if a
-     * rule evaluates to false.
-     *
-     * @deprecated 8.8.0
-     */
-    class RuleEvaluator extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\RuleEvaluator';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
-    }
-    /**
      * Rule processor interface
+     *
+     * @deprecated 9.4.0 Use \Automattic\WooCommerce\Admin\RemoteSpecs\RuleProcessors\RuleProcessorInterface instead.
      */
     interface RuleProcessorInterface
     {
@@ -81055,72 +82083,13 @@ namespace Automattic\WooCommerce\Admin\RemoteInboxNotifications {
         }
     }
     /**
-     * Rule processor that performs a comparison operation against a value in the
-     * stored state object.
-     *
-     * @deprecated 8.8.0
-     */
-    class StoredStateRuleProcessor extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\StoredStateRuleProcessor';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
-    }
-    /**
-     * Handles stored state setup for products.
-     *
-     * @deprecated 8.8.0
-     */
-    class StoredStateSetupForProducts extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\StoredStateSetupForProducts';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
-    }
-    /**
-     * Rule processor that passes when a store's payments volume exceeds a provided amount.
-     *
-     * @deprecated 8.8.0
-     */
-    class TotalPaymentsVolumeProcessor extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\TotalPaymentsVolumeProcessor';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
-    }
-    /**
      * An interface to define a transformer.
      *
      * Interface TransformerInterface
      *
      * @package Automattic\WooCommerce\Admin\RemoteInboxNotifications
+     *
+     * @deprecated 9.4.0 Use \Automattic\WooCommerce\Admin\RemoteSpecs\Transformers\TransformerInterface instead.
      */
     interface TransformerInterface
     {
@@ -81142,271 +82111,6 @@ namespace Automattic\WooCommerce\Admin\RemoteInboxNotifications {
          * @return mixed
          */
         public function validate(\stdClass $arguments = null);
-    }
-    /**
-     * A simple service class for the Transformer classes.
-     *
-     * Class TransformerService
-     *
-     * @package Automattic\WooCommerce\Admin\RemoteInboxNotifications
-     *
-     * @deprecated 8.8.0
-     */
-    class TransformerService extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\Transformers\\TransformerService';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
-    }
-}
-namespace Automattic\WooCommerce\Admin\RemoteInboxNotifications\Transformers {
-    /**
-     * Search array value by one of its key.
-     *
-     * @package Automattic\WooCommerce\Admin\RemoteInboxNotifications\Transformers
-     *
-     * @deprecated 8.8.0
-     */
-    class ArrayColumn extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\Transformers\\ArrayColumn';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
-    }
-    /**
-     * Flatten nested array.
-     *
-     * @package Automattic\WooCommerce\Admin\RemoteInboxNotifications\Transformers
-     *
-     * @deprecated 8.8.0
-     */
-    class ArrayFlatten extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\Transformers\\ArrayColumn';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
-    }
-    /**
-     * Search array value by one of its key.
-     *
-     * @package Automattic\WooCommerce\Admin\RemoteInboxNotifications\Transformers
-     *
-     * @deprecated 8.8.0
-     */
-    class ArrayKeys extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\Transformers\\ArrayColumn';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
-    }
-    /**
-     * Searches a given a given value in the array.
-     *
-     * @package Automattic\WooCommerce\Admin\RemoteInboxNotifications\Transformers
-     *
-     * @deprecated 8.8.0
-     */
-    class ArraySearch extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\Transformers\\ArrayColumn';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
-    }
-    /**
-     * Search array value by one of its key.
-     *
-     * @package Automattic\WooCommerce\Admin\RemoteInboxNotifications\Transformers
-     *
-     * @deprecated 8.8.0
-     */
-    class ArrayValues extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\Transformers\\ArrayColumn';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
-    }
-    /**
-     * Count elements in Array or Countable object.
-     *
-     * @package Automattic\WooCommerce\Admin\RemoteInboxNotifications\Transformers
-     *
-     * @deprecated 8.8.0
-     */
-    class Count extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\Transformers\\ArrayColumn';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
-    }
-    /**
-     * Find an array value by dot notation.
-     *
-     * @package Automattic\WooCommerce\Admin\RemoteInboxNotifications\Transformers
-     *
-     * @deprecated 8.8.0
-     */
-    class DotNotation extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\Transformers\\ArrayColumn';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
-    }
-    /**
-     * Prepare site URL for comparison.
-     *
-     * @package Automattic\WooCommerce\Admin\RemoteInboxNotifications\Transformers
-     *
-     * @deprecated 8.8.0
-     */
-    class PrepareUrl extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\Transformers\\ArrayColumn';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
-    }
-}
-namespace Automattic\WooCommerce\Admin\RemoteInboxNotifications {
-    /**
-     * WCAdminActiveForProvider class
-     *
-     * @deprecated 8.8.0
-     */
-    class WCAdminActiveForProvider extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\WCAdminActiveForProvider';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
-    }
-    /**
-     * Rule processor for publishing if wc-admin has been active for at least the
-     * given number of seconds.
-     *
-     * @deprecated 8.8.0
-     */
-    class WCAdminActiveForRuleProcessor extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\WCAdminActiveForRuleProcessor';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
-    }
-    /**
-     * Rule processor for sending when WooCommerce Admin has been updated.
-     *
-     * @deprecated 8.8.0
-     */
-    class WooCommerceAdminUpdatedRuleProcessor extends \Automattic\WooCommerce\Admin\DeprecatedClassFacade
-    {
-        /**
-         * The name of the non-deprecated class that this facade covers.
-         *
-         * @var string
-         */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\RemoteSpecs\\RuleProcessors\\WooCommerceAdminUpdatedRuleProcessor';
-        /**
-         * The version that this class was deprecated in.
-         *
-         * @var string
-         */
-        protected static $deprecated_in_version = '8.8.0';
     }
 }
 namespace Automattic\WooCommerce\Admin\RemoteSpecs\RuleProcessors {
@@ -82641,7 +83345,7 @@ namespace Automattic\WooCommerce\Admin\RemoteSpecs\RuleProcessors\Transformers {
          * @param bool   $is_default_set flag on is default value set.
          * @param string $default_value default value.
          *
-         * @throws InvalidArgumentException Throws when one of the requried arguments is missing.
+         * @throws InvalidArgumentException Throws when one of the required arguments is missing.
          * @return mixed|null
          */
         public static function apply($target_value, array $transformer_configs, $is_default_set, $default_value)
@@ -83468,6 +84172,8 @@ namespace Automattic\WooCommerce {
 namespace Automattic\WooCommerce\Blocks\AI {
     /**
      * Class Configuration
+     *
+     * @internal
      */
     class Configuration
     {
@@ -83538,6 +84244,8 @@ namespace Automattic\WooCommerce\Blocks\AI {
     }
     /**
      * Class Connection
+     *
+     * @internal
      */
     class Connection
     {
@@ -83594,6 +84302,8 @@ namespace Automattic\WooCommerce\Blocks\AIContent {
      * ContentProcessor class.
      *
      * Process images for content
+     *
+     * @internal
      */
     class ContentProcessor
     {
@@ -83637,6 +84347,8 @@ namespace Automattic\WooCommerce\Blocks\AIContent {
     }
     /**
      * Patterns Dictionary class.
+     *
+     * @internal
      */
     class PatternsDictionary
     {
@@ -83651,6 +84363,8 @@ namespace Automattic\WooCommerce\Blocks\AIContent {
     }
     /**
      * Patterns Helper class.
+     *
+     * @internal
      */
     class PatternsHelper
     {
@@ -83716,6 +84430,8 @@ namespace Automattic\WooCommerce\Blocks\AIContent {
     }
     /**
      * Pattern Images class.
+     *
+     * @internal
      */
     class UpdatePatterns
     {
@@ -83869,6 +84585,8 @@ namespace Automattic\WooCommerce\Blocks\AIContent {
     }
     /**
      * Pattern Images class.
+     *
+     * @internal
      */
     class UpdateProducts
     {
@@ -84013,11 +84731,11 @@ namespace Automattic\WooCommerce\Blocks\AIContent {
         /**
          * Update the product with the new content.
          *
-         * @param \WC_Product $product The product.
-         * @param int         $product_image_id The product image ID.
-         * @param string      $product_title The product title.
-         * @param string      $product_description The product description.
-         * @param int         $product_price The product price.
+         * @param \WC_Product         $product The product.
+         * @param int|string|WP_Error $product_image_id The product image ID.
+         * @param string              $product_title The product title.
+         * @param string              $product_description The product description.
+         * @param int                 $product_price The product price.
          *
          * @return int|\WP_Error
          */
@@ -84141,6 +84859,12 @@ namespace Automattic\WooCommerce\Blocks\Assets {
          * @var array|null
          */
         private $script_data = null;
+        /**
+         * Tracks whether script_data was modified during the current request.
+         *
+         * @var boolean
+         */
+        private $script_data_modified = false;
         /**
          * Stores the hash for the script data, made up of the site url, plugin version and package path.
          *
@@ -84749,6 +85473,14 @@ namespace Automattic\WooCommerce\Blocks {
          * @param PTKPatternsStore $ptk_patterns_store An instance of PTKPatternsStore.
          */
         public function __construct(\Automattic\WooCommerce\Blocks\Domain\Package $package, \Automattic\WooCommerce\Blocks\Patterns\PatternRegistry $pattern_registry, \Automattic\WooCommerce\Blocks\Patterns\PTKPatternsStore $ptk_patterns_store)
+        {
+        }
+        /**
+         * Returns the Patterns dictionary.
+         *
+         * @return array|WP_Error
+         */
+        private function get_patterns_dictionary()
         {
         }
         /**
@@ -86046,6 +86778,18 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @var string
          */
         protected $block_name = 'cart-express-payment-block';
+        /**
+         * Uniform default_styles for the express payment buttons
+         *
+         * @var boolean
+         */
+        protected $default_styles = null;
+        /**
+         * Current styles for the express payment buttons
+         *
+         * @var boolean
+         */
+        protected $current_styles = null;
     }
     /**
      * CartItemsBlock class.
@@ -86488,6 +87232,42 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @var string
          */
         protected $block_name = 'checkout-express-payment-block';
+        /**
+         * Default styles for the express payment buttons
+         *
+         * @var boolean
+         */
+        protected $default_styles = null;
+        /**
+         * Current styles for the express payment buttons
+         *
+         * @var boolean
+         */
+        protected $current_styles = null;
+        /**
+         * Initialise the block
+         */
+        protected function initialize()
+        {
+        }
+        /**
+         * Synchorize the express payment attributes between the Cart and Checkout pages.
+         *
+         * @param int     $post_id Post ID.
+         * @param WP_Post $post Post object.
+         */
+        public function sync_express_payment_attrs($post_id, $post)
+        {
+        }
+        /**
+         * Update the express payment attributes in the other page (Cart or Checkout).
+         *
+         * @param string $cart_or_checkout The page to update.
+         * @param array  $updated_attrs     The updated attributes.
+         */
+        private function update_other_page_with_express_payment_attrs($cart_or_checkout, $updated_attrs)
+        {
+        }
     }
     /**
      * CheckoutFieldsBlock class.
@@ -88210,6 +88990,57 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes\OrderConfirmation {
         }
     }
     /**
+     * CreateAccount class.
+     */
+    class CreateAccount extends \Automattic\WooCommerce\Blocks\BlockTypes\OrderConfirmation\AbstractOrderConfirmationBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'order-confirmation-create-account';
+        /**
+         * Get the frontend script handle for this block type.
+         *
+         * @see $this->register_block_type()
+         * @param string $key Data to get, or default to everything.
+         * @return array|string
+         */
+        protected function get_block_type_script($key = null)
+        {
+        }
+        /**
+         * Process posted account form.
+         *
+         * @param \WC_Order $order Order object.
+         * @return \WP_Error|int
+         */
+        protected function process_form_post($order)
+        {
+        }
+        /**
+         * This renders the content of the block within the wrapper.
+         *
+         * @param \WC_Order    $order Order object.
+         * @param string|false $permission If the current user can view the order details or not.
+         * @param array        $attributes Block attributes.
+         * @param string       $content Original block content.
+         * @return string
+         */
+        protected function render_content($order, $permission = false, $attributes = [], $content = '')
+        {
+        }
+        /**
+         * Render the block when an account has been registered.
+         *
+         * @return string
+         */
+        protected function render_confirmation()
+        {
+        }
+    }
+    /**
      * Downloads class.
      */
     class Downloads extends \Automattic\WooCommerce\Blocks\BlockTypes\OrderConfirmation\AbstractOrderConfirmationBlock
@@ -89051,6 +89882,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          */
         protected $custom_order_opts = array('popularity', 'rating');
         /**
+         * The render state of the product collection block.
+         *
+         * These props are runtime-based and reinitialize for every block on a page.
+         *
+         * @var array
+         */
+        private $render_state = array('has_results' => false, 'has_no_results_block' => false);
+        /**
          * Initialize this block type.
          *
          * - Hook into WP lifecycle.
@@ -89058,6 +89897,31 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * - Hook into pre_render_block to update the query.
          */
         protected function initialize()
+        {
+        }
+        /**
+         * Handle the rendering of the block.
+         *
+         * @param string $block_content The block content about to be rendered.
+         * @param array  $block The block being rendered.
+         *
+         * @return string
+         */
+        public function handle_rendering($block_content, $block)
+        {
+        }
+        /**
+         * Check if the block should be prevented from rendering.
+         *
+         * @return bool
+         */
+        private function should_prevent_render()
+        {
+        }
+        /**
+         * Reset the render state.
+         */
+        private function reset_render_state()
         {
         }
         /**
@@ -89167,6 +90031,18 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
+         * Add interactivity to the Product Title block within Product Collection.
+         * This enables the triggering of a custom event when the product title is clicked.
+         *
+         * @param string    $block_content The block content.
+         * @param array     $block         The full block, including name and attributes.
+         * @param \WP_Block $instance      The block instance.
+         * @return string   Modified block content with added interactivity.
+         */
+        public function add_product_title_click_event_directives($block_content, $block, $instance)
+        {
+        }
+        /**
          * Process pagination links within the block content.
          *
          * @param string $block_content The block content.
@@ -89196,8 +90072,8 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         }
         /**
          * Check inner blocks of Product Collection block if there's one
-         * incompatible with Interactivity API and if so, disable client-side
-         * naviagtion.
+         * incompatible with the Interactivity API and if so, disable client-side
+         * navigation.
          *
          * @param array $parsed_block The block being rendered.
          * @return string Returns the parsed block, unmodified.
@@ -89336,7 +90212,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * - For array items with numeric keys, we merge them as normal.
          * - For array items with string keys:
          *
-         *   - If the value isn't array, we'll use the value comming from the merge array.
+         *   - If the value isn't array, we'll use the value coming from the merge array.
          *     $base = ['orderby' => 'date']
          *     $new  = ['orderby' => 'meta_value_num']
          *     Result: ['orderby' => 'meta_value_num']
@@ -89707,74 +90583,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         }
     }
     /**
-     * Product Filter Block.
-     */
-    final class ProductFilter extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
-    {
-        /**
-         * Block name.
-         *
-         * @var string
-         */
-        protected $block_name = 'product-filter';
-        /**
-         * Get the frontend style handle for this block type.
-         *
-         * @return null
-         */
-        protected function get_block_type_style()
-        {
-        }
-        /**
-         * Get the frontend script handle for this block type.
-         *
-         * @see $this->register_block_type()
-         * @param string $key Data to get, or default to everything.
-         * @return array|string|null
-         */
-        protected function get_block_type_script($key = null)
-        {
-        }
-        /**
-         * Extra data passed through from server to client for block.
-         *
-         * @param array $attributes  Any attributes that currently are available from the block.
-         *                           Note, this will be empty in the editor context when the block is
-         *                           not in the post content on editor load.
-         */
-        protected function enqueue_data(array $attributes = [])
-        {
-        }
-        /**
-         * Check array for checked item.
-         *
-         * @param array $items Items to check.
-         */
-        private function hasSelectedFilter($items)
-        {
-        }
-        /**
-         * Render the block.
-         *
-         * @param array    $attributes Block attributes.
-         * @param string   $content    Block content.
-         * @param WP_Block $block      Block instance.
-         * @return string Rendered block type output.
-         */
-        protected function render($attributes, $content, $block)
-        {
-        }
-        /**
-         * Generate a unique navigation ID for the block.
-         *
-         * @param mixed $block - Block instance.
-         * @return string - Unique navigation ID.
-         */
-        private function generate_navigation_id($block)
-        {
-        }
-    }
-    /**
      * Product Filter: Active Block.
      */
     final class ProductFilterActive extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
@@ -89906,31 +90714,12 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         /**
          * Render the block.
          *
-         * @param array    $attributes Block attributes.
-         * @param string   $content    Block content.
-         * @param WP_Block $block      Block instance.
+         * @param array    $block_attributes Block attributes.
+         * @param string   $content          Block content.
+         * @param WP_Block $block            Block instance.
          * @return string Rendered block type output.
          */
-        protected function render($attributes, $content, $block)
-        {
-        }
-        /**
-         * Render the dropdown.
-         *
-         * @param array $options    Data to render the dropdown.
-         * @param bool  $attributes Block attributes.
-         */
-        private function render_attribute_dropdown($options, $attributes)
-        {
-        }
-        /**
-         * Render the attribute filter checkbox list.
-         *
-         * @param mixed $options Attribute filter options to render in the checkbox list.
-         * @param mixed $attributes Block attributes.
-         * @return string
-         */
-        private function render_attribute_checkbox_list($options, $attributes)
+        protected function render($block_attributes, $content, $block)
         {
         }
         /**
@@ -89955,6 +90744,62 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * Register pattern for default product attribute.
          */
         public function register_block_patterns()
+        {
+        }
+        /**
+         * Skip default rendering routine for inner blocks.
+         *
+         * @param array $settings Array of determined settings for registering a block type.
+         * @param array $metadata Metadata provided for registering a block type.
+         * @return array
+         */
+        public function add_block_type_metadata_settings($settings, $metadata)
+        {
+        }
+    }
+    /**
+     * Product Filter: Checkbox List Block.
+     */
+    final class ProductFilterCheckboxList extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'product-filter-checkbox-list';
+        /**
+         * Render the block.
+         *
+         * @param array    $attributes Block attributes.
+         * @param string   $content    Block content.
+         * @param WP_Block $block      Block instance.
+         * @return string Rendered block type output.
+         */
+        protected function render($attributes, $content, $block)
+        {
+        }
+    }
+    /**
+     * Product Filter: Chips Block.
+     */
+    final class ProductFilterChips extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'product-filter-chips';
+        /**
+         * Render the block.
+         *
+         * @param array    $attributes Block attributes.
+         * @param string   $content    Block content.
+         * @param WP_Block $block      Block instance.
+         * @return string Rendered block type output.
+         */
+        protected function render($attributes, $content, $block)
         {
         }
     }
@@ -90251,11 +91096,41 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
-         * Get the frontend style handle for this block type.
+         * Extra data passed through from server to client for block.
          *
-         * @return null
+         * @param array $attributes  Any attributes that currently are available from the block.
+         *                           Note, this will be empty in the editor context when the block is
+         *                           not in the post content on editor load.
          */
-        protected function get_block_type_style()
+        protected function enqueue_data(array $attributes = array())
+        {
+        }
+        /**
+         * Return the dialog content.
+         *
+         * @return string
+         */
+        protected function render_dialog()
+        {
+        }
+        /**
+         * This method is used to render the template part. For each template part, we parse the blocks and render them.
+         *
+         * @param string $template_part The template part to render.
+         * @return string The rendered template part.
+         */
+        protected function render_template_part($template_part)
+        {
+        }
+        /**
+         * Inject dialog into the product filters HTML.
+         *
+         * @param string $product_filters_html The Product Filters HTML.
+         * @param string $dialog_html The dialog HTML.
+         *
+         * @return string
+         */
+        protected function inject_dialog($product_filters_html, $dialog_html)
         {
         }
         /**
@@ -90267,6 +91142,26 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @return string Rendered block type output.
          */
         protected function render($attributes, $content, $block)
+        {
+        }
+        /**
+         * Generate a unique navigation ID for the block.
+         *
+         * @param mixed $block - Block instance.
+         * @return string - Unique navigation ID.
+         */
+        private function generate_navigation_id($block)
+        {
+        }
+        /**
+         * Parse the filter parameters from the URL.
+         * For now we only get the global query params from the URL. In the future,
+         * we should get the query params based on $query_id.
+         *
+         * @param int $query_id Query ID.
+         * @return array Parsed filter params.
+         */
+        private function get_filter_query_params($query_id)
         {
         }
     }
@@ -90328,16 +91223,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @return string[]
          */
         protected function get_block_type_uses_context()
-        {
-        }
-        /**
-         * Get the frontend script handle for this block type.
-         *
-         * @see $this->register_block_type()
-         * @param string $key Data to get, or default to everything.
-         * @return array|string|null
-         */
-        protected function get_block_type_script($key = null)
         {
         }
         /**
@@ -91361,7 +92246,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * - For array items with numeric keys, we merge them as normal.
          * - For array items with string keys:
          *
-         *   - If the value isn't array, we'll use the value comming from the merge array.
+         *   - If the value isn't array, we'll use the value coming from the merge array.
          *     $base = ['orderby' => 'date']
          *     $new  = ['orderby' => 'meta_value_num']
          *     Result: ['orderby' => 'meta_value_num']
@@ -92603,7 +93488,7 @@ namespace Automattic\WooCommerce\Blocks {
          * and prevent them from showing as an option in the Legacy Widget block.
          *
          * @param array $widget_types An array of widgets hidden in core.
-         * @return array $widget_types An array inluding the WooCommerce widgets to hide.
+         * @return array $widget_types An array including the WooCommerce widgets to hide.
          */
         public function hide_legacy_widgets_with_block_equivalent($widget_types)
         {
@@ -94689,6 +95574,8 @@ namespace Automattic\WooCommerce\Blocks {
 namespace Automattic\WooCommerce\Blocks\Patterns {
     /**
      * AIPatterns class.
+     *
+     * @internal
      */
     class AIPatterns
     {
@@ -94750,6 +95637,8 @@ namespace Automattic\WooCommerce\Blocks\Patterns {
     }
     /**
      * PatternsToolkit class.
+     *
+     * @internal
      */
     class PTKClient
     {
@@ -94769,6 +95658,8 @@ namespace Automattic\WooCommerce\Blocks\Patterns {
     }
     /**
      * PTKPatterns class.
+     *
+     * @internal
      */
     class PTKPatternsStore
     {
@@ -94889,22 +95780,21 @@ namespace Automattic\WooCommerce\Blocks\Patterns {
     }
     /**
      * PatternRegistry class.
+     *
+     * @internal
      */
     class PatternRegistry
     {
         const SLUG_REGEX = '/^[A-z0-9\\/_-]+$/';
         const COMMA_SEPARATED_REGEX = '/[\\s,]+/';
         /**
-         * Associates pattern slugs with their localized labels for categorization.
+         * Returns pattern slugs with their localized labels for categorization.
+         *
          * Each key represents a unique pattern slug, while the value is the localized label.
          *
-         * @var array $category_labels
+         * @return array<string, string>
          */
-        private $category_labels;
-        /**
-         * Constructor.
-         */
-        public function __construct()
+        private function get_category_labels()
         {
         }
         /**
@@ -95479,7 +96369,7 @@ namespace Automattic\WooCommerce\Blocks {
         {
         }
         /**
-         * Filter the posts clauses of the main query to suport global filters.
+         * Filter the posts clauses of the main query to support global filters.
          *
          * @param array     $args     Query args.
          * @param \WP_Query $wp_query WP_Query object.
@@ -96355,7 +97245,7 @@ namespace Automattic\WooCommerce\Blocks\Templates {
         {
         }
         /**
-         * Check if block is within the product-query namespace
+         * Check whether block is within the product-query namespace.
          *
          * @param array $block Parsed block data.
          */
@@ -96363,7 +97253,7 @@ namespace Automattic\WooCommerce\Blocks\Templates {
         {
         }
         /**
-         * Check if block has isInherited attribute asigned
+         * Check whether block has isInherited attribute assigned.
          *
          * @param array $block Parsed block data.
          */
@@ -96381,7 +97271,7 @@ namespace Automattic\WooCommerce\Blocks\Templates {
         {
         }
         /**
-         * Check if block is a Post template
+         * Check whether block is a Post template.
          *
          * @param string $block_name Block name.
          */
@@ -96389,7 +97279,7 @@ namespace Automattic\WooCommerce\Blocks\Templates {
         {
         }
         /**
-         * Check if block is a Product Template
+         * Check whether block is a Product Template.
          *
          * @param string $block_name Block name.
          */
@@ -96397,7 +97287,7 @@ namespace Automattic\WooCommerce\Blocks\Templates {
         {
         }
         /**
-         * Check if block is eaither a Post template or Product Template
+         * Check if block is either a Post template or a Product Template
          *
          * @param string $block_name Block name.
          */
@@ -97219,12 +98109,10 @@ namespace Automattic\WooCommerce\Blocks\Templates {
         /**
          * Add the block template objects to be used.
          *
-         * @param array  $query_result Array of template objects.
-         * @param array  $query Optional. Arguments to retrieve templates.
-         * @param string $template_type wp_template or wp_template_part.
+         * @param array $query_result Array of template objects.
          * @return array
          */
-        public function update_single_product_content($query_result, $query, $template_type)
+        public function update_single_product_content($query_result)
         {
         }
         /**
@@ -97344,7 +98232,7 @@ namespace Automattic\WooCommerce\Blocks\Templates {
         }
         /**
          * Check if the Single Product template has a single product template block:
-         * woocommerce/product-gallery-image, woocommerce/product-details, woocommerce/add-to-cart-form]
+         * woocommerce/product-gallery-image, woocommerce/product-details, woocommerce/add-to-cart-form, etc.
          *
          * @param array $parsed_blocks Array of parsed block objects.
          * @return bool True if the template has a single product template block, false otherwise.
@@ -97691,6 +98579,17 @@ namespace Automattic\WooCommerce\Blocks\Utils {
         {
         }
         /**
+         * Determines whether the provided $blocks contains any of the $block_names,
+         * or if they contain a pattern that contains any of the $block_names.
+         *
+         * @param string[]   $block_names Full block types to look for.
+         * @param WP_Block[] $blocks      Array of block objects.
+         * @return bool Whether the content contains the specified block.
+         */
+        public static function has_block_including_patterns($block_names, $blocks)
+        {
+        }
+        /**
          * Returns whether the passed `$template` has the legacy template block.
          *
          * @param object $template The template object.
@@ -97835,6 +98734,26 @@ namespace Automattic\WooCommerce\Blocks\Utils {
          * @return array An array of formatted shipping zones.
          */
         public static function get_shipping_zones()
+        {
+        }
+        /**
+         * Recursively search the checkout block to find the express checkout block and
+         * get the button style attributes
+         *
+         * @param array  $blocks Blocks to search.
+         * @param string $cart_or_checkout The block type to check.
+         */
+        public static function find_express_checkout_attributes($blocks, $cart_or_checkout)
+        {
+        }
+        /**
+         * Given an array of blocks, find the express payment block and update its attributes.
+         *
+         * @param array  $blocks Blocks to search.
+         * @param string $cart_or_checkout The block type to check.
+         * @param array  $updated_attrs The new attributes to set.
+         */
+        public static function update_blocks_with_new_attrs(&$blocks, $cart_or_checkout, $updated_attrs)
         {
         }
     }
@@ -98384,7 +99303,7 @@ namespace Automattic\WooCommerce\Caching {
          * @param object|array    $object The new object that will replace the already cached one.
          * @param int|string|null $id Id of the object to be cached, if null, get_object_id will be used to get it.
          * @param int             $expiration Expiration of the cached data in seconds from the current time, or DEFAULT_EXPIRATION to use the default value.
-         * @return bool True on success, false on error or if no object wiith the supplied id was cached.
+         * @return bool True on success, false on error or if no object with the supplied id was cached.
          * @throws CacheException Invalid parameter, or null id was passed and get_object_id returns null too.
          */
         public function update_if_cached($object, $id = null, int $expiration = self::DEFAULT_EXPIRATION) : bool
@@ -99125,7 +100044,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          * ---
          *
          * [--order-types]
-         * : Comma seperated list of order types that needs to be verified. For example, --order-types=shop_order,shop_order_refund
+         * : Comma-separated list of order types that needs to be verified. For example, --order-types=shop_order,shop_order_refund
          * ---
          * default: Output of function `wc_get_order_types( 'cot-migration' )`
          *
@@ -99258,7 +100177,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *    # Cleanup post data for order 314.
          *    $ wp wc hpos cleanup 314
          *
-         *    # Cleanup postmeta for orders with IDs betweeen 10 and 100 and order 314.
+         *    # Cleanup postmeta for orders with IDs between 10 and 100 and order 314.
          *    $ wp wc hpos cleanup 10-100 314
          *
          *    # Cleanup postmeta for all orders.
@@ -99345,10 +100264,10 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          * ---
          *
          * [--meta_keys=<meta_keys>]
-         * : Comma separated list of meta keys to backfill.
+         * : Comma-separated list of meta keys to backfill.
          *
          * [--props=<props>]
-         * : Comma separated list of order properties to backfill.
+         * : Comma-separated list of order properties to backfill.
          *
          * @since 8.6.0
          *
@@ -99439,7 +100358,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
     abstract class TableMigrator
     {
         /**
-         * An array of cummulated error messages.
+         * An array of cumulated error messages.
          *
          * @var array
          */
@@ -99838,7 +100757,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          * @return string Generated queries for batch update. Would be of the form:
          * INSERT INTO $table ( $columns ) VALUES
          *  ($value for row 1)
-         *  ($valye for row 2)
+         *  ($value for row 2)
          * ...
          * ON DUPLICATE KEY UPDATE
          * $column1 = VALUES($column1)
@@ -101325,17 +102244,26 @@ namespace Automattic\WooCommerce {
         /**
          * Array of package names and their main package classes.
          *
-         * One a package has been merged into WooCommerce Core it should be moved fron the package list and placed in
+         * One a package has been merged into WooCommerce Core it should be moved from the package list and placed in
          * this list. This will ensure that the feature plugin is disabled as well as provide the class to handle
          * initialization for the now-merged feature plugin.
          *
          * Once a package has been merged into WooCommerce Core it should have its slug added here. This will ensure
-         * that we deactivate the feature plugin automaticatlly to prevent any problems caused by conflicts between
+         * that we deactivate the feature plugin automatically to prevent any problems caused by conflicts between
          * the two versions caused by them both being active.
+         *
+         * The packages included in this array cannot be deactivated and will always load with WooCommerce core.
          *
          * @var array Key is the package name/directory, value is the main package class which handles init.
          */
-        protected static $merged_packages = array('woocommerce-admin' => '\\Automattic\\WooCommerce\\Admin\\Composer\\Package', 'woocommerce-gutenberg-products-block' => '\\Automattic\\WooCommerce\\Blocks\\Package');
+        protected static $base_packages = array('woocommerce-admin' => '\\Automattic\\WooCommerce\\Admin\\Composer\\Package', 'woocommerce-gutenberg-products-block' => '\\Automattic\\WooCommerce\\Blocks\\Package');
+        /**
+         * Similar to $base_packages, but
+         * the packages included in this array can be deactivated via the 'woocommerce_merged_packages' filter.
+         *
+         * @var array Key is the package name/directory, value is the main package class which handles init.
+         */
+        protected static $merged_packages = array('woocommerce-brands' => '\\Automattic\\WooCommerce\\Internal\\Brands');
         /**
          * Init the package loader.
          *
@@ -101360,6 +102288,39 @@ namespace Automattic\WooCommerce {
         {
         }
         /**
+         * Checks a package exists by looking for it's directory.
+         *
+         * @param string $class_name Class name.
+         * @return boolean
+         */
+        public static function should_load_class($class_name)
+        {
+        }
+        /**
+         * Gets all merged, enabled packages.
+         *
+         * @return array
+         */
+        protected static function get_enabled_packages()
+        {
+        }
+        /**
+         * Checks if a package is enabled.
+         *
+         * @param string $package Package name.
+         * @return boolean
+         */
+        public static function is_package_enabled($package)
+        {
+        }
+        /**
+         * Prepare merged packages for initialization.
+         * Especially useful when running actions early in the 'plugins_loaded' timeline.
+         */
+        public static function prepare_packages()
+        {
+        }
+        /**
          * Deactivates merged feature plugins.
          *
          * Once a feature plugin is merged into WooCommerce Core it should be deactivated. This method will
@@ -101368,6 +102329,34 @@ namespace Automattic\WooCommerce {
          * because it will be deactivated on the request that updates or activates WooCommerce.
          */
         protected static function deactivate_merged_packages()
+        {
+        }
+        /**
+         * Prevent plugins already merged into WooCommerce core from getting activated as standalone plugins.
+         *
+         * @param string $plugin Plugin name.
+         */
+        public static function deactivate_merged_plugins($plugin)
+        {
+        }
+        /**
+         * Mark merged plugins as pending update.
+         * This is required for correctly displaying maintenance notices.
+         *
+         * @param array $plugins Plugins list.
+         */
+        public static function mark_merged_plugins_as_pending_update($plugins)
+        {
+        }
+        /**
+         * Displays a maintenance notice next to merged plugins, to inform users
+         * that the plugin functionality is now offered by WooCommerce core.
+         *
+         * Requires 'mark_merged_plugins_as_pending_update' to properly display this notice.
+         *
+         * @param string $plugin_file Plugin file.
+         */
+        public static function display_notice_for_merged_plugins($plugin_file)
         {
         }
         /**
@@ -103880,33 +104869,12 @@ namespace Automattic\WooCommerce\StoreApi\Routes\V1 {
         {
         }
         /**
-         * Create a new account for a customer.
+         * This validates if the order can be placed regarding settings in WooCommerce > Settings > Accounts & Privacy
+         * If registration during checkout is disabled, guest checkout is disabled and the user is not logged in, prevent checkout.
          *
-         * The account is created with a generated username. The customer is sent
-         * an email notifying them about the account and containing a link to set
-         * their (initial) password.
-         *
-         * Intended as a replacement for wc_create_new_customer in WC core.
-         *
-         * @throws \Exception If an error is encountered when creating the user account.
-         *
-         * @param string $user_email The email address to use for the new account.
-         * @param string $first_name The first name to use for the new account.
-         * @param string $last_name  The last name to use for the new account.
-         * @param string $password   The password to use for the new account. If empty, a password will be generated.
-         *
-         * @return int User id if successful
+         * @throws RouteException
          */
-        private function create_customer_account($user_email, $first_name, $last_name, $password = '')
-        {
-        }
-        /**
-         * Convert an account creation error to an exception.
-         *
-         * @param \WP_Error $error An error object.
-         * @return \Exception.
-         */
-        private function map_create_account_error(\WP_Error $error)
+        private function validate_user_can_place_order()
         {
         }
     }
@@ -108876,7 +109844,7 @@ namespace Automattic\WooCommerce\Utilities {
          * Note that the doc block for `wp_get_active_and_valid_plugins` says it returns "Array of paths to plugin files
          * relative to the plugins directory", but it actually returns absolute paths.
          *
-         * @return string[] Array of absolute paths to plugin files.
+         * @return string[] Array of plugin basenames (paths relative to the plugin directory).
          */
         public function get_all_active_valid_plugins()
         {
@@ -110021,6 +110989,72 @@ namespace {
      * @return string
      */
     function wc_attribute_taxonomy_slug($attribute_name)
+    {
+    }
+    /**
+     * Helper function :: wc_get_brand_thumbnail_url function.
+     *
+     * @param  int    $brand_id Brand ID.
+     * @param  string $size     Thumbnail image size.
+     * @return string
+     */
+    function wc_get_brand_thumbnail_url($brand_id, $size = 'full')
+    {
+    }
+    /**
+     * Helper function :: wc_get_brand_thumbnail_image function.
+     *
+     * @since 9.4.0
+     *
+     * @param  object $brand Brand term.
+     * @param  string $size  Thumbnail image size.
+     * @return string
+     */
+    function wc_get_brand_thumbnail_image($brand, $size = '')
+    {
+    }
+    /**
+     * Retrieves product's brands.
+     *
+     * @param  int    $post_id Post ID (default: 0).
+     * @param  string $sep     Seperator (default: ').
+     * @param  string $before  Before item (default: '').
+     * @param  string $after   After item (default: '').
+     * @return array  List of terms
+     */
+    function wc_get_brands($post_id = 0, $sep = ', ', $before = '', $after = '')
+    {
+    }
+    /**
+     * Polyfill for get_brand_thumbnail_image.
+     *
+     * @param int    $brand_id Brand ID.
+     * @param string $size Thumbnail image size.
+     * @return string
+     */
+    function get_brand_thumbnail_url($brand_id, $size = 'full')
+    {
+    }
+    /**
+     * Polyfill for get_brand_thumbnail_image.
+     *
+     * @param object $brand Brand term.
+     * @param string $size Thumbnail image size.
+     * @return string
+     */
+    function get_brand_thumbnail_image($brand, $size = '')
+    {
+    }
+    /**
+     * Polyfill for get_brands.
+     *
+     * @param  int    $post_id Post ID (default: 0).
+     * @param  string $sep     Seperator (default: ').
+     * @param  string $before  Before item (default: '').
+     * @param  string $after   After item (default: '').
+     * @return array  List of terms
+     */
+    function get_brands($post_id = 0, $sep = ', ', $before = '', $after = '')
     {
     }
     /**
@@ -113692,6 +114726,22 @@ namespace {
     {
     }
     /**
+     * Replace the title part of the document title.
+     *
+     * @param array $title {
+     *     The document title parts.
+     *
+     *     @type string $title   Title of the viewed page.
+     *     @type string $page    Optional. Page number if paginated.
+     *     @type string $tagline Optional. Site description when on home page.
+     *     @type string $site    Optional. Site title when not on home page.
+     * }
+     * @return array
+     */
+    function wc_page_endpoint_document_title_parts($title)
+    {
+    }
+    /**
      * Retrieve page ids - used for myaccount, edit_address, shop, cart, checkout, pay, view_order, terms. returns -1 if no page is found.
      *
      * @param string $page Page slug.
@@ -114709,7 +115759,7 @@ namespace {
     {
     }
     /**
-     * Set the current visbility for a product in the woocommerce_loop global.
+     * Set the current visibility for a product in the woocommerce_loop global.
      *
      * @since 4.4.0
      * @param int  $product_id Product it to cache visibility for.
@@ -116198,6 +117248,9 @@ namespace {
     }
     /**
      * Create a new customer.
+     *
+     * @since 9.4.0 Moved woocommerce_registration_error_email_exists filter to the shortcode checkout class.
+     * @since 9.4.0 Removed handling for generating username/password based on settings--this is consumed at form level. Here, if data is missing it will be generated.
      *
      * @param  string $email    Customer email.
      * @param  string $username Customer username.
