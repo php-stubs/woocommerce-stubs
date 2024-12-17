@@ -25,6 +25,20 @@ return \StubsGenerator\Finder::create()
             ->depth('< 1')
             ->path('AccessiblePrivateMethods.php')
     )
+    // WC_Abstract_Order uses these internal traits
+    ->append(
+        \StubsGenerator\Finder::create()
+            ->in(['source/woocommerce/src/Internal/CostOfGoodsSold'])
+            ->files()
+            ->depth('< 1')
+    )
+    ->append(
+        \StubsGenerator\Finder::create()
+            ->in(['source/woocommerce/src/Internal'])
+            ->files()
+            ->depth('< 1')
+            ->path('RegisterHooksInterface.php')
+    )
     ->append(
         \StubsGenerator\Finder::create()
             ->in(['source/woocommerce/src/Internal/Admin/BlockTemplates'])
