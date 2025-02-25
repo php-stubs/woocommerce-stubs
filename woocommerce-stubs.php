@@ -37000,7 +37000,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '9.5.0';
+        public $version = '9.5.2';
         /**
          * WooCommerce Schema version.
          *
@@ -39163,7 +39163,8 @@ namespace {
         {
         }
         /**
-         * Get held time for resources before cancelling the order. Use 60 minutes as sane default.
+         * Get held time for resources before cancelling the order.
+         * It will use `woocommerce_coupon_hold_minutes` filter to get the value, defaulting to `woocommerce_hold_stock_minutes` option if set, with a 1-minute minimum if set to 0.
          * Note that the filter `woocommerce_coupon_hold_minutes` only support minutes because it's getting used elsewhere as well, however this function returns in seconds.
          *
          * @return int
@@ -49134,6 +49135,14 @@ namespace {
         {
         }
         /**
+         * Returns list of allowed roles for the REST API.
+         *
+         * @return array $roles Allowed roles to be updated via the REST API.
+         */
+        private function allowed_roles() : array
+        {
+        }
+        /**
          * Check if a given request has access create customers.
          *
          * @param  WP_REST_Request $request Full details about the request.
@@ -53765,6 +53774,18 @@ namespace {
          * @return WP_Error|boolean
          */
         public function update_items_permissions_check($request)
+        {
+        }
+        /**
+         * Makes sure the current user has access to WRITE the settings APIs.
+         *
+         * @since 9.5.2
+         *
+         * @param WP_REST_Request $request Full data about the request.
+         *
+         * @return WP_Error|boolean True if the request has permission, otherwise false.
+         */
+        public function update_item_permissions_check($request)
         {
         }
         /**
@@ -116179,6 +116200,16 @@ namespace {
      * @param \WC_Order|int $order Order ID or instance.
      */
     function wc_release_stock_for_order($order)
+    {
+    }
+    /**
+     * Release coupons used for another order.
+     *
+     * @since 9.5.2
+     * @param \WC_Order|int $order Order ID or instance.
+     * @param bool          $save Save the order after releasing coupons.
+     */
+    function wc_release_coupons_for_order($order, bool $save = \true)
     {
     }
     /**
