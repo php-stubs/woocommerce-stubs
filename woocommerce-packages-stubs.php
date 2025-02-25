@@ -11,9 +11,17 @@ namespace {
      */
     class ActionScheduler_ActionClaim
     {
-        /** @var string */
+        /**
+         * Claim ID.
+         *
+         * @var string
+         */
         private $id = '';
-        /** @var int[] */
+        /**
+         * Claimed action IDs.
+         *
+         * @var int[]
+         */
         private $action_ids = array();
         /**
          * Construct.
@@ -262,6 +270,11 @@ namespace {
      */
     class ActionScheduler_AdminView_Deprecated
     {
+        /**
+         * Adjust parameters for custom post type.
+         *
+         * @param array $args Args.
+         */
         public function action_scheduler_post_type_args($args)
         {
         }
@@ -310,7 +323,7 @@ namespace {
          * Print the content for our custom columns.
          *
          * @param string $column_name The key for the column for which we should output our content.
-         * @param int $post_id The ID of the 'scheduled-action' post for which this row relates.
+         * @param int    $post_id The ID of the 'scheduled-action' post for which this row relates.
          */
         public static function list_table_column_content($column_name, $post_id)
         {
@@ -320,7 +333,8 @@ namespace {
          *
          * Hooked to the 'post_row_actions' filter.
          *
-         * @param array $actions An associative array of actions which can be performed on the 'scheduled-action' post type.
+         * @param array   $actions An associative array of actions which can be performed on the 'scheduled-action' post type.
+         * @param WP_Post $post The 'scheduled-action' post object.
          * @return array $actions An associative array of actions which can be performed on the 'scheduled-action' post type.
          */
         public static function row_actions($actions, $post)
@@ -343,8 +357,7 @@ namespace {
          *
          * Based on Crontrol::interval() function by Edward Dale: https://wordpress.org/plugins/wp-crontrol/
          *
-         * @param int $interval A interval in seconds.
-         * @return string A human friendly string representation of the interval.
+         * @return void
          */
         public static function admin_notices()
         {
@@ -352,9 +365,9 @@ namespace {
         /**
          * Filter search queries to allow searching by Claim ID (i.e. post_password).
          *
-         * @param string $orderby MySQL orderby string.
-         * @param WP_Query $query Instance of a WP_Query object
-         * @return string MySQL orderby string.
+         * @param string   $orderby MySQL orderby string.
+         * @param WP_Query $query Instance of a WP_Query object.
+         * @return void
          */
         public function custom_orderby($orderby, $query)
         {
@@ -362,9 +375,9 @@ namespace {
         /**
          * Filter search queries to allow searching by Claim ID (i.e. post_password).
          *
-         * @param string $search MySQL search string.
-         * @param WP_Query $query Instance of a WP_Query object
-         * @return string MySQL search string.
+         * @param string   $search MySQL search string.
+         * @param WP_Query $query Instance of a WP_Query object.
+         * @return void
          */
         public function search_post_password($search, $query)
         {
@@ -372,7 +385,7 @@ namespace {
         /**
          * Change messages when a scheduled action is updated.
          *
-         * @param  array $messages
+         * @param  array $messages Messages.
          * @return array
          */
         public function post_updated_messages($messages)
@@ -381,17 +394,32 @@ namespace {
     }
     /**
      * Class ActionScheduler_AdminView
+     *
      * @codeCoverageIgnore
      */
     class ActionScheduler_AdminView extends \ActionScheduler_AdminView_Deprecated
     {
-        /** @var null|self */
-        private static $admin_view = \NULL;
-        /** @var string */
+        /**
+         * Instance.
+         *
+         * @var null|self
+         */
+        private static $admin_view = \null;
+        /**
+         * Screen ID.
+         *
+         * @var string
+         */
         private static $screen_id = 'tools_page_action-scheduler';
-        /** @var ActionScheduler_ListTable */
+        /**
+         * ActionScheduler_ListTable instance.
+         *
+         * @var ActionScheduler_ListTable
+         */
         protected $list_table;
         /**
+         * Get instance.
+         *
          * @return ActionScheduler_AdminView
          * @codeCoverageIgnore
          */
@@ -463,8 +491,6 @@ namespace {
         }
         /**
          * Check past-due actions, and print notice.
-         *
-         * @todo update $link_url to "Past-due" filter when released (see issue #510, PR #511)
          */
         protected function check_pastdue_actions()
         {
@@ -485,21 +511,18 @@ namespace {
          * Data store for querying actions
          *
          * @var ActionScheduler_Store
-         * @access protected
          */
         protected $store;
         /**
          * Prefix for ajax hooks
          *
          * @var string
-         * @access protected
          */
         protected $prefix = 'as';
         /**
          * Action for ajax hooks
          *
          * @var string
-         * @access protected
          */
         protected $action = 'async_request_queue_runner';
         /**
@@ -605,11 +628,23 @@ namespace {
         const STATUS_COMPLETE = 'complete';
         /** Migration minimum required PHP version. */
         const MIN_PHP_VERSION = '5.5';
-        /** @var ActionScheduler_DataController */
+        /**
+         * Instance.
+         *
+         * @var ActionScheduler_DataController
+         */
         private static $instance;
-        /** @var int */
+        /**
+         * Sleep time in seconds.
+         *
+         * @var int
+         */
         private static $sleep_time = 0;
-        /** @var int */
+        /**
+         * Tick count required for freeing memory.
+         *
+         * @var int
+         */
         private static $free_ticks = 50;
         /**
          * Get a flag indicating whether the migration environment dependencies are met.
@@ -721,6 +756,7 @@ namespace {
          * @var int
          */
         protected $utcOffset = 0;
+        // phpcs:ignore WordPress.NamingConventions.ValidVariableName.PropertyNotSnakeCase
         /**
          * Get the unix timestamp of the current object.
          *
@@ -790,11 +826,23 @@ namespace {
      */
     class ActionScheduler_FatalErrorMonitor
     {
-        /** @var ActionScheduler_ActionClaim */
-        private $claim = \NULL;
-        /** @var ActionScheduler_Store */
-        private $store = \NULL;
-        /** @var int */
+        /**
+         * ActionScheduler_ActionClaim instance.
+         *
+         * @var ActionScheduler_ActionClaim
+         */
+        private $claim = \null;
+        /**
+         * ActionScheduler_Store instance.
+         *
+         * @var ActionScheduler_Store
+         */
+        private $store = \null;
+        /**
+         * Current action's ID.
+         *
+         * @var int
+         */
         private $action_id = 0;
         /**
          * Construct.
@@ -860,8 +908,6 @@ namespace {
         }
         /**
          * Create a new exception when the action's args cannot be decoded to an array.
-         *
-         * @author Jeremy Pry
          *
          * @param string $action_id The action ID with bad args.
          * @param mixed  $args      Passed arguments.
@@ -1282,6 +1328,7 @@ namespace {
     }
     /**
      * Implements the admin view of the actions.
+     *
      * @codeCoverageIgnore
      */
     class ActionScheduler_ListTable extends \ActionScheduler_Abstract_ListTable
@@ -1323,9 +1370,8 @@ namespace {
          */
         protected $runner;
         /**
-         * Bulk actions. The key of the array is the method name of the implementation:
-         *
-         *     bulk_<key>(array $ids, string $sql_in).
+         * Bulk actions. The key of the array is the method name of the implementation.
+         * Example: bulk_<key>(array $ids, string $sql_in).
          *
          * See the comments in the parent class for further details
          *
@@ -1537,14 +1583,20 @@ namespace {
     class ActionScheduler_LogEntry
     {
         /**
+         * Action's ID for log entry.
+         *
          * @var int $action_id
          */
         protected $action_id = '';
         /**
+         * Log entry's message.
+         *
          * @var string $message
          */
         protected $message = '';
         /**
+         * Log entry's date.
+         *
          * @var Datetime $date
          */
         protected $date;
@@ -1602,9 +1654,17 @@ namespace {
      */
     abstract class ActionScheduler_Lock
     {
-        /** @var ActionScheduler_Lock */
-        private static $locker = \NULL;
-        /** @var int */
+        /**
+         * Instance.
+         *
+         * @var ActionScheduler_Lock
+         */
+        private static $locker = \null;
+        /**
+         * Duration of lock.
+         *
+         * @var int
+         */
         protected static $lock_duration = \MINUTE_IN_SECONDS;
         /**
          * Check if a lock is set for a given lock type.
@@ -1641,6 +1701,8 @@ namespace {
         {
         }
         /**
+         * Get instance.
+         *
          * @return ActionScheduler_Lock
          */
         public static function instance()
@@ -1652,6 +1714,7 @@ namespace {
      * for up-to a given duration.
      *
      * Class ActionScheduler_OptionLock
+     *
      * @since 3.0.0
      */
     class ActionScheduler_OptionLock extends \ActionScheduler_Lock
@@ -1730,9 +1793,17 @@ namespace {
      */
     class ActionScheduler_QueueCleaner
     {
-        /** @var int */
+        /**
+         * The batch size.
+         *
+         * @var int
+         */
         protected $batch_size;
-        /** @var ActionScheduler_Store */
+        /**
+         * ActionScheduler_Store instance.
+         *
+         * @var ActionScheduler_Store
+         */
         private $store = \null;
         /**
          * 31 days in seconds.
@@ -1741,16 +1812,18 @@ namespace {
          */
         private $month_in_seconds = 2678400;
         /**
-         * @var string[] Default list of statuses purged by the cleaner process.
+         * Default list of statuses purged by the cleaner process.
+         *
+         * @var string[]
          */
-        private $default_statuses_to_purge = [\ActionScheduler_Store::STATUS_COMPLETE, \ActionScheduler_Store::STATUS_CANCELED];
+        private $default_statuses_to_purge = array(\ActionScheduler_Store::STATUS_COMPLETE, \ActionScheduler_Store::STATUS_CANCELED);
         /**
          * ActionScheduler_QueueCleaner constructor.
          *
-         * @param ActionScheduler_Store $store      The store instance.
-         * @param int                   $batch_size The batch size.
+         * @param ActionScheduler_Store|null $store      The store instance.
+         * @param int                        $batch_size The batch size.
          */
-        public function __construct(\ActionScheduler_Store $store = \null, $batch_size = 20)
+        public function __construct(?\ActionScheduler_Store $store = \null, $batch_size = 20)
         {
         }
         /**
@@ -1811,7 +1884,6 @@ namespace {
          * Do all of the cleaning actions.
          *
          * @param int $time_limit The number of seconds to use as the timeout and failure period. Default 300 (5 minutes).
-         * @author Jeremy Pry
          */
         public function clean($time_limit = 300)
         {
@@ -1819,7 +1891,6 @@ namespace {
         /**
          * Get the batch size for cleaning the queue.
          *
-         * @author Jeremy Pry
          * @return int
          */
         protected function get_batch_size()
@@ -1846,11 +1917,23 @@ namespace {
      */
     abstract class ActionScheduler_Abstract_QueueRunner extends \ActionScheduler_Abstract_QueueRunner_Deprecated
     {
-        /** @var ActionScheduler_QueueCleaner */
+        /**
+         * ActionScheduler_QueueCleaner instance.
+         *
+         * @var ActionScheduler_QueueCleaner
+         */
         protected $cleaner;
-        /** @var ActionScheduler_FatalErrorMonitor */
+        /**
+         * ActionScheduler_FatalErrorMonitor instance.
+         *
+         * @var ActionScheduler_FatalErrorMonitor
+         */
         protected $monitor;
-        /** @var ActionScheduler_Store */
+        /**
+         * ActionScheduler_Store instance.
+         *
+         * @var ActionScheduler_Store
+         */
         protected $store;
         /**
          * The created time.
@@ -1864,11 +1947,11 @@ namespace {
         /**
          * ActionScheduler_Abstract_QueueRunner constructor.
          *
-         * @param ActionScheduler_Store             $store Store object.
-         * @param ActionScheduler_FatalErrorMonitor $monitor Monitor object.
-         * @param ActionScheduler_QueueCleaner      $cleaner Cleaner object.
+         * @param ActionScheduler_Store|null             $store Store object.
+         * @param ActionScheduler_FatalErrorMonitor|null $monitor Monitor object.
+         * @param ActionScheduler_QueueCleaner|null      $cleaner Cleaner object.
          */
-        public function __construct(\ActionScheduler_Store $store = \null, \ActionScheduler_FatalErrorMonitor $monitor = \null, \ActionScheduler_QueueCleaner $cleaner = \null)
+        public function __construct(?\ActionScheduler_Store $store = \null, ?\ActionScheduler_FatalErrorMonitor $monitor = \null, ?\ActionScheduler_QueueCleaner $cleaner = \null)
         {
         }
         /**
@@ -1917,8 +2000,6 @@ namespace {
         }
         /**
          * Run the queue cleaner.
-         *
-         * @author Jeremy Pry
          */
         protected function run_cleanup()
         {
@@ -2001,7 +2082,6 @@ namespace {
         /**
          * Process actions in the queue.
          *
-         * @author Jeremy Pry
          * @param string $context Optional identifier for the context in which this action is being processed, e.g. 'WP CLI' or 'WP Cron'
          *        Generally, this should be capitalised and not localised as it's a proper noun.
          * @return int The number of actions processed.
@@ -2015,13 +2095,27 @@ namespace {
     {
         const WP_CRON_HOOK = 'action_scheduler_run_queue';
         const WP_CRON_SCHEDULE = 'every_minute';
-        /** @var ActionScheduler_AsyncRequest_QueueRunner */
+        /**
+         * ActionScheduler_AsyncRequest_QueueRunner instance.
+         *
+         * @var ActionScheduler_AsyncRequest_QueueRunner
+         */
         protected $async_request;
-        /** @var ActionScheduler_QueueRunner  */
+        /**
+         * ActionScheduler_QueueRunner instance.
+         *
+         * @var ActionScheduler_QueueRunner
+         */
         private static $runner = \null;
-        /** @var int  */
+        /**
+         * Number of processed actions.
+         *
+         * @var int
+         */
         private $processed_actions_count = 0;
         /**
+         * Get instance.
+         *
          * @return ActionScheduler_QueueRunner
          * @codeCoverageIgnore
          */
@@ -2031,15 +2125,17 @@ namespace {
         /**
          * ActionScheduler_QueueRunner constructor.
          *
-         * @param ActionScheduler_Store                    $store Store object.
-         * @param ActionScheduler_FatalErrorMonitor        $monitor Monitor object.
-         * @param ActionScheduler_QueueCleaner             $cleaner Cleaner object.
-         * @param ActionScheduler_AsyncRequest_QueueRunner $async_request Async request runner object.
+         * @param ActionScheduler_Store|null                    $store Store object.
+         * @param ActionScheduler_FatalErrorMonitor|null        $monitor Monitor object.
+         * @param ActionScheduler_QueueCleaner|null             $cleaner Cleaner object.
+         * @param ActionScheduler_AsyncRequest_QueueRunner|null $async_request Async request runner object.
          */
-        public function __construct(\ActionScheduler_Store $store = \null, \ActionScheduler_FatalErrorMonitor $monitor = \null, \ActionScheduler_QueueCleaner $cleaner = \null, \ActionScheduler_AsyncRequest_QueueRunner $async_request = \null)
+        public function __construct(?\ActionScheduler_Store $store = \null, ?\ActionScheduler_FatalErrorMonitor $monitor = \null, ?\ActionScheduler_QueueCleaner $cleaner = \null, ?\ActionScheduler_AsyncRequest_QueueRunner $async_request = \null)
         {
         }
         /**
+         * Initialize.
+         *
          * @codeCoverageIgnore
          */
         public function init()
@@ -2085,6 +2181,7 @@ namespace {
          * that was the only context in which this method was run, and the self::WP_CRON_HOOK hook had no context
          * passed along with it. New code calling this method directly, or by triggering the self::WP_CRON_HOOK,
          * should set a context as the first parameter. For an example of this, refer to the code seen in
+         *
          * @see ActionScheduler_AsyncRequest_QueueRunner::handle()
          *
          * @param string $context Optional identifier for the context in which this action is being processed, e.g. 'WP CLI' or 'WP Cron'
@@ -2133,10 +2230,16 @@ namespace {
     class ActionScheduler_Versions
     {
         /**
+         * ActionScheduler_Versions instance.
+         *
          * @var ActionScheduler_Versions
          */
-        private static $instance = \NULL;
-        /** @var array<string, callable> */
+        private static $instance = \null;
+        /**
+         * Versions.
+         *
+         * @var array<string, callable>
+         */
         private $versions = array();
         /**
          * Register version's callback.
@@ -2166,6 +2269,8 @@ namespace {
         {
         }
         /**
+         * Get instance.
+         *
          * @return ActionScheduler_Versions
          * @codeCoverageIgnore
          */
@@ -2173,6 +2278,8 @@ namespace {
         {
         }
         /**
+         * Initialize.
+         *
          * @codeCoverageIgnore
          */
         public static function initialize_latest_version()
@@ -2321,15 +2428,28 @@ namespace {
     }
     /**
      * Class ActionScheduler
+     *
      * @codeCoverageIgnore
      */
     abstract class ActionScheduler
     {
-        /** @var string */
+        /**
+         * Plugin file path.
+         *
+         * @var string
+         */
         private static $plugin_file = '';
-        /** @var ActionScheduler_ActionFactory */
-        private static $factory = \NULL;
-        /** @var bool */
+        /**
+         * ActionScheduler_ActionFactory instance.
+         *
+         * @var ActionScheduler_ActionFactory
+         */
+        private static $factory = \null;
+        /**
+         * Data store is initialized.
+         *
+         * @var bool
+         */
         private static $data_store_initialized = \false;
         /**
          * Factory.
@@ -2369,6 +2489,7 @@ namespace {
         }
         /**
          * Get the absolute system path to the plugin directory, or a file therein
+         *
          * @static
          * @param string $path Path relative to plugin directory.
          * @return string
@@ -2378,6 +2499,7 @@ namespace {
         }
         /**
          * Get the absolute URL to the plugin directory, or a file therein
+         *
          * @static
          * @param string $path Path relative to plugin directory.
          * @return string
@@ -2491,11 +2613,16 @@ namespace {
     interface ActionScheduler_Schedule
     {
         /**
+         * Get the date & time this schedule was created to run, or calculate when it should be run
+         * after a given date & time.
+         *
          * @param null|DateTime $after Timestamp.
          * @return DateTime|null
          */
-        public function next(\DateTime $after = \NULL);
+        public function next(?\DateTime $after = \null);
         /**
+         * Identify the schedule as (not) recurring.
+         *
          * @return bool
          */
         public function is_recurring();
@@ -2527,14 +2654,16 @@ namespace {
          *
          * @var DateTime
          */
-        private $scheduled_date = \NULL;
+        private $scheduled_date = \null;
         /**
          * Timestamp equivalent of @see $this->scheduled_date
          *
          * @var int
          */
-        protected $scheduled_timestamp = \NULL;
+        protected $scheduled_timestamp = \null;
         /**
+         * Construct.
+         *
          * @param DateTime $date The date & time to run the action.
          */
         public function __construct(\DateTime $date)
@@ -2571,7 +2700,8 @@ namespace {
         {
         }
         /**
-         * For PHP 5.2 compat, since DateTime objects can't be serialized
+         * For PHP 5.2 compat, because DateTime objects can't be serialized
+         *
          * @return array
          */
         public function __sleep()
@@ -2599,13 +2729,13 @@ namespace {
          *
          * @var DateTime
          */
-        private $first_date = \NULL;
+        private $first_date = \null;
         /**
          * Timestamp equivalent of @see $this->first_date
          *
          * @var int
          */
-        protected $first_timestamp = \NULL;
+        protected $first_timestamp = \null;
         /**
          * The recurrence between each time an action is run using this schedule.
          * Used to calculate the start date & time. Can be a number of seconds, in the
@@ -2616,14 +2746,18 @@ namespace {
          */
         protected $recurrence;
         /**
+         * Construct.
+         *
          * @param DateTime      $date The date & time to run the action.
          * @param mixed         $recurrence The data used to determine the schedule's recurrence.
          * @param DateTime|null $first (Optional) The date & time the first instance of this interval schedule ran. Default null, meaning this is the first instance.
          */
-        public function __construct(\DateTime $date, $recurrence, \DateTime $first = \null)
+        public function __construct(\DateTime $date, $recurrence, ?\DateTime $first = \null)
         {
         }
         /**
+         * Schedule is recurring.
+         *
          * @return bool
          */
         public function is_recurring()
@@ -2638,6 +2772,8 @@ namespace {
         {
         }
         /**
+         * Get the schedule's recurrence.
+         *
          * @return string
          */
         public function get_recurrence()
@@ -2645,6 +2781,7 @@ namespace {
         }
         /**
          * For PHP 5.2 compat, since DateTime objects can't be serialized
+         *
          * @return array
          */
         public function __sleep()
@@ -2676,15 +2813,21 @@ namespace {
     abstract class ActionScheduler_Abstract_Schema
     {
         /**
-         * @var int Increment this value in derived class to trigger a schema update.
+         * Increment this value in derived class to trigger a schema update.
+         *
+         * @var int
          */
         protected $schema_version = 1;
         /**
-         * @var string Schema version stored in database.
+         * Schema version stored in database.
+         *
+         * @var string
          */
         protected $db_version;
         /**
-         * @var array Names of tables that will be registered by this class.
+         * Names of tables that will be registered by this class.
+         *
+         * @var array
          */
         protected $tables = array();
         /**
@@ -2763,12 +2906,17 @@ namespace {
     }
     /**
      * Class ActionScheduler_Logger
+     *
      * @codeCoverageIgnore
      */
     abstract class ActionScheduler_Logger
     {
-        /** @var null|self */
-        private static $logger = \NULL;
+        /**
+         * Instance.
+         *
+         * @var null|self
+         */
+        private static $logger = \null;
         /**
          * Get instance.
          *
@@ -2780,13 +2928,13 @@ namespace {
         /**
          * Create log entry.
          *
-         * @param string   $action_id Action ID.
-         * @param string   $message   Log message.
-         * @param DateTime $date      Log date.
+         * @param string        $action_id Action ID.
+         * @param string        $message   Log message.
+         * @param DateTime|null $date      Log date.
          *
          * @return string The log entry ID
          */
-        public abstract function log($action_id, $message, \DateTime $date = \NULL);
+        public abstract function log($action_id, $message, ?\DateTime $date = \null);
         /**
          * Get action's log entry.
          *
@@ -2853,9 +3001,9 @@ namespace {
          *
          * @param int                         $action_id Action ID.
          * @param null|ActionScheduler_Action $action Action.
-         * @param string                      $context Action exeuction context.
+         * @param string                      $context Action execution context.
          */
-        public function log_completed_action($action_id, $action = \NULL, $context = '')
+        public function log_completed_action($action_id, $action = \null, $context = '')
         {
         }
         /**
@@ -2909,7 +3057,7 @@ namespace {
          * @param string         $action_id Action ID.
          * @param null|Exception $exception The exception which occurred when fetching the action. NULL by default for backward compatibility.
          */
-        public function log_failed_fetch_action($action_id, \Exception $exception = \NULL)
+        public function log_failed_fetch_action($action_id, ?\Exception $exception = \null)
         {
         }
         /**
@@ -2935,6 +3083,7 @@ namespace {
     }
     /**
      * Class ActionScheduler_Store_Deprecated
+     *
      * @codeCoverageIgnore
      */
     abstract class ActionScheduler_Store_Deprecated
@@ -2977,6 +3126,7 @@ namespace {
     }
     /**
      * Class ActionScheduler_Store
+     *
      * @codeCoverageIgnore
      */
     abstract class ActionScheduler_Store extends \ActionScheduler_Store_Deprecated
@@ -2987,11 +3137,21 @@ namespace {
         const STATUS_FAILED = 'failed';
         const STATUS_CANCELED = 'canceled';
         const DEFAULT_CLASS = 'ActionScheduler_wpPostStore';
-        /** @var ActionScheduler_Store */
-        private static $store = \NULL;
-        /** @var int */
+        /**
+         * ActionScheduler_Store instance.
+         *
+         * @var ActionScheduler_Store
+         */
+        private static $store = \null;
+        /**
+         * Maximum length of args.
+         *
+         * @var int
+         */
         protected static $max_args_length = 191;
         /**
+         * Save action.
+         *
          * @param ActionScheduler_Action $action Action to save.
          * @param null|DateTime          $scheduled_date Optional Date of the first instance
          *                                               to store. Otherwise uses the first date of the action's
@@ -2999,7 +3159,7 @@ namespace {
          *
          * @return int The action ID
          */
-        public abstract function save_action(\ActionScheduler_Action $action, \DateTime $scheduled_date = \NULL);
+        public abstract function save_action(\ActionScheduler_Action $action, ?\DateTime $scheduled_date = \null);
         /**
          * Get action.
          *
@@ -3101,14 +3261,14 @@ namespace {
         /**
          * Make a claim.
          *
-         * @param int      $max_actions Maximum number of actions to claim.
-         * @param DateTime $before_date Claim only actions schedule before the given date. Defaults to now.
-         * @param array    $hooks       Claim only actions with a hook or hooks.
-         * @param string   $group       Claim only actions in the given group.
+         * @param int           $max_actions Maximum number of actions to claim.
+         * @param DateTime|null $before_date Claim only actions schedule before the given date. Defaults to now.
+         * @param array         $hooks       Claim only actions with a hook or hooks.
+         * @param string        $group       Claim only actions in the given group.
          *
          * @return ActionScheduler_ActionClaim
          */
-        public abstract function stake_claim($max_actions = 10, \DateTime $before_date = \null, $hooks = array(), $group = '');
+        public abstract function stake_claim($max_actions = 10, ?\DateTime $before_date = \null, $hooks = array(), $group = '');
         /**
          * Get claim count.
          *
@@ -3182,17 +3342,17 @@ namespace {
          * @param null|DateTime          $scheduled_date Action's schedule date (optional).
          * @return string
          */
-        protected function get_scheduled_date_string(\ActionScheduler_Action $action, \DateTime $scheduled_date = \NULL)
+        protected function get_scheduled_date_string(\ActionScheduler_Action $action, ?\DateTime $scheduled_date = \null)
         {
         }
         /**
          * Get the time MySQL formatted date/time string for an action's (next) scheduled date.
          *
-         * @param ActionScheduler_Action $action Action.
-         * @param null|DateTime          $scheduled_date Action's scheduled date (optional).
+         * @param ActionScheduler_Action|null $action Action.
+         * @param null|DateTime               $scheduled_date Action's scheduled date (optional).
          * @return string
          */
-        protected function get_scheduled_date_string_local(\ActionScheduler_Action $action, \DateTime $scheduled_date = \NULL)
+        protected function get_scheduled_date_string_local(\ActionScheduler_Action $action, ?\DateTime $scheduled_date = \null)
         {
         }
         /**
@@ -3296,6 +3456,8 @@ namespace {
         {
         }
         /**
+         * Get instance.
+         *
          * @return ActionScheduler_Store
          */
         public static function instance()
@@ -3307,8 +3469,12 @@ namespace {
      */
     abstract class ActionScheduler_TimezoneHelper
     {
-        /** @var null|DateTimeZone */
-        private static $local_timezone = \NULL;
+        /**
+         * DateTimeZone object.
+         *
+         * @var null|DateTimeZone
+         */
+        private static $local_timezone = \null;
         /**
          * Set a DateTime's timezone to the WordPress site's timezone, or a UTC offset
          * if no timezone string is available.
@@ -3353,7 +3519,7 @@ namespace {
          * @param bool $reset Toggle to discard stored value.
          * @deprecated 2.1.0
          */
-        public static function get_local_timezone($reset = \FALSE)
+        public static function get_local_timezone($reset = \false)
         {
         }
     }
@@ -3362,13 +3528,29 @@ namespace {
      */
     class ActionScheduler_Action
     {
-        /** @var string */
+        /**
+         * Action's hook.
+         *
+         * @var string
+         */
         protected $hook = '';
-        /** @var array<string, mixed> */
+        /**
+         * Action's args.
+         *
+         * @var array<string, mixed>
+         */
         protected $args = array();
-        /** @var ActionScheduler_Schedule */
-        protected $schedule = \NULL;
-        /** @var string */
+        /**
+         * Action's schedule.
+         *
+         * @var ActionScheduler_Schedule
+         */
+        protected $schedule = \null;
+        /**
+         * Action's group.
+         *
+         * @var string
+         */
         protected $group = '';
         /**
          * Priorities are conceptually similar to those used for regular WordPress actions.
@@ -3390,7 +3572,7 @@ namespace {
          * @param null|ActionScheduler_Schedule $schedule Action's schedule.
          * @param string                        $group Action's group.
          */
-        public function __construct($hook, array $args = array(), \ActionScheduler_Schedule $schedule = \NULL, $group = '')
+        public function __construct($hook, array $args = array(), ?\ActionScheduler_Schedule $schedule = \null, $group = '')
         {
         }
         /**
@@ -3428,6 +3610,8 @@ namespace {
         {
         }
         /**
+         * Action's schedule.
+         *
          * @return ActionScheduler_Schedule
          */
         public function get_schedule()
@@ -3456,13 +3640,17 @@ namespace {
         {
         }
         /**
+         * Action's group.
+         *
          * @return string
          */
         public function get_group()
         {
         }
         /**
-         * @return bool If the action has been finished
+         * Action has not finished.
+         *
+         * @return bool
          */
         public function is_finished()
         {
@@ -3520,7 +3708,7 @@ namespace {
          * @param null|ActionScheduler_Schedule $schedule Action's schedule.
          * @param string                        $group Action's group.
          */
-        public function __construct($hook, array $args = array(), \ActionScheduler_Schedule $schedule = \null, $group = '')
+        public function __construct($hook, array $args = array(), ?\ActionScheduler_Schedule $schedule = \null, $group = '')
         {
         }
     }
@@ -3536,7 +3724,7 @@ namespace {
          * @param mixed[]                       $args Action arguments.
          * @param null|ActionScheduler_Schedule $schedule Action schedule.
          */
-        public function __construct($hook = '', array $args = array(), \ActionScheduler_Schedule $schedule = \NULL)
+        public function __construct($hook = '', array $args = array(), ?\ActionScheduler_Schedule $schedule = \null)
         {
         }
         /**
@@ -3558,13 +3746,13 @@ namespace {
         /**
          * Add a record to an action log.
          *
-         * @param int      $action_id Action ID.
-         * @param string   $message Message to be saved in the log entry.
-         * @param DateTime $date Timestamp of the log entry.
+         * @param int           $action_id Action ID.
+         * @param string        $message Message to be saved in the log entry.
+         * @param DateTime|null $date Timestamp of the log entry.
          *
          * @return int     The log entry ID.
          */
-        public function log($action_id, $message, \DateTime $date = \null)
+        public function log($action_id, $message, ?\DateTime $date = \null)
         {
         }
         /**
@@ -3640,12 +3828,24 @@ namespace {
          * @var DateTime|null
          */
         private $claim_before_date = \null;
-        /** @var int */
+        /**
+         * Maximum length of args.
+         *
+         * @var int
+         */
         protected static $max_args_length = 8000;
-        /** @var int */
+        /**
+         * Maximum length of index.
+         *
+         * @var int
+         */
         protected static $max_index_length = 191;
-        /** @var array List of claim filters. */
-        protected $claim_filters = ['group' => '', 'hooks' => '', 'exclude-groups' => ''];
+        /**
+         * List of claim filters.
+         *
+         * @var array
+         */
+        protected $claim_filters = array('group' => '', 'hooks' => '', 'exclude-groups' => '');
         /**
          * Initialize the data store
          *
@@ -3658,24 +3858,24 @@ namespace {
          * Save an action, checks if this is a unique action before actually saving.
          *
          * @param ActionScheduler_Action $action         Action object.
-         * @param \DateTime              $scheduled_date Optional schedule date. Default null.
+         * @param DateTime|null          $scheduled_date Optional schedule date. Default null.
          *
          * @return int                  Action ID.
          * @throws RuntimeException     Throws exception when saving the action fails.
          */
-        public function save_unique_action(\ActionScheduler_Action $action, \DateTime $scheduled_date = \null)
+        public function save_unique_action(\ActionScheduler_Action $action, ?\DateTime $scheduled_date = \null)
         {
         }
         /**
          * Save an action. Can save duplicate action as well, prefer using `save_unique_action` instead.
          *
          * @param ActionScheduler_Action $action Action object.
-         * @param \DateTime              $scheduled_date Optional schedule date. Default null.
+         * @param DateTime|null          $scheduled_date Optional schedule date. Default null.
          *
          * @return int Action ID.
          * @throws RuntimeException     Throws exception when saving the action fails.
          */
-        public function save_action(\ActionScheduler_Action $action, \DateTime $scheduled_date = \null)
+        public function save_action(\ActionScheduler_Action $action, ?\DateTime $scheduled_date = \null)
         {
         }
         /**
@@ -3688,7 +3888,7 @@ namespace {
          * @return int Action ID.
          * @throws \RuntimeException     Throws exception when saving the action fails.
          */
-        private function save_action_to_db(\ActionScheduler_Action $action, \DateTime $date = \null, $unique = \false)
+        private function save_action_to_db(\ActionScheduler_Action $action, ?\DateTime $date = \null, $unique = \false)
         {
         }
         /**
@@ -3905,14 +4105,14 @@ namespace {
         /**
          * Stake a claim on actions.
          *
-         * @param int       $max_actions Maximum number of action to include in claim.
-         * @param \DateTime $before_date Jobs must be schedule before this date. Defaults to now.
-         * @param array     $hooks Hooks to filter for.
-         * @param string    $group Group to filter for.
+         * @param int           $max_actions Maximum number of action to include in claim.
+         * @param DateTime|null $before_date Jobs must be schedule before this date. Defaults to now.
+         * @param array         $hooks Hooks to filter for.
+         * @param string        $group Group to filter for.
          *
          * @return ActionScheduler_ActionClaim
          */
-        public function stake_claim($max_actions = 10, \DateTime $before_date = \null, $hooks = array(), $group = '')
+        public function stake_claim($max_actions = 10, ?\DateTime $before_date = \null, $hooks = array(), $group = '')
         {
         }
         /**
@@ -3945,17 +4145,17 @@ namespace {
         /**
          * Mark actions claimed.
          *
-         * @param string    $claim_id Claim Id.
-         * @param int       $limit Number of action to include in claim.
-         * @param \DateTime $before_date Should use UTC timezone.
-         * @param array     $hooks Hooks to filter for.
-         * @param string    $group Group to filter for.
+         * @param string        $claim_id Claim Id.
+         * @param int           $limit Number of action to include in claim.
+         * @param DateTime|null $before_date Should use UTC timezone.
+         * @param array         $hooks Hooks to filter for.
+         * @param string        $group Group to filter for.
          *
          * @return int The number of actions that were claimed.
          * @throws \InvalidArgumentException Throws InvalidArgumentException if group doesn't exist.
          * @throws \RuntimeException Throws RuntimeException if unable to claim action.
          */
-        protected function claim_actions($claim_id, $limit, \DateTime $before_date = \null, $hooks = array(), $group = '')
+        protected function claim_actions($claim_id, $limit, ?\DateTime $before_date = \null, $hooks = array(), $group = '')
         {
         }
         /**
@@ -4058,15 +4258,29 @@ namespace {
     class ActionScheduler_HybridStore extends \ActionScheduler_Store
     {
         const DEMARKATION_OPTION = 'action_scheduler_hybrid_store_demarkation';
-        /** @var ActionScheduler_Store */
+        /**
+         * Primary store instance.
+         *
+         * @var ActionScheduler_Store
+         */
         private $primary_store;
-        /** @var ActionScheduler_Store */
+        /**
+         * Secondary store instance.
+         *
+         * @var ActionScheduler_Store
+         */
         private $secondary_store;
-        /** @var Action_Scheduler\Migration\Runner */
+        /**
+         * Runner instance.
+         *
+         * @var Action_Scheduler\Migration\Runner
+         */
         private $migration_runner;
         /**
-         * @var int The dividing line between IDs of actions created
-         *          by the primary and secondary stores.
+         * The dividing line between IDs of actions created
+         * by the primary and secondary stores.
+         *
+         * @var int
          *
          * Methods that accept an action ID will compare the ID against
          * this to determine which store will contain that ID. In almost
@@ -4079,9 +4293,9 @@ namespace {
         /**
          * ActionScheduler_HybridStore constructor.
          *
-         * @param Config $config Migration config object.
+         * @param Config|null $config Migration config object.
          */
-        public function __construct(\Action_Scheduler\Migration\Config $config = \null)
+        public function __construct(?\Action_Scheduler\Migration\Config $config = \null)
         {
         }
         /**
@@ -4130,7 +4344,7 @@ namespace {
          *
          * @return string
          */
-        public function find_action($hook, $params = [])
+        public function find_action($hook, $params = array())
         {
         }
         /**
@@ -4143,7 +4357,7 @@ namespace {
          *
          * @return int[]
          */
-        public function query_actions($query = [], $query_type = 'select')
+        public function query_actions($query = array(), $query_type = 'select')
         {
         }
         /**
@@ -4166,7 +4380,7 @@ namespace {
          *
          * @return ActionScheduler_ActionClaim
          */
-        public function stake_claim($max_actions = 10, \DateTime $before_date = \null, $hooks = array(), $group = '')
+        public function stake_claim($max_actions = 10, ?\DateTime $before_date = \null, $hooks = array(), $group = '')
         {
         }
         /**
@@ -4181,11 +4395,11 @@ namespace {
          * Save an action to the primary store.
          *
          * @param ActionScheduler_Action $action Action object to be saved.
-         * @param DateTime               $date Optional. Schedule date. Default null.
+         * @param DateTime|null          $date Optional. Schedule date. Default null.
          *
          * @return int The action ID
          */
-        public function save_action(\ActionScheduler_Action $action, \DateTime $date = \null)
+        public function save_action(\ActionScheduler_Action $action, ?\DateTime $date = \null)
         {
         }
         /**
@@ -4317,13 +4531,13 @@ namespace {
         /**
          * Create log entry.
          *
-         * @param string   $action_id Action ID.
-         * @param string   $message   Action log's message.
-         * @param DateTime $date      Action log's timestamp.
+         * @param string        $action_id Action ID.
+         * @param string        $message   Action log's message.
+         * @param DateTime|null $date      Action log's timestamp.
          *
          * @return string The log entry ID
          */
-        public function log($action_id, $message, \DateTime $date = \NULL)
+        public function log($action_id, $message, ?\DateTime $date = \null)
         {
         }
         /**
@@ -4478,23 +4692,23 @@ namespace {
          * Save action.
          *
          * @param ActionScheduler_Action $action Scheduled Action.
-         * @param DateTime               $scheduled_date Scheduled Date.
+         * @param DateTime|null          $scheduled_date Scheduled Date.
          *
          * @throws RuntimeException Throws an exception if the action could not be saved.
          * @return int
          */
-        public function save_action(\ActionScheduler_Action $action, \DateTime $scheduled_date = \null)
+        public function save_action(\ActionScheduler_Action $action, ?\DateTime $scheduled_date = \null)
         {
         }
         /**
          * Create post array.
          *
          * @param ActionScheduler_Action $action Scheduled Action.
-         * @param DateTime               $scheduled_date Scheduled Date.
+         * @param DateTime|null          $scheduled_date Scheduled Date.
          *
          * @return array Returns an array of post data.
          */
-        protected function create_post_array(\ActionScheduler_Action $action, \DateTime $scheduled_date = \null)
+        protected function create_post_array(\ActionScheduler_Action $action, ?\DateTime $scheduled_date = \null)
         {
         }
         /**
@@ -4704,16 +4918,16 @@ namespace {
         /**
          * Stake claim.
          *
-         * @param int      $max_actions Maximum number of actions.
-         * @param DateTime $before_date Jobs must be schedule before this date. Defaults to now.
-         * @param array    $hooks       Claim only actions with a hook or hooks.
-         * @param string   $group       Claim only actions in the given group.
+         * @param int           $max_actions Maximum number of actions.
+         * @param DateTime|null $before_date Jobs must be schedule before this date. Defaults to now.
+         * @param array         $hooks       Claim only actions with a hook or hooks.
+         * @param string        $group       Claim only actions in the given group.
          *
          * @return ActionScheduler_ActionClaim
          * @throws RuntimeException When there is an error staking a claim.
          * @throws InvalidArgumentException When the given group is not valid.
          */
-        public function stake_claim($max_actions = 10, \DateTime $before_date = \null, $hooks = array(), $group = '')
+        public function stake_claim($max_actions = 10, ?\DateTime $before_date = \null, $hooks = array(), $group = '')
         {
         }
         /**
@@ -4735,16 +4949,16 @@ namespace {
         /**
          * Claim actions.
          *
-         * @param string   $claim_id    Claim ID.
-         * @param int      $limit       Limit.
-         * @param DateTime $before_date Should use UTC timezone.
-         * @param array    $hooks       Claim only actions with a hook or hooks.
-         * @param string   $group       Claim only actions in the given group.
+         * @param string        $claim_id    Claim ID.
+         * @param int           $limit       Limit.
+         * @param DateTime|null $before_date Should use UTC timezone.
+         * @param array         $hooks       Claim only actions with a hook or hooks.
+         * @param string        $group       Claim only actions in the given group.
          *
          * @return int The number of actions that were claimed.
          * @throws RuntimeException  When there is a database error.
          */
-        protected function claim_actions($claim_id, $limit, \DateTime $before_date = \null, $hooks = array(), $group = '')
+        protected function claim_actions($claim_id, $limit, ?\DateTime $before_date = \null, $hooks = array(), $group = '')
         {
         }
         /**
@@ -4890,6 +5104,7 @@ namespace {
     }
     /**
      * Class ActionScheduler_wpPostStore_PostStatusRegistrar
+     *
      * @codeCoverageIgnore
      */
     class ActionScheduler_wpPostStore_PostStatusRegistrar
@@ -4927,6 +5142,7 @@ namespace {
     }
     /**
      * Class ActionScheduler_wpPostStore_PostTypeRegistrar
+     *
      * @codeCoverageIgnore
      */
     class ActionScheduler_wpPostStore_PostTypeRegistrar
@@ -4948,6 +5164,7 @@ namespace {
     }
     /**
      * Class ActionScheduler_wpPostStore_TaxonomyRegistrar
+     *
      * @codeCoverageIgnore
      */
     class ActionScheduler_wpPostStore_TaxonomyRegistrar
@@ -4978,11 +5195,23 @@ namespace Action_Scheduler\Migration {
      */
     class ActionMigrator
     {
-        /** @var ActionScheduler_Store */
+        /**
+         * Source store instance.
+         *
+         * @var ActionScheduler_Store
+         */
         private $source;
-        /** @var ActionScheduler_Store */
+        /**
+         * Destination store instance.
+         *
+         * @var ActionScheduler_Store
+         */
         private $destination;
-        /** @var LogMigrator */
+        /**
+         * LogMigrator instance.
+         *
+         * @var LogMigrator
+         */
         private $log_migrator;
         /**
          * ActionMigrator constructor.
@@ -5011,7 +5240,7 @@ namespace {
     /**
      * Class ActionScheduler_DBStoreMigrator
      *
-     * A  class for direct saving of actions to the table data store during migration.
+     * A class for direct saving of actions to the table data store during migration.
      *
      * @since 3.0.0
      */
@@ -5025,13 +5254,13 @@ namespace {
          * that when first saving the action.
          *
          * @param ActionScheduler_Action $action Action to migrate.
-         * @param null|\DateTime         $scheduled_date Optional date of the first instance to store.
-         * @param null|\DateTime         $last_attempt_date Optional date the action was last attempted.
+         * @param null|DateTime          $scheduled_date Optional date of the first instance to store.
+         * @param null|DateTime          $last_attempt_date Optional date the action was last attempted.
          *
          * @return string The action ID
          * @throws \RuntimeException When the action is not saved.
          */
-        public function save_action(\ActionScheduler_Action $action, \DateTime $scheduled_date = \null, \DateTime $last_attempt_date = \null)
+        public function save_action(\ActionScheduler_Action $action, ?\DateTime $scheduled_date = \null, ?\DateTime $last_attempt_date = \null)
         {
         }
     }
@@ -5048,7 +5277,11 @@ namespace Action_Scheduler\Migration {
      */
     class BatchFetcher
     {
-        /** @var ActionScheduler_Store */
+        /**
+         * Store instance.
+         *
+         * @var ActionScheduler_Store
+         */
         private $store;
         /**
          * BatchFetcher constructor.
@@ -5090,17 +5323,41 @@ namespace Action_Scheduler\Migration {
      */
     class Config
     {
-        /** @var ActionScheduler_Store */
+        /**
+         * Source store instance.
+         *
+         * @var ActionScheduler_Store
+         */
         private $source_store;
-        /** @var ActionScheduler_Logger */
+        /**
+         * Source logger instance.
+         *
+         * @var ActionScheduler_Logger
+         */
         private $source_logger;
-        /** @var ActionScheduler_Store */
+        /**
+         * Destination store instance.
+         *
+         * @var ActionScheduler_Store
+         */
         private $destination_store;
-        /** @var ActionScheduler_Logger */
+        /**
+         * Destination logger instance.
+         *
+         * @var ActionScheduler_Logger
+         */
         private $destination_logger;
-        /** @var Progress bar */
+        /**
+         * Progress bar object.
+         *
+         * @var Action_Scheduler\WP_CLI\ProgressBar
+         */
         private $progress_bar;
-        /** @var bool */
+        /**
+         * Flag indicating a dryrun.
+         *
+         * @var bool
+         */
         private $dry_run = false;
         /**
          * Config constructor.
@@ -5222,15 +5479,35 @@ namespace Action_Scheduler\Migration {
      */
     class Controller
     {
-        /** @var self */
+        /**
+         * Instance.
+         *
+         * @var self
+         */
         private static $instance;
-        /** @var Action_Scheduler\Migration\Scheduler */
+        /**
+         * Scheduler instance.
+         *
+         * @var Action_Scheduler\Migration\Scheduler
+         */
         private $migration_scheduler;
-        /** @var string */
+        /**
+         * Class name of the store object.
+         *
+         * @var string
+         */
         private $store_classname;
-        /** @var string */
+        /**
+         * Class name of the logger object.
+         *
+         * @var string
+         */
         private $logger_classname;
-        /** @var bool */
+        /**
+         * Flag to indicate migrating custom store.
+         *
+         * @var bool
+         */
         private $migrate_custom_store;
         /**
          * Controller constructor.
@@ -5304,8 +5581,6 @@ namespace Action_Scheduler\Migration {
         }
         /**
          * Possibly hook the migration scheduler action.
-         *
-         * @author Jeremy Pry
          */
         public function maybe_hook_migration()
         {
@@ -5362,17 +5637,25 @@ namespace Action_Scheduler\Migration {
      */
     class LogMigrator
     {
-        /** @var ActionScheduler_Logger */
+        /**
+         * Source logger instance.
+         *
+         * @var ActionScheduler_Logger
+         */
         private $source;
-        /** @var ActionScheduler_Logger */
+        /**
+         * Destination logger instance.
+         *
+         * @var ActionScheduler_Logger
+         */
         private $destination;
         /**
          * ActionMigrator constructor.
          *
          * @param ActionScheduler_Logger $source_logger Source logger object.
-         * @param ActionScheduler_Logger $destination_Logger Destination logger object.
+         * @param ActionScheduler_Logger $destination_logger Destination logger object.
          */
-        public function __construct(\ActionScheduler_Logger $source_logger, \ActionScheduler_Logger $destination_Logger)
+        public function __construct(\ActionScheduler_Logger $source_logger, \ActionScheduler_Logger $destination_logger)
         {
         }
         /**
@@ -5415,21 +5698,53 @@ namespace Action_Scheduler\Migration {
      */
     class Runner
     {
-        /** @var ActionScheduler_Store */
+        /**
+         * Source store instance.
+         *
+         * @var ActionScheduler_Store
+         */
         private $source_store;
-        /** @var ActionScheduler_Store */
+        /**
+         * Destination store instance.
+         *
+         * @var ActionScheduler_Store
+         */
         private $destination_store;
-        /** @var ActionScheduler_Logger */
+        /**
+         * Source logger instance.
+         *
+         * @var ActionScheduler_Logger
+         */
         private $source_logger;
-        /** @var ActionScheduler_Logger */
+        /**
+         * Destination logger instance.
+         *
+         * @var ActionScheduler_Logger
+         */
         private $destination_logger;
-        /** @var BatchFetcher */
+        /**
+         * Batch fetcher instance.
+         *
+         * @var BatchFetcher
+         */
         private $batch_fetcher;
-        /** @var ActionMigrator */
+        /**
+         * Action migrator instance.
+         *
+         * @var ActionMigrator
+         */
         private $action_migrator;
-        /** @var LogMigrator */
+        /**
+         * Log migrator instance.
+         *
+         * @var LogMigrator
+         */
         private $log_migrator;
-        /** @var ProgressBar */
+        /**
+         * Progress bar instance.
+         *
+         * @var ProgressBar
+         */
         private $progress_bar;
         /**
          * Runner constructor.
@@ -5564,8 +5879,11 @@ namespace {
          *
          * @var null|DateTime
          */
-        private $timestamp = \NULL;
+        private $timestamp = \null;
         /**
+         * Calculate when this schedule should start after a given date & time using
+         * the number of seconds between recurrences.
+         *
          * @param DateTime $after Timestamp.
          *
          * @return DateTime|null
@@ -5574,6 +5892,8 @@ namespace {
         {
         }
         /**
+         * Schedule is not recurring.
+         *
          * @return bool
          */
         public function is_recurring()
@@ -5619,8 +5939,10 @@ namespace {
          *
          * @var null
          */
-        private $timestamp = \NULL;
+        private $timestamp = \null;
         /**
+         * Calculate when the next instance of this schedule would run based on a given date & time.
+         *
          * @param DateTime $after Timestamp.
          *
          * @return DateTime|null
@@ -5639,6 +5961,8 @@ namespace {
         {
         }
         /**
+         * Action is not recurring.
+         *
          * @return bool
          */
         public function is_recurring()
@@ -5668,13 +5992,13 @@ namespace {
          *
          * @var null
          */
-        private $start_timestamp = \NULL;
+        private $start_timestamp = \null;
         /**
          * Deprecated property @see $this->__wakeup() for details.
          *
          * @var null
          */
-        private $cron = \NULL;
+        private $cron = \null;
         /**
          * Wrapper for parent constructor to accept a cron expression string and map it to a CronExpression for this
          * objects $recurrence property.
@@ -5683,7 +6007,7 @@ namespace {
          * @param CronExpression|string $recurrence The CronExpression used to calculate the schedule's next instance.
          * @param DateTime|null         $first (Optional) The date & time the first instance of this interval schedule ran. Default null, meaning this is the first instance.
          */
-        public function __construct(\DateTime $start, $recurrence, \DateTime $first = \null)
+        public function __construct(\DateTime $start, $recurrence, ?\DateTime $first = \null)
         {
         }
         /**
@@ -5697,6 +6021,8 @@ namespace {
         {
         }
         /**
+         * Get the schedule's recurrence.
+         *
          * @return string
          */
         public function get_recurrence()
@@ -5737,13 +6063,13 @@ namespace {
          *
          * @var null
          */
-        private $start_timestamp = \NULL;
+        private $start_timestamp = \null;
         /**
          * Deprecated property @see $this->__wakeup() for details.
          *
          * @var null
          */
-        private $interval_in_seconds = \NULL;
+        private $interval_in_seconds = \null;
         /**
          * Calculate when this schedule should start after a given date & time using
          * the number of seconds between recurrences.
@@ -5755,6 +6081,8 @@ namespace {
         {
         }
         /**
+         * Schedule interval in seconds.
+         *
          * @return int
          */
         public function interval_in_seconds()
@@ -5790,18 +6118,23 @@ namespace {
      */
     class ActionScheduler_NullSchedule extends \ActionScheduler_SimpleSchedule
     {
-        /** @var DateTime|null */
+        /**
+         * DateTime instance.
+         *
+         * @var DateTime|null
+         */
         protected $scheduled_date;
         /**
          * Make the $date param optional and default to null.
          *
          * @param null|DateTime $date The date & time to run the action.
          */
-        public function __construct(\DateTime $date = \null)
+        public function __construct(?\DateTime $date = \null)
         {
         }
         /**
-         * This schedule has no scheduled DateTime, so we need to override the parent __sleep()
+         * This schedule has no scheduled DateTime, so we need to override the parent __sleep().
+         *
          * @return array
          */
         public function __sleep()
@@ -5825,7 +6158,11 @@ namespace {
     {
         const LOG_TABLE = 'actionscheduler_logs';
         /**
-         * @var int Increment this value to trigger a schema update.
+         * Schema version.
+         *
+         * Increment this value to trigger a schema update.
+         *
+         * @var int
          */
         protected $schema_version = 3;
         /**
@@ -5878,7 +6215,11 @@ namespace {
         const GROUPS_TABLE = 'actionscheduler_groups';
         const DEFAULT_DATE = '0000-00-00 00:00:00';
         /**
-         * @var int Increment this value to trigger a schema update.
+         * Schema version.
+         *
+         * Increment this value to trigger a schema update.
+         *
+         * @var int
          */
         protected $schema_version = 7;
         /**
@@ -5925,14 +6266,16 @@ namespace {
      * Functions with the wc prefix were deprecated to avoid confusion with
      * Action Scheduler being included in WooCommerce core, and it providing
      * a different set of APIs for working with the action queue.
+     *
+     * @package ActionScheduler
      */
     /**
-     * Schedule an action to run one time
+     * Schedule an action to run one time.
      *
-     * @param int $timestamp When the job will run
-     * @param string $hook The hook to trigger
-     * @param array $args Arguments to pass when the hook triggers
-     * @param string $group The group to assign this job to
+     * @param int    $timestamp When the job will run.
+     * @param string $hook The hook to trigger.
+     * @param array  $args Arguments to pass when the hook triggers.
+     * @param string $group The group to assign this job to.
      *
      * @return string The job ID
      */
@@ -5940,13 +6283,13 @@ namespace {
     {
     }
     /**
-     * Schedule a recurring action
+     * Schedule a recurring action.
      *
-     * @param int $timestamp When the first instance of the job will run
-     * @param int $interval_in_seconds How long to wait between runs
-     * @param string $hook The hook to trigger
-     * @param array $args Arguments to pass when the hook triggers
-     * @param string $group The group to assign this job to
+     * @param int    $timestamp When the first instance of the job will run.
+     * @param int    $interval_in_seconds How long to wait between runs.
+     * @param string $hook The hook to trigger.
+     * @param array  $args Arguments to pass when the hook triggers.
+     * @param string $group The group to assign this job to.
      *
      * @deprecated 2.1.0
      *
@@ -5958,8 +6301,8 @@ namespace {
     /**
      * Schedule an action that recurs on a cron-like schedule.
      *
-     * @param int $timestamp The schedule will start on or after this time
-     * @param string $schedule A cron-link schedule string
+     * @param int    $timestamp The schedule will start on or after this time.
+     * @param string $schedule A cron-link schedule string.
      * @see http://en.wikipedia.org/wiki/Cron
      *   *    *    *    *    *    *
      *   ┬    ┬    ┬    ┬    ┬    ┬
@@ -5970,9 +6313,9 @@ namespace {
      *   |    |    +--------------- day of month (1 - 31)
      *   |    +-------------------- hour (0 - 23)
      *   +------------------------- min (0 - 59)
-     * @param string $hook The hook to trigger
-     * @param array $args Arguments to pass when the hook triggers
-     * @param string $group The group to assign this job to
+     * @param string $hook The hook to trigger.
+     * @param array  $args Arguments to pass when the hook triggers.
+     * @param string $group The group to assign this job to.
      *
      * @deprecated 2.1.0
      *
@@ -5984,9 +6327,9 @@ namespace {
     /**
      * Cancel the next occurrence of a job.
      *
-     * @param string $hook The hook that the job will trigger
-     * @param array $args Args that would have been passed to the job
-     * @param string $group
+     * @param string $hook The hook that the job will trigger.
+     * @param array  $args Args that would have been passed to the job.
+     * @param string $group Action's group.
      *
      * @deprecated 2.1.0
      */
@@ -5994,21 +6337,23 @@ namespace {
     {
     }
     /**
-     * @param string $hook
-     * @param array $args
-     * @param string $group
+     * Get next scheduled action.
+     *
+     * @param string $hook Action's hook.
+     * @param array  $args Action's args.
+     * @param string $group Action's group.
      *
      * @deprecated 2.1.0
      *
      * @return int|bool The timestamp for the next occurrence, or false if nothing was found
      */
-    function wc_next_scheduled_action($hook, $args = \NULL, $group = '')
+    function wc_next_scheduled_action($hook, $args = \null, $group = '')
     {
     }
     /**
      * Find scheduled actions
      *
-     * @param array $args Possible arguments, with their default values:
+     * @param array  $args Possible arguments, with their default values:
      *        'hook' => '' - the name of the action that will be triggered
      *        'args' => NULL - the args array that will be passed with the action
      *        'date' => NULL - the scheduled date of the action. Expects a DateTime object, a unix timestamp, or a string that can parsed with strtotime(). Used in UTC timezone.
@@ -6021,8 +6366,8 @@ namespace {
      *        'per_page' => 5 - Number of results to return
      *        'offset' => 0
      *        'orderby' => 'date' - accepted values are 'hook', 'group', 'modified', or 'date'
-     *        'order' => 'ASC'
-     * @param string $return_format OBJECT, ARRAY_A, or ids
+     *        'order' => 'ASC'.
+     * @param string $return_format OBJECT, ARRAY_A, or ids.
      *
      * @deprecated 2.1.0
      *
