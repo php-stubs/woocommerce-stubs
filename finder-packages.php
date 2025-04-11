@@ -13,6 +13,7 @@ return \StubsGenerator\Finder::create()
             ])
             // Uses WP-CLI.
             ->notPath('WP_CLI')
+            ->notPath('abstracts/ActionScheduler_WPCLI_Command.php')
             ->sortByName(true)
     )
     ->append(
