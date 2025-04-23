@@ -19659,6 +19659,13 @@ namespace {
          */
         protected $shipping_methods;
         /**
+         * Whether the shipping totals have been calculated. This will only return true if shipping was calculated, not if
+         * shipping is disabled or if there are no cart contents.
+         *
+         * @var bool
+         */
+        protected $has_calculated_shipping = \false;
+        /**
          * Total defaults used to reset.
          *
          * @var array
@@ -20351,7 +20358,7 @@ namespace {
          * Get cart's owner.
          *
          * @since  3.2.0
-         * @return WC_Customer
+         * @return \WC_Customer
          */
         public function get_customer()
         {
@@ -20381,6 +20388,14 @@ namespace {
          * @return array
          */
         public function get_shipping_methods()
+        {
+        }
+        /**
+         * Whether the shipping totals have been calculated.
+         *
+         * @return bool
+         */
+        public function has_calculated_shipping()
         {
         }
         /**
@@ -20451,7 +20466,7 @@ namespace {
         {
         }
         /**
-         * Sees if the customer has entered enough data to calc the shipping yet.
+         * Sees if the customer has entered enough data to calculate shipping.
          *
          * @return bool
          */
@@ -23159,6 +23174,16 @@ namespace {
          * @return bool
          */
         public function has_shipping_address()
+        {
+        }
+        /**
+         * Checks whether the address is "full" in the sense that it contains all required fields to calculate shipping rates.
+         *
+         * @since 9.8.0
+         * @return bool Whether the customer has a full shipping address (address_1, city, state, postcode, country).
+         * Only required fields are checked.
+         */
+        public function has_full_shipping_address()
         {
         }
         /**
@@ -26532,6 +26557,22 @@ namespace {
          * @since 9.8.0
          */
         public static function enable_email_improvements()
+        {
+        }
+        /**
+         * Enable the new Payments Settings page by default for new shops.
+         *
+         * @since 9.8.2
+         */
+        public static function enable_new_payments_settings_page()
+        {
+        }
+        /**
+         * Enable the new Payments Settings page by default for existing shops, under certain circumstances.
+         *
+         * @since 9.8.2
+         */
+        public static function maybe_enable_new_payments_settings_page()
         {
         }
         /**
@@ -37550,7 +37591,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '9.8.1';
+        public $version = '9.8.2';
         /**
          * WooCommerce Schema version.
          *
@@ -82693,7 +82734,7 @@ namespace Automattic\WooCommerce\Admin {
          *
          * @return array
          */
-        public static function install_plugins($plugins, ?\Automattic\WooCommerce\Admin\PluginsInstallLoggers\PluginsInstallLogger $logger = null, string $source = null)
+        public static function install_plugins($plugins, ?\Automattic\WooCommerce\Admin\PluginsInstallLoggers\PluginsInstallLogger $logger = null, ?string $source = null)
         {
         }
         /**
@@ -82707,7 +82748,7 @@ namespace Automattic\WooCommerce\Admin {
          *
          * @return bool
          */
-        public static function install_and_activate_plugins_async_callback(array $plugins, string $job_id, string $source = null)
+        public static function install_and_activate_plugins_async_callback(array $plugins, string $job_id, ?string $source = null)
         {
         }
         /**
@@ -99250,15 +99291,6 @@ namespace Automattic\WooCommerce\Blocks\Shipping {
         {
         }
         /**
-         * Checks whether the address is "full" in the sense that it contains all required fields to calculate shipping rates.
-         *
-         * @return bool Whether the customer has a full shipping address (address_1, city, state, postcode, country).
-         * Only required fields are checked.
-         */
-        public function has_full_shipping_address()
-        {
-        }
-        /**
          * Remove shipping (i.e. delivery, not local pickup) if
          * "Hide shipping costs until an address is entered" is enabled,
          * and no address has been entered yet.
@@ -105625,10 +105657,12 @@ namespace Automattic\WooCommerce\StoreApi {
          *
          * Users of valid Cart Tokens are also allowed access from any origin.
          *
-         * @param bool $value  Whether the request has already been served.
+         * @param bool             $value  Whether the request has already been served.
+         * @param \WP_REST_Server  $server The REST server instance.
+         * @param \WP_REST_Request $request The REST request instance.
          * @return bool
          */
-        public function send_cors_headers($value)
+        public function send_cors_headers($value, $server, $request)
         {
         }
         /**
@@ -105642,9 +105676,10 @@ namespace Automattic\WooCommerce\StoreApi {
         /**
          * Gets the cart token from the request header.
          *
+         * @param \WP_REST_Request $request The REST request instance.
          * @return string
          */
-        protected function get_cart_token()
+        protected function get_cart_token(\WP_REST_Request $request)
         {
         }
         /**
@@ -106752,6 +106787,14 @@ namespace Automattic\WooCommerce\StoreApi\Routes\V1 {
          * @return \WP_REST_Response
          */
         protected function add_response_headers(\WP_REST_Response $response)
+        {
+        }
+        /**
+         * Load the cart session before handling responses.
+         *
+         * @param \WP_REST_Request $request Request object.
+         */
+        protected function load_cart_session(\WP_REST_Request $request)
         {
         }
         /**
@@ -107890,7 +107933,7 @@ namespace Automattic\WooCommerce\StoreApi\Routes\V1 {
          *
          * @param \WP_REST_Request $request Request object.
          * @throws RouteException On error.
-         * @return \WP_REST_Response
+         * @return \WP_REST_Response|\WP_Error
          */
         protected function get_route_update_response(\WP_REST_Request $request)
         {
@@ -107908,7 +107951,7 @@ namespace Automattic\WooCommerce\StoreApi\Routes\V1 {
          *
          * @param \WP_REST_Request $request Request object.
          *
-         * @return \WP_REST_Response
+         * @return \WP_REST_Response|\WP_Error
          */
         protected function get_route_post_response(\WP_REST_Request $request)
         {
@@ -110408,7 +110451,7 @@ namespace Automattic\WooCommerce\StoreApi\Schemas\V1 {
          * @param \WC_Cart|null      $cart           Cart object.
          * @return array
          */
-        protected function get_checkout_response(\WC_Order $order, \Automattic\WooCommerce\StoreApi\Payments\PaymentResult $payment_result = null, \WC_Cart $cart = null)
+        protected function get_checkout_response(\WC_Order $order, ?\Automattic\WooCommerce\StoreApi\Payments\PaymentResult $payment_result = null, ?\WC_Cart $cart = null)
         {
         }
         /**
