@@ -12376,17 +12376,7 @@ namespace {
          *
          * @throws \Exception When file validation fails.
          */
-        protected static function check_file_path(string $path) : void
-        {
-        }
-        /**
-         * Check if a given file is inside a given directory.
-         *
-         * @param string $file_path The full path of the file to check.
-         * @param string $directory The path of the directory to check.
-         * @return bool True if the file is inside the directory.
-         */
-        private static function file_is_in_directory(string $file_path, string $directory) : bool
+        protected static function validate_file_path(string $path) : void
         {
         }
         /**
@@ -15967,12 +15957,25 @@ namespace {
      */
     class WC_Settings_Payment_Gateways_React extends \WC_Settings_Page
     {
+        const TAB_NAME = 'checkout';
+        const MAIN_SECTION_NAME = 'main';
+        const OFFLINE_SECTION_NAME = 'offline';
         /**
          * Get the whitelist of sections to render using React.
          *
          * @return array List of section identifiers.
          */
         private function get_reactify_render_sections()
+        {
+        }
+        /**
+         * Standardize the current section name.
+         *
+         * @param string $section The section name to standardize.
+         *
+         * @return string The standardized section name.
+         */
+        private function standardize_section_name(string $section) : string
         {
         }
         /**
@@ -16024,13 +16027,14 @@ namespace {
          * Render the classic gateway settings page.
          *
          * @param array  $payment_gateways The payment gateways.
-         * @param string $current_section The current section.
+         * @param string $current_section  The current section.
          */
-        private function render_classic_gateway_settings_page($payment_gateways, $current_section)
+        private function render_classic_gateway_settings_page(array $payment_gateways, string $current_section)
         {
         }
         /**
          * Run the 'admin_options' method on a given gateway.
+         *
          * This method exists to help with unit testing.
          *
          * @param object $gateway The gateway object to run the method on.
@@ -16039,9 +16043,13 @@ namespace {
         {
         }
         /**
-         * Don't show any section links.
+         * Get all sections for the current page.
          *
-         * @return array
+         * Reactified section pages won't have any sections.
+         * The rest of the settings pages will get the default/own section and those added via
+         * the `woocommerce_get_sections_checkout` filter.
+         *
+         * @return array The sections for this settings page.
          */
         public function get_sections()
         {
@@ -16062,6 +16070,16 @@ namespace {
          * Suppress WP admin notices on the WooCommerce Payments settings page.
          */
         public function suppress_admin_notices()
+        {
+        }
+        /**
+         * Suppress the store-alerts WCAdmin feature on the WooCommerce Payments settings page and Reactified sections.
+         *
+         * @param mixed $features The WCAdmin features list.
+         *
+         * @return mixed The modified features list.
+         */
+        public function suppress_store_alerts($features)
         {
         }
     }
@@ -19635,6 +19653,13 @@ namespace {
     class WC_Cart extends \WC_Legacy_Cart
     {
         /**
+         * Cart context, used to determine if the cart is being used in a StoreAPI or shortcode context. This should only
+         * be used internally.
+         *
+         * @var string shortcode|store-api
+         */
+        public $cart_context = 'shortcode';
+        /**
          * Contains an array of cart items.
          *
          * @var array
@@ -23178,10 +23203,14 @@ namespace {
         }
         /**
          * Checks whether the address is "full" in the sense that it contains all required fields to calculate shipping rates.
+         * This method uses the current country's locale to determine if a field is required, or falls back to the default
+         * locale if there's no country-specific setting for that field.
+         *
+         * This method is only used internally by StoreAPI, and not by the classic/shortcode checkout.
          *
          * @since 9.8.0
-         * @return bool Whether the customer has a full shipping address (address_1, city, state, postcode, country).
-         * Only required fields are checked.
+         * @return bool Whether the customer has a full shipping address (city, state, postcode, country).
+         * Only required fields are checked based on the country locale.
          */
         public function has_full_shipping_address()
         {
@@ -26275,7 +26304,7 @@ namespace {
          *
          * @var array
          */
-        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_admin_update_0201_order_status_index', 'wc_admin_update_0230_rename_gross_total', 'wc_admin_update_0251_remove_unsnooze_action', 'wc_update_400_db_version'), '4.4.0' => array('wc_update_440_insert_attribute_terms_for_variable_products', 'wc_admin_update_110_remove_facebook_note', 'wc_admin_update_130_remove_dismiss_action_from_tracking_opt_in_note', 'wc_update_440_db_version'), '4.5.0' => array('wc_update_450_sanitize_coupons_code', 'wc_update_450_db_version'), '5.0.0' => array('wc_update_500_fix_product_review_count', 'wc_admin_update_160_remove_facebook_note', 'wc_admin_update_170_homescreen_layout', 'wc_update_500_db_version'), '5.6.0' => array('wc_update_560_create_refund_returns_page', 'wc_update_560_db_version'), '6.0.0' => array('wc_update_600_migrate_rate_limit_options', 'wc_admin_update_270_delete_report_downloads', 'wc_admin_update_271_update_task_list_options', 'wc_admin_update_280_order_status', 'wc_admin_update_290_update_apperance_task_option', 'wc_admin_update_290_delete_default_homepage_layout_option', 'wc_update_600_db_version'), '6.3.0' => array('wc_update_630_create_product_attributes_lookup_table', 'wc_admin_update_300_update_is_read_from_last_read', 'wc_update_630_db_version'), '6.4.0' => array('wc_update_640_add_primary_key_to_product_attributes_lookup_table', 'wc_admin_update_340_remove_is_primary_from_note_action', 'wc_update_640_db_version'), '6.5.0' => array('wc_update_650_approved_download_directories'), '6.5.1' => array('wc_update_651_approved_download_directories'), '6.7.0' => array('wc_update_670_purge_comments_count_cache', 'wc_update_670_delete_deprecated_remote_inbox_notifications_option'), '7.0.0' => array('wc_update_700_remove_download_log_fk', 'wc_update_700_remove_recommended_marketing_plugins_transient'), '7.2.1' => array('wc_update_721_adjust_new_zealand_states', 'wc_update_721_adjust_ukraine_states'), '7.2.2' => array('wc_update_722_adjust_new_zealand_states', 'wc_update_722_adjust_ukraine_states'), '7.5.0' => array('wc_update_750_add_columns_to_order_stats_table', 'wc_update_750_disable_new_product_management_experience'), '7.7.0' => array('wc_update_770_remove_multichannel_marketing_feature_options'), '8.1.0' => array('wc_update_810_migrate_transactional_metadata_for_hpos'), '8.6.0' => array('wc_update_860_remove_recommended_marketing_plugins_transient'), '8.7.0' => array('wc_update_870_prevent_listing_of_transient_files_directory'), '8.9.0' => array('wc_update_890_update_connect_to_woocommerce_note', 'wc_update_890_update_paypal_standard_load_eligibility'), '8.9.1' => array('wc_update_891_create_plugin_autoinstall_history_option'), '9.1.0' => array('wc_update_910_add_launch_your_store_tour_option', 'wc_update_910_remove_obsolete_user_meta'), '9.2.0' => array('wc_update_920_add_wc_hooked_blocks_version_option'), '9.3.0' => array('wc_update_930_add_woocommerce_coming_soon_option', 'wc_update_930_migrate_user_meta_for_launch_your_store_tour'), '9.4.0' => array('wc_update_940_add_phone_to_order_address_fts_index', 'wc_update_940_remove_help_panel_highlight_shown'), '9.5.0' => array('wc_update_950_tracking_option_autoload'), '9.6.1' => array('wc_update_961_migrate_default_email_base_color'), '9.8.0' => array('wc_update_980_remove_order_attribution_install_banner_dismissed_option'));
+        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_admin_update_0201_order_status_index', 'wc_admin_update_0230_rename_gross_total', 'wc_admin_update_0251_remove_unsnooze_action', 'wc_update_400_db_version'), '4.4.0' => array('wc_update_440_insert_attribute_terms_for_variable_products', 'wc_admin_update_110_remove_facebook_note', 'wc_admin_update_130_remove_dismiss_action_from_tracking_opt_in_note', 'wc_update_440_db_version'), '4.5.0' => array('wc_update_450_sanitize_coupons_code', 'wc_update_450_db_version'), '5.0.0' => array('wc_update_500_fix_product_review_count', 'wc_admin_update_160_remove_facebook_note', 'wc_admin_update_170_homescreen_layout', 'wc_update_500_db_version'), '5.6.0' => array('wc_update_560_create_refund_returns_page', 'wc_update_560_db_version'), '6.0.0' => array('wc_update_600_migrate_rate_limit_options', 'wc_admin_update_270_delete_report_downloads', 'wc_admin_update_271_update_task_list_options', 'wc_admin_update_280_order_status', 'wc_admin_update_290_update_apperance_task_option', 'wc_admin_update_290_delete_default_homepage_layout_option', 'wc_update_600_db_version'), '6.3.0' => array('wc_update_630_create_product_attributes_lookup_table', 'wc_admin_update_300_update_is_read_from_last_read', 'wc_update_630_db_version'), '6.4.0' => array('wc_update_640_add_primary_key_to_product_attributes_lookup_table', 'wc_admin_update_340_remove_is_primary_from_note_action', 'wc_update_640_db_version'), '6.5.0' => array('wc_update_650_approved_download_directories'), '6.5.1' => array('wc_update_651_approved_download_directories'), '6.7.0' => array('wc_update_670_purge_comments_count_cache', 'wc_update_670_delete_deprecated_remote_inbox_notifications_option'), '7.0.0' => array('wc_update_700_remove_download_log_fk', 'wc_update_700_remove_recommended_marketing_plugins_transient'), '7.2.1' => array('wc_update_721_adjust_new_zealand_states', 'wc_update_721_adjust_ukraine_states'), '7.2.2' => array('wc_update_722_adjust_new_zealand_states', 'wc_update_722_adjust_ukraine_states'), '7.5.0' => array('wc_update_750_add_columns_to_order_stats_table', 'wc_update_750_disable_new_product_management_experience'), '7.7.0' => array('wc_update_770_remove_multichannel_marketing_feature_options'), '8.1.0' => array('wc_update_810_migrate_transactional_metadata_for_hpos'), '8.6.0' => array('wc_update_860_remove_recommended_marketing_plugins_transient'), '8.7.0' => array('wc_update_870_prevent_listing_of_transient_files_directory'), '8.9.0' => array('wc_update_890_update_connect_to_woocommerce_note', 'wc_update_890_update_paypal_standard_load_eligibility'), '8.9.1' => array('wc_update_891_create_plugin_autoinstall_history_option'), '9.1.0' => array('wc_update_910_add_launch_your_store_tour_option', 'wc_update_910_remove_obsolete_user_meta'), '9.2.0' => array('wc_update_920_add_wc_hooked_blocks_version_option'), '9.3.0' => array('wc_update_930_add_woocommerce_coming_soon_option', 'wc_update_930_migrate_user_meta_for_launch_your_store_tour'), '9.4.0' => array('wc_update_940_add_phone_to_order_address_fts_index', 'wc_update_940_remove_help_panel_highlight_shown'), '9.5.0' => array('wc_update_950_tracking_option_autoload'), '9.6.1' => array('wc_update_961_migrate_default_email_base_color'), '9.8.0' => array('wc_update_980_remove_order_attribution_install_banner_dismissed_option'), '9.8.5' => array('wc_update_985_enable_new_payments_settings_page_feature'));
         /**
          * Option name used to track new installations of WooCommerce.
          *
@@ -26557,22 +26586,6 @@ namespace {
          * @since 9.8.0
          */
         public static function enable_email_improvements()
-        {
-        }
-        /**
-         * Enable the new Payments Settings page by default for new shops.
-         *
-         * @since 9.8.2
-         */
-        public static function enable_new_payments_settings_page()
-        {
-        }
-        /**
-         * Enable the new Payments Settings page by default for existing shops, under certain circumstances.
-         *
-         * @since 9.8.2
-         */
-        public static function maybe_enable_new_payments_settings_page()
         {
         }
         /**
@@ -37591,7 +37604,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '9.8.2';
+        public $version = '9.8.5';
         /**
          * WooCommerce Schema version.
          *
@@ -86957,7 +86970,7 @@ namespace Automattic\WooCommerce\Blocks {
          * @param array $patterns The patterns to parse.
          * @return array The parsed patterns.
          */
-        private function parse_categories(array $patterns)
+        private function parse_categories($patterns)
         {
         }
     }
@@ -104379,7 +104392,7 @@ namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
          * @throws \ValueError If the block configuration is invalid.
          * @throws \ValueError If the parent block container does not belong to the same template as the block.
          */
-        public function __construct(array $config, \Automattic\WooCommerce\Admin\BlockTemplates\BlockTemplateInterface &$root_template, \Automattic\WooCommerce\Admin\BlockTemplates\ContainerInterface &$parent = null)
+        public function __construct(array $config, \Automattic\WooCommerce\Admin\BlockTemplates\BlockTemplateInterface &$root_template, ?\Automattic\WooCommerce\Admin\BlockTemplates\ContainerInterface &$parent = null)
         {
         }
         /**
@@ -104392,7 +104405,7 @@ namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
          * @throws \ValueError If the block configuration is invalid.
          * @throws \ValueError If the parent block container does not belong to the same template as the block.
          */
-        protected function validate(array $config, \Automattic\WooCommerce\Admin\BlockTemplates\BlockTemplateInterface &$root_template, \Automattic\WooCommerce\Admin\BlockTemplates\ContainerInterface &$parent = null)
+        protected function validate(array $config, \Automattic\WooCommerce\Admin\BlockTemplates\BlockTemplateInterface &$root_template, ?\Automattic\WooCommerce\Admin\BlockTemplates\ContainerInterface &$parent = null)
         {
         }
         /**
@@ -115506,6 +115519,16 @@ namespace {
      * @param string $url   URL of the page to return to.
      */
     function wc_back_link($label, $url)
+    {
+    }
+    /**
+     * Outputs a header with "back" link so admin screens can easily jump back a page.
+     *
+     * @param string $title Title of the current page.
+     * @param string $label Label of the page to return to.
+     * @param string $url   URL of the page to return to.
+     */
+    function wc_back_header($title, $label, $url)
     {
     }
     /**
