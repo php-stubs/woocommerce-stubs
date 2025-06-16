@@ -11592,6 +11592,7 @@ namespace {
      */
     class WC_Helper
     {
+        const NOTE_NAME = 'wccom-api-failed';
         /**
          * A log object returned by wc_get_logger().
          *
@@ -11613,6 +11614,18 @@ namespace {
          * Loads the helper class, runs on init.
          */
         public static function load()
+        {
+        }
+        /**
+         * Remove all notes signaling an error with the WCCOM API, when the request was successful.
+         */
+        protected static function remove_api_error_notice()
+        {
+        }
+        /**
+         * Adds at most one note signaling that there was an error with the WCCOM API.
+         */
+        protected static function add_api_error_notice()
         {
         }
         /**
@@ -38017,7 +38030,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '9.9.3';
+        public $version = '9.9.4';
         /**
          * WooCommerce Schema version.
          *
