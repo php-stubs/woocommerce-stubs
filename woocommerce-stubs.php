@@ -563,7 +563,7 @@ namespace {
          *
          * @param string $hook_name Hook name.
          */
-        public abstract function hook_in($hook_name);
+        abstract public function hook_in($hook_name);
         /**
          * Get old hooks to map to new hook.
          *
@@ -588,7 +588,7 @@ namespace {
          * @param  mixed  $return_value      Returned value.
          * @return mixed
          */
-        public abstract function handle_deprecated_hook($new_hook, $old_hook, $new_callback_args, $return_value);
+        abstract public function handle_deprecated_hook($new_hook, $old_hook, $new_callback_args, $return_value);
         /**
          * Get deprecated version.
          *
@@ -614,7 +614,7 @@ namespace {
          * @param  array  $new_callback_args New callback args.
          * @return mixed
          */
-        protected abstract function trigger_hook($old_hook, $new_callback_args);
+        abstract protected function trigger_hook($old_hook, $new_callback_args);
     }
     /**
      * WC_Settings_API class.
@@ -1007,7 +1007,7 @@ namespace {
          *
          * @return string
          */
-        public function validate_safe_text_field(string $key, ?string $value) : string
+        public function validate_safe_text_field(string $key, ?string $value): string
         {
         }
         /**
@@ -1656,7 +1656,7 @@ namespace {
          *
          * @return array having `total`|`subtotal` property.
          */
-        protected abstract function get_values_for_total($field);
+        abstract protected function get_values_for_total($field);
         /**
          * Return rounded total based on settings. Will be used by Cart and Orders.
          *
@@ -1714,7 +1714,7 @@ namespace Automattic\WooCommerce\Internal\CostOfGoodsSold {
          *
          * @return bool True if the feature is enabled.
          */
-        protected function cogs_is_enabled(?string $doing_it_wrong_function_name = null) : bool
+        protected function cogs_is_enabled(?string $doing_it_wrong_function_name = null): bool
         {
         }
     }
@@ -2487,7 +2487,7 @@ namespace {
          * @param WC_Order_Item_Coupon $coupon_item The order item corresponding to the coupon to reapply.
          * @returns WC_Coupon Coupon object populated from order line item metadata, or empty if no such metadata exists (should never happen).
          */
-        private function get_temporary_coupon(\WC_Order_Item_Coupon $coupon_item) : \WC_Coupon
+        private function get_temporary_coupon(\WC_Order_Item_Coupon $coupon_item): \WC_Coupon
         {
         }
         /**
@@ -2882,7 +2882,7 @@ namespace {
          *
          * @return string Order title.
          */
-        public function get_title() : string
+        public function get_title(): string
         {
         }
         /**
@@ -2904,7 +2904,7 @@ namespace {
          *
          * @return float The calculated value.
          */
-        public function calculate_cogs_total_value() : float
+        public function calculate_cogs_total_value(): float
         {
         }
         /**
@@ -2913,7 +2913,7 @@ namespace {
          *
          * @return float The calculated value.
          */
-        protected function calculate_cogs_total_value_core() : float
+        protected function calculate_cogs_total_value_core(): float
         {
         }
         /**
@@ -2923,7 +2923,7 @@ namespace {
          *
          * @return float The current value for this order.
          */
-        public function get_cogs_total_value() : float
+        public function get_cogs_total_value(): float
         {
         }
         /**
@@ -5066,7 +5066,7 @@ namespace {
          *
          * @return WC_Product_Download[]
          */
-        private function build_downloads_map(array $downloads) : array
+        private function build_downloads_map(array $downloads): array
         {
         }
         /**
@@ -5658,7 +5658,7 @@ namespace {
          *
          * @param float|null $value The value to set for this product.
          */
-        public function set_cogs_value(?float $value) : void
+        public function set_cogs_value(?float $value): void
         {
         }
         /**
@@ -5670,7 +5670,7 @@ namespace {
          * @param float|null $value Cost value passed to the set_cogs_value method.
          * @return float|null The actual value that will be set for the cost property.
          */
-        protected function adjust_cogs_value_before_set(?float $value) : ?float
+        protected function adjust_cogs_value_before_set(?float $value): ?float
         {
         }
         /**
@@ -5681,7 +5681,7 @@ namespace {
          *
          * @return float The current value for this product.
          */
-        public function get_cogs_value() : ?float
+        public function get_cogs_value(): ?float
         {
         }
         /**
@@ -5696,7 +5696,7 @@ namespace {
          *
          * @return float The effective value for this product.
          */
-        public function get_cogs_effective_value() : float
+        public function get_cogs_effective_value(): float
         {
         }
         /**
@@ -5709,7 +5709,7 @@ namespace {
          *
          * @return float The effective value for this product.
          */
-        protected function get_cogs_effective_value_core() : float
+        protected function get_cogs_effective_value_core(): float
         {
         }
         /**
@@ -5721,7 +5721,7 @@ namespace {
          *
          * @return float The effective total value for this product.
          */
-        public function get_cogs_total_value() : float
+        public function get_cogs_total_value(): float
         {
         }
         /**
@@ -5733,7 +5733,7 @@ namespace {
          *
          * @return float The effective total value for this product.
          */
-        protected function get_cogs_total_value_core() : float
+        protected function get_cogs_total_value_core(): float
         {
         }
     }
@@ -6424,7 +6424,7 @@ namespace {
          * Override this method to perform any actions required
          * during the async request.
          */
-        protected abstract function handle();
+        abstract protected function handle();
     }
     /**
      * Abstract WP_Background_Process class.
@@ -6684,7 +6684,7 @@ namespace {
          *
          * @return mixed
          */
-        protected abstract function task($item);
+        abstract protected function task($item);
     }
     /**
      * WC_Background_Process class.
@@ -6852,7 +6852,7 @@ namespace {
          *
          * @return string Body class with added class for Marketplace or My Subscriptions page.
          */
-        public static function filter_admin_body_classes(string $admin_body_class = '') : string
+        public static function filter_admin_body_classes(string $admin_body_class = ''): string
         {
         }
         /**
@@ -6861,7 +6861,7 @@ namespace {
          * @param object $action Action object.
          * @return string URL.
          */
-        public static function get_action_url($action) : string
+        public static function get_action_url($action): string
         {
         }
         /**
@@ -8222,7 +8222,7 @@ namespace {
          *
          * @return int
          */
-        public function get_per_page_default() : int
+        public function get_per_page_default(): int
         {
         }
     }
@@ -8311,7 +8311,7 @@ namespace {
          *
          * @return array
          */
-        private static function get_promotions_of_format($promotions = array(), $format = '') : array
+        private static function get_promotions_of_format($promotions = array(), $format = ''): array
         {
         }
         /**
@@ -8334,7 +8334,7 @@ namespace {
          *
          * @return array
          * */
-        private static function merge_promos(?array $promotions = array()) : array
+        private static function merge_promos(?array $promotions = array()): array
         {
         }
         /**
@@ -8348,7 +8348,7 @@ namespace {
          *
          * @return array
          */
-        public static function filter_marketplace_menu_items($menu_items, $promotion = array()) : array
+        public static function filter_marketplace_menu_items($menu_items, $promotion = array()): array
         {
         }
         /**
@@ -8359,7 +8359,7 @@ namespace {
          *
          * @return string
          */
-        private static function append_bubble(string $menu_item_text, string $bubble_text) : string
+        private static function append_bubble(string $menu_item_text, string $bubble_text): string
         {
         }
         /**
@@ -8541,7 +8541,7 @@ namespace {
          *
          * @return void
          */
-        public function orders_menu() : void
+        public function orders_menu(): void
         {
         }
         /**
@@ -8864,7 +8864,7 @@ namespace {
          * @param int|null $user_id User id, or null for the current user.
          * @return bool True if the user has dismissed the notice.
          */
-        public static function user_has_dismissed_notice(string $name, ?int $user_id = \null) : bool
+        public static function user_has_dismissed_notice(string $name, ?int $user_id = \null): bool
         {
         }
         /**
@@ -11034,7 +11034,7 @@ namespace {
          * @param array  $body The body of the request.
          * @return string The signature.
          */
-        private static function create_request_signature(string $access_token_secret, string $url, string $method, $body = \null) : string
+        private static function create_request_signature(string $access_token_secret, string $url, string $method, $body = \null): string
         {
         }
         /**
@@ -11043,7 +11043,7 @@ namespace {
          * @param string $url The URL to add the access token and signature to.
          * @return string
          */
-        public static function add_auth_parameters(string $url) : string
+        public static function add_auth_parameters(string $url): string
         {
         }
         /**
@@ -11931,7 +11931,7 @@ namespace {
          * @param string $request_hash request hash to be verified.
          * @return bool
          */
-        public static function verify_request_hash(string $request_hash) : bool
+        public static function verify_request_hash(string $request_hash): bool
         {
         }
         /**
@@ -12144,7 +12144,7 @@ namespace {
          *
          * @return bool
          */
-        public static function is_site_connected() : bool
+        public static function is_site_connected(): bool
         {
         }
         /**
@@ -12167,7 +12167,7 @@ namespace {
          *
          * @return void
          */
-        public static function update_auth_option(string $access_token, string $access_token_secret, int $site_id, string $home_url) : void
+        public static function update_auth_option(string $access_token, string $access_token_secret, int $site_id, string $home_url): void
         {
         }
         /**
@@ -12201,7 +12201,7 @@ namespace {
          *
          * @return array
          */
-        protected static function wccom_activate($product_key) : array
+        protected static function wccom_activate($product_key): array
         {
         }
         /**
@@ -12220,7 +12220,7 @@ namespace {
          * @param int $code The HTTP response code.
          * @return string The user-friendly error message.
          */
-        protected static function get_message_for_response_code(int $code) : string
+        protected static function get_message_for_response_code(int $code): string
         {
         }
     }
@@ -12337,7 +12337,7 @@ namespace {
          *
          * @return bool
          */
-        private static function is_remind_later_clicked_recently(int $user_id, int $product_id) : bool
+        private static function is_remind_later_clicked_recently(int $user_id, int $product_id): bool
         {
         }
         /**
@@ -12348,7 +12348,7 @@ namespace {
          *
          * @return bool
          */
-        private static function has_reached_max_dismissals(int $user_id, int $product_id) : bool
+        private static function has_reached_max_dismissals(int $user_id, int $product_id): bool
         {
         }
         /**
@@ -12358,7 +12358,7 @@ namespace {
          *
          * @return bool
          */
-        private static function is_any_notices_dismissed_recently(int $user_id) : bool
+        private static function is_any_notices_dismissed_recently(int $user_id): bool
         {
         }
         /**
@@ -12369,7 +12369,7 @@ namespace {
          *
          * @return bool
          */
-        private static function is_product_notice_dismissed_recently(int $user_id, int $product_id) : bool
+        private static function is_product_notice_dismissed_recently(int $user_id, int $product_id): bool
         {
         }
         /**
@@ -12380,7 +12380,7 @@ namespace {
          *
          * @return bool
          */
-        private static function is_notice_throttled(int $user_id, int $product_id) : bool
+        private static function is_notice_throttled(int $user_id, int $product_id): bool
         {
         }
         /**
@@ -12435,7 +12435,7 @@ namespace {
          *
          * @return bool
          */
-        public static function get_connection_url_notice() : string
+        public static function get_connection_url_notice(): string
         {
         }
         /**
@@ -12443,7 +12443,7 @@ namespace {
          *
          * @return bool
          */
-        public static function has_host_plan_orders() : bool
+        public static function has_host_plan_orders(): bool
         {
         }
     }
@@ -12462,7 +12462,7 @@ namespace {
          *
          * @return void
          */
-        public static function load() : void
+        public static function load(): void
         {
         }
         /**
@@ -12470,7 +12470,7 @@ namespace {
          *
          * @return bool
          */
-        public static function is_plugin_active() : bool
+        public static function is_plugin_active(): bool
         {
         }
         /**
@@ -12478,7 +12478,7 @@ namespace {
          *
          * @return bool
          */
-        public static function is_plugin_installed() : bool
+        public static function is_plugin_installed(): bool
         {
         }
         /**
@@ -12486,7 +12486,7 @@ namespace {
          *
          * @return string
          */
-        public static function generate_install_url() : string
+        public static function generate_install_url(): string
         {
         }
         /**
@@ -12494,7 +12494,7 @@ namespace {
          *
          * @return int
          */
-        public static function get_plugin_slug() : string
+        public static function get_plugin_slug(): string
         {
         }
         /**
@@ -12502,7 +12502,7 @@ namespace {
          *
          * @return void
          */
-        public static function show_woo_update_manager_install_notice() : void
+        public static function show_woo_update_manager_install_notice(): void
         {
         }
         /**
@@ -12510,7 +12510,7 @@ namespace {
          *
          * @return bool
          */
-        protected static function install_admin_notice_dismissed() : bool
+        protected static function install_admin_notice_dismissed(): bool
         {
         }
         /**
@@ -12518,7 +12518,7 @@ namespace {
          *
          * @return bool
          */
-        protected static function activate_admin_notice_dismissed() : bool
+        protected static function activate_admin_notice_dismissed(): bool
         {
         }
     }
@@ -12607,7 +12607,7 @@ namespace {
          *
          * @throws \Exception When file validation fails.
          */
-        protected static function validate_file_path(string $path) : void
+        protected static function validate_file_path(string $path): void
         {
         }
         /**
@@ -13968,7 +13968,7 @@ namespace {
          *
          * @return string
          */
-        private static function get_trash_or_delete_order_link(int $order_id) : string
+        private static function get_trash_or_delete_order_link(int $order_id): string
         {
         }
         /**
@@ -15750,7 +15750,7 @@ namespace {
          *
          * @return array Settings array, each item being an associative array representing a setting.
          */
-        public final function get_settings_for_section($section_id)
+        final public function get_settings_for_section($section_id)
         {
         }
         /**
@@ -16085,13 +16085,13 @@ namespace {
         /**
          * Show a notice to the user when they are trying out the new email templates.
          */
-        public function previewing_new_templates() : void
+        public function previewing_new_templates(): void
         {
         }
         /**
          * Show a button to revert or enable email improvements.
          */
-        public function email_improvements_button() : void
+        public function email_improvements_button(): void
         {
         }
         /**
@@ -16254,7 +16254,7 @@ namespace {
          *
          * @return string The standardized section name.
          */
-        private function standardize_section_name(string $section) : string
+        private function standardize_section_name(string $section): string
         {
         }
         /**
@@ -17776,7 +17776,7 @@ namespace {
          *
          * @return void
          */
-        private static function order_delete_meta() : void
+        private static function order_delete_meta(): void
         {
         }
         /**
@@ -17785,7 +17785,7 @@ namespace {
          *
          * @return void
          */
-        public static function json_search_order_metakeys() : void
+        public static function json_search_order_metakeys(): void
         {
         }
         /**
@@ -17832,7 +17832,7 @@ namespace {
          * @param WC_Product $product_object Product object.
          * @return float|null Cost of the product, or null.
          */
-        private static function base_cost_or_null(\WC_Product $product_object) : ?float
+        private static function base_cost_or_null(\WC_Product $product_object): ?float
         {
         }
     }
@@ -21541,7 +21541,7 @@ namespace {
          *
          * @return int
          */
-        public static function get_products_reviews_pending_moderation_counter() : int
+        public static function get_products_reviews_pending_moderation_counter(): int
         {
         }
         /**
@@ -21551,7 +21551,7 @@ namespace {
          * @param \WP_Comment $comment    Comment object.
          * @return void
          */
-        public static function maybe_bump_products_reviews_pending_moderation_counter($comment_id, $comment) : void
+        public static function maybe_bump_products_reviews_pending_moderation_counter($comment_id, $comment): void
         {
         }
         /**
@@ -21562,7 +21562,7 @@ namespace {
          * @param \WP_Comment $comment    Comment object.
          * @return void
          */
-        public static function maybe_adjust_products_reviews_pending_moderation_counter($new_status, $old_status, $comment) : void
+        public static function maybe_adjust_products_reviews_pending_moderation_counter($new_status, $old_status, $comment): void
         {
         }
         /**
@@ -21596,7 +21596,7 @@ namespace {
          *
          * @return array
          */
-        public static function add_review_comment_filter(array $comment_types) : array
+        public static function add_review_comment_filter(array $comment_types): array
         {
         }
         /**
@@ -22809,7 +22809,7 @@ namespace {
          *
          * @return string A JSON string with information that allows the coupon to be reapplied to an existing order.
          */
-        public function get_short_info() : string
+        public function get_short_info(): string
         {
         }
         /**
@@ -24469,7 +24469,7 @@ namespace {
          *
          * @return bool Whether the passed method is callable.
          */
-        public function has_callable(string $method) : bool
+        public function has_callable(string $method): bool
         {
         }
     }
@@ -25271,7 +25271,7 @@ namespace {
          *
          * @return string Content disposition value.
          */
-        private static function get_content_disposition() : string
+        private static function get_content_disposition(): string
         {
         }
         /**
@@ -25322,7 +25322,7 @@ namespace {
          *
          * @internal For exclusive usage of WooCommerce core, backwards compatibility not guaranteed.
          */
-        public static function track_download($download, $user_id = \null, $user_ip_address = \null, bool $defer = \false) : void
+        public static function track_download($download, $user_id = \null, $user_ip_address = \null, bool $defer = \false): void
         {
         }
     }
@@ -26812,7 +26812,7 @@ namespace {
          *
          * @return bool TRUE if database auto-updates are enabled. FALSE otherwise.
          */
-        public static function is_db_auto_update_enabled() : bool
+        public static function is_db_auto_update_enabled(): bool
         {
         }
         /**
@@ -28118,7 +28118,7 @@ namespace {
          *
          * @return bool True if this line item has an associated Cost of Goods Sold value.
          */
-        public function has_cogs() : bool
+        public function has_cogs(): bool
         {
         }
         /**
@@ -28129,7 +28129,7 @@ namespace {
          * @return bool True if the value has been calculated successfully (and set as the actual value), false otherwise (and the value hasn't changed).
          * @throws Exception The class doesn't implement its own version of calculate_cogs_value_core. Derived classes are expected to override that method when has_cogs returns true.
          */
-        public function calculate_cogs_value() : bool
+        public function calculate_cogs_value(): bool
         {
         }
         // phpcs:disable Squiz.Commenting.FunctionComment.InvalidNoReturn
@@ -28140,7 +28140,7 @@ namespace {
          * @return float|null The calculated value, or null if the value can't be calculated for some reason.
          * @throws Exception The class doesn't implement its own version of this method. Derived classes are expected to override this method when has_cogs returns true.
          */
-        protected function calculate_cogs_value_core() : ?float
+        protected function calculate_cogs_value_core(): ?float
         {
         }
         // phpcs:enable Squiz.Commenting.FunctionComment.InvalidNoReturn
@@ -28152,7 +28152,7 @@ namespace {
          * @param string $context What the value is for. Valid values are view and edit.
          * @return float The current value for this order item.
          */
-        public function get_cogs_value($context = 'view') : float
+        public function get_cogs_value($context = 'view'): float
         {
         }
         /**
@@ -28165,7 +28165,7 @@ namespace {
          *
          * @internal This method is intended for data store usage only, the value set here will be overridden by calculate_cogs_value.
          */
-        public function set_cogs_value(float $value) : void
+        public function set_cogs_value(float $value): void
         {
         }
         /**
@@ -28173,7 +28173,7 @@ namespace {
          *
          * @return string
          */
-        public function get_cogs_value_html() : string
+        public function get_cogs_value_html(): string
         {
         }
         /**
@@ -28181,7 +28181,7 @@ namespace {
          *
          * @return string "Cost per unit: (formatted cost with currency)" text.
          */
-        public function get_cogs_value_per_unit_tooltip_text() : string
+        public function get_cogs_value_per_unit_tooltip_text(): string
         {
         }
     }
@@ -28933,7 +28933,7 @@ namespace {
          *
          * @return bool Always true.
          */
-        public function has_cogs() : bool
+        public function has_cogs(): bool
         {
         }
         /**
@@ -28941,7 +28941,7 @@ namespace {
          *
          * @return float|null The calculated value, null if the product associated to the line item no longer exists.
          */
-        public function calculate_cogs_value_core() : ?float
+        public function calculate_cogs_value_core(): ?float
         {
         }
     }
@@ -31069,7 +31069,7 @@ namespace {
          *
          * @return bool If the operation was successful.
          */
-        public function untrash() : bool
+        public function untrash(): bool
         {
         }
         /**
@@ -31087,7 +31087,7 @@ namespace {
          *
          * @return float The calculated value.
          */
-        protected function calculate_cogs_total_value_core() : float
+        protected function calculate_cogs_total_value_core(): float
         {
         }
     }
@@ -32353,7 +32353,7 @@ namespace {
          *
          * @return void
          */
-        private function raise_invalid_file_exception(string $download_file) : void
+        private function raise_invalid_file_exception(string $download_file): void
         {
         }
         /*
@@ -32445,7 +32445,7 @@ namespace {
          *
          * @return bool
          */
-        public function get_enabled() : bool
+        public function get_enabled(): bool
         {
         }
         /*
@@ -33646,7 +33646,7 @@ namespace {
          *
          * @return bool The current value of the flag.
          */
-        public function get_cogs_value_is_additive() : bool
+        public function get_cogs_value_is_additive(): bool
         {
         }
         /**
@@ -33657,7 +33657,7 @@ namespace {
          *
          * @param bool $value The value to set for the flag.
          */
-        public function set_cogs_value_is_additive(bool $value) : void
+        public function set_cogs_value_is_additive(bool $value): void
         {
         }
         /**
@@ -33667,7 +33667,7 @@ namespace {
          * @param float|null $value Cost value passed to the set_cogs_value method.
          * @return float|null The actual value that will be set for the cost property.
          */
-        protected function adjust_cogs_value_before_set(?float $value) : ?float
+        protected function adjust_cogs_value_before_set(?float $value): ?float
         {
         }
         /**
@@ -33680,7 +33680,7 @@ namespace {
          *
          * @return float
          */
-        protected function get_cogs_total_value_core() : float
+        protected function get_cogs_total_value_core(): float
         {
         }
         /**
@@ -33688,7 +33688,7 @@ namespace {
          *
          * @return float Cost of Goods Sold effective value of the parent product.
          */
-        public function get_parent_cogs_effective_value() : float
+        public function get_parent_cogs_effective_value(): float
         {
         }
     }
@@ -34585,7 +34585,7 @@ namespace {
          * @internal
          * @return self
          */
-        public static function instance() : self
+        public static function instance(): self
         {
         }
         /**
@@ -36786,7 +36786,7 @@ namespace {
          * @param object $taxonomy Object taxonomy to check.
          * @return boolean
          */
-        private static function taxonomy_has_block_template($taxonomy) : bool
+        private static function taxonomy_has_block_template($taxonomy): bool
         {
         }
         /**
@@ -37368,7 +37368,7 @@ namespace {
          * @param array $template_overrides Template overrides.
          * @return array Array with count of core email overrides and the templates that are overriden.
          */
-        public static function get_core_email_overrides($template_overrides) : array
+        public static function get_core_email_overrides($template_overrides): array
         {
         }
     }
@@ -38030,7 +38030,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '9.9.4';
+        public $version = '9.9.5';
         /**
          * WooCommerce Schema version.
          *
@@ -38962,7 +38962,7 @@ namespace {
          *
          * @var array
          */
-        private static $disabled_endpoints = array('settings', 'settings/(?P<group_id>[\\w-]+)', 'settings/(?P<group_id>[\\w-]+)/batch', 'settings/(?P<group_id>[\\w-]+)/(?P<id>[\\w-]+)', 'system_status', 'system_status/tools', 'system_status/tools/(?P<id>[\\w-]+)', 'reports', 'reports/sales', 'reports/top_sellers');
+        private static $disabled_endpoints = array('settings', 'settings/(?P<group_id>[\w-]+)', 'settings/(?P<group_id>[\w-]+)/batch', 'settings/(?P<group_id>[\w-]+)/(?P<id>[\w-]+)', 'system_status', 'system_status/tools', 'system_status/tools/(?P<id>[\w-]+)', 'reports', 'reports/sales', 'reports/top_sellers');
         /**
          * The version of the REST API we should target to
          * generate commands.
@@ -39658,7 +39658,7 @@ namespace {
          * @param int $order_id The order id to check.
          * @return bool True if an order exists with the given name.
          */
-        public function order_exists($order_id) : bool
+        public function order_exists($order_id): bool
         {
         }
         /**
@@ -40517,7 +40517,7 @@ namespace {
          *
          * @return bool
          */
-        private function is_cot_in_use() : bool
+        private function is_cot_in_use(): bool
         {
         }
         /**
@@ -41463,7 +41463,7 @@ namespace {
          *
          * @return bool If the operation was successful.
          */
-        public function untrash_order(\WC_Order $order) : bool
+        public function untrash_order(\WC_Order $order): bool
         {
         }
     }
@@ -42890,7 +42890,7 @@ namespace {
          *
          * @return bool True if the feature is enabled.
          */
-        protected function cogs_feature_is_enabled() : bool
+        protected function cogs_feature_is_enabled(): bool
         {
         }
         /**
@@ -42898,7 +42898,7 @@ namespace {
          *
          * @return bool
          */
-        protected function use_cogs_lookup_column() : bool
+        protected function use_cogs_lookup_column(): bool
         {
         }
     }
@@ -43923,7 +43923,7 @@ namespace {
             // Euro sign.
             '/&(dollar|#0*36);/i',
             // Dollar sign.
-            '/&[^&\\s;]+;/i',
+            '/&[^&\s;]+;/i',
             // Unknown/unhandled entities.
             '/[ ]{2,}/',
         );
@@ -44270,7 +44270,7 @@ namespace {
          *
          * @return string
          */
-        protected function get_must_use_css_styles() : string
+        protected function get_must_use_css_styles(): string
         {
         }
         /**
@@ -44440,7 +44440,7 @@ namespace {
         /**
          * Clears the PhpMailer AltBody field, to prevent that content from leaking across emails.
          */
-        private function clear_alt_body_field() : void
+        private function clear_alt_body_field(): void
         {
         }
         /**
@@ -44458,7 +44458,7 @@ namespace {
          *
          * @return string|null
          */
-        private function get_block_email_html_content() : ?string
+        private function get_block_email_html_content(): ?string
         {
         }
     }
@@ -45929,7 +45929,7 @@ namespace {
         /**
          * Prepare data that will be exported.
          */
-        public abstract function prepare_data_to_export();
+        abstract public function prepare_data_to_export();
         /**
          * Return an array of supported column names and ids.
          *
@@ -49693,7 +49693,7 @@ namespace {
          * @param int $product_id product id to get feature restriction rules.
          * @since 9.3.0
          */
-        public static function get_rules_for_product(int $product_id) : ?\WC_Product_Usage_Rule_Set
+        public static function get_rules_for_product(int $product_id): ?\WC_Product_Usage_Rule_Set
         {
         }
         /**
@@ -49703,7 +49703,7 @@ namespace {
          * @return array|null
          * @since 9.3.0
          */
-        private static function get_product_usage_restriction_rule(int $product_id) : ?array
+        private static function get_product_usage_restriction_rule(int $product_id): ?array
         {
         }
     }
@@ -49867,7 +49867,7 @@ namespace {
          *
          * @return WC_Queue_Interface
          */
-        public static final function instance()
+        final public static function instance()
         {
         }
         /**
@@ -50622,7 +50622,7 @@ namespace {
          *
          * @var string
          */
-        protected $rest_base = 'customers/(?P<customer_id>[\\d]+)/downloads';
+        protected $rest_base = 'customers/(?P<customer_id>[\d]+)/downloads';
         /**
          * Register the routes for customers.
          */
@@ -50724,7 +50724,7 @@ namespace {
          *
          * @return array $roles Allowed roles to be updated via the REST API.
          */
-        private function allowed_roles() : array
+        private function allowed_roles(): array
         {
         }
         /**
@@ -50893,7 +50893,7 @@ namespace {
          *
          * @var string
          */
-        protected $rest_base = 'orders/(?P<order_id>[\\d]+)/notes';
+        protected $rest_base = 'orders/(?P<order_id>[\d]+)/notes';
         /**
          * Post type.
          *
@@ -51327,7 +51327,7 @@ namespace {
          *
          * @var string
          */
-        protected $rest_base = 'orders/(?P<order_id>[\\d]+)/refunds';
+        protected $rest_base = 'orders/(?P<order_id>[\d]+)/refunds';
         /**
          * Post type.
          *
@@ -51625,7 +51625,7 @@ namespace {
          *
          * @var string
          */
-        protected $rest_base = 'products/attributes/(?P<attribute_id>[\\d]+)/terms';
+        protected $rest_base = 'products/attributes/(?P<attribute_id>[\d]+)/terms';
         /**
          * Register the routes for terms.
          */
@@ -51947,7 +51947,7 @@ namespace {
          *
          * @var string
          */
-        protected $rest_base = 'products/(?P<product_id>[\\d]+)/reviews';
+        protected $rest_base = 'products/(?P<product_id>[\d]+)/reviews';
         /**
          * Register the routes for product reviews.
          */
@@ -53098,7 +53098,7 @@ namespace {
          *
          * @var string
          */
-        protected $rest_base = 'webhooks/(?P<webhook_id>[\\d]+)/deliveries';
+        protected $rest_base = 'webhooks/(?P<webhook_id>[\d]+)/deliveries';
         /**
          * Register the routes for webhook deliveries.
          */
@@ -53913,7 +53913,7 @@ namespace {
          * @return array Prepared response data.
          * @since  9.5.0
          */
-        protected function prepare_object_for_response_core($order, $request) : array
+        protected function prepare_object_for_response_core($order, $request): array
         {
         }
         /**
@@ -54251,7 +54251,7 @@ namespace {
          *
          * @var string
          */
-        protected $rest_base = 'orders/(?P<order_id>[\\d]+)/refunds';
+        protected $rest_base = 'orders/(?P<order_id>[\d]+)/refunds';
         /**
          * Post type.
          *
@@ -54607,7 +54607,7 @@ namespace {
          *
          * @var string
          */
-        protected $rest_base = 'products/(?P<product_id>[\\d]+)/reviews';
+        protected $rest_base = 'products/(?P<product_id>[\d]+)/reviews';
         /**
          * Register the routes for product reviews.
          */
@@ -54758,7 +54758,7 @@ namespace {
          * @param string          $context Request context.
          * @return array Product data to be included in the response.
          */
-        protected function prepare_object_for_response_core($object_data, $request, $context) : array
+        protected function prepare_object_for_response_core($object_data, $request, $context): array
         {
         }
         /**
@@ -55036,7 +55036,7 @@ namespace {
          *
          * @var string
          */
-        protected $rest_base = 'products/(?P<product_id>[\\d]+)/variations';
+        protected $rest_base = 'products/(?P<product_id>[\d]+)/variations';
         /**
          * Post type.
          *
@@ -55068,7 +55068,7 @@ namespace {
          *
          * @since 9.2.0
          */
-        protected function check_variation_parent(int $variation_id, int $parent_id) : bool
+        protected function check_variation_parent(int $variation_id, int $parent_id): bool
         {
         }
         /**
@@ -55240,7 +55240,7 @@ namespace {
          *
          * @var string
          */
-        protected $rest_base = 'settings/(?P<group_id>[\\w-]+)';
+        protected $rest_base = 'settings/(?P<group_id>[\w-]+)';
         /**
          * Register routes.
          *
@@ -56922,7 +56922,7 @@ namespace {
          *
          * @param WP_REST_Request $request The request.
          */
-        public function get_items_permissions_check($request) : bool
+        public function get_items_permissions_check($request): bool
         {
         }
         /**
@@ -56930,7 +56930,7 @@ namespace {
          *
          * @param WP_REST_Request $request The request.
          */
-        public function get_item_permissions_check($request) : bool
+        public function get_item_permissions_check($request): bool
         {
         }
         /**
@@ -56954,7 +56954,7 @@ namespace {
          *
          * @param array $query_params Query params.
          */
-        private function get_layout_templates(array $query_params) : array
+        private function get_layout_templates(array $query_params): array
         {
         }
     }
@@ -57066,7 +57066,7 @@ namespace {
          * @param array $schema The original schema.
          * @return array The updated schema.
          */
-        private function add_cogs_related_schema(array $schema) : array
+        private function add_cogs_related_schema(array $schema): array
         {
         }
     }
@@ -57131,7 +57131,7 @@ namespace {
          * @return void
          * @throws WC_REST_Exception If item ID is not associated with order.
          */
-        protected function remove_item(\WC_Order $order, string $item_type, int $item_id) : void
+        protected function remove_item(\WC_Order $order, string $item_type, int $item_id): void
         {
         }
         /**
@@ -57170,7 +57170,7 @@ namespace {
          * @param array $schema The original schema.
          * @return array The updated schema.
          */
-        private function add_cogs_related_schema(array $schema) : array
+        private function add_cogs_related_schema(array $schema): array
         {
         }
         /**
@@ -57190,7 +57190,7 @@ namespace {
          * @return array Prepared response data.
          * @since  9.5.0
          */
-        protected function prepare_object_for_response_core($order, $request) : array
+        protected function prepare_object_for_response_core($order, $request): array
         {
         }
     }
@@ -57252,7 +57252,7 @@ namespace {
          * @param array $options Nested options array.
          * @return array Flat list of valid keys.
          */
-        private function flatten_options_keys(array $options) : array
+        private function flatten_options_keys(array $options): array
         {
         }
     }
@@ -57700,7 +57700,7 @@ namespace Automattic\WooCommerce\Internal\CostOfGoodsSold {
          * @param array      $data Array of response data.
          * @param WC_Product $product Product to get the information from.
          */
-        private function add_cogs_info_to_returned_product_data(array &$data, $product) : void
+        private function add_cogs_info_to_returned_product_data(array &$data, $product): void
         {
         }
         /**
@@ -57709,7 +57709,7 @@ namespace Automattic\WooCommerce\Internal\CostOfGoodsSold {
          * @param WP_Rest_Request $request Request data.
          * @param WC_Product      $product The product to apply the data to.
          */
-        private function set_cogs_info_in_product_object($request, $product) : void
+        private function set_cogs_info_in_product_object($request, $product): void
         {
         }
         /**
@@ -57719,7 +57719,7 @@ namespace Automattic\WooCommerce\Internal\CostOfGoodsSold {
          * @param bool  $for_variations_controller True if the information is for an endpoint in the variations controller.
          * @return array Updated schema information.
          */
-        private function add_cogs_related_product_schema(array $schema, bool $for_variations_controller) : array
+        private function add_cogs_related_product_schema(array $schema, bool $for_variations_controller): array
         {
         }
     }
@@ -58064,7 +58064,7 @@ namespace {
          * @param string          $context Request context.
          * @return array Product data to be included in the response.
          */
-        protected function prepare_object_for_response_core($object_data, $request, $context) : array
+        protected function prepare_object_for_response_core($object_data, $request, $context): array
         {
         }
     }
@@ -58822,7 +58822,7 @@ namespace Automattic\WooCommerce\RestApi\Utilities {
          *
          * @return object Instance.
          */
-        public static final function instance()
+        final public static function instance()
         {
         }
         /**
@@ -58834,7 +58834,7 @@ namespace Automattic\WooCommerce\RestApi\Utilities {
         /**
          * Prevent unserializing.
          */
-        public final function __wakeup()
+        final public function __wakeup()
         {
         }
     }
@@ -59727,7 +59727,7 @@ namespace {
          *
          * @return bool
          */
-        private static function guest_should_verify_email(\WC_Order $order, string $context) : bool
+        private static function guest_should_verify_email(\WC_Order $order, string $context): bool
         {
         }
     }
@@ -60613,7 +60613,7 @@ namespace {
          *
          * @return bool If setting the cookie was attempted (will be false if tracking is not allowed).
          */
-        public static function set_tracking_cookie(string $cookie_key, string $cookie_value, int $expire = 0, bool $secure = \false, bool $http_only = \false) : bool
+        public static function set_tracking_cookie(string $cookie_key, string $cookie_value, int $expire = 0, bool $secure = \false, bool $http_only = \false): bool
         {
         }
     }
@@ -62002,7 +62002,7 @@ namespace {
          * @return bool
          * @throws WC_REST_WCCOM_Site_Installer_Error If installation failed to run.
          */
-        public function run_installation(string $run_until_step) : bool
+        public function run_installation(string $run_until_step): bool
         {
         }
         /**
@@ -62011,7 +62011,7 @@ namespace {
          * @return bool
          * @throws WC_REST_WCCOM_Site_Installer_Error If the installation cannot be rest.
          */
-        public function reset_installation() : bool
+        public function reset_installation(): bool
         {
         }
         /**
@@ -62031,7 +62031,7 @@ namespace {
          * @param WC_WCCOM_Site_Installation_State $state Installation state.
          * @return string
          */
-        protected function get_next_step($state) : string
+        protected function get_next_step($state): string
         {
         }
         /**
@@ -62067,7 +62067,7 @@ namespace {
          * @param int $product_id The product ID.
          * @return WC_WCCOM_Site_Installation_State|null
          */
-        public static function get_state($product_id) : ?\WC_WCCOM_Site_Installation_State
+        public static function get_state($product_id): ?\WC_WCCOM_Site_Installation_State
         {
         }
         /**
@@ -62076,7 +62076,7 @@ namespace {
          * @param WC_WCCOM_Site_Installation_State $state The state to save.
          * @return bool
          */
-        public static function save_state(\WC_WCCOM_Site_Installation_State $state) : bool
+        public static function save_state(\WC_WCCOM_Site_Installation_State $state): bool
         {
         }
         /**
@@ -62085,7 +62085,7 @@ namespace {
          * @param WC_WCCOM_Site_Installation_State $state The state to delete.
          * @return bool
          */
-        public static function delete_state(\WC_WCCOM_Site_Installation_State $state) : bool
+        public static function delete_state(\WC_WCCOM_Site_Installation_State $state): bool
         {
         }
         /**
@@ -62094,7 +62094,7 @@ namespace {
          * @param int $product_id The product ID.
          * @return string
          */
-        protected static function get_storage_key($product_id) : string
+        protected static function get_storage_key($product_id): string
         {
         }
     }
@@ -63660,7 +63660,7 @@ namespace Automattic\WooCommerce\Vendor\Detection {
          *
          * @deprecated since version 2.6.9
          */
-        const VER = '([\\w._\\+]+)';
+        const VER = '([\w._\+]+)';
         /**
          * Stores the version number of the current release.
          */
@@ -63747,24 +63747,24 @@ namespace Automattic\WooCommerce\Vendor\Detection {
          * @var array
          */
         protected static array $phoneDevices = [
-            'iPhone' => '\\biPhone\\b|\\biPod\\b',
+            'iPhone' => '\biPhone\b|\biPod\b',
             // |\biTunes
-            'BlackBerry' => 'BlackBerry|\\bBB10\\b|rim[0-9]+|\\b(BBA100|BBB100|BBD100|BBE100|BBF100|STH100)\\b-[0-9]+',
-            'Pixel' => '; \\bPixel\\b',
-            'HTC' => 'HTC|HTC.*(Sensation|Evo|Vision|Explorer|6800|8100|8900|A7272|S510e|C110e|Legend|Desire|T8282)|APX515CKT|Qtek9090|APA9292KT|HD_mini|Sensation.*Z710e|PG86100|Z715e|Desire.*(A8181|HD)|ADR6200|ADR6400L|ADR6425|001HT|Inspire 4G|Android.*\\bEVO\\b|T-Mobile G1|Z520m|Android [0-9.]+; Pixel',
+            'BlackBerry' => 'BlackBerry|\bBB10\b|rim[0-9]+|\b(BBA100|BBB100|BBD100|BBE100|BBF100|STH100)\b-[0-9]+',
+            'Pixel' => '; \bPixel\b',
+            'HTC' => 'HTC|HTC.*(Sensation|Evo|Vision|Explorer|6800|8100|8900|A7272|S510e|C110e|Legend|Desire|T8282)|APX515CKT|Qtek9090|APA9292KT|HD_mini|Sensation.*Z710e|PG86100|Z715e|Desire.*(A8181|HD)|ADR6200|ADR6400L|ADR6425|001HT|Inspire 4G|Android.*\bEVO\b|T-Mobile G1|Z520m|Android [0-9.]+; Pixel',
             'Nexus' => 'Nexus One|Nexus S|Galaxy.*Nexus|Android.*Nexus.*Mobile|Nexus 4|Nexus 5|Nexus 5X|Nexus 6',
             // @todo: Is 'Dell Streak' a tablet or a phone? ;)
-            'Dell' => 'Dell[;]? (Streak|Aero|Venue|Venue Pro|Flash|Smoke|Mini 3iX)|XCD28|XCD35|\\b001DL\\b|\\b101DL\\b|\\bGS01\\b',
-            'Motorola' => 'Motorola|DROIDX|DROID BIONIC|\\bDroid\\b.*Build|Android.*Xoom|HRI39|MOT-|A1260|A1680|A555|A853|A855|A953|A955|A956|Motorola.*ELECTRIFY|Motorola.*i1|i867|i940|MB200|MB300|MB501|MB502|MB508|MB511|MB520|MB525|MB526|MB611|MB612|MB632|MB810|MB855|MB860|MB861|MB865|MB870|ME501|ME502|ME511|ME525|ME600|ME632|ME722|ME811|ME860|ME863|ME865|MT620|MT710|MT716|MT720|MT810|MT870|MT917|Motorola.*TITANIUM|WX435|WX445|XT300|XT301|XT311|XT316|XT317|XT319|XT320|XT390|XT502|XT530|XT531|XT532|XT535|XT603|XT610|XT611|XT615|XT681|XT701|XT702|XT711|XT720|XT800|XT806|XT860|XT862|XT875|XT882|XT883|XT894|XT901|XT907|XT909|XT910|XT912|XT928|XT926|XT915|XT919|XT925|XT1021|\\bMoto E\\b|XT1068|XT1092|XT1052',
-            'Samsung' => '\\bSamsung\\b|SM-G950F|SM-G955F|SM-G9250|GT-19300|SGH-I337|BGT-S5230|GT-B2100|GT-B2700|GT-B2710|GT-B3210|GT-B3310|GT-B3410|GT-B3730|GT-B3740|GT-B5510|GT-B5512|GT-B5722|GT-B6520|GT-B7300|GT-B7320|GT-B7330|GT-B7350|GT-B7510|GT-B7722|GT-B7800|GT-C3010|GT-C3011|GT-C3060|GT-C3200|GT-C3212|GT-C3212I|GT-C3262|GT-C3222|GT-C3300|GT-C3300K|GT-C3303|GT-C3303K|GT-C3310|GT-C3322|GT-C3330|GT-C3350|GT-C3500|GT-C3510|GT-C3530|GT-C3630|GT-C3780|GT-C5010|GT-C5212|GT-C6620|GT-C6625|GT-C6712|GT-E1050|GT-E1070|GT-E1075|GT-E1080|GT-E1081|GT-E1085|GT-E1087|GT-E1100|GT-E1107|GT-E1110|GT-E1120|GT-E1125|GT-E1130|GT-E1160|GT-E1170|GT-E1175|GT-E1180|GT-E1182|GT-E1200|GT-E1210|GT-E1225|GT-E1230|GT-E1390|GT-E2100|GT-E2120|GT-E2121|GT-E2152|GT-E2220|GT-E2222|GT-E2230|GT-E2232|GT-E2250|GT-E2370|GT-E2550|GT-E2652|GT-E3210|GT-E3213|GT-I5500|GT-I5503|GT-I5700|GT-I5800|GT-I5801|GT-I6410|GT-I6420|GT-I7110|GT-I7410|GT-I7500|GT-I8000|GT-I8150|GT-I8160|GT-I8190|GT-I8320|GT-I8330|GT-I8350|GT-I8530|GT-I8700|GT-I8703|GT-I8910|GT-I9000|GT-I9001|GT-I9003|GT-I9010|GT-I9020|GT-I9023|GT-I9070|GT-I9082|GT-I9100|GT-I9103|GT-I9220|GT-I9250|GT-I9300|GT-I9305|GT-I9500|GT-I9505|GT-M3510|GT-M5650|GT-M7500|GT-M7600|GT-M7603|GT-M8800|GT-M8910|GT-N7000|GT-S3110|GT-S3310|GT-S3350|GT-S3353|GT-S3370|GT-S3650|GT-S3653|GT-S3770|GT-S3850|GT-S5210|GT-S5220|GT-S5229|GT-S5230|GT-S5233|GT-S5250|GT-S5253|GT-S5260|GT-S5263|GT-S5270|GT-S5300|GT-S5330|GT-S5350|GT-S5360|GT-S5363|GT-S5369|GT-S5380|GT-S5380D|GT-S5560|GT-S5570|GT-S5600|GT-S5603|GT-S5610|GT-S5620|GT-S5660|GT-S5670|GT-S5690|GT-S5750|GT-S5780|GT-S5830|GT-S5839|GT-S6102|GT-S6500|GT-S7070|GT-S7200|GT-S7220|GT-S7230|GT-S7233|GT-S7250|GT-S7500|GT-S7530|GT-S7550|GT-S7562|GT-S7710|GT-S8000|GT-S8003|GT-S8500|GT-S8530|GT-S8600|SCH-A310|SCH-A530|SCH-A570|SCH-A610|SCH-A630|SCH-A650|SCH-A790|SCH-A795|SCH-A850|SCH-A870|SCH-A890|SCH-A930|SCH-A950|SCH-A970|SCH-A990|SCH-I100|SCH-I110|SCH-I400|SCH-I405|SCH-I500|SCH-I510|SCH-I515|SCH-I600|SCH-I730|SCH-I760|SCH-I770|SCH-I830|SCH-I910|SCH-I920|SCH-I959|SCH-LC11|SCH-N150|SCH-N300|SCH-R100|SCH-R300|SCH-R351|SCH-R400|SCH-R410|SCH-T300|SCH-U310|SCH-U320|SCH-U350|SCH-U360|SCH-U365|SCH-U370|SCH-U380|SCH-U410|SCH-U430|SCH-U450|SCH-U460|SCH-U470|SCH-U490|SCH-U540|SCH-U550|SCH-U620|SCH-U640|SCH-U650|SCH-U660|SCH-U700|SCH-U740|SCH-U750|SCH-U810|SCH-U820|SCH-U900|SCH-U940|SCH-U960|SCS-26UC|SGH-A107|SGH-A117|SGH-A127|SGH-A137|SGH-A157|SGH-A167|SGH-A177|SGH-A187|SGH-A197|SGH-A227|SGH-A237|SGH-A257|SGH-A437|SGH-A517|SGH-A597|SGH-A637|SGH-A657|SGH-A667|SGH-A687|SGH-A697|SGH-A707|SGH-A717|SGH-A727|SGH-A737|SGH-A747|SGH-A767|SGH-A777|SGH-A797|SGH-A817|SGH-A827|SGH-A837|SGH-A847|SGH-A867|SGH-A877|SGH-A887|SGH-A897|SGH-A927|SGH-B100|SGH-B130|SGH-B200|SGH-B220|SGH-C100|SGH-C110|SGH-C120|SGH-C130|SGH-C140|SGH-C160|SGH-C170|SGH-C180|SGH-C200|SGH-C207|SGH-C210|SGH-C225|SGH-C230|SGH-C417|SGH-C450|SGH-D307|SGH-D347|SGH-D357|SGH-D407|SGH-D415|SGH-D780|SGH-D807|SGH-D980|SGH-E105|SGH-E200|SGH-E315|SGH-E316|SGH-E317|SGH-E335|SGH-E590|SGH-E635|SGH-E715|SGH-E890|SGH-F300|SGH-F480|SGH-I200|SGH-I300|SGH-I320|SGH-I550|SGH-I577|SGH-I600|SGH-I607|SGH-I617|SGH-I627|SGH-I637|SGH-I677|SGH-I700|SGH-I717|SGH-I727|SGH-i747M|SGH-I777|SGH-I780|SGH-I827|SGH-I847|SGH-I857|SGH-I896|SGH-I897|SGH-I900|SGH-I907|SGH-I917|SGH-I927|SGH-I937|SGH-I997|SGH-J150|SGH-J200|SGH-L170|SGH-L700|SGH-M110|SGH-M150|SGH-M200|SGH-N105|SGH-N500|SGH-N600|SGH-N620|SGH-N625|SGH-N700|SGH-N710|SGH-P107|SGH-P207|SGH-P300|SGH-P310|SGH-P520|SGH-P735|SGH-P777|SGH-Q105|SGH-R210|SGH-R220|SGH-R225|SGH-S105|SGH-S307|SGH-T109|SGH-T119|SGH-T139|SGH-T209|SGH-T219|SGH-T229|SGH-T239|SGH-T249|SGH-T259|SGH-T309|SGH-T319|SGH-T329|SGH-T339|SGH-T349|SGH-T359|SGH-T369|SGH-T379|SGH-T409|SGH-T429|SGH-T439|SGH-T459|SGH-T469|SGH-T479|SGH-T499|SGH-T509|SGH-T519|SGH-T539|SGH-T559|SGH-T589|SGH-T609|SGH-T619|SGH-T629|SGH-T639|SGH-T659|SGH-T669|SGH-T679|SGH-T709|SGH-T719|SGH-T729|SGH-T739|SGH-T746|SGH-T749|SGH-T759|SGH-T769|SGH-T809|SGH-T819|SGH-T839|SGH-T919|SGH-T929|SGH-T939|SGH-T959|SGH-T989|SGH-U100|SGH-U200|SGH-U800|SGH-V205|SGH-V206|SGH-X100|SGH-X105|SGH-X120|SGH-X140|SGH-X426|SGH-X427|SGH-X475|SGH-X495|SGH-X497|SGH-X507|SGH-X600|SGH-X610|SGH-X620|SGH-X630|SGH-X700|SGH-X820|SGH-X890|SGH-Z130|SGH-Z150|SGH-Z170|SGH-ZX10|SGH-ZX20|SHW-M110|SPH-A120|SPH-A400|SPH-A420|SPH-A460|SPH-A500|SPH-A560|SPH-A600|SPH-A620|SPH-A660|SPH-A700|SPH-A740|SPH-A760|SPH-A790|SPH-A800|SPH-A820|SPH-A840|SPH-A880|SPH-A900|SPH-A940|SPH-A960|SPH-D600|SPH-D700|SPH-D710|SPH-D720|SPH-I300|SPH-I325|SPH-I330|SPH-I350|SPH-I500|SPH-I600|SPH-I700|SPH-L700|SPH-M100|SPH-M220|SPH-M240|SPH-M300|SPH-M305|SPH-M320|SPH-M330|SPH-M350|SPH-M360|SPH-M370|SPH-M380|SPH-M510|SPH-M540|SPH-M550|SPH-M560|SPH-M570|SPH-M580|SPH-M610|SPH-M620|SPH-M630|SPH-M800|SPH-M810|SPH-M850|SPH-M900|SPH-M910|SPH-M920|SPH-M930|SPH-N100|SPH-N200|SPH-N240|SPH-N300|SPH-N400|SPH-Z400|SWC-E100|SCH-i909|GT-N7100|GT-N7105|SCH-I535|SM-N900A|SGH-I317|SGH-T999L|GT-S5360B|GT-I8262|GT-S6802|GT-S6312|GT-S6310|GT-S5312|GT-S5310|GT-I9105|GT-I8510|GT-S6790N|SM-G7105|SM-N9005|GT-S5301|GT-I9295|GT-I9195|SM-C101|GT-S7392|GT-S7560|GT-B7610|GT-I5510|GT-S7582|GT-S7530E|GT-I8750|SM-G9006V|SM-G9008V|SM-G9009D|SM-G900A|SM-G900D|SM-G900F|SM-G900H|SM-G900I|SM-G900J|SM-G900K|SM-G900L|SM-G900M|SM-G900P|SM-G900R4|SM-G900S|SM-G900T|SM-G900V|SM-G900W8|SHV-E160K|SCH-P709|SCH-P729|SM-T2558|GT-I9205|SM-G9350|SM-J120F|SM-G920F|SM-G920V|SM-G930F|SM-N910C|SM-A310F|GT-I9190|SM-J500FN|SM-G903F|SM-J330F|SM-G610F|SM-G981B|SM-G892A|SM-A530F|SM-G988N|SM-G781B|SM-A805N|SM-G965F',
-            'LG' => '\\bLG\\b;|LG[- ]?(C800|C900|E400|E610|E900|E-900|F160|F180K|F180L|F180S|730|855|L160|LS740|LS840|LS970|LU6200|MS690|MS695|MS770|MS840|MS870|MS910|P500|P700|P705|VM696|AS680|AS695|AX840|C729|E970|GS505|272|C395|E739BK|E960|L55C|L75C|LS696|LS860|P769BK|P350|P500|P509|P870|UN272|US730|VS840|VS950|LN272|LN510|LS670|LS855|LW690|MN270|MN510|P509|P769|P930|UN200|UN270|UN510|UN610|US670|US740|US760|UX265|UX840|VN271|VN530|VS660|VS700|VS740|VS750|VS910|VS920|VS930|VX9200|VX11000|AX840A|LW770|P506|P925|P999|E612|D955|D802|MS323|M257)|LM-G710',
+            'Dell' => 'Dell[;]? (Streak|Aero|Venue|Venue Pro|Flash|Smoke|Mini 3iX)|XCD28|XCD35|\b001DL\b|\b101DL\b|\bGS01\b',
+            'Motorola' => 'Motorola|DROIDX|DROID BIONIC|\bDroid\b.*Build|Android.*Xoom|HRI39|MOT-|A1260|A1680|A555|A853|A855|A953|A955|A956|Motorola.*ELECTRIFY|Motorola.*i1|i867|i940|MB200|MB300|MB501|MB502|MB508|MB511|MB520|MB525|MB526|MB611|MB612|MB632|MB810|MB855|MB860|MB861|MB865|MB870|ME501|ME502|ME511|ME525|ME600|ME632|ME722|ME811|ME860|ME863|ME865|MT620|MT710|MT716|MT720|MT810|MT870|MT917|Motorola.*TITANIUM|WX435|WX445|XT300|XT301|XT311|XT316|XT317|XT319|XT320|XT390|XT502|XT530|XT531|XT532|XT535|XT603|XT610|XT611|XT615|XT681|XT701|XT702|XT711|XT720|XT800|XT806|XT860|XT862|XT875|XT882|XT883|XT894|XT901|XT907|XT909|XT910|XT912|XT928|XT926|XT915|XT919|XT925|XT1021|\bMoto E\b|XT1068|XT1092|XT1052',
+            'Samsung' => '\bSamsung\b|SM-G950F|SM-G955F|SM-G9250|GT-19300|SGH-I337|BGT-S5230|GT-B2100|GT-B2700|GT-B2710|GT-B3210|GT-B3310|GT-B3410|GT-B3730|GT-B3740|GT-B5510|GT-B5512|GT-B5722|GT-B6520|GT-B7300|GT-B7320|GT-B7330|GT-B7350|GT-B7510|GT-B7722|GT-B7800|GT-C3010|GT-C3011|GT-C3060|GT-C3200|GT-C3212|GT-C3212I|GT-C3262|GT-C3222|GT-C3300|GT-C3300K|GT-C3303|GT-C3303K|GT-C3310|GT-C3322|GT-C3330|GT-C3350|GT-C3500|GT-C3510|GT-C3530|GT-C3630|GT-C3780|GT-C5010|GT-C5212|GT-C6620|GT-C6625|GT-C6712|GT-E1050|GT-E1070|GT-E1075|GT-E1080|GT-E1081|GT-E1085|GT-E1087|GT-E1100|GT-E1107|GT-E1110|GT-E1120|GT-E1125|GT-E1130|GT-E1160|GT-E1170|GT-E1175|GT-E1180|GT-E1182|GT-E1200|GT-E1210|GT-E1225|GT-E1230|GT-E1390|GT-E2100|GT-E2120|GT-E2121|GT-E2152|GT-E2220|GT-E2222|GT-E2230|GT-E2232|GT-E2250|GT-E2370|GT-E2550|GT-E2652|GT-E3210|GT-E3213|GT-I5500|GT-I5503|GT-I5700|GT-I5800|GT-I5801|GT-I6410|GT-I6420|GT-I7110|GT-I7410|GT-I7500|GT-I8000|GT-I8150|GT-I8160|GT-I8190|GT-I8320|GT-I8330|GT-I8350|GT-I8530|GT-I8700|GT-I8703|GT-I8910|GT-I9000|GT-I9001|GT-I9003|GT-I9010|GT-I9020|GT-I9023|GT-I9070|GT-I9082|GT-I9100|GT-I9103|GT-I9220|GT-I9250|GT-I9300|GT-I9305|GT-I9500|GT-I9505|GT-M3510|GT-M5650|GT-M7500|GT-M7600|GT-M7603|GT-M8800|GT-M8910|GT-N7000|GT-S3110|GT-S3310|GT-S3350|GT-S3353|GT-S3370|GT-S3650|GT-S3653|GT-S3770|GT-S3850|GT-S5210|GT-S5220|GT-S5229|GT-S5230|GT-S5233|GT-S5250|GT-S5253|GT-S5260|GT-S5263|GT-S5270|GT-S5300|GT-S5330|GT-S5350|GT-S5360|GT-S5363|GT-S5369|GT-S5380|GT-S5380D|GT-S5560|GT-S5570|GT-S5600|GT-S5603|GT-S5610|GT-S5620|GT-S5660|GT-S5670|GT-S5690|GT-S5750|GT-S5780|GT-S5830|GT-S5839|GT-S6102|GT-S6500|GT-S7070|GT-S7200|GT-S7220|GT-S7230|GT-S7233|GT-S7250|GT-S7500|GT-S7530|GT-S7550|GT-S7562|GT-S7710|GT-S8000|GT-S8003|GT-S8500|GT-S8530|GT-S8600|SCH-A310|SCH-A530|SCH-A570|SCH-A610|SCH-A630|SCH-A650|SCH-A790|SCH-A795|SCH-A850|SCH-A870|SCH-A890|SCH-A930|SCH-A950|SCH-A970|SCH-A990|SCH-I100|SCH-I110|SCH-I400|SCH-I405|SCH-I500|SCH-I510|SCH-I515|SCH-I600|SCH-I730|SCH-I760|SCH-I770|SCH-I830|SCH-I910|SCH-I920|SCH-I959|SCH-LC11|SCH-N150|SCH-N300|SCH-R100|SCH-R300|SCH-R351|SCH-R400|SCH-R410|SCH-T300|SCH-U310|SCH-U320|SCH-U350|SCH-U360|SCH-U365|SCH-U370|SCH-U380|SCH-U410|SCH-U430|SCH-U450|SCH-U460|SCH-U470|SCH-U490|SCH-U540|SCH-U550|SCH-U620|SCH-U640|SCH-U650|SCH-U660|SCH-U700|SCH-U740|SCH-U750|SCH-U810|SCH-U820|SCH-U900|SCH-U940|SCH-U960|SCS-26UC|SGH-A107|SGH-A117|SGH-A127|SGH-A137|SGH-A157|SGH-A167|SGH-A177|SGH-A187|SGH-A197|SGH-A227|SGH-A237|SGH-A257|SGH-A437|SGH-A517|SGH-A597|SGH-A637|SGH-A657|SGH-A667|SGH-A687|SGH-A697|SGH-A707|SGH-A717|SGH-A727|SGH-A737|SGH-A747|SGH-A767|SGH-A777|SGH-A797|SGH-A817|SGH-A827|SGH-A837|SGH-A847|SGH-A867|SGH-A877|SGH-A887|SGH-A897|SGH-A927|SGH-B100|SGH-B130|SGH-B200|SGH-B220|SGH-C100|SGH-C110|SGH-C120|SGH-C130|SGH-C140|SGH-C160|SGH-C170|SGH-C180|SGH-C200|SGH-C207|SGH-C210|SGH-C225|SGH-C230|SGH-C417|SGH-C450|SGH-D307|SGH-D347|SGH-D357|SGH-D407|SGH-D415|SGH-D780|SGH-D807|SGH-D980|SGH-E105|SGH-E200|SGH-E315|SGH-E316|SGH-E317|SGH-E335|SGH-E590|SGH-E635|SGH-E715|SGH-E890|SGH-F300|SGH-F480|SGH-I200|SGH-I300|SGH-I320|SGH-I550|SGH-I577|SGH-I600|SGH-I607|SGH-I617|SGH-I627|SGH-I637|SGH-I677|SGH-I700|SGH-I717|SGH-I727|SGH-i747M|SGH-I777|SGH-I780|SGH-I827|SGH-I847|SGH-I857|SGH-I896|SGH-I897|SGH-I900|SGH-I907|SGH-I917|SGH-I927|SGH-I937|SGH-I997|SGH-J150|SGH-J200|SGH-L170|SGH-L700|SGH-M110|SGH-M150|SGH-M200|SGH-N105|SGH-N500|SGH-N600|SGH-N620|SGH-N625|SGH-N700|SGH-N710|SGH-P107|SGH-P207|SGH-P300|SGH-P310|SGH-P520|SGH-P735|SGH-P777|SGH-Q105|SGH-R210|SGH-R220|SGH-R225|SGH-S105|SGH-S307|SGH-T109|SGH-T119|SGH-T139|SGH-T209|SGH-T219|SGH-T229|SGH-T239|SGH-T249|SGH-T259|SGH-T309|SGH-T319|SGH-T329|SGH-T339|SGH-T349|SGH-T359|SGH-T369|SGH-T379|SGH-T409|SGH-T429|SGH-T439|SGH-T459|SGH-T469|SGH-T479|SGH-T499|SGH-T509|SGH-T519|SGH-T539|SGH-T559|SGH-T589|SGH-T609|SGH-T619|SGH-T629|SGH-T639|SGH-T659|SGH-T669|SGH-T679|SGH-T709|SGH-T719|SGH-T729|SGH-T739|SGH-T746|SGH-T749|SGH-T759|SGH-T769|SGH-T809|SGH-T819|SGH-T839|SGH-T919|SGH-T929|SGH-T939|SGH-T959|SGH-T989|SGH-U100|SGH-U200|SGH-U800|SGH-V205|SGH-V206|SGH-X100|SGH-X105|SGH-X120|SGH-X140|SGH-X426|SGH-X427|SGH-X475|SGH-X495|SGH-X497|SGH-X507|SGH-X600|SGH-X610|SGH-X620|SGH-X630|SGH-X700|SGH-X820|SGH-X890|SGH-Z130|SGH-Z150|SGH-Z170|SGH-ZX10|SGH-ZX20|SHW-M110|SPH-A120|SPH-A400|SPH-A420|SPH-A460|SPH-A500|SPH-A560|SPH-A600|SPH-A620|SPH-A660|SPH-A700|SPH-A740|SPH-A760|SPH-A790|SPH-A800|SPH-A820|SPH-A840|SPH-A880|SPH-A900|SPH-A940|SPH-A960|SPH-D600|SPH-D700|SPH-D710|SPH-D720|SPH-I300|SPH-I325|SPH-I330|SPH-I350|SPH-I500|SPH-I600|SPH-I700|SPH-L700|SPH-M100|SPH-M220|SPH-M240|SPH-M300|SPH-M305|SPH-M320|SPH-M330|SPH-M350|SPH-M360|SPH-M370|SPH-M380|SPH-M510|SPH-M540|SPH-M550|SPH-M560|SPH-M570|SPH-M580|SPH-M610|SPH-M620|SPH-M630|SPH-M800|SPH-M810|SPH-M850|SPH-M900|SPH-M910|SPH-M920|SPH-M930|SPH-N100|SPH-N200|SPH-N240|SPH-N300|SPH-N400|SPH-Z400|SWC-E100|SCH-i909|GT-N7100|GT-N7105|SCH-I535|SM-N900A|SGH-I317|SGH-T999L|GT-S5360B|GT-I8262|GT-S6802|GT-S6312|GT-S6310|GT-S5312|GT-S5310|GT-I9105|GT-I8510|GT-S6790N|SM-G7105|SM-N9005|GT-S5301|GT-I9295|GT-I9195|SM-C101|GT-S7392|GT-S7560|GT-B7610|GT-I5510|GT-S7582|GT-S7530E|GT-I8750|SM-G9006V|SM-G9008V|SM-G9009D|SM-G900A|SM-G900D|SM-G900F|SM-G900H|SM-G900I|SM-G900J|SM-G900K|SM-G900L|SM-G900M|SM-G900P|SM-G900R4|SM-G900S|SM-G900T|SM-G900V|SM-G900W8|SHV-E160K|SCH-P709|SCH-P729|SM-T2558|GT-I9205|SM-G9350|SM-J120F|SM-G920F|SM-G920V|SM-G930F|SM-N910C|SM-A310F|GT-I9190|SM-J500FN|SM-G903F|SM-J330F|SM-G610F|SM-G981B|SM-G892A|SM-A530F|SM-G988N|SM-G781B|SM-A805N|SM-G965F',
+            'LG' => '\bLG\b;|LG[- ]?(C800|C900|E400|E610|E900|E-900|F160|F180K|F180L|F180S|730|855|L160|LS740|LS840|LS970|LU6200|MS690|MS695|MS770|MS840|MS870|MS910|P500|P700|P705|VM696|AS680|AS695|AX840|C729|E970|GS505|272|C395|E739BK|E960|L55C|L75C|LS696|LS860|P769BK|P350|P500|P509|P870|UN272|US730|VS840|VS950|LN272|LN510|LS670|LS855|LW690|MN270|MN510|P509|P769|P930|UN200|UN270|UN510|UN610|US670|US740|US760|UX265|UX840|VN271|VN530|VS660|VS700|VS740|VS750|VS910|VS920|VS930|VX9200|VX11000|AX840A|LW770|P506|P925|P999|E612|D955|D802|MS323|M257)|LM-G710',
             'Sony' => 'SonyST|SonyLT|SonyEricsson|SonyEricssonLT15iv|LT18i|E10i|LT28h|LT26w|SonyEricssonMT27i|C5303|C6902|C6903|C6906|C6943|D2533|SOV34|601SO|F8332',
             'Asus' => 'Asus.*Galaxy|PadFone.*Mobile|ASUS_Z01QD|ASUS_X00TD',
-            'Xiaomi' => '^(?!.*\\bx11\\b).*xiaomi.*$|POCOPHONE F1|\\bMI\\b 8|\\bMi\\b 10|Redmi Note 9S|Redmi 5A|Redmi Note 5A Prime|Redmi Note 7 Pro|N2G47H|M2001J2G|M2001J2I|M1805E10A|M2004J11G|M1902F1G|M2002J9G|M2004J19G|M2003J6A1G|M2012K11C|M2007J1SC',
+            'Xiaomi' => '^(?!.*\bx11\b).*xiaomi.*$|POCOPHONE F1|\bMI\b 8|\bMi\b 10|Redmi Note 9S|Redmi 5A|Redmi Note 5A Prime|Redmi Note 7 Pro|N2G47H|M2001J2G|M2001J2I|M1805E10A|M2004J11G|M1902F1G|M2002J9G|M2004J19G|M2003J6A1G|M2012K11C|M2007J1SC',
             'NokiaLumia' => 'Lumia [0-9]{3,4}',
             // http://www.micromaxinfo.com/mobiles/smartphones
             // Added because the codes might conflict with Acer Tablets.
-            'Micromax' => 'Micromax.*\\b(A210|A92|A88|A72|A111|A110Q|A115|A116|A110|A90S|A26|A51|A35|A54|A25|A27|A89|A68|A65|A57|A90)\\b',
+            'Micromax' => 'Micromax.*\b(A210|A92|A88|A72|A111|A110Q|A115|A116|A110|A90S|A26|A51|A35|A54|A25|A27|A89|A68|A65|A57|A90)\b',
             // @todo Complete the regex.
             'Palm' => 'PalmSource|Palm',
             // avantgo|blazer|elaine|hiptop|plucker|xiino ;
@@ -63780,7 +63780,7 @@ namespace Automattic\WooCommerce\Vendor\Detection {
             'iMobile' => 'i-mobile (IQ|i-STYLE|idea|ZAA|Hitz)',
             // Added simvalley mobile just for fun. They have some interesting devices.
             // http://www.simvalley.fr/telephonie---gps-_22_telephonie-mobile_telephones_.html
-            'SimValley' => '\\b(SP-80|XT-930|SX-340|XT-930|SX-310|SP-360|SP60|SPT-800|SP-120|SPT-800|SP-140|SPX-5|SPX-8|SP-100|SPX-8|SPX-12)\\b',
+            'SimValley' => '\b(SP-80|XT-930|SX-340|XT-930|SX-310|SP-360|SP60|SPT-800|SP-120|SPT-800|SP-140|SPX-5|SPX-8|SP-100|SPX-8|SPX-12)\b',
             // Wolfgang - a brand that is sold by Aldi supermarkets.
             // http://www.wolfgangmobile.com/
             'Wolfgang' => 'AT-B24D|AT-AS50HD|AT-AS40W|AT-AS55HD|AT-AS45q2|AT-B26D|AT-AS50Q',
@@ -63792,7 +63792,7 @@ namespace Automattic\WooCommerce\Vendor\Detection {
             'INQ' => 'INQ',
             'OnePlus' => 'ONEPLUS',
             // @Tapatalk is a mobile app; http://support.tapatalk.com/threads/smf-2-0-2-os-and-browser-detection-plugin-and-tapatalk.15565/#post-79039
-            'GenericPhone' => 'Tapatalk|PDA;|SAGEM|\\bmmp\\b|pocket|\\bpsp\\b|symbian|Smartphone|smartfon|treo|up.browser|up.link|vodafone|\\bwap\\b|nokia|Series40|Series60|S60|SonyEricsson|N900|MAUI.*WAP.*Browser',
+            'GenericPhone' => 'Tapatalk|PDA;|SAGEM|\bmmp\b|pocket|\bpsp\b|symbian|Smartphone|smartfon|treo|up.browser|up.link|vodafone|\bwap\b|nokia|Series40|Series60|S60|SonyEricsson|N900|MAUI.*WAP.*Browser',
         ];
         /**
          * List of tablet devices.
@@ -63805,13 +63805,13 @@ namespace Automattic\WooCommerce\Vendor\Detection {
             // Removed |^.*Android.*Nexus(?!(?:Mobile).)*$
             // @see #442
             // @todo Merge NexusTablet into GoogleTablet.
-            'NexusTablet' => 'Android.*Nexus[\\s]+(7|9|10)',
+            'NexusTablet' => 'Android.*Nexus[\s]+(7|9|10)',
             // https://en.wikipedia.org/wiki/Pixel_C
             'GoogleTablet' => 'Android.*Pixel C',
             'SamsungTablet' => 'SAMSUNG.*Tablet|Galaxy.*Tab|SC-01C|GT-P1000|GT-P1003|GT-P1010|GT-P3105|GT-P6210|GT-P6800|GT-P6810|GT-P7100|GT-P7300|GT-P7310|GT-P7500|GT-P7510|SCH-I800|SCH-I815|SCH-I905|SGH-I957|SGH-I987|SGH-T849|SGH-T859|SGH-T869|SPH-P100|GT-P3100|GT-P3108|GT-P3110|GT-P5100|GT-P5110|GT-P6200|GT-P7320|GT-P7511|GT-N8000|GT-P8510|SGH-I497|SPH-P500|SGH-T779|SCH-I705|SCH-I915|GT-N8013|GT-P3113|GT-P5113|GT-P8110|GT-N8010|GT-N8005|GT-N8020|GT-P1013|GT-P6201|GT-P7501|GT-N5100|GT-N5105|GT-N5110|SHV-E140K|SHV-E140L|SHV-E140S|SHV-E150S|SHV-E230K|SHV-E230L|SHV-E230S|SHW-M180K|SHW-M180L|SHW-M180S|SHW-M180W|SHW-M300W|SHW-M305W|SHW-M380K|SHW-M380S|SHW-M380W|SHW-M430W|SHW-M480K|SHW-M480S|SHW-M480W|SHW-M485W|SHW-M486W|SHW-M500W|GT-I9228|SCH-P739|SCH-I925|GT-I9200|GT-P5200|GT-P5210|GT-P5210X|SM-T311|SM-T310|SM-T310X|SM-T210|SM-T210R|SM-T211|SM-P600|SM-P601|SM-P605|SM-P900|SM-P901|SM-T217|SM-T217A|SM-T217S|SM-P6000|SM-T3100|SGH-I467|XE500|SM-T110|GT-P5220|GT-I9200X|GT-N5110X|GT-N5120|SM-P905|SM-T111|SM-T2105|SM-T315|SM-T320|SM-T320X|SM-T321|SM-T520|SM-T525|SM-T530NU|SM-T230NU|SM-T330NU|SM-T900|XE500T1C|SM-P605V|SM-P905V|SM-T337V|SM-T537V|SM-T707V|SM-T807V|SM-P600X|SM-P900X|SM-T210X|SM-T230|SM-T230X|SM-T325|GT-P7503|SM-T531|SM-T330|SM-T530|SM-T705|SM-T705C|SM-T535|SM-T331|SM-T800|SM-T700|SM-T537|SM-T807|SM-P907A|SM-T337A|SM-T537A|SM-T707A|SM-T807A|SM-T237|SM-T807P|SM-P607T|SM-T217T|SM-T337T|SM-T807T|SM-T116NQ|SM-T116BU|SM-P550|SM-T350|SM-T550|SM-T9000|SM-P9000|SM-T705Y|SM-T805|GT-P3113|SM-T710|SM-T810|SM-T815|SM-T360|SM-T533|SM-T113|SM-T335|SM-T715|SM-T560|SM-T670|SM-T677|SM-T377|SM-T567|SM-T357T|SM-T555|SM-T561|SM-T713|SM-T719|SM-T813|SM-T819|SM-T580|SM-T355Y?|SM-T280|SM-T817A|SM-T820|SM-W700|SM-P580|SM-T587|SM-P350|SM-P555M|SM-P355M|SM-T113NU|SM-T815Y|SM-T585|SM-T285|SM-T825|SM-W708|SM-T835|SM-T830|SM-T837V|SM-T720|SM-T510|SM-T387V|SM-P610|SM-T290|SM-T515|SM-T590|SM-T595|SM-T725|SM-T817P|SM-P585N0|SM-T395|SM-T295|SM-T865|SM-P610N|SM-P615|SM-T970|SM-T380|SM-T5950|SM-T905|SM-T231|SM-T500|SM-T860|SM-T536|SM-T837A|SM-X200|SM-T220|SM-T870|SM-X906C|SM-X700|SM-X706|SM-X706B|SM-X706U|SM-X706N|SM-X800|SM-X806|SM-X806B|SM-X806U|SM-X806N|SM-X900|SM-X906|SM-X906B|SM-X906U|SM-X906N|SM-P613',
             // SCH-P709|SCH-P729|SM-T2558|GT-I9205 - Samsung Mega - treat them like a regular phone.
             // http://docs.aws.amazon.com/silk/latest/developerguide/user-agent.html
-            'Kindle' => 'Kindle|Silk.*Accelerated|Android.*\\b(KFOT|KFTT|KFJWI|KFJWA|KFOTE|KFSOWI|KFTHWI|KFTHWA|KFAPWI|KFAPWA|WFJWAE|KFSAWA|KFSAWI|KFASWI|KFARWI|KFFOWI|KFGIWI|KFMEWI)\\b|Android.*Silk/[0-9.]+ like Chrome/[0-9.]+ (?!Mobile)',
+            'Kindle' => 'Kindle|Silk.*Accelerated|Android.*\b(KFOT|KFTT|KFJWI|KFJWA|KFOTE|KFSOWI|KFTHWI|KFTHWA|KFAPWI|KFAPWA|WFJWAE|KFSAWA|KFSAWI|KFASWI|KFARWI|KFFOWI|KFGIWI|KFMEWI)\b|Android.*Silk/[0-9.]+ like Chrome/[0-9.]+ (?!Mobile)',
             // Only the Surface tablets with Windows RT are considered mobile.
             // http://msdn.microsoft.com/en-us/library/ie/hh920767(v=vs.85).aspx
             'SurfaceTablet' => 'Windows NT [0-9.]+; ARM;.*(Tablet|ARMBJS)',
@@ -63819,7 +63819,7 @@ namespace Automattic\WooCommerce\Vendor\Detection {
             'HPTablet' => 'HP Slate (7|8|10)|HP ElitePad 900|hp-tablet|EliteBook.*Touch|HP 8|Slate 21|HP SlateBook 10',
             // Watch out for PadFone, see #132.
             // http://www.asus.com/de/Tablets_Mobile/Memo_Pad_Products/
-            'AsusTablet' => '^.*PadFone((?!Mobile).)*$|Transformer|TF101|TF101G|TF300T|TF300TG|TF300TL|TF700T|TF700KL|TF701T|TF810C|ME171|ME301T|ME302C|ME371MG|ME370T|ME372MG|ME172V|ME173X|ME400C|Slider SL101|\\bK00F\\b|\\bK00C\\b|\\bK00E\\b|\\bK00L\\b|TX201LA|ME176C|ME102A|\\bM80TA\\b|ME372CL|ME560CG|ME372CG|ME302KL| K01A | K010 | K011 | K017 | K01E |ME572C|ME103K|ME170C|ME171C|\\bME70C\\b|ME581C|ME581CL|ME8510C|ME181C|P01Y|PO1MA|P01Z|\\bP027\\b|\\bP024\\b|\\bP00C\\b',
+            'AsusTablet' => '^.*PadFone((?!Mobile).)*$|Transformer|TF101|TF101G|TF300T|TF300TG|TF300TL|TF700T|TF700KL|TF701T|TF810C|ME171|ME301T|ME302C|ME371MG|ME370T|ME372MG|ME172V|ME173X|ME400C|Slider SL101|\bK00F\b|\bK00C\b|\bK00E\b|\bK00L\b|TX201LA|ME176C|ME102A|\bM80TA\b|ME372CL|ME560CG|ME372CG|ME302KL| K01A | K010 | K011 | K017 | K01E |ME572C|ME103K|ME170C|ME171C|\bME70C\b|ME581C|ME581CL|ME8510C|ME181C|P01Y|PO1MA|P01Z|\bP027\b|\bP024\b|\bP00C\b',
             'BlackBerryTablet' => 'PlayBook|RIM Tablet',
             'HTCtablet' => 'HTC_Flyer_P512|HTC Flyer|HTC Jetstream|HTC-P715a|HTC EVO View 4G|PG41200|PG09410',
             'MotorolaTablet' => 'xoom|sholest|MZ615|MZ605|MZ505|MZ601|MZ602|MZ603|MZ604|MZ606|MZ607|MZ608|MZ609|MZ615|MZ616|MZ617',
@@ -63829,15 +63829,15 @@ namespace Automattic\WooCommerce\Vendor\Detection {
             // http://us.acer.com/ac/en/US/content/group/tablets
             // http://www.acer.de/ac/de/DE/content/models/tablets/
             // Can conflict with Micromax and Motorola phones codes.
-            'AcerTablet' => 'Android.*; \\b(A100|A101|A110|A200|A210|A211|A500|A501|A510|A511|A700|A701|W500|W500P|W501|W501P|W510|W511|W700|G100|G100W|B1-A71|B1-710|B1-711|A1-810|A1-811|A1-830)\\b|W3-810|\\bA3-A10\\b|\\bA3-A11\\b|\\bA3-A20\\b|\\bA3-A30|A3-A40',
+            'AcerTablet' => 'Android.*; \b(A100|A101|A110|A200|A210|A211|A500|A501|A510|A511|A700|A701|W500|W500P|W501|W501P|W510|W511|W700|G100|G100W|B1-A71|B1-710|B1-711|A1-810|A1-811|A1-830)\b|W3-810|\bA3-A10\b|\bA3-A11\b|\bA3-A20\b|\bA3-A30|A3-A40',
             // http://eu.computers.toshiba-europe.com/innovation/family/Tablets/1098744/banner_id/tablet_footerlink/
             // http://us.toshiba.com/tablets/tablet-finder
             // http://www.toshiba.co.jp/regza/tablet/
             'ToshibaTablet' => 'Android.*(AT100|AT105|AT200|AT205|AT270|AT275|AT300|AT305|AT1S5|AT500|AT570|AT700|AT830)|TOSHIBA.*FOLIO',
             // http://www.nttdocomo.co.jp/english/service/developer/smart_phone/technical_info/spec/index.html
             // http://www.lg.com/us/tablets
-            'LGTablet' => '\\bL-06C|LG-V909|LG-V900|LG-V700|LG-V510|LG-V500|LG-V410|LG-V400|LG-VK810\\b',
-            'FujitsuTablet' => 'Android.*\\b(F-01D|F-02F|F-05E|F-10D|M532|Q572)\\b',
+            'LGTablet' => '\bL-06C|LG-V909|LG-V900|LG-V700|LG-V510|LG-V500|LG-V410|LG-V400|LG-VK810\b',
+            'FujitsuTablet' => 'Android.*\b(F-01D|F-02F|F-05E|F-10D|M532|Q572)\b',
             // Prestigio Tablets http://www.prestigio.com/support
             'PrestigioTablet' => 'PMP3170B|PMP3270B|PMP3470B|PMP7170B|PMP3370B|PMP3570C|PMP5870C|PMP3670B|PMP5570C|PMP5770D|PMP3970B|PMP3870C|PMP5580C|PMP5880D|PMP5780D|PMP5588C|PMP7280C|PMP7280C3G|PMP7280|PMP7880D|PMP5597D|PMP5597|PMP7100D|PER3464|PER3274|PER3574|PER3884|PER5274|PER5474|PMP5097CPRO|PMP5097|PMP7380D|PMP5297C|PMP5297C_QUAD|PMP812E|PMP812E3G|PMP812F|PMP810E|PMP880TD|PMT3017|PMT3037|PMT3047|PMT3057|PMT7008|PMT5887|PMT5001|PMT5002',
             // http://support.lenovo.com/en_GB/downloads/default.page?#
@@ -63846,22 +63846,22 @@ namespace Automattic\WooCommerce\Vendor\Detection {
             'DellTablet' => 'Venue 11|Venue 8|Venue 7|Dell Streak 10|Dell Streak 7',
             'XiaomiTablet' => '21051182G',
             // http://www.yarvik.com/en/matrix/tablets/
-            'YarvikTablet' => 'Android.*\\b(TAB210|TAB211|TAB224|TAB250|TAB260|TAB264|TAB310|TAB360|TAB364|TAB410|TAB411|TAB420|TAB424|TAB450|TAB460|TAB461|TAB464|TAB465|TAB467|TAB468|TAB07-100|TAB07-101|TAB07-150|TAB07-151|TAB07-152|TAB07-200|TAB07-201-3G|TAB07-210|TAB07-211|TAB07-212|TAB07-214|TAB07-220|TAB07-400|TAB07-485|TAB08-150|TAB08-200|TAB08-201-3G|TAB08-201-30|TAB09-100|TAB09-211|TAB09-410|TAB10-150|TAB10-201|TAB10-211|TAB10-400|TAB10-410|TAB13-201|TAB274EUK|TAB275EUK|TAB374EUK|TAB462EUK|TAB474EUK|TAB9-200)\\b',
-            'MedionTablet' => 'Android.*\\bOYO\\b|LIFE.*(P9212|P9514|P9516|S9512)|LIFETAB',
+            'YarvikTablet' => 'Android.*\b(TAB210|TAB211|TAB224|TAB250|TAB260|TAB264|TAB310|TAB360|TAB364|TAB410|TAB411|TAB420|TAB424|TAB450|TAB460|TAB461|TAB464|TAB465|TAB467|TAB468|TAB07-100|TAB07-101|TAB07-150|TAB07-151|TAB07-152|TAB07-200|TAB07-201-3G|TAB07-210|TAB07-211|TAB07-212|TAB07-214|TAB07-220|TAB07-400|TAB07-485|TAB08-150|TAB08-200|TAB08-201-3G|TAB08-201-30|TAB09-100|TAB09-211|TAB09-410|TAB10-150|TAB10-201|TAB10-211|TAB10-400|TAB10-410|TAB13-201|TAB274EUK|TAB275EUK|TAB374EUK|TAB462EUK|TAB474EUK|TAB9-200)\b',
+            'MedionTablet' => 'Android.*\bOYO\b|LIFE.*(P9212|P9514|P9516|S9512)|LIFETAB',
             'ArnovaTablet' => '97G4|AN10G2|AN7bG3|AN7fG3|AN8G3|AN8cG3|AN7G3|AN9G3|AN7dG3|AN7dG3ST|AN7dG3ChildPad|AN10bG3|AN10bG3DT|AN9G2',
             // http://www.intenso.de/kategorie_en.php?kategorie=33
             // @todo: http://www.nbhkdz.com/read/b8e64202f92a2df129126bff.html - investigate
             'IntensoTablet' => 'INM8002KP|INM1010FP|INM805ND|Intenso Tab|TAB1004',
             // IRU.ru Tablets http://www.iru.ru/catalog/soho/planetable/
             'IRUTablet' => 'M702pro',
-            'MegafonTablet' => 'MegaFon V9|\\bZTE V9\\b|Android.*\\bMT7A\\b',
+            'MegafonTablet' => 'MegaFon V9|\bZTE V9\b|Android.*\bMT7A\b',
             // http://www.e-boda.ro/tablete-pc.html
             'EbodaTablet' => 'E-Boda (Supreme|Impresspeed|Izzycomm|Essential)',
             // http://www.allview.ro/produse/droseries/lista-tablete-pc/
             'AllViewTablet' => 'Allview.*(Viva|Alldro|City|Speed|All TV|Frenzy|Quasar|Shine|TX1|AX1|AX2)',
             // http://wiki.archosfans.com/index.php?title=Main_Page
             // @note Rewrite the regex format after we add more UAs.
-            'ArchosTablet' => '\\b(101G9|80G9|A101IT)\\b|Qilive 97R|Archos5|\\bARCHOS (70|79|80|90|97|101|FAMILYPAD|)(b|c|)(G10| Cobalt| TITANIUM(HD|)| Xenon| Neon|XSK| 2| XS 2| PLATINUM| CARBON|GAMEPAD)\\b',
+            'ArchosTablet' => '\b(101G9|80G9|A101IT)\b|Qilive 97R|Archos5|\bARCHOS (70|79|80|90|97|101|FAMILYPAD|)(b|c|)(G10| Cobalt| TITANIUM(HD|)| Xenon| Neon|XSK| 2| XS 2| PLATINUM| CARBON|GAMEPAD)\b',
             // http://www.ainol.com/plugin.php?identifier=ainol&module=product
             'AinolTablet' => 'NOVO7|NOVO8|NOVO10|Novo7Aurora|Novo7Basic|NOVO7PALADIN|novo9-Spark',
             'NokiaLumiaTablet' => 'Lumia 2520',
@@ -63870,7 +63870,7 @@ namespace Automattic\WooCommerce\Vendor\Detection {
             // http://www.sony.jp/support/tablet/
             'SonyTablet' => 'Sony.*Tablet|Xperia Tablet|Sony Tablet S|SO-03E|SGPT12|SGPT13|SGPT114|SGPT121|SGPT122|SGPT123|SGPT111|SGPT112|SGPT113|SGPT131|SGPT132|SGPT133|SGPT211|SGPT212|SGPT213|SGP311|SGP312|SGP321|EBRD1101|EBRD1102|EBRD1201|SGP351|SGP341|SGP511|SGP512|SGP521|SGP541|SGP551|SGP621|SGP641|SGP612|SOT31|SGP771|SGP611|SGP612|SGP712',
             // http://www.support.philips.com/support/catalog/worldproducts.jsp?userLanguage=en&userCountry=cn&categoryid=3G_LTE_TABLET_SU_CN_CARE&title=3G%20tablets%20/%20LTE%20range&_dyncharset=UTF-8
-            'PhilipsTablet' => '\\b(PI2010|PI3000|PI3100|PI3105|PI3110|PI3205|PI3210|PI3900|PI4010|PI7000|PI7100)\\b',
+            'PhilipsTablet' => '\b(PI2010|PI3000|PI3100|PI3105|PI3110|PI3205|PI3210|PI3900|PI4010|PI7000|PI7100)\b',
             // db + http://www.cube-tablet.com/buy-products.html
             'CubeTablet' => 'Android.*(K8GT|U9GT|U10GT|U16GT|U17GT|U18GT|U19GT|U20GT|U23GT|U30GT)|CUBE U8GT',
             // http://www.cobyusa.com/?p=pcat&pcat_id=3001
@@ -63879,41 +63879,41 @@ namespace Automattic\WooCommerce\Vendor\Detection {
             'MIDTablet' => 'M9701|M9000|M9100|M806|M1052|M806|T703|MID701|MID713|MID710|MID727|MID760|MID830|MID728|MID933|MID125|MID810|MID732|MID120|MID930|MID800|MID731|MID900|MID100|MID820|MID735|MID980|MID130|MID833|MID737|MID960|MID135|MID860|MID736|MID140|MID930|MID835|MID733|MID4X10',
             // http://www.msi.com/support
             // @todo Research the Windows Tablets.
-            'MSITablet' => 'MSI \\b(Primo 73K|Primo 73L|Primo 81L|Primo 77|Primo 93|Primo 75|Primo 76|Primo 73|Primo 81|Primo 91|Primo 90|Enjoy 71|Enjoy 7|Enjoy 10)\\b',
+            'MSITablet' => 'MSI \b(Primo 73K|Primo 73L|Primo 81L|Primo 77|Primo 93|Primo 75|Primo 76|Primo 73|Primo 81|Primo 91|Primo 90|Enjoy 71|Enjoy 7|Enjoy 10)\b',
             // @todo http://www.kyoceramobile.com/support/drivers/
             //    'KyoceraTablet' => null,
             // @todo http://intexuae.com/index.php/category/mobile-devices/tablets-products/
             //    'IntextTablet' => null,
             // http://pdadb.net/index.php?m=pdalist&list=SMiT (NoName Chinese Tablets)
             // http://www.imp3.net/14/show.php?itemid=20454
-            'SMiTTablet' => 'Android.*(\\bMID\\b|MID-560|MTV-T1200|MTV-PND531|MTV-P1101|MTV-PND530)',
+            'SMiTTablet' => 'Android.*(\bMID\b|MID-560|MTV-T1200|MTV-PND531|MTV-P1101|MTV-PND530)',
             // http://www.rock-chips.com/index.php?do=prod&pid=2
             'RockChipTablet' => 'Android.*(RK2818|RK2808A|RK2918|RK3066)|RK2738|RK2808A',
             // http://www.fly-phone.com/devices/tablets/ ; http://www.fly-phone.com/service/
             'FlyTablet' => 'IQ310|Fly Vision',
             // http://www.bqreaders.com/gb/tablets-prices-sale.html
-            'bqTablet' => 'Android.*(bq)?.*\\b(Elcano|Curie|Edison|Maxwell|Kepler|Pascal|Tesla|Hypatia|Platon|Newton|Livingstone|Cervantes|Avant|Aquaris ([E|M]10|M8))\\b|Maxwell.*Lite|Maxwell.*Plus',
+            'bqTablet' => 'Android.*(bq)?.*\b(Elcano|Curie|Edison|Maxwell|Kepler|Pascal|Tesla|Hypatia|Platon|Newton|Livingstone|Cervantes|Avant|Aquaris ([E|M]10|M8))\b|Maxwell.*Lite|Maxwell.*Plus',
             // http://www.huaweidevice.com/worldwide/productFamily.do?method=index&directoryId=5011&treeId=3290
             // http://www.huaweidevice.com/worldwide/downloadCenter.do?method=index&directoryId=3372&treeId=0&tb=1&type=software (including legacy tablets)
             'HuaweiTablet' => 'MediaPad|MediaPad 7 Youth|IDEOS S7|S7-201c|S7-202u|S7-101|S7-103|S7-104|S7-105|S7-106|S7-201|S7-Slim|M2-A01L|BAH-L09|BAH-W09|AGS-L09|CMR-AL19|KOB2-L09|BG2-U01|BG2-W09|BG2-U03',
             // Nec or Medias Tab
-            'NecTablet' => '\\bN-06D|\\bN-08D',
+            'NecTablet' => '\bN-06D|\bN-08D',
             // Pantech Tablets: http://www.pantechusa.com/phones/
             'PantechTablet' => 'Pantech.*P4100',
             // Broncho Tablets: http://www.broncho.cn/ (hard to find)
             'BronchoTablet' => 'Broncho.*(N701|N708|N802|a710)',
             // http://versusuk.com/support.html
-            'VersusTablet' => 'TOUCHPAD.*[78910]|\\bTOUCHTAB\\b',
+            'VersusTablet' => 'TOUCHPAD.*[78910]|\bTOUCHTAB\b',
             // http://www.zync.in/index.php/our-products/tablet-phablets
             'ZyncTablet' => 'z1000|Z99 2G|z930|z990|z909|Z919|z900',
             // Removed "z999" because of https://github.com/serbanghita/Mobile-Detect/issues/717
             // http://www.positivoinformatica.com.br/www/pessoal/tablet-ypy/
             'PositivoTablet' => 'TB07STA|TB10STA|TB07FTA|TB10FTA',
             // https://www.nabitablet.com/
-            'NabiTablet' => 'Android.*\\bNabi',
-            'KoboTablet' => 'Kobo Touch|\\bK080\\b|\\bVox\\b Build|\\bArc\\b Build',
+            'NabiTablet' => 'Android.*\bNabi',
+            'KoboTablet' => 'Kobo Touch|\bK080\b|\bVox\b Build|\bArc\b Build',
             // French Danew Tablets http://www.danew.com/produits-tablette.php
-            'DanewTablet' => 'DSlide.*\\b(700|701R|702|703R|704|802|970|971|972|973|974|1010|1012)\\b',
+            'DanewTablet' => 'DSlide.*\b(700|701R|702|703R|704|802|970|971|972|973|974|1010|1012)\b',
             // Texet Tablets and Readers http://www.texet.ru/tablet/
             'TexetTablet' => 'NaviPad|TB-772A|TM-7045|TM-7055|TM-9750|TM-7016|TM-7024|TM-7026|TM-7041|TM-7043|TM-7047|TM-8041|TM-9741|TM-9747|TM-9748|TM-9751|TM-7022|TM-7021|TM-7020|TM-7011|TM-7010|TM-7023|TM-7025|TM-7037W|TM-7038W|TM-7027W|TM-9720|TM-9725|TM-9737W|TM-1020|TM-9738W|TM-9740|TM-9743W|TB-807A|TB-771A|TB-727A|TB-725A|TB-719A|TB-823A|TB-805A|TB-723A|TB-715A|TB-707A|TB-705A|TB-709A|TB-711A|TB-890HD|TB-880HD|TB-790HD|TB-780HD|TB-770HD|TB-721HD|TB-710HD|TB-434HD|TB-860HD|TB-840HD|TB-760HD|TB-750HD|TB-740HD|TB-730HD|TB-722HD|TB-720HD|TB-700HD|TB-500HD|TB-470HD|TB-431HD|TB-430HD|TB-506|TB-504|TB-446|TB-436|TB-416|TB-146SE|TB-126SE',
             // Avoid detecting 'PLAYSTATION 3' as mobile.
@@ -63921,22 +63921,22 @@ namespace Automattic\WooCommerce\Vendor\Detection {
             // http://www.trekstor.de/surftabs.html
             'TrekstorTablet' => 'ST10416-1|VT10416-1|ST70408-1|ST702xx-1|ST702xx-2|ST80208|ST97216|ST70104-2|VT10416-2|ST10216-2A|SurfTab',
             // http://www.pyleaudio.com/Products.aspx?%2fproducts%2fPersonal-Electronics%2fTablets
-            'PyleAudioTablet' => '\\b(PTBL10CEU|PTBL10C|PTBL72BC|PTBL72BCEU|PTBL7CEU|PTBL7C|PTBL92BC|PTBL92BCEU|PTBL9CEU|PTBL9CUK|PTBL9C)\\b',
+            'PyleAudioTablet' => '\b(PTBL10CEU|PTBL10C|PTBL72BC|PTBL72BCEU|PTBL7CEU|PTBL7C|PTBL92BC|PTBL92BCEU|PTBL9CEU|PTBL9CUK|PTBL9C)\b',
             // http://www.advandigital.com/index.php?link=content-product&jns=JP001
             // because of the short codenames we have to include whitespaces to reduce the possible conflicts.
-            'AdvanTablet' => 'Android.* \\b(E3A|T3X|T5C|T5B|T3E|T3C|T3B|T1J|T1F|T2A|T1H|T1i|E1C|T1-E|T5-A|T4|E1-B|T2Ci|T1-B|T1-D|O1-A|E1-A|T1-A|T3A|T4i)\\b ',
+            'AdvanTablet' => 'Android.* \b(E3A|T3X|T5C|T5B|T3E|T3C|T3B|T1J|T1F|T2A|T1H|T1i|E1C|T1-E|T5-A|T4|E1-B|T2Ci|T1-B|T1-D|O1-A|E1-A|T1-A|T3A|T4i)\b ',
             // http://www.danytech.com/category/tablet-pc
             'DanyTechTablet' => 'Genius Tab G3|Genius Tab S2|Genius Tab Q3|Genius Tab G4|Genius Tab Q4|Genius Tab G-II|Genius TAB GII|Genius TAB GIII|Genius Tab S1',
             // http://www.galapad.net/product.html ; https://github.com/serbanghita/Mobile-Detect/issues/761
-            'GalapadTablet' => 'Android [0-9.]+; [a-z-]+; \\bG1\\b',
+            'GalapadTablet' => 'Android [0-9.]+; [a-z-]+; \bG1\b',
             // http://www.micromaxinfo.com/tablet/funbook
-            'MicromaxTablet' => 'Funbook|Micromax.*\\b(P250|P560|P360|P362|P600|P300|P350|P500|P275)\\b',
+            'MicromaxTablet' => 'Funbook|Micromax.*\b(P250|P560|P360|P362|P600|P300|P350|P500|P275)\b',
             // http://www.karbonnmobiles.com/products_tablet.php
-            'KarbonnTablet' => 'Android.*\\b(A39|A37|A34|ST8|ST10|ST7|Smart Tab3|Smart Tab2)\\b',
+            'KarbonnTablet' => 'Android.*\b(A39|A37|A34|ST8|ST10|ST7|Smart Tab3|Smart Tab2)\b',
             // http://www.myallfine.com/Products.asp
             'AllFineTablet' => 'Fine7 Genius|Fine7 Shine|Fine7 Air|Fine8 Style|Fine9 More|Fine10 Joy|Fine11 Wide',
             // http://www.proscanvideo.com/products-search.asp?itemClass=TABLET&itemnmbr=
-            'PROSCANTablet' => '\\b(PEM63|PLT1023G|PLT1041|PLT1044|PLT1044G|PLT1091|PLT4311|PLT4311PL|PLT4315|PLT7030|PLT7033|PLT7033D|PLT7035|PLT7035D|PLT7044K|PLT7045K|PLT7045KB|PLT7071KG|PLT7072|PLT7223G|PLT7225G|PLT7777G|PLT7810K|PLT7849G|PLT7851G|PLT7852G|PLT8015|PLT8031|PLT8034|PLT8036|PLT8080K|PLT8082|PLT8088|PLT8223G|PLT8234G|PLT8235G|PLT8816K|PLT9011|PLT9045K|PLT9233G|PLT9735|PLT9760G|PLT9770G)\\b',
+            'PROSCANTablet' => '\b(PEM63|PLT1023G|PLT1041|PLT1044|PLT1044G|PLT1091|PLT4311|PLT4311PL|PLT4315|PLT7030|PLT7033|PLT7033D|PLT7035|PLT7035D|PLT7044K|PLT7045K|PLT7045KB|PLT7071KG|PLT7072|PLT7223G|PLT7225G|PLT7777G|PLT7810K|PLT7849G|PLT7851G|PLT7852G|PLT8015|PLT8031|PLT8034|PLT8036|PLT8080K|PLT8082|PLT8088|PLT8223G|PLT8234G|PLT8235G|PLT8816K|PLT9011|PLT9045K|PLT9233G|PLT9735|PLT9760G|PLT9770G)\b',
             // http://www.yonesnav.com/products/products.php
             'YONESTablet' => 'BQ1078|BC1003|BC1077|RK9702|BC9730|BC9001|IT9001|BC7008|BC7010|BC708|BC728|BC7012|BC7030|BC7027|BC7026',
             // http://www.cjshowroom.com/eproducts.aspx?classcode=004001001
@@ -63963,7 +63963,7 @@ namespace Automattic\WooCommerce\Vendor\Detection {
             // http://www.mijncresta.nl/tablet
             'CrestaTablet' => 'CTP(-)?810|CTP(-)?818|CTP(-)?828|CTP(-)?838|CTP(-)?888|CTP(-)?978|CTP(-)?980|CTP(-)?987|CTP(-)?988|CTP(-)?989',
             // MediaTek - http://www.mediatek.com/_en/01_products/02_proSys.php?cata_sn=1&cata1_sn=1&cata2_sn=309
-            'MediatekTablet' => '\\bMT8125|MT8389|MT8135|MT8377\\b',
+            'MediatekTablet' => '\bMT8125|MT8389|MT8135|MT8377\b',
             // Concorde tab
             'ConcordeTablet' => 'Concorde([ ]+)?Tab|ConCorde ReadMan',
             // GoClever Tablets - http://www.goclever.com/uk/products,c1/tablet,c5/
@@ -63971,7 +63971,7 @@ namespace Automattic\WooCommerce\Vendor\Detection {
             // Modecom Tablets - http://www.modecom.eu/tablets/portal/
             'ModecomTablet' => 'FreeTAB 9000|FreeTAB 7.4|FreeTAB 7004|FreeTAB 7800|FreeTAB 2096|FreeTAB 7.5|FreeTAB 1014|FreeTAB 1001 |FreeTAB 8001|FreeTAB 9706|FreeTAB 9702|FreeTAB 7003|FreeTAB 7002|FreeTAB 1002|FreeTAB 7801|FreeTAB 1331|FreeTAB 1004|FreeTAB 8002|FreeTAB 8014|FreeTAB 9704|FreeTAB 1003',
             // Vonino Tablets
-            'VoninoTablet' => '\\b(Argus[ _]?S|Diamond[ _]?79HD|Emerald[ _]?78E|Luna[ _]?70C|Onyx[ _]?S|Onyx[ _]?Z|Orin[ _]?HD|Orin[ _]?S|Otis[ _]?S|SpeedStar[ _]?S|Magnet[ _]?M9|Primus[ _]?94[ _]?3G|Primus[ _]?94HD|Primus[ _]?QS|Android.*\\bQ8\\b|Sirius[ _]?EVO[ _]?QS|Sirius[ _]?QS|Spirit[ _]?S)\\b',
+            'VoninoTablet' => '\b(Argus[ _]?S|Diamond[ _]?79HD|Emerald[ _]?78E|Luna[ _]?70C|Onyx[ _]?S|Onyx[ _]?Z|Orin[ _]?HD|Orin[ _]?S|Otis[ _]?S|SpeedStar[ _]?S|Magnet[ _]?M9|Primus[ _]?94[ _]?3G|Primus[ _]?94HD|Primus[ _]?QS|Android.*\bQ8\b|Sirius[ _]?EVO[ _]?QS|Sirius[ _]?QS|Spirit[ _]?S)\b',
             // ECS Tablets - http://www.ecs.com.tw/ECSWebSite/Product/Product_Tablet_List.aspx?CategoryID=14&MenuID=107&childid=M_107&LanID=0
             'ECSTablet' => 'V07OT2|TM105A|S10OT1|TR10CS1',
             // Storex Tablets - http://storex.fr/espace_client/support.html
@@ -63990,7 +63990,7 @@ namespace Automattic\WooCommerce\Vendor\Detection {
             'TolinoTablet' => 'tolino tab [0-9.]+|tolino shine',
             // AudioSonic - a Kmart brand
             // http://www.kmart.com.au/webapp/wcs/stores/servlet/Search?langId=-1&storeId=10701&catalogId=10001&categoryId=193001&pageSize=72&currentPage=1&searchCategory=193001%2b4294965664&sortBy=p_MaxPrice%7c1
-            'AudioSonicTablet' => '\\bC-22Q|T7-QC|T-17B|T-17P\\b',
+            'AudioSonicTablet' => '\bC-22Q|T7-QC|T-17B|T-17P\b',
             // AMPE Tablets - http://www.ampe.com.my/product-category/tablets/
             // @todo: add them gradually to avoid conflicts.
             'AMPETablet' => 'Android.* A78 ',
@@ -63999,7 +63999,7 @@ namespace Automattic\WooCommerce\Vendor\Detection {
             // Tecno Mobile (only tablet) - http://www.tecno-mobile.com/index.php/product?filterby=smart&list_order=all&page=1
             'TecnoTablet' => 'TECNO P9|TECNO DP8D',
             // JXD (consoles & tablets) - http://jxd.hk/products.asp?selectclassid=009008&clsid=3
-            'JXDTablet' => 'Android.* \\b(F3000|A3300|JXD5000|JXD3000|JXD2000|JXD300B|JXD300|S5800|S7800|S602b|S5110b|S7300|S5300|S602|S603|S5100|S5110|S601|S7100a|P3000F|P3000s|P101|P200s|P1000m|P200m|P9100|P1000s|S6600b|S908|P1000|P300|S18|S6600|S9100)\\b',
+            'JXDTablet' => 'Android.* \b(F3000|A3300|JXD5000|JXD3000|JXD2000|JXD300B|JXD300|S5800|S7800|S602b|S5110b|S7300|S5300|S602|S603|S5100|S5110|S601|S7100a|P3000F|P3000s|P101|P200s|P1000m|P200m|P9100|P1000s|S6600b|S908|P1000|P300|S18|S6600|S9100)\b',
             // i-Joy tablets - http://www.i-joy.es/en/cat/products/tablets/
             'iJoyTablet' => 'Tablet (Spirit 7|Essentia|Galatea|Fusion|Onix 7|Landa|Titan|Scooby|Deox|Stella|Themis|Argon|Unique 7|Sygnus|Hexen|Finity 7|Cream|Cream X2|Jade|Neon 7|Neron 7|Kandy|Scape|Saphyr 7|Rebel|Biox|Rebel|Rebel 8GB|Myst|Draco 7|Myst|Tab7-004|Myst|Tadeo Jones|Tablet Boing|Arrow|Draco Dual Cam|Aurix|Mint|Amity|Revolution|Finity 9|Neon 9|T9w|Amity 4GB Dual Cam|Stone 4GB|Stone 8GB|Andromeda|Silken|X2|Andromeda II|Halley|Flame|Saphyr 9,7|Touch 8|Planet|Triton|Unique 10|Hexen 10|Memphis 4GB|Memphis 8GB|Onix 10)',
             // http://www.intracon.eu/tablet
@@ -64012,37 +64012,37 @@ namespace Automattic\WooCommerce\Vendor\Detection {
             // https://www.verizonwireless.com/tablets/verizon/
             'VerizonTablet' => 'QTAQZ3|QTAIR7|QTAQTZ3|QTASUN1|QTASUN2|QTAXIA1',
             // http://www.odys.de/web/internet-tablet_en.html
-            'OdysTablet' => 'LOOX|XENO10|ODYS[ -](Space|EVO|Xpress|NOON)|\\bXELIO\\b|Xelio10Pro|XELIO7PHONETAB|XELIO10EXTREME|XELIOPT2|NEO_QUAD10',
+            'OdysTablet' => 'LOOX|XENO10|ODYS[ -](Space|EVO|Xpress|NOON)|\bXELIO\b|Xelio10Pro|XELIO7PHONETAB|XELIO10EXTREME|XELIOPT2|NEO_QUAD10',
             // http://www.captiva-power.de/products.html#tablets-en
             'CaptivaTablet' => 'CAPTIVA PAD',
             // IconBIT - http://www.iconbit.com/products/tablets/
             'IconbitTablet' => 'NetTAB|NT-3702|NT-3702S|NT-3702S|NT-3603P|NT-3603P|NT-0704S|NT-0704S|NT-3805C|NT-3805C|NT-0806C|NT-0806C|NT-0909T|NT-0909T|NT-0907S|NT-0907S|NT-0902S|NT-0902S',
             // http://www.teclast.com/topic.php?channelID=70&topicID=140&pid=63
-            'TeclastTablet' => 'T98 4G|\\bP80\\b|\\bX90HD\\b|X98 Air|X98 Air 3G|\\bX89\\b|P80 3G|\\bX80h\\b|P98 Air|\\bX89HD\\b|P98 3G|\\bP90HD\\b|P89 3G|X98 3G|\\bP70h\\b|P79HD 3G|G18d 3G|\\bP79HD\\b|\\bP89s\\b|\\bA88\\b|\\bP10HD\\b|\\bP19HD\\b|G18 3G|\\bP78HD\\b|\\bA78\\b|\\bP75\\b|G17s 3G|G17h 3G|\\bP85t\\b|\\bP90\\b|\\bP11\\b|\\bP98t\\b|\\bP98HD\\b|\\bG18d\\b|\\bP85s\\b|\\bP11HD\\b|\\bP88s\\b|\\bA80HD\\b|\\bA80se\\b|\\bA10h\\b|\\bP89\\b|\\bP78s\\b|\\bG18\\b|\\bP85\\b|\\bA70h\\b|\\bA70\\b|\\bG17\\b|\\bP18\\b|\\bA80s\\b|\\bA11s\\b|\\bP88HD\\b|\\bA80h\\b|\\bP76s\\b|\\bP76h\\b|\\bP98\\b|\\bA10HD\\b|\\bP78\\b|\\bP88\\b|\\bA11\\b|\\bA10t\\b|\\bP76a\\b|\\bP76t\\b|\\bP76e\\b|\\bP85HD\\b|\\bP85a\\b|\\bP86\\b|\\bP75HD\\b|\\bP76v\\b|\\bA12\\b|\\bP75a\\b|\\bA15\\b|\\bP76Ti\\b|\\bP81HD\\b|\\bA10\\b|\\bT760VE\\b|\\bT720HD\\b|\\bP76\\b|\\bP73\\b|\\bP71\\b|\\bP72\\b|\\bT720SE\\b|\\bC520Ti\\b|\\bT760\\b|\\bT720VE\\b|T720-3GE|T720-WiFi',
+            'TeclastTablet' => 'T98 4G|\bP80\b|\bX90HD\b|X98 Air|X98 Air 3G|\bX89\b|P80 3G|\bX80h\b|P98 Air|\bX89HD\b|P98 3G|\bP90HD\b|P89 3G|X98 3G|\bP70h\b|P79HD 3G|G18d 3G|\bP79HD\b|\bP89s\b|\bA88\b|\bP10HD\b|\bP19HD\b|G18 3G|\bP78HD\b|\bA78\b|\bP75\b|G17s 3G|G17h 3G|\bP85t\b|\bP90\b|\bP11\b|\bP98t\b|\bP98HD\b|\bG18d\b|\bP85s\b|\bP11HD\b|\bP88s\b|\bA80HD\b|\bA80se\b|\bA10h\b|\bP89\b|\bP78s\b|\bG18\b|\bP85\b|\bA70h\b|\bA70\b|\bG17\b|\bP18\b|\bA80s\b|\bA11s\b|\bP88HD\b|\bA80h\b|\bP76s\b|\bP76h\b|\bP98\b|\bA10HD\b|\bP78\b|\bP88\b|\bA11\b|\bA10t\b|\bP76a\b|\bP76t\b|\bP76e\b|\bP85HD\b|\bP85a\b|\bP86\b|\bP75HD\b|\bP76v\b|\bA12\b|\bP75a\b|\bA15\b|\bP76Ti\b|\bP81HD\b|\bA10\b|\bT760VE\b|\bT720HD\b|\bP76\b|\bP73\b|\bP71\b|\bP72\b|\bT720SE\b|\bC520Ti\b|\bT760\b|\bT720VE\b|T720-3GE|T720-WiFi',
             // Onda - http://www.onda-tablet.com/buy-android-onda.html?dir=desc&limit=all&order=price
-            'OndaTablet' => '\\b(V975i|Vi30|VX530|V701|Vi60|V701s|Vi50|V801s|V719|Vx610w|VX610W|V819i|Vi10|VX580W|Vi10|V711s|V813|V811|V820w|V820|Vi20|V711|VI30W|V712|V891w|V972|V819w|V820w|Vi60|V820w|V711|V813s|V801|V819|V975s|V801|V819|V819|V818|V811|V712|V975m|V101w|V961w|V812|V818|V971|V971s|V919|V989|V116w|V102w|V973|Vi40)\\b[\\s]+|V10 \\b4G\\b',
+            'OndaTablet' => '\b(V975i|Vi30|VX530|V701|Vi60|V701s|Vi50|V801s|V719|Vx610w|VX610W|V819i|Vi10|VX580W|Vi10|V711s|V813|V811|V820w|V820|Vi20|V711|VI30W|V712|V891w|V972|V819w|V820w|Vi60|V820w|V711|V813s|V801|V819|V975s|V801|V819|V819|V818|V811|V712|V975m|V101w|V961w|V812|V818|V971|V971s|V919|V989|V116w|V102w|V973|Vi40)\b[\s]+|V10 \b4G\b',
             'JaytechTablet' => 'TPC-PA762',
             'BlaupunktTablet' => 'Endeavour 800NG|Endeavour 1010',
             // http://www.digma.ru/support/download/
             // @todo: Ebooks also (if requested)
-            'DigmaTablet' => '\\b(iDx10|iDx9|iDx8|iDx7|iDxD7|iDxD8|iDsQ8|iDsQ7|iDsQ8|iDsD10|iDnD7|3TS804H|iDsQ11|iDj7|iDs10)\\b',
+            'DigmaTablet' => '\b(iDx10|iDx9|iDx8|iDx7|iDxD7|iDxD8|iDsQ8|iDsQ7|iDsQ8|iDsD10|iDnD7|3TS804H|iDsQ11|iDj7|iDs10)\b',
             // http://www.evolioshop.com/ro/tablete-pc.html
             // http://www.evolio.ro/support/downloads_static.html?cat=2
             // @todo: Research some more
-            'EvolioTablet' => 'ARIA_Mini_wifi|Aria[ _]Mini|Evolio X10|Evolio X7|Evolio X8|\\bEvotab\\b|\\bNeura\\b',
+            'EvolioTablet' => 'ARIA_Mini_wifi|Aria[ _]Mini|Evolio X10|Evolio X7|Evolio X8|\bEvotab\b|\bNeura\b',
             // @todo http://www.lavamobiles.com/tablets-data-cards
-            'LavaTablet' => 'QPAD E704|\\bIvoryS\\b|E-TAB IVORY|\\bE-TAB\\b',
+            'LavaTablet' => 'QPAD E704|\bIvoryS\b|E-TAB IVORY|\bE-TAB\b',
             // http://www.breezetablet.com/
             'AocTablet' => 'MW0811|MW0812|MW0922|MTK8382|MW1031|MW0831|MW0821|MW0931|MW0712',
             // http://www.mpmaneurope.com/en/products/internet-tablets-14/android-tablets-14/
-            'MpmanTablet' => 'MP11 OCTA|MP10 OCTA|MPQC1114|MPQC1004|MPQC994|MPQC974|MPQC973|MPQC804|MPQC784|MPQC780|\\bMPG7\\b|MPDCG75|MPDCG71|MPDC1006|MP101DC|MPDC9000|MPDC905|MPDC706HD|MPDC706|MPDC705|MPDC110|MPDC100|MPDC99|MPDC97|MPDC88|MPDC8|MPDC77|MP709|MID701|MID711|MID170|MPDC703|MPQC1010',
+            'MpmanTablet' => 'MP11 OCTA|MP10 OCTA|MPQC1114|MPQC1004|MPQC994|MPQC974|MPQC973|MPQC804|MPQC784|MPQC780|\bMPG7\b|MPDCG75|MPDCG71|MPDC1006|MP101DC|MPDC9000|MPDC905|MPDC706HD|MPDC706|MPDC705|MPDC110|MPDC100|MPDC99|MPDC97|MPDC88|MPDC8|MPDC77|MP709|MID701|MID711|MID170|MPDC703|MPQC1010',
             // https://www.celkonmobiles.com/?_a=categoryphones&sid=2
-            'CelkonTablet' => 'CT695|CT888|CT[\\s]?910|CT7 Tab|CT9 Tab|CT3 Tab|CT2 Tab|CT1 Tab|C820|C720|\\bCT-1\\b',
+            'CelkonTablet' => 'CT695|CT888|CT[\s]?910|CT7 Tab|CT9 Tab|CT3 Tab|CT2 Tab|CT1 Tab|C820|C720|\bCT-1\b',
             // http://www.wolderelectronics.com/productos/manuales-y-guias-rapidas/categoria-2-miTab
-            'WolderTablet' => 'miTab \\b(DIAMOND|SPACE|BROOKLYN|NEO|FLY|MANHATTAN|FUNK|EVOLUTION|SKY|GOCAR|IRON|GENIUS|POP|MINT|EPSILON|BROADWAY|JUMP|HOP|LEGEND|NEW AGE|LINE|ADVANCE|FEEL|FOLLOW|LIKE|LINK|LIVE|THINK|FREEDOM|CHICAGO|CLEVELAND|BALTIMORE-GH|IOWA|BOSTON|SEATTLE|PHOENIX|DALLAS|IN 101|MasterChef)\\b',
+            'WolderTablet' => 'miTab \b(DIAMOND|SPACE|BROOKLYN|NEO|FLY|MANHATTAN|FUNK|EVOLUTION|SKY|GOCAR|IRON|GENIUS|POP|MINT|EPSILON|BROADWAY|JUMP|HOP|LEGEND|NEW AGE|LINE|ADVANCE|FEEL|FOLLOW|LIKE|LINK|LIVE|THINK|FREEDOM|CHICAGO|CLEVELAND|BALTIMORE-GH|IOWA|BOSTON|SEATTLE|PHOENIX|DALLAS|IN 101|MasterChef)\b',
             'MediacomTablet' => 'M-MPI10C3G|M-SP10EG|M-SP10EGP|M-SP10HXAH|M-SP7HXAH|M-SP10HXBH|M-SP8HXAH|M-SP8MXA',
             // http://www.mi.com/en
-            'MiTablet' => '\\bMI PAD\\b|\\bHM NOTE 1W\\b',
+            'MiTablet' => '\bMI PAD\b|\bHM NOTE 1W\b',
             // http://www.nbru.cn/index.html
             'NibiruTablet' => 'Nibiru M1|Nibiru Jupiter One',
             // http://navroad.com/products/produkty/tablety/
@@ -64052,18 +64052,18 @@ namespace Automattic\WooCommerce\Vendor\Detection {
             // http://www.leader-online.net.au/List/Tablet
             'LeaderTablet' => 'TBLT10Q|TBLT10I|TBL-10WDKB|TBL-10WDKBO2013|TBL-W230V2|TBL-W450|TBL-W500|SV572|TBLT7I|TBA-AC7-8G|TBLT79|TBL-8W16|TBL-10W32|TBL-10WKB|TBL-W100',
             // http://www.datawind.com/ubislate/
-            'UbislateTablet' => 'UbiSlate[\\s]?7C',
+            'UbislateTablet' => 'UbiSlate[\s]?7C',
             // http://www.pocketbook-int.com/ru/support
             'PocketBookTablet' => 'Pocketbook',
             // http://www.kocaso.com/product_tablet.html
-            'KocasoTablet' => '\\b(TB-1207)\\b',
+            'KocasoTablet' => '\b(TB-1207)\b',
             // http://global.hisense.com/product/asia/tablet/Sero7/201412/t20141215_91832.htm
-            'HisenseTablet' => '\\b(F5281|E2371)\\b',
+            'HisenseTablet' => '\b(F5281|E2371)\b',
             // http://www.tesco.com/direct/hudl/
             'Hudl' => 'Hudl HT7S3|Hudl 2',
             // http://www.telstra.com.au/home-phone/thub-2/
             'TelstraTablet' => 'T-Hub2',
-            'GenericTablet' => 'Android.*\\b97D\\b|Tablet(?!.*PC)|BNTV250A|MID-WCDMA|LogicPD Zoom2|\\bA7EB\\b|CatNova8|A1_07|CT704|CT1002|\\bM721\\b|rk30sdk|\\bEVOTAB\\b|M758A|ET904|ALUMIUM10|Smartfren Tab|Endeavour 1010|Tablet-PC-4|Tagi Tab|\\bM6pro\\b|CT1020W|arc 10HD|\\bTP750\\b|\\bQTAQZ3\\b|WVT101|TM1088|KT107',
+            'GenericTablet' => 'Android.*\b97D\b|Tablet(?!.*PC)|BNTV250A|MID-WCDMA|LogicPD Zoom2|\bA7EB\b|CatNova8|A1_07|CT704|CT1002|\bM721\b|rk30sdk|\bEVOTAB\b|M758A|ET904|ALUMIUM10|Smartfren Tab|Endeavour 1010|Tablet-PC-4|Tagi Tab|\bM6pro\b|CT1020W|arc 10HD|\bTP750\b|\bQTAQZ3\b|WVT101|TM1088|KT107',
         ];
         /**
          * List of mobile Operating Systems.
@@ -64072,9 +64072,9 @@ namespace Automattic\WooCommerce\Vendor\Detection {
          */
         protected static array $operatingSystems = [
             'AndroidOS' => 'Android',
-            'BlackBerryOS' => 'blackberry|\\bBB10\\b|rim tablet os',
+            'BlackBerryOS' => 'blackberry|\bBB10\b|rim tablet os',
             'PalmOS' => 'PalmOS|avantgo|blazer|elaine|hiptop|palm|plucker|xiino',
-            'SymbianOS' => 'Symbian|SymbOS|Series60|Series40|SYB-[0-9]+|\\bS60\\b',
+            'SymbianOS' => 'Symbian|SymbOS|Series60|Series40|SYB-[0-9]+|\bS60\b',
             // @reference: http://en.wikipedia.org/wiki/Windows_Mobile
             'WindowsMobileOS' => 'Windows CE.*(PPC|Smartphone|Mobile|[0-9]{3}x[0-9]{3})|Windows Mobile|Windows Phone [0-9.]+|WCE;',
             // @reference: http://en.wikipedia.org/wiki/Windows_Phone
@@ -64083,7 +64083,7 @@ namespace Automattic\WooCommerce\Vendor\Detection {
             // http://msdn.microsoft.com/library/ms537503.aspx
             // https://msdn.microsoft.com/en-us/library/hh869301(v=vs.85).aspx
             'WindowsPhoneOS' => 'Windows Phone 10.0|Windows Phone 8.1|Windows Phone 8.0|Windows Phone OS|XBLWP7|ZuneWP7|Windows NT 6.[23]; ARM;',
-            'iOS' => '\\biPhone.*Mobile|\\biPod|\\biPad|AppleCoreMedia',
+            'iOS' => '\biPhone.*Mobile|\biPod|\biPad|AppleCoreMedia',
             // https://en.wikipedia.org/wiki/IPadOS
             'iPadOS' => 'CPU OS 13',
             // @reference https://en.m.wikipedia.org/wiki/Sailfish_OS
@@ -64095,10 +64095,10 @@ namespace Automattic\WooCommerce\Vendor\Detection {
             // http://en.wikipedia.org/wiki/Maemo
             // @todo: research Maemo in UAs
             'MaemoOS' => 'Maemo',
-            'JavaOS' => 'J2ME/|\\bMIDP\\b|\\bCLDC\\b',
+            'JavaOS' => 'J2ME/|\bMIDP\b|\bCLDC\b',
             // '|Java/' produces bug #135
             'webOS' => 'webOS|hpwOS',
-            'badaOS' => '\\bBada\\b',
+            'badaOS' => '\bBada\b',
             'BREWOS' => 'BREW',
         ];
         /**
@@ -64114,8 +64114,8 @@ namespace Automattic\WooCommerce\Vendor\Detection {
         protected static array $browsers = [
             //'Vivaldi'         => 'Vivaldi',
             // @reference: https://developers.google.com/chrome/mobile/docs/user-agent
-            'Chrome' => '\\bCrMo\\b|CriOS.*Mobile|Android.*Chrome/[.0-9]* Mobile',
-            'Dolfin' => '\\bDolfin\\b',
+            'Chrome' => '\bCrMo\b|CriOS.*Mobile|Android.*Chrome/[.0-9]* Mobile',
+            'Dolfin' => '\bDolfin\b',
             'Opera' => 'Opera.*Mini|Opera.*Mobi|Android.*Opera|Mobile.*OPR/[0-9.]+$|Coast/[0-9.]+',
             'Skyfire' => 'Skyfire',
             // Added "Edge on iOS" https://github.com/serbanghita/Mobile-Detect/issues/764
@@ -64128,11 +64128,11 @@ namespace Automattic\WooCommerce\Vendor\Detection {
             'Blazer' => 'Blazer',
             // @reference: http://developer.apple.com/library/safari/#documentation/AppleApplications/Reference/SafariWebContent/OptimizingforSafarioniPhone/OptimizingforSafarioniPhone.html#//apple_ref/doc/uid/TP40006517-SW3
             // Excluded "Edge on iOS" https://github.com/serbanghita/Mobile-Detect/issues/764
-            'Safari' => 'Version((?!\\bEdgiOS\\b).)*Mobile.*Safari|Safari.*Mobile|MobileSafari',
+            'Safari' => 'Version((?!\bEdgiOS\b).)*Mobile.*Safari|Safari.*Mobile|MobileSafari',
             // http://en.wikipedia.org/wiki/Midori_(web_browser)
             //'Midori'          => 'midori',
             //'Tizen'           => 'Tizen',
-            'WeChat' => '\\bMicroMessenger\\b',
+            'WeChat' => '\bMicroMessenger\b',
             'UCBrowser' => 'UC.*Browser|UCWEB',
             'baiduboxapp' => 'baiduboxapp',
             'baidubrowser' => 'baidubrowser',
@@ -64142,7 +64142,7 @@ namespace Automattic\WooCommerce\Vendor\Detection {
             // https://github.com/serbanghita/Mobile-Detect/issues/752
             // 'Puffin'            => 'Puffin',
             // http://mercury-browser.com/index.html
-            'Mercury' => '\\bMercury\\b',
+            'Mercury' => '\bMercury\b',
             // http://en.wikipedia.org/wiki/Obigo_Browser
             'ObigoBrowser' => 'Obigo',
             // http://en.wikipedia.org/wiki/NetFront
@@ -64228,10 +64228,10 @@ namespace Automattic\WooCommerce\Vendor\Detection {
             'Presto' => 'Presto/[VER]',
             'Goanna' => 'Goanna/[VER]',
             // OS
-            'iOS' => ' \\bi?OS\\b [VER][ ;]{1}',
+            'iOS' => ' \bi?OS\b [VER][ ;]{1}',
             'Android' => 'Android [VER]',
             'Sailfish' => 'Sailfish [VER]',
-            'BlackBerry' => ['BlackBerry[\\w]+/[VER]', 'BlackBerry.*Version/[VER]', 'Version/[VER]'],
+            'BlackBerry' => ['BlackBerry[\w]+/[VER]', 'BlackBerry.*Version/[VER]', 'Version/[VER]'],
             'BREW' => 'BREW [VER]',
             'Java' => 'Java/[VER]',
             // @reference: http://windowsteamblog.com/windows_phone/b/wpdev/archive/2011/08/29/introducing-the-ie9-on-windows-phone-mango-user-agent-string.aspx
@@ -64263,7 +64263,7 @@ namespace Automattic\WooCommerce\Vendor\Detection {
          *
          * @return string The version number in semantic version format.
          */
-        public static function getScriptVersion() : string
+        public static function getScriptVersion(): string
         {
         }
         /**
@@ -64280,7 +64280,7 @@ namespace Automattic\WooCommerce\Vendor\Detection {
          *
          * @return array
          */
-        public function getHttpHeaders() : array
+        public function getHttpHeaders(): array
         {
         }
         /**
@@ -64293,10 +64293,10 @@ namespace Automattic\WooCommerce\Vendor\Detection {
          *
          * @return string|null The value of the header.
          */
-        public function getHttpHeader(string $header) : ?string
+        public function getHttpHeader(string $header): ?string
         {
         }
-        public function getMobileHeaders() : array
+        public function getMobileHeaders(): array
         {
         }
         /**
@@ -64305,7 +64305,7 @@ namespace Automattic\WooCommerce\Vendor\Detection {
          *
          * @return array List of HTTP headers.
          */
-        public function getUaHttpHeaders() : array
+        public function getUaHttpHeaders(): array
         {
         }
         /**
@@ -64316,7 +64316,7 @@ namespace Automattic\WooCommerce\Vendor\Detection {
          *
          * @return bool If there were CloudFront headers to be set
          */
-        public function setCfHeaders(?array $cfHeaders = null) : bool
+        public function setCfHeaders(?array $cfHeaders = null): bool
         {
         }
         /**
@@ -64324,14 +64324,14 @@ namespace Automattic\WooCommerce\Vendor\Detection {
          *
          * @return array
          */
-        public function getCfHeaders() : array
+        public function getCfHeaders(): array
         {
         }
         /**
          * @param string $userAgent
          * @return string
          */
-        private function prepareUserAgent(string $userAgent) : string
+        private function prepareUserAgent(string $userAgent): string
         {
         }
         /**
@@ -64341,7 +64341,7 @@ namespace Automattic\WooCommerce\Vendor\Detection {
          *
          * @return string|null
          */
-        public function setUserAgent(?string $userAgent = null) : ?string
+        public function setUserAgent(?string $userAgent = null): ?string
         {
         }
         /**
@@ -64349,13 +64349,13 @@ namespace Automattic\WooCommerce\Vendor\Detection {
          *
          * @return string|null The user agent if it's set.
          */
-        public function getUserAgent() : ?string
+        public function getUserAgent(): ?string
         {
         }
-        public function getMatchingRegex() : ?string
+        public function getMatchingRegex(): ?string
         {
         }
-        public function getMatchesArray() : ?array
+        public function getMatchesArray(): ?array
         {
         }
         /**
@@ -64363,7 +64363,7 @@ namespace Automattic\WooCommerce\Vendor\Detection {
          *
          * @return array List of phone devices.
          */
-        public static function getPhoneDevices() : array
+        public static function getPhoneDevices(): array
         {
         }
         /**
@@ -64371,7 +64371,7 @@ namespace Automattic\WooCommerce\Vendor\Detection {
          *
          * @return array List of tablet devices.
          */
-        public static function getTabletDevices() : array
+        public static function getTabletDevices(): array
         {
         }
         /**
@@ -64379,7 +64379,7 @@ namespace Automattic\WooCommerce\Vendor\Detection {
          *
          * @return array List of user agents.
          */
-        public static function getUserAgents() : array
+        public static function getUserAgents(): array
         {
         }
         /**
@@ -64387,7 +64387,7 @@ namespace Automattic\WooCommerce\Vendor\Detection {
          *
          * @return array List of browsers / user agents.
          */
-        public static function getBrowsers() : array
+        public static function getBrowsers(): array
         {
         }
         /**
@@ -64396,7 +64396,7 @@ namespace Automattic\WooCommerce\Vendor\Detection {
          *
          * @return array
          */
-        public function getRules() : array
+        public function getRules(): array
         {
         }
         /**
@@ -64404,7 +64404,7 @@ namespace Automattic\WooCommerce\Vendor\Detection {
          *
          * @return array The list of mobile operating systems.
          */
-        public static function getOperatingSystems() : array
+        public static function getOperatingSystems(): array
         {
         }
         /**
@@ -64414,7 +64414,7 @@ namespace Automattic\WooCommerce\Vendor\Detection {
          *
          * @return bool
          */
-        public function checkHttpHeadersForMobile() : bool
+        public function checkHttpHeadersForMobile(): bool
         {
         }
         /**
@@ -64435,7 +64435,7 @@ namespace Automattic\WooCommerce\Vendor\Detection {
          * @param string|null $userAgent deprecated
          * @return bool
          */
-        protected function matchDetectionRulesAgainstUA(?string $userAgent = null) : bool
+        protected function matchDetectionRulesAgainstUA(?string $userAgent = null): bool
         {
         }
         /**
@@ -64447,7 +64447,7 @@ namespace Automattic\WooCommerce\Vendor\Detection {
          *
          * @return bool
          */
-        protected function matchUAAgainstKey(string $key) : bool
+        protected function matchUAAgainstKey(string $key): bool
         {
         }
         /**
@@ -64457,7 +64457,7 @@ namespace Automattic\WooCommerce\Vendor\Detection {
          * @param array|null $httpHeaders deprecated
          * @return bool
          */
-        public function isMobile(?string $userAgent = null, ?array $httpHeaders = null) : bool
+        public function isMobile(?string $userAgent = null, ?array $httpHeaders = null): bool
         {
         }
         /**
@@ -64468,7 +64468,7 @@ namespace Automattic\WooCommerce\Vendor\Detection {
          * @param array|null $httpHeaders deprecated
          * @return bool
          */
-        public function isTablet(?string $userAgent = null, ?array $httpHeaders = null) : bool
+        public function isTablet(?string $userAgent = null, ?array $httpHeaders = null): bool
         {
         }
         /**
@@ -64481,7 +64481,7 @@ namespace Automattic\WooCommerce\Vendor\Detection {
          *
          * @todo: The httpHeaders part is not yet used.
          */
-        public function is(string $key, ?string $userAgent = null, ?array $httpHeaders = null) : bool
+        public function is(string $key, ?string $userAgent = null, ?array $httpHeaders = null): bool
         {
         }
         /**
@@ -64499,7 +64499,7 @@ namespace Automattic\WooCommerce\Vendor\Detection {
          *
          * @todo: search in the HTTP headers too.
          */
-        public function match(string $regex, ?string $userAgent = null) : bool
+        public function match(string $regex, ?string $userAgent = null): bool
         {
         }
         /**
@@ -64507,7 +64507,7 @@ namespace Automattic\WooCommerce\Vendor\Detection {
          *
          * @return array
          */
-        public static function getProperties() : array
+        public static function getProperties(): array
         {
         }
         /**
@@ -64519,7 +64519,7 @@ namespace Automattic\WooCommerce\Vendor\Detection {
          *
          * @todo Remove the error suppression from str_replace() call.
          */
-        public function prepareVersionNo(string $ver) : float
+        public function prepareVersionNo(string $ver): float
         {
         }
         /**
@@ -65234,7 +65234,7 @@ namespace Automattic\WooCommerce\Admin\API {
          *
          * @return object Instance.
          */
-        public static final function instance()
+        final public static function instance()
         {
         }
         /**
@@ -66117,7 +66117,7 @@ namespace Automattic\WooCommerce\Admin\API {
          * @param string $name The nonce name.
          * @return string A fully formed URL.
          */
-        private function maybe_add_nonce_to_url(string $url, string $action = '', string $name = '') : string
+        private function maybe_add_nonce_to_url(string $url, string $action = '', string $name = ''): string
         {
         }
         /**
@@ -66219,7 +66219,7 @@ namespace Automattic\WooCommerce\Admin\API {
          *
          * @return bool
          */
-        public function get_permission() : bool
+        public function get_permission(): bool
         {
         }
     }
@@ -69693,7 +69693,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports {
          *
          * @return array
          */
-        protected abstract function get_item_properties_schema();
+        abstract protected function get_item_properties_schema();
         /**
          * Get the Report's schema, conforming to JSON Schema.
          *
@@ -71829,7 +71829,7 @@ namespace Automattic\WooCommerce\Internal\Traits {
          *
          * @return string The device type.
          */
-        protected function get_device_type(array $values) : string
+        protected function get_device_type(array $values): string
         {
         }
         /**
@@ -71845,7 +71845,7 @@ namespace Automattic\WooCommerce\Internal\Traits {
          *
          * @return void
          */
-        private function set_field_prefix() : void
+        private function set_field_prefix(): void
         {
         }
         /**
@@ -71857,7 +71857,7 @@ namespace Automattic\WooCommerce\Internal\Traits {
          *
          * @return array
          */
-        private function filter_meta_data(array $meta) : array
+        private function filter_meta_data(array $meta): array
         {
         }
         /**
@@ -71867,7 +71867,7 @@ namespace Automattic\WooCommerce\Internal\Traits {
          *
          * @return string The prefixed field name.
          */
-        private function get_prefixed_field_name($name) : string
+        private function get_prefixed_field_name($name): string
         {
         }
         /**
@@ -71877,7 +71877,7 @@ namespace Automattic\WooCommerce\Internal\Traits {
          *
          * @return string The prefixed field name.
          */
-        private function get_meta_prefixed_field_name(string $name) : string
+        private function get_meta_prefixed_field_name(string $name): string
         {
         }
         /**
@@ -71887,7 +71887,7 @@ namespace Automattic\WooCommerce\Internal\Traits {
          *
          * @return string
          */
-        private function unprefix_meta_field_name(string $name) : string
+        private function unprefix_meta_field_name(string $name): string
         {
         }
         /**
@@ -71909,7 +71909,7 @@ namespace Automattic\WooCommerce\Internal\Traits {
          *
          * @return array
          */
-        private function get_unprefixed_field_values(array $raw_values = array()) : array
+        private function get_unprefixed_field_values(array $raw_values = array()): array
         {
         }
         /**
@@ -71919,7 +71919,7 @@ namespace Automattic\WooCommerce\Internal\Traits {
          *
          * @return array
          */
-        private function get_source_values(array $raw_values = array()) : array
+        private function get_source_values(array $raw_values = array()): array
         {
         }
         /**
@@ -71932,7 +71932,7 @@ namespace Automattic\WooCommerce\Internal\Traits {
          *
          * @return string
          */
-        private function get_origin_label(string $source_type, string $source, bool $translated = true) : string
+        private function get_origin_label(string $source_type, string $source, bool $translated = true): string
         {
         }
         /**
@@ -71942,7 +71942,7 @@ namespace Automattic\WooCommerce\Internal\Traits {
          *
          * @return string
          */
-        private function get_field_description(string $field_name) : string
+        private function get_field_description(string $field_name): string
         {
         }
     }
@@ -71971,7 +71971,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Orders {
          *
          * @internal
          */
-        public static final function init()
+        final public static function init()
         {
         }
         /**
@@ -74329,7 +74329,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports {
          *
          * @var string
          */
-        public static $iso_datetime_format = 'Y-m-d\\TH:i:s';
+        public static $iso_datetime_format = 'Y-m-d\TH:i:s';
         /**
          * Format string for use in SQL queries.
          *
@@ -75425,15 +75425,15 @@ namespace Automattic\WooCommerce\Admin\BlockTemplates {
         /**
          * Get the block name.
          */
-        public function get_name() : string;
+        public function get_name(): string;
         /**
          * Get the block ID.
          */
-        public function get_id() : string;
+        public function get_id(): string;
         /**
          * Get the block order.
          */
-        public function get_order() : int;
+        public function get_order(): int;
         /**
          * Set the block order.
          *
@@ -75443,7 +75443,7 @@ namespace Automattic\WooCommerce\Admin\BlockTemplates {
         /**
          * Get the block attributes.
          */
-        public function get_attributes() : array;
+        public function get_attributes(): array;
         /**
          * Set the block attributes.
          *
@@ -75460,11 +75460,11 @@ namespace Automattic\WooCommerce\Admin\BlockTemplates {
         /**
          * Get the parent container that the block belongs to.
          */
-        public function &get_parent() : \Automattic\WooCommerce\Admin\BlockTemplates\ContainerInterface;
+        public function &get_parent(): \Automattic\WooCommerce\Admin\BlockTemplates\ContainerInterface;
         /**
          * Get the root template that the block belongs to.
          */
-        public function &get_root_template() : \Automattic\WooCommerce\Admin\BlockTemplates\BlockTemplateInterface;
+        public function &get_root_template(): \Automattic\WooCommerce\Admin\BlockTemplates\BlockTemplateInterface;
         /**
          * Remove the block from its parent.
          */
@@ -75474,7 +75474,7 @@ namespace Automattic\WooCommerce\Admin\BlockTemplates {
          *
          * @return bool True if the block is detached from its parent or root template.
          */
-        public function is_detached() : bool;
+        public function is_detached(): bool;
         /**
          * Add a hide condition to the block.
          *
@@ -75484,7 +75484,7 @@ namespace Automattic\WooCommerce\Admin\BlockTemplates {
          * @param string $expression An expression, which if true, will hide the block.
          * @return string The key of the hide condition, which can be used to remove the hide condition.
          */
-        public function add_hide_condition(string $expression) : string;
+        public function add_hide_condition(string $expression): string;
         /**
          * Remove a hide condition from the block.
          *
@@ -75494,7 +75494,7 @@ namespace Automattic\WooCommerce\Admin\BlockTemplates {
         /**
          * Get the hide conditions of the block.
          */
-        public function get_hide_conditions() : array;
+        public function get_hide_conditions(): array;
         /**
          * Add a disable condition to the block.
          *
@@ -75504,7 +75504,7 @@ namespace Automattic\WooCommerce\Admin\BlockTemplates {
          * @param string $expression An expression, which if true, will disable the block.
          * @return string The key of the disable condition, which can be used to remove the disable condition.
          */
-        public function add_disable_condition(string $expression) : string;
+        public function add_disable_condition(string $expression): string;
         /**
          * Remove a disable condition from the block.
          *
@@ -75514,13 +75514,13 @@ namespace Automattic\WooCommerce\Admin\BlockTemplates {
         /**
          * Get the disable conditions of the block.
          */
-        public function get_disable_conditions() : array;
+        public function get_disable_conditions(): array;
         /**
          * Get the block configuration as a formatted template.
          *
          * @return array The block configuration as a formatted template.
          */
-        public function get_formatted_template() : array;
+        public function get_formatted_template(): array;
     }
     /**
      * Interface for block containers.
@@ -75530,17 +75530,17 @@ namespace Automattic\WooCommerce\Admin\BlockTemplates {
         /**
          * Get the root template that the block belongs to.
          */
-        public function &get_root_template() : \Automattic\WooCommerce\Admin\BlockTemplates\BlockTemplateInterface;
+        public function &get_root_template(): \Automattic\WooCommerce\Admin\BlockTemplates\BlockTemplateInterface;
         /**
          * Get the block configuration as a formatted template.
          */
-        public function get_formatted_template() : array;
+        public function get_formatted_template(): array;
         /**
          * Get a block by ID.
          *
          * @param string $block_id The block ID.
          */
-        public function get_block(string $block_id) : ?\Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface;
+        public function get_block(string $block_id): ?\Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface;
         /**
          * Removes a block from the container.
          *
@@ -75568,32 +75568,32 @@ namespace Automattic\WooCommerce\Admin\BlockTemplates {
         /**
          * Get the template ID.
          */
-        public function get_id() : string;
+        public function get_id(): string;
         /**
          * Get the template title.
          */
-        public function get_title() : string;
+        public function get_title(): string;
         /**
          * Get the template description.
          */
-        public function get_description() : string;
+        public function get_description(): string;
         /**
          * Get the template area.
          */
-        public function get_area() : string;
+        public function get_area(): string;
         /**
          * Generate a block ID based on a base.
          *
          * @param string $id_base The base to use when generating an ID.
          * @return string
          */
-        public function generate_block_id(string $id_base) : string;
+        public function generate_block_id(string $id_base): string;
         /**
          * Get the template as JSON like array.
          *
          * @return array The JSON.
          */
-        public function to_json() : array;
+        public function to_json(): array;
     }
 }
 namespace Automattic\WooCommerce\Admin\Composer {
@@ -75679,7 +75679,7 @@ namespace Automattic\WooCommerce\Admin\RemoteSpecs {
         /**
          * Get class instance.
          */
-        public static abstract function get_instance();
+        abstract public static function get_instance();
         /**
          * Name of data sources filter.
          */
@@ -75985,7 +75985,7 @@ namespace Automattic\WooCommerce\Admin {
          *
          * @var string
          */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Internal\\Admin\\FeaturePlugin';
+        protected static $facade_over_classname = 'Automattic\WooCommerce\Internal\Admin\FeaturePlugin';
         /**
          * The version that this class was deprecated in.
          *
@@ -76005,7 +76005,7 @@ namespace Automattic\WooCommerce\Admin {
          *
          * @return object Instance.
          */
-        public static final function instance()
+        final public static function instance()
         {
         }
         /**
@@ -76443,7 +76443,7 @@ namespace Automattic\WooCommerce\Admin\Features\MarketingRecommendations {
          *
          * @return array
          */
-        public static function get_recommended_plugins() : array
+        public static function get_recommended_plugins(): array
         {
         }
         /**
@@ -76451,7 +76451,7 @@ namespace Automattic\WooCommerce\Admin\Features\MarketingRecommendations {
          *
          * @return array
          */
-        public static function get_recommended_marketing_channels() : array
+        public static function get_recommended_marketing_channels(): array
         {
         }
         /**
@@ -76459,7 +76459,7 @@ namespace Automattic\WooCommerce\Admin\Features\MarketingRecommendations {
          *
          * @return array
          */
-        public static function get_recommended_marketing_extensions_excluding_channels() : array
+        public static function get_recommended_marketing_extensions_excluding_channels(): array
         {
         }
         /**
@@ -76468,7 +76468,7 @@ namespace Automattic\WooCommerce\Admin\Features\MarketingRecommendations {
          * @since 9.5.0
          * @return array
          */
-        public static function get_misc_recommendations() : array
+        public static function get_misc_recommendations(): array
         {
         }
         /**
@@ -76478,7 +76478,7 @@ namespace Automattic\WooCommerce\Admin\Features\MarketingRecommendations {
          *
          * @return bool
          */
-        protected static function is_marketing_plugin(array $plugin_data) : bool
+        protected static function is_marketing_plugin(array $plugin_data): bool
         {
         }
         /**
@@ -76488,7 +76488,7 @@ namespace Automattic\WooCommerce\Admin\Features\MarketingRecommendations {
          *
          * @return bool
          */
-        protected static function is_marketing_channel_plugin(array $plugin_data) : bool
+        protected static function is_marketing_channel_plugin(array $plugin_data): bool
         {
         }
         /**
@@ -76632,7 +76632,7 @@ namespace Automattic\WooCommerce\Admin\Features {
          *
          * @var string
          */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Features\\Onboarding';
+        protected static $facade_over_classname = 'Automattic\WooCommerce\Admin\Features\Onboarding';
         /**
          * The version that this class was deprecated in.
          *
@@ -76794,25 +76794,25 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
          *
          * @return string
          */
-        public abstract function get_id();
+        abstract public function get_id();
         /**
          * Title.
          *
          * @return string
          */
-        public abstract function get_title();
+        abstract public function get_title();
         /**
          * Content.
          *
          * @return string
          */
-        public abstract function get_content();
+        abstract public function get_content();
         /**
          * Time.
          *
          * @return string
          */
-        public abstract function get_time();
+        abstract public function get_time();
         /**
          * Parent ID.
          *
@@ -77056,7 +77056,7 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
          *
          * @return bool
          */
-        public function get_record_view_event() : bool
+        public function get_record_view_event(): bool
         {
         }
         /**
@@ -77675,7 +77675,7 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
         /**
          * Get class instance.
          */
-        public static final function instance()
+        final public static function instance()
         {
         }
         /**
@@ -77983,7 +77983,7 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
          *
          * @return string
          */
-        public function get_action_url() : string
+        public function get_action_url(): string
         {
         }
         /**
@@ -77991,7 +77991,7 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
          *
          * @return bool True if there are enabled non-PSP payment suggestions, false otherwise.
          */
-        private function has_enabled_non_psp_payment_suggestion() : bool
+        private function has_enabled_non_psp_payment_suggestion(): bool
         {
         }
         /**
@@ -77999,7 +77999,7 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
          *
          * @return array The list of payment providers.
          */
-        private function get_payment_providers() : array
+        private function get_payment_providers(): array
         {
         }
     }
@@ -79178,7 +79178,7 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
          *
          * @return bool
          */
-        public function get_record_view_event() : bool
+        public function get_record_view_event(): bool
         {
         }
     }
@@ -79341,7 +79341,7 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
          *
          * @return bool
          */
-        public static function has_other_ecommerce_gateways() : bool
+        public static function has_other_ecommerce_gateways(): bool
         {
         }
         /**
@@ -79710,7 +79710,7 @@ namespace Automattic\WooCommerce\Admin\Features\ProductBlockEditor {
         /**
          * Get the singleton instance.
          */
-        public static function get_instance() : \Automattic\WooCommerce\Admin\Features\ProductBlockEditor\BlockRegistry
+        public static function get_instance(): \Automattic\WooCommerce\Admin\Features\ProductBlockEditor\BlockRegistry
         {
         }
         /**
@@ -79791,7 +79791,7 @@ namespace Automattic\WooCommerce\Admin\Features\ProductBlockEditor {
          *
          * @param string $block_name Block name.
          */
-        public function is_registered($block_name) : bool
+        public function is_registered($block_name): bool
         {
         }
         /**
@@ -80252,13 +80252,13 @@ namespace Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTempla
          * @param array $block_config block config.
          * @return SectionInterface new block section.
          */
-        public function add_section(array $block_config) : \Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTemplates\SectionInterface;
+        public function add_section(array $block_config): \Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTemplates\SectionInterface;
         /**
          * Adds a new block to the group.
          *
          * @param array $block_config block config.
          */
-        public function add_block(array $block_config) : \Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface;
+        public function add_block(array $block_config): \Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface;
     }
     /**
      * Interface for block containers.
@@ -80271,35 +80271,35 @@ namespace Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTempla
          * @param array $block_config block config.
          * @return GroupInterface new group block.
          */
-        public function add_group(array $block_config) : \Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTemplates\GroupInterface;
+        public function add_group(array $block_config): \Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTemplates\GroupInterface;
         /**
          * Gets Group block by id.
          *
          * @param string $group_id group id.
          * @return GroupInterface|null
          */
-        public function get_group_by_id(string $group_id) : ?\Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTemplates\GroupInterface;
+        public function get_group_by_id(string $group_id): ?\Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTemplates\GroupInterface;
         /**
          * Gets Section block by id.
          *
          * @param string $section_id section id.
          * @return SectionInterface|null
          */
-        public function get_section_by_id(string $section_id) : ?\Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTemplates\SectionInterface;
+        public function get_section_by_id(string $section_id): ?\Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTemplates\SectionInterface;
         /**
          * Gets subsection block by id.
          *
          * @param string $subsection_id subsection id.
          * @return SubsectionInterface|null
          */
-        public function get_subsection_by_id(string $subsection_id) : ?\Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTemplates\SubsectionInterface;
+        public function get_subsection_by_id(string $subsection_id): ?\Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTemplates\SubsectionInterface;
         /**
          * Gets Block by id.
          *
          * @param string $block_id block id.
          * @return BlockInterface|null
          */
-        public function get_block_by_id(string $block_id) : ?\Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface;
+        public function get_block_by_id(string $block_id): ?\Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface;
     }
     /**
      * Interface for section containers, which contain sub-sections and blocks.
@@ -80312,13 +80312,13 @@ namespace Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTempla
          * @param array $block_config block config.
          * @return SubsectionInterface new block sub-section.
          */
-        public function add_subsection(array $block_config) : \Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTemplates\SubsectionInterface;
+        public function add_subsection(array $block_config): \Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTemplates\SubsectionInterface;
         /**
          * Adds a new block to the section.
          *
          * @param array $block_config block config.
          */
-        public function add_block(array $block_config) : \Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface;
+        public function add_block(array $block_config): \Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface;
         /**
          * Adds a new sub-section to the section.
          *
@@ -80326,7 +80326,7 @@ namespace Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTempla
          *
          * @param array $block_config The block data.
          */
-        public function add_section(array $block_config) : \Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTemplates\SubsectionInterface;
+        public function add_section(array $block_config): \Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTemplates\SubsectionInterface;
     }
     /**
      * Interface for subsection containers, which contain sub-sections and blocks.
@@ -80338,7 +80338,7 @@ namespace Automattic\WooCommerce\Admin\Features\ProductBlockEditor\ProductTempla
          *
          * @param array $block_config block config.
          */
-        public function add_block(array $block_config) : \Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface;
+        public function add_block(array $block_config): \Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface;
     }
 }
 namespace Automattic\WooCommerce\Admin\Features\ProductBlockEditor {
@@ -80362,13 +80362,13 @@ namespace Automattic\WooCommerce\Admin\Features\ProductBlockEditor {
         /**
          * Check if the current screen is the legacy add product screen.
          */
-        protected function is_legacy_add_new_screen() : bool
+        protected function is_legacy_add_new_screen(): bool
         {
         }
         /**
          * Check if the current screen is the legacy edit product screen.
          */
-        protected function is_legacy_edit_screen() : bool
+        protected function is_legacy_edit_screen(): bool
         {
         }
         /**
@@ -80376,7 +80376,7 @@ namespace Automattic\WooCommerce\Admin\Features\ProductBlockEditor {
          *
          * @param integer $product_id Product ID.
          */
-        protected function is_product_supported($product_id) : bool
+        protected function is_product_supported($product_id): bool
         {
         }
         /**
@@ -80384,33 +80384,33 @@ namespace Automattic\WooCommerce\Admin\Features\ProductBlockEditor {
          *
          * @param array $product_templates The registered product templates.
          */
-        public function set_product_templates(array $product_templates) : void
+        public function set_product_templates(array $product_templates): void
         {
         }
         /**
          * Redirects from old product form to the new product form if the
          * feature `product_block_editor` is enabled.
          */
-        public function maybe_redirect_to_new_editor() : void
+        public function maybe_redirect_to_new_editor(): void
         {
         }
         /**
          * Redirects from new product form to the old product form if the
          * feature `product_block_editor` is enabled.
          */
-        public function maybe_redirect_to_old_editor() : void
+        public function maybe_redirect_to_old_editor(): void
         {
         }
         /**
          * Get the parsed WooCommerce Admin path.
          */
-        protected function get_parsed_route() : array
+        protected function get_parsed_route(): array
         {
         }
         /**
          * Redirect non supported product types to legacy editor.
          */
-        public function redirect_non_supported_product_types() : void
+        public function redirect_non_supported_product_types(): void
         {
         }
     }
@@ -80587,7 +80587,7 @@ namespace Automattic\WooCommerce\Admin\Features\Settings {
          *
          * @return array Transformed settings data.
          */
-        public function transform(array $raw_settings) : array
+        public function transform(array $raw_settings): array
         {
         }
         /**
@@ -80597,7 +80597,7 @@ namespace Automattic\WooCommerce\Admin\Features\Settings {
          *
          * @return array Transformed sections.
          */
-        private function transform_sections(array $sections) : array
+        private function transform_sections(array $sections): array
         {
         }
         /**
@@ -80607,7 +80607,7 @@ namespace Automattic\WooCommerce\Admin\Features\Settings {
          *
          * @return array Transformed settings.
          */
-        private function transform_section_settings(array $settings) : array
+        private function transform_section_settings(array $settings): array
         {
         }
         /**
@@ -80616,7 +80616,7 @@ namespace Automattic\WooCommerce\Admin\Features\Settings {
          * @param array $setting Setting to process.
          * @param array $transformed_settings Transformed settings array.
          */
-        private function process_setting(?array $setting, array &$transformed_settings) : void
+        private function process_setting(?array $setting, array &$transformed_settings): void
         {
         }
         /**
@@ -80625,7 +80625,7 @@ namespace Automattic\WooCommerce\Admin\Features\Settings {
          * @param array $setting Setting to add.
          * @param array $transformed_settings Transformed settings array.
          */
-        private function handle_group_start(array $setting, array &$transformed_settings) : void
+        private function handle_group_start(array $setting, array &$transformed_settings): void
         {
         }
         /**
@@ -80634,7 +80634,7 @@ namespace Automattic\WooCommerce\Admin\Features\Settings {
          * @param array $setting Setting to add.
          * @param array $transformed_settings Transformed settings array.
          */
-        private function handle_group_end(array $setting, array &$transformed_settings) : void
+        private function handle_group_end(array $setting, array &$transformed_settings): void
         {
         }
         /**
@@ -80642,7 +80642,7 @@ namespace Automattic\WooCommerce\Admin\Features\Settings {
          *
          * @param array $transformed_settings Transformed settings array.
          */
-        private function flush_current_group(array &$transformed_settings) : void
+        private function flush_current_group(array &$transformed_settings): void
         {
         }
         /**
@@ -80651,7 +80651,7 @@ namespace Automattic\WooCommerce\Admin\Features\Settings {
          * @param array $setting Setting to add.
          * @param array $transformed_settings Transformed settings array.
          */
-        private function handle_checkbox_setting(array $setting, array &$transformed_settings) : void
+        private function handle_checkbox_setting(array $setting, array &$transformed_settings): void
         {
         }
         /**
@@ -80659,7 +80659,7 @@ namespace Automattic\WooCommerce\Admin\Features\Settings {
          *
          * @param array $setting Setting to add.
          */
-        private function start_checkbox_group(array $setting) : void
+        private function start_checkbox_group(array $setting): void
         {
         }
         /**
@@ -80668,7 +80668,7 @@ namespace Automattic\WooCommerce\Admin\Features\Settings {
          * @param array $setting Setting to add.
          * @param array $transformed_settings Transformed settings array.
          */
-        private function end_checkbox_group(array $setting, array &$transformed_settings) : void
+        private function end_checkbox_group(array $setting, array &$transformed_settings): void
         {
         }
         /**
@@ -80677,13 +80677,13 @@ namespace Automattic\WooCommerce\Admin\Features\Settings {
          * @param array $setting Setting to add.
          * @param array $transformed_settings Transformed settings array.
          */
-        private function handle_checkbox_group_item(array $setting, array &$transformed_settings) : void
+        private function handle_checkbox_group_item(array $setting, array &$transformed_settings): void
         {
         }
         /**
          * Flush current checkbox group to transformed settings.
          */
-        private function flush_current_checkbox_group() : void
+        private function flush_current_checkbox_group(): void
         {
         }
         /**
@@ -80692,7 +80692,7 @@ namespace Automattic\WooCommerce\Admin\Features\Settings {
          * @param array $setting Setting to add.
          * @param array $transformed_settings Transformed settings array.
          */
-        private function add_setting(array $setting, array &$transformed_settings) : void
+        private function add_setting(array $setting, array &$transformed_settings): void
         {
         }
         /**
@@ -80700,13 +80700,13 @@ namespace Automattic\WooCommerce\Admin\Features\Settings {
          *
          * @param array &$transformed_settings Transformed settings array.
          */
-        private function finalize_transformation(array &$transformed_settings) : void
+        private function finalize_transformation(array &$transformed_settings): void
         {
         }
         /**
          * Reset the state to its initial values.
          */
-        public function reset_state() : void
+        public function reset_state(): void
         {
         }
     }
@@ -80883,7 +80883,7 @@ namespace Automattic\WooCommerce\Admin {
          *
          * @var string
          */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Internal\\Admin\\Loader';
+        protected static $facade_over_classname = 'Automattic\WooCommerce\Internal\Admin\Loader';
         /**
          * The version that this class was deprecated in.
          *
@@ -81169,7 +81169,7 @@ namespace Automattic\WooCommerce\Admin\Marketing {
          *
          * @return string
          */
-        public function get_id() : string
+        public function get_id(): string
         {
         }
         /**
@@ -81177,7 +81177,7 @@ namespace Automattic\WooCommerce\Admin\Marketing {
          *
          * @return MarketingCampaignType
          */
-        public function get_type() : \Automattic\WooCommerce\Admin\Marketing\MarketingCampaignType
+        public function get_type(): \Automattic\WooCommerce\Admin\Marketing\MarketingCampaignType
         {
         }
         /**
@@ -81185,7 +81185,7 @@ namespace Automattic\WooCommerce\Admin\Marketing {
          *
          * @return string
          */
-        public function get_title() : string
+        public function get_title(): string
         {
         }
         /**
@@ -81193,7 +81193,7 @@ namespace Automattic\WooCommerce\Admin\Marketing {
          *
          * @return string
          */
-        public function get_manage_url() : string
+        public function get_manage_url(): string
         {
         }
         /**
@@ -81201,7 +81201,7 @@ namespace Automattic\WooCommerce\Admin\Marketing {
          *
          * @return Price|null
          */
-        public function get_cost() : ?\Automattic\WooCommerce\Admin\Marketing\Price
+        public function get_cost(): ?\Automattic\WooCommerce\Admin\Marketing\Price
         {
         }
         /**
@@ -81209,7 +81209,7 @@ namespace Automattic\WooCommerce\Admin\Marketing {
          *
          * @return Price|null
          */
-        public function get_sales() : ?\Automattic\WooCommerce\Admin\Marketing\Price
+        public function get_sales(): ?\Automattic\WooCommerce\Admin\Marketing\Price
         {
         }
     }
@@ -81274,7 +81274,7 @@ namespace Automattic\WooCommerce\Admin\Marketing {
          *
          * @return string
          */
-        public function get_id() : string
+        public function get_id(): string
         {
         }
         /**
@@ -81282,7 +81282,7 @@ namespace Automattic\WooCommerce\Admin\Marketing {
          *
          * @return MarketingChannelInterface
          */
-        public function get_channel() : \Automattic\WooCommerce\Admin\Marketing\MarketingChannelInterface
+        public function get_channel(): \Automattic\WooCommerce\Admin\Marketing\MarketingChannelInterface
         {
         }
         /**
@@ -81290,7 +81290,7 @@ namespace Automattic\WooCommerce\Admin\Marketing {
          *
          * @return string
          */
-        public function get_name() : string
+        public function get_name(): string
         {
         }
         /**
@@ -81298,7 +81298,7 @@ namespace Automattic\WooCommerce\Admin\Marketing {
          *
          * @return string
          */
-        public function get_description() : string
+        public function get_description(): string
         {
         }
         /**
@@ -81306,7 +81306,7 @@ namespace Automattic\WooCommerce\Admin\Marketing {
          *
          * @return string
          */
-        public function get_create_url() : string
+        public function get_create_url(): string
         {
         }
         /**
@@ -81314,7 +81314,7 @@ namespace Automattic\WooCommerce\Admin\Marketing {
          *
          * @return string
          */
-        public function get_icon_url() : string
+        public function get_icon_url(): string
         {
         }
     }
@@ -81334,61 +81334,61 @@ namespace Automattic\WooCommerce\Admin\Marketing {
          *
          * @return string
          */
-        public function get_slug() : string;
+        public function get_slug(): string;
         /**
          * Returns the name of the marketing channel.
          *
          * @return string
          */
-        public function get_name() : string;
+        public function get_name(): string;
         /**
          * Returns the description of the marketing channel.
          *
          * @return string
          */
-        public function get_description() : string;
+        public function get_description(): string;
         /**
          * Returns the path to the channel icon.
          *
          * @return string
          */
-        public function get_icon_url() : string;
+        public function get_icon_url(): string;
         /**
          * Returns the setup status of the marketing channel.
          *
          * @return bool
          */
-        public function is_setup_completed() : bool;
+        public function is_setup_completed(): bool;
         /**
          * Returns the URL to the settings page, or the link to complete the setup/onboarding if the channel has not been set up yet.
          *
          * @return string
          */
-        public function get_setup_url() : string;
+        public function get_setup_url(): string;
         /**
          * Returns the status of the marketing channel's product listings.
          *
          * @return string
          */
-        public function get_product_listings_status() : string;
+        public function get_product_listings_status(): string;
         /**
          * Returns the number of channel issues/errors (e.g. account-related errors, product synchronization issues, etc.).
          *
          * @return int The number of issues to resolve, or 0 if there are no issues with the channel.
          */
-        public function get_errors_count() : int;
+        public function get_errors_count(): int;
         /**
          * Returns an array of marketing campaign types that the channel supports.
          *
          * @return MarketingCampaignType[] Array of marketing campaign type objects.
          */
-        public function get_supported_campaign_types() : array;
+        public function get_supported_campaign_types(): array;
         /**
          * Returns an array of the channel's marketing campaigns.
          *
          * @return MarketingCampaign[]
          */
-        public function get_campaigns() : array;
+        public function get_campaigns(): array;
     }
     /**
      * MarketingChannels repository class
@@ -81412,7 +81412,7 @@ namespace Automattic\WooCommerce\Admin\Marketing {
          *
          * @throws Exception If the given marketing channel is already registered.
          */
-        public function register(\Automattic\WooCommerce\Admin\Marketing\MarketingChannelInterface $channel) : void
+        public function register(\Automattic\WooCommerce\Admin\Marketing\MarketingChannelInterface $channel): void
         {
         }
         /**
@@ -81420,7 +81420,7 @@ namespace Automattic\WooCommerce\Admin\Marketing {
          *
          * @return void
          */
-        public function unregister_all() : void
+        public function unregister_all(): void
         {
         }
         /**
@@ -81428,7 +81428,7 @@ namespace Automattic\WooCommerce\Admin\Marketing {
          *
          * @return MarketingChannelInterface[]
          */
-        public function get_registered_channels() : array
+        public function get_registered_channels(): array
         {
         }
     }
@@ -81465,7 +81465,7 @@ namespace Automattic\WooCommerce\Admin\Marketing {
          *
          * @return string
          */
-        public function get_value() : string
+        public function get_value(): string
         {
         }
         /**
@@ -81473,7 +81473,7 @@ namespace Automattic\WooCommerce\Admin\Marketing {
          *
          * @return string
          */
-        public function get_currency() : string
+        public function get_currency(): string
         {
         }
     }
@@ -81647,7 +81647,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\Note';
+        protected static $facade_over_classname = 'Automattic\WooCommerce\Admin\Notes\Note';
         /**
          * The version that this class was deprecated in.
          *
@@ -81675,7 +81675,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\Notes';
+        protected static $facade_over_classname = 'Automattic\WooCommerce\Admin\Notes\Notes';
         /**
          * The version that this class was deprecated in.
          *
@@ -81695,7 +81695,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Internal\\Admin\\Notes\\CustomizeStoreWithBlocks';
+        protected static $facade_over_classname = 'Automattic\WooCommerce\Internal\Admin\Notes\CustomizeStoreWithBlocks';
         /**
          * The version that this class was deprecated in.
          *
@@ -81715,7 +81715,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Internal\\Admin\\Notes\\EditProductsOnTheMove';
+        protected static $facade_over_classname = 'Automattic\WooCommerce\Internal\Admin\Notes\EditProductsOnTheMove';
         /**
          * The version that this class was deprecated in.
          *
@@ -81735,7 +81735,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Internal\\Admin\\Notes\\EUVATNumber';
+        protected static $facade_over_classname = 'Automattic\WooCommerce\Internal\Admin\Notes\EUVATNumber';
         /**
          * The version that this class was deprecated in.
          *
@@ -81755,7 +81755,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\FacebookMarketingExpert';
+        protected static $facade_over_classname = 'Automattic\WooCommerce\Admin\Notes\FacebookMarketingExpert';
         /**
          * The version that this class was deprecated in.
          *
@@ -81775,7 +81775,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Internal\\Admin\\Notes\\FirstProduct';
+        protected static $facade_over_classname = 'Automattic\WooCommerce\Internal\Admin\Notes\FirstProduct';
         /**
          * The version that this class was deprecated in.
          *
@@ -81795,7 +81795,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Internal\\Admin\\Notes\\GivingFeedbackNotes';
+        protected static $facade_over_classname = 'Automattic\WooCommerce\Internal\Admin\Notes\GivingFeedbackNotes';
         /**
          * The version that this class was deprecated in.
          *
@@ -81815,7 +81815,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Internal\\Admin\\Notes\\InstallJPAndWCSPlugins';
+        protected static $facade_over_classname = 'Automattic\WooCommerce\Internal\Admin\Notes\InstallJPAndWCSPlugins';
         /**
          * The version that this class was deprecated in.
          *
@@ -81835,7 +81835,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Internal\\Admin\\Notes\\LaunchChecklist';
+        protected static $facade_over_classname = 'Automattic\WooCommerce\Internal\Admin\Notes\LaunchChecklist';
         /**
          * The version that this class was deprecated in.
          *
@@ -81855,7 +81855,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Internal\\Admin\\Notes\\MigrateFromShopify';
+        protected static $facade_over_classname = 'Automattic\WooCommerce\Internal\Admin\Notes\MigrateFromShopify';
         /**
          * The version that this class was deprecated in.
          *
@@ -81875,7 +81875,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Internal\\Admin\\Notes\\MobileApp';
+        protected static $facade_over_classname = 'Automattic\WooCommerce\Internal\Admin\Notes\MobileApp';
         /**
          * The version that this class was deprecated in.
          *
@@ -81895,7 +81895,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Internal\\Admin\\Notes\\NewSalesRecord';
+        protected static $facade_over_classname = 'Automattic\WooCommerce\Internal\Admin\Notes\NewSalesRecord';
         /**
          * The version that this class was deprecated in.
          *
@@ -81915,7 +81915,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Admin\\Notes\\OnboardingEmailMarketing';
+        protected static $facade_over_classname = 'Automattic\WooCommerce\Admin\Notes\OnboardingEmailMarketing';
         /**
          * The version that this class was deprecated in.
          *
@@ -81935,7 +81935,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Internal\\Admin\\Notes\\OnboardingPayments';
+        protected static $facade_over_classname = 'Automattic\WooCommerce\Internal\Admin\Notes\OnboardingPayments';
         /**
          * The version that this class was deprecated in.
          *
@@ -81955,7 +81955,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Internal\\Admin\\Notes\\OnlineClothingStore';
+        protected static $facade_over_classname = 'Automattic\WooCommerce\Internal\Admin\Notes\OnlineClothingStore';
         /**
          * The version that this class was deprecated in.
          *
@@ -81975,7 +81975,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Internal\\Admin\\Notes\\OrderMilestones';
+        protected static $facade_over_classname = 'Automattic\WooCommerce\Internal\Admin\Notes\OrderMilestones';
         /**
          * The version that this class was deprecated in.
          *
@@ -81995,7 +81995,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Internal\\Admin\\Notes\\PerformanceOnMobile';
+        protected static $facade_over_classname = 'Automattic\WooCommerce\Internal\Admin\Notes\PerformanceOnMobile';
         /**
          * The version that this class was deprecated in.
          *
@@ -82015,7 +82015,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Internal\\Admin\\Notes\\PersonalizeStore';
+        protected static $facade_over_classname = 'Automattic\WooCommerce\Internal\Admin\Notes\PersonalizeStore';
         /**
          * The version that this class was deprecated in.
          *
@@ -82035,7 +82035,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Internal\\Admin\\Notes\\RealTimeOrderAlerts';
+        protected static $facade_over_classname = 'Automattic\WooCommerce\Internal\Admin\Notes\RealTimeOrderAlerts';
         /**
          * The version that this class was deprecated in.
          *
@@ -82055,7 +82055,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Internal\\Admin\\Notes\\SellingOnlineCourses';
+        protected static $facade_over_classname = 'Automattic\WooCommerce\Internal\Admin\Notes\SellingOnlineCourses';
         /**
          * The version that this class was deprecated in.
          *
@@ -82075,7 +82075,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Internal\\Admin\\Notes\\TrackingOptIn';
+        protected static $facade_over_classname = 'Automattic\WooCommerce\Internal\Admin\Notes\TrackingOptIn';
         /**
          * The version that this class was deprecated in.
          *
@@ -82095,7 +82095,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Internal\\Admin\\Notes\\WooSubscriptionsNotes';
+        protected static $facade_over_classname = 'Automattic\WooCommerce\Internal\Admin\Notes\WooSubscriptionsNotes';
         /**
          * The version that this class was deprecated in.
          *
@@ -82115,7 +82115,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Internal\\Admin\\Notes\\WooCommercePayments';
+        protected static $facade_over_classname = 'Automattic\WooCommerce\Internal\Admin\Notes\WooCommercePayments';
         /**
          * The version that this class was deprecated in.
          *
@@ -82135,7 +82135,7 @@ namespace Automattic\WooCommerce\Admin\Notes {
          *
          * @var string
          */
-        protected static $facade_over_classname = 'Automattic\\WooCommerce\\Internal\\Admin\\Notes\\WooCommerceSubscriptions';
+        protected static $facade_over_classname = 'Automattic\WooCommerce\Internal\Admin\Notes\WooCommerceSubscriptions';
         /**
          * The version that this class was deprecated in.
          *
@@ -85204,7 +85204,7 @@ namespace Automattic\WooCommerce\Admin\RemoteSpecs\RuleProcessors {
          *
          * @internal
          */
-        public static final function init()
+        final public static function init()
         {
         }
         /**
@@ -86528,7 +86528,7 @@ namespace Automattic\WooCommerce\Blocks\AIContent {
          *
          * @return bool
          */
-        public function should_update_dummy_product($dummy_product) : bool
+        public function should_update_dummy_product($dummy_product): bool
         {
         }
         /**
@@ -88076,7 +88076,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          *
          * @param array $query_args Query args.
          */
-        protected abstract function set_block_query_args(&$query_args);
+        abstract protected function set_block_query_args(&$query_args);
         /**
          * Set categories query args.
          *
@@ -88517,7 +88517,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes\AddToCartWithOptions {
          * @param WP_Block $block Block instance.
          * @return string Rendered block output.
          */
-        protected function render($attributes, $content, $block) : string
+        protected function render($attributes, $content, $block): string
         {
         }
     }
@@ -88570,7 +88570,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes\AddToCartWithOptions {
          * @param WP_Block $block Block instance.
          * @return string Rendered block output.
          */
-        protected function render($attributes, $content, $block) : string
+        protected function render($attributes, $content, $block): string
         {
         }
     }
@@ -88595,7 +88595,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes\AddToCartWithOptions {
          * @param WP_Block $block The Block.
          * @return string Row HTML
          */
-        private function get_product_row($product_id, $attributes, $block) : string
+        private function get_product_row($product_id, $attributes, $block): string
         {
         }
         /**
@@ -88606,7 +88606,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes\AddToCartWithOptions {
          * @param WP_Block $block Block instance.
          * @return string Rendered block output.
          */
-        protected function render($attributes, $content, $block) : string
+        protected function render($attributes, $content, $block): string
         {
         }
     }
@@ -88736,7 +88736,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes\AddToCartWithOptions {
          * @param WP_Block $block Block instance.
          * @return string Rendered block output.
          */
-        protected function render($attributes, $content, $block) : string
+        protected function render($attributes, $content, $block): string
         {
         }
         /**
@@ -88776,7 +88776,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes\AddToCartWithOptions {
          * @param WP_Block $block Block instance.
          * @return string Rendered block output.
          */
-        protected function render($attributes, $content, $block) : string
+        protected function render($attributes, $content, $block): string
         {
         }
     }
@@ -88810,7 +88810,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes\AddToCartWithOptions {
          * @param WP_Block $block Block instance.
          * @return string Rendered block output.
          */
-        protected function render($attributes, $content, $block) : string
+        protected function render($attributes, $content, $block): string
         {
         }
         /**
@@ -88876,7 +88876,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes\AddToCartWithOptions {
          * @param WP_Block $block Block instance.
          * @return string Rendered block output.
          */
-        protected function render($attributes, $content, $block) : string
+        protected function render($attributes, $content, $block): string
         {
         }
         /**
@@ -88887,7 +88887,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes\AddToCartWithOptions {
          * @param WP_Block $block The Block.
          * @return string Row HTML
          */
-        private function get_product_row($product_attribute_name, $product_attribute_terms, $block) : string
+        private function get_product_row($product_attribute_name, $product_attribute_terms, $block): string
         {
         }
         /**
@@ -90523,14 +90523,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @param array $attributes Block attributes. Default empty array.
          * @return \WP_Term|\WC_Product|null
          */
-        protected abstract function get_item($attributes);
+        abstract protected function get_item($attributes);
         /**
          * Returns the name of the featured item.
          *
          * @param \WP_Term|\WC_Product $item Item object.
          * @return string
          */
-        protected abstract function get_item_title($item);
+        abstract protected function get_item_title($item);
         /**
          * Returns the featured item image URL.
          *
@@ -90538,7 +90538,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @param string               $size Image size, defaults to 'full'.
          * @return string
          */
-        protected abstract function get_item_image($item, $size = 'full');
+        abstract protected function get_item_image($item, $size = 'full');
         /**
          * Renders the featured item attributes.
          *
@@ -90546,7 +90546,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @param array                $attributes Block attributes. Default empty array.
          * @return string
          */
-        protected abstract function render_attributes($item, $attributes);
+        abstract protected function render_attributes($item, $attributes);
         /**
          * Render the featured item block.
          *
@@ -90638,7 +90638,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          *
          * @return bool
          */
-        private function hasFocalPoint($attributes) : bool
+        private function hasFocalPoint($attributes): bool
         {
         }
         /**
@@ -91278,7 +91278,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes\OrderConfirmation {
          * @param string       $content Original block content.
          * @return string
          */
-        protected abstract function render_content($order, $permission = false, $attributes = [], $content = '');
+        abstract protected function render_content($order, $permission = false, $attributes = [], $content = '');
         /**
          * This is what gets rendered when the order does not exist. Renders nothing by default, but can be overridden by
          * child classes.
@@ -92546,7 +92546,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes\ProductCollection {
          * @param array           $query   Query args.
          * @param WP_REST_Request $request Request.
          */
-        public function update_rest_query_in_editor($query, $request) : array
+        public function update_rest_query_in_editor($query, $request): array
         {
         }
         /**
@@ -92818,7 +92818,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes\ProductCollection {
          * @param array $tax_query Query to filter products by taxonomies.
          * @return array Query to filter products by taxonomies.
          */
-        private function get_filter_by_taxonomies_query($tax_query) : array
+        private function get_filter_by_taxonomies_query($tax_query): array
         {
         }
         /**
@@ -93016,7 +93016,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes\ProductCollection {
          * }
          * @return array Date query array; empty if parameters are invalid.
          */
-        private function get_date_query(array $time_frame) : array
+        private function get_date_query(array $time_frame): array
         {
         }
         /**
@@ -94714,7 +94714,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @param array           $args    Query args.
          * @param WP_REST_Request $request Request.
          */
-        public function update_rest_query($args, $request) : array
+        public function update_rest_query($args, $request): array
         {
         }
         /**
@@ -94984,7 +94984,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @param array $query WP_Query.
          * @return array Query to filter products by taxonomies.
          */
-        private function get_filter_by_taxonomies_query($query) : array
+        private function get_filter_by_taxonomies_query($query): array
         {
         }
         /**
@@ -94993,7 +94993,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @param WP_Query $query The query to extract the keyword filter from.
          * @return array The keyword filter, or an empty array if none is found.
          */
-        private function get_filter_by_keyword_query($query) : array
+        private function get_filter_by_keyword_query($query): array
         {
         }
     }
@@ -96727,6 +96727,22 @@ namespace Automattic\WooCommerce\Blocks {
          * @return array
          */
         protected function get_block_types()
+        {
+        }
+        /**
+         * By default, when the classic theme is used, block style is always
+         * enqueued even if the block is not used on the page. We want WooCommerce
+         * store to always performant so we have to manually enqueue the block style
+         * on-demand for classic themes.
+         *
+         * @internal
+         *
+         * @param array  $args Block metadata.
+         * @param string $block_name Block name.
+         *
+         * @return array Block metadata.
+         */
+        public function enqueue_block_style_for_classic_themes($args, $block_name)
         {
         }
     }
@@ -98856,7 +98872,7 @@ namespace Automattic\WooCommerce\Blocks\Patterns {
          *
          * @return bool
          */
-        private function allowed_tracking_is_enabled() : bool
+        private function allowed_tracking_is_enabled(): bool
         {
         }
         /**
@@ -98886,8 +98902,8 @@ namespace Automattic\WooCommerce\Blocks\Patterns {
      */
     class PatternRegistry
     {
-        const SLUG_REGEX = '/^[A-z0-9\\/_-]+$/';
-        const COMMA_SEPARATED_REGEX = '/[\\s,]+/';
+        const SLUG_REGEX = '/^[A-z0-9\/_-]+$/';
+        const COMMA_SEPARATED_REGEX = '/[\s,]+/';
         /**
          * Returns pattern slugs with their localized labels for categorization.
          *
@@ -99662,7 +99678,7 @@ namespace Automattic\WooCommerce\Blocks\Registry {
          *
          * @return void
          */
-        public abstract function get(\Automattic\WooCommerce\Blocks\Registry\Container $container);
+        abstract public function get(\Automattic\WooCommerce\Blocks\Registry\Container $container);
     }
     /**
      * A simple Dependency Injection Container
@@ -100087,19 +100103,19 @@ namespace Automattic\WooCommerce\Blocks\Templates {
         /**
          * Initialization method.
          */
-        public abstract function init();
+        abstract public function init();
         /**
          * Should return the title of the template.
          *
          * @return string
          */
-        public abstract function get_template_title();
+        abstract public function get_template_title();
         /**
          * Should return the description of the template.
          *
          * @return string
          */
-        public abstract function get_template_description();
+        abstract public function get_template_description();
     }
     /**
      * AbstractPageTemplate class.
@@ -100121,13 +100137,13 @@ namespace Automattic\WooCommerce\Blocks\Templates {
          *
          * @return \WP_Post|null Post object or null.
          */
-        protected abstract function get_placeholder_page();
+        abstract protected function get_placeholder_page();
         /**
          * Should return true on pages/endpoints/routes where the template should be shown.
          *
          * @return boolean
          */
-        protected abstract function is_active_template();
+        abstract protected function is_active_template();
         /**
          * When the page should be displaying the template, add it to the hierarchy.
          *
@@ -100185,7 +100201,7 @@ namespace Automattic\WooCommerce\Blocks\Templates {
          *
          * @return array
          */
-        public abstract function update_render_block_data($parsed_block, $source_block, $parent_block);
+        abstract public function update_render_block_data($parsed_block, $source_block, $parent_block);
         /**
          * Inject hooks to rendered content of corresponding blocks.
          *
@@ -100193,7 +100209,7 @@ namespace Automattic\WooCommerce\Blocks\Templates {
          * @param mixed $block         The parsed block data.
          * @return string
          */
-        public abstract function inject_hooks($block_content, $block);
+        abstract public function inject_hooks($block_content, $block);
         /**
          * The hook data to inject to the rendered content of blocks. This also
          * contains hooked functions that will be removed by remove_default_hooks.
@@ -100217,7 +100233,7 @@ namespace Automattic\WooCommerce\Blocks\Templates {
          *   replaced. The key is the function name and the value is the
          *   priority.
          */
-        protected abstract function set_hook_data();
+        abstract protected function set_hook_data();
         /**
          * Remove the default callback added by WooCommerce. We replaced these
          * callbacks by blocks so we have to remove them to prevent duplicated
@@ -101949,7 +101965,7 @@ namespace Automattic\WooCommerce\Blocks\Utils {
          * @param string $page_type The page type to check for.
          * @return bool|null
          */
-        private static function is_page_type(string $page_type) : ?bool
+        private static function is_page_type(string $page_type): ?bool
         {
         }
         /**
@@ -101957,7 +101973,7 @@ namespace Automattic\WooCommerce\Blocks\Utils {
          *
          * @return bool
          */
-        public static function is_cart_page() : bool
+        public static function is_cart_page(): bool
         {
         }
         /**
@@ -101965,7 +101981,7 @@ namespace Automattic\WooCommerce\Blocks\Utils {
          *
          * @return bool
          */
-        public static function is_checkout_page() : bool
+        public static function is_checkout_page(): bool
         {
         }
         /**
@@ -102054,7 +102070,7 @@ namespace Automattic\WooCommerce\Blocks\Utils {
          *
          * @return bool true if the template has out of sync content.
          */
-        public static function is_overriden_by_custom_template_content(string $block) : bool
+        public static function is_overriden_by_custom_template_content(string $block): bool
         {
         }
         /**
@@ -102605,7 +102621,7 @@ namespace Automattic\WooCommerce\Caching {
          *
          * @return string
          */
-        public abstract function get_object_type() : string;
+        abstract public function get_object_type(): string;
         /**
          * Creates a new instance of the class.
          *
@@ -102619,7 +102635,7 @@ namespace Automattic\WooCommerce\Caching {
          *
          * @return int
          */
-        public function get_default_expiration_value() : int
+        public function get_default_expiration_value(): int
         {
         }
         /**
@@ -102627,7 +102643,7 @@ namespace Automattic\WooCommerce\Caching {
          *
          * @return CacheEngine
          */
-        private function get_cache_engine() : \Automattic\WooCommerce\Caching\CacheEngine
+        private function get_cache_engine(): \Automattic\WooCommerce\Caching\CacheEngine
         {
         }
         /**
@@ -102639,7 +102655,7 @@ namespace Automattic\WooCommerce\Caching {
          * @return bool True on success, false on error.
          * @throws CacheException Invalid parameter, or null id was passed and get_object_id returns null too.
          */
-        public function set($object, $id = null, int $expiration = self::DEFAULT_EXPIRATION) : bool
+        public function set($object, $id = null, int $expiration = self::DEFAULT_EXPIRATION): bool
         {
         }
         /**
@@ -102651,7 +102667,7 @@ namespace Automattic\WooCommerce\Caching {
          * @return bool True on success, false on error or if no object with the supplied id was cached.
          * @throws CacheException Invalid parameter, or null id was passed and get_object_id returns null too.
          */
-        public function update_if_cached($object, $id = null, int $expiration = self::DEFAULT_EXPIRATION) : bool
+        public function update_if_cached($object, $id = null, int $expiration = self::DEFAULT_EXPIRATION): bool
         {
         }
         /**
@@ -102674,7 +102690,7 @@ namespace Automattic\WooCommerce\Caching {
          * @return void
          * @throws CacheException Expiration time is negative or higher than MAX_EXPIRATION.
          */
-        private function verify_expiration_value(int $expiration) : void
+        private function verify_expiration_value(int $expiration): void
         {
         }
         /**
@@ -102699,7 +102715,7 @@ namespace Automattic\WooCommerce\Caching {
          * @param int|string $id The id of the object to remove.
          * @return bool True if the object is removed from the cache successfully, false otherwise (because the object wasn't cached or for other reason).
          */
-        public function remove($id) : bool
+        public function remove($id): bool
         {
         }
         /**
@@ -102707,7 +102723,7 @@ namespace Automattic\WooCommerce\Caching {
          *
          * @return bool True on success, false on error.
          */
-        public function flush() : bool
+        public function flush(): bool
         {
         }
         /**
@@ -102716,7 +102732,7 @@ namespace Automattic\WooCommerce\Caching {
          * @param int|string $id The id of the object to check.
          * @return bool True if there's a cached object with the specified id.
          */
-        public function is_cached($id) : bool
+        public function is_cached($id): bool
         {
         }
         /**
@@ -102726,20 +102742,20 @@ namespace Automattic\WooCommerce\Caching {
          * @param array|object $object The object to get the id for.
          * @return int|string|null
          */
-        protected abstract function get_object_id($object);
+        abstract protected function get_object_id($object);
         /**
          * Validate an object before it's cached.
          *
          * @param array|object $object Object to validate.
          * @return array|null An array with validation error messages, null or an empty array if there are no errors.
          */
-        protected abstract function validate($object) : ?array;
+        abstract protected function validate($object): ?array;
         /**
          * Get the instance of the cache engine to use.
          *
          * @return CacheEngine
          */
-        protected function get_cache_engine_instance() : \Automattic\WooCommerce\Caching\CacheEngine
+        protected function get_cache_engine_instance(): \Automattic\WooCommerce\Caching\CacheEngine
         {
         }
         /**
@@ -102748,7 +102764,7 @@ namespace Automattic\WooCommerce\Caching {
          *
          * @return string
          */
-        protected function get_random_string() : string
+        protected function get_random_string(): string
         {
         }
     }
@@ -102764,7 +102780,7 @@ namespace Automattic\WooCommerce\Caches {
          *
          * @return string
          */
-        public function get_object_type() : string
+        public function get_object_type(): string
         {
         }
         /**
@@ -102782,7 +102798,7 @@ namespace Automattic\WooCommerce\Caches {
          * @param array|object $object The object to validate.
          * @return string[]|null An array of error messages, or null if the object is valid.
          */
-        protected function validate($object) : ?array
+        protected function validate($object): ?array
         {
         }
     }
@@ -102815,7 +102831,7 @@ namespace Automattic\WooCommerce\Caches {
          * @internal
          * @param OrderCache $order_cache The order cache engine to use.
          */
-        public final function init(\Automattic\WooCommerce\Caches\OrderCache $order_cache)
+        final public function init(\Automattic\WooCommerce\Caches\OrderCache $order_cache)
         {
         }
         /**
@@ -102823,7 +102839,7 @@ namespace Automattic\WooCommerce\Caches {
          *
          * @return bool True if the order cache is enabled.
          */
-        public function orders_cache_usage_is_enabled() : bool
+        public function orders_cache_usage_is_enabled(): bool
         {
         }
         /**
@@ -102834,7 +102850,7 @@ namespace Automattic\WooCommerce\Caches {
          * is checked by orders_cache_usage_is_enabled. In the next request the
          * feature will be again enabled or not depending on how the feature is set.
          */
-        public function temporarily_disable_orders_cache_usage() : void
+        public function temporarily_disable_orders_cache_usage(): void
         {
         }
         /**
@@ -102842,13 +102858,13 @@ namespace Automattic\WooCommerce\Caches {
          *
          * @return bool True if the order cache is currently temporarily disabled.
          */
-        public function orders_cache_usage_is_temporarly_disabled() : bool
+        public function orders_cache_usage_is_temporarly_disabled(): bool
         {
         }
         /**
          * Restore the order cache usage that had been temporarily disabled.
          */
-        public function maybe_restore_orders_cache_usage() : void
+        public function maybe_restore_orders_cache_usage(): void
         {
         }
     }
@@ -102914,7 +102930,7 @@ namespace Automattic\WooCommerce\Caches {
          * @param int $value The value to set.
          * @return bool True if the value was set, false otherwise.
          */
-        public function set($order_type, $order_status, int $value) : bool
+        public function set($order_type, $order_status, int $value): bool
         {
         }
         /**
@@ -102990,7 +103006,7 @@ namespace Automattic\WooCommerce\Caches {
          *
          * @internal
          */
-        public final function init()
+        final public function init()
         {
         }
         /**
@@ -103085,7 +103101,7 @@ namespace Automattic\WooCommerce\Caching {
          *
          * @return bool True if the object is cached successfully, false otherwise.
          */
-        public function cache_object(string $key, $object, int $expiration, string $group = '') : bool;
+        public function cache_object(string $key, $object, int $expiration, string $group = ''): bool;
         /**
          * Removes a cached object from the cache.
          *
@@ -103094,7 +103110,7 @@ namespace Automattic\WooCommerce\Caching {
          *
          * @return bool True if the object is removed from the cache successfully, false otherwise (because the object wasn't cached or for other reason).
          */
-        public function delete_cached_object(string $key, string $group = '') : bool;
+        public function delete_cached_object(string $key, string $group = ''): bool;
         /**
          * Checks if an object is cached under a given key.
          *
@@ -103103,7 +103119,7 @@ namespace Automattic\WooCommerce\Caching {
          *
          * @return bool True if there's an object cached under the given key, false otherwise.
          */
-        public function is_cached(string $key, string $group = '') : bool;
+        public function is_cached(string $key, string $group = ''): bool;
         /**
          * Deletes all cached objects under a given group.
          *
@@ -103111,7 +103127,7 @@ namespace Automattic\WooCommerce\Caching {
          *
          * @return bool True if the group is deleted successfully, false otherwise.
          */
-        public function delete_cache_group(string $group = '') : bool;
+        public function delete_cache_group(string $group = ''): bool;
     }
     /**
      * Exception thrown by classes derived from ObjectCache.
@@ -103154,7 +103170,7 @@ namespace Automattic\WooCommerce\Caching {
          *
          * @return string String representation of the exception object.
          */
-        public function __toString() : string
+        public function __toString(): string
         {
         }
         /**
@@ -103162,7 +103178,7 @@ namespace Automattic\WooCommerce\Caching {
          *
          * @return array Error messages passed to the exception constructor.
          */
-        public function get_errors() : array
+        public function get_errors(): array
         {
         }
         /**
@@ -103170,7 +103186,7 @@ namespace Automattic\WooCommerce\Caching {
          *
          * @return object The object that threw the exception.
          */
-        public function get_thrower() : object
+        public function get_thrower(): object
         {
         }
         /**
@@ -103220,7 +103236,7 @@ namespace Automattic\WooCommerce\Caching {
          *
          * @return bool True if the object is cached successfully, false otherwise.
          */
-        public function cache_object(string $key, $object, int $expiration, string $group = '') : bool
+        public function cache_object(string $key, $object, int $expiration, string $group = ''): bool
         {
         }
         /**
@@ -103233,7 +103249,7 @@ namespace Automattic\WooCommerce\Caching {
          * @return array Array of return values, grouped by key. Each value is either
          *                true on success, or false on failure
          */
-        public function cache_objects(array $objects, int $expiration, string $group = '') : array
+        public function cache_objects(array $objects, int $expiration, string $group = ''): array
         {
         }
         /**
@@ -103244,7 +103260,7 @@ namespace Automattic\WooCommerce\Caching {
          *
          * @return bool True if the object is removed from the cache successfully, false otherwise (because the object wasn't cached or for other reason).
          */
-        public function delete_cached_object(string $key, string $group = '') : bool
+        public function delete_cached_object(string $key, string $group = ''): bool
         {
         }
         /**
@@ -103255,7 +103271,7 @@ namespace Automattic\WooCommerce\Caching {
          *
          * @return bool True if there's an object cached under the given key, false otherwise.
          */
-        public function is_cached(string $key, string $group = '') : bool
+        public function is_cached(string $key, string $group = ''): bool
         {
         }
         /**
@@ -103265,7 +103281,7 @@ namespace Automattic\WooCommerce\Caching {
          *
          * @return bool True if the group is deleted successfully, false otherwise.
          */
-        public function delete_cache_group(string $group = '') : bool
+        public function delete_cache_group(string $group = ''): bool
         {
         }
     }
@@ -103461,7 +103477,7 @@ namespace Automattic\WooCommerce {
          *
          * @return bool
          */
-        public function has(string $id) : bool
+        public function has(string $id): bool
         {
         }
         /**
@@ -103469,7 +103485,7 @@ namespace Automattic\WooCommerce {
          *
          * @return array<int,class-string>
          */
-        private function get_service_providers() : array
+        private function get_service_providers(): array
         {
         }
     }
@@ -103511,7 +103527,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @internal
          */
-        public final function init(\Automattic\WooCommerce\Internal\DataStores\Orders\CustomOrdersTableController $controller, \Automattic\WooCommerce\Internal\DataStores\Orders\DataSynchronizer $synchronizer, \Automattic\WooCommerce\Database\Migrations\CustomOrderTable\PostsToOrdersMigrationController $posts_to_orders_migration_controller)
+        final public function init(\Automattic\WooCommerce\Internal\DataStores\Orders\CustomOrdersTableController $controller, \Automattic\WooCommerce\Internal\DataStores\Orders\DataSynchronizer $synchronizer, \Automattic\WooCommerce\Database\Migrations\CustomOrderTable\PostsToOrdersMigrationController $posts_to_orders_migration_controller)
         {
         }
         /**
@@ -103527,7 +103543,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @return bool Whether the COT feature is enabled.
          */
-        private function is_enabled($log = true) : bool
+        private function is_enabled($log = true): bool
         {
         }
         /**
@@ -103549,7 +103565,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @return int The number of orders to be migrated.*
          */
-        public function count_unmigrated($args = array(), $assoc_args = array()) : int
+        public function count_unmigrated($args = array(), $assoc_args = array()): int
         {
         }
         /**
@@ -103658,7 +103674,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @return int Order count.
          */
-        private function get_verify_order_count(int $order_id_start, int $order_id_end, array $order_types, bool $log = true) : int
+        private function get_verify_order_count(int $order_id_start, int $order_id_end, array $order_types, bool $log = true): int
         {
         }
         /**
@@ -103669,7 +103685,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @return array Failed IDs with meta details.
          */
-        private function verify_meta_data(array $order_ids, array $failed_ids) : array
+        private function verify_meta_data(array $order_ids, array $failed_ids): array
         {
         }
         /**
@@ -103679,7 +103695,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @return array Normalized data.
          */
-        private function normalize_raw_meta_data(array $data) : array
+        private function normalize_raw_meta_data(array $data): array
         {
         }
         /**
@@ -103876,7 +103892,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          * @param array $args       Positional arguments passed to the command.
          * @param array $assoc_args Associative arguments (options) passed to the command.
          */
-        public function compatibility_info(array $args = array(), array $assoc_args = array()) : void
+        public function compatibility_info(array $args = array(), array $assoc_args = array()): void
         {
         }
         /**
@@ -103886,7 +103902,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          * @param bool  $display_filenames True to simply return the sorted list of plugin file names.
          * @return array A sorted array of plugin names or file names.
          */
-        private function get_printable_plugin_names(array $plugins, bool $display_filenames) : array
+        private function get_printable_plugin_names(array $plugins, bool $display_filenames): array
         {
         }
         /**
@@ -103894,7 +103910,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @param array $plugins The names to print.
          */
-        private function print_plugin_names(array $plugins) : void
+        private function print_plugin_names(array $plugins): void
         {
         }
         /**
@@ -103910,7 +103926,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @since 9.1.0
          */
-        public function enable_compat_mode() : void
+        public function enable_compat_mode(): void
         {
         }
         /**
@@ -103918,7 +103934,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @since 9.1.0
          */
-        public function disable_compat_mode() : void
+        public function disable_compat_mode(): void
         {
         }
         /**
@@ -103928,7 +103944,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @param bool $enabled TRUE to enable compatibility mode, FALSE to disable.
          */
-        private function toggle_compat_mode(bool $enabled) : void
+        private function toggle_compat_mode(bool $enabled): void
         {
         }
     }
@@ -103953,7 +103969,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          *
          * @return void
          */
-        protected function clear_errors() : void
+        protected function clear_errors(): void
         {
         }
         /**
@@ -103962,7 +103978,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          * @param string $error The error message to add.
          * @return void
          */
-        protected function add_error(string $error) : void
+        protected function add_error(string $error): void
         {
         }
         /**
@@ -103970,7 +103986,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          *
          * @return array
          */
-        protected function get_errors() : array
+        protected function get_errors(): array
         {
         }
         /**
@@ -104000,7 +104016,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          *
          * @deprecated 8.0.0 Use `fetch_sanitized_migration_data` and `process_migration_data` instead.
          */
-        public function process_migration_batch_for_ids(array $entity_ids) : array
+        public function process_migration_batch_for_ids(array $entity_ids): array
         {
         }
         // phpcs:disable Squiz.Commenting.FunctionComment.InvalidNoReturn, Squiz.Commenting.FunctionCommentThrowTag.Missing -- Methods are not marked abstract for back compat.
@@ -104034,7 +104050,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          *
          * @deprecated 8.0.0 Use `fetch_sanitized_migration_data` and `process_migration_data` instead.
          */
-        protected abstract function process_migration_batch_for_ids_core(array $entity_ids) : void;
+        abstract protected function process_migration_batch_for_ids_core(array $entity_ids): void;
         /**
          * Check if the amount of processed database rows matches the amount of orders to process, and log an error if not.
          *
@@ -104091,7 +104107,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          *  ),
          * )
          */
-        protected abstract function get_meta_config() : array;
+        abstract protected function get_meta_config(): array;
         /**
          * MetaToMetaTableMigrator constructor.
          */
@@ -104113,7 +104129,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          *
          * @param array $entity_ids Ids of entities ro migrate.
          */
-        protected function process_migration_batch_for_ids_core(array $entity_ids) : void
+        protected function process_migration_batch_for_ids_core(array $entity_ids): void
         {
         }
         /**
@@ -104133,7 +104149,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          *
          * @return string Query to update batch records.
          */
-        private function generate_update_sql_for_batch(array $batch) : string
+        private function generate_update_sql_for_batch(array $batch): string
         {
         }
         /**
@@ -104143,7 +104159,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          *
          * @return string Insert SQL query.
          */
-        private function generate_insert_sql_for_batch(array $batch) : string
+        private function generate_insert_sql_for_batch(array $batch): string
         {
         }
         /**
@@ -104157,7 +104173,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          *   ...,
          * )
          */
-        public function fetch_data_for_migration_for_ids(array $entity_ids) : array
+        public function fetch_data_for_migration_for_ids(array $entity_ids): array
         {
         }
         /**
@@ -104167,7 +104183,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          *
          * @return array Already migrated records.
          */
-        private function get_already_migrated_records(array $entity_ids) : array
+        private function get_already_migrated_records(array $entity_ids): array
         {
         }
         /**
@@ -104178,7 +104194,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          *
          * @return array[] Returns two arrays, first for records to migrate, and second for records to upgrade.
          */
-        private function classify_update_insert_records(array $to_migrate, array $already_migrated) : array
+        private function classify_update_insert_records(array $to_migrate, array $already_migrated): array
         {
         }
         /**
@@ -104188,7 +104204,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          *
          * @return string Query that can be used to fetch data.
          */
-        private function build_meta_table_query(array $entity_ids) : string
+        private function build_meta_table_query(array $entity_ids): string
         {
         }
     }
@@ -104221,7 +104237,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @return array Meta data migration config.
          */
-        protected function get_meta_config() : array
+        protected function get_meta_config(): array
         {
         }
     }
@@ -104285,7 +104301,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
         			'primary_key_type' => $type bool|int|string|decimal
         		)
         */
-        protected abstract function get_schema_config() : array;
+        abstract protected function get_schema_config(): array;
         /**
          * Specify column config from the source table.
          *
@@ -104301,7 +104317,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          *  ....
          * ).
          */
-        protected abstract function get_core_column_mapping() : array;
+        abstract protected function get_core_column_mapping(): array;
         /**
          * Specify meta keys config from source meta table.
          *
@@ -104317,7 +104333,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          *  ....
          * ).
          */
-        protected abstract function get_meta_column_config() : array;
+        abstract protected function get_meta_column_config(): array;
         /**
          * Generate SQL for data insertion.
          *
@@ -104329,7 +104345,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          *  ($value for row 2)
          * ...
          */
-        private function generate_insert_sql_for_batch(array $batch) : string
+        private function generate_insert_sql_for_batch(array $batch): string
         {
         }
         /**
@@ -104349,7 +104365,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          * $column2 = VALUES($column2)
          * ...
          */
-        private function generate_update_sql_for_batch(array $batch, array $entity_row_mapping) : string
+        private function generate_update_sql_for_batch(array $batch, array $entity_row_mapping): string
         {
         }
         /**
@@ -104357,7 +104373,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          *
          * @return array[] Schema for primary ID column.
          */
-        private function get_destination_table_primary_id_schema() : array
+        private function get_destination_table_primary_id_schema(): array
         {
         }
         /**
@@ -104368,7 +104384,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          *
          * @return array SQL clause for values, columns placeholders, and columns.
          */
-        private function generate_column_clauses(array $columns_schema, array $batch) : array
+        private function generate_column_clauses(array $columns_schema, array $batch): array
         {
         }
         /**
@@ -104388,7 +104404,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          *
          * @return void
          */
-        protected function process_migration_batch_for_ids_core(array $entity_ids) : void
+        protected function process_migration_batch_for_ids_core(array $entity_ids): void
         {
         }
         /**
@@ -104406,7 +104422,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          *
          * @param array $batch Data to insert, will be of the form as returned by `data` in `fetch_data_for_migration_for_ids`.
          */
-        private function process_insert_batch(array $batch) : void
+        private function process_insert_batch(array $batch): void
         {
         }
         /**
@@ -104415,7 +104431,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          * @param array $batch Data to insert, will be of the form as returned by `data` in `fetch_data_for_migration_for_ids`.
          * @param array $ids_mapping Maps rows to update data with their original IDs.
          */
-        private function process_update_batch(array $batch, array $ids_mapping) : void
+        private function process_update_batch(array $batch, array $ids_mapping): void
         {
         }
         /**
@@ -104434,7 +104450,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          *      ...,
          * )
          */
-        private function fetch_data_for_migration_for_ids(array $entity_ids) : array
+        private function fetch_data_for_migration_for_ids(array $entity_ids): array
         {
         }
         /**
@@ -104452,7 +104468,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          *      ...
          * )
          */
-        protected function get_already_existing_records(array $entity_ids) : array
+        protected function get_already_existing_records(array $entity_ids): array
         {
         }
         /**
@@ -104461,7 +104477,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          * @param array $entity_ids The ids of the entities being inserted or updated.
          * @return string Additional string for the WHERE clause, must either be empty or start with "AND" or "OR".
          */
-        protected function get_additional_where_clause_for_get_data_to_insert_or_update(array $entity_ids) : string
+        protected function get_additional_where_clause_for_get_data_to_insert_or_update(array $entity_ids): string
         {
         }
         /**
@@ -104471,7 +104487,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          *
          * @return string Query that can be used to fetch data.
          */
-        private function build_entity_table_query(array $entity_ids) : string
+        private function build_entity_table_query(array $entity_ids): string
         {
         }
         /**
@@ -104481,7 +104497,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          *
          * @return string Query for fetching meta data.
          */
-        private function build_meta_data_query(array $entity_ids) : string
+        private function build_meta_data_query(array $entity_ids): string
         {
         }
         /**
@@ -104492,7 +104508,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          *
          * @return array[] Validated and combined data with errors.
          */
-        private function process_and_sanitize_data(array $entity_data, array $meta_data) : array
+        private function process_and_sanitize_data(array $entity_data, array $meta_data): array
         {
         }
         /**
@@ -104502,7 +104518,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          * @param array $error_records Error records.
          * @param array $entity_data Original source data.
          */
-        private function process_and_sanitize_entity_data(array &$sanitized_entity_data, array &$error_records, array $entity_data) : void
+        private function process_and_sanitize_entity_data(array &$sanitized_entity_data, array &$error_records, array $entity_data): void
         {
         }
         /**
@@ -104512,7 +104528,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          * @param array $error_records Error records.
          * @param array $meta_data Original source data.
          */
-        private function processs_and_sanitize_meta_data(array &$sanitized_entity_data, array &$error_records, array $meta_data) : void
+        private function processs_and_sanitize_meta_data(array &$sanitized_entity_data, array &$error_records, array $meta_data): void
         {
         }
         /**
@@ -104533,7 +104549,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          *
          * @return array List of IDs along with columns that failed to migrate.
          */
-        public function verify_migrated_data(array $source_ids) : array
+        public function verify_migrated_data(array $source_ids): array
         {
         }
         /**
@@ -104663,7 +104679,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @return array Config.
          */
-        protected function get_schema_config() : array
+        protected function get_schema_config(): array
         {
         }
         /**
@@ -104671,7 +104687,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @return \string[][] Config.
          */
-        protected function get_core_column_mapping() : array
+        protected function get_core_column_mapping(): array
         {
         }
         /**
@@ -104679,7 +104695,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @return \string[][] Config.
          */
-        public function get_meta_column_config() : array
+        public function get_meta_column_config(): array
         {
         }
         /**
@@ -104688,7 +104704,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          * @param array $entity_ids The ids of the entities being inserted or updated.
          * @return string The additional string for the WHERE clause.
          */
-        protected function get_additional_where_clause_for_get_data_to_insert_or_update(array $entity_ids) : string
+        protected function get_additional_where_clause_for_get_data_to_insert_or_update(array $entity_ids): string
         {
         }
         /**
@@ -104715,7 +104731,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @return array Config.
          */
-        protected function get_schema_config() : array
+        protected function get_schema_config(): array
         {
         }
         /**
@@ -104723,7 +104739,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @return \string[][] Config.
          */
-        protected function get_core_column_mapping() : array
+        protected function get_core_column_mapping(): array
         {
         }
         /**
@@ -104731,7 +104747,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @return \string[][] Config.
          */
-        public function get_meta_column_config() : array
+        public function get_meta_column_config(): array
         {
         }
     }
@@ -104747,7 +104763,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @return array Config.
          */
-        protected function get_schema_config() : array
+        protected function get_schema_config(): array
         {
         }
         /**
@@ -104755,7 +104771,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @return \string[][] Config.
          */
-        protected function get_core_column_mapping() : array
+        protected function get_core_column_mapping(): array
         {
         }
         /**
@@ -104763,7 +104779,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @return \string[][] Config.
          */
-        public function get_meta_column_config() : array
+        public function get_meta_column_config(): array
         {
         }
     }
@@ -104810,7 +104826,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @param array $order_post_ids List of post IDs of the orders to migrate.
          */
-        public function migrate_orders(array $order_post_ids) : void
+        public function migrate_orders(array $order_post_ids): void
         {
         }
         /**
@@ -104842,7 +104858,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @throws \Exception If the transaction isolation level is invalid.
          */
-        private function maybe_start_transaction() : ?bool
+        private function maybe_start_transaction(): ?bool
         {
         }
         /**
@@ -104850,7 +104866,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @return bool True on success, false on error.
          */
-        private function commit_transaction() : bool
+        private function commit_transaction(): bool
         {
         }
         /**
@@ -104858,7 +104874,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @return bool True on success, false on error.
          */
-        private function rollback_transaction() : bool
+        private function rollback_transaction(): bool
         {
         }
         /**
@@ -104869,7 +104885,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @return bool True if the query succeeded, false if there were errors.
          */
-        private function db_query(string $query, bool $supress_errors = false) : bool
+        private function db_query(string $query, bool $supress_errors = false): bool
         {
         }
         /**
@@ -104879,7 +104895,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @return array Array of failed IDs along with columns.
          */
-        public function verify_migrated_orders(array $order_post_ids) : array
+        public function verify_migrated_orders(array $order_post_ids): array
         {
         }
         /**
@@ -104887,7 +104903,7 @@ namespace Automattic\WooCommerce\Database\Migrations\CustomOrderTable {
          *
          * @param int $order_post_id Post ID of the order to migrate.
          */
-        public function migrate_order(int $order_post_id) : void
+        public function migrate_order(int $order_post_id): void
         {
         }
     }
@@ -104911,7 +104927,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          *
          * @return array Schema config escaped for backtick.
          */
-        public static function escape_schema_for_backtick(array $schema_config) : array
+        public static function escape_schema_for_backtick(array $schema_config): array
         {
         }
         /**
@@ -104932,7 +104948,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          *
          * @return string $wpdb placeholder.
          */
-        public static function get_wpdb_placeholder_for_type(string $type) : string
+        public static function get_wpdb_placeholder_for_type(string $type): string
         {
         }
         /**
@@ -104942,7 +104958,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          *
          * @return string SQL clause for INSERT...ON DUPLICATE KEY UPDATE
          */
-        public static function generate_on_duplicate_statement_clause(array $columns) : string
+        public static function generate_on_duplicate_statement_clause(array $columns): string
         {
         }
         /**
@@ -104952,7 +104968,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          * @param array  $old_to_new_states_mapping An associative array where keys are the old state codes and values are the new state codes.
          * @return bool True if there are more records that need to be migrated, false otherwise.
          */
-        public static function migrate_country_states(string $country_code, array $old_to_new_states_mapping) : bool
+        public static function migrate_country_states(string $country_code, array $old_to_new_states_mapping): bool
         {
         }
         /**
@@ -104962,7 +104978,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          * @param array  $old_to_new_states_mapping An associative array where keys are the old state codes and values are the new state codes.
          * @return void
          */
-        private static function migrate_country_states_for_misc_data(string $country_code, array $old_to_new_states_mapping) : void
+        private static function migrate_country_states_for_misc_data(string $country_code, array $old_to_new_states_mapping): void
         {
         }
         /**
@@ -104972,7 +104988,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          * @param array  $old_to_new_states_mapping An associative array where keys are the old state codes and values are the new state codes.
          * @return void
          */
-        private static function migrate_country_states_for_shipping_locations(string $country_code, array $old_to_new_states_mapping) : void
+        private static function migrate_country_states_for_shipping_locations(string $country_code, array $old_to_new_states_mapping): void
         {
         }
         /**
@@ -104982,7 +104998,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          * @param array  $old_to_new_states_mapping An associative array where keys are the old state codes and values are the new state codes.
          * @return void
          */
-        private static function migrate_country_states_for_store_location(string $country_code, array $old_to_new_states_mapping) : void
+        private static function migrate_country_states_for_store_location(string $country_code, array $old_to_new_states_mapping): void
         {
         }
         /**
@@ -104994,7 +105010,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          * @param array  $old_to_new_states_mapping An associative array where keys are the old state codes and values are the new state codes.
          * @return bool True if there are more records that need to be migrated, false otherwise.
          */
-        private static function migrate_country_states_for_orders(string $country_code, array $old_to_new_states_mapping) : bool
+        private static function migrate_country_states_for_orders(string $country_code, array $old_to_new_states_mapping): bool
         {
         }
         /**
@@ -105004,7 +105020,7 @@ namespace Automattic\WooCommerce\Database\Migrations {
          * @param array  $old_to_new_states_mapping An associative array where keys are the old state codes and values are the new state codes.
          * @return void
          */
-        private static function migrate_country_states_for_tax_rates(string $country_code, array $old_to_new_states_mapping) : void
+        private static function migrate_country_states_for_tax_rates(string $country_code, array $old_to_new_states_mapping): void
         {
         }
     }
@@ -105259,19 +105275,19 @@ namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
          *
          * @return array The block configuration as a formatted template.
          */
-        public function get_formatted_template() : array
+        public function get_formatted_template(): array
         {
         }
         /**
          * Get the block hide conditions formatted for inclusion in a formatted template.
          */
-        private function get_formatted_hide_conditions() : array
+        private function get_formatted_hide_conditions(): array
         {
         }
         /**
          * Get the block disable conditions formatted for inclusion in a formatted template.
          */
-        private function get_formatted_disable_conditions() : array
+        private function get_formatted_disable_conditions(): array
         {
         }
         /**
@@ -105279,7 +105295,7 @@ namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
          *
          * @param array $conditions The conditions to format.
          */
-        private function format_conditions($conditions) : array
+        private function format_conditions($conditions): array
         {
         }
     }
@@ -105378,19 +105394,19 @@ namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
         /**
          * Get the block name.
          */
-        public function get_name() : string
+        public function get_name(): string
         {
         }
         /**
          * Get the block ID.
          */
-        public function get_id() : string
+        public function get_id(): string
         {
         }
         /**
          * Get the block order.
          */
-        public function get_order() : int
+        public function get_order(): int
         {
         }
         /**
@@ -105404,7 +105420,7 @@ namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
         /**
          * Get the block attributes.
          */
-        public function get_attributes() : array
+        public function get_attributes(): array
         {
         }
         /**
@@ -105427,13 +105443,13 @@ namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
         /**
          * Get the template that this block belongs to.
          */
-        public function &get_root_template() : \Automattic\WooCommerce\Admin\BlockTemplates\BlockTemplateInterface
+        public function &get_root_template(): \Automattic\WooCommerce\Admin\BlockTemplates\BlockTemplateInterface
         {
         }
         /**
          * Get the parent block container.
          */
-        public function &get_parent() : \Automattic\WooCommerce\Admin\BlockTemplates\ContainerInterface
+        public function &get_parent(): \Automattic\WooCommerce\Admin\BlockTemplates\ContainerInterface
         {
         }
         /**
@@ -105447,7 +105463,7 @@ namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
          *
          * @return bool True if the block is detached from its parent block container or the template it belongs to.
          */
-        public function is_detached() : bool
+        public function is_detached(): bool
         {
         }
         /**
@@ -105458,7 +105474,7 @@ namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
          *
          * @param string $expression An expression, which if true, will hide the block.
          */
-        public function add_hide_condition(string $expression) : string
+        public function add_hide_condition(string $expression): string
         {
         }
         /**
@@ -105472,7 +105488,7 @@ namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
         /**
          * Get the hide conditions of the block.
          */
-        public function get_hide_conditions() : array
+        public function get_hide_conditions(): array
         {
         }
         /**
@@ -105483,7 +105499,7 @@ namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
          *
          * @param string $expression An expression, which if true, will disable the block.
          */
-        public function add_disable_condition(string $expression) : string
+        public function add_disable_condition(string $expression): string
         {
         }
         /**
@@ -105497,7 +105513,7 @@ namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
         /**
          * Get the disable conditions of the block.
          */
-        public function get_disable_conditions() : array
+        public function get_disable_conditions(): array
         {
         }
     }
@@ -105527,7 +105543,7 @@ namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
          * @throws \UnexpectedValueException If the block container is not the parent of the block.
          * @throws \UnexpectedValueException If the block container's root template is not the same as the block's root template.
          */
-        protected function &add_inner_block(\Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface $block) : \Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface
+        protected function &add_inner_block(\Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface $block): \Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface
         {
         }
         // phpcs:enable Squiz.Commenting.FunctionCommentThrowTag.WrongNumber
@@ -105536,7 +105552,7 @@ namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
          *
          * @param BlockInterface $block The block.
          */
-        private function is_block_descendant(\Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface $block) : bool
+        private function is_block_descendant(\Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface $block): bool
         {
         }
         /**
@@ -105544,7 +105560,7 @@ namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
          *
          * @param string $block_id The block ID.
          */
-        public function get_block(string $block_id) : ?\Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface
+        public function get_block(string $block_id): ?\Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface
         {
         }
         /**
@@ -105575,13 +105591,13 @@ namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
         /**
          * Get the inner blocks sorted by order.
          */
-        private function get_inner_blocks_sorted_by_order() : array
+        private function get_inner_blocks_sorted_by_order(): array
         {
         }
         /**
          * Get the inner blocks as a formatted template.
          */
-        public function get_formatted_template() : array
+        public function get_formatted_template(): array
         {
         }
         /**
@@ -105650,23 +105666,23 @@ namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
         /**
          * Get the template ID.
          */
-        public abstract function get_id() : string;
+        abstract public function get_id(): string;
         /**
          * Get the template title.
          */
-        public function get_title() : string
+        public function get_title(): string
         {
         }
         /**
          * Get the template description.
          */
-        public function get_description() : string
+        public function get_description(): string
         {
         }
         /**
          * Get the template area.
          */
-        public function get_area() : string
+        public function get_area(): string
         {
         }
         /**
@@ -105680,7 +105696,7 @@ namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
          *
          * @param string $block_id The block ID.
          */
-        public function get_block(string $block_id) : ?\Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface
+        public function get_block(string $block_id): ?\Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface
         {
         }
         /**
@@ -105714,19 +105730,19 @@ namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
          * @param string $id_base The base to use when generating an ID.
          * @return string
          */
-        public function generate_block_id(string $id_base) : string
+        public function generate_block_id(string $id_base): string
         {
         }
         /**
          * Get the root template.
          */
-        public function &get_root_template() : \Automattic\WooCommerce\Admin\BlockTemplates\BlockTemplateInterface
+        public function &get_root_template(): \Automattic\WooCommerce\Admin\BlockTemplates\BlockTemplateInterface
         {
         }
         /**
          * Get the inner blocks as a formatted template.
          */
-        public function get_formatted_template() : array
+        public function get_formatted_template(): array
         {
         }
         /**
@@ -105734,7 +105750,7 @@ namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
          *
          * @return array The JSON.
          */
-        public function to_json() : array
+        public function to_json(): array
         {
         }
     }
@@ -105749,7 +105765,7 @@ namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
          *
          * @param array $block_config The block data.
          */
-        public function &add_block(array $block_config) : \Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface
+        public function &add_block(array $block_config): \Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface
         {
         }
     }
@@ -105761,7 +105777,7 @@ namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
         /**
          * Get the template ID.
          */
-        public function get_id() : string
+        public function get_id(): string
         {
         }
         /**
@@ -105769,7 +105785,7 @@ namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
          *
          * @param array $block_config The block data.
          */
-        public function add_block(array $block_config) : \Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface
+        public function add_block(array $block_config): \Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface
         {
         }
     }
@@ -105827,7 +105843,7 @@ namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
         /**
          * Get the singleton instance.
          */
-        public static function get_instance() : \Automattic\WooCommerce\Internal\Admin\BlockTemplates\BlockTemplateLogger
+        public static function get_instance(): \Automattic\WooCommerce\Internal\Admin\BlockTemplates\BlockTemplateLogger
         {
         }
         /**
@@ -105841,7 +105857,7 @@ namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
          *
          * @param string $template_id Template ID.
          */
-        public function template_events_to_json(string $template_id) : array
+        public function template_events_to_json(string $template_id): array
         {
         }
         /**
@@ -105851,7 +105867,7 @@ namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
          *
          * @return array The JSON.
          */
-        private function to_json(array $template_events) : array
+        private function to_json(array $template_events): array
         {
         }
         /**
@@ -105876,7 +105892,7 @@ namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
          *
          * @param array $template_events Template events.
          */
-        private function generate_template_events_hash(array $template_events) : string
+        private function generate_template_events_hash(array $template_events): string
         {
         }
         /**
@@ -105924,7 +105940,7 @@ namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
          * @param string $message Message to log.
          * @param array  $info    Additional info to log.
          */
-        private function format_message(string $message, array $info = array()) : string
+        private function format_message(string $message, array $info = array()): string
         {
         }
         /**
@@ -105932,7 +105948,7 @@ namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
          *
          * @param array $info Info to log.
          */
-        private function format_info(array $info) : array
+        private function format_info(array $info): array
         {
         }
         /**
@@ -105940,7 +105956,7 @@ namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
          *
          * @param \Exception $exception Exception to format.
          */
-        private function format_exception(\Exception $exception) : array
+        private function format_exception(\Exception $exception): array
         {
         }
         /**
@@ -105948,7 +105964,7 @@ namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
          *
          * @param array $trace Exception trace to format.
          */
-        private function format_exception_trace(array $trace) : array
+        private function format_exception_trace(array $trace): array
         {
         }
         /**
@@ -105956,7 +105972,7 @@ namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
          *
          * @param BlockTemplateInterface $template Template to format.
          */
-        private function format_template(\Automattic\WooCommerce\Admin\BlockTemplates\BlockTemplateInterface $template) : string
+        private function format_template(\Automattic\WooCommerce\Admin\BlockTemplates\BlockTemplateInterface $template): string
         {
         }
         /**
@@ -105964,7 +105980,7 @@ namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
          *
          * @param BlockInterface $block Block to format.
          */
-        private function format_block(\Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface $block) : string
+        private function format_block(\Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface $block): string
         {
         }
     }
@@ -106041,7 +106057,7 @@ namespace Automattic\WooCommerce\Internal\CostOfGoodsSold {
          * @internal
          * @param FeaturesController $features_controller The instance of FeaturesController to use.
          */
-        public final function init(\Automattic\WooCommerce\Internal\Features\FeaturesController $features_controller)
+        final public function init(\Automattic\WooCommerce\Internal\Features\FeaturesController $features_controller)
         {
         }
         /**
@@ -106049,7 +106065,7 @@ namespace Automattic\WooCommerce\Internal\CostOfGoodsSold {
          *
          * @return bool True if the engine is enabled, false otherwise.
          */
-        public function feature_is_enabled() : bool
+        public function feature_is_enabled(): bool
         {
         }
         /**
@@ -106070,7 +106086,7 @@ namespace Automattic\WooCommerce\Internal\CostOfGoodsSold {
          * @param array $tools_array Array to add the tool to.
          * @return array Updated tools array.
          */
-        public function add_debug_tools_entry(array $tools_array) : array
+        public function add_debug_tools_entry(array $tools_array): array
         {
         }
         /**
@@ -106094,7 +106110,7 @@ namespace Automattic\WooCommerce\Internal\CostOfGoodsSold {
          *
          * @return bool True if the column exists, false otherwise.
          */
-        public function product_meta_lookup_table_cogs_value_columns_exist() : bool
+        public function product_meta_lookup_table_cogs_value_columns_exist(): bool
         {
         }
         /**
@@ -106177,7 +106193,7 @@ namespace Automattic\WooCommerce\Internal\Traits {
          *                                         in the order in which they were added to the action. Default 10.
          * @param int             $accepted_args   Optional. The number of arguments the function accepts. Default 1.
          */
-        protected static function add_action(string $hook_name, $callback, int $priority = 10, int $accepted_args = 1) : void
+        protected static function add_action(string $hook_name, $callback, int $priority = 10, int $accepted_args = 1): void
         {
         }
         /**
@@ -106195,7 +106211,7 @@ namespace Automattic\WooCommerce\Internal\Traits {
          *                                         in the order in which they were added to the filter. Default 10.
          * @param int             $accepted_args   Optional. The number of arguments the function accepts. Default 1.
          */
-        protected static function add_filter(string $hook_name, $callback, int $priority = 10, int $accepted_args = 1) : void
+        protected static function add_filter(string $hook_name, $callback, int $priority = 10, int $accepted_args = 1): void
         {
         }
         /**
@@ -106204,7 +106220,7 @@ namespace Automattic\WooCommerce\Internal\Traits {
          * @param callable $callback The callback to process.
          * @return void
          */
-        protected static function process_callback_before_hooking($callback) : void
+        protected static function process_callback_before_hooking($callback): void
         {
         }
         /**
@@ -106213,7 +106229,7 @@ namespace Automattic\WooCommerce\Internal\Traits {
          * @param string $method_name Method name.
          * @return bool True if the method has been marked as externally accessible, false if the method doesn't exist.
          */
-        protected function mark_method_as_accessible(string $method_name) : bool
+        protected function mark_method_as_accessible(string $method_name): bool
         {
         }
         /**
@@ -106222,7 +106238,7 @@ namespace Automattic\WooCommerce\Internal\Traits {
          * @param string $method_name Method name.
          * @return bool True if the method has been marked as externally accessible, false if the method doesn't exist.
          */
-        protected static function mark_static_method_as_accessible(string $method_name) : bool
+        protected static function mark_static_method_as_accessible(string $method_name): bool
         {
         }
         /**
@@ -106276,7 +106292,7 @@ namespace Automattic\WooCommerce\LayoutTemplates {
         /**
          * Get the instance of the class.
          */
-        public static function get_instance() : \Automattic\WooCommerce\LayoutTemplates\LayoutTemplateRegistry
+        public static function get_instance(): \Automattic\WooCommerce\LayoutTemplates\LayoutTemplateRegistry
         {
         }
         /**
@@ -106290,7 +106306,7 @@ namespace Automattic\WooCommerce\LayoutTemplates {
          *
          * @param string $layout_template_id Layout template ID.
          */
-        public function is_registered($layout_template_id) : bool
+        public function is_registered($layout_template_id): bool
         {
         }
         /**
@@ -106313,7 +106329,7 @@ namespace Automattic\WooCommerce\LayoutTemplates {
          *
          * @param array $query_params Query params.
          */
-        public function instantiate_layout_templates(array $query_params = array()) : array
+        public function instantiate_layout_templates(array $query_params = array()): array
         {
         }
         /**
@@ -106321,7 +106337,7 @@ namespace Automattic\WooCommerce\LayoutTemplates {
          *
          * @param array $layout_template_info Layout template info.
          */
-        private function get_layout_template_instance($layout_template_info) : \Automattic\WooCommerce\Admin\BlockTemplates\BlockTemplateInterface
+        private function get_layout_template_instance($layout_template_info): \Automattic\WooCommerce\Admin\BlockTemplates\BlockTemplateInterface
         {
         }
         /**
@@ -106329,7 +106345,7 @@ namespace Automattic\WooCommerce\LayoutTemplates {
          *
          * @param array $query_params Query params.
          */
-        private function get_matching_layout_templates_info(array $query_params = array()) : array
+        private function get_matching_layout_templates_info(array $query_params = array()): array
         {
         }
     }
@@ -106354,7 +106370,7 @@ namespace Automattic\WooCommerce {
          *
          * @var array Key is the package name/directory, value is the main package class which handles init.
          */
-        protected static $packages = array('email-editor' => '\\Automattic\\WooCommerce\\Internal\\EmailEditor\\Package');
+        protected static $packages = array('email-editor' => '\Automattic\WooCommerce\Internal\EmailEditor\Package');
         /**
          * Array of package names and their main package classes.
          *
@@ -106370,14 +106386,14 @@ namespace Automattic\WooCommerce {
          *
          * @var array Key is the package name/directory, value is the main package class which handles init.
          */
-        protected static $base_packages = array('woocommerce-admin' => '\\Automattic\\WooCommerce\\Admin\\Composer\\Package', 'woocommerce-gutenberg-products-block' => '\\Automattic\\WooCommerce\\Blocks\\Package');
+        protected static $base_packages = array('woocommerce-admin' => '\Automattic\WooCommerce\Admin\Composer\Package', 'woocommerce-gutenberg-products-block' => '\Automattic\WooCommerce\Blocks\Package');
         /**
          * Similar to $base_packages, but
          * the packages included in this array can be deactivated via the 'woocommerce_merged_packages' filter.
          *
          * @var array Key is the package name/directory, value is the main package class which handles init.
          */
-        protected static $merged_packages = array('woocommerce-brands' => '\\Automattic\\WooCommerce\\Internal\\Brands');
+        protected static $merged_packages = array('woocommerce-brands' => '\Automattic\WooCommerce\Internal\Brands');
         /**
          * Init the package loader.
          *
@@ -106722,7 +106738,7 @@ namespace Automattic\WooCommerce\StoreApi {
          *
          * @return string
          */
-        protected static function get_rate_limiting_id(bool $proxy_support) : string
+        protected static function get_rate_limiting_id(bool $proxy_support): string
         {
         }
         /**
@@ -110346,7 +110362,7 @@ namespace Automattic\WooCommerce\StoreApi\Schemas\V1 {
          *
          * @return array
          */
-        public abstract function get_properties();
+        abstract public function get_properties();
         /**
          * Recursive removal of arg_options.
          *
@@ -113409,7 +113425,7 @@ namespace Automattic\WooCommerce\StoreApi\Utilities {
          * @param string $action_id Identifier of the action.
          * @return string
          */
-        protected static function get_cache_key($action_id) : string
+        protected static function get_cache_key($action_id): string
         {
         }
         /**
@@ -113420,7 +113436,7 @@ namespace Automattic\WooCommerce\StoreApi\Utilities {
          *
          * @return object Object containing reset and remaining.
          */
-        protected static function get_rate_limit_row(string $action_id) : object
+        protected static function get_rate_limit_row(string $action_id): object
         {
         }
         /**
@@ -113430,7 +113446,7 @@ namespace Automattic\WooCommerce\StoreApi\Utilities {
          *
          * @return object
          */
-        public static function get_rate_limit(string $action_id) : object
+        public static function get_rate_limit(string $action_id): object
         {
         }
         /**
@@ -113450,7 +113466,7 @@ namespace Automattic\WooCommerce\StoreApi\Utilities {
          *
          * @return object Current rate limits.
          */
-        public static function update_rate_limit(string $action_id) : object
+        public static function update_rate_limit(string $action_id): object
         {
         }
         /**
@@ -113469,7 +113485,7 @@ namespace Automattic\WooCommerce\StoreApi\Utilities {
          * @param object $current_limit Current limit object with expiry and retries remaining.
          * @return bool
          */
-        protected static function set_cache($action_id, $current_limit) : bool
+        protected static function set_cache($action_id, $current_limit): bool
         {
         }
         /**
@@ -113477,7 +113493,7 @@ namespace Automattic\WooCommerce\StoreApi\Utilities {
          *
          * @return object Default options.
          */
-        public static function get_options() : object
+        public static function get_options(): object
         {
         }
         /**
@@ -113623,7 +113639,7 @@ namespace Automattic\WooCommerce\Utilities {
          *
          * @return string
          */
-        public static function to_ranges_string(array $items, string $item_separator = ', ', string $range_separator = '-', bool $sort = true) : string
+        public static function to_ranges_string(array $items, string $item_separator = ', ', string $range_separator = '-', bool $sort = true): string
         {
         }
         /**
@@ -113634,7 +113650,7 @@ namespace Automattic\WooCommerce\Utilities {
          *
          * @return \Closure Callback to select the value.
          */
-        private static function get_selector_callback(string $selector_name, int $selector_type = self::SELECT_BY_AUTO) : \Closure
+        private static function get_selector_callback(string $selector_name, int $selector_type = self::SELECT_BY_AUTO): \Closure
         {
         }
         /**
@@ -113646,7 +113662,7 @@ namespace Automattic\WooCommerce\Utilities {
          * @param int    $selector_type Selector type, one of the SELECT_BY_* constants.
          * @return array The selected values.
          */
-        public static function select(array $items, string $selector_name, int $selector_type = self::SELECT_BY_AUTO) : array
+        public static function select(array $items, string $selector_name, int $selector_type = self::SELECT_BY_AUTO): array
         {
         }
         /**
@@ -113658,7 +113674,7 @@ namespace Automattic\WooCommerce\Utilities {
          *
          * @return array The converted assoc array.
          */
-        public static function select_as_assoc(array $items, string $selector_name, int $selector_type = self::SELECT_BY_AUTO) : array
+        public static function select_as_assoc(array $items, string $selector_name, int $selector_type = self::SELECT_BY_AUTO): array
         {
         }
         /**
@@ -113682,7 +113698,7 @@ namespace Automattic\WooCommerce\Utilities {
          *
          * @return array The difference between the two arrays.
          */
-        public static function deep_assoc_array_diff(array $array1, array $array2, bool $strict = true) : array
+        public static function deep_assoc_array_diff(array $array1, array $array2, bool $strict = true): array
         {
         }
         /**
@@ -113705,7 +113721,7 @@ namespace Automattic\WooCommerce\Utilities {
          * @param mixed $value The value to maybe push.
          * @return bool True if the value has been added to the array, false if the value was already in the array.
          */
-        public static function push_once(array &$items, $value) : bool
+        public static function push_once(array &$items, $value): bool
         {
         }
         /**
@@ -113717,7 +113733,7 @@ namespace Automattic\WooCommerce\Utilities {
          * @return bool True if the key has been added to the array, false if not (the key already existed).
          * @throws \Exception The key already exists in the array but the value is not an array.
          */
-        public static function ensure_key_is_array(array &$items, string $key, bool $throw_if_existing_is_not_array = false) : bool
+        public static function ensure_key_is_array(array &$items, string $key, bool $throw_if_existing_is_not_array = false): bool
         {
         }
         /**
@@ -113731,7 +113747,7 @@ namespace Automattic\WooCommerce\Utilities {
          * @param bool   $single_values True to only return the last suitable array found for each column value.
          * @return array The grouped array.
          */
-        public static function group_by_column(array $items, string $column, bool $single_values = false) : array
+        public static function group_by_column(array $items, string $column, bool $single_values = false): array
         {
         }
         /**
@@ -113742,7 +113758,7 @@ namespace Automattic\WooCommerce\Utilities {
          *
          * @return bool true if all items pass the callback, false otherwise.
          */
-        public static function array_all(array $items, callable $callback) : bool
+        public static function array_all(array $items, callable $callback): bool
         {
         }
     }
@@ -113784,7 +113800,7 @@ namespace Automattic\WooCommerce\Utilities {
          * @param bool $include_enabled_info True to include the 'is_enabled' field in the returned features info.
          * @returns array An array of information about existing features.
          */
-        public static function get_features(bool $include_experimental = false, bool $include_enabled_info = false) : array
+        public static function get_features(bool $include_experimental = false, bool $include_enabled_info = false): array
         {
         }
         /**
@@ -113793,7 +113809,7 @@ namespace Automattic\WooCommerce\Utilities {
          * @param  string $feature_id Unique feature id.
          * @return bool True if the feature is enabled, false if not or if the feature doesn't exist.
          */
-        public static function feature_is_enabled(string $feature_id) : bool
+        public static function feature_is_enabled(string $feature_id): bool
         {
         }
         /**
@@ -113808,7 +113824,7 @@ namespace Automattic\WooCommerce\Utilities {
          * @param bool   $positive_compatibility True if the plugin declares being compatible with the feature, false if it declares being incompatible.
          * @return bool True on success, false on error (feature doesn't exist or not inside the required hook).
          */
-        public static function declare_compatibility(string $feature_id, string $plugin_file, bool $positive_compatibility = true) : bool
+        public static function declare_compatibility(string $feature_id, string $plugin_file, bool $positive_compatibility = true): bool
         {
         }
         /**
@@ -113819,7 +113835,7 @@ namespace Automattic\WooCommerce\Utilities {
          * @param string $plugin_name Plugin name, in the form 'directory/file.php'.
          * @return array An array having a 'compatible' and an 'incompatible' key, each holding an array of plugin ids.
          */
-        public static function get_compatible_features_for_plugin(string $plugin_name) : array
+        public static function get_compatible_features_for_plugin(string $plugin_name): array
         {
         }
         /**
@@ -113828,21 +113844,21 @@ namespace Automattic\WooCommerce\Utilities {
          * @param string $feature_id Feature id.
          * @return array An array having a 'compatible' and an 'incompatible' key, each holding an array of plugin names.
          */
-        public static function get_compatible_plugins_for_feature(string $feature_id) : array
+        public static function get_compatible_plugins_for_feature(string $feature_id): array
         {
         }
         /**
          * Sets a flag indicating that it's allowed to enable features for which incompatible plugins are active
          * from the WooCommerce feature settings page.
          */
-        public static function allow_enabling_features_with_incompatible_plugins() : void
+        public static function allow_enabling_features_with_incompatible_plugins(): void
         {
         }
         /**
          * Sets a flag indicating that it's allowed to activate plugins for which incompatible features are enabled
          * from the WordPress plugins page.
          */
-        public static function allow_activating_plugins_with_incompatible_features() : void
+        public static function allow_activating_plugins_with_incompatible_features(): void
         {
         }
     }
@@ -113894,7 +113910,7 @@ namespace Automattic\WooCommerce\Utilities {
          *
          * @return string
          */
-        public static function get_logs_tab_url() : string
+        public static function get_logs_tab_url(): string
         {
         }
         /**
@@ -113902,7 +113918,7 @@ namespace Automattic\WooCommerce\Utilities {
          *
          * @return bool
          */
-        public static function logging_is_enabled() : bool
+        public static function logging_is_enabled(): bool
         {
         }
         /**
@@ -113910,7 +113926,7 @@ namespace Automattic\WooCommerce\Utilities {
          *
          * @return string
          */
-        public static function get_default_handler() : string
+        public static function get_default_handler(): string
         {
         }
         /**
@@ -113918,7 +113934,7 @@ namespace Automattic\WooCommerce\Utilities {
          *
          * @return int
          */
-        public static function get_retention_period() : int
+        public static function get_retention_period(): int
         {
         }
         /**
@@ -113926,7 +113942,7 @@ namespace Automattic\WooCommerce\Utilities {
          *
          * @return string
          */
-        public static function get_level_threshold() : string
+        public static function get_level_threshold(): string
         {
         }
         /**
@@ -113942,7 +113958,7 @@ namespace Automattic\WooCommerce\Utilities {
          *
          * @return string
          */
-        public static function generate_log_file_id(string $source, ?int $rotation = null, int $created = 0) : string
+        public static function generate_log_file_id(string $source, ?int $rotation = null, int $created = 0): string
         {
         }
         /**
@@ -113952,7 +113968,7 @@ namespace Automattic\WooCommerce\Utilities {
          *
          * @return string
          */
-        public static function generate_log_file_hash(string $file_id) : string
+        public static function generate_log_file_hash(string $file_id): string
         {
         }
         /**
@@ -113962,7 +113978,7 @@ namespace Automattic\WooCommerce\Utilities {
          *
          * @return string The full directory path, with trailing slash.
          */
-        public static function get_log_directory(bool $create_dir = true) : string
+        public static function get_log_directory(bool $create_dir = true): string
         {
         }
         /**
@@ -113970,7 +113986,7 @@ namespace Automattic\WooCommerce\Utilities {
          *
          * @return int
          */
-        public static function get_log_directory_size() : int
+        public static function get_log_directory_size(): int
         {
         }
     }
@@ -113994,7 +114010,7 @@ namespace Automattic\WooCommerce\Utilities {
          *
          * @return float The value rounded to the given precision as a float, or the supplied default value.
          */
-        public static function round($val, int $precision = 0, int $mode = PHP_ROUND_HALF_UP) : float
+        public static function round($val, int $precision = 0, int $mode = PHP_ROUND_HALF_UP): float
         {
         }
         /**
@@ -114010,7 +114026,7 @@ namespace Automattic\WooCommerce\Utilities {
          *
          * @return float
          */
-        public static function array_sum(array $arr) : float
+        public static function array_sum(array $arr): float
         {
         }
         /**
@@ -114020,7 +114036,7 @@ namespace Automattic\WooCommerce\Utilities {
          * @return string                     The sanitized value.
          * @throws \InvalidArgumentException If the value is not a valid numeric value.
          */
-        public static function sanitize_cost_in_current_locale($value) : string
+        public static function sanitize_cost_in_current_locale($value): string
         {
         }
     }
@@ -114034,7 +114050,7 @@ namespace Automattic\WooCommerce\Utilities {
          *
          * @return string
          */
-        public static function get_order_admin_screen() : string
+        public static function get_order_admin_screen(): string
         {
         }
         /**
@@ -114042,7 +114058,7 @@ namespace Automattic\WooCommerce\Utilities {
          *
          * @return bool
          */
-        public static function custom_orders_table_usage_is_enabled() : bool
+        public static function custom_orders_table_usage_is_enabled(): bool
         {
         }
         /**
@@ -114050,7 +114066,7 @@ namespace Automattic\WooCommerce\Utilities {
          *
          * @return bool
          */
-        public static function custom_orders_table_datastore_cache_enabled() : bool
+        public static function custom_orders_table_datastore_cache_enabled(): bool
         {
         }
         /**
@@ -114058,7 +114074,7 @@ namespace Automattic\WooCommerce\Utilities {
          *
          * @return bool True if the orders cache should be used, false otherwise.
          */
-        public static function orders_cache_usage_is_enabled() : bool
+        public static function orders_cache_usage_is_enabled(): bool
         {
         }
         /**
@@ -114066,7 +114082,7 @@ namespace Automattic\WooCommerce\Utilities {
          *
          * @return bool
          */
-        public static function is_custom_order_tables_in_sync() : bool
+        public static function is_custom_order_tables_in_sync(): bool
         {
         }
         /**
@@ -114100,7 +114116,7 @@ namespace Automattic\WooCommerce\Utilities {
          *
          * @return int Order or post ID.
          */
-        public static function get_post_or_order_id($post_or_order_object) : int
+        public static function get_post_or_order_id($post_or_order_object): int
         {
         }
         /**
@@ -114131,7 +114147,7 @@ namespace Automattic\WooCommerce\Utilities {
          *
          * @return string Admin url for an order.
          */
-        public static function get_order_admin_edit_url(int $order_id) : string
+        public static function get_order_admin_edit_url(int $order_id): string
         {
         }
         /**
@@ -114139,7 +114155,7 @@ namespace Automattic\WooCommerce\Utilities {
          *
          * @return string Link for new order.
          */
-        public static function get_order_admin_new_url() : string
+        public static function get_order_admin_new_url(): string
         {
         }
         /**
@@ -114149,7 +114165,7 @@ namespace Automattic\WooCommerce\Utilities {
          *
          * @return bool
          */
-        public static function is_order_list_table_screen($order_type = 'shop_order') : bool
+        public static function is_order_list_table_screen($order_type = 'shop_order'): bool
         {
         }
         /**
@@ -114159,7 +114175,7 @@ namespace Automattic\WooCommerce\Utilities {
          *
          * @return bool
          */
-        public static function is_order_edit_screen($order_type = 'shop_order') : bool
+        public static function is_order_edit_screen($order_type = 'shop_order'): bool
         {
         }
         /**
@@ -114169,7 +114185,7 @@ namespace Automattic\WooCommerce\Utilities {
          *
          * @return bool
          */
-        public static function is_new_order_screen($order_type = 'shop_order') : bool
+        public static function is_new_order_screen($order_type = 'shop_order'): bool
         {
         }
         /**
@@ -114207,7 +114223,7 @@ namespace Automattic\WooCommerce\Utilities {
          * @return string The status without the prefix.
          * @since 9.2.0
          */
-        public static function remove_status_prefix(string $status) : string
+        public static function remove_status_prefix(string $status): string
         {
         }
     }
@@ -114253,7 +114269,7 @@ namespace Automattic\WooCommerce\Utilities {
          *
          * @param LegacyProxy $proxy The instance of LegacyProxy to use.
          */
-        public final function init(\Automattic\WooCommerce\Proxies\LegacyProxy $proxy)
+        final public function init(\Automattic\WooCommerce\Proxies\LegacyProxy $proxy)
         {
         }
         /**
@@ -114279,7 +114295,7 @@ namespace Automattic\WooCommerce\Utilities {
          * @param bool $active_only True to return only active plugins, false to return all the active plugins.
          * @return string[] A list of plugin ids (path/file.php).
          */
-        public function get_woocommerce_aware_plugins(bool $active_only = false) : array
+        public function get_woocommerce_aware_plugins(bool $active_only = false): array
         {
         }
         /**
@@ -114288,7 +114304,7 @@ namespace Automattic\WooCommerce\Utilities {
          * @param string $plugin_id Plugin id (path/file.php).
          * @return string Printable plugin name, or the plugin id itself if printable name is not available.
          */
-        public function get_plugin_name(string $plugin_id) : string
+        public function get_plugin_name(string $plugin_id): string
         {
         }
         /**
@@ -114298,7 +114314,7 @@ namespace Automattic\WooCommerce\Utilities {
          * @return bool True if the plugin exists and is WooCommerce aware.
          * @throws \Exception The input is neither a string nor an array.
          */
-        public function is_woocommerce_aware_plugin($plugin_file_or_data) : bool
+        public function is_woocommerce_aware_plugin($plugin_file_or_data): bool
         {
         }
         /**
@@ -114316,7 +114332,7 @@ namespace Automattic\WooCommerce\Utilities {
          *
          * @internal For exclusive usage of WooCommerce core, backwards compatibility not guaranteed.
          */
-        public function handle_plugin_de_activation() : void
+        public function handle_plugin_de_activation(): void
         {
         }
         /**
@@ -114330,7 +114346,7 @@ namespace Automattic\WooCommerce\Utilities {
          *
          * @return string Warning string.
          */
-        public function generate_incompatible_plugin_feature_warning(string $feature_id, array $plugin_feature_info) : string
+        public function generate_incompatible_plugin_feature_warning(string $feature_id, array $plugin_feature_info): string
         {
         }
         /**
@@ -114342,7 +114358,7 @@ namespace Automattic\WooCommerce\Utilities {
          * @param array  $compatibility_info Array containing "compatible', 'incompatible' and 'uncertain' keys.
          * @return array Items in 'incompatible' and 'uncertain' if plugins are incompatible by default with the feature; only items in 'incompatible' otherwise.
          */
-        public function get_items_considered_incompatible(string $feature_id, array $compatibility_info) : array
+        public function get_items_considered_incompatible(string $feature_id, array $compatibility_info): array
         {
         }
         /**
@@ -114404,7 +114420,7 @@ namespace Automattic\WooCommerce\Utilities {
          *
          * @return bool True if the $string starts with $starts_with, false otherwise.
          */
-        public static function starts_with(string $string, string $starts_with, bool $case_sensitive = true) : bool
+        public static function starts_with(string $string, string $starts_with, bool $case_sensitive = true): bool
         {
         }
         /**
@@ -114416,7 +114432,7 @@ namespace Automattic\WooCommerce\Utilities {
          *
          * @return bool True if the $string ends with $ends_with, false otherwise.
          */
-        public static function ends_with(string $string, string $ends_with, bool $case_sensitive = true) : bool
+        public static function ends_with(string $string, string $ends_with, bool $case_sensitive = true): bool
         {
         }
         /**
@@ -114427,7 +114443,7 @@ namespace Automattic\WooCommerce\Utilities {
          * @param bool   $case_sensitive Indicates whether the comparison should be case-sensitive.
          * @return bool True if $contained is contained inside $string, false otherwise.
          */
-        public static function contains(string $string, string $contained, bool $case_sensitive = true) : bool
+        public static function contains(string $string, string $contained, bool $case_sensitive = true): bool
         {
         }
         /**
@@ -114436,7 +114452,7 @@ namespace Automattic\WooCommerce\Utilities {
          * @param string $plugin_file_path The path of the main plugin file (can be passed as __FILE__ from the plugin itself).
          * @return string The name of the plugin in the form 'directory/file.php'.
          */
-        public static function plugin_name_from_plugin_file(string $plugin_file_path) : string
+        public static function plugin_name_from_plugin_file(string $plugin_file_path): string
         {
         }
         /**
@@ -114511,7 +114527,7 @@ namespace Automattic\WooCommerce\Utilities {
          *
          * @return DateTimeZone DateTimeZone object representing UTC.
          */
-        public static function get_utc_date_time_zone() : \DateTimeZone
+        public static function get_utc_date_time_zone(): \DateTimeZone
         {
         }
         /**
@@ -114521,7 +114537,7 @@ namespace Automattic\WooCommerce\Utilities {
          * @param string $format The format to verify the date string against.
          * @return bool True if $date represents a valid date/time according to $format, false otherwise.
          */
-        public static function is_valid_date(string $date, string $format = 'Y-m-d H:i:s') : bool
+        public static function is_valid_date(string $date, string $format = 'Y-m-d H:i:s'): bool
         {
         }
     }
@@ -118694,7 +118710,7 @@ namespace {
      * @return string The sanitized string without problematic characters.
      * @since 9.9.0
      */
-    function wc_remove_non_displayable_chars(string $raw_value) : string
+    function wc_remove_non_displayable_chars(string $raw_value): string
     {
     }
     /**
@@ -119293,7 +119309,7 @@ namespace {
      * @internal This function is intended for internal use only.
      * @since 9.9.0
      */
-    function wc_log_order_step(string $message, ?array $context = \null, bool $final_step = \false, bool $first_step = \false) : void
+    function wc_log_order_step(string $message, ?array $context = \null, bool $final_step = \false, bool $first_step = \false): void
     {
     }
     /**
@@ -119526,7 +119542,7 @@ namespace {
      *
      * @return void
      */
-    function wc_product_canonical_redirect() : void
+    function wc_product_canonical_redirect(): void
     {
     }
     /**
@@ -120149,7 +120165,7 @@ namespace {
      *
      * @return bool True if the namespace should be loaded, false otherwise.
      */
-    function wc_rest_should_load_namespace(string $ns, string $rest_route = '') : bool
+    function wc_rest_should_load_namespace(string $ns, string $rest_route = ''): bool
     {
     }
     /**

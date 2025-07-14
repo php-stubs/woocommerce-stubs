@@ -1683,14 +1683,14 @@ namespace {
          * @param string $lock_type A string to identify different lock types.
          * @return bool
          */
-        public abstract function set($lock_type);
+        abstract public function set($lock_type);
         /**
          * If a lock is set, return the timestamp it was set to expiry.
          *
          * @param string $lock_type A string to identify different lock types.
          * @return bool|int False if no lock is set, otherwise the timestamp for when the lock is set to expire.
          */
-        public abstract function get_expiration($lock_type);
+        abstract public function get_expiration($lock_type);
         /**
          * Get the amount of time to set for a given lock. 60 seconds by default.
          *
@@ -2086,7 +2086,7 @@ namespace {
          *        Generally, this should be capitalised and not localised as it's a proper noun.
          * @return int The number of actions processed.
          */
-        public abstract function run($context = '');
+        abstract public function run($context = '');
     }
     /**
      * Class ActionScheduler_QueueRunner
@@ -2244,7 +2244,7 @@ namespace {
          *
          * @return array
          */
-        public static function active_source() : array
+        public static function active_source(): array
         {
         }
         /**
@@ -2252,7 +2252,7 @@ namespace {
          *
          * @return string
          */
-        public static function active_source_path() : string
+        public static function active_source_path(): string
         {
         }
         /**
@@ -2366,7 +2366,7 @@ namespace {
          *
          * @return array
          */
-        public function active_source() : array
+        public function active_source(): array
         {
         }
         /**
@@ -2376,7 +2376,7 @@ namespace {
          *
          * @return string
          */
-        public function active_source_path() : string
+        public function active_source_path(): string
         {
         }
     }
@@ -2666,19 +2666,19 @@ namespace {
         /**
          * Clone.
          */
-        public final function __clone()
+        final public function __clone()
         {
         }
         /**
          * Wakeup.
          */
-        public final function __wakeup()
+        final public function __wakeup()
         {
         }
         /**
          * Construct.
          */
-        private final function __construct()
+        final private function __construct()
         {
         }
         /** Deprecated **/
@@ -2768,14 +2768,14 @@ namespace {
          *
          * @return bool
          */
-        public abstract function is_recurring();
+        abstract public function is_recurring();
         /**
          * Calculate when the next instance of this schedule would run based on a given date & time.
          *
          * @param DateTime $after Start timestamp.
          * @return DateTime
          */
-        protected abstract function calculate_next(\DateTime $after);
+        abstract protected function calculate_next(\DateTime $after);
         /**
          * Get the next date & time when this schedule should run after a given date & time.
          *
@@ -2948,7 +2948,7 @@ namespace {
          *
          * @return string The CREATE TABLE statement, suitable for passing to dbDelta
          */
-        protected abstract function get_table_definition($table);
+        abstract protected function get_table_definition($table);
         /**
          * Determine if the database schema is out of date
          * by comparing the integer found in $this->schema_version
@@ -3028,7 +3028,7 @@ namespace {
          *
          * @return string The log entry ID
          */
-        public abstract function log($action_id, $message, ?\DateTime $date = \null);
+        abstract public function log($action_id, $message, ?\DateTime $date = \null);
         /**
          * Get action's log entry.
          *
@@ -3036,7 +3036,7 @@ namespace {
          *
          * @return ActionScheduler_LogEntry
          */
-        public abstract function get_entry($entry_id);
+        abstract public function get_entry($entry_id);
         /**
          * Get action's logs.
          *
@@ -3044,7 +3044,7 @@ namespace {
          *
          * @return ActionScheduler_LogEntry[]
          */
-        public abstract function get_logs($action_id);
+        abstract public function get_logs($action_id);
         /**
          * Initialize.
          *
@@ -3253,7 +3253,7 @@ namespace {
          *
          * @return int The action ID
          */
-        public abstract function save_action(\ActionScheduler_Action $action, ?\DateTime $scheduled_date = \null);
+        abstract public function save_action(\ActionScheduler_Action $action, ?\DateTime $scheduled_date = \null);
         /**
          * Get action.
          *
@@ -3261,7 +3261,7 @@ namespace {
          *
          * @return ActionScheduler_Action
          */
-        public abstract function fetch_action($action_id);
+        abstract public function fetch_action($action_id);
         /**
          * Find an action.
          *
@@ -3301,7 +3301,7 @@ namespace {
          *
          * @return string|array|null The IDs of actions matching the query. Null on failure.
          */
-        public abstract function query_actions($query = array(), $query_type = 'select');
+        abstract public function query_actions($query = array(), $query_type = 'select');
         /**
          * Run query to get a single action ID.
          *
@@ -3321,7 +3321,7 @@ namespace {
          *
          * @return array
          */
-        public abstract function action_counts();
+        abstract public function action_counts();
         /**
          * Get additional action counts.
          *
@@ -3337,13 +3337,13 @@ namespace {
          *
          * @param string $action_id Action ID.
          */
-        public abstract function cancel_action($action_id);
+        abstract public function cancel_action($action_id);
         /**
          * Delete action.
          *
          * @param string $action_id Action ID.
          */
-        public abstract function delete_action($action_id);
+        abstract public function delete_action($action_id);
         /**
          * Get action's schedule or run timestamp.
          *
@@ -3351,7 +3351,7 @@ namespace {
          *
          * @return DateTime The date the action is schedule to run, or the date that it ran.
          */
-        public abstract function get_date($action_id);
+        abstract public function get_date($action_id);
         /**
          * Make a claim.
          *
@@ -3362,64 +3362,64 @@ namespace {
          *
          * @return ActionScheduler_ActionClaim
          */
-        public abstract function stake_claim($max_actions = 10, ?\DateTime $before_date = \null, $hooks = array(), $group = '');
+        abstract public function stake_claim($max_actions = 10, ?\DateTime $before_date = \null, $hooks = array(), $group = '');
         /**
          * Get claim count.
          *
          * @return int
          */
-        public abstract function get_claim_count();
+        abstract public function get_claim_count();
         /**
          * Release the claim.
          *
          * @param ActionScheduler_ActionClaim $claim Claim object.
          */
-        public abstract function release_claim(\ActionScheduler_ActionClaim $claim);
+        abstract public function release_claim(\ActionScheduler_ActionClaim $claim);
         /**
          * Un-claim the action.
          *
          * @param string $action_id Action ID.
          */
-        public abstract function unclaim_action($action_id);
+        abstract public function unclaim_action($action_id);
         /**
          * Mark action as failed.
          *
          * @param string $action_id Action ID.
          */
-        public abstract function mark_failure($action_id);
+        abstract public function mark_failure($action_id);
         /**
          * Log action's execution.
          *
          * @param string $action_id Actoin ID.
          */
-        public abstract function log_execution($action_id);
+        abstract public function log_execution($action_id);
         /**
          * Mark action as complete.
          *
          * @param string $action_id Action ID.
          */
-        public abstract function mark_complete($action_id);
+        abstract public function mark_complete($action_id);
         /**
          * Get action's status.
          *
          * @param string $action_id Action ID.
          * @return string
          */
-        public abstract function get_status($action_id);
+        abstract public function get_status($action_id);
         /**
          * Get action's claim ID.
          *
          * @param string $action_id Action ID.
          * @return mixed
          */
-        public abstract function get_claim_id($action_id);
+        abstract public function get_claim_id($action_id);
         /**
          * Find actions by claim ID.
          *
          * @param string $claim_id Claim ID.
          * @return array
          */
-        public abstract function find_actions_by_claim_id($claim_id);
+        abstract public function find_actions_by_claim_id($claim_id);
         /**
          * Validate SQL operator.
          *
