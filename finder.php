@@ -60,7 +60,7 @@ return \StubsGenerator\Finder::create()
             ->depth('< 1')
             ->path('MobileDetect.php')
     )
-    // ProductQuery uses uses this internal class
+    // ProductQuery uses this internal interface
     ->append(
         \StubsGenerator\Finder::create()
             ->in(['source/woocommerce/src/Internal/ProductFilters/Interfaces'])

@@ -10878,8 +10878,7 @@ namespace {
         }
         /**
          * Handle redirects:
-         * 1. To setup/welcome page after install and updates.
-         * 2. To offline payment gateway(s) new settings page.
+         * 1. Nonced plugin install redirects.
          *
          * The user must have access rights, and we must ignore the network/bulk plugin updaters.
          */
@@ -16300,23 +16299,17 @@ namespace {
         const CHEQUE_SECTION_NAME = 'cheque';
         // Cheque payments.
         /**
-         * Get the whitelist of sections to render using React.
+         * Setting page icon.
          *
-         * @return array List of section identifiers.
+         * @var string
          */
-        private function get_reactify_render_sections()
-        {
-        }
+        public $icon = 'payment';
         /**
-         * Standardize the current section name.
+         * Memoized list of sections to render using React.
          *
-         * @param string $section The section name to standardize.
-         *
-         * @return string The standardized section name.
+         * @var array|null
          */
-        private function standardize_section_name(string $section): string
-        {
-        }
+        private ?array $reactified_sections_memo = \null;
         /**
          * Constructor.
          */
@@ -16324,11 +16317,27 @@ namespace {
         {
         }
         /**
-         * Setting page icon.
+         * Check if the given section should be rendered using React.
          *
-         * @var string
+         * @param mixed $section The section name to check.
+         *                       Since this value originates from the global `$current_section` variable,
+         *                       it is best to accept anything and standardize it to a string.
+         *
+         * @return bool Whether the section should be rendered using React.
          */
-        public $icon = 'payment';
+        public function should_render_react_section($section): bool
+        {
+        }
+        /**
+         * Add body classes.
+         *
+         * @param string $classes The existing body classes.
+         *
+         * @return string The modified body classes.
+         */
+        public function add_body_classes($classes)
+        {
+        }
         /**
          * Output the settings.
          */
@@ -16346,12 +16355,21 @@ namespace {
         {
         }
         /**
-         * Check if the given section should be rendered using React.
+         * Get the whitelist of sections to render using React.
          *
-         * @param string $section The section to check.
-         * @return bool Whether the section should be rendered using React.
+         * @return array List of section identifiers.
          */
-        private function should_render_react_section($section)
+        private function get_reactified_sections(): array
+        {
+        }
+        /**
+         * Standardize the current section name.
+         *
+         * @param mixed $section The section name to standardize.
+         *
+         * @return string The standardized section name.
+         */
+        private function standardize_section_name($section): string
         {
         }
         /**
@@ -38078,7 +38096,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '10.1.0';
+        public $version = '10.1.1';
         /**
          * WooCommerce Schema version.
          *
@@ -38695,9 +38713,88 @@ namespace {
         {
         }
         /**
+         * For actions that may fail at execution time due to missing callbacks, register the recurring action in a wrapper
+         * to prevent errors, and load the classes where the callback is added.
+         *
+         * @return void
+         * @internal For exclusive usage of WooCommerce core, backwards compatibility not guaranteed.
+         */
+        public function add_recurring_action_wrappers()
+        {
+        }
+        /**
+         * Unschedule unwrapped actions that may have been added to the site.
+         *
+         * @return void
+         * @internal For exclusive usage of WooCommerce core, backwards compatibility not guaranteed.
+         */
+        public function unschedule_unwrapped_actions()
+        {
+        }
+        /**
+         * Wrapper for the `woocommerce_tracker_send_event` action. This prevents the event failing when the class is not loaded.
+         * It loads the class if it exists, and then calls the actual action.
+         *
+         * @return void
+         * @internal For exclusive usage of WooCommerce core, backwards compatibility not guaranteed.
+         */
+        public function add_woocommerce_tracker_send_event_wrapper()
+        {
+        }
+        /**
+         * Wrapper for the `wc_admin_daily` action. This prevents the event failing when the class is not loaded.
+         * It loads the class if it exists, and then calls the actual action.
+         *
+         * @return void
+         * @internal For exclusive usage of WooCommerce core, backwards compatibility not guaranteed.
+         */
+        public function add_wc_admin_daily_wrapper()
+        {
+        }
+        /**
+         * Wrapper for the `generate_category_lookup_table` action. This prevents the event failing when the class is not loaded.
+         * It loads the class if it exists, and then calls the actual action.
+         *
+         * @return void
+         * @internal For exclusive usage of WooCommerce core, backwards compatibility not guaranteed.
+         */
+        public function add_generate_category_lookup_table_wrapper()
+        {
+        }
+        /**
+         * Wrapper for the `woocommerce_cleanup_rate_limits` action. This prevents the event failing when the class is not loaded.
+         * It loads the class if it exists, and then calls the actual action.
+         *
+         * @return void
+         * @internal For exclusive usage of WooCommerce core, backwards compatibility not guaranteed.
+         */
+        public function add_woocommerce_cleanup_rate_limits_wrapper()
+        {
+        }
+        /**
          * Register recurring actions.
          */
         public function register_recurring_actions()
+        {
+        }
+        /**
+         * Schedule the action send tracking events if tracking is enabled, or unregister it if tracking is disabled.
+         * This will be called when the `woocommerce_allow_tracking` option is updated.
+         *
+         * @param string $old_value The old value of the `woocommerce_allow_tracking` option.
+         * @param string $value     The new value of the `woocommerce_allow_tracking` option.
+         *
+         * @return void
+         */
+        public function handle_tracking_setting_change($old_value, $value)
+        {
+        }
+        /**
+         * Schedule the action to send tracking events if tracking is enabled.
+         *
+         * @return void
+         */
+        public function schedule_tracking_action()
         {
         }
         /**
@@ -47354,9 +47451,17 @@ namespace {
         /**
          * Get the settings URL for the gateway.
          *
-         * @return string
+         * @return string The settings page URL for the gateway.
          */
         public function get_settings_url()
+        {
+        }
+        /**
+         * Check if the BACS settings page is reactified.
+         *
+         * @return bool Whether the BACS settings page is reactified or not.
+         */
+        private function is_reactified_settings_page(): bool
         {
         }
     }
@@ -47425,7 +47530,7 @@ namespace {
         /**
          * Get the settings URL for the gateway.
          *
-         * @return string
+         * @return string The settings page URL for the gateway.
          */
         public function get_settings_url()
         {
@@ -47624,7 +47729,7 @@ namespace {
         /**
          * Get the settings URL for the gateway.
          *
-         * @return string
+         * @return string The settings page URL for the gateway.
          */
         public function get_settings_url()
         {
@@ -78647,6 +78752,14 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
          * @return bool
          */
         private function is_woopayments_onboarded(): bool
+        {
+        }
+        /**
+         * Check if WooPayments has a live account onboarding in progress.
+         *
+         * @return bool
+         */
+        private function has_woopayments_live_account_in_progress()
         {
         }
         /**
