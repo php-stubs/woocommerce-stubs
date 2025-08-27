@@ -19101,16 +19101,12 @@ namespace {
         }
         /**
          * Save the persistent cart when the cart is updated.
-         *
-         * @deprecated 11.0.0 Data persists in the session table for longer instead of syncing to meta.
          */
         public function persistent_cart_update()
         {
         }
         /**
          * Delete the persistent cart permanently.
-         *
-         * @deprecated 11.0.0 Data persists in the session table for longer instead of syncing to meta.
          */
         public function persistent_cart_destroy()
         {
@@ -19121,6 +19117,15 @@ namespace {
          * @param bool $set Should cookies be set (true) or unset.
          */
         private function set_cart_cookies($set = \true)
+        {
+        }
+        /**
+         * Get the persistent cart from the database.
+         *
+         * @since  3.5.0
+         * @return array
+         */
+        private function get_saved_cart()
         {
         }
         /**
@@ -20251,9 +20256,10 @@ namespace {
          * Empties the cart and optionally the persistent cart too.
          *
          * @since 9.7.0 Also clears shipping methods and packages since the items they are linked to are cleared.
-         * @param bool $deprecated Previously used to clear the persistent cart, but this is now handled by the session handler.
+         *
+         * @param bool $clear_persistent_cart Should the persistent cart be cleared too. Defaults to true.
          */
-        public function empty_cart($deprecated = \true)
+        public function empty_cart($clear_persistent_cart = \true)
         {
         }
         /**
@@ -34845,10 +34851,8 @@ namespace {
         }
         /**
          * Migrates a guest session to a user session.
-         *
-         * @param int $user_id The user ID to migrate to.
          */
-        private function migrate_guest_session_to_user_session(int $user_id)
+        private function migrate_guest_session_to_user_session()
         {
         }
         /**
@@ -34857,18 +34861,6 @@ namespace {
          * @since 10.0.0
          */
         private function restore_session_data()
-        {
-        }
-        /**
-         * Merges the cart data from the guest session to the user session.
-         *
-         * When merging, if the same item exists in both carts (same cart item ID), the guest cart data for that item is preserved.
-         *
-         * @param array $data The updated session data.
-         * @param array $user_session_data The user session data that will be overridden.
-         * @return array The updated session data.
-         */
-        private function migrate_cart_data(array $data, array $user_session_data)
         {
         }
         /**
@@ -34924,30 +34916,6 @@ namespace {
         {
         }
         /**
-         * Check if the cookie exists in the $_COOKIE superglobal.
-         *
-         * @return bool Whether the cookie exists.
-         */
-        protected function cookie_exists()
-        {
-        }
-        /**
-         * Get the cookie value.
-         *
-         * @return string The cookie value.
-         */
-        protected function get_cookie_value()
-        {
-        }
-        /**
-         * Set the cookie value if not empty. Unset the cookie if empty. Wrapper for wc_setcookie.
-         *
-         * @param string $cookie_value The cookie value to set.
-         */
-        protected function set_cookie_value($cookie_value)
-        {
-        }
-        /**
          * Should the session cookie be secure?
          *
          * @since 3.6.0
@@ -34974,9 +34942,6 @@ namespace {
         }
         /**
          * Set session expiration.
-         *
-         * For logged in users sessions renew daily and expire in a week. This is to keep carts persistent for logged in users.
-         * For guests, sessions expire in 48 hours.
          */
         public function set_session_expiration()
         {
@@ -38096,7 +38061,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '10.1.1';
+        public $version = '10.1.2';
         /**
          * WooCommerce Schema version.
          *
