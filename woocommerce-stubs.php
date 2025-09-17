@@ -35,7 +35,8 @@ namespace {
      *
      * Implemented by classes using the same CRUD(s) pattern.
      *
-     * @version  2.6.0
+     * @since    2.6.0
+     * @version  10.2.0
      * @package  WooCommerce\Abstracts
      */
     abstract class WC_Data
@@ -5754,21 +5755,24 @@ namespace {
         /**
          * Customer ID.
          *
-         * @var string $_customer_id Customer ID.
+         * @var ?string $_customer_id Customer ID.
          */
         protected $_customer_id;
+        // phpcs:ignore PSR2.Classes.PropertyDeclaration.Underscore
         /**
          * Session Data.
          *
          * @var array $_data Data array.
          */
         protected $_data = array();
+        // phpcs:ignore PSR2.Classes.PropertyDeclaration.Underscore
         /**
          * Dirty when the session needs saving.
          *
          * @var bool $_dirty When something changes
          */
         protected $_dirty = \false;
+        // phpcs:ignore PSR2.Classes.PropertyDeclaration.Underscore
         /**
          * Init hooks and session data. Extended by child classes.
          *
@@ -5786,7 +5790,7 @@ namespace {
         /**
          * Magic get method.
          *
-         * @param mixed $key Key to get.
+         * @param string $key Key to get.
          * @return mixed
          */
         public function __get($key)
@@ -5795,8 +5799,8 @@ namespace {
         /**
          * Magic set method.
          *
-         * @param mixed $key Key to set.
-         * @param mixed $value Value to set.
+         * @param string $key Key to set.
+         * @param mixed  $value Value to set.
          */
         public function __set($key, $value)
         {
@@ -5804,7 +5808,7 @@ namespace {
         /**
          * Magic isset method.
          *
-         * @param mixed $key Key to check.
+         * @param string $key Key to check.
          * @return bool
          */
         public function __isset($key)
@@ -5813,7 +5817,7 @@ namespace {
         /**
          * Magic unset method.
          *
-         * @param mixed $key Key to unset.
+         * @param string $key Key to unset.
          */
         public function __unset($key)
         {
@@ -5822,10 +5826,10 @@ namespace {
          * Get a session variable.
          *
          * @param string $key Key to get.
-         * @param mixed  $default used if the session variable isn't set.
-         * @return array|string value of session variable
+         * @param mixed  $default_value used if the session variable isn't set.
+         * @return mixed value of session variable
          */
-        public function get($key, $default = \null)
+        public function get($key, $default_value = \null)
         {
         }
         /**
@@ -5838,7 +5842,7 @@ namespace {
         {
         }
         /**
-         * Get customer ID.
+         * Get customer ID. If the session is not initialized, returns an empty string.
          *
          * @return string
          */
@@ -10906,11 +10910,23 @@ namespace {
         /**
          * Change the admin footer text on WooCommerce admin pages.
          *
-         * @since  2.3
-         * @param  string $footer_text text to be rendered in the footer.
+         * @since 2.3
+         *
+         * @param string $footer_text Footer text to be rendered.
          * @return string
          */
         public function admin_footer_text($footer_text)
+        {
+        }
+        /**
+         * Update the footer version text.
+         *
+         * @since $VID:$
+         *
+         * @param string $version The current version string.
+         * @return string
+         */
+        public function update_footer_version($version)
         {
         }
         /**
@@ -11815,6 +11831,7 @@ namespace {
          * Activate helper subscription.
          *
          * @throws Exception If the subscription could not be activated or found.
+         * @throws WC_Data_Exception If the activation fails with error details.
          * @param string $product_key Subscription product key.
          * @return bool True if activated, false otherwise.
          */
@@ -18180,16 +18197,6 @@ namespace {
         {
         }
         /**
-         * Add product_brand to the taxonomies overridden for the original term count.
-         *
-         * @param array $taxonomies List of taxonomies.
-         *
-         * @return array
-         */
-        public function add_brands_to_terms($taxonomies)
-        {
-        }
-        /**
          * Recount the brands after the stock amount changes.
          *
          * @param int $product_id Product ID.
@@ -22345,7 +22352,7 @@ namespace {
          * Set amount.
          *
          * @since 3.0.0
-         * @param float $amount Amount.
+         * @param float|string $amount Amount.
          */
         public function set_amount($amount)
         {
@@ -22480,7 +22487,7 @@ namespace {
          * Set the minimum spend amount.
          *
          * @since 3.0.0
-         * @param float $amount Minimum amount.
+         * @param float|string $amount Minimum amount.
          */
         public function set_minimum_amount($amount)
         {
@@ -22489,7 +22496,7 @@ namespace {
          * Set the maximum spend amount.
          *
          * @since 3.0.0
-         * @param float $amount Maximum amount.
+         * @param float|string $amount Maximum amount.
          */
         public function set_maximum_amount($amount)
         {
@@ -26517,7 +26524,7 @@ namespace {
          *
          * @var array
          */
-        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_admin_update_0201_order_status_index', 'wc_admin_update_0230_rename_gross_total', 'wc_admin_update_0251_remove_unsnooze_action', 'wc_update_400_db_version'), '4.4.0' => array('wc_update_440_insert_attribute_terms_for_variable_products', 'wc_admin_update_110_remove_facebook_note', 'wc_admin_update_130_remove_dismiss_action_from_tracking_opt_in_note', 'wc_update_440_db_version'), '4.5.0' => array('wc_update_450_sanitize_coupons_code', 'wc_update_450_db_version'), '5.0.0' => array('wc_update_500_fix_product_review_count', 'wc_admin_update_160_remove_facebook_note', 'wc_admin_update_170_homescreen_layout', 'wc_update_500_db_version'), '5.6.0' => array('wc_update_560_create_refund_returns_page', 'wc_update_560_db_version'), '6.0.0' => array('wc_update_600_migrate_rate_limit_options', 'wc_admin_update_270_delete_report_downloads', 'wc_admin_update_271_update_task_list_options', 'wc_admin_update_280_order_status', 'wc_admin_update_290_update_apperance_task_option', 'wc_admin_update_290_delete_default_homepage_layout_option', 'wc_update_600_db_version'), '6.3.0' => array('wc_update_630_create_product_attributes_lookup_table', 'wc_admin_update_300_update_is_read_from_last_read', 'wc_update_630_db_version'), '6.4.0' => array('wc_update_640_add_primary_key_to_product_attributes_lookup_table', 'wc_admin_update_340_remove_is_primary_from_note_action', 'wc_update_640_db_version'), '6.5.0' => array('wc_update_650_approved_download_directories'), '6.5.1' => array('wc_update_651_approved_download_directories'), '6.7.0' => array('wc_update_670_purge_comments_count_cache', 'wc_update_670_delete_deprecated_remote_inbox_notifications_option'), '7.0.0' => array('wc_update_700_remove_download_log_fk', 'wc_update_700_remove_recommended_marketing_plugins_transient'), '7.2.1' => array('wc_update_721_adjust_new_zealand_states', 'wc_update_721_adjust_ukraine_states'), '7.2.2' => array('wc_update_722_adjust_new_zealand_states', 'wc_update_722_adjust_ukraine_states'), '7.5.0' => array('wc_update_750_add_columns_to_order_stats_table', 'wc_update_750_disable_new_product_management_experience'), '7.7.0' => array('wc_update_770_remove_multichannel_marketing_feature_options'), '7.9.0' => array('wc_update_790_blockified_product_grid_block'), '8.1.0' => array('wc_update_810_migrate_transactional_metadata_for_hpos'), '8.3.0' => array('wc_update_830_rename_checkout_template', 'wc_update_830_rename_cart_template'), '8.6.0' => array('wc_update_860_remove_recommended_marketing_plugins_transient'), '8.7.0' => array('wc_update_870_prevent_listing_of_transient_files_directory'), '8.9.0' => array('wc_update_890_update_connect_to_woocommerce_note', 'wc_update_890_update_paypal_standard_load_eligibility'), '8.9.1' => array('wc_update_891_create_plugin_autoinstall_history_option'), '9.1.0' => array('wc_update_910_add_launch_your_store_tour_option', 'wc_update_910_remove_obsolete_user_meta'), '9.2.0' => array('wc_update_920_add_wc_hooked_blocks_version_option'), '9.3.0' => array('wc_update_930_add_woocommerce_coming_soon_option', 'wc_update_930_migrate_user_meta_for_launch_your_store_tour'), '9.4.0' => array('wc_update_940_add_phone_to_order_address_fts_index', 'wc_update_940_remove_help_panel_highlight_shown'), '9.5.0' => array('wc_update_950_tracking_option_autoload'), '9.6.1' => array('wc_update_961_migrate_default_email_base_color'), '9.8.0' => array('wc_update_980_remove_order_attribution_install_banner_dismissed_option'), '9.8.5' => array('wc_update_985_enable_new_payments_settings_page_feature'), '9.9.0' => array('wc_update_990_remove_wc_count_comments_transient', 'wc_update_990_remove_email_notes'), '10.0.0' => array('wc_update_1000_multisite_visibility_setting', 'wc_update_1000_remove_patterns_toolkit_transient'));
+        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_admin_update_0201_order_status_index', 'wc_admin_update_0230_rename_gross_total', 'wc_admin_update_0251_remove_unsnooze_action', 'wc_update_400_db_version'), '4.4.0' => array('wc_update_440_insert_attribute_terms_for_variable_products', 'wc_admin_update_110_remove_facebook_note', 'wc_admin_update_130_remove_dismiss_action_from_tracking_opt_in_note', 'wc_update_440_db_version'), '4.5.0' => array('wc_update_450_sanitize_coupons_code', 'wc_update_450_db_version'), '5.0.0' => array('wc_update_500_fix_product_review_count', 'wc_admin_update_160_remove_facebook_note', 'wc_admin_update_170_homescreen_layout', 'wc_update_500_db_version'), '5.6.0' => array('wc_update_560_create_refund_returns_page', 'wc_update_560_db_version'), '6.0.0' => array('wc_update_600_migrate_rate_limit_options', 'wc_admin_update_270_delete_report_downloads', 'wc_admin_update_271_update_task_list_options', 'wc_admin_update_280_order_status', 'wc_admin_update_290_update_apperance_task_option', 'wc_admin_update_290_delete_default_homepage_layout_option', 'wc_update_600_db_version'), '6.3.0' => array('wc_update_630_create_product_attributes_lookup_table', 'wc_admin_update_300_update_is_read_from_last_read', 'wc_update_630_db_version'), '6.4.0' => array('wc_update_640_add_primary_key_to_product_attributes_lookup_table', 'wc_admin_update_340_remove_is_primary_from_note_action', 'wc_update_640_db_version'), '6.5.0' => array('wc_update_650_approved_download_directories'), '6.5.1' => array('wc_update_651_approved_download_directories'), '6.7.0' => array('wc_update_670_purge_comments_count_cache', 'wc_update_670_delete_deprecated_remote_inbox_notifications_option'), '7.0.0' => array('wc_update_700_remove_download_log_fk', 'wc_update_700_remove_recommended_marketing_plugins_transient'), '7.2.1' => array('wc_update_721_adjust_new_zealand_states', 'wc_update_721_adjust_ukraine_states'), '7.2.2' => array('wc_update_722_adjust_new_zealand_states', 'wc_update_722_adjust_ukraine_states'), '7.5.0' => array('wc_update_750_add_columns_to_order_stats_table', 'wc_update_750_disable_new_product_management_experience'), '7.7.0' => array('wc_update_770_remove_multichannel_marketing_feature_options'), '7.9.0' => array('wc_update_790_blockified_product_grid_block'), '8.1.0' => array('wc_update_810_migrate_transactional_metadata_for_hpos'), '8.3.0' => array('wc_update_830_rename_checkout_template', 'wc_update_830_rename_cart_template'), '8.6.0' => array('wc_update_860_remove_recommended_marketing_plugins_transient'), '8.7.0' => array('wc_update_870_prevent_listing_of_transient_files_directory'), '8.9.0' => array('wc_update_890_update_connect_to_woocommerce_note', 'wc_update_890_update_paypal_standard_load_eligibility'), '8.9.1' => array('wc_update_891_create_plugin_autoinstall_history_option'), '9.1.0' => array('wc_update_910_add_launch_your_store_tour_option', 'wc_update_910_remove_obsolete_user_meta'), '9.2.0' => array('wc_update_920_add_wc_hooked_blocks_version_option'), '9.3.0' => array('wc_update_930_add_woocommerce_coming_soon_option', 'wc_update_930_migrate_user_meta_for_launch_your_store_tour'), '9.4.0' => array('wc_update_940_add_phone_to_order_address_fts_index', 'wc_update_940_remove_help_panel_highlight_shown'), '9.5.0' => array('wc_update_950_tracking_option_autoload'), '9.6.1' => array('wc_update_961_migrate_default_email_base_color'), '9.8.0' => array('wc_update_980_remove_order_attribution_install_banner_dismissed_option'), '9.8.5' => array('wc_update_985_enable_new_payments_settings_page_feature'), '9.9.0' => array('wc_update_990_remove_wc_count_comments_transient', 'wc_update_990_remove_email_notes'), '10.0.0' => array('wc_update_1000_multisite_visibility_setting', 'wc_update_1000_remove_patterns_toolkit_transient'), '10.2.0' => array('wc_update_1020_add_old_refunded_order_items_to_product_lookup_table'));
         /**
          * Option name used to track new installations of WooCommerce.
          *
@@ -26810,6 +26817,14 @@ namespace {
          * @since 9.8.0
          */
         public static function enable_email_improvements_for_newly_installed()
+        {
+        }
+        /**
+         * Enable customer stock notifications signups by default for new shops.
+         *
+         * @since 0.0.0
+         */
+        public static function enable_customer_stock_notifications_signups()
         {
         }
         /**
@@ -30818,6 +30833,15 @@ namespace {
         {
         }
         /**
+         * Get the total shipping tax refunded.
+         *
+         * @since  10.2.0
+         * @return float
+         */
+        public function get_total_shipping_tax_refunded()
+        {
+        }
+        /**
          * Get the total shipping refunded.
          *
          * @since  2.4
@@ -31558,6 +31582,121 @@ namespace {
          * @param array  $old_tt_ids Old array of term taxonomy IDs.
          */
         public static function set_object_terms($object_id, $terms, $tt_ids, $taxonomy, $append, $old_tt_ids)
+        {
+        }
+        /**
+         * Regenerates attribute summaries for a list of variations.
+         *
+         * @since 10.2.0
+         * @param array $variation_ids Array of variation IDs.
+         */
+        private static function regenerate_variation_summaries($variation_ids)
+        {
+        }
+        /**
+         * Regenerates the attribute summary for a single variation.
+         *
+         * @since 10.2.0
+         * @param int $variation_id Variation ID.
+         */
+        public static function regenerate_variation_attribute_summary($variation_id)
+        {
+        }
+        /**
+         * Gets the threshold for synchronous regeneration of variation summaries.
+         *
+         * @since 10.2.0
+         * @return int
+         */
+        public static function get_variation_summaries_sync_threshold()
+        {
+        }
+        /**
+         * Handles updates to a global attribute by triggering variation summary regeneration.
+         *
+         * @since 10.2.0
+         * @param int    $attribute_id Attribute ID.
+         * @param string $attribute    Attribute name.
+         * @param string $old_slug     Old attribute slug.
+         */
+        public static function handle_global_attribute_updated($attribute_id, $attribute, $old_slug)
+        {
+        }
+        /**
+         * Regenerates variation summaries for all variations using a specific attribute taxonomy.
+         *
+         * @since 10.2.0
+         * @param string $taxonomy Attribute taxonomy.
+         */
+        public static function regenerate_attribute_variation_summaries($taxonomy)
+        {
+        }
+        /**
+         * Handles regeneration of variation summaries when a variable product's attributes are updated.
+         *
+         * @since 10.2.0
+         * @param WC_Product $product The variable product whose attributes were updated.
+         */
+        public static function on_product_attributes_updated($product)
+        {
+        }
+        /**
+         * Regenerates variation summaries for all variations of a variable product.
+         *
+         * @since 10.2.0
+         * @param int $product_id Variable product ID.
+         */
+        public static function regenerate_product_variation_summaries($product_id)
+        {
+        }
+        /**
+         * Hook called after a term is updated to handle updates for product variations.
+         *
+         * @param int    $term_id  Term ID.
+         * @param int    $tt_id    Term taxonomy ID.
+         * @param string $taxonomy Taxonomy slug.
+         */
+        public static function handle_attribute_term_updated($term_id, $tt_id, $taxonomy)
+        {
+        }
+        /**
+         * Hook called after a term is deleted to handle updates for product variations.
+         *
+         * @param int     $term_id  Term ID.
+         * @param int     $tt_id    Term taxonomy ID.
+         * @param string  $taxonomy Taxonomy slug.
+         * @param WP_Term $deleted_term Copy of the already-deleted term.
+         */
+        public static function handle_attribute_term_deleted($term_id, $tt_id, $taxonomy, $deleted_term)
+        {
+        }
+        /**
+         * Schedule an asynchronous action to regenerate product variation summaries.
+         *
+         * This method uses the WooCommerce Action Scheduler to queue a single regeneration action
+         * for product variation summaries. It first checks whether an identical action with the
+         * given arguments is already scheduled to avoid duplicate jobs. If the Action Scheduler
+         * is not available, a warning is logged instead.
+         *
+         * @param string $action_name     The name/identifier of the scheduled action (hook name).
+         * @param array  $args            Arguments to pass to the scheduled action callback.
+         * @param string $warning_message Message to log when the Action Scheduler is unavailable.
+         * @param string $group           Optional. The Action Scheduler group to associate with
+         *                                the scheduled action. Default 'woocommerce'.
+         *
+         * @return void
+         */
+        private static function schedule_variation_summary_regeneration($action_name, $args, $warning_message, $group = 'woocommerce')
+        {
+        }
+        /**
+         * Regenerates variation summaries for all variations using a specific term.
+         *
+         * @since 10.2.0
+         * @param string $taxonomy Taxonomy slug.
+         * @param string $term_slug Term slug.
+         */
+        public static function regenerate_term_variation_summaries($taxonomy, $term_slug)
         {
         }
     }
@@ -34764,21 +34903,21 @@ namespace {
          *
          * @var string cookie name
          */
-        protected $_cookie;
+        protected $_cookie = '';
         // phpcs:ignore PSR2.Classes.PropertyDeclaration.Underscore
         /**
          * Stores session expiry.
          *
-         * @var string session due to expire timestamp
+         * @var int session due to expire timestamp
          */
-        protected $_session_expiring;
+        protected $_session_expiring = 0;
         // phpcs:ignore PSR2.Classes.PropertyDeclaration.Underscore
         /**
          * Stores session due to expire timestamp.
          *
-         * @var string session expiration timestamp
+         * @var int session expiration timestamp
          */
-        protected $_session_expiration;
+        protected $_session_expiration = 0;
         // phpcs:ignore PSR2.Classes.PropertyDeclaration.Underscore
         /**
          * True when the cookie exists.
@@ -34792,7 +34931,7 @@ namespace {
          *
          * @var string Custom session table name
          */
-        protected $_table;
+        protected $_table = '';
         // phpcs:ignore PSR2.Classes.PropertyDeclaration.Underscore
         /**
          * Constructor for the session class.
@@ -34850,7 +34989,7 @@ namespace {
         {
         }
         /**
-         * Migrates a guest session to a user session.
+         * Migrates a guest session to the current user session.
          */
         private function migrate_guest_session_to_user_session()
         {
@@ -34888,7 +35027,7 @@ namespace {
          * @param string $message Value to hash.
          * @return string Hashed value.
          */
-        private function hash($message)
+        private function hash(string $message)
         {
         }
         /**
@@ -34900,7 +35039,7 @@ namespace {
          * @param string $hash Hash to verify.
          * @return bool Whether the hash is valid.
          */
-        private function verify_hash($message, $hash)
+        private function verify_hash(string $message, string $hash)
         {
         }
         /**
@@ -35026,8 +35165,8 @@ namespace {
          * This filter runs everything `wp_verify_nonce()` and `wp_create_nonce()` gets called.
          *
          * @since 5.3.0
-         * @param int    $uid    User ID.
-         * @param string $action The nonce action.
+         * @param int        $uid    User ID.
+         * @param int|string $action The nonce action.
          * @return int|string
          */
         public function maybe_update_nonce_user_logged_out($uid, $action)
@@ -35044,7 +35183,7 @@ namespace {
          *
          * @param string $customer_id Customer ID.
          * @param mixed  $default_value Default session value.
-         * @return string|array
+         * @return mixed Returns either the session data or the default value. Returns false if WP setup is in progress.
          */
         public function get_session($customer_id, $default_value = \false)
         {
@@ -35052,7 +35191,7 @@ namespace {
         /**
          * Delete the session from the cache and database.
          *
-         * @param int $customer_id Customer ID.
+         * @param string $customer_id Customer session ID.
          */
         public function delete_session($customer_id)
         {
@@ -38061,7 +38200,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '10.1.2';
+        public $version = '10.2.0';
         /**
          * WooCommerce Schema version.
          *
@@ -39998,6 +40137,17 @@ namespace {
          * @param WC_Abstract_Order $order Order object.
          */
         protected function update_order_meta_from_object($order)
+        {
+        }
+        /**
+         * Get the total shipping tax refunded.
+         *
+         * @param  WC_Order $order Order object.
+         *
+         * @since 10.2.0
+         * @return float
+         */
+        public function get_total_shipping_tax_refunded($order)
         {
         }
     }
@@ -43433,6 +43583,15 @@ namespace {
         {
         }
         /**
+         * Get attribute summary for a product.
+         *
+         * @param WC_Product $product The product object.
+         * @return string The generated attribute summary.
+         */
+        public function get_attribute_summary($product)
+        {
+        }
+        /**
          * Make sure we store the product version (to track data changes).
          *
          * @param WC_Product $product Product object.
@@ -44382,13 +44541,23 @@ namespace {
         /**
          * Apply inline styles to dynamic content.
          *
-         * We only inline CSS for html emails, and to do so we use Emogrifier library (if supported).
+         * We only inline CSS for html emails.
          *
-         * @version 4.0.0
+         * @version 10.2.0
          * @param string|null $content Content that will receive inline styles.
          * @return string
          */
         public function style_inline($content)
+        {
+        }
+        /**
+         * Apply inline styles to dynamic content using Emogrifier library (if supported).
+         *
+         * @since 10.2.0
+         * @param string|null $content Content that will receive inline styles.
+         * @return string
+         */
+        private function apply_inline_style($content)
         {
         }
         /**
@@ -48039,6 +48208,28 @@ namespace {
         }
     }
     /**
+     * Helper for PayPal gateway.
+     */
+    class WC_Gateway_Paypal_Helper
+    {
+        /**
+         * Check if the PayPal gateway is enabled.
+         *
+         * @return bool
+         */
+        public static function is_paypal_gateway_available()
+        {
+        }
+        /**
+         * Check if the merchant is eligible for migration from WPS to PPCP.
+         *
+         * @return bool
+         */
+        public static function is_orders_v2_migration_eligible()
+        {
+        }
+    }
+    /**
      * Handles Responses.
      */
     abstract class WC_Gateway_Paypal_Response
@@ -48260,6 +48451,42 @@ namespace {
          * @param string $message Email message.
          */
         protected function send_ipn_email_notification($subject, $message)
+        {
+        }
+    }
+    /**
+     * Class WC_Gateway_Paypal_Notices.
+     */
+    class WC_Gateway_Paypal_Notices
+    {
+        /**
+         * Constructor.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Add notice warning about the migration to PayPal Payments.
+         *
+         * @return void
+         */
+        public function add_paypal_migration_notice()
+        {
+        }
+        /**
+         * Add notice warning about the migration to PayPal Payments on the Payments settings page.
+         *
+         * @return void
+         */
+        public function add_paypal_migration_notice_on_payments_settings_page()
+        {
+        }
+        /**
+         * Check if the installation notice has been dismissed.
+         *
+         * @return bool
+         */
+        protected static function paypal_migration_notice_dismissed()
         {
         }
     }
@@ -62733,7 +62960,16 @@ namespace {
          * @param int    $product_id The product ID.
          * @param string $idempotency_key The idempotency key.
          */
-        public function __construct(int $product_id, string $idempotency_key)
+        public function __construct(int $product_id, string $idempotency_key = '')
+        {
+        }
+        /**
+         * Get the installation status.
+         *
+         * @return WC_WCCOM_Site_Installation_State
+         * @throws Installer_Error If installation status request failed.
+         */
+        public function get_installation_status(): \WC_WCCOM_Site_Installation_State
         {
         }
         /**
@@ -62741,7 +62977,7 @@ namespace {
          *
          * @param string $run_until_step The step to run until.
          * @return bool
-         * @throws WC_REST_WCCOM_Site_Installer_Error If installation failed to run.
+         * @throws Installer_Error If installation failed to run.
          */
         public function run_installation(string $run_until_step): bool
         {
@@ -64956,7 +65192,7 @@ namespace Automattic\WooCommerce\Vendor\Detection {
             'SamsungBrowser' => 'SamsungBrowser/[VER]',
             'Iron' => 'Iron/[VER]',
             // @note: Safari 7534.48.3 is actually Version 5.1.
-            // @note: On BlackBerry the Version is overwritten by the OS.
+            // @note: On BlackBerry the Version is overwriten by the OS.
             'Safari' => ['Version/[VER]', 'Safari/[VER]'],
             'Skyfire' => 'Skyfire/[VER]',
             'Tizen' => 'Tizen/[VER]',
@@ -71354,6 +71590,16 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Customers {
         {
         }
         /**
+         * Retrieve a customer ID by email address, regardless of user registration status.
+         * Prioritizes registered customers over guest customers when both exist.
+         *
+         * @param string $email Email address.
+         * @return false|int Customer ID if found, boolean false if not.
+         */
+        public static function get_customer_id_by_email($email)
+        {
+        }
+        /**
          * Retrieve a registered customer row id by user_id.
          *
          * @param string|int $user_id User ID.
@@ -73720,6 +73966,33 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Products {
          * Set up all the hooks for maintaining and populating table data.
          */
         public static function init()
+        {
+        }
+        /**
+         * Add a partial refund type meta to the order.
+         *
+         * @param int $order_id  Order ID.
+         * @param int $refund_id Refund ID.
+         */
+        public static function add_partial_refund_type_meta($order_id, $refund_id)
+        {
+        }
+        /**
+         * Add a full refund type meta to the order.
+         *
+         * @param int $order_id  Order ID.
+         * @param int $refund_id Refund ID.
+         */
+        public static function add_full_refund_type_meta($order_id, $refund_id)
+        {
+        }
+        /**
+         * Add a refund type meta to the order.
+         *
+         * @param int    $refund_id Refund ID.
+         * @param string $type      Refund type.
+         */
+        public static function add_refund_type_meta($refund_id, $type)
         {
         }
         /**
@@ -83813,11 +84086,13 @@ namespace Automattic\WooCommerce\Admin\Overrides {
         /**
          * Calculate shipping amount for line item/product as a total shipping amount ratio based on quantity.
          *
-         * @param WC_Order_Item $item Line item from order.
+         * @param WC_Order_Item $item              Line item from order.
+         * @param int           $order_items_count (optional) The number of order items in an order. This could be the remaining items left to refund.
+         * @param float         $shipping_amount   (optional) The shipping fee amount in an order. This could be the remaining shipping amount left to refund.
          *
          * @return float|int
          */
-        public function get_item_shipping_amount($item)
+        public function get_item_shipping_amount($item, $order_items_count = null, $shipping_amount = null)
         {
         }
         /**
@@ -83828,10 +84103,12 @@ namespace Automattic\WooCommerce\Admin\Overrides {
          * @todo If WC is currently not tax enabled, but it was before (or vice versa), would this work correctly?
          *
          * @param WC_Order_Item $item Line item from order.
+         * @param int           $order_items_count   (optional) The number of order items in an order. This could be the remaining items left to refund.
+         * @param float         $shipping_tax_amount (optional) The shipping tax amount in an order. This could be the remaining shipping tax amount left to refund.
          *
          * @return float|int
          */
-        public function get_item_shipping_tax_amount($item)
+        public function get_item_shipping_tax_amount($item, $order_items_count = null, $shipping_tax_amount = null)
         {
         }
         /**
@@ -83844,6 +84121,16 @@ namespace Automattic\WooCommerce\Admin\Overrides {
          * @return float
          */
         public function get_item_coupon_amount($item)
+        {
+        }
+        /**
+         * Calculate cart tax amount for line item/product.
+         *
+         * @param WC_Order_Item $item Line item from order.
+         *
+         * @return float
+         */
+        public function get_item_cart_tax_amount($item)
         {
         }
     }
@@ -88320,6 +88607,12 @@ namespace Automattic\WooCommerce\Blocks {
         {
         }
         /**
+         * Dequeue legacy scripts that have no usage with block themes.
+         */
+        public function dequeue_legacy_scripts()
+        {
+        }
+        /**
          * Renders the `core/template-part` block on the server.
          *
          * This is done because the core handling for template parts only supports templates from the current theme, not
@@ -88329,32 +88622,6 @@ namespace Automattic\WooCommerce\Blocks {
          * @return string The render.
          */
         public function render_woocommerce_template_part($attributes)
-        {
-        }
-        /**
-         * This function is used on the `pre_get_block_template` hook to return the fallback template from the db in case
-         * the template is eligible for it.
-         *
-         * Currently, the Products by Category, Products by Tag and Products by Attribute templates fall back to the
-         * Product Catalog template. That means that if there are customizations in the Product Catalog template,
-         * they are also reflected in the other templates as long as they haven't been customized as well.
-         *
-         * @param \WP_Block_Template|null $template Block template object to short-circuit the default query,
-         *                                          or null to allow WP to run its normal queries.
-         * @param string                  $id Template unique identifier (example: theme_slug//template_slug).
-         * @param string                  $template_type wp_template or wp_template_part.
-         *
-         * @return object|null
-         */
-        public function get_block_template_fallback($template, $id, $template_type)
-        {
-        }
-        /**
-         * Adds the fallback template to the template hierarchy.
-         *
-         * @param array $template_hierarchy A list of template candidates, in descending order of priority.
-         */
-        public function add_fallback_template_to_hierarchy($template_hierarchy)
         {
         }
         /**
@@ -88413,25 +88680,35 @@ namespace Automattic\WooCommerce\Blocks {
         {
         }
         /**
-         * Add the block template objects to be used.
+         * Run hooks on block templates.
+         *
+         * @param array $templates The block templates.
+         * @return array The block templates.
+         */
+        public function run_hooks_on_block_templates($templates)
+        {
+        }
+        /**
+         * Add the block template objects currently saved in the database with the WooCommerce slug.
+         * That is, templates that have been customised before WooCommerce started to use the
+         * Template Registration API.
          *
          * @param array  $query_result Array of template objects.
          * @param array  $query Optional. Arguments to retrieve templates.
          * @param string $template_type wp_template or wp_template_part.
          * @return array
          */
-        public function add_block_templates($query_result, $query, $template_type)
+        public function add_db_templates_with_woo_slug($query_result, $query, $template_type)
         {
         }
         /**
-         * Gets the templates saved in the database.
+         * When creating a template from the WP suggestion, don't load the templates with the WooCommerce slug.
+         * Otherwise they take precedence and the new template can't be created.
          *
-         * @param array  $slugs An array of slugs to retrieve templates for.
-         * @param string $template_type wp_template or wp_template_part.
-         *
-         * @return int[]|\WP_Post[] An array of found templates.
+         * @param stdClass $prepared_post An object representing a single post prepared
+         *                                for inserting or updating the database.
          */
-        public function get_block_templates_from_db($slugs = array(), $template_type = 'wp_template')
+        public function dont_load_templates_for_suggestions($prepared_post)
         {
         }
         /**
@@ -89655,15 +89932,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes\AddToCartWithOptions {
         {
         }
         /**
-         * Get standardized quantity input arguments for WooCommerce quantity input.
-         *
-         * @param \WC_Product $product The product object.
-         * @return array Arguments for woocommerce_quantity_input().
-         */
-        public static function get_quantity_input_args($product)
-        {
-        }
-        /**
          * Make the quantity input interactive by wrapping it with the necessary data attribute and adding an input event listener.
          *
          * @param string   $quantity_html The quantity HTML.
@@ -89711,6 +89979,15 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes\AddToCartWithOptions {
          * @return bool True if min and max purchase quantity are the same, false otherwise.
          */
         public static function is_min_max_quantity_same($product)
+        {
+        }
+        /**
+         * Get the quantity constraints for a product.
+         *
+         * @param \WC_Product $product The product to get the quantity constraints for.
+         * @return array The quantity constraints.
+         */
+        public static function get_product_quantity_constraints($product)
         {
         }
     }
@@ -91096,7 +91373,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          *                           Note, this will be empty in the editor context when the block is
          *                           not in the post content on editor load.
          */
-        protected function enqueue_data(array $attributes = [])
+        protected function enqueue_data(array $attributes = array())
         {
         }
         /**
@@ -91105,6 +91382,27 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * This is needed if a block is not yet within the post content--`render` and `enqueue_assets` may not have ran.
          */
         public function enqueue_block_assets()
+        {
+        }
+        /**
+         * Enqueue assets specific to this block.
+         *
+         * @param array    $attributes Block attributes.
+         * @param string   $content Block content.
+         * @param WP_Block $block Block instance.
+         */
+        protected function enqueue_assets($attributes, $content, $block)
+        {
+        }
+        /**
+         * Enqueue legacy assets when this block is used as we don't enqueue them for block themes anymore.
+         *
+         * Note: This enqueue logic is intentionally duplicated in ProductImageGallery.php
+         * to keep legacy blocks independent and allow for separate deprecation paths.
+         *
+         * @see https://github.com/woocommerce/woocommerce/pull/60223
+         */
+        public function enqueue_legacy_assets()
         {
         }
         /**
@@ -91387,6 +91685,46 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @return null This block has no frontend script.
          */
         protected function get_block_type_script($key = null)
+        {
+        }
+    }
+    /**
+     * EmailContent class.
+     */
+    class EmailContent extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'email-content';
+        /**
+         * Get the editor script handle for this block type.
+         *
+         * @param string $key Data to get, or default to everything.
+         * @return array|string
+         */
+        protected function get_block_type_editor_script($key = null)
+        {
+        }
+        /**
+         * Get the frontend script handle for this block type.
+         *
+         * @param string $key Data to get, or default to everything.
+         */
+        protected function get_block_type_script($key = null)
+        {
+        }
+        /**
+         * Renders Woo content placeholder to be replaced by content during sending.
+         *
+         * @param array     $attributes Block attributes.
+         * @param string    $content Block content.
+         * @param \WP_Block $block Block instance.
+         * @return string Rendered block output.
+         */
+        protected function render($attributes, $content, $block)
         {
         }
     }
@@ -92101,6 +92439,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
+         * Echoes the Interactivity API Mini Cart overlay markup.
+         *
+         * @return void
+         */
+        public function render_experimental_iapi_mini_cart_overlay()
+        {
+        }
+        /**
          * Process template contents to remove unwanted div wrappers.
          *
          * The old Mini Cart template had extra divs nested within the block tags
@@ -92433,6 +92779,24 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         protected function render_experimental_iapi_markup($attributes, $content, $block)
         {
         }
+        /**
+         * Render markup for product details.
+         *
+         * @param string $property The property to render in the product details markup.
+         * @return string Rendered product details output.
+         */
+        protected function render_experimental_iapi_product_details_markup($property)
+        {
+        }
+        /**
+         * Render markup for a single product detail item.
+         *
+         * @param string $tag_name The HTML tag to use for the item.
+         * @return string Rendered product detail item output.
+         */
+        private function render_experimental_iapi_product_details_item_markup($tag_name)
+        {
+        }
     }
     /**
      * MiniCartShoppingButtonBlock class.
@@ -92572,6 +92936,31 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @return string Rendered block type output.
          */
         protected function render_experimental_iapi_title_label_block($attributes, $content, $block)
+        {
+        }
+    }
+    /**
+     * ProductGalleryLargeImage class.
+     */
+    class NextPreviousButtons extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    {
+        use \Automattic\WooCommerce\Blocks\BlockTypes\EnableBlockJsonAssetsTrait;
+        /**
+         * Block name. Block has been initially created for Product Gallery Large Image block
+         * hence the slug is related to this block. But it can be used for other blocks as well.
+         *
+         * @var string
+         */
+        protected $block_name = 'product-gallery-large-image-next-previous';
+        /**
+         * Include and render the block.
+         *
+         * @param array    $attributes Block attributes. Default empty array.
+         * @param string   $content    Block content. Default empty string.
+         * @param WP_Block $block      Block instance.
+         * @return string Rendered block type output.
+         */
+        protected function render($attributes, $content, $block)
         {
         }
     }
@@ -94766,7 +95155,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes\ProductCollection {
          *     }
          * }
          */
-        public function provide_location_context_for_inner_blocks($context)
+        public function extend_context_for_inner_blocks($context)
         {
         }
         /**
@@ -95028,6 +95417,14 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
+         * Enqueue legacy assets when this block is used as we don't enqueue them for block themes anymore.
+         *
+         * @see https://github.com/woocommerce/woocommerce/pull/60223
+         */
+        public function enqueue_legacy_assets()
+        {
+        }
+        /**
          * Previously, the Product Details block was a standalone block. It doesn't
          * have any inner blocks and it rendered the tabs directly like the classic
          * template. When upgrading, we want the existing stores using the block to
@@ -95138,17 +95535,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @param string $transient The transient name.
          */
         public function delete_default_attribute_id_transient($transient)
-        {
-        }
-        /**
-         * Register the query param keys.
-         *
-         * @param array $filter_param_keys The active filters data.
-         * @param array $url_param_keys    The query param parsed from the URL.
-         *
-         * @return array Active filters param keys.
-         */
-        public function get_filter_query_param_keys($filter_param_keys, $url_param_keys)
         {
         }
         /**
@@ -95359,17 +95745,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
-         * Register the query param keys.
-         *
-         * @param array $filter_param_keys The active filters data.
-         * @param array $url_param_keys    The query param parsed from the URL.
-         *
-         * @return array Active filters param keys.
-         */
-        public function get_filter_query_param_keys($filter_param_keys, $url_param_keys)
-        {
-        }
-        /**
          * Render the block.
          *
          * @param array    $attributes Block attributes.
@@ -95434,17 +95809,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * - Register the block with WordPress.
          */
         protected function initialize()
-        {
-        }
-        /**
-         * Register the query param keys.
-         *
-         * @param array $filter_param_keys The active filters data.
-         * @param array $url_param_keys    The query param parsed from the URL.
-         *
-         * @return array Active filters param keys.
-         */
-        public function get_filter_query_param_keys($filter_param_keys, $url_param_keys)
         {
         }
         /**
@@ -95549,17 +95913,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
-         * Register the query param keys.
-         *
-         * @param array $filter_param_keys The active filters data.
-         * @param array $url_param_keys    The query param parsed from the URL.
-         *
-         * @return array Active filters param keys.
-         */
-        public function get_filter_query_param_keys($filter_param_keys, $url_param_keys)
-        {
-        }
-        /**
          * Prepare the active filter items.
          *
          * @param array $items  The active filter items.
@@ -95628,6 +95981,27 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          */
         protected $block_name = 'product-filter-taxonomy';
         /**
+         * Prepare the active filter items.
+         *
+         * @internal For exclusive usage of WooCommerce core, backwards compatibility not guaranteed.
+         *
+         * @param array $items  The active filter items.
+         * @param array $params The query param parsed from the URL.
+         * @return array Active filters items.
+         */
+        public function prepare_selected_filters($items, $params)
+        {
+        }
+        /**
+         * Initialize this block type.
+         *
+         * - Hook into WP lifecycle.
+         * - Register the block with WordPress.
+         */
+        protected function initialize()
+        {
+        }
+        /**
          * Extra data passed through from server to client for block.
          *
          * @param array $attributes  Any attributes that currently are available from the block.
@@ -95638,11 +96012,103 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
+         * Get the frontend script handle for this block type.
+         *
+         * @see $this->register_block_type()
+         * @param string $key Data to get, or default to everything.
+         * @return array|string|null
+         */
+        protected function get_block_type_script($key = null)
+        {
+        }
+        /**
+         * Render the block.
+         *
+         * @param array    $block_attributes Block attributes.
+         * @param string   $content          Block content.
+         * @param WP_Block $block            Block instance.
+         * @return string Rendered block type output.
+         */
+        protected function render($block_attributes, $content, $block)
+        {
+        }
+        /**
+         * Get terms sorted based on taxonomy type (hierarchical vs flat).
+         *
+         * @param string $taxonomy        Taxonomy slug.
+         * @param array  $taxonomy_counts Term counts with term_id as key.
+         * @param bool   $hide_empty      Whether to hide empty terms.
+         * @param string $orderby         Sort field (name, count, menu_order).
+         * @param string $order           Sort direction (ASC, DESC).
+         * @return array Sorted terms array.
+         */
+        private function get_sorted_terms($taxonomy, $taxonomy_counts, $hide_empty, $orderby, $order)
+        {
+        }
+        /**
+         * Retrieve the taxonomy term counts for current block.
+         *
+         * @param WP_Block $block    Block instance.
+         * @param string   $taxonomy Taxonomy slug.
+         * @return array Term counts with term_id as key and count as value.
+         */
+        private function get_taxonomy_term_counts($block, $taxonomy)
+        {
+        }
+        /**
          * Get product taxonomies for the block.
          *
          * @return array
          */
         private function get_taxonomies()
+        {
+        }
+        /**
+         * Sort hierarchical terms recursively maintaining parent-child relationships.
+         *
+         * @param array  $terms           Hierarchical terms array with children.
+         * @param string $orderby         Sort field (name, count, menu_order).
+         * @param string $order           Sort direction (ASC, DESC).
+         * @param array  $taxonomy_counts Context-aware term counts.
+         * @return array Sorted hierarchical terms.
+         */
+        private function sort_hierarchy_terms($terms, $orderby, $order, $taxonomy_counts)
+        {
+        }
+        /**
+         * Flatten hierarchical term tree into flat array maintaining depth-first order.
+         *
+         * @param array $terms  Hierarchical terms with children structure.
+         * @param array $result Reference to result array being built.
+         * @param array $visited_ids Reference to array tracking visited term IDs to prevent circular references.
+         * @param int   $depth Current recursion depth for bounds checking.
+         */
+        private function flatten_terms_list($terms, &$result, &$visited_ids = array(), $depth = 0)
+        {
+        }
+        /**
+         * Get taxonomy terms ordered hierarchically.
+         *
+         * @param string $taxonomy        Taxonomy slug.
+         * @param array  $taxonomy_counts Term counts with term_id as key.
+         * @param bool   $hide_empty      Whether to hide empty terms.
+         * @param string $orderby         Sort field for siblings (name, count, menu_order).
+         * @param string $order           Sort direction (ASC, DESC).
+         * @return array|\WP_Error Hierarchically ordered terms or error.
+         */
+        private function get_hierarchical_terms(string $taxonomy, array $taxonomy_counts, bool $hide_empty, string $orderby, string $order)
+        {
+        }
+        /**
+         * Sort terms by the specified criteria (name or count).
+         *
+         * @param array  $terms           Array of term objects to sort.
+         * @param string $orderby         Sort field (name, count, menu_order).
+         * @param string $order           Sort direction (ASC, DESC).
+         * @param array  $taxonomy_counts Context-aware term counts.
+         * @return array Sorted terms.
+         */
+        private function sort_terms_by_criteria(array $terms, string $orderby, string $order, array $taxonomy_counts): array
         {
         }
     }
@@ -95908,67 +96374,17 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         }
     }
     /**
-     * ProductGalleryLargeImage class.
-     */
-    class ProductGalleryLargeImageNextPrevious extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
-    {
-        /**
-         * Block name.
-         *
-         * @var string
-         */
-        protected $block_name = 'product-gallery-large-image-next-previous';
-        /**
-         * It isn't necessary register block assets because it is a server side block.
-         */
-        protected function register_block_type_assets()
-        {
-        }
-        /**
-         * Get the frontend style handle for this block type.
-         *
-         * @return null
-         */
-        protected function get_block_type_style()
-        {
-        }
-        /**
-         * Include and render the block.
-         *
-         * @param array    $attributes Block attributes. Default empty array.
-         * @param string   $content    Block content. Default empty string.
-         * @param WP_Block $block      Block instance.
-         * @return string Rendered block type output.
-         */
-        protected function render($attributes, $content, $block)
-        {
-        }
-    }
-    /**
      * ProductGalleryThumbnails class.
      */
     class ProductGalleryThumbnails extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
     {
+        use \Automattic\WooCommerce\Blocks\BlockTypes\EnableBlockJsonAssetsTrait;
         /**
          * Block name.
          *
          * @var string
          */
         protected $block_name = 'product-gallery-thumbnails';
-        /**
-         * It isn't necessary register block assets because it is a server side block.
-         */
-        protected function register_block_type_assets()
-        {
-        }
-        /**
-         * Get the frontend style handle for this block type.
-         *
-         * @return null
-         */
-        protected function get_block_type_style()
-        {
-        }
         /**
          *  Register the context
          *
@@ -96106,6 +96522,27 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @return string[]
          */
         protected function get_block_type_uses_context()
+        {
+        }
+        /**
+         * Enqueue assets specific to this block.
+         *
+         * @param array    $attributes Block attributes.
+         * @param string   $content Block content.
+         * @param WP_Block $block Block instance.
+         */
+        protected function enqueue_assets($attributes, $content, $block)
+        {
+        }
+        /**
+         * Enqueue legacy assets when this block is used as we don't enqueue them for block themes anymore.
+         *
+         * Note: This enqueue logic is intentionally duplicated in ClassicTemplate.php
+         * to keep legacy blocks independent and allow for separate deprecation paths.
+         *
+         * @see https://github.com/woocommerce/woocommerce/pull/60223
+         */
+        public function enqueue_legacy_assets()
         {
         }
         /**
@@ -96987,16 +97424,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         protected function render($attributes, $content, $block)
         {
         }
-        /**
-         * Extra data passed through from server to client for block.
-         *
-         * @param array $attributes  Any attributes that currently are available from the block.
-         *                           Note, this will be empty in the editor context when the block is
-         *                           not in the post content on editor load.
-         */
-        protected function enqueue_data(array $attributes = [])
-        {
-        }
     }
     /**
      * ProductSpecifications class.
@@ -97620,22 +98047,13 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes\Reviews {
      */
     class ProductReviewForm extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
     {
+        use \Automattic\WooCommerce\Blocks\BlockTypes\EnableBlockJsonAssetsTrait;
         /**
          * Block name.
          *
          * @var string
          */
         protected $block_name = 'product-review-form';
-        /**
-         * Get the frontend script handle for this block type.
-         *
-         * @see $this->register_block_type()
-         * @param string $key Data to get, or default to everything.
-         * @return array|string|null
-         */
-        protected function get_block_type_script($key = null)
-        {
-        }
         /**
          * Render the block.
          *
@@ -97645,6 +98063,12 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes\Reviews {
          * @return string Rendered block content.
          */
         protected function render($attributes, $content, $block)
+        {
+        }
+        /**
+         * Render stars for rating selector.
+         */
+        private function render_stars()
         {
         }
     }
@@ -101802,6 +102226,12 @@ namespace Automattic\WooCommerce\Blocks\Templates {
          */
         const SLUG = '';
         /**
+         * Whether this is a taxonomy template.
+         *
+         * @var bool
+         */
+        public bool $is_taxonomy_template = false;
+        /**
          * Initialization method.
          */
         abstract public function init();
@@ -101970,6 +102400,40 @@ namespace Automattic\WooCommerce\Blocks\Templates {
          * @var string
          */
         public $template_area;
+    }
+    /**
+     * AbstractTemplateWithFallback class.
+     *
+     * Shared logic for templates with fallbacks.
+     *
+     * @internal
+     */
+    abstract class AbstractTemplateWithFallback extends \Automattic\WooCommerce\Blocks\Templates\AbstractTemplate
+    {
+        /**
+         * The fallback template to render if the existing template is not available.
+         *
+         * @var string
+         */
+        public string $fallback_template;
+        /**
+         * Initialization method.
+         */
+        public function init()
+        {
+        }
+        /**
+         * Add the fallback template to the hierarchy, right after the current template.
+         *
+         * @param array $templates Templates that match the taxonomy_template_hierarchy.
+         */
+        public function template_hierarchy($templates)
+        {
+        }
+        /**
+         * Render the block template.
+         */
+        abstract public function render_block_template();
     }
     /**
      * ArchiveProductTemplatesCompatibility class.
@@ -102154,12 +102618,6 @@ namespace Automattic\WooCommerce\Blocks\Templates {
          */
         const SLUG = 'page-cart';
         /**
-         * Initialization method.
-         */
-        public function init()
-        {
-        }
-        /**
          * Returns the title of the template.
          *
          * @return string
@@ -102173,12 +102631,6 @@ namespace Automattic\WooCommerce\Blocks\Templates {
          * @return string
          */
         public function get_template_description()
-        {
-        }
-        /**
-         * Renders the default block template from Woo Blocks if no theme templates exist.
-         */
-        public function render_block_template()
         {
         }
         /**
@@ -102266,12 +102718,6 @@ namespace Automattic\WooCommerce\Blocks\Templates {
          */
         const SLUG = 'page-checkout';
         /**
-         * Initialization method.
-         */
-        public function init()
-        {
-        }
-        /**
          * Returns the title of the template.
          *
          * @return string
@@ -102285,12 +102731,6 @@ namespace Automattic\WooCommerce\Blocks\Templates {
          * @return string
          */
         public function get_template_description()
-        {
-        }
-        /**
-         * Renders the default block template from Woo Blocks if no theme templates exist.
-         */
-        public function render_block_template()
         {
         }
         /**
@@ -102686,7 +103126,7 @@ namespace Automattic\WooCommerce\Blocks\Templates {
      *
      * @internal
      */
-    class ProductAttributeTemplate extends \Automattic\WooCommerce\Blocks\Templates\AbstractTemplate
+    class ProductAttributeTemplate extends \Automattic\WooCommerce\Blocks\Templates\AbstractTemplateWithFallback
     {
         /**
          * The slug of the template.
@@ -102699,13 +103139,7 @@ namespace Automattic\WooCommerce\Blocks\Templates {
          *
          * @var string
          */
-        public $fallback_template = \Automattic\WooCommerce\Blocks\Templates\ProductCatalogTemplate::SLUG;
-        /**
-         * Initialization method.
-         */
-        public function init()
-        {
-        }
+        public string $fallback_template = \Automattic\WooCommerce\Blocks\Templates\ProductCatalogTemplate::SLUG;
         /**
          * Returns the title of the template.
          *
@@ -102733,7 +103167,7 @@ namespace Automattic\WooCommerce\Blocks\Templates {
          *
          * @param array $templates Templates that match the product attributes taxonomy.
          */
-        public function update_taxonomy_template_hierarchy($templates)
+        public function template_hierarchy($templates)
         {
         }
     }
@@ -102742,7 +103176,7 @@ namespace Automattic\WooCommerce\Blocks\Templates {
      *
      * @internal
      */
-    class ProductBrandTemplate extends \Automattic\WooCommerce\Blocks\Templates\AbstractTemplate
+    class ProductBrandTemplate extends \Automattic\WooCommerce\Blocks\Templates\AbstractTemplateWithFallback
     {
         /**
          * The slug of the template.
@@ -102755,13 +103189,13 @@ namespace Automattic\WooCommerce\Blocks\Templates {
          *
          * @var string
          */
-        public $fallback_template = \Automattic\WooCommerce\Blocks\Templates\ProductCatalogTemplate::SLUG;
+        public string $fallback_template = \Automattic\WooCommerce\Blocks\Templates\ProductCatalogTemplate::SLUG;
         /**
-         * Initialization method.
+         * Whether this is a taxonomy template.
+         *
+         * @var bool
          */
-        public function init()
-        {
-        }
+        public bool $is_taxonomy_template = true;
         /**
          * Returns the title of the template.
          *
@@ -102845,7 +103279,7 @@ namespace Automattic\WooCommerce\Blocks\Templates {
      *
      * @internal
      */
-    class ProductCategoryTemplate extends \Automattic\WooCommerce\Blocks\Templates\AbstractTemplate
+    class ProductCategoryTemplate extends \Automattic\WooCommerce\Blocks\Templates\AbstractTemplateWithFallback
     {
         /**
          * The slug of the template.
@@ -102858,13 +103292,13 @@ namespace Automattic\WooCommerce\Blocks\Templates {
          *
          * @var string
          */
-        public $fallback_template = \Automattic\WooCommerce\Blocks\Templates\ProductCatalogTemplate::SLUG;
+        public string $fallback_template = \Automattic\WooCommerce\Blocks\Templates\ProductCatalogTemplate::SLUG;
         /**
-         * Initialization method.
+         * Whether this is a taxonomy template.
+         *
+         * @var bool
          */
-        public function init()
-        {
-        }
+        public bool $is_taxonomy_template = true;
         /**
          * Returns the title of the template.
          *
@@ -102943,7 +103377,7 @@ namespace Automattic\WooCommerce\Blocks\Templates {
      *
      * @internal
      */
-    class ProductTagTemplate extends \Automattic\WooCommerce\Blocks\Templates\AbstractTemplate
+    class ProductTagTemplate extends \Automattic\WooCommerce\Blocks\Templates\AbstractTemplateWithFallback
     {
         /**
          * The slug of the template.
@@ -102956,13 +103390,13 @@ namespace Automattic\WooCommerce\Blocks\Templates {
          *
          * @var string
          */
-        public $fallback_template = \Automattic\WooCommerce\Blocks\Templates\ProductCatalogTemplate::SLUG;
+        public string $fallback_template = \Automattic\WooCommerce\Blocks\Templates\ProductCatalogTemplate::SLUG;
         /**
-         * Initialization method.
+         * Whether this is a taxonomy template.
+         *
+         * @var bool
          */
-        public function init()
-        {
-        }
+        public bool $is_taxonomy_template = true;
         /**
          * Returns the title of the template.
          *
@@ -103504,16 +103938,6 @@ namespace Automattic\WooCommerce\Blocks\Utils {
         {
         }
         /**
-         * Checks if we can fall back to an `archive-product` template stored on the db for a given slug.
-         *
-         * @param string $template_slug Slug to check for fallbacks.
-         * @param array  $db_templates Templates that have already been found on the db.
-         * @return boolean
-         */
-        public static function template_is_eligible_for_fallback_from_db($template_slug, $db_templates)
-        {
-        }
-        /**
          * Gets the `archive-product` fallback template stored on the db for a given slug.
          *
          * @param string $template_slug Slug to check for fallbacks.
@@ -103524,45 +103948,17 @@ namespace Automattic\WooCommerce\Blocks\Utils {
         {
         }
         /**
-         * Checks if we can fall back to the `archive-product` file template for a given slug in the current theme.
-         *
-         * `taxonomy-product_cat`, `taxonomy-product_tag`, `taxonomy-attribute` templates can
-         *  generally use the `archive-product` as a fallback if there are no specific overrides.
-         *
-         * @param string $template_slug Slug to check for fallbacks.
-         * @return boolean
-         */
-        public static function template_is_eligible_for_fallback_from_theme($template_slug)
-        {
-        }
-        /**
-         * Sets the `has_theme_file` to `true` for templates with fallbacks
-         *
-         * There are cases (such as tags, categories and attributes) in which fallback templates
-         * can be used; so, while *technically* the theme doesn't have a specific file
-         * for them, it is important that we tell Gutenberg that we do, in fact,
-         * have a theme file (i.e. the fallback one).
-         *
-         * **Note:** this function changes the array that has been passed.
-         *
-         * It returns `true` if anything was changed, `false` otherwise.
-         *
-         * @param array  $query_result Array of template objects.
-         * @param object $template A specific template object which could have a fallback.
-         *
-         * @return boolean
-         */
-        public static function set_has_theme_file_if_fallback_is_available($query_result, $template)
-        {
-        }
-        /**
-         * Removes templates that were added to a theme's block-templates directory, but already had a customised version saved in the database.
+         * Removes templates from the theme or WooCommerce which have the same slug
+         * as template saved in the database with the `woocommerce/woocommerce` theme.
+         * Before WC migrated to the Template Registration API from WordPress, templates
+         * were saved in the database with the `woocommerce/woocommerce` theme instead
+         * of the theme's slug.
          *
          * @param \WP_Block_Template[]|\stdClass[] $templates List of templates to run the filter on.
          *
          * @return array List of templates with duplicates removed. The customised alternative is preferred over the theme default.
          */
-        public static function remove_theme_templates_with_custom_alternative($templates)
+        public static function remove_templates_with_custom_alternative($templates)
         {
         }
         /**
@@ -103570,11 +103966,10 @@ namespace Automattic\WooCommerce\Blocks\Utils {
          * WooCommerce default template when there is a customized template based on the theme template.
          *
          * @param \WP_Block_Template[]|\stdClass[] $templates  List of templates to run the filter on.
-         * @param string                           $theme_slug Slug of the theme currently active.
          *
          * @return array Filtered list of templates with only relevant templates available.
          */
-        public static function remove_duplicate_customized_templates($templates, $theme_slug)
+        public static function remove_duplicate_customized_templates($templates)
         {
         }
         /**
@@ -103629,7 +104024,7 @@ namespace Automattic\WooCommerce\Blocks\Utils {
          * @param array  $slugs An array of slugs to retrieve templates for.
          * @param string $template_type wp_template or wp_template_part.
          *
-         * @return int[]|\WP_Post[] An array of found templates.
+         * @return \WP_Block_Template[] An array of found templates.
          */
         public static function get_block_templates_from_db($slugs = array(), $template_type = 'wp_template')
         {
@@ -108051,7 +108446,25 @@ namespace Automattic\WooCommerce\Internal\CostOfGoodsSold {
 }
 namespace Automattic\WooCommerce\Internal\ProductFilters\Interfaces {
     /**
+     * MainQueryClausesGenerator interface.
+     *
+     * @internal For exclusive usage of WooCommerce core, backwards compatibility not guaranteed.
+     */
+    interface MainQueryClausesGenerator
+    {
+        /**
+         * Add conditional query clauses for main query based on the filter params in query vars.
+         *
+         * @param array     $args     Query args.
+         * @param \WP_Query $wp_query WP_Query object.
+         * @return array
+         */
+        public function add_query_clauses_for_main_query(array $args, \WP_Query $wp_query): array;
+    }
+    /**
      * QueryClausesGenerator interface.
+     *
+     * @internal For exclusive usage of WooCommerce core, backwards compatibility not guaranteed.
      */
     interface QueryClausesGenerator
     {
@@ -108062,7 +108475,7 @@ namespace Automattic\WooCommerce\Internal\ProductFilters\Interfaces {
          * @param \WP_Query $wp_query WP_Query object.
          * @return array
          */
-        public function add_query_clauses(array $args, \WP_Query $wp_query);
+        public function add_query_clauses(array $args, \WP_Query $wp_query): array;
     }
 }
 namespace Automattic\WooCommerce\Internal\Traits {
@@ -114022,19 +114435,19 @@ namespace Automattic\WooCommerce\StoreApi {
          *
          * @var string
          */
-        protected $token;
+        protected $token = '';
         /**
          * Table name for session data.
          *
          * @var string Custom session table name
          */
-        protected $table;
+        protected $table = '';
         /**
          * Expiration timestamp.
          *
          * @var int
          */
-        protected $session_expiration;
+        protected $session_expiration = 0;
         /**
          * Constructor for the session class.
          */
@@ -114058,8 +114471,7 @@ namespace Automattic\WooCommerce\StoreApi {
          *
          * @param string $customer_id Customer ID.
          * @param mixed  $default_value Default session value.
-         *
-         * @return string|array|bool
+         * @return mixed Returns either the session data or the default value. Returns false if WP setup is in progress.
          */
         public function get_session($customer_id, $default_value = false)
         {
@@ -115139,7 +115551,7 @@ namespace Automattic\WooCommerce\StoreApi\Utilities {
          * @param \WP_Query $wp_query WP_Query object.
          * @return array
          */
-        public function add_query_clauses(array $args, \WP_Query $wp_query)
+        public function add_query_clauses(array $args, \WP_Query $wp_query): array
         {
         }
         /**
@@ -116256,6 +116668,14 @@ namespace Automattic\WooCommerce\Utilities {
         public static function remove_status_prefix(string $status): string
         {
         }
+        /**
+         * Checks if the new full refund data is used.
+         *
+         * @return bool
+         */
+        public static function uses_new_full_refund_data()
+        {
+        }
     }
     /**
      * A class of utilities for dealing with plugins.
@@ -116656,6 +117076,7 @@ namespace {
     }
     /**
      * Get all WooCommerce screen ids.
+     * Note, among other things, this is used to conditionally load some assets. See class-wc-admin-assets.php.
      *
      * @return array
      */
@@ -123921,7 +124342,7 @@ namespace {
     /**
      * Function for recounting product terms, ignoring hidden products.
      *
-     * This is used as the update_count_callback for the Product Category and Product Tag
+     * This is used as the update_count_callback for the Product Category, Product Tag, and Product Brand
      * taxonomies. By default, it actually calculates two (possibly different) counts for each
      * term, which it stores in two different places. The first count is the one done by WordPress
      * itself, and is based on the status of the objects that are assigned the terms. In this case,
