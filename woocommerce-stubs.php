@@ -7179,6 +7179,11 @@ namespace {
     }
     /**
      * WC_Admin_Assets Class.
+     *
+     * These scripts are enqueued in the admin of the store.  The registered script handles in this class
+     * can be used to enqueue the scripts in the admin by third party plugins and the handles will follow
+     * WooCommerce's L-1 support policy.  Scripts registered outside of this class do not guarantee support
+     * and can be removed in future versions of WooCommerce.
      */
     class WC_Admin_Assets
     {
@@ -7186,12 +7191,6 @@ namespace {
          * Hook in tabs.
          */
         public function __construct()
-        {
-        }
-        /**
-         * Add warnings for deprecated script handles.
-         */
-        public function add_legacy_script_warnings()
         {
         }
         /**
@@ -19233,12 +19232,6 @@ namespace {
         {
         }
         /**
-         * Remove the draft order from the session and delete it.
-         */
-        private function remove_draft_order()
-        {
-        }
-        /**
          * Remove shipping data for all packages from session.
          *
          * @return void
@@ -21693,6 +21686,18 @@ namespace {
          * @return bool True if the country is known to us, false otherwise.
          */
         public function country_exists($country_code)
+        {
+        }
+        /**
+         * Searches for a valid ISO 3166-1 alpha-2 code using the provided alpha-3 code.
+         *
+         * @since 10.3.0
+         * @param string $country_code The alpha-3 country code to search for.
+         * @return string|null The alpha-2 country code, or null if not found.
+         *
+         * @throws \Exception If an error occurs while looking up the country code.
+         */
+        public function get_country_from_alpha_3_code($country_code)
         {
         }
         /**
@@ -25898,6 +25903,11 @@ namespace {
     }
     /**
      * Frontend scripts class.
+     *
+     * These scripts are enqueued in the frontend of the store.  The registered script handles in this class
+     * can be used to enqueue the scripts in the frontend by third party plugins and the handles will follow
+     * WooCommerce's L-1 support policy.  Scripts registered outside of this class do not guarantee support
+     * and can be removed in future versions of WooCommerce.
      */
     class WC_Frontend_Scripts
     {
@@ -25923,12 +25933,6 @@ namespace {
          * Hook in methods.
          */
         public static function init()
-        {
-        }
-        /**
-         * Add warnings for deprecated script handles.
-         */
-        public static function add_legacy_script_warnings()
         {
         }
         /**
@@ -38406,7 +38410,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '10.3.0';
+        public $version = '10.3.4';
         /**
          * WooCommerce Schema version.
          *
@@ -48762,9 +48766,11 @@ namespace {
         const PAYPAL_ORDER_ITEM_NAME_MAX_LENGTH = 127;
         const PAYPAL_INVOICE_ID_MAX_LENGTH = 127;
         const PAYPAL_ADDRESS_LINE_MAX_LENGTH = 300;
+        const PAYPAL_COUNTRY_CODE_LENGTH = 2;
         const PAYPAL_STATE_MAX_LENGTH = 300;
         const PAYPAL_CITY_MAX_LENGTH = 120;
         const PAYPAL_POSTAL_CODE_MAX_LENGTH = 60;
+        const PAYPAL_LOCALE_MAX_LENGTH = 10;
         /**
          * Supported payment sources.
          */
@@ -49296,6 +49302,8 @@ namespace {
          * @param string   $payment_source The payment source.
          * @param array    $js_sdk_params Extra parameters for a PayPal JS SDK (Buttons) request.
          * @return array
+         *
+         * @throws Exception If the order items cannot be built.
          */
         private function get_paypal_create_order_request_params($order, $payment_source, $js_sdk_params)
         {
@@ -49339,6 +49347,16 @@ namespace {
         {
         }
         /**
+         * Get the amount for a specific order item.
+         *
+         * @param WC_Order      $order Order object.
+         * @param WC_Order_Item $item Order item.
+         * @return float
+         */
+        private function get_paypal_order_item_amount($order, $item)
+        {
+        }
+        /**
          * Get the value for the intent field in the create-order request.
          *
          * @return string
@@ -49363,6 +49381,15 @@ namespace {
          *  or the address is not set, or is incomplete.
          */
         private function get_paypal_order_shipping($order)
+        {
+        }
+        /**
+         * Normalize PayPal order shipping country code.
+         *
+         * @param string $country_code Country code to normalize.
+         * @return string|null
+         */
+        private function normalize_paypal_order_shipping_country_code($country_code)
         {
         }
         /**
@@ -66289,6 +66316,12 @@ namespace {
          * Constructor.
          */
         public function __construct()
+        {
+        }
+        /**
+         * Add warnings for deprecated script handles.
+         */
+        public function add_legacy_script_warnings()
         {
         }
         /**
@@ -109809,6 +109842,61 @@ namespace Automattic\WooCommerce\Enums {
          * @var string
          */
         public const VARIATION = 'variation';
+    }
+}
+namespace Automattic\WooCommerce\Gateways\PayPal {
+    /**
+     * Class AddressRequirements
+     *
+     * This helper class checks country-specific address requirements.
+     * This was built based on {@see https://developer.paypal.com/api/rest/reference/orders/v2/country-address-requirements/}
+     */
+    class AddressRequirements
+    {
+        /**
+         * The single instance of the class.
+         *
+         * @var AddressRequirements
+         */
+        protected static $instance = null;
+        /**
+         * Countries that require a city in the address.
+         *
+         * @var array
+         */
+        private const COUNTRIES_REQUIRING_CITY = array('AD', 'AE', 'AF', 'AG', 'AI', 'AL', 'AM', 'AN', 'AO', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AW', 'AZ', 'BA', 'BB', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BM', 'BN', 'BO', 'BR', 'BS', 'BT', 'BV', 'BW', 'BY', 'BZ', 'CA', 'CC', 'CD', 'CF', 'CG', 'CH', 'CI', 'CK', 'CL', 'CM', 'CN', 'CO', 'CR', 'CS', 'CU', 'CV', 'CX', 'CY', 'CZ', 'DE', 'DJ', 'DK', 'DM', 'DO', 'DZ', 'EC', 'EE', 'EG', 'EH', 'ER', 'ES', 'ET', 'FI', 'FJ', 'FK', 'FM', 'FO', 'FR', 'GA', 'GB', 'GD', 'GE', 'GF', 'GG', 'GH', 'GI', 'GL', 'GM', 'GN', 'GP', 'GQ', 'GR', 'GS', 'GT', 'GU', 'GW', 'GY', 'HK', 'HM', 'HN', 'HR', 'HT', 'HU', 'ID', 'IE', 'IL', 'IM', 'IN', 'IO', 'IQ', 'IR', 'IS', 'IT', 'JE', 'JM', 'JO', 'JP', 'KE', 'KG', 'KH', 'KI', 'KM', 'KN', 'KR', 'KW', 'KY', 'KZ', 'LA', 'LB', 'LC', 'LI', 'LK', 'LR', 'LS', 'LT', 'LU', 'LV', 'LY', 'MA', 'MC', 'MD', 'ME', 'MG', 'MH', 'MK', 'ML', 'MM', 'MN', 'MO', 'MP', 'MQ', 'MR', 'MS', 'MT', 'MU', 'MV', 'MW', 'MX', 'MY', 'MZ', 'NA', 'NC', 'NE', 'NF', 'NG', 'NI', 'NL', 'NO', 'NP', 'NR', 'NU', 'NZ', 'OM', 'PA', 'PE', 'PF', 'PG', 'PH', 'PK', 'PL', 'PM', 'PN', 'PR', 'PS', 'PT', 'PW', 'PY', 'QA', 'RE', 'RO', 'RS', 'RU', 'RW', 'SA', 'SB', 'SC', 'SD', 'SE', 'SG', 'SH', 'SI', 'SJ', 'SK', 'SL', 'SM', 'SN', 'SO', 'SR', 'ST', 'SV', 'SY', 'SZ', 'TC', 'TD', 'TF', 'TG', 'TH', 'TJ', 'TL', 'TM', 'TN', 'TO', 'TP', 'TR', 'TT', 'TV', 'TW', 'TZ', 'UA', 'UG', 'UM', 'US', 'UY', 'UZ', 'VA', 'VC', 'VE', 'VG', 'VI', 'VN', 'VU', 'WF', 'WS', 'YE', 'YT', 'YU', 'ZA', 'ZM', 'ZW', 'ZR', 'C2');
+        /**
+         * Countries that require a postal code in the address.
+         *
+         * @var array
+         */
+        private const COUNTRIES_REQUIRING_POSTAL_CODE = array('AR', 'AT', 'AU', 'BR', 'BT', 'CA', 'C2', 'CC', 'CH', 'CN', 'DE', 'DK', 'EH', 'ES', 'FK', 'FM', 'FO', 'FR', 'GB', 'GL', 'GM', 'IT', 'JP', 'KG', 'KI', 'KM', 'MR', 'MX', 'NE', 'NL', 'NO', 'NR', 'NU', 'NF', 'PL', 'PM', 'PN', 'SE', 'SG', 'SH', 'SJ', 'SM', 'SR', 'TF', 'TH', 'TK', 'TV', 'UM', 'US', 'VA', 'WF', 'YT');
+        /**
+         * Get class instance.
+         *
+         * @return AddressRequirements Instance.
+         */
+        final public static function instance()
+        {
+        }
+        /**
+         * Check if a country requires a city in the address.
+         *
+         * @param string $country_code The ISO 3166-1 alpha-2 country code.
+         * @return bool
+         */
+        public function country_requires_city(string $country_code)
+        {
+        }
+        /**
+         * Check if a country requires a postal code in the address.
+         *
+         * @param string $country_code The ISO 3166-1 alpha-2 country code.
+         * @return bool
+         */
+        public function country_requires_postal_code(string $country_code)
+        {
+        }
     }
 }
 namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
