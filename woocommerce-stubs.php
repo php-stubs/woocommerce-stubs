@@ -38410,7 +38410,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '10.3.4';
+        public $version = '10.3.5';
         /**
          * WooCommerce Schema version.
          *
@@ -66316,12 +66316,6 @@ namespace {
          * Constructor.
          */
         public function __construct()
-        {
-        }
-        /**
-         * Add warnings for deprecated script handles.
-         */
-        public function add_legacy_script_warnings()
         {
         }
         /**
