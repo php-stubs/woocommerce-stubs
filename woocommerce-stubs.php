@@ -38509,7 +38509,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '10.4.0';
+        public $version = '10.4.2';
         /**
          * WooCommerce Schema version.
          *
@@ -103197,6 +103197,7 @@ namespace Automattic\WooCommerce\Blocks\Patterns {
         /**
          * Reset the cached patterns to fetch them again from the PTK.
          *
+         * @since 10.4.1 Unscheduling is deferred if Action Scheduler hasn't initialized yet.
          * @return void
          */
         public function flush_cached_patterns()
