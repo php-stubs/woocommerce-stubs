@@ -38701,7 +38701,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '10.5.0';
+        public $version = '10.5.1';
         /**
          * WooCommerce Schema version.
          *
@@ -60192,6 +60192,16 @@ namespace {
          * @return void
          */
         public function register_routes()
+        {
+        }
+        /**
+         * Validate the shipping callback request.
+         *
+         * @since 10.6.0
+         * @param WP_REST_Request<array<string, mixed>> $request The request object.
+         * @return bool True if the request is valid, false otherwise.
+         */
+        public function validate_shipping_callback_request(\WP_REST_Request $request)
         {
         }
         /**
@@ -111199,6 +111209,14 @@ namespace Automattic\WooCommerce\Gateways\PayPal {
          * @since 10.5.0
          */
         public const PAYPAL_ORDER_META_PAYMENT_SOURCE = '_paypal_payment_source';
+        /**
+         * Meta key for storing PayPal shipping callback token in order meta.
+         *
+         * @var string
+         *
+         * @since 10.5.0
+         */
+        public const PAYPAL_ORDER_META_SHIPPING_CALLBACK_TOKEN = '_paypal_shipping_callback_token';
     }
     /**
      * PayPal Helper Class
@@ -111640,6 +111658,16 @@ namespace Automattic\WooCommerce\Gateways\PayPal {
          *  or the address is not set, or is incomplete.
          */
         private function get_paypal_order_shipping(\WC_Order $order): ?array
+        {
+        }
+        /**
+         * Generate and store a shipping callback token for the order.
+         * The token is stored in the database cache and can be validated later.
+         *
+         * @param WC_Order $order The order object.
+         * @return string The generated token.
+         */
+        private function generate_shipping_callback_token(\WC_Order $order): string
         {
         }
         /**
