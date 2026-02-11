@@ -68,6 +68,14 @@ return \StubsGenerator\Finder::create()
             ->depth('< 1')
             ->path('QueryClausesGenerator.php')
     )
+    // WC_REST_Products_V2_Controller uses this internal trait
+    ->append(
+        \StubsGenerator\Finder::create()
+            ->in(['source/woocommerce/src/Internal/Traits'])
+            ->files()
+            ->depth('< 1')
+            ->path('RestApiCache.php')
+    )
 /*
     ->append(
         \StubsGenerator\Finder::create()

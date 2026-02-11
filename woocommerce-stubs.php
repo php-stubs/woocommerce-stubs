@@ -48,6 +48,18 @@ namespace {
     abstract class WC_Data
     {
         /**
+         * Clone mode constant: Duplicate mode clears meta IDs (default, for backward compatibility).
+         *
+         * @since 10.4.0
+         */
+        const CLONE_MODE_DUPLICATE = 'duplicate';
+        /**
+         * Clone mode constant: Cache mode preserves meta IDs.
+         *
+         * @since 10.4.0
+         */
+        const CLONE_MODE_CACHE = 'cache';
+        /**
          * ID for this object.
          *
          * @since 3.0.0
@@ -117,9 +129,16 @@ namespace {
          * Stores additional meta data.
          *
          * @since 3.0.0
-         * @var array
+         * @var WC_Meta_Data[]|null
          */
         protected $meta_data = \null;
+        /**
+         * Clone mode for controlling meta ID handling during clone operations.
+         *
+         * @since 10.4.0
+         * @var string Either CLONE_MODE_DUPLICATE (default, clears meta IDs) or CLONE_MODE_CACHE (preserves meta IDs).
+         */
+        protected $clone_mode = self::CLONE_MODE_DUPLICATE;
         /**
          * List of properties that were earlier managed by data store. However, since DataStore is a not a stored entity in itself, they used to store data in metadata of the data object.
          * With custom tables, some of these are moved from metadata to their own columns, but existing code will still try to add them to metadata. This array is used to keep track of such properties.
@@ -154,11 +173,38 @@ namespace {
         {
         }
         /**
-         * When the object is cloned, make sure meta is duplicated correctly.
+         * When the object is cloned, make sure meta is cloned correctly.
+         *
+         * Meta ID handling depends on the clone mode:
+         * - CLONE_MODE_DUPLICATE (default): Forces reading of Meta and clears meta IDs for duplication (backward compatible).
+         * - CLONE_MODE_CACHE: Preserves meta IDs for caching purposes.
          *
          * @since 3.0.2
          */
         public function __clone()
+        {
+        }
+        /**
+         * Set the clone mode.
+         *
+         * This controls how meta IDs are handled when the object is cloned:
+         * - CLONE_MODE_DUPLICATE (default): Clears meta IDs for duplication workflows
+         * - CLONE_MODE_CACHE: Preserves meta IDs for caching workflows
+         *
+         * @since 10.4.0
+         * @param string $mode One of the CLONE_MODE_* constants.
+         * @throws InvalidArgumentException If an invalid mode is provided.
+         */
+        public function set_clone_mode($mode)
+        {
+        }
+        /**
+         * Get the current clone mode.
+         *
+         * @since 10.4.0
+         * @return string The current clone mode (one of the CLONE_MODE_* constants).
+         */
+        public function get_clone_mode()
         {
         }
         /**
@@ -7779,6 +7825,12 @@ namespace {
         {
         }
         /**
+         * Recent reviews widget: legacy implementation.
+         */
+        private function legacy_recent_reviews(): void
+        {
+        }
+        /**
          * Recent reviews widget.
          */
         public function recent_reviews()
@@ -7884,6 +7936,18 @@ namespace {
          * @since 3.9.0
          */
         private function generate_unique_slug($product)
+        {
+        }
+        /**
+         * Generates a unique sku for a given product.
+         *
+         * @param WC_Product $product The product to generate a sku for.
+         * @return void
+         * @since 10.5.0
+         *
+         * @internal For exclusive usage of WooCommerce core, backwards compatibility not guaranteed.
+         */
+        private function generate_unique_sku($product)
         {
         }
     }
@@ -8532,6 +8596,8 @@ namespace {
         }
         /**
          * Addons menu item.
+         *
+         * @deprecated 10.5.0 The marketplace feature is now always enabled. Use the Extensions menu instead.
          */
         public function addons_menu()
         {
@@ -14532,6 +14598,15 @@ namespace {
         {
         }
         /**
+         * Add the note when WooCommerce is newly installed.
+         *
+         * @since 10.5.0
+         * @return void
+         */
+        public static function on_newly_installed()
+        {
+        }
+        /**
          * Maybe add a note to the inbox.
          *
          * @param int $page_id The ID of the page.
@@ -16097,6 +16172,14 @@ namespace {
         {
         }
         /**
+         * Get settings for the REST API caching section.
+         *
+         * @return array
+         */
+        protected function get_settings_for_rest_api_caching_section()
+        {
+        }
+        /**
          * Get settings for the Blueprint section.
          *
          * @return array
@@ -16906,6 +16989,28 @@ namespace {
          * Save tax rates.
          */
         public function save_tax_rates()
+        {
+        }
+        /**
+         * Display admin notice when tax-inclusive pricing is enabled without a base tax rate.
+         *
+         * @since 10.5.0
+         * @internal This method is public only because it is used as a hook callback.
+         *
+         * @return void
+         */
+        public function tax_configuration_validation_notice(): void
+        {
+        }
+        /**
+         * Check if a standard tax rate exists for a given country.
+         *
+         * @since 10.5.0
+         *
+         * @param string $country Country code.
+         * @return bool True if at least one standard tax rate exists for the country.
+         */
+        private function has_standard_tax_rate_for_country($country)
         {
         }
     }
@@ -20722,6 +20827,16 @@ namespace {
          * @return array of cart items
          */
         public function get_shipping_packages()
+        {
+        }
+        /**
+         * Get the package name.
+         *
+         * @param array $package Shipping package data.
+         * @param int   $index Package number.
+         * @return string
+         */
+        private function get_shipping_package_name($package, $index)
         {
         }
         /**
@@ -25476,7 +25591,7 @@ namespace {
         /**
          * Return the email classes - used in admin to load settings.
          *
-         * @return WC_Email[]
+         * @return array<string, WC_Email> Email classes.
          */
         public function get_emails()
         {
@@ -26014,6 +26129,13 @@ namespace {
          * @return array
          */
         public static function get_styles()
+        {
+        }
+        /**
+         * Enqueue styles for block assets (both editor and frontend).
+         * This ensures compatibility with WordPress 6.9+ requirements.
+         */
+        public static function enqueue_block_assets()
         {
         }
         /**
@@ -26736,7 +26858,7 @@ namespace {
          *
          * @var array
          */
-        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_admin_update_0201_order_status_index', 'wc_admin_update_0230_rename_gross_total', 'wc_admin_update_0251_remove_unsnooze_action', 'wc_update_400_db_version'), '4.4.0' => array('wc_update_440_insert_attribute_terms_for_variable_products', 'wc_admin_update_110_remove_facebook_note', 'wc_admin_update_130_remove_dismiss_action_from_tracking_opt_in_note', 'wc_update_440_db_version'), '4.5.0' => array('wc_update_450_sanitize_coupons_code', 'wc_update_450_db_version'), '5.0.0' => array('wc_update_500_fix_product_review_count', 'wc_admin_update_160_remove_facebook_note', 'wc_admin_update_170_homescreen_layout', 'wc_update_500_db_version'), '5.6.0' => array('wc_update_560_create_refund_returns_page', 'wc_update_560_db_version'), '6.0.0' => array('wc_update_600_migrate_rate_limit_options', 'wc_admin_update_270_delete_report_downloads', 'wc_admin_update_271_update_task_list_options', 'wc_admin_update_280_order_status', 'wc_admin_update_290_update_apperance_task_option', 'wc_admin_update_290_delete_default_homepage_layout_option', 'wc_update_600_db_version'), '6.3.0' => array('wc_update_630_create_product_attributes_lookup_table', 'wc_admin_update_300_update_is_read_from_last_read', 'wc_update_630_db_version'), '6.4.0' => array('wc_update_640_add_primary_key_to_product_attributes_lookup_table', 'wc_admin_update_340_remove_is_primary_from_note_action', 'wc_update_640_db_version'), '6.5.0' => array('wc_update_650_approved_download_directories'), '6.5.1' => array('wc_update_651_approved_download_directories'), '6.7.0' => array('wc_update_670_purge_comments_count_cache', 'wc_update_670_delete_deprecated_remote_inbox_notifications_option'), '7.0.0' => array('wc_update_700_remove_download_log_fk', 'wc_update_700_remove_recommended_marketing_plugins_transient'), '7.2.1' => array('wc_update_721_adjust_new_zealand_states', 'wc_update_721_adjust_ukraine_states'), '7.2.2' => array('wc_update_722_adjust_new_zealand_states', 'wc_update_722_adjust_ukraine_states'), '7.5.0' => array('wc_update_750_add_columns_to_order_stats_table', 'wc_update_750_disable_new_product_management_experience'), '7.7.0' => array('wc_update_770_remove_multichannel_marketing_feature_options'), '7.9.0' => array('wc_update_790_blockified_product_grid_block'), '8.1.0' => array('wc_update_810_migrate_transactional_metadata_for_hpos'), '8.3.0' => array('wc_update_830_rename_checkout_template', 'wc_update_830_rename_cart_template'), '8.6.0' => array('wc_update_860_remove_recommended_marketing_plugins_transient'), '8.7.0' => array('wc_update_870_prevent_listing_of_transient_files_directory'), '8.9.0' => array('wc_update_890_update_connect_to_woocommerce_note', 'wc_update_890_update_paypal_standard_load_eligibility'), '8.9.1' => array('wc_update_891_create_plugin_autoinstall_history_option'), '9.1.0' => array('wc_update_910_add_launch_your_store_tour_option', 'wc_update_910_remove_obsolete_user_meta'), '9.2.0' => array('wc_update_920_add_wc_hooked_blocks_version_option'), '9.3.0' => array('wc_update_930_add_woocommerce_coming_soon_option', 'wc_update_930_migrate_user_meta_for_launch_your_store_tour'), '9.4.0' => array('wc_update_940_add_phone_to_order_address_fts_index', 'wc_update_940_remove_help_panel_highlight_shown'), '9.5.0' => array('wc_update_950_tracking_option_autoload'), '9.6.1' => array('wc_update_961_migrate_default_email_base_color'), '9.8.0' => array('wc_update_980_remove_order_attribution_install_banner_dismissed_option'), '9.8.5' => array('wc_update_985_enable_new_payments_settings_page_feature'), '9.9.0' => array('wc_update_990_remove_wc_count_comments_transient', 'wc_update_990_remove_email_notes'), '10.0.0' => array('wc_update_1000_multisite_visibility_setting', 'wc_update_1000_remove_patterns_toolkit_transient'), '10.2.0' => array('wc_update_1020_add_old_refunded_order_items_to_product_lookup_table'), '10.3.0' => array('wc_update_1030_add_comments_date_type_index'), '10.4.0' => array('wc_update_1040_add_idx_date_paid_status_parent', 'wc_update_1040_cleanup_legacy_ptk_patterns_fetching'));
+        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_admin_update_0201_order_status_index', 'wc_admin_update_0230_rename_gross_total', 'wc_admin_update_0251_remove_unsnooze_action', 'wc_update_400_db_version'), '4.4.0' => array('wc_update_440_insert_attribute_terms_for_variable_products', 'wc_admin_update_110_remove_facebook_note', 'wc_admin_update_130_remove_dismiss_action_from_tracking_opt_in_note', 'wc_update_440_db_version'), '4.5.0' => array('wc_update_450_sanitize_coupons_code', 'wc_update_450_db_version'), '5.0.0' => array('wc_update_500_fix_product_review_count', 'wc_admin_update_160_remove_facebook_note', 'wc_admin_update_170_homescreen_layout', 'wc_update_500_db_version'), '5.6.0' => array('wc_update_560_create_refund_returns_page', 'wc_update_560_db_version'), '6.0.0' => array('wc_update_600_migrate_rate_limit_options', 'wc_admin_update_270_delete_report_downloads', 'wc_admin_update_271_update_task_list_options', 'wc_admin_update_280_order_status', 'wc_admin_update_290_update_apperance_task_option', 'wc_admin_update_290_delete_default_homepage_layout_option', 'wc_update_600_db_version'), '6.3.0' => array('wc_update_630_create_product_attributes_lookup_table', 'wc_admin_update_300_update_is_read_from_last_read', 'wc_update_630_db_version'), '6.4.0' => array('wc_update_640_add_primary_key_to_product_attributes_lookup_table', 'wc_admin_update_340_remove_is_primary_from_note_action', 'wc_update_640_db_version'), '6.5.0' => array('wc_update_650_approved_download_directories'), '6.5.1' => array('wc_update_651_approved_download_directories'), '6.7.0' => array('wc_update_670_purge_comments_count_cache', 'wc_update_670_delete_deprecated_remote_inbox_notifications_option'), '7.0.0' => array('wc_update_700_remove_download_log_fk', 'wc_update_700_remove_recommended_marketing_plugins_transient'), '7.2.1' => array('wc_update_721_adjust_new_zealand_states', 'wc_update_721_adjust_ukraine_states'), '7.2.2' => array('wc_update_722_adjust_new_zealand_states', 'wc_update_722_adjust_ukraine_states'), '7.5.0' => array('wc_update_750_add_columns_to_order_stats_table', 'wc_update_750_disable_new_product_management_experience'), '7.7.0' => array('wc_update_770_remove_multichannel_marketing_feature_options'), '7.9.0' => array('wc_update_790_blockified_product_grid_block'), '8.1.0' => array('wc_update_810_migrate_transactional_metadata_for_hpos'), '8.3.0' => array('wc_update_830_rename_checkout_template', 'wc_update_830_rename_cart_template'), '8.6.0' => array('wc_update_860_remove_recommended_marketing_plugins_transient'), '8.7.0' => array('wc_update_870_prevent_listing_of_transient_files_directory'), '8.9.0' => array('wc_update_890_update_connect_to_woocommerce_note', 'wc_update_890_update_paypal_standard_load_eligibility'), '8.9.1' => array('wc_update_891_create_plugin_autoinstall_history_option'), '9.1.0' => array('wc_update_910_add_launch_your_store_tour_option', 'wc_update_910_remove_obsolete_user_meta'), '9.2.0' => array('wc_update_920_add_wc_hooked_blocks_version_option'), '9.3.0' => array('wc_update_930_add_woocommerce_coming_soon_option', 'wc_update_930_migrate_user_meta_for_launch_your_store_tour'), '9.4.0' => array('wc_update_940_add_phone_to_order_address_fts_index', 'wc_update_940_remove_help_panel_highlight_shown'), '9.5.0' => array('wc_update_950_tracking_option_autoload'), '9.6.1' => array('wc_update_961_migrate_default_email_base_color'), '9.8.0' => array('wc_update_980_remove_order_attribution_install_banner_dismissed_option'), '9.8.5' => array('wc_update_985_enable_new_payments_settings_page_feature'), '9.9.0' => array('wc_update_990_remove_wc_count_comments_transient', 'wc_update_990_remove_email_notes'), '10.0.0' => array('wc_update_1000_multisite_visibility_setting', 'wc_update_1000_remove_patterns_toolkit_transient'), '10.2.0' => array('wc_update_1020_add_old_refunded_order_items_to_product_lookup_table'), '10.3.0' => array('wc_update_1030_add_comments_date_type_index'), '10.4.0' => array('wc_update_1040_add_idx_date_paid_status_parent', 'wc_update_1040_cleanup_legacy_ptk_patterns_fetching'), '10.5.0' => array('wc_update_1050_migrate_brand_permalink_setting', 'wc_update_1050_enable_autoload_options', 'wc_update_1050_add_idx_user_email', 'wc_update_1050_remove_deprecated_marketplace_option'));
         /**
          * Option name used to track new installations of WooCommerce.
          *
@@ -27057,6 +27179,19 @@ namespace {
         {
         }
         /**
+         * Set scheduled import mode as the default for new installations.
+         *
+         * Uses add_option() which only sets the option if it doesn't already exist.
+         * This ensures existing installations are not affected.
+         *
+         * @since 10.5.0
+         *
+         * @return void
+         */
+        public static function enable_analytics_scheduled_import(): void
+        {
+        }
+        /**
          * Enable email improvements by default for existing shops if conditions are met.
          *
          * @since 9.9.0
@@ -27312,6 +27447,8 @@ namespace {
          * Refund and returns page.
          *
          * @since 5.6.0
+         * @deprecated 10.5.0 No longer used.
+         *
          * @return void
          */
         public static function add_admin_note_after_page_created()
@@ -27319,7 +27456,7 @@ namespace {
         }
         /**
          * When pages are created, we might want to take some action.
-         * In this case we want to set an option when refund and returns
+         * In this case we want to create an admin note when the refund and returns
          * page is created.
          *
          * @since 5.6.0
@@ -27925,7 +28062,7 @@ namespace {
          * Get order.
          *
          * @param  mixed $order_id (default: false) Order ID to get.
-         * @return \WC_Order|bool
+         * @return \WC_Order|false
          */
         public static function get_order($order_id = \false)
         {
@@ -28332,6 +28469,22 @@ namespace {
         public function get_cogs_refund_value_html(float $refunded_cost, ?array $wc_price_arg = \null, ?\WC_Order $order = \null): string
         {
         }
+        /**
+         * Convert a legacy scalar tax value to array format.
+         *
+         * Legacy orders may have tax data stored as floats/strings
+         * instead of arrays keyed by tax rate ID. This method attempts to infer the
+         * appropriate tax rate ID from the order context.
+         *
+         * @since 10.5.0
+         *
+         * @param float|string   $value The legacy scalar tax value.
+         * @param WC_Order|false $order The order object, or false/null if unavailable.
+         * @return array Tax data as array, keyed by tax rate ID (or 0 if unknown).
+         */
+        protected function convert_legacy_tax_value_to_array($value, $order = \null)
+        {
+        }
     }
     /**
      * Order item coupon class.
@@ -28568,6 +28721,8 @@ namespace {
          * Set taxes.
          *
          * This is an array of tax ID keys with total amount values.
+         *
+         * @since 10.5.0 Handles legacy scalar tax values by converting to arrays.
          *
          * @param array $raw_tax_data Raw tax data.
          */
@@ -28867,7 +29022,11 @@ namespace {
         /**
          * Set line taxes and totals for passed in taxes.
          *
-         * @param array $raw_tax_data Raw tax data.
+         * @since 10.5.0 Handles legacy scalar tax values by converting to arrays.
+         * When legacy data is detected, attempts to infer tax rate ID from order context.
+         *
+         * @param array $raw_tax_data Raw tax data. 'total' and 'subtotal' should be arrays keyed by tax rate ID,
+         * but scalar values (floats/strings) are accepted for legacy compatibility.
          */
         public function set_taxes($raw_tax_data)
         {
@@ -29178,6 +29337,8 @@ namespace {
          * Set taxes.
          *
          * This is an array of tax ID keys with total amount values.
+         *
+         * @since 10.5.0 Handles legacy scalar tax values by converting to arrays.
          *
          * @param array $raw_tax_data Value to set.
          * @throws WC_Data_Exception May throw exception if data is invalid.
@@ -31374,6 +31535,18 @@ namespace {
         {
         }
         /**
+         * Get readable payment method name from payment method ID.
+         *
+         * Retrieves the payment gateway title from the payment method ID by loading
+         * the payment gateway instance.
+         *
+         * @param string $payment_gateway_id Payment method ID (e.g., "stripe", "paypal", "bacs").
+         * @return string Payment method name or ID if name not found.
+         */
+        public function get_payment_gateway_name_by_id(string $payment_gateway_id): string
+        {
+        }
+        /**
          * Get array of registered gateway ids
          *
          * @since 2.6.0
@@ -33427,9 +33600,28 @@ namespace {
         /**
          * Get an array of available variations for the current product.
          *
-         * @param string $return Optional. The format to return the results in. Can be 'array' to return an array of variation data or 'objects' for the product objects. Default 'array'.
+         * Important: The default 'array' return type is expensive for products with many variations.
+         * It calls get_available_variation() for each variation, which processes HTML generation
+         * (wc_get_stock_html, get_price_html), price calculations (wc_get_price_to_display),
+         * image attachment lookups, and dimension/weight formatting - all passed through filters.
          *
-         * @return array[]|WC_Product_Variation[]
+         * Use 'objects' when you only need the WC_Product_Variation objects or a subset of the generated
+         * output of ::get_available_variation(), avoiding unnecessary processing overhead.
+         *
+         * @since 2.4.0
+         *
+         * @param string $return Optional. The format to return the results in. Default 'array'.
+         *                       - 'array': Returns fully processed variation data arrays. Each variation
+         *                         is passed through get_available_variation() which generates HTML,
+         *                         calculates display prices, and formats dimensions/weights. Use this
+         *                         when you need the complete variation data for front-end display.
+         *                       - 'objects': Returns WC_Product_Variation objects directly without
+         *                         additional processing. Use this when you need to work with variation
+         *                         objects and will call methods on them selectively.
+         * @return array[]|WC_Product_Variation[] Array of variation data arrays or variation objects.
+         *
+         * @phpstan-param 'array'|'objects' $return
+         * @phpstan-return ($return is 'array' ? array[] : WC_Product_Variation[])
          */
         public function get_available_variations($return = 'array')
         {
@@ -38509,7 +38701,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '10.4.3';
+        public $version = '10.5.0';
         /**
          * WooCommerce Schema version.
          *
@@ -40260,8 +40452,8 @@ namespace {
         /**
          * Set the properties of an object and log the first error found while doing so.
          *
-         * @param $order WC_Order $order Order object.
-         * @param array $props The properties to set.
+         * @param \WC_Order $order Order object.
+         * @param array     $props The properties to set.
          */
         private function set_order_props(&$order, array $props)
         {
@@ -44325,6 +44517,56 @@ namespace {
         private function save_locations(&$zone)
         {
         }
+        /**
+         * Shipping zones do not support meta data.
+         *
+         * This override prevents the parent class from incorrectly reading from wp_postmeta,
+         * which would happen because shipping zones use their own table but there is no
+         * corresponding shipping zone meta table.
+         *
+         * @since 10.5.0
+         * @param WC_Shipping_Zone $zone Shipping zone object.
+         * @return array Empty array - shipping zones have no meta table.
+         */
+        public function read_meta(&$zone)
+        {
+        }
+        /**
+         * Shipping zones do not support meta data.
+         *
+         * @since 10.5.0
+         * @param WC_Shipping_Zone $zone Shipping zone object.
+         * @param stdClass         $meta Meta object (containing at least ->id).
+         * @return array Empty array - no meta was deleted.
+         */
+        public function delete_meta(&$zone, $meta)
+        {
+        }
+        /**
+         * Shipping zones do not support meta data.
+         *
+         * Returns 0 to indicate no meta was added. Valid meta IDs are always positive
+         * integers, so 0 indicates failure while remaining type-compatible with parent.
+         *
+         * @since 10.5.0
+         * @param WC_Shipping_Zone $zone Shipping zone object.
+         * @param stdClass         $meta Meta object (containing ->key and ->value).
+         * @return int Always returns 0 as shipping zones do not support meta storage.
+         */
+        public function add_meta(&$zone, $meta)
+        {
+        }
+        /**
+         * Shipping zones do not support meta data.
+         *
+         * @since 10.5.0
+         * @param WC_Shipping_Zone $zone Shipping zone object.
+         * @param stdClass         $meta Meta object (containing ->id, ->key and ->value).
+         * @return bool False - meta was not updated.
+         */
+        public function update_meta(&$zone, $meta)
+        {
+        }
     }
     /**
      * Webhook Data Store Interface
@@ -44541,6 +44783,12 @@ namespace {
          * @var string
          */
         public $template_html;
+        /**
+         * Initial email block template path.
+         *
+         * @var string
+         */
+        public $template_block;
         /**
          * Template path.
          *
@@ -45167,7 +45415,7 @@ namespace {
         /**
          * Get template.
          *
-         * @param  string $type Template type. Can be either 'template_html' or 'template_plain'.
+         * @param  string $type Template type. Can be either 'template_html', 'template_plain' or 'template_block'.
          * @return string
          */
         public function get_template($type)
@@ -45642,6 +45890,14 @@ namespace {
         {
         }
         /**
+         * Get block editor email template content.
+         *
+         * @return string
+         */
+        public function get_block_editor_email_template_content()
+        {
+        }
+        /**
          * Default content to show below main email content.
          *
          * @since 3.7.0
@@ -45732,6 +45988,14 @@ namespace {
         {
         }
         /**
+         * Get block editor email template content.
+         *
+         * @return string
+         */
+        public function get_block_editor_email_template_content()
+        {
+        }
+        /**
          * Default content to show below main email content.
          *
          * @since 3.7.0
@@ -45819,6 +46083,14 @@ namespace {
          * @return string
          */
         public function get_content_plain()
+        {
+        }
+        /**
+         * Get block editor email template content.
+         *
+         * @return string
+         */
+        public function get_block_editor_email_template_content()
         {
         }
         /**
@@ -48363,33 +48635,17 @@ namespace {
     }
     /**
      * Handles PayPal Buttons.
+     *
+     * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Buttons instead. This class will be removed in 11.0.0.
      */
     class WC_Gateway_Paypal_Buttons
     {
         /**
-         * The option for the client-id.
+         * The delegated buttons instance.
          *
-         * @var string
+         * @var PayPalButtons
          */
-        private const CLIENT_ID_OPTION = 'woocommerce_paypal_client_id';
-        /**
-         * The gateway instance.
-         *
-         * @var WC_Gateway_Paypal
-         */
-        private $gateway;
-        /**
-         * Whether the gateway should use Orders v2 API.
-         *
-         * @var bool
-         */
-        private $enabled = \false;
-        /**
-         * The request instance.
-         *
-         * @var WC_Gateway_Paypal_Request
-         */
-        private $request;
+        private $buttons;
         /**
          * Constructor.
          *
@@ -48402,6 +48658,8 @@ namespace {
          * Get the options for the PayPal buttons.
          *
          * @return array
+         *
+         * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Buttons::get_options() instead. This method will be removed in 11.0.0.
          */
         public function get_options()
         {
@@ -48410,6 +48668,8 @@ namespace {
          * Get the common attributes for the PayPal JS SDK script and modules.
          *
          * @return array
+         *
+         * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Buttons::get_common_options() instead. This method will be removed in 11.0.0.
          */
         public function get_common_options()
         {
@@ -48418,6 +48678,8 @@ namespace {
          * Get the client-id for the PayPal buttons.
          *
          * @return string|null The PayPal client-id, or null if the request fails.
+         *
+         * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Buttons::get_client_id() instead. This method will be removed in 11.0.0.
          */
         public function get_client_id()
         {
@@ -48426,6 +48688,8 @@ namespace {
          * Get the page type for the PayPal buttons.
          *
          * @return string
+         *
+         * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Buttons::get_page_type() instead. This method will be removed in 11.0.0.
          */
         public function get_page_type()
         {
@@ -48434,6 +48698,8 @@ namespace {
          * Whether PayPal Buttons is enabled.
          *
          * @return bool
+         *
+         * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Buttons::is_enabled() instead. This method will be removed in 11.0.0.
          */
         public function is_enabled()
         {
@@ -48443,6 +48709,8 @@ namespace {
          * Limited to checkout, cart, and product pages for security.
          *
          * @return string
+         *
+         * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Buttons::get_current_page_for_app_switch() instead. This method will be removed in 11.0.0.
          */
         public function get_current_page_for_app_switch()
         {
@@ -48947,129 +49215,104 @@ namespace {
     }
     /**
      * WC_Gateway_Paypal_Constants Class.
+     *
+     * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Constants instead. This class will be removed in 11.0.0.
      */
     class WC_Gateway_Paypal_Constants
     {
         /**
          * PayPal proxy request timeout.
+         *
+         * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Constants::WPCOM_PROXY_REQUEST_TIMEOUT instead.
          */
-        const WPCOM_PROXY_REQUEST_TIMEOUT = 60;
+        const WPCOM_PROXY_REQUEST_TIMEOUT = \Automattic\WooCommerce\Gateways\PayPal\Constants::WPCOM_PROXY_REQUEST_TIMEOUT;
         /**
          * PayPal payment statuses.
+         *
+         * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Constants::STATUS_* instead.
          */
-        const STATUS_COMPLETED = 'COMPLETED';
-        const STATUS_APPROVED = 'APPROVED';
-        const STATUS_CAPTURED = 'CAPTURED';
-        const STATUS_AUTHORIZED = 'AUTHORIZED';
+        const STATUS_COMPLETED = \Automattic\WooCommerce\Gateways\PayPal\Constants::STATUS_COMPLETED;
+        const STATUS_APPROVED = \Automattic\WooCommerce\Gateways\PayPal\Constants::STATUS_APPROVED;
+        const STATUS_CAPTURED = \Automattic\WooCommerce\Gateways\PayPal\Constants::STATUS_CAPTURED;
+        const STATUS_AUTHORIZED = \Automattic\WooCommerce\Gateways\PayPal\Constants::STATUS_AUTHORIZED;
+        const STATUS_PAYER_ACTION_REQUIRED = \Automattic\WooCommerce\Gateways\PayPal\Constants::STATUS_PAYER_ACTION_REQUIRED;
+        const VOIDED = \Automattic\WooCommerce\Gateways\PayPal\Constants::VOIDED;
         /**
          * PayPal payment intents.
+         *
+         * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Constants::INTENT_* instead.
          */
-        const INTENT_CAPTURE = 'CAPTURE';
-        const INTENT_AUTHORIZE = 'AUTHORIZE';
+        const INTENT_CAPTURE = \Automattic\WooCommerce\Gateways\PayPal\Constants::INTENT_CAPTURE;
+        const INTENT_AUTHORIZE = \Automattic\WooCommerce\Gateways\PayPal\Constants::INTENT_AUTHORIZE;
         /**
          * PayPal payment actions.
+         *
+         * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Constants::PAYMENT_ACTION_* instead.
          */
-        const PAYMENT_ACTION_CAPTURE = 'capture';
-        const PAYMENT_ACTION_AUTHORIZE = 'authorize';
+        const PAYMENT_ACTION_CAPTURE = \Automattic\WooCommerce\Gateways\PayPal\Constants::PAYMENT_ACTION_CAPTURE;
+        const PAYMENT_ACTION_AUTHORIZE = \Automattic\WooCommerce\Gateways\PayPal\Constants::PAYMENT_ACTION_AUTHORIZE;
         /**
          * PayPal shipping preferences.
+         *
+         * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Constants::SHIPPING_* instead.
          */
-        const SHIPPING_NO_SHIPPING = 'NO_SHIPPING';
-        const SHIPPING_GET_FROM_FILE = 'GET_FROM_FILE';
-        const SHIPPING_SET_PROVIDED_ADDRESS = 'SET_PROVIDED_ADDRESS';
+        const SHIPPING_NO_SHIPPING = \Automattic\WooCommerce\Gateways\PayPal\Constants::SHIPPING_NO_SHIPPING;
+        const SHIPPING_GET_FROM_FILE = \Automattic\WooCommerce\Gateways\PayPal\Constants::SHIPPING_GET_FROM_FILE;
+        const SHIPPING_SET_PROVIDED_ADDRESS = \Automattic\WooCommerce\Gateways\PayPal\Constants::SHIPPING_SET_PROVIDED_ADDRESS;
         /**
          * PayPal user actions.
+         *
+         * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Constants::USER_ACTION_* instead.
          */
-        const USER_ACTION_PAY_NOW = 'PAY_NOW';
+        const USER_ACTION_PAY_NOW = \Automattic\WooCommerce\Gateways\PayPal\Constants::USER_ACTION_PAY_NOW;
         /**
          * Maximum lengths for PayPal fields.
+         *
+         * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Constants::PAYPAL_* instead.
          */
-        const PAYPAL_ORDER_ITEM_NAME_MAX_LENGTH = 127;
-        const PAYPAL_INVOICE_ID_MAX_LENGTH = 127;
-        const PAYPAL_ADDRESS_LINE_MAX_LENGTH = 300;
-        const PAYPAL_COUNTRY_CODE_LENGTH = 2;
-        const PAYPAL_STATE_MAX_LENGTH = 300;
-        const PAYPAL_CITY_MAX_LENGTH = 120;
-        const PAYPAL_POSTAL_CODE_MAX_LENGTH = 60;
-        const PAYPAL_LOCALE_MAX_LENGTH = 10;
+        const PAYPAL_ORDER_ITEM_NAME_MAX_LENGTH = \Automattic\WooCommerce\Gateways\PayPal\Constants::PAYPAL_ORDER_ITEM_NAME_MAX_LENGTH;
+        const PAYPAL_INVOICE_ID_MAX_LENGTH = \Automattic\WooCommerce\Gateways\PayPal\Constants::PAYPAL_INVOICE_ID_MAX_LENGTH;
+        const PAYPAL_ADDRESS_LINE_MAX_LENGTH = \Automattic\WooCommerce\Gateways\PayPal\Constants::PAYPAL_ADDRESS_LINE_MAX_LENGTH;
+        const PAYPAL_COUNTRY_CODE_LENGTH = \Automattic\WooCommerce\Gateways\PayPal\Constants::PAYPAL_COUNTRY_CODE_LENGTH;
+        const PAYPAL_STATE_MAX_LENGTH = \Automattic\WooCommerce\Gateways\PayPal\Constants::PAYPAL_STATE_MAX_LENGTH;
+        const PAYPAL_CITY_MAX_LENGTH = \Automattic\WooCommerce\Gateways\PayPal\Constants::PAYPAL_CITY_MAX_LENGTH;
+        const PAYPAL_POSTAL_CODE_MAX_LENGTH = \Automattic\WooCommerce\Gateways\PayPal\Constants::PAYPAL_POSTAL_CODE_MAX_LENGTH;
+        const PAYPAL_LOCALE_MAX_LENGTH = \Automattic\WooCommerce\Gateways\PayPal\Constants::PAYPAL_LOCALE_MAX_LENGTH;
         /**
          * Supported payment sources.
+         *
+         * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Constants::PAYMENT_SOURCE_* instead.
          */
-        const PAYMENT_SOURCE_PAYPAL = 'paypal';
-        const PAYMENT_SOURCE_VENMO = 'venmo';
-        const PAYMENT_SOURCE_PAYLATER = 'paylater';
-        const SUPPORTED_PAYMENT_SOURCES = array(self::PAYMENT_SOURCE_PAYPAL, self::PAYMENT_SOURCE_VENMO, self::PAYMENT_SOURCE_PAYLATER);
+        const PAYMENT_SOURCE_PAYPAL = \Automattic\WooCommerce\Gateways\PayPal\Constants::PAYMENT_SOURCE_PAYPAL;
+        const PAYMENT_SOURCE_VENMO = \Automattic\WooCommerce\Gateways\PayPal\Constants::PAYMENT_SOURCE_VENMO;
+        const PAYMENT_SOURCE_PAYLATER = \Automattic\WooCommerce\Gateways\PayPal\Constants::PAYMENT_SOURCE_PAYLATER;
+        const SUPPORTED_PAYMENT_SOURCES = \Automattic\WooCommerce\Gateways\PayPal\Constants::SUPPORTED_PAYMENT_SOURCES;
         /**
          * Fields to redact from logs.
          *
+         * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Constants::FIELDS_TO_REDACT instead.
          * @var array
          */
-        const FIELDS_TO_REDACT = array('given_name', 'surname', 'full_name', 'address_line_1', 'address_line_2', 'admin_area_1', 'admin_area_2', 'postal_code', 'phone', 'phone_number', 'national_number');
+        const FIELDS_TO_REDACT = \Automattic\WooCommerce\Gateways\PayPal\Constants::FIELDS_TO_REDACT;
         /**
          * List of currencies supported by PayPal (Orders API V2).
          *
+         * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Constants::SUPPORTED_CURRENCIES instead.
          * @var array<string>
          */
-        const SUPPORTED_CURRENCIES = array(
-            'AUD',
-            // Australian Dollar.
-            'BRL',
-            // Brazilian Real.
-            'CAD',
-            // Canadian Dollar.
-            'CNY',
-            // Chinese Renminbi.
-            'CZK',
-            // Czech Koruna.
-            'DKK',
-            // Danish Krone.
-            'EUR',
-            // Euro.
-            'HKD',
-            // Hong Kong Dollar.
-            'HUF',
-            // Hungarian Forint.
-            'ILS',
-            // Israeli New Shekel.
-            'JPY',
-            // Japanese Yen.
-            'MYR',
-            // Malaysian Ringgit.
-            'MXN',
-            // Mexican Peso.
-            'TWD',
-            // New Taiwan Dollar.
-            'NZD',
-            // New Zealand Dollar.
-            'NOK',
-            // Norwegian Krone.
-            'PHP',
-            // Philippine Peso.
-            'PLN',
-            // Polish Złoty.
-            'GBP',
-            // Pound Sterling.
-            'SGD',
-            // Singapore Dollar.
-            'SEK',
-            // Swedish Krona.
-            'CHF',
-            // Swiss Franc.
-            'THB',
-            // Thai Baht.
-            'USD',
-            // United States Dollar.
-            'RUB',
-        );
+        const SUPPORTED_CURRENCIES = \Automattic\WooCommerce\Gateways\PayPal\Constants::SUPPORTED_CURRENCIES;
     }
     /**
      * Helper for PayPal gateway.
+     *
+     * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Helper instead. This class will be removed in 11.0.0.
      */
     class WC_Gateway_Paypal_Helper
     {
         /**
          * Check if the PayPal gateway is enabled.
          *
+         * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Helper::is_paypal_gateway_available() instead.
          * @return bool
          */
         public static function is_paypal_gateway_available()
@@ -49078,6 +49321,7 @@ namespace {
         /**
          * Check if the merchant is eligible for migration from WPS to PPCP.
          *
+         * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Helper::is_orders_v2_migration_eligible() instead.
          * @return bool
          */
         public static function is_orders_v2_migration_eligible()
@@ -49086,6 +49330,7 @@ namespace {
         /**
          * Get the WC order from the PayPal custom ID.
          *
+         * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Helper::get_wc_order_from_paypal_custom_id() instead.
          * @param string $custom_id The custom ID string from the PayPal order.
          * @return WC_Order|null
          */
@@ -49098,6 +49343,7 @@ namespace {
          * This function recursively traverses the data array and redacts sensitive information
          * while preserving the structure for debugging purposes.
          *
+         * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Helper::redact_data() instead.
          * @param mixed $data The data to remove PII from (array, string, or other types).
          * @return mixed The data with PII redacted.
          */
@@ -49107,10 +49353,22 @@ namespace {
         /**
          * Mask email address before @ keeping the full domain.
          *
+         * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Helper::mask_email() instead.
          * @param string $email The email address to mask.
          * @return string The masked email address or original input if invalid.
          */
         public static function mask_email($email)
+        {
+        }
+        /**
+         * Update the addresses in the order.
+         *
+         * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Helper::update_addresses_in_order() instead.
+         * @param WC_Order|null $order The order object.
+         * @param array         $paypal_order_details The PayPal order details.
+         * @return void
+         */
+        public static function update_addresses_in_order(?\WC_Order $order, array $paypal_order_details): void
         {
         }
     }
@@ -49342,44 +49600,17 @@ namespace {
     /**
      * Class WC_Gateway_Paypal_Notices.
      *
+     * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Notices instead. This class will be removed in 11.0.0.
      * @since 10.3.0
      */
     class WC_Gateway_Paypal_Notices
     {
         /**
-         * The name of the notice for PayPal migration.
+         * The delegated notices instance.
          *
-         * @since 10.4.0
-         * @var string
+         * @var PayPalNotices
          */
-        private const PAYPAL_MIGRATION_NOTICE = 'paypal_migration_completed';
-        /**
-         * The name of the notice for PayPal account restriction.
-         *
-         * @since 10.4.0
-         * @var string
-         */
-        private const PAYPAL_ACCOUNT_RESTRICTED_NOTICE = 'paypal_account_restricted';
-        /**
-         * The name of the notice for PayPal unsupported currency.
-         *
-         * @since 10.4.0
-         * @var string
-         */
-        private const PAYPAL_UNSUPPORTED_CURRENCY_NOTICE = 'paypal_unsupported_currency';
-        /**
-         * PayPal account restriction issue codes from PayPal API.
-         *
-         * @since 10.4.0
-         * @var array
-         */
-        protected const PAYPAL_ACCOUNT_RESTRICTION_ISSUES = array('PAYEE_ACCOUNT_LOCKED_OR_CLOSED', 'PAYEE_ACCOUNT_RESTRICTED');
-        /**
-         * The PayPal gateway instance.
-         *
-         * @var WC_Gateway_Paypal
-         */
-        private $gateway;
+        private $notices;
         /**
          * Constructor.
          */
@@ -49389,6 +49620,7 @@ namespace {
         /**
          * Add PayPal Standard notices.
          *
+         * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Notices::add_paypal_notices() instead.
          * @since 10.4.0
          * @return void
          */
@@ -49398,6 +49630,7 @@ namespace {
         /**
          * Add PayPal notices on the payments settings page.
          *
+         * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Notices::add_paypal_notices_on_payments_settings_page() instead.
          * @since 10.4.0
          * @return void
          */
@@ -49416,55 +49649,11 @@ namespace {
         /**
          * Add notice warning about the migration to PayPal Payments.
          *
+         * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Notices::add_paypal_migration_notice() instead.
          * @since 10.3.0
          * @return void
          */
         public function add_paypal_migration_notice()
-        {
-        }
-        /**
-         * Add notice warning about PayPal account restriction.
-         *
-         * @since 10.4.0
-         * @return void
-         */
-        private function add_paypal_account_restricted_notice()
-        {
-        }
-        /**
-         * Add notice warning when PayPal does not support the store's currency.
-         *
-         * @since 10.4.0
-         * @return void
-         */
-        private function add_paypal_unsupported_currency_notice()
-        {
-        }
-        /**
-         * Get the dismiss URL for a notice.
-         *
-         * @since 10.4.0
-         * @param string $notice_name The name of the notice.
-         * @return string
-         */
-        private function get_dismiss_url(string $notice_name): string
-        {
-        }
-        /**
-         * Check if the notice has been dismissed.
-         *
-         * User meta keys for notice dismissals:
-         * - dismissed_paypal_migration_completed_notice
-         * - dismissed_paypal_account_restricted_notice
-         * - dismissed_paypal_unsupported_currency_notice
-         *
-         * The meta keys are set by WC_Admin_Notices when the notice is dismissed by the user.
-         *
-         * @since 10.4.0
-         * @param string $notice_name The name of the notice.
-         * @return bool
-         */
-        private function is_notice_dismissed(string $notice_name): bool
         {
         }
         /**
@@ -49477,17 +49666,9 @@ namespace {
         {
         }
         /**
-         * Check if there's a flag indicating PayPal account restriction.
-         *
-         * @since 10.4.0
-         * @return bool
-         */
-        private function has_account_restriction_flag(): bool
-        {
-        }
-        /**
          * Set the flag indicating PayPal account restriction.
          *
+         * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Notices::set_account_restriction_flag() instead.
          * @since 10.4.0
          * @return void
          */
@@ -49497,6 +49678,7 @@ namespace {
         /**
          * Clear the flag indicating PayPal account restriction.
          *
+         * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Notices::clear_account_restriction_flag() instead.
          * @since 10.4.0
          * @return void
          */
@@ -49506,6 +49688,7 @@ namespace {
         /**
          * Handle PayPal order response to manage account restriction notices.
          *
+         * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Notices::manage_account_restriction_flag_for_notice() instead.
          * @since 10.4.0
          * @param int|string $http_code     The HTTP status code from the PayPal API response.
          * @param array      $response_data The decoded response data from the PayPal API.
@@ -49608,27 +49791,11 @@ namespace {
          */
         protected $endpoint;
         /**
-         * The API version for the proxy endpoint.
+         * The delegated request instance.
          *
-         * @var int
+         * @var PayPalRequest
          */
-        private const WPCOM_PROXY_ENDPOINT_API_VERSION = 2;
-        /**
-         * The base for the proxy REST endpoint.
-         *
-         * @var string
-         */
-        private const WPCOM_PROXY_REST_BASE = 'transact/paypal_standard/proxy';
-        /**
-         * Proxy REST endpoints.
-         *
-         * @var string
-         */
-        private const WPCOM_PROXY_ORDER_ENDPOINT = 'order';
-        private const WPCOM_PROXY_PAYMENT_CAPTURE_ENDPOINT = 'payment/capture';
-        private const WPCOM_PROXY_PAYMENT_AUTHORIZE_ENDPOINT = 'payment/authorize';
-        private const WPCOM_PROXY_PAYMENT_CAPTURE_AUTH_ENDPOINT = 'payment/capture_auth';
-        private const WPCOM_PROXY_CLIENT_ID_ENDPOINT = 'client_id';
+        private $request;
         /**
          * Constructor.
          *
@@ -49650,21 +49817,20 @@ namespace {
         /**
          * Create a PayPal order using the Orders v2 API.
          *
-         * This method creates a PayPal order and returns the order details including
-         * the approval URL where customers will be redirected to complete payment.
-         *
+         * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Request::create_paypal_order() instead. This method will be removed in 11.0.0.
          * @param WC_Order $order Order object.
          * @param string   $payment_source The payment source.
          * @param array    $js_sdk_params Extra parameters for a PayPal JS SDK (Buttons) request.
          * @return array|null
          * @throws Exception If the PayPal order creation fails.
          */
-        public function create_paypal_order($order, $payment_source = \WC_Gateway_Paypal_Constants::PAYMENT_SOURCE_PAYPAL, $js_sdk_params = array())
+        public function create_paypal_order($order, $payment_source = \Automattic\WooCommerce\Gateways\PayPal\Constants::PAYMENT_SOURCE_PAYPAL, $js_sdk_params = array())
         {
         }
         /**
          * Get PayPal order details.
          *
+         * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Request::get_paypal_order_details() instead. This method will be removed in 11.0.0.
          * @param string $paypal_order_id The ID of the PayPal order.
          * @return array
          * @throws Exception If the PayPal order details request fails.
@@ -49674,22 +49840,22 @@ namespace {
         {
         }
         /**
-         * Authorize or capture a PayPal payment using the Orders v2 API.
-         *
          * This method authorizes or captures a PayPal payment and updates the order status.
          *
-         * @param WC_Order $order Order object.
-         * @param string   $action_url The URL to authorize or capture the payment.
-         * @param string   $action The action to perform. Either 'authorize' or 'capture'.
+         * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Request::authorize_or_capture_payment() instead.
+         * @param WC_Order    $order Order object.
+         * @param string|null $action_url The URL to authorize or capture the payment.
+         * @param string      $action The action to perform. Either 'authorize' or 'capture'.
          * @return void
          * @throws Exception If the PayPal payment authorization or capture fails.
          */
-        public function authorize_or_capture_payment($order, $action_url, $action = \WC_Gateway_Paypal_Constants::PAYMENT_ACTION_CAPTURE)
+        public function authorize_or_capture_payment($order, $action_url, $action = \Automattic\WooCommerce\Gateways\PayPal\Constants::PAYMENT_ACTION_CAPTURE)
         {
         }
         /**
          * Capture a PayPal payment that has been authorized.
          *
+         * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Request::capture_authorized_payment() instead. This method will be removed in 11.0.0.
          * @param WC_Order $order Order object.
          * @return void
          * @throws Exception If the PayPal payment capture fails.
@@ -49698,49 +49864,9 @@ namespace {
         {
         }
         /**
-         * Get the authorization ID for the PayPal payment.
-         *
-         * @param WC_Order $order Order object.
-         * @return string|null
-         */
-        private function get_authorization_id_for_capture($order)
-        {
-        }
-        /**
-         * Get the latest item from the authorizations or captures array based on update_time.
-         *
-         * @param array $items Array of authorizations or captures.
-         * @return array|null The latest authorization or capture or null if array is empty or no valid update_time found.
-         */
-        private function get_latest_transaction_data($items)
-        {
-        }
-        /**
-         * Get the approve link from the response data.
-         *
-         * @param int   $http_code The HTTP code of the response.
-         * @param array $response_data The response data.
-         * @return string|null
-         */
-        private function get_approve_link($http_code, $response_data)
-        {
-        }
-        /**
-         * Build the request parameters for the PayPal create-order request.
-         *
-         * @param WC_Order $order Order object.
-         * @param string   $payment_source The payment source.
-         * @param array    $js_sdk_params Extra parameters for a PayPal JS SDK (Buttons) request.
-         * @return array
-         *
-         * @throws Exception If the order items cannot be built.
-         */
-        private function get_paypal_create_order_request_params($order, $payment_source, $js_sdk_params)
-        {
-        }
-        /**
          * Get the amount data  for the PayPal order purchase unit field.
          *
+         * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Request::get_paypal_order_purchase_unit_amount() instead. This method will be removed in 11.0.0.
          * @param WC_Order $order Order object.
          * @return array
          */
@@ -49748,109 +49874,13 @@ namespace {
         {
         }
         /**
-         * Build the custom ID for the PayPal order. The custom ID will be used by the proxy for webhook forwarding,
-         * and by later steps to identify the order.
-         *
-         * @param WC_Order $order Order object.
-         * @return string
-         * @throws Exception If the custom ID is too long.
-         */
-        private function get_paypal_order_custom_id($order)
-        {
-        }
-        /**
-         * Get the order items for the PayPal create-order request.
-         *
-         * @param WC_Order $order Order object.
-         * @return array
-         */
-        private function get_paypal_order_items($order)
-        {
-        }
-        /**
-         * Get the subtotal for all items, before discounts.
-         *
-         * @param WC_Order $order Order object.
-         * @return float
-         */
-        private function get_paypal_order_items_subtotal($order)
-        {
-        }
-        /**
-         * Get the amount for a specific order item.
-         *
-         * @param WC_Order      $order Order object.
-         * @param WC_Order_Item $item Order item.
-         * @return float
-         */
-        private function get_paypal_order_item_amount($order, $item)
-        {
-        }
-        /**
-         * Get the value for the intent field in the create-order request.
-         *
-         * @return string
-         */
-        private function get_paypal_order_intent()
-        {
-        }
-        /**
-         * Get the shipping preference for the PayPal create-order request.
-         *
-         * @param WC_Order $order Order object.
-         * @return string
-         */
-        private function get_paypal_shipping_preference($order)
-        {
-        }
-        /**
-         * Get the shipping information for the PayPal create-order request.
-         *
-         * @param WC_Order $order Order object.
-         * @return array|null Returns null if the shipping is not required,
-         *  or the address is not set, or is incomplete.
-         */
-        private function get_paypal_order_shipping($order)
-        {
-        }
-        /**
-         * Normalize PayPal order shipping country code.
-         *
-         * @param string $country_code Country code to normalize.
-         * @return string|null
-         */
-        private function normalize_paypal_order_shipping_country_code($country_code)
-        {
-        }
-        /**
-         * Normalize a URL for PayPal. PayPal requires absolute URLs with protocol.
-         *
-         * @param string $url The URL to check.
-         * @return string Normalized URL.
-         */
-        private function normalize_url_for_paypal($url)
-        {
-        }
-        /**
          * Fetch the PayPal client-id from the Transact platform.
          *
+         * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\Request::fetch_paypal_client_id() instead. This method will be removed in 11.0.0.
          * @return string|null The PayPal client-id, or null if the request fails.
          * @throws Exception If the request fails.
          */
         public function fetch_paypal_client_id()
-        {
-        }
-        /**
-         * Send a request to the API proxy.
-         *
-         * @param string $method The HTTP method to use.
-         * @param string $endpoint The endpoint to request.
-         * @param array  $request_body The request body.
-         *
-         * @return array|null The API response body, or null if the request fails.
-         * @throws Exception If the site ID is not found.
-         */
-        private function send_wpcom_proxy_request($method, $endpoint, $request_body)
         {
         }
         /**
@@ -50046,43 +50076,17 @@ namespace {
     }
     /**
      * Handles Transact account management.
+     *
+     * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\TransactAccountManager instead. This class will be removed in 11.0.0.
      */
     final class WC_Gateway_Paypal_Transact_Account_Manager
     {
         /**
-         * The API version for the proxy endpoint.
+         * The delegated TransactAccountManager instance.
          *
-         * @var int
+         * @var PayPalTransactAccountManager
          */
-        private const WPCOM_PROXY_ENDPOINT_API_VERSION = 2;
-        /**
-         * Transact provider type, for provider onboarding.
-         *
-         * @var string
-         */
-        private const TRANSACT_PROVIDER_TYPE = 'paypal_standard';
-        /**
-         * Cache keys for the merchant and provider accounts.
-         *
-         * @var string
-         */
-        private const TRANSACT_MERCHANT_ACCOUNT_CACHE_KEY_LIVE = 'woocommerce_paypal_transact_merchant_account_live';
-        private const TRANSACT_MERCHANT_ACCOUNT_CACHE_KEY_TEST = 'woocommerce_paypal_transact_merchant_account_test';
-        private const TRANSACT_PROVIDER_ACCOUNT_CACHE_KEY_LIVE = 'woocommerce_paypal_transact_provider_account_live';
-        private const TRANSACT_PROVIDER_ACCOUNT_CACHE_KEY_TEST = 'woocommerce_paypal_transact_provider_account_test';
-        /**
-         * The expiry time for the Transact account cache.
-         *
-         * @var int
-         */
-        private const TRANSACT_ACCOUNT_CACHE_EXPIRY = 60 * 60 * 24;
-        // 24 hours.
-        /**
-         * Paypal gateway object.
-         *
-         * @var WC_Gateway_Paypal
-         */
-        private $gateway;
+        private $transact_account_manager;
         /**
          * Constructor.
          *
@@ -50095,6 +50099,8 @@ namespace {
          * Onboard the merchant with the Transact platform.
          *
          * @return void
+         *
+         * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\TransactAccountManager::do_onboarding() instead. This method will be removed in 11.0.0.
          */
         public function do_onboarding()
         {
@@ -50105,147 +50111,44 @@ namespace {
          *
          * @param string $account_type The type of account to get (merchant or provider).
          * @return array|null Returns null if the transact account cannot be retrieved.
+         *
+         * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\TransactAccountManager::get_transact_account_data() instead. This method will be removed in 11.0.0.
          */
         public function get_transact_account_data($account_type)
-        {
-        }
-        /**
-         * Get the cache key for the transact account.
-         *
-         * @param string $account_type The type of account to get (merchant or provider).
-         * @return string|null The cache key, or null if the account type is invalid.
-         */
-        private function get_cache_key($account_type)
-        {
-        }
-        /**
-         * Fetch the merchant account from the Transact platform.
-         *
-         * @return array|null The API response body, or null if the request fails.
-         */
-        private function fetch_merchant_account()
-        {
-        }
-        /**
-         * Fetch the provider account from the Transact platform.
-         *
-         * @return bool True if the provider account exists, false otherwise.
-         */
-        private function fetch_provider_account()
-        {
-        }
-        /**
-         * Create the merchant account with the Transact platform.
-         *
-         * @return array|null The API response body, or null if the request fails.
-         */
-        private function create_merchant_account()
-        {
-        }
-        /**
-         * Create the provider account with the Transact platform.
-         *
-         * @return bool True if the provider account creation was successful, false otherwise.
-         */
-        private function create_provider_account()
-        {
-        }
-        /**
-         * Update the transact account (merchant or provider) cache.
-         *
-         * @param string $cache_key The cache key to update.
-         * @param array  $account_data The transact account data.
-         */
-        private function update_transact_account_cache($cache_key, $account_data)
-        {
-        }
-        /**
-         * Get the transact account (merchant or provider) from the database cache.
-         *
-         * @param string $cache_key The cache key to get the account.
-         * @return bool|null The transact account data, or null if the cache is
-         *                    empty or expired.
-         */
-        private function get_transact_account_from_cache($cache_key)
-        {
-        }
-        /**
-         * Send a request to the Transact platform.
-         *
-         * @param string $method The HTTP method to use.
-         * @param string $endpoint The endpoint to request.
-         * @param array  $request_body The request body.
-         *
-         * @return array|null The API response body, or null if the request fails.
-         */
-        private function send_transact_api_request($method, $endpoint, $request_body)
         {
         }
     }
     /**
      * Handles webhook events.
+     *
+     * @deprecated 10.5.0 Deprecated in favor of Automattic\WooCommerce\Gateways\PayPal\WebhookHandler
      */
     class WC_Gateway_Paypal_Webhook_Handler
     {
         /**
+         * The delegated webhook handler instance.
+         *
+         * @var PayPalWebhookHandler
+         */
+        private \Automattic\WooCommerce\Gateways\PayPal\WebhookHandler $webhook_handler;
+        /**
+         * Constructor.
+         */
+        public function __construct()
+        {
+        }
+        /**
          * Process the webhook event.
          *
+         * @deprecated 10.5.0 Use Automattic\WooCommerce\Gateways\PayPal\WebhookHandler::process_webhook() instead. This method will be removed in 11.0.0.
+         *
          * @param WP_REST_Request $request The request object.
+         *
+         * @return void
+         *
+         * @deprecated 10.5.0 Deprecated in favor of Automattic\WooCommerce\Gateways\PayPal\WebhookHandler::process_webhook
          */
         public function process_webhook(\WP_REST_Request $request)
-        {
-        }
-        /**
-         * Process the CHECKOUT.ORDER.APPROVED webhook event.
-         *
-         * @param array $event The webhook event data.
-         */
-        private function process_checkout_order_approved($event)
-        {
-        }
-        /**
-         * Process the PAYMENT.CAPTURE.COMPLETED webhook event.
-         *
-         * @param array $event The webhook event data.
-         */
-        private function process_payment_capture_completed($event)
-        {
-        }
-        /**
-         * Process the PAYMENT.CAPTURE.PENDING webhook event.
-         *
-         * @param array $event The webhook event data.
-         */
-        private function process_payment_capture_pending($event)
-        {
-        }
-        /**
-         * Process the PAYMENT.AUTHORIZATION.CREATED webhook event.
-         *
-         * @param array $event The webhook event data.
-         */
-        private function process_payment_authorization_created($event)
-        {
-        }
-        /**
-         * Capture the payment.
-         *
-         * @param WC_Order $order The order object.
-         * @param array    $links The links from the webhook event.
-         * @param string   $action The action to perform (capture or authorize).
-         * @return void
-         */
-        private function authorize_or_capture_payment($order, $links, $action)
-        {
-        }
-        /**
-         * Get the action URL from the links.
-         *
-         * @param array  $links The links from the webhook event.
-         * @param string $action The action to perform (capture or authorize).
-         * @return string|null
-         */
-        private function get_action_url($links, $action)
         {
         }
     }
@@ -57076,6 +56979,488 @@ namespace {
          */
         protected $namespace = 'wc/v2';
     }
+}
+namespace Automattic\WooCommerce\Internal\Traits {
+    /**
+     * This trait provides caching capabilities for REST API endpoints using the WordPress cache.
+     *
+     * - The output of all the REST API endpoints whose callback declaration is wrapped
+     *   in a call to 'with_cache' will be cached using wp_cache_* functions.
+     * - Response headers are cached together with the response data, excluding certain fixed
+     *   headers (like Set-Cookie) and optionally others specified via configuration
+     *   (per-controller or per-endpoint).
+     * - For the purposes of caching, a request is uniquely identified by its route,
+     *   HTTP method, query string, and user ID.
+     * - The VersionStringGenerator class is used to track versions of entities included
+     *   in the responses (an "entity" is any object that is uniquely identified by type and id
+     *   and contributes with information to be included in the response),
+     *   so that when those entities change, the relevant cached responses become invalid.
+     *   Modification of entity versions must be done externally by the code that modifies
+     *   those entities (via calls to VersionStringGenerator::generate_version).
+     * - Various parameters (cached outputs TTL, entity type for a given response, hooks that affect
+     *   the response) can be configured globally for the controller (via overriding protected methods)
+     *   or per-endpoint (via arguments passed to with_cache).
+     * - Caching can be disabled for a given request by adding a '_skip_cache=true|1'
+     *   to the query string.
+     * - A X-WC-Cache HTTP header is added to responses to indicate cache status:
+     *   HIT, MISS, or SKIP.
+     *
+     * Additionally to caching, this trait also handles the sending of appropriate
+     * Cache-Control and ETag headers to instruct clients and proxies on how to cache responses.
+     * The ETag is generated based on the cached response data and cache key, and a request
+     * containing an If-None-Match header with a matching ETag will receive a 304 Not Modified response.
+     *
+     * Usage: Wrap endpoint callbacks with the `with_cache()` method when registering routes.
+     *
+     * Example:
+     *
+     * class WC_REST_Products_Controller extends WC_REST_Products_V2_Controller {
+     *     use RestApiCache;
+     *
+     *     public function __construct() {
+     *         parent::__construct();
+     *         $this->initialize_rest_api_cache();  // REQUIRED
+     *     }
+     *
+     *     protected function get_default_response_entity_type(): ?string {
+     *         return 'product';  // REQUIRED (or specify entity_type in each with_cache call)
+     *     }
+     *
+     *     public function register_routes() {
+     *         register_rest_route(
+     *             $this->namespace,
+     *             '/' . $this->rest_base . '/(?P<id>[\d]+)',
+     *             array(
+     *                 'methods'  => WP_REST_Server::READABLE,
+     *                 'callback' => $this->with_cache(
+     *                     array( $this, 'get_item' ),
+     *                     array(
+     *                         // String, optional if get_default_response_entity_type() is overridden.
+     *                         'entity_type'    => 'product',
+     *                         // Optional int, defaults to the controller's get_ttl_for_cached_response().
+     *                         'cache_ttl'      => HOUR_IN_SECONDS,
+     *                         // Optional array, defaults to the controller's get_hooks_relevant_to_caching().
+     *                         'relevant_hooks'  => array( 'filter_name_1', 'filter_name_2' ),
+     *                         // Optional bool, defaults to the controller's response_cache_vary_by_user().
+     *                         'vary_by_user'    => true,
+     *                         // Optional array, defaults to the controller's get_response_headers_to_include_in_caching().
+     *                         'include_headers' => array( 'X-Custom-Header' ),
+     *                         // Optional array, defaults to the controller's get_response_headers_to_exclude_from_caching().
+     *                         'exclude_headers' => array( 'X-Private-Header' ),
+     *                         // Optional, this will be passed to all the caching-related methods.
+     *                         'endpoint_id'     => 'get_product'
+     *                     )
+     *                 ),
+     *             )
+     *         );
+     *     }
+     * }
+     *
+     * Override these methods in your controller as needed:
+     * - get_default_response_entity_type(): Default entity type for endpoints without explicit config.
+     * - response_cache_vary_by_user(): Whether cache should be user-specific.
+     * - get_hooks_relevant_to_caching(): Hook names to track for cache invalidation.
+     * - get_ttl_for_cached_response(): TTL for cached outputs in seconds.
+     * - get_response_headers_to_include_in_caching(): Headers to include in cache (false = use exclusion mode).
+     * - get_response_headers_to_exclude_from_caching(): Headers to exclude from cache (when in exclusion mode).
+     *
+     * Cache invalidation happens when:
+     * - Entity versions change (tracked via VersionStringGenerator).
+     * - Hook callbacks change
+     *   (if the `get_hooks_relevant_to_caching()` call result or the 'relevant_hooks' array isn't empty).
+     * - Cached response TTL expires.
+     *
+     * NOTE: This caching mechanism uses the WordPress cache (wp_cache_* functions).
+     * By default caching is only enabled when an external object cache is enabled
+     * (checked via call to VersionStringGenerator::can_use()), so the cache is persistent
+     * across requests and not just for the current request.
+     *
+     * @since 10.5.0
+     */
+    trait RestApiCache
+    {
+        /**
+         * Cache group name for REST API responses.
+         *
+         * @var string
+         */
+        private static string $cache_group = 'woocommerce_rest_api_cache';
+        /**
+         * Response headers that are always excluded from caching.
+         *
+         * @var array
+         */
+        private static array $always_excluded_headers = array('X-WC-Cache', 'Set-Cookie', 'Date', 'Expires', 'Last-Modified', 'Age', 'ETag', 'Cache-Control', 'Pragma');
+        /**
+         * The instance of VersionStringGenerator to use, or null if caching is disabled.
+         *
+         * @var VersionStringGenerator|null
+         */
+        private ?\Automattic\WooCommerce\Internal\Caches\VersionStringGenerator $version_string_generator = null;
+        /**
+         * Whether we are currently handling a cached endpoint.
+         *
+         * @var bool
+         */
+        private $is_handling_cached_endpoint = false;
+        /**
+         * Whether the REST API caching feature is enabled.
+         *
+         * @var bool
+         */
+        private bool $rest_api_caching_feature_enabled = false;
+        /**
+         * Initialize the trait.
+         * This MUST be called from the controller's constructor.
+         */
+        protected function initialize_rest_api_cache(): void
+        {
+        }
+        /**
+         * Wrap an endpoint callback declaration with caching logic.
+         * Usage: `'callback' => $this->with_cache( array( $this, 'endpoint_callback_method' ) )`
+         *        `'callback' => $this->with_cache( array( $this, 'endpoint_callback_method' ), [ 'entity_type' => 'product' ] )`
+         *
+         * @param callable $callback The original endpoint callback.
+         * @param array    $config   Caching configuration:
+         *                           - entity_type: string (falls back to get_default_response_entity_type()).
+         *                           - vary_by_user: bool (defaults to response_cache_vary_by_user()).
+         *                           - endpoint_id: string|null (optional friendly identifier for the endpoint).
+         *                           - cache_ttl: int (defaults to get_ttl_for_cached_response()).
+         *                           - relevant_hooks: array (defaults to get_hooks_relevant_to_caching()).
+         *                           - include_headers: array|false (defaults to get_response_headers_to_include_in_caching()).
+         *                           - exclude_headers: array (defaults to get_response_headers_to_exclude_from_caching()).
+         * @return callable Wrapped callback.
+         */
+        protected function with_cache(callable $callback, array $config = array()): callable
+        {
+        }
+        /**
+         * Handle a request with caching logic.
+         *
+         * Strategy:
+         * - If backend caching is enabled: Try to use cached response if available, otherwise execute
+         *   the callback and cache the response.
+         * - If only cache headers are enabled: Execute the callback, generate ETag, and return 304
+         *   if the client's ETag matches.
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request  The request object.
+         * @param callable                              $callback The original endpoint callback.
+         * @param array                                 $config   Caching configuration specified for the endpoint.
+         *
+         * @return WP_REST_Response|\WP_Error The response.
+         */
+        private function handle_cacheable_request(\WP_REST_Request $request, callable $callback, array $config)
+        {
+        }
+        /**
+         * Check if caching should be used for a particular incoming request.
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request The request object.
+         *
+         * @return bool True if caching should be used, false otherwise.
+         */
+        private function should_use_cache_for_request(\WP_REST_Request $request): bool
+        {
+        }
+        /**
+         * Build the output cache entry configuration from the request and per-endpoint config.
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request The request object.
+         * @param array                                 $config  Raw configuration array passed to with_cache.
+         *
+         * @return array|null Normalized cache config with keys: endpoint_id, entity_type, vary_by_user, cache_ttl, relevant_hooks, include_headers, exclude_headers, cache_key. Returns null if entity type is not available.
+         *
+         * @throws \InvalidArgumentException If include_headers is not false or an array.
+         */
+        private function build_cache_config(\WP_REST_Request $request, array $config): ?array
+        {
+        }
+        /**
+         * Cache the response if it's successful and optionally add cache headers.
+         *
+         * Only caches responses with 2xx status codes. Always adds the X-WC-Cache header
+         * with value MISS if the response was cached, or SKIP if it was not cached.
+         *
+         * Supports both WP_REST_Response objects and raw data (which will be wrapped in a response object).
+         * Error objects are returned as-is without caching.
+         *
+         * @param WP_REST_Request<array<string, mixed>>   $request            The request object.
+         * @param WP_REST_Response|\WP_Error|array|object $response           The response to potentially cache.
+         * @param array                                   $cached_config      Caching configuration from build_cache_config().
+         * @param bool                                    $add_cache_headers  Whether to add cache control headers.
+         *
+         * @return WP_REST_Response|\WP_Error The response with appropriate cache headers.
+         */
+        private function maybe_cache_response(\WP_REST_Request $request, $response, array $cached_config, bool $add_cache_headers)
+        {
+        }
+        /**
+         * Add cache control headers to a response.
+         *
+         * This method generates an ETag from the response data and returns a 304 Not Modified
+         * if the client's If-None-Match header matches. It can be used both with and without
+         * backend caching.
+         *
+         * @param WP_REST_Request<array<string, mixed>>   $request       The request object.
+         * @param WP_REST_Response|\WP_Error|array|object $response      The response to add headers to.
+         * @param array                                   $cached_config Caching configuration from build_cache_config().
+         *
+         * @return WP_REST_Response|\WP_Error The response with cache headers.
+         */
+        private function maybe_add_cache_headers(\WP_REST_Request $request, $response, array $cached_config)
+        {
+        }
+        /**
+         * Create a 304 Not Modified response if allowed by filters.
+         *
+         * @param string                                $etag                The ETag value.
+         * @param string                                $cache_control_value The Cache-Control header value.
+         * @param WP_REST_Request<array<string, mixed>> $request             The request object.
+         * @param string|null                           $endpoint_id         The endpoint identifier.
+         *
+         * @return WP_REST_Response|null 304 response if allowed, null otherwise.
+         */
+        private function create_not_modified_response(string $etag, string $cache_control_value, \WP_REST_Request $request, ?string $endpoint_id): ?\WP_REST_Response
+        {
+        }
+        /**
+         * Get the default type for entities included in responses.
+         *
+         * This can be customized per-endpoint via the config array
+         * passed to with_cache() ('entity_type' key).
+         *
+         * @return string|null Entity type (e.g., 'product', 'order'), or null if no controller-wide default.
+         */
+        protected function get_default_response_entity_type(): ?string
+        {
+        }
+        /**
+         * Get data for ETag generation.
+         *
+         * Override in classes to exclude fields that change on each request
+         * (e.g., random recommendations, timestamps).
+         *
+         * @param array                                 $data        Response data.
+         * @param WP_REST_Request<array<string, mixed>> $request     The request object.
+         * @param string|null                           $endpoint_id Optional friendly identifier for the endpoint.
+         *
+         * @return array Cleaned data for ETag generation.
+         */
+        protected function get_data_for_etag(array $data, \WP_REST_Request $request, ?string $endpoint_id = null): array
+        {
+        }
+        /**
+         * Whether the response cache should vary by user.
+         *
+         * When true, each user gets their own cached version of the response.
+         * When false, the same cached response is shared across all users.
+         *
+         * This can be customized per-endpoint via the config array
+         * passed to with_cache() ('vary_by_user' key).
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request     The request object.
+         * @param string|null                           $endpoint_id Optional friendly identifier for the endpoint.
+         *
+         * @return bool True to make cache user-specific, false otherwise.
+         */
+        protected function response_cache_vary_by_user(\WP_REST_Request $request, ?string $endpoint_id = null): bool
+        {
+        }
+        /**
+         * Get the cache TTL (time to live) for cached responses.
+         *
+         * This can be customized per-endpoint via the config array
+         * passed to with_cache() ('cache_ttl' key).
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request     The request object.
+         * @param string|null                           $endpoint_id Optional friendly identifier for the endpoint.
+         *
+         * @return int Cache TTL in seconds.
+         */
+        protected function get_ttl_for_cached_response(\WP_REST_Request $request, ?string $endpoint_id = null): int
+        {
+        }
+        /**
+         * Get the names of hooks (filters and actions) that can customize the response.
+         *
+         * All the existing instances of add_action/add_filter for these hooks
+         * will be included in the information that gets cached together with the response,
+         * and if any of these has changed when the cached response is retrieved,
+         * the cache entry will be invalidated.
+         *
+         * This can be customized per-endpoint via the config array
+         * passed to with_cache() ('relevant_hooks' key).
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request     Request object.
+         * @param string|null                           $endpoint_id Optional friendly identifier for the endpoint.
+         *
+         * @return array Array of hook names to track.
+         */
+        protected function get_hooks_relevant_to_caching(\WP_REST_Request $request, ?string $endpoint_id = null): array
+        {
+        }
+        /**
+         * Get the names of response headers to include in caching.
+         *
+         * When this returns an array, ONLY the headers whose names are returned
+         * will be included in the cache (subject to always-excluded headers).
+         * When this returns false, all headers will be included except those returned
+         * by get_response_headers_to_exclude_from_caching().
+         *
+         * This can be customized per-endpoint via the config array
+         * passed to with_cache() ('include_headers' key).
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request     Request object.
+         * @param string|null                           $endpoint_id Optional friendly identifier for the endpoint.
+         *
+         * @return array|false Array of header names to include (case-insensitive), or false to use exclusion logic.
+         */
+        protected function get_response_headers_to_include_in_caching(\WP_REST_Request $request, ?string $endpoint_id = null)
+        {
+        }
+        /**
+         * Get the names of response headers to exclude from caching.
+         *
+         * These headers will not be stored in the cache, in addition to the
+         * always-excluded headers (X-WC-Cache, Set-Cookie, Date, Expires, Last-Modified,
+         * Age, ETag, Cache-Control, Pragma).
+         *
+         * This is only used when get_response_headers_to_include_in_caching() returns false.
+         *
+         * This can be customized per-endpoint via the config array
+         * passed to with_cache() ('exclude_headers' key).
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request     Request object.
+         * @param string|null                           $endpoint_id Optional friendly identifier for the endpoint.
+         *
+         * @return array Array of header names to exclude (case-insensitive).
+         */
+        protected function get_response_headers_to_exclude_from_caching(\WP_REST_Request $request, ?string $endpoint_id = null): array
+        {
+        }
+        /**
+         * Extract entity IDs from response data.
+         *
+         * This implementation assumes the response is either:
+         * - An array with an 'id' field (single item)
+         * - An array of arrays each having an 'id' field (collection)
+         *
+         * Controllers can override this method to customize entity ID extraction.
+         *
+         * @param array                                 $response_data Response data.
+         * @param WP_REST_Request<array<string, mixed>> $request       The request object.
+         * @param string|null                           $endpoint_id   Optional friendly identifier for the endpoint.
+         *
+         * @return array Array of entity IDs.
+         */
+        protected function extract_entity_ids_from_response(array $response_data, \WP_REST_Request $request, ?string $endpoint_id = null): array
+        {
+        }
+        /**
+         * Filter response headers to get only those that should be cached.
+         *
+         * The filtering process follows these steps:
+         * 1. If $include_headers is an array, only those headers are included (case-insensitive).
+         *    If $include_headers is false, all headers are included except those in $exclude_headers.
+         * 2. Always-excluded headers (X-WC-Cache, Set-Cookie, Date, etc.) are removed.
+         * 3. The woocommerce_rest_api_cached_headers filter is applied, receiving both the candidate
+         *    headers list and all available headers. This allows filters to both add and remove
+         *    headers from the caching list.
+         * 4. Always-excluded headers are enforced again post-filter to prevent filters from
+         *    re-introducing dangerous headers like Set-Cookie.
+         * 5. Only headers from the response that are in the filtered list are returned.
+         *
+         * @param array                                 $nominal_headers Response headers.
+         * @param array|false                           $include_headers Header names to include (false to use exclusion logic).
+         * @param array                                 $exclude_headers Header names to exclude (case-insensitive).
+         * @param WP_REST_Request<array<string, mixed>> $request The request object.
+         * @param WP_REST_Response                      $response        The response object.
+         * @param string|null                           $endpoint_id     Optional friendly identifier for the endpoint.
+         *
+         * @return array Filtered headers array.
+         */
+        private function get_headers_to_cache(array $nominal_headers, $include_headers, array $exclude_headers, \WP_REST_Request $request, \WP_REST_Response $response, ?string $endpoint_id): array
+        {
+        }
+        /**
+         * Get cache key information that uniquely identifies a request.
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request      The request object.
+         * @param bool                                  $vary_by_user Whether to include user ID in cache key.
+         * @param string|null                           $endpoint_id  Optional friendly identifier for the endpoint.
+         *
+         * @return array Array of cache key information parts.
+         */
+        protected function get_key_info_for_cached_response(\WP_REST_Request $request, bool $vary_by_user = false, ?string $endpoint_id = null): array
+        {
+        }
+        /**
+         * Generate a cache key for a given request.
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request      The request object.
+         * @param string                                $entity_type  The entity type.
+         * @param bool                                  $vary_by_user Whether to include user ID in cache key.
+         * @param string|null                           $endpoint_id  Optional friendly identifier for the endpoint.
+         *
+         * @return string Cache key.
+         */
+        private function get_key_for_cached_response(\WP_REST_Request $request, string $entity_type, bool $vary_by_user = false, ?string $endpoint_id = null): string
+        {
+        }
+        /**
+         * Generate a hash based on the actual usages of the hooks that affect the response.
+         *
+         * @param array $hook_names Array of hook names to track.
+         *
+         * @return string Hooks hash.
+         */
+        private function generate_hooks_hash(array $hook_names): string
+        {
+        }
+        /**
+         * Get a cached response, but only if it's valid (otherwise the cached response will be invalidated).
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request              The request object.
+         * @param array                                 $cached_config        Built caching configuration from build_cache_config().
+         * @param bool                                  $cache_headers_enabled Whether to add cache control headers.
+         *
+         * @return WP_REST_Response|null Cached response, or null if not available or has been invalidated.
+         */
+        private function get_cached_response(\WP_REST_Request $request, array $cached_config, bool $cache_headers_enabled): ?\WP_REST_Response
+        {
+        }
+        /**
+         * Store a response in cache.
+         *
+         * @param string $cache_key      The cache key.
+         * @param mixed  $data           The response data to cache.
+         * @param int    $status_code    The HTTP status code of the response.
+         * @param string $entity_type    The entity type.
+         * @param array  $entity_ids     Array of entity IDs in the response.
+         * @param int    $cache_ttl      Cache TTL in seconds.
+         * @param array  $relevant_hooks Hook names to track for invalidation.
+         * @param array  $headers        Response headers to cache.
+         * @param string $etag           ETag for the response.
+         */
+        private function store_cached_response(string $cache_key, $data, int $status_code, string $entity_type, array $entity_ids, int $cache_ttl, array $relevant_hooks, array $headers = array(), string $etag = ''): void
+        {
+        }
+        /**
+         * Handle rest_send_nocache_headers filter to prevent WordPress from overriding our cache headers.
+         *
+         * @internal
+         *
+         * @param bool $send_no_cache_headers Whether to send no-cache headers.
+         *
+         * @return bool False if we're handling caching for this request, original value otherwise.
+         */
+        public function handle_rest_send_nocache_headers(bool $send_no_cache_headers): bool
+        {
+        }
+    }
+}
+namespace {
     /**
      * REST API Products controller class.
      *
@@ -57084,6 +57469,7 @@ namespace {
      */
     class WC_REST_Products_V2_Controller extends \WC_REST_CRUD_Controller
     {
+        use \Automattic\WooCommerce\Internal\Traits\RestApiCache;
         /**
          * Endpoint namespace.
          *
@@ -57112,6 +57498,37 @@ namespace {
          * Initialize product actions.
          */
         public function __construct()
+        {
+        }
+        /**
+         * Get the default entity type for response caching.
+         *
+         * @return string|null The entity type.
+         */
+        protected function get_default_response_entity_type(): ?string
+        {
+        }
+        /**
+         * Get data for ETag generation, excluding fields that change on each request.
+         *
+         * @param array                                 $data        Response data.
+         * @param WP_REST_Request<array<string, mixed>> $request The request object.
+         * @param string|null                           $endpoint_id Optional endpoint identifier.
+         * @return array Cleaned data for ETag generation.
+         */
+        protected function get_data_for_etag(array $data, \WP_REST_Request $request, ?string $endpoint_id = \null): array
+        {
+        }
+        /**
+         * Remove related_ids from response data for ETag calculation.
+         *
+         * The related_ids field contains a random sample of related products,
+         * so it should not be used for ETag calculation.
+         *
+         * @param array $data Response data.
+         * @return array Response data without related_ids.
+         */
+        private function remove_related_ids_from_response_data(array $data): array
         {
         }
         /**
@@ -57289,6 +57706,17 @@ namespace {
         {
         }
         /**
+         * Get related products for a specific product.
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request Full details about the request.
+         * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+         *
+         * @internal
+         */
+        public function get_related_products($request)
+        {
+        }
+        /**
          * Fetch meta data.
          *
          * @param WC_Product $product Product object.
@@ -57452,6 +57880,14 @@ namespace {
          * @var string
          */
         protected $post_type = 'product_variation';
+        /**
+         * Get the default entity type for response caching.
+         *
+         * @return string|null The entity type.
+         */
+        protected function get_default_response_entity_type(): ?string
+        {
+        }
         /**
          * Register the routes for products.
          */
@@ -63524,6 +63960,18 @@ namespace {
          */
         const USER_AGENT_SLUG = 'tracks-client';
         /**
+         * Batch pixel queue for batched requests.
+         *
+         * @var array
+         */
+        private static $pixel_batch_queue = array();
+        /**
+         * Whether the shutdown hook has been registered.
+         *
+         * @var bool
+         */
+        private static $shutdown_hook_registered = \false;
+        /**
          * Initialize tracks client class
          *
          * @return void
@@ -63549,12 +63997,36 @@ namespace {
         {
         }
         /**
+         * Record a Tracks event using batched requests for improved performance.
+         * Events are queued and sent together on the shutdown hook.
+         *
+         * @since 10.5.0
+         *
+         * @param  array $event Array of event properties.
+         * @return bool|WP_Error         True on success, WP_Error on failure.
+         */
+        public static function record_event_batched($event)
+        {
+        }
+        /**
          * Synchronously request the pixel.
          *
          * @param string $pixel pixel url and query string.
          * @return bool Always returns true.
          */
         public static function record_pixel($pixel)
+        {
+        }
+        /**
+         * Record a pixel using batched requests for improved performance.
+         * Pixels are queued and sent together on the shutdown hook.
+         *
+         * @since 10.5.0
+         *
+         * @param string $pixel pixel url and query string.
+         * @return bool Always returns true.
+         */
+        public static function record_pixel_batched($pixel)
         {
         }
         /**
@@ -63592,6 +64064,48 @@ namespace {
         public static function get_anon_id()
         {
         }
+        /**
+         * Check if batch requests are supported.
+         *
+         * @since 10.5.0
+         *
+         * @return bool Whether batch requests are supported.
+         */
+        private static function can_use_batch_requests()
+        {
+        }
+        /**
+         * Queue a pixel URL for batch sending.
+         *
+         * @since 10.5.0
+         *
+         * @param string $pixel The pixel URL to queue.
+         */
+        private static function queue_pixel_for_batch(string $pixel): void
+        {
+        }
+        /**
+         * Send all queued pixels using batched non-blocking requests.
+         * This runs on the shutdown hook to batch all requests together.
+         *
+         * Uses Requests library's request_multiple() for true parallel batching via curl_multi.
+         *
+         * @since 10.5.0
+         */
+        public static function send_batched_pixels(): void
+        {
+        }
+        /**
+         * Send pixels using Requests::request_multiple() for parallel non-blocking execution.
+         * Uses blocking => false for true non-blocking behavior via curl_multi.
+         *
+         * @since 10.5.0
+         *
+         * @param array $pixels Array of pixel URLs to send.
+         */
+        private static function send_with_requests_multiple(array $pixels): void
+        {
+        }
     }
     /**
      * WC_Tracks_Event class.
@@ -63610,7 +64124,7 @@ namespace {
         /**
          * Error message as WP_Error.
          *
-         * @var WP_Error
+         * @var WP_Error|null
          */
         public $error;
         /**
@@ -63633,7 +64147,7 @@ namespace {
          * Annotate the event with all relevant info.
          *
          * @param  array $event Event arguments.
-         * @return bool|WP_Error True on success, WP_Error on failure.
+         * @return object|WP_Error Event object on success, WP_Error on failure.
          */
         public static function validate_and_sanitize($event)
         {
@@ -63645,6 +64159,19 @@ namespace {
          * @return string A pixel URL or empty string ('') if there were invalid args.
          */
         public function build_pixel_url()
+        {
+        }
+        /**
+         * Sanitize property values to ensure they can be safely serialized.
+         *
+         * Converts array values to appropriate formats to prevent http_build_query()
+         * from creating bracket notation (e.g., prop[0], prop[1]) which violates
+         * the property name regex.
+         *
+         * @param object|array $properties Event properties as object or array.
+         * @return object|array Sanitized properties in the same type as input.
+         */
+        private static function sanitize_property_values($properties)
         {
         }
         /**
@@ -63800,6 +64327,26 @@ namespace {
         /**
          * Record an event in Tracks - this is the preferred way to record events from PHP.
          * Note: the event request won't be made if $properties has a member called `error`.
+         *
+         * Array values in event properties are automatically converted to prevent invalid property names:
+         * - Indexed arrays (e.g., ['a', 'b', 'c']) become comma-separated strings: 'a,b,c'
+         * - Associative arrays (e.g., ['key' => 'val']) become JSON strings: '{"key":"val"}'
+         * - Empty arrays become empty strings
+         *
+         * Examples:
+         *     // Indexed array - becomes comma-separated string
+         *     WC_Tracks::record_event( 'checkout_viewed', array(
+         *         'blocks' => array( 'woocommerce/cart-items', 'woocommerce/checkout-totals' )
+         *     ) );
+         *     // Results in: blocks=woocommerce%2Fcart-items%2Cwoocommerce%2Fcheckout-totals
+         *
+         *     // Associative array - becomes JSON string
+         *     WC_Tracks::record_event( 'settings_changed', array(
+         *         'options' => array( 'enabled' => true, 'count' => 5 )
+         *     ) );
+         *     // Results in: options=%7B%22enabled%22%3Atrue%2C%22count%22%3A5%7D
+         *
+         * For complex structures, consider explicitly JSON-encoding before passing to record_event().
          *
          * @param string $event_name The name of the event.
          * @param array  $event_properties Custom properties to send with the event.
@@ -67507,6 +68054,101 @@ namespace Automattic\WooCommerce\Admin\API\AI {
 }
 namespace Automattic\WooCommerce\Admin\API {
     /**
+     * REST API Analytics Imports Controller.
+     *
+     * @internal
+     */
+    class AnalyticsImports extends \WC_REST_Data_Controller
+    {
+        /**
+         * Endpoint namespace.
+         *
+         * @var string
+         */
+        protected $namespace = 'wc-analytics';
+        /**
+         * Route base.
+         *
+         * @var string
+         */
+        protected $rest_base = 'imports';
+        /**
+         * Register routes.
+         *
+         * @return void
+         */
+        public function register_routes(): void
+        {
+        }
+        /**
+         * Check if a given request has access to analytics imports.
+         *
+         * @param  \WP_REST_Request<array<string, mixed>> $request Full details about the request.
+         * @return WP_Error|boolean
+         */
+        public function permissions_check($request)
+        {
+        }
+        /**
+         * Get the current import status.
+         *
+         * @param  \WP_REST_Request<array<string, mixed>> $request Full details about the request.
+         * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+         */
+        public function get_status($request)
+        {
+        }
+        /**
+         * Trigger a manual import.
+         *
+         * @param  \WP_REST_Request<array<string, mixed>> $request Full details about the request.
+         * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+         */
+        public function trigger_import($request)
+        {
+        }
+        /**
+         * Check if scheduled import is enabled.
+         *
+         * @return bool
+         */
+        private function is_scheduled_import_enabled()
+        {
+        }
+        /**
+         * Get the next scheduled time for the batch processor.
+         *
+         * @return string|null Datetime string in site timezone or null if not scheduled.
+         */
+        private function get_next_scheduled_time()
+        {
+        }
+        /**
+         * Get the schema for the status endpoint, conforming to JSON Schema.
+         *
+         * @return array
+         */
+        public function get_status_schema()
+        {
+        }
+        /**
+         * Get the schema for the trigger endpoint, conforming to JSON Schema.
+         *
+         * @return array
+         */
+        public function get_trigger_schema()
+        {
+        }
+        /**
+         * Check if a batch import is currently in progress or due to run soon.
+         *
+         * @return bool True if a batch import is in progress or scheduled to run within the next minute, false otherwise.
+         */
+        private function is_import_in_progress_or_due()
+        {
+        }
+    }
+    /**
      * Coupons controller.
      *
      * @internal
@@ -69251,14 +69893,6 @@ namespace Automattic\WooCommerce\Admin\API {
          * @return array
          */
         public function get_jetpack_authorization_url(\WP_REST_Request $request)
-        {
-        }
-        /**
-         * Return a locale string for wpcom.
-         *
-         * @return string
-         */
-        private function get_wpcom_locale()
         {
         }
         /**
@@ -73423,14 +74057,27 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Customers {
         {
         }
         /**
+         * Fills ORDER BY clause of SQL request based on user supplied parameters. Overridden here to allow multiple direction
+         * clauses.
+         *
+         * @since 10.5.0
+         * @param array $query_args Parameters supplied by the user.
+         * @return void
+         */
+        protected function add_order_by_sql_params($query_args)
+        {
+        }
+        /**
          * Maps ordering specified by the user to columns in the database/fields in the data.
          *
-         * @override ReportsDataStore::normalize_order_by()
+         * Handles both order_by and direction.
          *
+         * @since 10.5.0
          * @param string $order_by Sorting criterion.
+         * @param string $order Order direction.
          * @return string
          */
-        protected function normalize_order_by($order_by)
+        protected function normalize_order_by_clause($order_by, $order = 'desc')
         {
         }
         /**
@@ -73612,6 +74259,17 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Customers {
          * @return void
          */
         public static function anonymize_customer($order)
+        {
+        }
+        /**
+         * Build location filter SQL clause for includes or excludes.
+         *
+         * @since 10.5.0
+         * @param string $locations_string Comma-separated list of locations (e.g., "US:CA,US:NY,GB").
+         * @param bool   $is_include       True for IN clause, false for NOT IN clause.
+         * @return string SQL WHERE clause condition.
+         */
+        protected function build_location_filter_clause($locations_string, $is_include = true)
         {
         }
         /**
@@ -80658,7 +81316,7 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks {
          *
          * @var array
          */
-        const DEFAULT_TASKS = array('StoreDetails', 'Products', 'WooCommercePayments', 'Payments', 'Tax', 'Shipping', 'Marketing', 'Appearance', 'AdditionalPayments', 'ReviewShippingOptions', 'GetMobileApp');
+        const DEFAULT_TASKS = array('StoreDetails', 'Products', 'WooCommercePayments', 'Payments', 'Tax', 'Shipping', 'Marketing', 'AdditionalPayments', 'ReviewShippingOptions', 'GetMobileApp');
         /**
          * Get class instance.
          */
@@ -81273,29 +81931,6 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
          * @return string
          */
         public function get_action_url()
-        {
-        }
-        /**
-         * Possibly add site editor scripts.
-         */
-        public function possibly_add_site_editor_scripts()
-        {
-        }
-        /**
-         * Appends a small style to hide admin bar
-         *
-         * @param bool $show Whether to show the admin bar.
-         */
-        public function possibly_hide_wp_admin_bar($show)
-        {
-        }
-        /**
-         * Runs script and add styles to remove unwanted elements and hide scrollbar
-         * when users are viewing with ?cys-hide-admin-bar=true.
-         *
-         * @return void
-         */
-        public function possibly_remove_unwanted_ui_elements()
         {
         }
         /**
@@ -85744,9 +86379,10 @@ namespace Automattic\WooCommerce\Admin\Notes {
         /**
          * Check if the note has been previously added.
          *
+         * @return bool
          * @throws NotesUnavailableException Throws exception when notes are unavailable.
          */
-        public static function note_exists()
+        public static function note_exists(): bool
         {
         }
         /**
@@ -85755,23 +86391,25 @@ namespace Automattic\WooCommerce\Admin\Notes {
          * @return bool
          * @throws NotesUnavailableException Throws exception when notes are unavailable.
          */
-        public static function can_be_added()
+        public static function can_be_added(): bool
         {
         }
         /**
          * Add the note if it passes predefined conditions.
          *
+         * @return void
          * @throws NotesUnavailableException Throws exception when notes are unavailable.
          */
-        public static function possibly_add_note()
+        public static function possibly_add_note(): void
         {
         }
         /**
          * Alias this method for backwards compatibility.
          *
+         * @return void
          * @throws NotesUnavailableException Throws exception when notes are unavailable.
          */
-        public static function add_note()
+        public static function add_note(): void
         {
         }
         /**
@@ -85782,8 +86420,10 @@ namespace Automattic\WooCommerce\Admin\Notes {
         }
         /**
          * Delete this note if it is not applicable, unless has been soft-deleted or actioned already.
+         *
+         * @return void
          */
-        public static function delete_if_not_applicable()
+        public static function delete_if_not_applicable(): void
         {
         }
         /**
@@ -85791,17 +86431,19 @@ namespace Automattic\WooCommerce\Admin\Notes {
          * is a hard delete, for where it doesn't make sense to soft delete or
          * action the note.
          *
+         * @return void
          * @throws NotesUnavailableException Throws exception when notes are unavailable.
          */
-        public static function possibly_delete_note()
+        public static function possibly_delete_note(): void
         {
         }
         /**
          * Update the note if it passes predefined conditions.
          *
+         * @return void
          * @throws NotesUnavailableException Throws exception when notes are unavailable.
          */
-        public static function possibly_update_note()
+        public static function possibly_update_note(): void
         {
         }
         /**
@@ -85810,18 +86452,18 @@ namespace Automattic\WooCommerce\Admin\Notes {
          * @return bool
          * @throws NotesUnavailableException Throws exception when notes are unavailable.
          */
-        public static function has_note_been_actioned()
+        public static function has_note_been_actioned(): bool
         {
         }
         /**
          * Update a note field of note1 if it's different from note2 with getter and setter.
          *
-         * @param Note   $note1 Note to update.
-         * @param Note   $note2 Note to compare against.
-         * @param string $field_name Field to update.
+         * @param Note|WC_Admin_Note $note1 Note to update.
+         * @param Note|WC_Admin_Note $note2 Note to compare against.
+         * @param string             $field_name Field to update.
          * @return bool True if the field was updated.
          */
-        private static function update_note_field_if_changed($note1, $note2, $field_name)
+        private static function update_note_field_if_changed($note1, $note2, string $field_name): bool
         {
         }
         /**
@@ -91638,6 +92280,30 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes\AddToCartWithOptions {
          */
         protected $block_name = 'add-to-cart-with-options';
         /**
+         * Get the template part path for a product type.
+         *
+         * @param string $product_type The product type.
+         * @return string|bool The template part path if it exists, false otherwise.
+         */
+        protected function get_template_part_path($product_type)
+        {
+        }
+        /**
+         * Enqueue assets specific to this block.
+         * We enqueue frontend scripts only if the product type has a block template
+         * part (that's WC core product types and extensions that migrated to block
+         * templates).
+         *
+         * @param array     $attributes Block attributes.
+         * @param string    $content Block content.
+         * @param \WP_Block $block Block instance.
+         *
+         * @return void
+         */
+        protected function enqueue_assets($attributes, $content, $block)
+        {
+        }
+        /**
          * Extra data passed through from server to client for block.
          *
          * @param array $attributes  Any attributes that currently are available from the block.
@@ -91686,11 +92352,11 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes\AddToCartWithOptions {
         /**
          * Render the block.
          *
-         * @param array    $attributes Block attributes.
-         * @param string   $content Block content.
-         * @param WP_Block $block Block instance.
+         * @param array     $attributes Block attributes.
+         * @param string    $content Block content.
+         * @param \WP_Block $block Block instance.
          *
-         * @return string | void Rendered block output.
+         * @return string|void Rendered block output.
          */
         protected function render($attributes, $content, $block)
         {
@@ -91940,14 +92606,18 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes\AddToCartWithOptions {
         /**
          * Make the quantity input interactive by wrapping it with the necessary data attribute and adding a blur event listener.
          *
-         * @param string   $quantity_html The quantity HTML.
-         * @param array    $wrapper_attributes Optional wrapper attributes.
-         * @param array    $input_attributes Optional input attributes.
-         * @param int|null $child_product_id Optional child product ID.
+         * @param string $quantity_html The quantity HTML.
+         * @param array  $wrapper_attributes Optional wrapper attributes.
+         * @param array  $input_attributes Optional input attributes.
+         * @param array  $context {
+         *     Optional context for quantity input.
+         *     @type int  $productId  Product ID for context-specific behavior.
+         *     @type bool $allowZero  Whether to allow zero quantity.
+         * }
          *
          * @return string The quantity HTML with interactive wrapper.
          */
-        public static function make_quantity_input_interactive($quantity_html, $wrapper_attributes = array(), $input_attributes = array(), $child_product_id = null)
+        public static function make_quantity_input_interactive($quantity_html, $wrapper_attributes = array(), $input_attributes = array(), $context = array())
         {
         }
         /**
@@ -93611,6 +94281,138 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
     }
+    /**
+     * CouponCode block for displaying coupon codes in emails.
+     *
+     * @since 10.5.0
+     */
+    class CouponCode extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
+    {
+        /**
+         * Block name.
+         *
+         * @var string
+         */
+        protected $block_name = 'coupon-code';
+        /**
+         * Default styles for the coupon code element.
+         */
+        private const DEFAULT_STYLES = array('font-size' => '1.2em', 'padding' => '12px 20px', 'display' => 'inline-block', 'border' => '2px dashed #cccccc', 'border-radius' => '4px', 'box-sizing' => 'border-box', 'color' => '#000000', 'background-color' => '#f5f5f5', 'text-align' => 'center', 'font-weight' => 'bold', 'letter-spacing' => '1px');
+        /**
+         * Get the editor script handle for this block type.
+         *
+         * @param string|null $key Data to get. Valid keys: "handle", "path", "dependencies".
+         * @return array|string|null
+         */
+        protected function get_block_type_editor_script($key = null)
+        {
+        }
+        /**
+         * Get the frontend style handle for this block type.
+         *
+         * @return null
+         */
+        protected function get_block_type_style()
+        {
+        }
+        /**
+         * Render the coupon code block.
+         *
+         * @param array         $attributes Block attributes.
+         * @param string        $content Block content.
+         * @param WP_Block|null $block Block instance.
+         * @return string
+         */
+        protected function render($attributes, $content, $block)
+        {
+        }
+        /**
+         * Get block attributes from parsed block or fallback.
+         *
+         * @param array $parsed_block Parsed block data.
+         * @param array $fallback Fallback attributes.
+         * @return array
+         */
+        private function get_block_attributes(array $parsed_block, $fallback): array
+        {
+        }
+        /**
+         * Extract coupon code from attributes.
+         *
+         * @param array $attributes Block attributes.
+         * @return string
+         */
+        private function get_coupon_code(array $attributes): string
+        {
+        }
+        /**
+         * Get rendering context from block or create a new one.
+         *
+         * @param WP_Block|null $block Block instance.
+         * @return Rendering_Context
+         */
+        private function get_rendering_context($block): \Automattic\WooCommerce\EmailEditor\Engine\Renderer\ContentRenderer\Rendering_Context
+        {
+        }
+        /**
+         * Build the coupon code HTML element with styles.
+         *
+         * @param string            $coupon_code Coupon code text.
+         * @param array             $attributes Block attributes.
+         * @param Rendering_Context $rendering_context Rendering context for style resolution.
+         * @return string
+         */
+        private function build_coupon_html(string $coupon_code, array $attributes, \Automattic\WooCommerce\EmailEditor\Engine\Renderer\ContentRenderer\Rendering_Context $rendering_context): string
+        {
+        }
+        /**
+         * Check if declarations contain a valid CSS background color.
+         *
+         * @param array $declarations CSS declarations.
+         * @return bool
+         */
+        private function has_valid_background_color(array $declarations): bool
+        {
+        }
+        /**
+         * Resolve background color from attributes, translating color slugs if needed.
+         *
+         * @param array             $attributes Block attributes.
+         * @param Rendering_Context $rendering_context Rendering context.
+         * @return string Resolved color value or default.
+         */
+        private function resolve_background_color(array $attributes, \Automattic\WooCommerce\EmailEditor\Engine\Renderer\ContentRenderer\Rendering_Context $rendering_context): string
+        {
+        }
+        /**
+         * Check if a string is a valid CSS color value (hex, rgb, or hsl).
+         *
+         * @param string $value Value to check.
+         * @return bool
+         */
+        private function is_css_color_value(string $value): bool
+        {
+        }
+        /**
+         * Wrap coupon HTML in an email-compatible table structure.
+         *
+         * @param string $coupon_html Coupon HTML content.
+         * @param array  $parsed_block Parsed block data.
+         * @return string
+         */
+        private function wrap_for_email(string $coupon_html, array $parsed_block): string
+        {
+        }
+        /**
+         * Get alignment from parsed block attributes.
+         *
+         * @param array $parsed_block Parsed block data.
+         * @return string
+         */
+        private function get_alignment(array $parsed_block): string
+        {
+        }
+    }
 }
 namespace Automattic\WooCommerce\Blocks\Utils {
     /**
@@ -94329,107 +95131,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
     }
-}
-namespace Automattic\WooCommerce\Blocks\Utils {
-    /**
-     * Manages the registration of interactivity config and state that is commonly shared by WooCommerce blocks.
-     * Initialization only happens on the first call to initialize_shared_config.
-     * Intended to be used as a singleton.
-     */
-    trait BlocksSharedState
-    {
-        /**
-         * The consent statement for using private APIs of this class.
-         *
-         * @var string
-         */
-        private static $consent_statement = 'I acknowledge that using private APIs means my theme or plugin will inevitably break in the next version of WooCommerce';
-        /**
-         * The namespace for the config.
-         *
-         * @var string
-         */
-        private static $settings_namespace = 'woocommerce';
-        /**
-         * Whether the core config has been registered.
-         *
-         * @var boolean
-         */
-        private static $core_config_registered = false;
-        /**
-         * Cart state.
-         *
-         * @var mixed
-         */
-        private static $blocks_shared_cart_state;
-        /**
-         * Prevent caching on certain pages
-         */
-        private static function prevent_cache()
-        {
-        }
-        /**
-         * Check that the consent statement was passed.
-         *
-         * @param string $consent_statement - The consent statement string.
-         * @return true
-         * @throws \InvalidArgumentException - If the statement does not match the class consent statement string.
-         */
-        private static function check_consent($consent_statement)
-        {
-        }
-        /**
-         * Initialize the shared core config.
-         *
-         * @param string $consent_statement - The consent statement string.
-         */
-        public function initialize_shared_config($consent_statement)
-        {
-        }
-        /**
-         * Initialize interactivity state for cart that is needed by multiple blocks.
-         *
-         * @param string $consent_statement - The consent statement string.
-         * @return void
-         */
-        public function register_cart_interactivity($consent_statement)
-        {
-        }
-        /**
-         * Get core data to include in settings.
-         *
-         * @return array
-         */
-        private static function get_core_data()
-        {
-        }
-        /**
-         * Get currency data to include in settings.
-         *
-         * @return array
-         */
-        private static function get_currency_data()
-        {
-        }
-        /**
-         * Get locale data to include in settings.
-         *
-         * @return array
-         */
-        private static function get_locale_data()
-        {
-        }
-        /**
-         * Add placeholder image.
-         *
-         * @param string $consent_statement - The consent statement string.
-         */
-        public function placeholder_image($consent_statement)
-        {
-        }
-    }
-}
-namespace Automattic\WooCommerce\Blocks\BlockTypes {
     /**
      * Mini-Cart class.
      *
@@ -94438,7 +95139,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
     class MiniCart extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
     {
         use \Automattic\WooCommerce\Blocks\Utils\BlockHooksTrait;
-        use \Automattic\WooCommerce\Blocks\Utils\BlocksSharedState;
         /**
          * Block name.
          *
@@ -94974,23 +95674,12 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
-         * Render experimental iAPI block markup.
-         *
-         * @param array    $attributes Block attributes.
-         * @param string   $content    Block content.
-         * @param WP_Block $block      Block instance.
-         * @return string Rendered block type output.
-         */
-        protected function render_experimental_iapi_markup($attributes, $content, $block)
-        {
-        }
-        /**
          * Render markup for product details.
          *
          * @param string $property The property to render in the product details markup.
          * @return string Rendered product details output.
          */
-        protected function render_experimental_iapi_product_details_markup($property)
+        protected function render_product_details_markup($property)
         {
         }
         /**
@@ -95000,7 +95689,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @param bool   $is_item_data Whether the item is of item_data type.
          * @return string Rendered product detail item output based on item type.
          */
-        private function render_experimental_iapi_product_details_item_markup($tag_name, $is_item_data = false)
+        private function render_product_details_item_markup($tag_name, $is_item_data = false)
         {
         }
     }
@@ -95146,13 +95835,13 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         }
     }
     /**
-     * ProductGalleryLargeImage class.
+     * NextPreviousButtons class.
      */
     class NextPreviousButtons extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
     {
         use \Automattic\WooCommerce\Blocks\BlockTypes\EnableBlockJsonAssetsTrait;
         /**
-         * Block name. Block has been initially created for Product Gallery Large Image block
+         * Block name. Block has been initially created for Product Gallery Viewer block
          * hence the slug is related to this block. But it can be used for other blocks as well.
          *
          * @var string
@@ -96234,7 +96923,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
     class ProductButton extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
     {
         use \Automattic\WooCommerce\Blocks\BlockTypes\EnableBlockJsonAssetsTrait;
-        use \Automattic\WooCommerce\Blocks\Utils\BlocksSharedState;
         /**
          * Block name.
          *
@@ -97560,10 +98248,11 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          *
          * @param string $title Title of the accordion item.
          * @param string $content Content of the accordion item as block markup.
+         * @param array  $anchor_block Accordion anchor block to determine which item block to create.
          *
          * @return array Accordion item.
          */
-        private function create_accordion_item_block($title, $content)
+        private function create_accordion_item_block($title, $content, $anchor_block)
         {
         }
         /**
@@ -97607,6 +98296,16 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * @return bool True if the block has an accordion, false otherwise.
          */
         private function has_accordion($parsed_block)
+        {
+        }
+        /**
+         * Get the first accordion anchor block in a parsed block.
+         *
+         * @param array $parsed_block Parsed block.
+         *
+         * @return array|null Accordion anchor block or null.
+         */
+        private function get_accordion_anchor_block($parsed_block)
         {
         }
         /**
@@ -98334,7 +99033,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
      */
     class ProductFilters extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
     {
-        use \Automattic\WooCommerce\Blocks\Utils\BlocksSharedState;
         /**
          * Block name.
          *
@@ -98493,7 +99191,8 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
     {
         use \Automattic\WooCommerce\Blocks\BlockTypes\EnableBlockJsonAssetsTrait;
         /**
-         * Block name.
+         * Block name. Block has been initially created as Large Image but has been renamed
+         * to more generic name.
          *
          * @var string
          */
@@ -98568,7 +99267,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
-         * Large Image renders inner blocks manually so we need to skip default
+         * Viewer renders inner blocks manually so we need to skip default
          * rendering routine for its inner blocks
          *
          * @param array $settings Array of determined settings for registering a block type.
@@ -98863,7 +99562,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
     class ProductPrice extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
     {
         use \Automattic\WooCommerce\Blocks\BlockTypes\EnableBlockJsonAssetsTrait;
-        use \Automattic\WooCommerce\Blocks\Utils\BlocksSharedState;
         /**
          * Block name.
          *
@@ -99677,7 +100375,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
     class ProductStockIndicator extends \Automattic\WooCommerce\Blocks\BlockTypes\AbstractBlock
     {
         use \Automattic\WooCommerce\Blocks\BlockTypes\EnableBlockJsonAssetsTrait;
-        use \Automattic\WooCommerce\Blocks\Utils\BlocksSharedState;
         /**
          * Block name.
          *
@@ -101055,6 +101752,160 @@ namespace Automattic\WooCommerce\Blocks {
          * @return array Block metadata.
          */
         public function enqueue_block_style_for_classic_themes($args, $block_name)
+        {
+        }
+        /**
+         * Set the preferred taxonomy and term for the breadcrumbs block on the product post type.
+         *
+         * This method mimics the behavior of WC_Breadcrumb::add_crumbs_single() to ensure
+         * consistent breadcrumb term selection between WooCommerce's legacy breadcrumbs
+         * and the Core breadcrumbs block.
+         *
+         * @param array  $settings The settings for the breadcrumbs block.
+         * @param string $post_type The post type.
+         * @param int    $post_id The current post ID.
+         * @return array The settings for the breadcrumbs block.
+         *
+         * @internal
+         */
+        public function set_product_breadcrumbs_preferred_taxonomy($settings, $post_type, $post_id = 0)
+        {
+        }
+    }
+    /**
+     * DependencyDetection class.
+     *
+     * Provides runtime detection of extensions that use Blocks related WooCommerce globals
+     * (window.wc.*) without properly declaring their PHP script dependencies.
+     *
+     * This runs by default to warn developers about missing dependencies.
+     *
+     * @since 10.5.0
+     * @internal
+     */
+    final class DependencyDetection
+    {
+        /**
+         * WooCommerce blocks that use the tracked globals.
+         *
+         * Detection script only runs on pages containing these blocks.
+         *
+         * @var array<string>
+         */
+        private const TRACKED_BLOCKS = array('woocommerce/checkout', 'woocommerce/cart', 'woocommerce/mini-cart');
+        /**
+         * Maps window.wc.* property names to their required script handles.
+         *
+         * This is the source of truth for both PHP and JS dependency detection.
+         * Based on wcDepMap and wcHandleMap in client/blocks/bin/webpack-helpers.js.
+         *
+         * @var array<string, string>
+         */
+        private const WC_GLOBAL_EXPORTS = array('wcBlocksRegistry' => 'wc-blocks-registry', 'wcSettings' => 'wc-settings', 'wcBlocksData' => 'wc-blocks-data-store', 'data' => 'wc-store-data', 'wcBlocksSharedContext' => 'wc-blocks-shared-context', 'wcBlocksSharedHocs' => 'wc-blocks-shared-hocs', 'priceFormat' => 'wc-price-format', 'blocksCheckout' => 'wc-blocks-checkout', 'blocksCheckoutEvents' => 'wc-blocks-checkout-events', 'blocksComponents' => 'wc-blocks-components', 'wcTypes' => 'wc-types', 'sanitize' => 'wc-sanitize');
+        /**
+         * Whether the proxy script was output.
+         *
+         * Used to ensure we only output the registry if the proxy was set up.
+         *
+         * @var bool
+         */
+        private bool $proxy_output = false;
+        /**
+         * Constructor.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Initialize hooks.
+         *
+         * @since 10.5.0
+         */
+        public function init(): void
+        {
+        }
+        /**
+         * Output early inline script to set up the Proxy on window.wc.
+         *
+         * This must run before any WooCommerce scripts to intercept access.
+         * The script is loaded from a separate file for better IDE support and testing,
+         * but output inline to ensure correct timing (before any enqueued scripts).
+         *
+         * @since 10.5.0
+         */
+        public function output_early_proxy_setup(): void
+        {
+        }
+        /**
+         * Output the script registry JSON for dependency checking.
+         *
+         * This runs late (wp_print_footer_scripts) to ensure all scripts,
+         * including those registered via IntegrationInterface, are captured.
+         *
+         * @since 10.5.0
+         */
+        public function output_script_registry(): void
+        {
+        }
+        /**
+         * Build a registry of all enqueued scripts with their URLs and dependencies.
+         *
+         * @return array<string, array{handle: string, deps: array<string>}>
+         */
+        private function build_script_registry(): array
+        {
+        }
+        /**
+         * Check if a script URL belongs to WooCommerce core.
+         *
+         * Checks if the script is loaded from the WooCommerce core plugin directory,
+         * not from third-party extensions that may use similar handle naming.
+         *
+         * @param string $url Script URL.
+         * @return bool
+         */
+        private function is_woocommerce_script(string $url): bool
+        {
+        }
+        /**
+         * Check if a script URL belongs to WordPress core.
+         *
+         * WordPress core scripts (wp-includes, wp-admin) won't use wc.* globals,
+         * so we can skip them to reduce registry size.
+         *
+         * @param string $url Script URL.
+         * @return bool
+         */
+        private function is_wordpress_core_script(string $url): bool
+        {
+        }
+        /**
+         * Recursively get all dependencies including nested ones.
+         *
+         * @param array<string> $deps Direct dependencies.
+         * @return array<string> All dependencies (flattened).
+         */
+        private function get_all_dependencies(array $deps): array
+        {
+        }
+        /**
+         * Check if the current page contains any of the tracked blocks.
+         * Checks post content, widget areas, and template parts (header) for blocks.
+         *
+         * @return bool True if page has tracked blocks.
+         */
+        private function page_has_tracked_blocks(): bool
+        {
+        }
+        /**
+         * Normalize a URL by removing query strings and hash fragments.
+         *
+         * This helps match URLs in stack traces which don't include query strings.
+         *
+         * @param string $url URL to normalize.
+         * @return string Normalized URL without query string or hash.
+         */
+        private function normalize_url(string $url): string
         {
         }
     }
@@ -102592,20 +103443,22 @@ namespace Automattic\WooCommerce\Blocks\Domain\Services {
          *
          * @param string $controller_class Controller class FQN that will respond to the request.
          * @param string $path             Request path regex.
+         * @param array  $url_params       URL parameters extracted from route (e.g., ['id' => '123']).
+         * @param array  $query_params     Query string parameters (e.g., ['key' => 'value']).
          *
          * @return false|mixed|null Response
          */
-        private function get_response_from_controller($controller_class, $path)
+        private function get_response_from_controller($controller_class, $path, $url_params = array(), $query_params = array())
         {
         }
         /**
          * Inspired from WP core's `match_request_to_handler`, this matches a given path from available route regexes.
-         * However, unlike WP core, this does not check against query params, request method etc.
+         * Extracts URL parameters from regex named groups and query string parameters.
          *
-         * @param string $path The path to match.
+         * @param string $path The path to match (may include query string).
          * @param array  $available_routes Available routes in { $regex1 => $contoller_class1, ... } format.
          *
-         * @return string|null
+         * @return array|null Array with 'controller', 'url_params', and 'query_params' keys, or null if no match.
          */
         private function match_route_to_handler($path, $available_routes)
         {
@@ -105694,7 +106547,6 @@ namespace Automattic\WooCommerce\Blocks\Templates {
      */
     class SingleProductTemplate extends \Automattic\WooCommerce\Blocks\Templates\AbstractTemplate
     {
-        use \Automattic\WooCommerce\Blocks\Utils\BlocksSharedState;
         /**
          * The slug of the template.
          *
@@ -106262,6 +107114,111 @@ namespace Automattic\WooCommerce\Blocks\Utils {
          * @return string The template part content.
          */
         public static function get_template_part($slug)
+        {
+        }
+    }
+    /**
+     * Manages the registration of interactivity config and state that is commonly shared by WooCommerce blocks.
+     * Initialization only happens on the first call to load_store_config.
+     *
+     * This is a private API and may change in future versions.
+     */
+    class BlocksSharedState
+    {
+        /**
+         * The consent statement for using private APIs of this class.
+         *
+         * @var string
+         */
+        private static string $consent_statement = 'I acknowledge that using private APIs means my theme or plugin will inevitably break in the next version of WooCommerce';
+        /**
+         * The namespace for the config.
+         *
+         * @var string
+         */
+        private static string $settings_namespace = 'woocommerce';
+        /**
+         * Whether the core config has been registered.
+         *
+         * @var bool
+         */
+        private static bool $core_config_registered = false;
+        /**
+         * Cart state.
+         *
+         * @var array|null
+         */
+        private static ?array $blocks_shared_cart_state = null;
+        /**
+         * Prevent caching on certain pages.
+         *
+         * @return void
+         */
+        private static function prevent_cache(): void
+        {
+        }
+        /**
+         * Check that the consent statement was passed.
+         *
+         * @param string $consent_statement The consent statement string.
+         * @return true
+         * @throws InvalidArgumentException If the statement does not match.
+         */
+        private static function check_consent(string $consent_statement): bool
+        {
+        }
+        /**
+         * Load store config (currency, locale, core data) into interactivity config.
+         *
+         * @param string $consent_statement The consent statement string.
+         * @return void
+         * @throws InvalidArgumentException If consent statement doesn't match.
+         */
+        public static function load_store_config(string $consent_statement): void
+        {
+        }
+        /**
+         * Load cart state into interactivity state.
+         *
+         * @param string $consent_statement The consent statement string.
+         * @return void
+         * @throws InvalidArgumentException If consent statement doesn't match.
+         */
+        public static function load_cart_state(string $consent_statement): void
+        {
+        }
+        /**
+         * Get core data to include in settings.
+         *
+         * @return array
+         */
+        private static function get_core_data(): array
+        {
+        }
+        /**
+         * Get currency data to include in settings.
+         *
+         * @return array
+         */
+        private static function get_currency_data(): array
+        {
+        }
+        /**
+         * Get locale data to include in settings.
+         *
+         * @return array
+         */
+        private static function get_locale_data(): array
+        {
+        }
+        /**
+         * Load placeholder image into interactivity config.
+         *
+         * @param string $consent_statement The consent statement string.
+         * @return void
+         * @throws InvalidArgumentException If consent statement doesn't match.
+         */
+        public static function load_placeholder_image(string $consent_statement): void
         {
         }
     }
@@ -107914,10 +108871,11 @@ namespace Automattic\WooCommerce {
          * Returns an instance of the specified class.
          * See the comment about ContainerException in RuntimeContainer::get.
          *
-         * @template T
-         * @param string|class-string<T> $id Class name.
+         * @template T of object
+         * @param string $id Class name.
+         * @phpstan-param class-string<T> $id
          *
-         * @return T|object Object instance.
+         * @return T Object instance.
          *
          * @throws ContainerException Error when resolving the class to an object instance, or class not found.
          * @throws \Exception Exception thrown in the constructor or in the 'init' method of one of the resolved classes.
@@ -109944,6 +110902,1080 @@ namespace Automattic\WooCommerce\Gateways\PayPal {
         {
         }
     }
+    /**
+     * Handles PayPal Buttons.
+     *
+     * @since 10.5.0
+     */
+    class Buttons
+    {
+        /**
+         * The option for the client-id.
+         *
+         * @var string
+         */
+        private const CLIENT_ID_OPTION = 'woocommerce_paypal_client_id';
+        /**
+         * The gateway instance.
+         *
+         * @var \WC_Gateway_Paypal
+         */
+        private \WC_Gateway_Paypal $gateway;
+        /**
+         * Whether the gateway should use Orders v2 API.
+         *
+         * @var bool
+         */
+        private bool $enabled;
+        /**
+         * The request instance.
+         *
+         * @var PayPalRequest
+         */
+        private \Automattic\WooCommerce\Gateways\PayPal\Request $request;
+        /**
+         * Constructor.
+         *
+         * @param \WC_Gateway_Paypal $gateway The gateway instance.
+         */
+        public function __construct(\WC_Gateway_Paypal $gateway)
+        {
+        }
+        /**
+         * Get the options for the PayPal buttons.
+         *
+         * @since 10.5.0
+         *
+         * @return array
+         */
+        public function get_options(): array
+        {
+        }
+        /**
+         * Get the common attributes for the PayPal JS SDK script and modules.
+         *
+         * @since 10.5.0
+         *
+         * @return array
+         */
+        public function get_common_options(): array
+        {
+        }
+        /**
+         * Get the client-id for the PayPal buttons.
+         *
+         * @since 10.5.0
+         *
+         * @return string|null The PayPal client-id, or null if the request fails.
+         */
+        public function get_client_id(): ?string
+        {
+        }
+        /**
+         * Get the page type for the PayPal buttons.
+         *
+         * @since 10.5.0
+         *
+         * @return string
+         */
+        public function get_page_type(): string
+        {
+        }
+        /**
+         * Whether PayPal Buttons is enabled.
+         *
+         * @since 10.5.0
+         *
+         * @return bool
+         */
+        public function is_enabled(): bool
+        {
+        }
+        /**
+         * Get the current page URL, to be used for App Switch.
+         * Limited to checkout, cart, and product pages for security.
+         *
+         * @since 10.5.0
+         *
+         * @return string
+         */
+        public function get_current_page_for_app_switch(): string
+        {
+        }
+    }
+    /**
+     * PayPal Gateway Constants.
+     *
+     * Provides constants for PayPal payment statuses, intents, and other PayPal-related values.
+     *
+     * @since 10.5.0
+     */
+    class Constants
+    {
+        /**
+         * PayPal proxy request timeout.
+         */
+        const WPCOM_PROXY_REQUEST_TIMEOUT = 60;
+        /**
+         * PayPal payment statuses.
+         */
+        const STATUS_COMPLETED = 'COMPLETED';
+        const STATUS_APPROVED = 'APPROVED';
+        const STATUS_CAPTURED = 'CAPTURED';
+        const STATUS_AUTHORIZED = 'AUTHORIZED';
+        const STATUS_PAYER_ACTION_REQUIRED = 'PAYER_ACTION_REQUIRED';
+        const VOIDED = 'VOIDED';
+        /**
+         * PayPal payment intents.
+         */
+        const INTENT_CAPTURE = 'CAPTURE';
+        const INTENT_AUTHORIZE = 'AUTHORIZE';
+        /**
+         * PayPal payment actions.
+         */
+        const PAYMENT_ACTION_CAPTURE = 'capture';
+        const PAYMENT_ACTION_AUTHORIZE = 'authorize';
+        /**
+         * PayPal shipping preferences.
+         */
+        const SHIPPING_NO_SHIPPING = 'NO_SHIPPING';
+        const SHIPPING_GET_FROM_FILE = 'GET_FROM_FILE';
+        const SHIPPING_SET_PROVIDED_ADDRESS = 'SET_PROVIDED_ADDRESS';
+        /**
+         * PayPal user actions.
+         */
+        const USER_ACTION_PAY_NOW = 'PAY_NOW';
+        /**
+         * Maximum lengths for PayPal fields.
+         */
+        const PAYPAL_ORDER_ITEM_NAME_MAX_LENGTH = 127;
+        const PAYPAL_INVOICE_ID_MAX_LENGTH = 127;
+        const PAYPAL_ADDRESS_LINE_MAX_LENGTH = 300;
+        const PAYPAL_COUNTRY_CODE_LENGTH = 2;
+        const PAYPAL_STATE_MAX_LENGTH = 300;
+        const PAYPAL_CITY_MAX_LENGTH = 120;
+        const PAYPAL_POSTAL_CODE_MAX_LENGTH = 60;
+        const PAYPAL_LOCALE_MAX_LENGTH = 10;
+        /**
+         * Supported payment sources.
+         */
+        const PAYMENT_SOURCE_PAYPAL = 'paypal';
+        const PAYMENT_SOURCE_VENMO = 'venmo';
+        const PAYMENT_SOURCE_PAYLATER = 'paylater';
+        const SUPPORTED_PAYMENT_SOURCES = array(self::PAYMENT_SOURCE_PAYPAL, self::PAYMENT_SOURCE_VENMO, self::PAYMENT_SOURCE_PAYLATER);
+        /**
+         * Fields to redact from logs.
+         *
+         * @var array
+         */
+        const FIELDS_TO_REDACT = array('given_name', 'surname', 'full_name', 'address_line_1', 'address_line_2', 'admin_area_1', 'admin_area_2', 'postal_code', 'phone', 'phone_number', 'national_number');
+        /**
+         * List of currencies supported by PayPal (Orders API V2).
+         *
+         * @var array<string>
+         */
+        const SUPPORTED_CURRENCIES = array(
+            'AUD',
+            // Australian Dollar.
+            'BRL',
+            // Brazilian Real.
+            'CAD',
+            // Canadian Dollar.
+            'CNY',
+            // Chinese Renminbi.
+            'CZK',
+            // Czech Koruna.
+            'DKK',
+            // Danish Krone.
+            'EUR',
+            // Euro.
+            'HKD',
+            // Hong Kong Dollar.
+            'HUF',
+            // Hungarian Forint.
+            'ILS',
+            // Israeli New Shekel.
+            'JPY',
+            // Japanese Yen.
+            'MYR',
+            // Malaysian Ringgit.
+            'MXN',
+            // Mexican Peso.
+            'TWD',
+            // New Taiwan Dollar.
+            'NZD',
+            // New Zealand Dollar.
+            'NOK',
+            // Norwegian Krone.
+            'PHP',
+            // Philippine Peso.
+            'PLN',
+            // Polish Złoty.
+            'GBP',
+            // Pound Sterling.
+            'SGD',
+            // Singapore Dollar.
+            'SEK',
+            // Swedish Krona.
+            'CHF',
+            // Swiss Franc.
+            'THB',
+            // Thai Baht.
+            'USD',
+            // United States Dollar.
+            'RUB',
+        );
+        /**
+         * PayPal authorization already captured issue code.
+         *
+         * @var string
+         */
+        const PAYPAL_ISSUE_AUTHORIZATION_ALREADY_CAPTURED = 'AUTHORIZATION_ALREADY_CAPTURED';
+        /**
+         * PayPal account locked or closed issue code.
+         *
+         * @var string
+         */
+        const PAYPAL_ISSUE_PAYEE_ACCOUNT_LOCKED_OR_CLOSED = 'PAYEE_ACCOUNT_LOCKED_OR_CLOSED';
+        /**
+         * PayPal account restricted issue code.
+         *
+         * @var string
+         */
+        const PAYPAL_ISSUE_PAYEE_ACCOUNT_RESTRICTED = 'PAYEE_ACCOUNT_RESTRICTED';
+        /**
+         * Meta key for storing PayPal payment status in order meta.
+         *
+         * @var string
+         *
+         * @since 10.5.0
+         */
+        public const PAYPAL_ORDER_META_STATUS = '_paypal_status';
+        /**
+         * Meta key for storing PayPal capture ID in order meta.
+         *
+         * @var string
+         *
+         * @since 10.5.0
+         */
+        public const PAYPAL_ORDER_META_CAPTURE_ID = '_paypal_capture_id';
+        /**
+         * Meta key for storing PayPal authorization ID in order meta.
+         *
+         * @var string
+         *
+         * @since 10.5.0
+         */
+        public const PAYPAL_ORDER_META_AUTHORIZATION_ID = '_paypal_authorization_id';
+        /**
+         * Meta key for storing PayPal authorization checked flag in order meta.
+         *
+         * @var string
+         *
+         * @since 10.5.0
+         */
+        public const PAYPAL_ORDER_META_AUTHORIZATION_CHECKED = '_paypal_authorization_checked';
+        /**
+         * Meta key for storing PayPal order ID in order meta.
+         *
+         * @var string
+         *
+         * @since 10.5.0
+         */
+        public const PAYPAL_ORDER_META_ORDER_ID = '_paypal_order_id';
+        /**
+         * Meta key for storing PayPal addresses updated flag in order meta.
+         *
+         * @var string
+         *
+         * @since 10.5.0
+         */
+        public const PAYPAL_ORDER_META_ADDRESSES_UPDATED = '_paypal_addresses_updated';
+        /**
+         * Meta key for storing PayPal payment source in order meta.
+         *
+         * @var string
+         *
+         * @since 10.5.0
+         */
+        public const PAYPAL_ORDER_META_PAYMENT_SOURCE = '_paypal_payment_source';
+    }
+    /**
+     * PayPal Helper Class
+     *
+     * Helper methods for PayPal gateway operations including order validation,
+     * data redaction, and address updates.
+     *
+     * @since 10.5.0
+     */
+    class Helper
+    {
+        /**
+         * Check if the PayPal gateway is enabled.
+         *
+         * @return bool
+         */
+        public static function is_paypal_gateway_available(): bool
+        {
+        }
+        /**
+         * Check if the merchant is eligible for migration from WPS to PPCP.
+         *
+         * @return bool
+         */
+        public static function is_orders_v2_migration_eligible(): bool
+        {
+        }
+        /**
+         * Get the WC order from the PayPal custom ID.
+         *
+         * @param string $custom_id The custom ID string from the PayPal order.
+         * @return WC_Order|null
+         */
+        public static function get_wc_order_from_paypal_custom_id(string $custom_id): ?\WC_Order
+        {
+        }
+        /**
+         * Remove PII (Personally Identifiable Information) from data for logging.
+         *
+         * This function recursively traverses the data array and redacts sensitive information
+         * while preserving the structure for debugging purposes.
+         *
+         * @param mixed $data The data to remove PII from (array, string, or other types).
+         * @return mixed The data with PII redacted.
+         */
+        public static function redact_data($data)
+        {
+        }
+        /**
+         * Mask email address before @ keeping the full domain.
+         *
+         * @param string $email The email address to mask.
+         * @return string The masked email address or original input if invalid.
+         */
+        public static function mask_email(string $email): string
+        {
+        }
+        /**
+         * Update the addresses in the order.
+         *
+         * @param WC_Order|null $order The order object.
+         * @param array         $paypal_order_details The PayPal order details.
+         * @return void
+         */
+        public static function update_addresses_in_order(?\WC_Order $order, array $paypal_order_details): void
+        {
+        }
+    }
+    /**
+     * PayPal Notices Class
+     *
+     * Handles admin notices for PayPal gateway including migration notices,
+     * account restriction warnings, and currency support notifications.
+     *
+     * @since 10.5.0
+     */
+    class Notices
+    {
+        /**
+         * The name of the notice for PayPal migration.
+         *
+         * @since 10.5.0
+         * @var string
+         */
+        private const PAYPAL_MIGRATION_NOTICE = 'paypal_migration_completed';
+        /**
+         * The name of the notice for PayPal account restriction.
+         *
+         * @since 10.5.0
+         * @var string
+         */
+        private const PAYPAL_ACCOUNT_RESTRICTED_NOTICE = 'paypal_account_restricted';
+        /**
+         * The name of the notice for PayPal unsupported currency.
+         *
+         * @since 10.5.0
+         * @var string
+         */
+        private const PAYPAL_UNSUPPORTED_CURRENCY_NOTICE = 'paypal_unsupported_currency';
+        /**
+         * PayPal account restriction issue codes from PayPal API.
+         *
+         * @since 10.5.0
+         * @var array
+         */
+        protected const PAYPAL_ACCOUNT_RESTRICTION_ISSUES = array(\Automattic\WooCommerce\Gateways\PayPal\Constants::PAYPAL_ISSUE_PAYEE_ACCOUNT_LOCKED_OR_CLOSED, \Automattic\WooCommerce\Gateways\PayPal\Constants::PAYPAL_ISSUE_PAYEE_ACCOUNT_RESTRICTED);
+        /**
+         * The PayPal gateway instance.
+         *
+         * @var \WC_Gateway_Paypal
+         */
+        private $gateway;
+        /**
+         * Constructor.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Add PayPal Standard notices.
+         *
+         * @since 10.5.0
+         * @return void
+         */
+        public function add_paypal_notices(): void
+        {
+        }
+        /**
+         * Add PayPal notices on the payments settings page.
+         *
+         * @since 10.5.0
+         * @return void
+         */
+        public function add_paypal_notices_on_payments_settings_page(): void
+        {
+        }
+        /**
+         * Add notice warning about the migration to PayPal Payments.
+         *
+         * @since 10.5.0
+         * @return void
+         */
+        public function add_paypal_migration_notice(): void
+        {
+        }
+        /**
+         * Add notice warning about PayPal account restriction.
+         *
+         * @since 10.5.0
+         * @return void
+         */
+        private function add_paypal_account_restricted_notice(): void
+        {
+        }
+        /**
+         * Add notice warning when PayPal does not support the store's currency.
+         *
+         * @since 10.5.0
+         * @return void
+         */
+        private function add_paypal_unsupported_currency_notice(): void
+        {
+        }
+        /**
+         * Get the dismiss URL for a notice.
+         *
+         * @since 10.5.0
+         * @param string $notice_name The name of the notice.
+         * @return string
+         */
+        private function get_dismiss_url(string $notice_name): string
+        {
+        }
+        /**
+         * Check if the notice has been dismissed.
+         *
+         * User meta keys for notice dismissals:
+         * - dismissed_paypal_migration_completed_notice
+         * - dismissed_paypal_account_restricted_notice
+         * - dismissed_paypal_unsupported_currency_notice
+         *
+         * The meta keys are set by WC_Admin_Notices when the notice is dismissed by the user.
+         *
+         * @since 10.5.0
+         * @param string $notice_name The name of the notice.
+         * @return bool
+         */
+        private function is_notice_dismissed(string $notice_name): bool
+        {
+        }
+        /**
+         * Check if there's a flag indicating PayPal account restriction.
+         *
+         * @since 10.5.0
+         * @return bool
+         */
+        private function has_account_restriction_flag(): bool
+        {
+        }
+        /**
+         * Set the flag indicating PayPal account restriction.
+         *
+         * @since 10.5.0
+         * @return void
+         */
+        public static function set_account_restriction_flag(): void
+        {
+        }
+        /**
+         * Clear the flag indicating PayPal account restriction.
+         *
+         * @since 10.5.0
+         * @return void
+         */
+        public static function clear_account_restriction_flag(): void
+        {
+        }
+        /**
+         * Handle PayPal order response to manage account restriction notices.
+         *
+         * @since 10.5.0
+         * @param int|string $http_code     The HTTP status code from the PayPal API response.
+         * @param array      $response_data The decoded response data from the PayPal API.
+         * @param WC_Order   $order         The WooCommerce order object.
+         * @return void
+         */
+        public static function manage_account_restriction_flag_for_notice($http_code, array $response_data, \WC_Order $order): void
+        {
+        }
+    }
+    /**
+     * PayPal Request Class
+     *
+     * Handles PayPal API requests for creating orders, authorizing/capturing payments,
+     * and fetching PayPal order details using the Orders v2 API.
+     *
+     * @since 10.5.0
+     */
+    class Request
+    {
+        /**
+         * The PayPal gateway instance.
+         *
+         * @var \WC_Gateway_Paypal
+         */
+        private \WC_Gateway_Paypal $gateway;
+        /**
+         * The API version for the proxy endpoint.
+         *
+         * @var string
+         */
+        private const WPCOM_PROXY_ENDPOINT_API_VERSION = '2';
+        /**
+         * The base for the proxy REST endpoint.
+         *
+         * @var string
+         */
+        private const WPCOM_PROXY_REST_BASE = 'transact/paypal_standard/proxy';
+        /**
+         * Proxy REST endpoints.
+         *
+         * @var string
+         */
+        private const WPCOM_PROXY_ORDER_ENDPOINT = 'order';
+        private const WPCOM_PROXY_PAYMENT_CAPTURE_ENDPOINT = 'payment/capture';
+        private const WPCOM_PROXY_PAYMENT_AUTHORIZE_ENDPOINT = 'payment/authorize';
+        private const WPCOM_PROXY_PAYMENT_CAPTURE_AUTH_ENDPOINT = 'payment/capture_auth';
+        private const WPCOM_PROXY_CLIENT_ID_ENDPOINT = 'client_id';
+        /**
+         * Constructor.
+         *
+         * @param \WC_Gateway_Paypal $gateway Paypal gateway object.
+         */
+        public function __construct(\WC_Gateway_Paypal $gateway)
+        {
+        }
+        /**
+         * Create a PayPal order using the Orders v2 API.
+         *
+         * This method creates a PayPal order and returns the order details including
+         * the approval URL where customers will be redirected to complete payment.
+         *
+         * @param WC_Order $order Order object.
+         * @param string   $payment_source The payment source.
+         * @param array    $js_sdk_params Extra parameters for a PayPal JS SDK (Buttons) request.
+         * @return array|null
+         * @throws Exception If the PayPal order creation fails.
+         */
+        public function create_paypal_order(\WC_Order $order, string $payment_source = \Automattic\WooCommerce\Gateways\PayPal\Constants::PAYMENT_SOURCE_PAYPAL, array $js_sdk_params = array()): ?array
+        {
+        }
+        /**
+         * Get PayPal order details.
+         *
+         * @param string $paypal_order_id The ID of the PayPal order.
+         * @return array
+         * @throws Exception If the PayPal order details request fails.
+         * @throws Exception If the PayPal order details are not found.
+         */
+        public function get_paypal_order_details(string $paypal_order_id): array
+        {
+        }
+        /**
+         * Authorize or capture a PayPal payment using the Orders v2 API.
+         *
+         * This method authorizes or captures a PayPal payment and updates the order status.
+         *
+         * @param WC_Order|null $order Order object.
+         * @param string|null   $action_url The URL to authorize or capture the payment.
+         * @param string        $action The action to perform. Either 'authorize' or 'capture'.
+         * @return void
+         * @throws Exception If the PayPal payment authorization or capture fails.
+         */
+        public function authorize_or_capture_payment(?\WC_Order $order, ?string $action_url, string $action = \Automattic\WooCommerce\Gateways\PayPal\Constants::PAYMENT_ACTION_CAPTURE): void
+        {
+        }
+        /**
+         * Capture a PayPal payment that has been authorized.
+         *
+         * @param WC_Order|null $order Order object.
+         * @return void
+         * @throws Exception If the PayPal payment capture fails.
+         */
+        public function capture_authorized_payment(?\WC_Order $order): void
+        {
+        }
+        /**
+         * Get the authorization ID for the PayPal payment.
+         *
+         * @param WC_Order $order Order object.
+         * @return string|null
+         */
+        private function get_authorization_id_for_capture(\WC_Order $order): ?string
+        {
+        }
+        /**
+         * Get the latest item from the authorizations or captures array based on update_time.
+         *
+         * @param array $items Array of authorizations or captures.
+         * @return array|null The latest authorization or capture or null if array is empty or no valid update_time found.
+         */
+        private function get_latest_transaction_data(array $items): ?array
+        {
+        }
+        /**
+         * Get the approve link from the response data.
+         *
+         * @param int|string $http_code The HTTP code of the response.
+         * @param array      $response_data The response data.
+         * @return string|null
+         */
+        private function get_approve_link($http_code, array $response_data): ?string
+        {
+        }
+        /**
+         * Build the request parameters for the PayPal create-order request.
+         *
+         * @param WC_Order $order Order object.
+         * @param string   $payment_source The payment source.
+         * @param array    $js_sdk_params Extra parameters for a PayPal JS SDK (Buttons) request.
+         * @return array
+         *
+         * @throws Exception If the order items cannot be built.
+         */
+        private function get_paypal_create_order_request_params(\WC_Order $order, string $payment_source, array $js_sdk_params): array
+        {
+        }
+        /**
+         * Get the amount data  for the PayPal order purchase unit field.
+         *
+         * @param WC_Order|null $order Order object.
+         * @return array
+         */
+        public function get_paypal_order_purchase_unit_amount(?\WC_Order $order): array
+        {
+        }
+        /**
+         * Build the custom ID for the PayPal order. The custom ID will be used by the proxy for webhook forwarding,
+         * and by later steps to identify the order.
+         *
+         * @param WC_Order $order Order object.
+         * @return string
+         * @throws Exception If the custom ID is too long.
+         */
+        private function get_paypal_order_custom_id(\WC_Order $order): string
+        {
+        }
+        /**
+         * Get the order items for the PayPal create-order request.
+         * Returns an empty array if any of the items (amount, quantity) are invalid.
+         *
+         * @param WC_Order $order Order object.
+         * @return array
+         */
+        private function get_paypal_order_items(\WC_Order $order): array
+        {
+        }
+        /**
+         * Get the subtotal for all items, before discounts.
+         *
+         * @param WC_Order $order Order object.
+         * @return float
+         */
+        private function get_paypal_order_items_subtotal(\WC_Order $order): float
+        {
+        }
+        /**
+         * Get the amount for a specific order item.
+         *
+         * @param WC_Order       $order Order object.
+         * @param \WC_Order_Item $item Order item.
+         * @return float
+         */
+        private function get_paypal_order_item_amount(\WC_Order $order, \WC_Order_Item $item): float
+        {
+        }
+        /**
+         * Get the value for the intent field in the create-order request.
+         *
+         * @return string
+         */
+        private function get_paypal_order_intent(): string
+        {
+        }
+        /**
+         * Get the shipping preference for the PayPal create-order request.
+         *
+         * @param WC_Order $order Order object.
+         * @return string
+         */
+        private function get_paypal_shipping_preference(\WC_Order $order): string
+        {
+        }
+        /**
+         * Get the shipping information for the PayPal create-order request.
+         *
+         * @param WC_Order $order Order object.
+         * @return array|null Returns null if the shipping is not required,
+         *  or the address is not set, or is incomplete.
+         */
+        private function get_paypal_order_shipping(\WC_Order $order): ?array
+        {
+        }
+        /**
+         * Normalize PayPal order shipping country code.
+         *
+         * @param string $country_code Country code to normalize.
+         * @return string|null
+         */
+        private function normalize_paypal_order_shipping_country_code(string $country_code): ?string
+        {
+        }
+        /**
+         * Normalize a URL for PayPal. PayPal requires absolute URLs with protocol.
+         *
+         * @param string $url The URL to check.
+         * @return string Normalized URL.
+         */
+        private function normalize_url_for_paypal(string $url): string
+        {
+        }
+        /**
+         * Fetch the PayPal client-id from the Transact platform.
+         *
+         * @return string|null The PayPal client-id, or null if the request fails.
+         * @throws Exception If the request fails.
+         */
+        public function fetch_paypal_client_id(): ?string
+        {
+        }
+        /**
+         * Send a request to the API proxy.
+         *
+         * @param string $method The HTTP method to use.
+         * @param string $endpoint The endpoint to request.
+         * @param array  $request_body The request body.
+         *
+         * @return array|\WP_Error The API response body, or WP_Error if the request fails.
+         * @throws Exception If the site ID is not found.
+         */
+        private function send_wpcom_proxy_request(string $method, string $endpoint, array $request_body)
+        {
+        }
+        /**
+         * Limit length of an arg.
+         *
+         * @param  string  $text Text to limit.
+         * @param  integer $limit Limit size in characters.
+         * @return string
+         */
+        private function limit_length(string $text, int $limit = 127): string
+        {
+        }
+    }
+    /**
+     * PayPal TransactAccountManager Class
+     *
+     * Handles Transact account management.
+     *
+     * @since 10.5.0
+     */
+    final class TransactAccountManager
+    {
+        /**
+         * The API version for the proxy endpoint.
+         *
+         * @var int
+         *
+         * @since 10.5.0
+         */
+        private const WPCOM_PROXY_ENDPOINT_API_VERSION = 2;
+        /**
+         * Transact provider type, for provider onboarding.
+         *
+         * @var string
+         *
+         * @since 10.5.0
+         */
+        private const TRANSACT_PROVIDER_TYPE = 'paypal_standard';
+        /**
+         * Cache key for the merchant account in live mode.
+         *
+         * @var string
+         *
+         * @since 10.5.0
+         */
+        private const TRANSACT_MERCHANT_ACCOUNT_CACHE_KEY_LIVE = 'woocommerce_paypal_transact_merchant_account_live';
+        /**
+         * Cache key for the merchant account in test mode.
+         *
+         * @var string
+         *
+         * @since 10.5.0
+         */
+        private const TRANSACT_MERCHANT_ACCOUNT_CACHE_KEY_TEST = 'woocommerce_paypal_transact_merchant_account_test';
+        /**
+         * Cache key for the provider account in live mode.
+         *
+         * @var string
+         *
+         * @since 10.5.0
+         */
+        private const TRANSACT_PROVIDER_ACCOUNT_CACHE_KEY_LIVE = 'woocommerce_paypal_transact_provider_account_live';
+        /**
+         * Cache key for the provider account in test mode.
+         *
+         * @var string
+         *
+         * @since 10.5.0
+         */
+        private const TRANSACT_PROVIDER_ACCOUNT_CACHE_KEY_TEST = 'woocommerce_paypal_transact_provider_account_test';
+        /**
+         * The expiry time for the Transact account cache.
+         *
+         * @var int
+         *
+         * @since 10.5.0
+         */
+        private const TRANSACT_ACCOUNT_CACHE_EXPIRY = 60 * 60 * 24;
+        // 24 hours.
+        /**
+         * Paypal gateway object.
+         *
+         * @var \WC_Gateway_Paypal
+         */
+        private \WC_Gateway_Paypal $gateway;
+        /**
+         * Constructor.
+         *
+         * @param \WC_Gateway_Paypal $gateway Paypal gateway object.
+         */
+        public function __construct(\WC_Gateway_Paypal $gateway)
+        {
+        }
+        /**
+         * Onboard the merchant with the Transact platform.
+         *
+         * @return void
+         *
+         * @since 10.5.0
+         */
+        public function do_onboarding(): void
+        {
+        }
+        /**
+         * Get the Transact account (merchant or provider) data. Performs a fetch if the account
+         * is not in cache or expired.
+         *
+         * @since 10.5.0
+         *
+         * @param string $account_type The type of account to get (merchant or provider).
+         * @return mixed Returns null if the transact account cannot be retrieved.
+         */
+        public function get_transact_account_data(string $account_type)
+        {
+        }
+        /**
+         * Get the cache key for the transact account.
+         *
+         * @since 10.5.0
+         *
+         * @param string $account_type The type of account to get (merchant or provider).
+         * @return string|null The cache key, or null if the account type is invalid.
+         */
+        private function get_cache_key(string $account_type): ?string
+        {
+        }
+        /**
+         * Fetch the merchant account from the Transact platform.
+         *
+         * @since 10.5.0
+         *
+         * @return array|null The API response body, or null if the request fails.
+         */
+        private function fetch_merchant_account(): ?array
+        {
+        }
+        /**
+         * Fetch the provider account from the Transact platform.
+         *
+         * @since 10.5.0
+         *
+         * @return bool True if the provider account exists, false otherwise.
+         */
+        private function fetch_provider_account(): bool
+        {
+        }
+        /**
+         * Create the merchant account with the Transact platform.
+         *
+         * @since 10.5.0
+         *
+         * @return array|null The API response body, or null if the request fails.
+         */
+        private function create_merchant_account(): ?array
+        {
+        }
+        /**
+         * Create the provider account with the Transact platform.
+         *
+         * @since 10.5.0
+         *
+         * @return bool True if the provider account creation was successful, false otherwise.
+         */
+        private function create_provider_account(): bool
+        {
+        }
+        /**
+         * Update the transact account (merchant or provider) cache.
+         *
+         * @since 10.5.0
+         *
+         * @param string|null $cache_key The cache key to update.
+         * @param array|bool  $account_data The transact account data.
+         *
+         * @return void
+         */
+        private function update_transact_account_cache(string $cache_key, $account_data): void
+        {
+        }
+        /**
+         * Get the transact account (merchant or provider) from the database cache.
+         *
+         * @since 10.5.0
+         *
+         * @param string $cache_key The cache key to get the account.
+         * @return mixed The transact account data, or null if the cache is
+         *                    empty or expired.
+         */
+        private function get_transact_account_from_cache(string $cache_key)
+        {
+        }
+        /**
+         * Send a request to the Transact platform.
+         *
+         * @since 10.5.0
+         *
+         * @param string $method The HTTP method to use.
+         * @param string $endpoint The endpoint to request.
+         * @param array  $request_body The request body.
+         *
+         * @return array|\WP_Error The API response body, or null if the request fails.
+         */
+        private function send_transact_api_request(string $method, string $endpoint, array $request_body)
+        {
+        }
+    }
+    /**
+     * Class WebhookHandler file.
+     *
+     * Handles webhook events.
+     *
+     * @since 10.5.0
+     */
+    class WebhookHandler
+    {
+        /**
+         * Process the webhook event.
+         *
+         * @since 10.5.0
+         *
+         * @param \WP_REST_Request $request The request object.
+         * @return void
+         */
+        public function process_webhook(\WP_REST_Request $request): void
+        {
+        }
+        /**
+         * Process the CHECKOUT.ORDER.APPROVED webhook event.
+         *
+         * @since 10.5.0
+         *
+         * @param array $event The webhook event data.
+         * @return void
+         */
+        private function process_checkout_order_approved(array $event): void
+        {
+        }
+        /**
+         * Process the PAYMENT.CAPTURE.COMPLETED webhook event.
+         *
+         * @since 10.5.0
+         *
+         * @param array $event The webhook event data.
+         * @return void
+         */
+        private function process_payment_capture_completed(array $event): void
+        {
+        }
+        /**
+         * Process the PAYMENT.CAPTURE.PENDING webhook event.
+         *
+         * @since 10.5.0
+         *
+         * @param array $event The webhook event data.
+         * @return void
+         */
+        private function process_payment_capture_pending(array $event): void
+        {
+        }
+        /**
+         * Process the PAYMENT.AUTHORIZATION.CREATED webhook event.
+         *
+         * @since 10.5.0
+         *
+         * @param array $event The webhook event data.
+         * @return void
+         */
+        private function process_payment_authorization_created(array $event): void
+        {
+        }
+        /**
+         * Capture the payment.
+         *
+         * @since 10.5.0
+         *
+         * @param \WC_Order $order The order object.
+         * @param array     $links The links from the webhook event.
+         * @param string    $action The action to perform (capture or authorize).
+         * @return void
+         */
+        private function authorize_or_capture_payment(\WC_Order $order, array $links, string $action): void
+        {
+        }
+        /**
+         * Get the action URL from the links.
+         *
+         * @since 10.5.0
+         *
+         * @param array  $links The links from the webhook event.
+         * @param string $action The action to perform (capture or authorize).
+         * @return string|null
+         */
+        private function get_action_url(array $links, string $action): ?string
+        {
+        }
+    }
 }
 namespace Automattic\WooCommerce\Internal\Admin\BlockTemplates {
     /**
@@ -110841,143 +112873,40 @@ namespace Automattic\WooCommerce\Internal\ProductFilters\Interfaces {
 }
 namespace Automattic\WooCommerce\Internal\Traits {
     /**
-     * DON'T USE THIS TRAIT. It will be removed in WooCommerce 10.5.
-     * Instead, make the hook target methods public and mark them with an @internal annotation.
+     * DON'T USE THIS TRAIT. It's DEPRECATED and will be REMOVED in a future version of WooCommerce.
      *
-     * This trait allows making private methods of a class accessible from outside.
-     * This is useful to define hook handlers with the [$this, 'method'] or [__CLASS__, 'method'] syntax
-     * without having to make the method public (and thus having to keep it forever for backwards compatibility).
+     * If you have class methods that are public solely because they are the target of WordPress hooks,
+     * make the methods public and mark them with an @internal annotation.
      *
-     * Example:
-     *
-     * class Foobar {
-     *   use AccessiblePrivateMethods;
-     *
-     *   public function __construct() {
-     *     self::add_action('some_action', [$this, 'handle_some_action']);
-     *   }
-     *
-     *   public static function init() {
-     *     self::add_filter('some_filter', [__CLASS__, 'handle_some_filter']);
-     *   }
-     *
-     *   private function handle_some_action() {
-     *   }
-     *
-     *   private static function handle_some_filter() {
-     *   }
-     * }
-     *
-     * For this to work the callback must be an array and the first element of the array must be either '$this', '__CLASS__',
-     * or another instance of the same class; otherwise the method won't be marked as accessible
-     * (but the corresponding WordPress 'add_action' and 'add_filter' functions will still be called).
-     *
-     * No special procedure is needed to remove hooks set up with these methods, the regular 'remove_action'
-     * and 'remove_filter' functions provided by WordPress can be used as usual.
-     *
-     * @deprecated 9.6.0 Make the hook target methods public and mark them with an @internal annotation. This trait will be removed in WooCommerce 10.5.
+     * @deprecated 9.6.0 Make the hook target methods public and mark them with an @internal annotation. This trait will be REMOVED in a future version of WooCommerce.
      */
     trait AccessiblePrivateMethods
     {
-        //phpcs:disable PSR2.Classes.PropertyDeclaration.Underscore
-        /**
-         * List of instance methods marked as externally accessible.
-         *
-         * @var array
-         */
+        // phpcs:disable
         private $_accessible_private_methods = array();
-        /**
-         * List of static methods marked as externally accessible.
-         *
-         * @var array
-         */
         private static $_accessible_static_private_methods = array();
-        //phpcs:enable PSR2.Classes.PropertyDeclaration.Underscore
-        /**
-         * Register a WordPress action.
-         * If the callback refers to a private or protected instance method in this class, the method is marked as externally accessible.
-         *
-         * $callback can be a standard callable, or a string representing the name of a method in this class.
-         *
-         * @param string          $hook_name       The name of the action to add the callback to.
-         * @param callable|string $callback        The callback to be run when the action is called.
-         * @param int             $priority        Optional. Used to specify the order in which the functions
-         *                                         associated with a particular action are executed.
-         *                                         Lower numbers correspond with earlier execution,
-         *                                         and functions with the same priority are executed
-         *                                         in the order in which they were added to the action. Default 10.
-         * @param int             $accepted_args   Optional. The number of arguments the function accepts. Default 1.
-         */
         protected static function add_action(string $hook_name, $callback, int $priority = 10, int $accepted_args = 1): void
         {
         }
-        /**
-         * Register a WordPress filter.
-         * If the callback refers to a private or protected instance method in this class, the method is marked as externally accessible.
-         *
-         * $callback can be a standard callable, or a string representing the name of a method in this class.
-         *
-         * @param string          $hook_name       The name of the filter to add the callback to.
-         * @param callable|string $callback        The callback to be run when the filter is called.
-         * @param int             $priority        Optional. Used to specify the order in which the functions
-         *                                         associated with a particular filter are executed.
-         *                                         Lower numbers correspond with earlier execution,
-         *                                         and functions with the same priority are executed
-         *                                         in the order in which they were added to the filter. Default 10.
-         * @param int             $accepted_args   Optional. The number of arguments the function accepts. Default 1.
-         */
         protected static function add_filter(string $hook_name, $callback, int $priority = 10, int $accepted_args = 1): void
         {
         }
-        /**
-         * Do the required processing to a callback before invoking the WordPress 'add_action' or 'add_filter' function.
-         *
-         * @param callable $callback The callback to process.
-         * @return void
-         */
         protected static function process_callback_before_hooking($callback): void
         {
         }
-        /**
-         * Register a private or protected instance method of this class as externally accessible.
-         *
-         * @param string $method_name Method name.
-         * @return bool True if the method has been marked as externally accessible, false if the method doesn't exist.
-         */
         protected function mark_method_as_accessible(string $method_name): bool
         {
         }
-        /**
-         * Register a private or protected static method of this class as externally accessible.
-         *
-         * @param string $method_name Method name.
-         * @return bool True if the method has been marked as externally accessible, false if the method doesn't exist.
-         */
         protected static function mark_static_method_as_accessible(string $method_name): bool
         {
         }
-        /**
-         * Undefined/inaccessible instance method call handler.
-         *
-         * @param string $name Called method name.
-         * @param array  $arguments Called method arguments.
-         * @return mixed
-         * @throws \Error The called instance method doesn't exist or is private/protected and not marked as externally accessible.
-         */
         public function __call($name, $arguments)
         {
         }
-        /**
-         * Undefined/inaccessible static method call handler.
-         *
-         * @param string $name Called method name.
-         * @param array  $arguments Called method arguments.
-         * @return mixed
-         * @throws \Error The called static method doesn't exist or is private/protected and not marked as externally accessible.
-         */
         public static function __callStatic($name, $arguments)
         {
         }
+        // phpcs:enable
     }
 }
 namespace Automattic\WooCommerce\LayoutTemplates {
@@ -111273,10 +113202,12 @@ namespace Automattic\WooCommerce\Proxies {
          * method are retrieved, similar approaches can be used as needed to make use
          * of existing factory methods such as e.g. 'load'.
          *
-         * @param string $class_name The name of the class to get an instance for.
-         * @param mixed  ...$args Parameters to be passed to the class constructor or to the appropriate internal 'get_instance_of_' method.
+         * @template T of object
+         * @param string $class_name Class name.
+         * @phpstan-param class-string<T> $class_name
+         * @param mixed  ...$args    Parameters to be passed to the class constructor or to the appropriate internal 'get_instance_of_' method.
          *
-         * @return object The instance of the class.
+         * @return T The instance of the class.
          * @throws \Exception The requested class has a namespace starting with ' Automattic\WooCommerce', or there was an error creating an instance of the class.
          */
         public function get_instance_of(string $class_name, ...$args)
@@ -118239,16 +120170,6 @@ namespace Automattic\WooCommerce\StoreApi\Utilities {
         {
         }
         /**
-         * Creates a name for a package.
-         *
-         * @param array $package Shipping package from WooCommerce.
-         * @param int   $index Package number.
-         * @return string
-         */
-        protected function get_package_name($package, $index)
-        {
-        }
-        /**
          * Selects a shipping rate.
          *
          * @param int|string $package_id ID of the package to choose a rate for.
@@ -118604,6 +120525,26 @@ namespace Automattic\WooCommerce\StoreApi\Utilities {
          * @return bool True if the method is a local pickup method.
          */
         public static function is_local_pickup_method($method_id)
+        {
+        }
+        /**
+         * Gets local pickup locations for block editor preview, including placeholder
+         * locations for custom shipping methods that support local pickup.
+         *
+         * This method combines the built-in pickup_location locations with placeholder
+         * entries for any other shipping methods that declare 'local-pickup' support.
+         * This allows custom shipping methods to appear in the block editor preview.
+         *
+         * @return array Array of pickup locations with the following structure:
+         *               - 'name' (string) The location name.
+         *               - 'enabled' (bool) Whether the location is enabled.
+         *               - 'address' (array) Address array with keys: address_1, city, state, postcode, country.
+         *               - 'details' (string) Additional details about the location.
+         *               - 'method_id' (string) The shipping method ID this location belongs to.
+         *
+         * @since 10.5.0
+         */
+        public static function get_local_pickup_method_locations()
         {
         }
     }
@@ -119652,6 +121593,68 @@ namespace Automattic\WooCommerce\Utilities {
         }
     }
     /**
+     * Utility class for working with WordPress hooks and callbacks.
+     *
+     * @since 10.5.0
+     */
+    final class CallbackUtil
+    {
+        /**
+         * Get a stable signature for a callback that can be used for hashing.
+         *
+         * This method normalizes callbacks into consistent string representations,
+         * regardless of changes in dynamic properties in callback instances.
+         *
+         * @param callable|mixed $callback A PHP callback.
+         * @return string Normalized callback signature.
+         *
+         * @since 10.5.0
+         */
+        public static function get_callback_signature($callback): string
+        {
+        }
+        /**
+         * Get signatures for all callbacks attached to a specific hook.
+         *
+         * Returns an array of callback signatures for all callbacks registered
+         * with the specified hook name, organized by priority. This is useful
+         * for generating cache keys or comparing hook state.
+         *
+         * Closure signatures are based on their file location and line numbers,
+         * providing consistent hashes across requests for the same closure code.
+         *
+         * @param string $hook_name The name of the hook to inspect.
+         * @return array<int, array<string>> Array of priority => array( signatures ),  empty if hook has no callbacks.
+         *
+         * @since 10.5.0
+         */
+        public static function get_hook_callback_signatures(string $hook_name): array
+        {
+        }
+        /**
+         * Get a stable signature for a closure based on its file path and line numbers.
+         *
+         * @param \Closure $closure The closure to generate a signature for.
+         * @return string Signature in the format 'Closure@filename:startLine-endLine'.
+         * @throws \ReflectionException If reflection fails.
+         */
+        private static function get_closure_signature(\Closure $closure): string
+        {
+        }
+        /**
+         * Get a stable signature for an invokable object based on its class and __invoke method location.
+         *
+         * For regular classes, returns 'ClassName::__invoke' since the class name is stable.
+         * For anonymous classes, includes file location since the class name varies between requests.
+         *
+         * @param object $invokable The invokable object to generate a signature for.
+         * @return string Signature in format 'ClassName::__invoke' or 'class@anonymous[hash]::__invoke@filename:startLine-endLine'.
+         */
+        private static function get_invokable_signature(object $invokable): string
+        {
+        }
+    }
+    /**
      * The DiscountsUtil class provides utilities to assist discounts calculation and validation.
      */
     class DiscountsUtil
@@ -119699,6 +121702,17 @@ namespace Automattic\WooCommerce\Utilities {
          * @return bool True if the feature is enabled, false if not or if the feature doesn't exist.
          */
         public static function feature_is_enabled(string $feature_id): bool
+        {
+        }
+        /**
+         * Log usage of a deprecated feature.
+         *
+         * This method ensures logging only happens once per request to avoid spam.
+         *
+         * @param string $feature_id       The feature id being checked.
+         * @param string $deprecated_since The version since which the feature is deprecated.
+         */
+        private static function log_deprecated_feature_usage(string $feature_id, string $deprecated_since): void
         {
         }
         /**
@@ -121000,6 +123014,12 @@ namespace {
      * Add an index to the wc_order_stats table for (date_paid, status, parent) to improve report performance.
      */
     function wc_update_1040_add_idx_date_paid_status_parent()
+    {
+    }
+    /**
+     * Add an index to the woocommerce_downloadable_product_permissions table for (user_email) to improve anonymization/deletion performance.
+     */
+    function wc_update_1050_add_idx_user_email()
     {
     }
     /**
@@ -124874,7 +126894,7 @@ namespace {
      *
      * @param mixed $the_order       Post object or post ID of the order.
      *
-     * @return bool|WC_Order|WC_Order_Refund
+     * @return false|WC_Order|WC_Order_Refund
      */
     function wc_get_order($the_order = \false)
     {
@@ -125617,7 +127637,86 @@ namespace {
     {
     }
     /**
+     * Schedule start/end sale actions for a product based on its sale dates.
+     *
+     * Uses Action Scheduler to fire events at the exact sale start/end times,
+     * rather than relying on the daily cron.
+     *
+     * @since 10.5.0
+     * @param WC_Product $product Product object.
+     * @return void
+     */
+    function wc_schedule_product_sale_events(\WC_Product $product): void
+    {
+    }
+    /**
+     * Apply the expected sale state for a product.
+     *
+     * This is a shared helper used by both the per-product Action Scheduler
+     * callbacks and the daily cron safety net.
+     *
+     * @since 10.5.0
+     * @param WC_Product $product Product object.
+     * @param string     $mode    'start' or 'end'.
+     * @return void
+     */
+    function wc_apply_sale_state_for_product(\WC_Product $product, string $mode): void
+    {
+    }
+    /**
+     * Handle scheduled sale start for a product.
+     *
+     * This is the Action Scheduler callback that fires at the exact sale start time.
+     *
+     * @since 10.5.0
+     * @param int $product_id Product ID.
+     * @return void
+     */
+    function wc_handle_product_start_scheduled_sale($product_id): void
+    {
+    }
+    /**
+     * Handle scheduled sale end for a product.
+     *
+     * This is the Action Scheduler callback that fires at the exact sale end time.
+     *
+     * @since 10.5.0
+     * @param int $product_id Product ID.
+     * @return void
+     */
+    function wc_handle_product_end_scheduled_sale($product_id): void
+    {
+    }
+    /**
+     * Schedule sale events when a product is saved with sale dates.
+     *
+     * @since 10.5.0
+     * @param int             $product_id Product ID.
+     * @param WC_Product|null $product    Product object (optional).
+     * @return void
+     */
+    function wc_maybe_schedule_product_sale_events($product_id, $product = \null): void
+    {
+    }
+    /**
      * Function which handles the start and end of scheduled sales via cron.
+     *
+     * Previously, this daily cron was the only mechanism for starting/ending scheduled
+     * sales, which caused timing issues - sales could be "a day off" depending on when
+     * WP-Cron ran. Now, per-product Action Scheduler events fire at exact sale times.
+     *
+     * This function now acts as a safety net to:
+     * 1. Catch any products missed by the per-product Action Scheduler events
+     * 2. Handle products created before the AS events were introduced
+     *
+     * This function is kept for backwards compatibility. Extenders may hook into the
+     * `woocommerce_scheduled_sales` cron event or the before/after hooks fired within.
+     *
+     * Note: The before/after hooks (wc_before_products_starting_sales, etc.) only fire
+     * when this cron finds products to process. If per-product AS events handled sales
+     * on time, these hooks may not fire.
+     *
+     * @since 3.0.0
      */
     function wc_scheduled_sales()
     {
