@@ -2225,6 +2225,47 @@ namespace {
         }
     }
     /**
+     * Class ActionScheduler_RecurringActionScheduler
+     *
+     * This class ensures that the `action_scheduler_ensure_recurring_actions` hook is triggered on a daily interval. This
+     * simplifies the process for other plugins to register their recurring actions without requiring each plugin to query
+     * or schedule actions independently on every request.
+     */
+    class ActionScheduler_RecurringActionScheduler
+    {
+        /**
+         * @var string The hook of the scheduled recurring action that is run to trigger the
+         *      `action_scheduler_ensure_recurring_actions` hook that plugins should use.  We can't directly have the
+         *      scheduled action hook be the hook plugins should use because the actions will show as failed if no plugin
+         *      was actively hooked into it.
+         */
+        private const RUN_SCHEDULED_RECURRING_ACTIONS_HOOK = 'action_scheduler_run_recurring_actions_schedule_hook';
+        /**
+         * Initialize the instance.  Should only be run on a single instance per request.
+         *
+         * @return void
+         */
+        public function init(): void
+        {
+        }
+        /**
+         * Schedule the recurring `action_scheduler_ensure_recurring_actions` action if not already scheduled.
+         *
+         * @return void
+         */
+        public function schedule_recurring_scheduler_hook(): void
+        {
+        }
+        /**
+         * Trigger the hook to allow other plugins to schedule their recurring actions.
+         *
+         * @return void
+         */
+        public function run_recurring_scheduler_hook(): void
+        {
+        }
+    }
+    /**
      * Provides information about active and registered instances of Action Scheduler.
      */
     class ActionScheduler_SystemInformation
@@ -4253,6 +4294,16 @@ namespace {
         {
         }
         /**
+         * Determines whether the database supports using SKIP LOCKED. This logic mimicks the $wpdb::has_cap() logic.
+         *
+         * SKIP_LOCKED support was added to MariaDB in 10.6.0 and to MySQL in 8.0.1
+         *
+         * @return bool
+         */
+        private function db_supports_skip_locked()
+        {
+        }
+        /**
          * Get the number of active claims.
          *
          * @return int
@@ -4279,7 +4330,7 @@ namespace {
         {
         }
         /**
-         * Release actions from a claim and delete the claim.
+         * Release pending actions from a claim and delete the claim.
          *
          * @param ActionScheduler_ActionClaim $claim Claim object.
          * @throws \RuntimeException When unable to release actions from claim.
@@ -4591,7 +4642,7 @@ namespace {
         {
         }
         /**
-         * Release a claim in the table data store.
+         * Release a claim in the table data store on any pending actions.
          *
          * @param ActionScheduler_ActionClaim $claim Claim object.
          */
@@ -5079,7 +5130,7 @@ namespace {
         {
         }
         /**
-         * Release claim.
+         * Release pending actions from a claim.
          *
          * @param ActionScheduler_ActionClaim $claim Claim object to release.
          * @return void
@@ -6315,7 +6366,7 @@ namespace {
          *
          * @var int
          */
-        protected $schema_version = 7;
+        protected $schema_version = 8;
         /**
          * Construct.
          */
@@ -6655,6 +6706,18 @@ namespace {
      * @return ActionScheduler_DateTime
      */
     function as_get_datetime_object($date_string = \null, $timezone = 'UTC')
+    {
+    }
+    /**
+     * Check if a specific feature is supported by the current version of Action Scheduler.
+     *
+     * @since 3.9.3
+     *
+     * @param string $feature The feature to check support for.
+     *
+     * @return bool True if the feature is supported, false otherwise.
+     */
+    function as_supports(string $feature): bool
     {
     }
 }
