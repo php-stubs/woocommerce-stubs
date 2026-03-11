@@ -1901,12 +1901,15 @@ namespace {
          * @param Exception $e Exception object.
          * @param string    $message Message regarding exception thrown.
          * @since 3.7.0
+         * @return void
          */
         protected function handle_exception($e, $message = 'Error')
         {
         }
         /**
          * Save all order items which are part of this order.
+         *
+         * @return void
          */
         protected function save_items()
         {
@@ -2160,6 +2163,7 @@ namespace {
          *
          * @since 3.0.0
          * @param int $value Value to set.
+         * @return void
          * @throws WC_Data_Exception Exception thrown if parent ID does not exist or is invalid.
          */
         public function set_parent_id($value)
@@ -2179,6 +2183,7 @@ namespace {
          * Set order_version.
          *
          * @param string $value Value to set.
+         * @return void
          * @throws WC_Data_Exception Exception may be thrown if value is invalid.
          */
         public function set_version($value)
@@ -2188,6 +2193,7 @@ namespace {
          * Set order_currency.
          *
          * @param string $value Value to set.
+         * @return void
          * @throws WC_Data_Exception Exception may be thrown if value is invalid.
          */
         public function set_currency($value)
@@ -2197,6 +2203,7 @@ namespace {
          * Set prices_include_tax.
          *
          * @param bool $value Value to set.
+         * @return void
          * @throws WC_Data_Exception Exception may be thrown if value is invalid.
          */
         public function set_prices_include_tax($value)
@@ -2206,6 +2213,7 @@ namespace {
          * Set date_created.
          *
          * @param  string|integer|null $date UTC timestamp, or ISO 8601 DateTime. If the DateTime string has no timezone or offset, WordPress site timezone will be assumed. Null if there is no date.
+         * @return void
          * @throws WC_Data_Exception Exception may be thrown if value is invalid.
          */
         public function set_date_created($date = \null)
@@ -2215,6 +2223,7 @@ namespace {
          * Set date_modified.
          *
          * @param  string|integer|null $date UTC timestamp, or ISO 8601 DateTime. If the DateTime string has no timezone or offset, WordPress site timezone will be assumed. Null if there is no date.
+         * @return void
          * @throws WC_Data_Exception Exception may be thrown if value is invalid.
          */
         public function set_date_modified($date = \null)
@@ -2224,6 +2233,7 @@ namespace {
          * Set discount_total.
          *
          * @param string $value Value to set.
+         * @return void
          * @throws WC_Data_Exception Exception may be thrown if value is invalid.
          */
         public function set_discount_total($value)
@@ -2233,6 +2243,7 @@ namespace {
          * Set discount_tax.
          *
          * @param string $value Value to set.
+         * @return void
          * @throws WC_Data_Exception Exception may be thrown if value is invalid.
          */
         public function set_discount_tax($value)
@@ -2242,6 +2253,7 @@ namespace {
          * Set shipping_total.
          *
          * @param string $value Value to set.
+         * @return void
          * @throws WC_Data_Exception Exception may be thrown if value is invalid.
          */
         public function set_shipping_total($value)
@@ -2251,6 +2263,7 @@ namespace {
          * Set shipping_tax.
          *
          * @param string $value Value to set.
+         * @return void
          * @throws WC_Data_Exception Exception may be thrown if value is invalid.
          */
         public function set_shipping_tax($value)
@@ -2260,6 +2273,7 @@ namespace {
          * Set cart tax.
          *
          * @param string $value Value to set.
+         * @return void
          * @throws WC_Data_Exception Exception may be thrown if value is invalid.
          */
         public function set_cart_tax($value)
@@ -2269,6 +2283,7 @@ namespace {
          * Sets order tax (sum of cart and shipping tax). Used internally only.
          *
          * @param string $value Value to set.
+         * @return void
          * @throws WC_Data_Exception Exception may be thrown if value is invalid.
          */
         protected function set_total_tax($value)
@@ -2308,6 +2323,7 @@ namespace {
          * Remove all line items (products, coupons, shipping, taxes) from the order.
          *
          * @param string $type Order item type. Default null.
+         * @return void
          */
         public function remove_order_items($type = \null)
         {
@@ -2453,6 +2469,7 @@ namespace {
          * @throws Exception When not able to apply coupon.
          *
          * @param string $billing_email Billing email of order.
+         * @return void
          */
         public function hold_applied_coupons($billing_email)
         {
@@ -2527,6 +2544,7 @@ namespace {
          * This method is public since WooCommerce 3.8.0.
          *
          * @since 3.2.0
+         * @return void
          */
         public function recalculate_coupons()
         {
@@ -2548,6 +2566,7 @@ namespace {
          *
          * @since 3.2.0
          * @param WC_Discounts $discounts Discounts class.
+         * @return void
          */
         protected function set_item_discount_amounts($discounts)
         {
@@ -2557,6 +2576,7 @@ namespace {
          *
          * @since 3.2.0
          * @param WC_Discounts $discounts Discounts class.
+         * @return void
          */
         protected function set_coupon_discount_amounts($discounts)
         {
@@ -2667,6 +2687,7 @@ namespace {
          * Will use the base country unless customer addresses are set.
          *
          * @param array $args Added in 3.0.0 to pass things like location.
+         * @return void
          */
         public function calculate_taxes($args = array())
         {
@@ -2681,6 +2702,8 @@ namespace {
         }
         /**
          * Update tax lines for the order based on the line item taxes themselves.
+         *
+         * @return void
          */
         public function update_taxes()
         {
@@ -2828,6 +2851,7 @@ namespace {
          *
          * @param array  $total_rows Reference to total rows array.
          * @param string $tax_display Excl or incl tax display mode.
+         * @return void
          */
         protected function add_order_item_totals_subtotal_row(&$total_rows, $tax_display)
         {
@@ -2837,6 +2861,7 @@ namespace {
          *
          * @param array  $total_rows Reference to total rows array.
          * @param string $tax_display Excl or incl tax display mode.
+         * @return void
          */
         protected function add_order_item_totals_discount_row(&$total_rows, $tax_display)
         {
@@ -2846,6 +2871,7 @@ namespace {
          *
          * @param array  $total_rows Reference to total rows array.
          * @param string $tax_display Excl or incl tax display mode.
+         * @return void
          */
         protected function add_order_item_totals_shipping_row(&$total_rows, $tax_display)
         {
@@ -2855,6 +2881,7 @@ namespace {
          *
          * @param array  $total_rows Reference to total rows array.
          * @param string $tax_display Excl or incl tax display mode.
+         * @return void
          */
         protected function add_order_item_totals_fee_rows(&$total_rows, $tax_display)
         {
@@ -2864,6 +2891,7 @@ namespace {
          *
          * @param array  $total_rows Reference to total rows array.
          * @param string $tax_display Excl or incl tax display mode.
+         * @return void
          */
         protected function add_order_item_totals_tax_rows(&$total_rows, $tax_display)
         {
@@ -2873,6 +2901,7 @@ namespace {
          *
          * @param array  $total_rows Reference to total rows array.
          * @param string $tax_display Excl or incl tax display mode.
+         * @return void
          */
         protected function add_order_item_totals_total_row(&$total_rows, $tax_display)
         {
@@ -2985,6 +3014,7 @@ namespace {
          * WARNING! If the Cost of Goods Sold feature is disabled this method will have no effect.
          *
          * @param float $value The value to set for this order.
+         * @return void
          *
          * @internal This method is intended for data store usage only, the value set here will be overridden by calculate_cogs_total_value.
          */
@@ -3019,6 +3049,21 @@ namespace {
          * @var string
          */
         public $order_button_text;
+        /**
+         * Whether the gateway provides a custom place order button.
+         *
+         * When true, the default "Place order" button will be hidden on page load
+         * if this gateway is pre-selected. The gateway must register its custom
+         * button via JavaScript using wc.customPlaceOrderButton.register().
+         *
+         * Note: This property is purely for UX (preventing flash of default button).
+         * It does NOT affect security or functionality - the JS registration is what
+         * actually enables the custom button.
+         *
+         * @since 10.6.0
+         * @var bool
+         */
+        public $has_custom_place_order_button = \false;
         /**
          * Yes or no based on whether the method is enabled.
          *
@@ -4718,6 +4763,7 @@ namespace {
          *
          * @since 3.0.0
          * @param string $name Product name.
+         * @return void
          */
         public function set_name($name)
         {
@@ -4727,6 +4773,7 @@ namespace {
          *
          * @since 3.0.0
          * @param string $slug Product slug.
+         * @return void
          */
         public function set_slug($slug)
         {
@@ -4736,6 +4783,7 @@ namespace {
          *
          * @since 3.0.0
          * @param string|integer|null $date UTC timestamp, or ISO 8601 DateTime. If the DateTime string has no timezone or offset, WordPress site timezone will be assumed. Null if their is no date.
+         * @return void
          */
         public function set_date_created($date = \null)
         {
@@ -4745,6 +4793,7 @@ namespace {
          *
          * @since 3.0.0
          * @param string|integer|null $date UTC timestamp, or ISO 8601 DateTime. If the DateTime string has no timezone or offset, WordPress site timezone will be assumed. Null if their is no date.
+         * @return void
          */
         public function set_date_modified($date = \null)
         {
@@ -4754,6 +4803,7 @@ namespace {
          *
          * @since 3.0.0
          * @param string $status Product status.
+         * @return void
          */
         public function set_status($status)
         {
@@ -4763,6 +4813,7 @@ namespace {
          *
          * @since 3.0.0
          * @param bool|string $featured Whether the product is featured or not.
+         * @return void
          */
         public function set_featured($featured)
         {
@@ -4773,6 +4824,7 @@ namespace {
          * @since  3.0.0
          * @throws WC_Data_Exception Throws exception when invalid data is found.
          * @param  string $visibility Options: 'hidden', 'visible', 'search' and 'catalog'.
+         * @return void
          */
         public function set_catalog_visibility($visibility)
         {
@@ -4782,6 +4834,7 @@ namespace {
          *
          * @since 3.0.0
          * @param string $description Product description.
+         * @return void
          */
         public function set_description($description)
         {
@@ -4791,6 +4844,7 @@ namespace {
          *
          * @since 3.0.0
          * @param string $short_description Product short description.
+         * @return void
          */
         public function set_short_description($short_description)
         {
@@ -4801,6 +4855,7 @@ namespace {
          * @since  3.0.0
          * @throws WC_Data_Exception Throws exception when invalid data is found.
          * @param  string $sku Product SKU.
+         * @return void
          */
         public function set_sku($sku)
         {
@@ -4810,6 +4865,7 @@ namespace {
          *
          * @since 9.1.0
          * @param string $global_unique_id Unique ID.
+         * @return void
          */
         public function set_global_unique_id($global_unique_id)
         {
@@ -4818,6 +4874,7 @@ namespace {
          * Set the product's active price.
          *
          * @param string $price Price.
+         * @return void
          */
         public function set_price($price)
         {
@@ -4827,6 +4884,7 @@ namespace {
          *
          * @since 3.0.0
          * @param string $price Regular price.
+         * @return void
          */
         public function set_regular_price($price)
         {
@@ -4836,6 +4894,7 @@ namespace {
          *
          * @since 3.0.0
          * @param string $price sale price.
+         * @return void
          */
         public function set_sale_price($price)
         {
@@ -4845,6 +4904,7 @@ namespace {
          *
          * @since 3.0.0
          * @param string|integer|null $date UTC timestamp, or ISO 8601 DateTime. If the DateTime string has no timezone or offset, WordPress site timezone will be assumed. Null if their is no date.
+         * @return void
          */
         public function set_date_on_sale_from($date = \null)
         {
@@ -4854,6 +4914,7 @@ namespace {
          *
          * @since 3.0.0
          * @param string|integer|null $date UTC timestamp, or ISO 8601 DateTime. If the DateTime string has no timezone or offset, WordPress site timezone will be assumed. Null if their is no date.
+         * @return void
          */
         public function set_date_on_sale_to($date = \null)
         {
@@ -4863,6 +4924,7 @@ namespace {
          *
          * @since 3.0.0
          * @param int $total Total of sales.
+         * @return void
          */
         public function set_total_sales($total)
         {
@@ -4873,6 +4935,7 @@ namespace {
          * @since  3.0.0
          * @throws WC_Data_Exception Throws exception when invalid data is found.
          * @param  string $status Tax status.
+         * @return void
          */
         public function set_tax_status($status)
         {
@@ -4882,6 +4945,7 @@ namespace {
          *
          * @since 3.0.0
          * @param string $class Tax class.
+         * @return void
          */
         public function set_tax_class($class)
         {
@@ -4899,6 +4963,7 @@ namespace {
          *
          * @since 3.0.0
          * @param bool $manage_stock Whether or not manage stock is enabled.
+         * @return void
          */
         public function set_manage_stock($manage_stock)
         {
@@ -4908,6 +4973,7 @@ namespace {
          *
          * @since 3.0.0
          * @param float|null $quantity Stock quantity.
+         * @return void
          */
         public function set_stock_quantity($quantity)
         {
@@ -4916,6 +4982,7 @@ namespace {
          * Set stock status.
          *
          * @param string $status New status.
+         * @return void
          */
         public function set_stock_status($status = \Automattic\WooCommerce\Enums\ProductStockStatus::IN_STOCK)
         {
@@ -4925,6 +4992,7 @@ namespace {
          *
          * @since 3.0.0
          * @param string $backorders Options: 'yes', 'no' or 'notify'.
+         * @return void
          */
         public function set_backorders($backorders)
         {
@@ -4934,6 +5002,7 @@ namespace {
          *
          * @param int|string $amount Empty string if value not set.
          * @since 3.5.0
+         * @return void
          */
         public function set_low_stock_amount($amount)
         {
@@ -4943,6 +5012,7 @@ namespace {
          *
          * @since 3.0.0
          * @param bool $sold_individually Whether or not product is sold individually.
+         * @return void
          */
         public function set_sold_individually($sold_individually)
         {
@@ -4952,6 +5022,7 @@ namespace {
          *
          * @since 3.0.0
          * @param float|string $weight Total weight.
+         * @return void
          */
         public function set_weight($weight)
         {
@@ -4961,6 +5032,7 @@ namespace {
          *
          * @since 3.0.0
          * @param float|string $length Total length.
+         * @return void
          */
         public function set_length($length)
         {
@@ -4970,6 +5042,7 @@ namespace {
          *
          * @since 3.0.0
          * @param float|string $width Total width.
+         * @return void
          */
         public function set_width($width)
         {
@@ -4979,6 +5052,7 @@ namespace {
          *
          * @since 3.0.0
          * @param float|string $height Total height.
+         * @return void
          */
         public function set_height($height)
         {
@@ -4988,6 +5062,7 @@ namespace {
          *
          * @since 3.0.0
          * @param array $upsell_ids IDs from the up-sell products.
+         * @return void
          */
         public function set_upsell_ids($upsell_ids)
         {
@@ -4997,6 +5072,7 @@ namespace {
          *
          * @since 3.0.0
          * @param array $cross_sell_ids IDs from the cross-sell products.
+         * @return void
          */
         public function set_cross_sell_ids($cross_sell_ids)
         {
@@ -5006,6 +5082,7 @@ namespace {
          *
          * @since 3.0.0
          * @param int $parent_id Product parent ID.
+         * @return void
          */
         public function set_parent_id($parent_id)
         {
@@ -5015,6 +5092,7 @@ namespace {
          *
          * @since 3.0.0
          * @param bool $reviews_allowed Reviews allowed or not.
+         * @return void
          */
         public function set_reviews_allowed($reviews_allowed)
         {
@@ -5024,6 +5102,7 @@ namespace {
          *
          * @since 3.0.0
          * @param string $purchase_note Purchase note.
+         * @return void
          */
         public function set_purchase_note($purchase_note)
         {
@@ -5042,6 +5121,7 @@ namespace {
          *
          * @since 3.0.0
          * @param array $raw_attributes Array of WC_Product_Attribute objects.
+         * @return void
          */
         public function set_attributes($raw_attributes)
         {
@@ -5051,6 +5131,7 @@ namespace {
          *
          * @since 3.0.0
          * @param array $default_attributes List of default attributes.
+         * @return void
          */
         public function set_default_attributes($default_attributes)
         {
@@ -5060,6 +5141,7 @@ namespace {
          *
          * @since 3.0.0
          * @param int $menu_order Menu order.
+         * @return void
          */
         public function set_menu_order($menu_order)
         {
@@ -5069,6 +5151,7 @@ namespace {
          *
          * @since 3.6.0
          * @param int $post_password Post password.
+         * @return void
          */
         public function set_post_password($post_password)
         {
@@ -5078,6 +5161,7 @@ namespace {
          *
          * @since 3.0.0
          * @param array $term_ids List of terms IDs.
+         * @return void
          */
         public function set_category_ids($term_ids)
         {
@@ -5087,6 +5171,7 @@ namespace {
          *
          * @since 3.0.0
          * @param array $term_ids List of terms IDs.
+         * @return void
          */
         public function set_tag_ids($term_ids)
         {
@@ -5096,6 +5181,7 @@ namespace {
          *
          * @since 10.3.0
          * @param array $term_ids List of terms IDs.
+         * @return void
          */
         public function set_brand_ids($term_ids)
         {
@@ -5105,6 +5191,7 @@ namespace {
          *
          * @since 3.0.0
          * @param bool|string $virtual Whether product is virtual or not.
+         * @return void
          */
         public function set_virtual($virtual)
         {
@@ -5114,6 +5201,7 @@ namespace {
          *
          * @since 3.0.0
          * @param int $id Product shipping class id.
+         * @return void
          */
         public function set_shipping_class_id($id)
         {
@@ -5123,6 +5211,7 @@ namespace {
          *
          * @since 3.0.0
          * @param bool|string $downloadable Whether product is downloadable or not.
+         * @return void
          */
         public function set_downloadable($downloadable)
         {
@@ -5135,6 +5224,7 @@ namespace {
          * @param array $downloads_array Array of WC_Product_Download objects or arrays.
          *
          * @since 3.0.0
+         * @return void
          */
         public function set_downloads($downloads_array)
         {
@@ -5155,6 +5245,7 @@ namespace {
          *
          * @since 3.0.0
          * @param int|string $download_limit Product download limit.
+         * @return void
          */
         public function set_download_limit($download_limit)
         {
@@ -5164,6 +5255,7 @@ namespace {
          *
          * @since 3.0.0
          * @param int|string $download_expiry Product download expiry.
+         * @return void
          */
         public function set_download_expiry($download_expiry)
         {
@@ -5173,6 +5265,7 @@ namespace {
          *
          * @since 3.0.0
          * @param array $image_ids List of image ids.
+         * @return void
          */
         public function set_gallery_image_ids($image_ids)
         {
@@ -5182,6 +5275,7 @@ namespace {
          *
          * @since 3.0.0
          * @param int|string $image_id Product image id.
+         * @return void
          */
         public function set_image_id($image_id = '')
         {
@@ -5190,6 +5284,7 @@ namespace {
          * Set rating counts. Read only.
          *
          * @param array $counts Product rating counts.
+         * @return void
          */
         public function set_rating_counts($counts)
         {
@@ -5198,6 +5293,7 @@ namespace {
          * Set average rating. Read only.
          *
          * @param float $average Product average rating.
+         * @return void
          */
         public function set_average_rating($average)
         {
@@ -5206,6 +5302,7 @@ namespace {
          * Set review count. Read only.
          *
          * @param int $count Product review count.
+         * @return void
          */
         public function set_review_count($count)
         {
@@ -5219,6 +5316,7 @@ namespace {
          * Ensure properties are set correctly before save.
          *
          * @since 3.0.0
+         * @return void
          */
         public function validate_props()
         {
@@ -5246,6 +5344,7 @@ namespace {
          * (but before triggering the 'woocommerce_after_..._object_save' action)
          *
          * @param mixed $state The state object that was returned by before_data_store_save_or_update.
+         * @return void
          */
         protected function after_data_store_save_or_update($state)
         {
@@ -5261,6 +5360,8 @@ namespace {
         }
         /**
          * If this is a child product, queue its parent for syncing at the end of the request.
+         *
+         * @return void
          */
         protected function maybe_defer_product_sync()
         {
@@ -5536,7 +5637,7 @@ namespace {
         /**
          * Returns the children IDs if applicable. Overridden by child classes.
          *
-         * @return array of IDs
+         * @return int[] of IDs
          */
         public function get_children()
         {
@@ -7831,9 +7932,15 @@ namespace {
         {
         }
         /**
-         * Recent reviews widget.
+         * Recent reviews widget: placeholder.
          */
         public function recent_reviews()
+        {
+        }
+        /**
+         * Recent reviews widget: content.
+         */
+        public function recent_reviews_content(): void
         {
         }
         /**
@@ -8552,30 +8659,40 @@ namespace {
         }
         /**
          * Add menu items.
+         *
+         * @return void
          */
         public function admin_menu()
         {
         }
         /**
          * Add menu item.
+         *
+         * @return void
          */
         public function reports_menu()
         {
         }
         /**
          * Add menu item.
+         *
+         * @return void
          */
         public function settings_menu()
         {
         }
         /**
          * Check if the user can access the top-level WooCommerce item.
+         *
+         * @return bool
          */
         public static function can_view_woocommerce_menu_item()
         {
         }
         /**
          * Loads gateways and shipping methods into memory for use within settings.
+         *
+         * @return void
          */
         public function settings_page_init()
         {
@@ -8590,6 +8707,8 @@ namespace {
         }
         /**
          * Add menu item.
+         *
+         * @return void
          */
         public function status_menu()
         {
@@ -8598,6 +8717,8 @@ namespace {
          * Addons menu item.
          *
          * @deprecated 10.5.0 The marketplace feature is now always enabled. Use the Extensions menu instead.
+         *
+         * @return void
          */
         public function addons_menu()
         {
@@ -8613,12 +8734,16 @@ namespace {
         }
         /**
          * Highlights the correct top level admin menu item for post type add screens.
+         *
+         * @return void
          */
         public function menu_highlight()
         {
         }
         /**
          * Adds the order processing count to the menu.
+         *
+         * @return void
          */
         public function menu_order_count()
         {
@@ -8647,36 +8772,47 @@ namespace {
          * @param bool|int $status Screen option value. Default false to skip.
          * @param string   $option The option name.
          * @param int      $value  The number of rows to use.
+         * @return bool|int
          */
         public function set_screen_option($status, $option, $value)
         {
         }
         /**
          * Init the reports page.
+         *
+         * @return void
          */
         public function reports_page()
         {
         }
         /**
          * Init the settings page.
+         *
+         * @return void
          */
         public function settings_page()
         {
         }
         /**
          * Init the attributes page.
+         *
+         * @return void
          */
         public function attributes_page()
         {
         }
         /**
          * Init the status page.
+         *
+         * @return void
          */
         public function status_page()
         {
         }
         /**
          * Init the addons page.
+         *
+         * @return void
          */
         public function addons_page()
         {
@@ -8693,12 +8829,16 @@ namespace {
          * Add custom nav meta box.
          *
          * Adapted from http://www.johnmorrisonline.com/how-to-add-a-fully-functional-custom-meta-box-to-wordpress-navigation-menus/.
+         *
+         * @return void
          */
         public function add_nav_menu_meta_boxes()
         {
         }
         /**
          * Output menu links.
+         *
+         * @return void
          */
         public function nav_menu_links()
         {
@@ -8708,12 +8848,15 @@ namespace {
          *
          * @since 2.4.0
          * @param WP_Admin_Bar $wp_admin_bar Admin bar instance.
+         * @return void
          */
         public function admin_bar_menus($wp_admin_bar)
         {
         }
         /**
          * Maybe add new management product experience.
+         *
+         * @return void
          */
         public function maybe_add_new_product_management_experience()
         {
@@ -8743,6 +8886,7 @@ namespace {
          * @param int    $index The position of a submenu item in the submenu array.
          * @param string $parent_slug The parent slug.
          * @param array  $item The submenu item.
+         * @return void
          */
         public function hide_submenu_element($index, $parent_slug, $item)
         {
@@ -8882,6 +9026,8 @@ namespace {
         private static bool $is_multisite;
         /**
          * Initializes the class.
+         *
+         * @return void
          */
         public static function init()
         {
@@ -8898,6 +9044,8 @@ namespace {
         }
         /**
          * Store the locally cached notices to DB.
+         *
+         * @return void
          */
         public static function store_notices()
         {
@@ -8914,18 +9062,23 @@ namespace {
          * Set the locally cached notices array for the current site.
          *
          * @param array $notices New value for the locally cached notices array.
+         * @return void
          */
         private static function set_notices(array $notices)
         {
         }
         /**
          * Remove all notices from the locally cached notices array.
+         *
+         * @return void
          */
         public static function remove_all_notices()
         {
         }
         /**
          * Reset notices for themes when switched or a new version of WC is installed.
+         *
+         * @return void
          */
         public static function reset_admin_notices()
         {
@@ -8933,6 +9086,8 @@ namespace {
         /**
          * Add an admin notice about unsupported webhooks with Legacy API payload if at least one of these exist
          * and the Legacy REST API plugin is not installed.
+         *
+         * @return void
          */
         private static function maybe_add_legacy_api_removal_notice()
         {
@@ -8941,6 +9096,7 @@ namespace {
          * Remove the admin notice about the unsupported webhooks if the Legacy REST API plugin is installed.
          *
          * @internal For exclusive usage of WooCommerce core, backwards compatibility not guaranteed.
+         * @return void
          */
         public static function maybe_remove_legacy_api_removal_notice()
         {
@@ -8950,6 +9106,7 @@ namespace {
          *
          * @param string $name Notice name.
          * @param bool   $force_save Force saving inside this method instead of at the 'shutdown'.
+         * @return void
          */
         public static function add_notice($name, $force_save = \false)
         {
@@ -8959,6 +9116,7 @@ namespace {
          *
          * @param string $name Notice name.
          * @param bool   $force_save Force saving inside this method instead of at the 'shutdown'.
+         * @return void
          */
         public static function remove_notice($name, $force_save = \false)
         {
@@ -8988,6 +9146,8 @@ namespace {
         }
         /**
          * Hide a notice if the GET variable is set.
+         *
+         * @return void
          */
         public static function hide_notices()
         {
@@ -8996,6 +9156,7 @@ namespace {
          * Hide a single notice.
          *
          * @param string $name Notice name.
+         * @return void
          */
         private static function hide_notice($name)
         {
@@ -9014,6 +9175,8 @@ namespace {
         }
         /**
          * Add notices + styles if needed.
+         *
+         * @return void
          */
         public static function add_notices()
         {
@@ -9023,18 +9186,23 @@ namespace {
          *
          * @param string $name        Notice name.
          * @param string $notice_html Notice HTML.
+         * @return void
          */
         public static function add_custom_notice($name, $notice_html)
         {
         }
         /**
          * Output any stored custom notices.
+         *
+         * @return void
          */
         public static function output_custom_notices()
         {
         }
         /**
          * If we need to update the database, include a message with the DB update button.
+         *
+         * @return void
          */
         public static function update_notice()
         {
@@ -9043,12 +9211,15 @@ namespace {
          * If we have just installed, show a message with the install pages button.
          *
          * @deprecated 4.6.0
+         * @return void
          */
         public static function install_notice()
         {
         }
         /**
          * Show a notice highlighting bad template files.
+         *
+         * @return void
          */
         public static function template_file_check_notice()
         {
@@ -9057,24 +9228,31 @@ namespace {
          * Show a notice asking users to convert to shipping zones.
          *
          * @todo remove in 4.0.0
+         * @return void
          */
         public static function legacy_shipping_notice()
         {
         }
         /**
          * No shipping methods.
+         *
+         * @return void
          */
         public static function no_shipping_methods_notice()
         {
         }
         /**
          * Notice shown when regenerating thumbnails background process is running.
+         *
+         * @return void
          */
         public static function regenerating_thumbnails_notice()
         {
         }
         /**
          * Notice about secure connection.
+         *
+         * @return void
          */
         public static function secure_connection_notice()
         {
@@ -9083,6 +9261,7 @@ namespace {
          * Notice shown when regenerating thumbnails background process is running.
          *
          * @since 3.6.0
+         * @return void
          */
         public static function regenerating_lookup_table_notice()
         {
@@ -9091,6 +9270,7 @@ namespace {
          * Add notice about minimum PHP and WordPress requirement.
          *
          * @since 3.6.5
+         * @return void
          */
         public static function add_min_version_notice()
         {
@@ -9110,18 +9290,23 @@ namespace {
          * Add MaxMind missing license key notice.
          *
          * @since 3.9.0
+         * @return void
          */
         public static function add_maxmind_missing_license_key_notice()
         {
         }
         /**
          *  Add notice about Redirect-only download method, nudging user to switch to a different method instead.
+         *
+         * @return void
          */
         public static function add_redirect_download_method_notice()
         {
         }
         /**
          * Notice about the completion of the product downloads sync, with further advice for the site operator.
+         *
+         * @return void
          */
         public static function download_directories_sync_complete()
         {
@@ -9130,6 +9315,7 @@ namespace {
          * Display MaxMind missing license key notice.
          *
          * @since 3.9.0
+         * @return void
          */
         public static function maxmind_missing_license_key_notice()
         {
@@ -9138,6 +9324,7 @@ namespace {
          * Notice about Redirect-Only download method.
          *
          * @since 4.0
+         * @return void
          */
         public static function redirect_download_method_notice()
         {
@@ -9146,12 +9333,15 @@ namespace {
          * Notice about uploads directory begin unprotected.
          *
          * @since 4.2.0
+         * @return void
          */
         public static function uploads_directory_is_unprotected_notice()
         {
         }
         /**
          * Notice about base tables missing.
+         *
+         * @return void
          */
         public static function base_tables_missing_notice()
         {
@@ -9178,6 +9368,7 @@ namespace {
          * Simplify Commerce is no longer in core.
          *
          * @deprecated 3.6.0 No longer shown.
+         * @return void
          */
         public static function simplify_commerce_notice()
         {
@@ -9186,6 +9377,7 @@ namespace {
          * Show the Theme Check notice.
          *
          * @deprecated 3.3.0 No longer shown.
+         * @return void
          */
         public static function theme_check_notice()
         {
@@ -9585,9 +9777,31 @@ namespace {
     class WC_Admin_Reports
     {
         /**
-         * Register the proper hook handlers.
+         * Register the hook handlers for integrating with admin.
          */
         public static function register_hook_handlers()
+        {
+        }
+        /**
+         * Register the hook handlers for integrating with orders.
+         *
+         * @internal
+         * @since 10.6.0
+         */
+        public static function register_orders_hook_handlers(): void
+        {
+        }
+        /**
+         * Execute legacy reports transient deletion (sync or async depending on the context)
+         *
+         * @internal
+         * @since 10.6.0
+         *
+         * @param int  $order_id Order ID (unused, exists for compatibility between the hooks we are integrating with).
+         * @param bool $defer    Whether to defer the deletion or execute.
+         * @return void
+         */
+        public static function delete_legacy_reports_transients(int $order_id, bool $defer = \true): void
         {
         }
         /**
@@ -9796,6 +10010,7 @@ namespace {
          * Hook in tabs.
          *
          * @deprecated 4.6.0
+         * @return void
          */
         public function __construct()
         {
@@ -9804,6 +10019,7 @@ namespace {
          * Add admin menus/screens.
          *
          * @deprecated 4.6.0
+         * @return void
          */
         public function admin_menus()
         {
@@ -9823,6 +10039,7 @@ namespace {
          * install plugins and the store is in a supported country.
          *
          * @deprecated 4.6.0
+         * @return bool
          */
         protected function should_show_automated_tax()
         {
@@ -9896,6 +10113,7 @@ namespace {
          * Hooked onto 'admin_enqueue_scripts'.
          *
          * @deprecated 4.6.0
+         * @return void
          */
         public function enqueue_scripts()
         {
@@ -9904,6 +10122,7 @@ namespace {
          * Show the setup wizard.
          *
          * @deprecated 4.6.0
+         * @return void
          */
         public function setup_wizard()
         {
@@ -9926,6 +10145,7 @@ namespace {
          * Setup Wizard Header.
          *
          * @deprecated 4.6.0
+         * @return void
          */
         public function setup_wizard_header()
         {
@@ -9934,6 +10154,7 @@ namespace {
          * Setup Wizard Footer.
          *
          * @deprecated 4.6.0
+         * @return void
          */
         public function setup_wizard_footer()
         {
@@ -9942,6 +10163,7 @@ namespace {
          * Output the steps.
          *
          * @deprecated 4.6.0
+         * @return void
          */
         public function setup_wizard_steps()
         {
@@ -9950,6 +10172,7 @@ namespace {
          * Output the content for the current step.
          *
          * @deprecated 4.6.0
+         * @return void
          */
         public function setup_wizard_content()
         {
@@ -9958,6 +10181,7 @@ namespace {
          * Display's a prompt for users to try out the new improved WooCommerce onboarding experience in WooCommerce Admin.
          *
          * @deprecated 4.6.0
+         * @return void
          */
         public function wc_setup_new_onboarding()
         {
@@ -9966,6 +10190,7 @@ namespace {
          * Installs WooCommerce admin and redirects to the new onboarding experience.
          *
          * @deprecated 4.6.0
+         * @return void
          */
         public function wc_setup_new_onboarding_save()
         {
@@ -9973,6 +10198,8 @@ namespace {
         /**
          * Initial "store setup" step.
          * Location, product type, page setup, and tracking opt-in.
+         *
+         * @return void
          */
         public function wc_setup_store_setup()
         {
@@ -9981,6 +10208,7 @@ namespace {
          * Template for the usage tracking modal.
          *
          * @deprecated 4.6.0
+         * @return void
          */
         public function tracking_modal()
         {
@@ -9989,6 +10217,7 @@ namespace {
          * Save initial store settings.
          *
          * @deprecated 4.6.0
+         * @return void
          */
         public function wc_setup_store_setup_save()
         {
@@ -9997,6 +10226,7 @@ namespace {
          * Finishes replying to the client, but keeps the process running for further (async) code execution.
          *
          * @see https://core.trac.wordpress.org/ticket/41358 .
+         * @return void
          */
         protected function close_http_connection()
         {
@@ -10008,6 +10238,7 @@ namespace {
          * @see WC_Admin_Setup_Wizard::install_theme
          *
          * @deprecated 4.6.0
+         * @return void
          */
         public function run_deferred_actions()
         {
@@ -10019,6 +10250,7 @@ namespace {
          * @param array  $plugin_info Plugin info array containing name and repo-slug, and optionally file if different from [repo-slug].php.
          *
          * @deprecated 4.6.0
+         * @return void
          */
         protected function install_plugin($plugin_id, $plugin_info)
         {
@@ -10029,6 +10261,7 @@ namespace {
          * @param string $theme_id  Theme id used for background install.
          *
          * @deprecated 4.6.0
+         * @return void
          */
         protected function install_theme($theme_id)
         {
@@ -10037,6 +10270,7 @@ namespace {
          * Helper method to install Jetpack.
          *
          * @deprecated 4.6.0
+         * @return void
          */
         protected function install_jetpack()
         {
@@ -10045,6 +10279,7 @@ namespace {
          * Helper method to install WooCommerce Services and its Jetpack dependency.
          *
          * @deprecated 4.6.0
+         * @return void
          */
         protected function install_woocommerce_services()
         {
@@ -10062,6 +10297,7 @@ namespace {
          * Plugin install info message markup with heading.
          *
          * @deprecated 4.6.0
+         * @return void
          */
         public function plugin_install_info()
         {
@@ -10086,6 +10322,7 @@ namespace {
          * @param string $input_prefix Input prefix.
          *
          * @deprecated 4.6.0
+         * @return void
          */
         protected function shipping_method_selection_form($country_code, $currency_code, $input_prefix)
         {
@@ -10094,7 +10331,7 @@ namespace {
          * Render a product weight unit dropdown.
          *
          * @deprecated 4.6.0
-         * @return string
+         * @return string|false
          */
         protected function get_product_weight_selection()
         {
@@ -10103,7 +10340,7 @@ namespace {
          * Render a product dimension unit dropdown.
          *
          * @deprecated 4.6.0
-         * @return string
+         * @return string|false
          */
         protected function get_product_dimension_selection()
         {
@@ -10112,6 +10349,7 @@ namespace {
          * Shipping.
          *
          * @deprecated 4.6.0
+         * @return void
          */
         public function wc_setup_shipping()
         {
@@ -10120,6 +10358,7 @@ namespace {
          * Save shipping options.
          *
          * @deprecated 4.6.0
+         * @return void
          */
         public function wc_setup_shipping_save()
         {
@@ -10131,6 +10370,7 @@ namespace {
          * @param string $country_code Country code.
          *
          * @deprecated 4.6.0
+         * @return bool
          */
         protected function is_stripe_supported_country($country_code)
         {
@@ -10152,6 +10392,7 @@ namespace {
          * @param string $country_code Country code.
          *
          * @deprecated 4.6.0
+         * @return bool
          */
         protected function is_klarna_checkout_supported_country($country_code)
         {
@@ -10162,6 +10403,7 @@ namespace {
          * @param string $country_code Country code.
          *
          * @deprecated 4.6.0
+         * @return bool
          */
         protected function is_klarna_payments_supported_country($country_code)
         {
@@ -10172,6 +10414,7 @@ namespace {
          * @param string $country_code Country code.
          *
          * @deprecated 4.6.0
+         * @return bool
          */
         protected function is_square_supported_country($country_code)
         {
@@ -10182,6 +10425,7 @@ namespace {
          * @param string $country_code Country code.
          *
          * @deprecated 4.6.0
+         * @return bool
          */
         protected function is_eway_payments_supported_country($country_code)
         {
@@ -10192,6 +10436,7 @@ namespace {
          * @param string $country_code Country code.
          *
          * @deprecated 4.6.0
+         * @return bool
          */
         protected function is_shipstation_supported_country($country_code)
         {
@@ -10202,6 +10447,7 @@ namespace {
          * @param string $country_code Country code.
          *
          * @deprecated 4.6.0
+         * @return bool
          */
         protected function is_wcs_shipping_labels_supported_country($country_code)
         {
@@ -10249,6 +10495,7 @@ namespace {
          * @param array $item_info Item info array.
          *
          * @deprecated 4.6.0
+         * @return void
          */
         public function display_service_item($item_id, $item_info)
         {
@@ -10279,6 +10526,7 @@ namespace {
          * Payment Step.
          *
          * @deprecated 4.6.0
+         * @return void
          */
         public function wc_setup_payment()
         {
@@ -10287,10 +10535,19 @@ namespace {
          * Payment Step save.
          *
          * @deprecated 4.6.0
+         * @return void
          */
         public function wc_setup_payment_save()
         {
         }
+        /**
+         * Display recommended item.
+         *
+         * @param array $item_info Item info array.
+         *
+         * @deprecated 4.6.0
+         * @return void
+         */
         protected function display_recommended_item($item_info)
         {
         }
@@ -10298,6 +10555,7 @@ namespace {
          * Recommended step
          *
          * @deprecated 4.6.0
+         * @return void
          */
         public function wc_setup_recommended()
         {
@@ -10306,26 +10564,33 @@ namespace {
          * Recommended step save.
          *
          * @deprecated 4.6.0
+         * @return void
          */
         public function wc_setup_recommended_save()
         {
         }
         /**
          * Go to the next step if Jetpack was connected.
+         *
+         * @return void
          */
         protected function wc_setup_activate_actions()
         {
         }
         /**
+         * Get feature list for activation.
          *
          * @deprecated 4.6.0
+         * @return array
          */
         protected function wc_setup_activate_get_feature_list()
         {
         }
         /**
+         * Get feature list string for activation.
          *
          * @deprecated 4.6.0
+         * @return string|false
          */
         protected function wc_setup_activate_get_feature_list_str()
         {
@@ -10334,20 +10599,27 @@ namespace {
          * Activate step.
          *
          * @deprecated 4.6.0
+         * @return void
          */
         public function wc_setup_activate()
         {
         }
         /**
+         * Get all activate errors.
          *
          * @deprecated 4.6.0
+         * @return array
          */
         protected function get_all_activate_errors()
         {
         }
         /**
+         * Get activate error message.
+         *
+         * @param string $code Error code.
          *
          * @deprecated 4.6.0
+         * @return string
          */
         protected function get_activate_error_message($code = '')
         {
@@ -10358,6 +10630,7 @@ namespace {
          * Install, activate, and launch connection flow for Jetpack.
          *
          * @deprecated 4.6.0
+         * @return void
          */
         public function wc_setup_activate_save()
         {
@@ -10366,6 +10639,7 @@ namespace {
          * Final step.
          *
          * @deprecated 4.6.0
+         * @return void
          */
         public function wc_setup_ready()
         {
@@ -11809,18 +12083,24 @@ namespace {
         }
         /**
          * Loads the helper class, runs on init.
+         *
+         * @return void
          */
         public static function load()
         {
         }
         /**
          * Remove all notes signaling an error with the WCCOM API, when the request was successful.
+         *
+         * @return void
          */
         protected static function remove_api_error_notice()
         {
         }
         /**
          * Adds at most one note signaling that there was an error with the WCCOM API.
+         *
+         * @return void
          */
         protected static function add_api_error_notice()
         {
@@ -11835,12 +12115,16 @@ namespace {
         }
         /**
          * Include supporting helper classes.
+         *
+         * @return void
          */
         protected static function includes()
         {
         }
         /**
          * Render the helper section content based on context.
+         *
+         * @return void
          */
         public static function render_helper_output()
         {
@@ -11887,12 +12171,16 @@ namespace {
          *
          * @param array  $subscriptions The subscriptions array, passed by ref.
          * @param string $filter The filter.
+         *
+         * @return void
          */
         private static function _filter(&$subscriptions, $filter)
         {
         }
         /**
          * Enqueue admin scripts and styles.
+         *
+         * @return void
          */
         public static function admin_enqueue_scripts()
         {
@@ -11917,6 +12205,8 @@ namespace {
         }
         /**
          * Maybe redirect to the new Marketplace installer.
+         *
+         * @return void
          */
         private static function maybe_redirect_to_new_marketplace_installer()
         {
@@ -11932,24 +12222,32 @@ namespace {
         }
         /**
          * Initiate a new OAuth connection.
+         *
+         * @return never
          */
         private static function _helper_auth_connect()
         {
         }
         /**
          * Return from WooCommerce.com OAuth flow.
+         *
+         * @return never
          */
         private static function _helper_auth_return()
         {
         }
         /**
          * Disconnect from WooCommerce.com, clear OAuth tokens.
+         *
+         * @return never
          */
         private static function _helper_auth_disconnect()
         {
         }
         /**
          * User hit the Refresh button, clear all caches.
+         *
+         * @return never
          */
         private static function _helper_auth_refresh()
         {
@@ -11958,12 +12256,16 @@ namespace {
          * Flush helper authentication cache.
          *
          * @throws Exception If there is an error refreshing subscriptions.
+         *
+         * @return void
          */
         public static function refresh_helper_subscriptions()
         {
         }
         /**
          * Active a product subscription.
+         *
+         * @return never
          */
         private static function _helper_subscription_activate()
         {
@@ -11991,6 +12293,8 @@ namespace {
         }
         /**
          * Deactivate a product subscription.
+         *
+         * @return never
          */
         private static function helper_subscription_deactivate()
         {
@@ -12017,6 +12321,8 @@ namespace {
         }
         /**
          * Deactivate a plugin.
+         *
+         * @return never
          */
         private static function _helper_plugin_deactivate()
         {
@@ -12104,12 +12410,16 @@ namespace {
         }
         /**
          * Obtain a list of data about locally installed Woo extensions.
+         *
+         * @return array
          */
         public static function get_local_woo_plugins()
         {
         }
         /**
          * Get locally installed Woo themes.
+         *
+         * @return array
          */
         public static function get_local_woo_themes()
         {
@@ -12221,6 +12531,8 @@ namespace {
          * need to visit the Helper UI at all after installing a new extension.
          *
          * @param string $filename The filename of the activated plugin.
+         *
+         * @return void
          */
         public static function activated_plugin($filename)
         {
@@ -12233,6 +12545,8 @@ namespace {
          * need to visit the Helper UI at all after installing a new extension.
          *
          * @param string $product_id The product id of the activated theme.
+         *
+         * @return void
          */
         public static function connect_theme($product_id)
         {
@@ -12244,12 +12558,16 @@ namespace {
          * associated with the extension.
          *
          * @param string $filename The filename of the deactivated plugin.
+         *
+         * @return void
          */
         public static function deactivated_plugin($filename)
         {
         }
         /**
          * Various Helper-related admin notices.
+         *
+         * @return void
          */
         public static function admin_notices()
         {
@@ -12272,30 +12590,40 @@ namespace {
         }
         /**
          * Flush subscriptions cache.
+         *
+         * @return void
          */
         public static function _flush_subscriptions_cache()
         {
         }
         /**
          * Flush product-usage-notice-rules cache.
+         *
+         * @return void
          */
         public static function flush_product_usage_notice_rules_cache()
         {
         }
         /**
          * Flush connection data cache.
+         *
+         * @return void
          */
         public static function flush_connection_data_cache()
         {
         }
         /**
          * Flush auth cache.
+         *
+         * @return bool
          */
         public static function _flush_authentication_cache()
         {
         }
         /**
          * Flush updates cache.
+         *
+         * @return void
          */
         private static function _flush_updates_cache()
         {
@@ -12327,6 +12655,8 @@ namespace {
          *
          * @param string $message Log message.
          * @param string $level Optional, defaults to info, valid levels: emergency|alert|critical|error|warning|notice|info|debug.
+         *
+         * @return void
          */
         public static function log($message, $level = 'info')
         {
@@ -12631,11 +12961,21 @@ namespace {
     class WC_Woo_Helper_Connection
     {
         /**
-         * Check if the Woo Update Manager plugin is active.
+         * Get the notice for the connection URL mismatch.
          *
-         * @return bool
+         * @return string The notice for the connection URL mismatch.
          */
         public static function get_connection_url_notice(): string
+        {
+        }
+        /**
+         * Get the notice for a deleted connection on WCCOM
+         *
+         * @return string The notice for a deleted connection on WCCOM.
+         *
+         * @since 10.6.0
+         */
+        public static function get_deleted_connection_notice(): string
         {
         }
         /**
@@ -17057,6 +17397,8 @@ namespace {
     {
         /**
          * Hook in ajax handlers.
+         *
+         * @return void
          */
         public static function init()
         {
@@ -17073,12 +17415,16 @@ namespace {
         }
         /**
          * Set the 'wc-ajax' argument in $wp_query.
+         *
+         * @return void
          */
         private static function set_wc_ajax_argument_in_query()
         {
         }
         /**
          * Set WC AJAX constant and headers.
+         *
+         * @return void
          */
         public static function define_ajax()
         {
@@ -17087,138 +17433,184 @@ namespace {
          * Send headers for WC Ajax Requests.
          *
          * @since 2.5.0
+         *
+         * @return void
          */
         private static function wc_ajax_headers()
         {
         }
         /**
          * Check for WC Ajax request and fire action.
+         *
+         * @return void
          */
         public static function do_wc_ajax()
         {
         }
         /**
          * Hook in methods - uses WordPress ajax handlers (admin-ajax).
+         *
+         * @return void
          */
         public static function add_ajax_events()
         {
         }
         /**
          * Get a refreshed cart fragment, including the mini cart HTML.
+         *
+         * @return void
          */
         public static function get_refreshed_fragments()
         {
         }
         /**
          * AJAX apply coupon on checkout page.
+         *
+         * @return void
          */
         public static function apply_coupon()
         {
         }
         /**
          * AJAX remove coupon on cart and checkout page.
+         *
+         * @return void
          */
         public static function remove_coupon()
         {
         }
         /**
          * AJAX update shipping method on cart page.
+         *
+         * @return void
          */
         public static function update_shipping_method()
         {
         }
         /**
          * AJAX receive updated cart_totals div.
+         *
+         * @return void
          */
         public static function get_cart_totals()
         {
         }
         /**
          * Session has expired.
+         *
+         * @return void
          */
         private static function update_order_review_expired()
         {
         }
         /**
          * AJAX update order review on checkout.
+         *
+         * @return void
          */
         public static function update_order_review()
         {
         }
         /**
          * AJAX add to cart.
+         *
+         * @return void
          */
         public static function add_to_cart()
         {
         }
         /**
          * AJAX remove from cart.
+         *
+         * @return void
          */
         public static function remove_from_cart()
         {
         }
         /**
          * Process ajax checkout form.
+         *
+         * @return void
          */
         public static function checkout()
         {
         }
         /**
          * Get a matching variation based on posted attributes.
+         *
+         * @return void
          */
         public static function get_variation()
         {
         }
         /**
          * Locate user via AJAX.
+         *
+         * @return void
          */
         public static function get_customer_location()
         {
         }
         /**
          * Toggle Featured status of a product from admin.
+         *
+         * @return void
          */
         public static function feature_product()
         {
         }
         /**
          * Mark an order with a status.
+         *
+         * @return void
          */
         public static function mark_order_status()
         {
         }
         /**
          * Get order details.
+         *
+         * @return void
          */
         public static function get_order_details()
         {
         }
         /**
          * Add an attribute row.
+         *
+         * @return void
          */
         public static function add_attribute()
         {
         }
         /**
          * Add a new attribute via ajax function.
+         *
+         * @return void
          */
         public static function add_new_attribute()
         {
         }
         /**
          * Delete variations via ajax function.
+         *
+         * @return void
          */
         public static function remove_variations()
         {
         }
         /**
          * Save attributes via ajax.
+         *
+         * @return void
          */
         public static function save_attributes()
         {
         }
         /**
          * Save attributes and variations via ajax.
+         *
+         * @return void
          */
         public static function add_attributes_and_variations()
         {
@@ -17243,30 +17635,40 @@ namespace {
         }
         /**
          * Add variation via ajax function.
+         *
+         * @return void
          */
         public static function add_variation()
         {
         }
         /**
          * Link all variations via ajax function.
+         *
+         * @return void
          */
         public static function link_all_variations()
         {
         }
         /**
          * Delete download permissions via ajax function.
+         *
+         * @return void
          */
         public static function revoke_access_to_download()
         {
         }
         /**
          * Grant download permissions via ajax function.
+         *
+         * @return void
          */
         public static function grant_access_to_download()
         {
         }
         /**
          * Get customer details via ajax.
+         *
+         * @return void
          */
         public static function get_customer_details()
         {
@@ -17275,6 +17677,8 @@ namespace {
          * Add order item via ajax. Used on the edit order screen in WP Admin.
          *
          * @throws Exception If order is invalid.
+         *
+         * @return void
          */
         public static function add_order_item()
         {
@@ -17296,6 +17700,8 @@ namespace {
          * Add order fee via ajax.
          *
          * @throws Exception If order is invalid.
+         *
+         * @return void
          */
         public static function add_order_fee()
         {
@@ -17304,6 +17710,8 @@ namespace {
          * Add order shipping cost via ajax.
          *
          * @throws Exception If order is invalid.
+         *
+         * @return void
          */
         public static function add_order_shipping()
         {
@@ -17312,6 +17720,8 @@ namespace {
          * Add order tax column via ajax.
          *
          * @throws Exception If order or tax rate is invalid.
+         *
+         * @return void
          */
         public static function add_order_tax()
         {
@@ -17320,6 +17730,8 @@ namespace {
          * Add order discount via ajax.
          *
          * @throws Exception If order or coupon is invalid.
+         *
+         * @return void
          */
         public static function add_coupon_discount()
         {
@@ -17328,6 +17740,8 @@ namespace {
          * Remove coupon from an order via ajax.
          *
          * @throws Exception If order or coupon is invalid.
+         *
+         * @return void
          */
         public static function remove_order_coupon()
         {
@@ -17336,6 +17750,8 @@ namespace {
          * Remove an order item.
          *
          * @throws Exception If order is invalid.
+         *
+         * @return void
          */
         public static function remove_order_item()
         {
@@ -17344,36 +17760,48 @@ namespace {
          * Remove an order tax.
          *
          * @throws Exception If there is an error whilst deleting the rate.
+         *
+         * @return void
          */
         public static function remove_order_tax()
         {
         }
         /**
          * Calc line tax.
+         *
+         * @return void
          */
         public static function calc_line_taxes()
         {
         }
         /**
          * Save order items via ajax.
+         *
+         * @return void
          */
         public static function save_order_items()
         {
         }
         /**
          * Load order items via ajax.
+         *
+         * @return void
          */
         public static function load_order_items()
         {
         }
         /**
          * Add order note via ajax.
+         *
+         * @return void
          */
         public static function add_order_note()
         {
         }
         /**
          * Delete order note via ajax.
+         *
+         * @return void
          */
         public static function delete_order_note()
         {
@@ -17383,6 +17811,8 @@ namespace {
          *
          * @param string $term (default: '') Term to search for.
          * @param bool   $include_variations in search or not.
+         *
+         * @return void
          */
         public static function json_search_products($term = '', $include_variations = \false)
         {
@@ -17391,6 +17821,8 @@ namespace {
          * Search for product variations and return json.
          *
          * @see WC_AJAX::json_search_products()
+         *
+         * @return void
          */
         public static function json_search_products_and_variations()
         {
@@ -17399,48 +17831,64 @@ namespace {
          * Search for downloadable product variations and return json.
          *
          * @see WC_AJAX::json_search_products()
+         *
+         * @return void
          */
         public static function json_search_downloadable_products_and_variations()
         {
         }
         /**
          * Search for customers and return json.
+         *
+         * @return void
          */
         public static function json_search_customers()
         {
         }
         /**
          * Search for categories and return json.
+         *
+         * @return void
          */
         public static function json_search_categories()
         {
         }
         /**
          * Search for categories and return json.
+         *
+         * @return void
          */
         public static function json_search_categories_tree()
         {
         }
         /**
          * Search for taxonomy terms and return json.
+         *
+         * @return void
          */
         public static function json_search_taxonomy_terms()
         {
         }
         /**
          * Search for product attributes and return json.
+         *
+         * @return void
          */
         public static function json_search_product_attributes()
         {
         }
         /**
          * Ajax request handling for page searching.
+         *
+         * @return void
          */
         public static function json_search_pages()
         {
         }
         /**
          * Ajax request handling for categories ordering.
+         *
+         * @return void
          */
         public static function term_ordering()
         {
@@ -17449,6 +17897,8 @@ namespace {
          * Ajax request handling for product ordering.
          *
          * Based on Simple Page Ordering by 10up (https://wordpress.org/plugins/simple-page-ordering/).
+         *
+         * @return void
          */
         public static function product_ordering()
         {
@@ -17457,18 +17907,24 @@ namespace {
          * Handle a refund via the edit order screen.
          *
          * @throws Exception To return errors.
+         *
+         * @return void
          */
         public static function refund_line_items()
         {
         }
         /**
          * Delete a refund.
+         *
+         * @return void
          */
         public static function delete_refund()
         {
         }
         /**
          * Triggered when clicking the rating footer.
+         *
+         * @return void
          */
         public static function rated()
         {
@@ -17477,18 +17933,24 @@ namespace {
          * Create/Update API key.
          *
          * @throws Exception On invalid or empty description, user, or permissions.
+         *
+         * @return void
          */
         public static function update_api_key()
         {
         }
         /**
          * Load variations via AJAX.
+         *
+         * @return void
          */
         public static function load_variations()
         {
         }
         /**
          * Save variations via AJAX.
+         *
+         * @return void
          */
         public static function save_variations()
         {
@@ -17500,6 +17962,8 @@ namespace {
          * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
+         *
+         * @return void
          */
         private static function variation_bulk_action_toggle_enabled($variations, $data)
         {
@@ -17511,6 +17975,8 @@ namespace {
          * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
+         *
+         * @return void
          */
         private static function variation_bulk_action_toggle_downloadable($variations, $data)
         {
@@ -17522,6 +17988,8 @@ namespace {
          * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
+         *
+         * @return void
          */
         private static function variation_bulk_action_toggle_virtual($variations, $data)
         {
@@ -17533,6 +18001,8 @@ namespace {
          * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
+         *
+         * @return void
          */
         private static function variation_bulk_action_toggle_manage_stock($variations, $data)
         {
@@ -17544,6 +18014,8 @@ namespace {
          * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
+         *
+         * @return void
          */
         private static function variation_bulk_action_variable_regular_price($variations, $data)
         {
@@ -17555,6 +18027,8 @@ namespace {
          * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
+         *
+         * @return void
          */
         private static function variation_bulk_action_variable_sale_price($variations, $data)
         {
@@ -17566,6 +18040,8 @@ namespace {
          * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
+         *
+         * @return void
          */
         private static function variation_bulk_action_variable_stock_status_instock($variations, $data)
         {
@@ -17577,6 +18053,8 @@ namespace {
          * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
+         *
+         * @return void
          */
         private static function variation_bulk_action_variable_stock_status_outofstock($variations, $data)
         {
@@ -17588,6 +18066,8 @@ namespace {
          * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
+         *
+         * @return void
          */
         private static function variation_bulk_action_variable_stock_status_onbackorder($variations, $data)
         {
@@ -17599,6 +18079,8 @@ namespace {
          * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
+         *
+         * @return void
          */
         private static function variation_bulk_action_variable_stock($variations, $data)
         {
@@ -17610,6 +18092,8 @@ namespace {
          * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
+         *
+         * @return void
          */
         private static function variation_bulk_action_variable_low_stock_amount($variations, $data)
         {
@@ -17621,6 +18105,8 @@ namespace {
          * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
+         *
+         * @return void
          */
         private static function variation_bulk_action_variable_weight($variations, $data)
         {
@@ -17632,6 +18118,8 @@ namespace {
          * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
+         *
+         * @return void
          */
         private static function variation_bulk_action_variable_length($variations, $data)
         {
@@ -17643,6 +18131,8 @@ namespace {
          * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
+         *
+         * @return void
          */
         private static function variation_bulk_action_variable_width($variations, $data)
         {
@@ -17654,6 +18144,8 @@ namespace {
          * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
+         *
+         * @return void
          */
         private static function variation_bulk_action_variable_height($variations, $data)
         {
@@ -17665,6 +18157,8 @@ namespace {
          * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
+         *
+         * @return void
          */
         private static function variation_bulk_action_variable_download_limit($variations, $data)
         {
@@ -17676,6 +18170,8 @@ namespace {
          * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
+         *
+         * @return void
          */
         private static function variation_bulk_action_variable_download_expiry($variations, $data)
         {
@@ -17687,6 +18183,8 @@ namespace {
          * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
+         *
+         * @return void
          */
         private static function variation_bulk_action_delete_all($variations, $data)
         {
@@ -17698,6 +18196,8 @@ namespace {
          * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
+         *
+         * @return void
          */
         private static function variation_bulk_action_variable_sale_schedule($variations, $data)
         {
@@ -17709,6 +18209,8 @@ namespace {
          * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
+         *
+         * @return void
          */
         private static function variation_bulk_action_variable_regular_price_increase($variations, $data)
         {
@@ -17720,6 +18222,8 @@ namespace {
          * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
+         *
+         * @return void
          */
         private static function variation_bulk_action_variable_regular_price_decrease($variations, $data)
         {
@@ -17731,6 +18235,8 @@ namespace {
          * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
+         *
+         * @return void
          */
         private static function variation_bulk_action_variable_sale_price_increase($variations, $data)
         {
@@ -17742,6 +18248,8 @@ namespace {
          * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
+         *
+         * @return void
          */
         private static function variation_bulk_action_variable_sale_price_decrease($variations, $data)
         {
@@ -17754,6 +18262,8 @@ namespace {
          * @param array $data Data to set.
          *
          * @used-by bulk_edit_variations
+         *
+         * @return void
          */
         private static function variation_bulk_action_variable_unset_cogs_value($variations, $data)
         {
@@ -17768,6 +18278,8 @@ namespace {
          * @param string $value Price or Percent.
          *
          * @used-by bulk_edit_variations
+         *
+         * @return void
          */
         private static function variation_bulk_adjust_price($variations, $field, $operator, $value)
         {
@@ -17778,6 +18290,8 @@ namespace {
          * @param array  $variations List of variations.
          * @param string $field Field to set.
          * @param string $value to set.
+         *
+         * @return void
          */
         private static function variation_bulk_set($variations, $field, $value)
         {
@@ -17787,6 +18301,8 @@ namespace {
          *
          * @param array  $variations List of variations.
          * @param string $field Field to toggle.
+         *
+         * @return void
          */
         private static function variation_bulk_toggle($variations, $field)
         {
@@ -17816,48 +18332,64 @@ namespace {
          * @uses WC_AJAX::variation_bulk_action_toggle_downloadable()
          * @uses WC_AJAX::variation_bulk_action_toggle_enabled
          * @uses WC_AJAX::variation_bulk_action_variable_low_stock_amount()
+         *
+         * @return void
          */
         public static function bulk_edit_variations()
         {
         }
         /**
          * Handle submissions from assets/js/settings-views-html-settings-tax.js Backbone model.
+         *
+         * @return void
          */
         public static function tax_rates_save_changes()
         {
         }
         /**
          * Handle submissions from assets/js/wc-shipping-zones.js Backbone model.
+         *
+         * @return void
          */
         public static function shipping_zones_save_changes()
         {
         }
         /**
          * Handle submissions from assets/js/wc-shipping-zone-methods.js Backbone model.
+         *
+         * @return void
          */
         public static function shipping_zone_add_method()
         {
         }
         /**
          * Handle submissions from assets/js/wc-shipping-zone-methods.js Backbone model.
+         *
+         * @return void
          */
         public static function shipping_zone_remove_method()
         {
         }
         /**
          * Handle submissions from assets/js/wc-shipping-zone-methods.js Backbone model.
+         *
+         * @return void
          */
         public static function shipping_zone_methods_save_changes()
         {
         }
         /**
          * Save method settings
+         *
+         * @return void
          */
         public static function shipping_zone_methods_save_settings()
         {
         }
         /**
          * Handle submissions from assets/js/wc-shipping-classes.js Backbone model.
+         *
+         * @return void
          */
         public static function shipping_classes_save_changes()
         {
@@ -17866,18 +18398,32 @@ namespace {
          * Toggle payment gateway on or off via AJAX.
          *
          * @since 3.4.0
+         *
+         * @return void
          */
         public static function toggle_gateway_enabled()
         {
         }
         /**
          * AJAX handler for asynchronously loading the status widget content.
+         *
+         * @return void
          */
         public static function load_status_widget()
         {
         }
         /**
+         * AJAX handler for asynchronously loading the recent reviews widget content.
+         *
+         * @return void
+         */
+        public static function load_recent_reviews_widget()
+        {
+        }
+        /**
          * Reimplementation of WP core's `wp_ajax_add_meta` method to support order custom meta updates with custom tables.
+         *
+         * @return void
          */
         private static function order_add_meta()
         {
@@ -17932,6 +18478,8 @@ namespace {
          * @param WC_Product $variation_object Variation being edited.
          * @param int        $loop Index of the variation being rendered.
          * @param float|null $base_cost Default cost for variations, null if the Cost of Goods Sold feature is disabled.
+         *
+         * @return void
          */
         private static function render_variation_html(\WC_Product $product_object, \WC_Product $variation_object, $loop, ?float $base_cost)
         {
@@ -18817,12 +19365,15 @@ namespace {
          *
          * @param string $name Name.
          * @param string $link Link.
+         * @return void
          */
         public function add_crumb($name, $link = '')
         {
         }
         /**
          * Reset crumbs.
+         *
+         * @return void
          */
         public function reset()
         {
@@ -18845,24 +19396,32 @@ namespace {
         }
         /**
          * Prepend the shop page to shop breadcrumbs.
+         *
+         * @return void
          */
         protected function prepend_shop_page()
         {
         }
         /**
          * Is home trail..
+         *
+         * @return void
          */
         protected function add_crumbs_home()
         {
         }
         /**
          * 404 trail.
+         *
+         * @return void
          */
         protected function add_crumbs_404()
         {
         }
         /**
          * Attachment trail.
+         *
+         * @return void
          */
         protected function add_crumbs_attachment()
         {
@@ -18872,66 +19431,87 @@ namespace {
          *
          * @param int    $post_id   Post ID.
          * @param string $permalink Post permalink.
+         * @return void
          */
         protected function add_crumbs_single($post_id = 0, $permalink = '')
         {
         }
         /**
          * Page trail.
+         *
+         * @return void
          */
         protected function add_crumbs_page()
         {
         }
         /**
          * Product category trail.
+         *
+         * @return void
          */
         protected function add_crumbs_product_category()
         {
         }
         /**
          * Product tag trail.
+         *
+         * @return void
          */
         protected function add_crumbs_product_tag()
         {
         }
         /**
          * Shop breadcrumb.
+         *
+         * @return void
          */
         protected function add_crumbs_shop()
         {
         }
         /**
          * Post type archive trail.
+         *
+         * @return void
          */
         protected function add_crumbs_post_type_archive()
         {
         }
         /**
          * Category trail.
+         *
+         * @return void
          */
         protected function add_crumbs_category()
         {
         }
         /**
          * Tag trail.
+         *
+         * @return void
          */
         protected function add_crumbs_tag()
         {
         }
         /**
          * Add crumbs for date based archives.
+         *
+         * @return void
          */
         protected function add_crumbs_date()
         {
         }
         /**
-         * Add crumbs for taxonomies
+         * Add crumbs for taxonomies.
+         *
+         * @return void
          */
         protected function add_crumbs_tax()
         {
         }
         /**
          * Add a breadcrumb for author archives.
+         *
+         * @return void
          */
         protected function add_crumbs_author()
         {
@@ -18941,24 +19521,31 @@ namespace {
          *
          * @param int    $term_id  Term ID.
          * @param string $taxonomy Taxonomy.
+         * @return void
          */
         protected function term_ancestors($term_id, $taxonomy)
         {
         }
         /**
          * Endpoints.
+         *
+         * @return void
          */
         protected function endpoint_trail()
         {
         }
         /**
          * Add a breadcrumb for search results.
+         *
+         * @return void
          */
         protected function search_trail()
         {
         }
         /**
          * Add a breadcrumb for pagination.
+         *
+         * @return void
          */
         protected function paged_trail()
         {
@@ -20071,6 +20658,8 @@ namespace {
         protected $fees_api;
         /**
          * Constructor for the cart class. Loads options and hooks in the init method.
+         *
+         * @return void
          */
         public function __construct()
         {
@@ -20079,6 +20668,8 @@ namespace {
          * When cloning, ensure object properties are handled.
          *
          * These properties store a reference to the cart, so we use new instead of clone.
+         *
+         * @return void
          */
         public function __clone()
         {
@@ -20266,6 +20857,7 @@ namespace {
          * Get taxes.
          *
          * @since 3.2.0
+         * @return array
          */
         public function get_shipping_taxes()
         {
@@ -20274,6 +20866,7 @@ namespace {
          * Get taxes.
          *
          * @since 3.2.0
+         * @return array
          */
         public function get_cart_contents_taxes()
         {
@@ -20282,6 +20875,7 @@ namespace {
          * Get taxes.
          *
          * @since 3.2.0
+         * @return array
          */
         public function get_fee_taxes()
         {
@@ -20306,6 +20900,7 @@ namespace {
          * Sets the contents of the cart.
          *
          * @param array $value Cart array.
+         * @return void
          */
         public function set_cart_contents($value)
         {
@@ -20315,6 +20910,7 @@ namespace {
          *
          * @since 3.2.0
          * @param array $value Item array.
+         * @return void
          */
         public function set_removed_cart_contents($value = array())
         {
@@ -20323,6 +20919,7 @@ namespace {
          * Sets the array of applied coupon codes.
          *
          * @param array $value List of applied coupon codes.
+         * @return void
          */
         public function set_applied_coupons($value = array())
         {
@@ -20332,6 +20929,7 @@ namespace {
          *
          * @since 3.2.0
          * @param array $value Value to set.
+         * @return void
          */
         public function set_coupon_discount_totals($value = array())
         {
@@ -20341,6 +20939,7 @@ namespace {
          *
          * @since 3.2.0
          * @param array $value Value to set.
+         * @return void
          */
         public function set_coupon_discount_tax_totals($value = array())
         {
@@ -20350,6 +20949,7 @@ namespace {
          *
          * @since 3.2.0
          * @param array $value Value to set.
+         * @return void
          */
         public function set_totals($value = array())
         {
@@ -20359,6 +20959,7 @@ namespace {
          *
          * @since 3.2.0
          * @param string $value Value to set.
+         * @return void
          */
         public function set_subtotal($value)
         {
@@ -20368,6 +20969,7 @@ namespace {
          *
          * @since 3.2.0
          * @param string $value Value to set.
+         * @return void
          */
         public function set_subtotal_tax($value)
         {
@@ -20377,6 +20979,7 @@ namespace {
          *
          * @since 3.2.0
          * @param string $value Value to set.
+         * @return void
          */
         public function set_discount_total($value)
         {
@@ -20386,6 +20989,7 @@ namespace {
          *
          * @since 3.2.0
          * @param string $value Value to set.
+         * @return void
          */
         public function set_discount_tax($value)
         {
@@ -20395,6 +20999,7 @@ namespace {
          *
          * @since 3.2.0
          * @param string $value Value to set.
+         * @return void
          */
         public function set_shipping_total($value)
         {
@@ -20404,6 +21009,7 @@ namespace {
          *
          * @since 3.2.0
          * @param string $value Value to set.
+         * @return void
          */
         public function set_shipping_tax($value)
         {
@@ -20413,6 +21019,7 @@ namespace {
          *
          * @since 3.2.0
          * @param string $value Value to set.
+         * @return void
          */
         public function set_cart_contents_total($value)
         {
@@ -20422,6 +21029,7 @@ namespace {
          *
          * @since 3.2.0
          * @param string $value Value to set.
+         * @return void
          */
         public function set_cart_contents_tax($value)
         {
@@ -20431,6 +21039,7 @@ namespace {
          *
          * @since 3.2.0
          * @param string $value Value to set.
+         * @return void
          */
         public function set_total($value)
         {
@@ -20440,6 +21049,7 @@ namespace {
          *
          * @since 3.2.0
          * @param string $value Value to set.
+         * @return void
          */
         public function set_total_tax($value)
         {
@@ -20449,6 +21059,7 @@ namespace {
          *
          * @since 3.2.0
          * @param string $value Value to set.
+         * @return void
          */
         public function set_fee_total($value)
         {
@@ -20458,6 +21069,7 @@ namespace {
          *
          * @since 3.2.0
          * @param string $value Value to set.
+         * @return void
          */
         public function set_fee_tax($value)
         {
@@ -20467,6 +21079,7 @@ namespace {
          *
          * @since 3.2.0
          * @param array $value Tax values.
+         * @return void
          */
         public function set_shipping_taxes($value)
         {
@@ -20476,6 +21089,7 @@ namespace {
          *
          * @since 3.2.0
          * @param array $value Tax values.
+         * @return void
          */
         public function set_cart_contents_taxes($value)
         {
@@ -20485,6 +21099,7 @@ namespace {
          *
          * @since 3.2.0
          * @param array $value Tax values.
+         * @return void
          */
         public function set_fee_taxes($value)
         {
@@ -20533,6 +21148,7 @@ namespace {
          * @since 9.7.0 Also clears shipping methods and packages since the items they are linked to are cleared.
          *
          * @param bool $clear_persistent_cart Should the persistent cart be cleared too. Defaults to true.
+         * @return void
          */
         public function empty_cart($clear_persistent_cart = \true)
         {
@@ -20570,6 +21186,8 @@ namespace {
         }
         /**
          * Check cart coupons for errors.
+         *
+         * @return void
          */
         public function check_cart_coupons()
         {
@@ -20662,7 +21280,7 @@ namespace {
          * (tax is shown after coupons).
          *
          * @since 2.6.0
-         * @return string
+         * @return float
          */
         public function get_displayed_subtotal()
         {
@@ -20747,6 +21365,7 @@ namespace {
          * Calculate totals for the items in the cart.
          *
          * @uses WC_Cart_Totals
+         * @return void
          */
         public function calculate_totals()
         {
@@ -20780,6 +21399,8 @@ namespace {
         }
         /**
          * Uses the shipping class to calculate shipping then gets the totals when its finished.
+         *
+         * @return array
          */
         public function calculate_shipping()
         {
@@ -20879,6 +21500,7 @@ namespace {
          *  2. Where a usage_limit_per_user is set (limits coupon usage to a number based on user ID and email).
          *
          * @param array $posted Post data.
+         * @return void
          */
         public function check_customer_coupons($posted)
         {
@@ -20945,6 +21567,7 @@ namespace {
          * Remove coupons from the cart of a defined type. Type 1 is before tax, type 2 is after tax.
          *
          * @param null $deprecated No longer used.
+         * @return void
          */
         public function remove_coupons($deprecated = \null)
         {
@@ -20962,6 +21585,7 @@ namespace {
          * Trigger an action so 3rd parties can add custom fees.
          *
          * @since 2.0.0
+         * @return void
          */
         public function calculate_fees()
         {
@@ -20987,6 +21611,7 @@ namespace {
          * @param float  $amount    Fee amount (do not enter negative amounts).
          * @param bool   $taxable   Is the fee taxable? (default: false).
          * @param string $tax_class The tax class for the fee if taxable. A blank string is standard tax class. (default: '').
+         * @return void
          */
         public function add_fee($name, $amount, $taxable = \false, $tax_class = '')
         {
@@ -21094,6 +21719,8 @@ namespace {
         }
         /**
          * Reset cart totals to the defaults. Useful before running calculations.
+         *
+         * @return void
          */
         private function reset_totals()
         {
@@ -21519,6 +22146,17 @@ namespace {
          * @return array
          */
         public static function exclude_order_comments($clauses)
+        {
+        }
+        /**
+         * Exclude order comments from Akismet comments counting SQL queries for better performance.
+         *
+         * @since 10.6.0
+         *
+         * @param string[] $comment_types Excluded comments types.
+         * @return string[]
+         */
+        public static function akismet_excluded_comment_types($comment_types): array
         {
         }
         /**
@@ -22320,6 +22958,7 @@ namespace {
          * If the object has an ID, read using the data store.
          *
          * @since 3.4.1
+         * @return void
          */
         protected function read_object_from_database()
         {
@@ -22616,6 +23255,7 @@ namespace {
          *
          * @since 3.0.0
          * @param string $code Coupon code.
+         * @return void
          */
         public function set_code($code)
         {
@@ -22625,6 +23265,7 @@ namespace {
          *
          * @since 3.0.0
          * @param string $description Description.
+         * @return void
          */
         public function set_description($description)
         {
@@ -22634,6 +23275,7 @@ namespace {
          *
          * @since 3.0.0
          * @param string $status Status.
+         * @return void
          */
         public function set_status($status)
         {
@@ -22643,6 +23285,7 @@ namespace {
          *
          * @since 3.0.0
          * @param string $discount_type Discount type.
+         * @return void
          */
         public function set_discount_type($discount_type)
         {
@@ -22653,6 +23296,7 @@ namespace {
          * @since 10.3.0
          * @param string $discount_type Discount type.
          * @param bool   $verify_discount_type Whether to verify if the discount type is valid.
+         * @return void
          */
         private function set_discount_type_core($discount_type, bool $verify_discount_type)
         {
@@ -22662,6 +23306,7 @@ namespace {
          *
          * @since 3.0.0
          * @param float|string $amount Amount.
+         * @return void
          */
         public function set_amount($amount)
         {
@@ -22671,6 +23316,7 @@ namespace {
          *
          * @since  3.0.0
          * @param string|integer|null $date UTC timestamp, or ISO 8601 DateTime. If the DateTime string has no timezone or offset, WordPress site timezone will be assumed. Null if there is no date.
+         * @return void
          */
         public function set_date_expires($date)
         {
@@ -22680,6 +23326,7 @@ namespace {
          *
          * @since  3.0.0
          * @param string|integer|null $date UTC timestamp, or ISO 8601 DateTime. If the DateTime string has no timezone or offset, WordPress site timezone will be assumed. Null if there is no date.
+         * @return void
          */
         public function set_date_created($date)
         {
@@ -22689,6 +23336,7 @@ namespace {
          *
          * @since  3.0.0
          * @param string|integer|null $date UTC timestamp, or ISO 8601 DateTime. If the DateTime string has no timezone or offset, WordPress site timezone will be assumed. Null if there is no date.
+         * @return void
          */
         public function set_date_modified($date)
         {
@@ -22698,6 +23346,7 @@ namespace {
          *
          * @since 3.0.0
          * @param int $usage_count Usage count.
+         * @return void
          */
         public function set_usage_count($usage_count)
         {
@@ -22707,6 +23356,7 @@ namespace {
          *
          * @since 3.0.0
          * @param bool $is_individual_use If is for individual use.
+         * @return void
          */
         public function set_individual_use($is_individual_use)
         {
@@ -22716,6 +23366,7 @@ namespace {
          *
          * @since 3.0.0
          * @param array $product_ids Products IDs.
+         * @return void
          */
         public function set_product_ids($product_ids)
         {
@@ -22725,6 +23376,7 @@ namespace {
          *
          * @since 3.0.0
          * @param array $excluded_product_ids Exclude product IDs.
+         * @return void
          */
         public function set_excluded_product_ids($excluded_product_ids)
         {
@@ -22734,6 +23386,7 @@ namespace {
          *
          * @since 3.0.0
          * @param int $usage_limit Usage limit.
+         * @return void
          */
         public function set_usage_limit($usage_limit)
         {
@@ -22743,6 +23396,7 @@ namespace {
          *
          * @since 3.0.0
          * @param int $usage_limit Usage limit.
+         * @return void
          */
         public function set_usage_limit_per_user($usage_limit)
         {
@@ -22752,6 +23406,7 @@ namespace {
          *
          * @since 3.0.0
          * @param int|null $limit_usage_to_x_items Limit usage to X items.
+         * @return void
          */
         public function set_limit_usage_to_x_items($limit_usage_to_x_items)
         {
@@ -22761,6 +23416,7 @@ namespace {
          *
          * @since 3.0.0
          * @param bool $free_shipping If grant free shipping.
+         * @return void
          */
         public function set_free_shipping($free_shipping)
         {
@@ -22770,6 +23426,7 @@ namespace {
          *
          * @since 3.0.0
          * @param array $product_categories List of product categories.
+         * @return void
          */
         public function set_product_categories($product_categories)
         {
@@ -22779,6 +23436,7 @@ namespace {
          *
          * @since 3.0.0
          * @param array $excluded_product_categories List of excluded product categories.
+         * @return void
          */
         public function set_excluded_product_categories($excluded_product_categories)
         {
@@ -22788,6 +23446,7 @@ namespace {
          *
          * @since 3.0.0
          * @param bool $exclude_sale_items If should exclude sale items.
+         * @return void
          */
         public function set_exclude_sale_items($exclude_sale_items)
         {
@@ -22797,6 +23456,7 @@ namespace {
          *
          * @since 3.0.0
          * @param float|string $amount Minimum amount.
+         * @return void
          */
         public function set_minimum_amount($amount)
         {
@@ -22806,6 +23466,7 @@ namespace {
          *
          * @since 3.0.0
          * @param float|string $amount Maximum amount.
+         * @return void
          */
         public function set_maximum_amount($amount)
         {
@@ -22815,6 +23476,7 @@ namespace {
          *
          * @since 3.0.0
          * @param array $emails List of emails.
+         * @return void
          */
         public function set_email_restrictions($emails = array())
         {
@@ -22824,6 +23486,7 @@ namespace {
          *
          * @since 3.0.0
          * @param array $used_by List of user IDs.
+         * @return void
          */
         public function set_used_by($used_by)
         {
@@ -22833,6 +23496,7 @@ namespace {
          *
          * @param boolean $virtual Whether it is virtual or not.
          * @since 3.2.0
+         * @return void
          */
         public function set_virtual($virtual)
         {
@@ -22848,6 +23512,7 @@ namespace {
          * @since 3.0.0
          * @param string $code   Coupon code.
          * @param array  $coupon Array of coupon properties.
+         * @return void
          */
         public function read_manual_coupon($code, $coupon)
         {
@@ -22857,6 +23522,7 @@ namespace {
          *
          * @param string   $used_by  Either user ID or billing email.
          * @param WC_Order $order  If provided, will clear the coupons held by this order.
+         * @return void
          */
         public function increase_usage_count($used_by = '', $order = \null)
         {
@@ -22865,6 +23531,7 @@ namespace {
          * Decrease usage count for current coupon.
          *
          * @param string $used_by Either user ID or billing email.
+         * @return void
          */
         public function decrease_usage_count($used_by = '')
         {
@@ -22924,6 +23591,7 @@ namespace {
          *
          * @param int    $msg_code Message/error code.
          * @param string $notice_type Notice type.
+         * @return void
          */
         public function add_coupon_message($msg_code, $notice_type = 'success')
         {
@@ -22976,11 +23644,43 @@ namespace {
         {
         }
         /**
+         * Parse short info JSON into an array of coupon properties without validation.
+         *
+         * @param string $info JSON string as returned by 'get_short_info'.
+         * @return array {
+         *     Parsed coupon properties.
+         *
+         *     `@type` int    $id            Coupon ID.
+         *     `@type` string $code          Coupon code.
+         *     `@type` string $discount_type Discount type ('fixed_cart', 'percent', etc.).
+         *     `@type` float  $amount        Discount amount.
+         *     `@type` bool   $free_shipping Whether free shipping is enabled.
+         * }
+         */
+        private static function parse_short_info(string $info): array
+        {
+        }
+        /**
          * Sets the coupon parameters from a reapply information set generated with 'get_short_info'.
          *
          * @param string $info JSON string with reapply information as returned by 'get_short_info'.
+         * @return void
          */
         public function set_short_info(string $info)
+        {
+        }
+        /**
+         * Create a WC_Coupon instance from an order's coupon line item without validation.
+         *
+         * This is useful for read-only contexts (e.g., REST API responses) where the stored
+         * data should be returned even if it contains invalid values.
+         *
+         * @since 10.6.0
+         *
+         * @param \WC_Order_Item_Coupon $order_item The coupon line item from an order.
+         * @return self A WC_Coupon instance populated with the stored data.
+         */
+        public static function from_order_item(\WC_Order_Item_Coupon $order_item): self
         {
         }
         /**
@@ -23594,13 +24294,13 @@ namespace {
         /**
          * Stores if user is VAT exempt for this session.
          *
-         * @var string
+         * @var bool
          */
         protected $is_vat_exempt = \false;
         /**
          * Stores if user has calculated shipping in this session.
          *
-         * @var string
+         * @var bool
          */
         protected $calculated_shipping = \false;
         /**
@@ -23645,7 +24345,7 @@ namespace {
          * Return this customer's avatar.
          *
          * @since 3.0.0
-         * @return string
+         * @return string|false
          */
         public function get_avatar_url()
         {
@@ -23738,6 +24438,7 @@ namespace {
          * Set if customer has tax exemption.
          *
          * @param bool $is_vat_exempt If is vat exempt.
+         * @return void
          */
         public function set_is_vat_exempt($is_vat_exempt)
         {
@@ -23746,6 +24447,7 @@ namespace {
          * Calculated shipping?
          *
          * @param bool $calculated If shipping is calculated.
+         * @return void
          */
         public function set_calculated_shipping($calculated = \true)
         {
@@ -23755,6 +24457,7 @@ namespace {
          *
          * @since 3.0.0
          * @param string $password Password.
+         * @return void
          */
         public function set_password($password)
         {
@@ -24128,6 +24831,7 @@ namespace {
          *
          * @since 3.0.0
          * @param string $username Username.
+         * @return void
          */
         public function set_username($username)
         {
@@ -24137,6 +24841,7 @@ namespace {
          *
          * @since 3.0.0
          * @param string $value Email.
+         * @return void
          */
         public function set_email($value)
         {
@@ -24146,6 +24851,7 @@ namespace {
          *
          * @since 3.0.0
          * @param string $first_name First name.
+         * @return void
          */
         public function set_first_name($first_name)
         {
@@ -24155,6 +24861,7 @@ namespace {
          *
          * @since 3.0.0
          * @param string $last_name Last name.
+         * @return void
          */
         public function set_last_name($last_name)
         {
@@ -24164,6 +24871,7 @@ namespace {
          *
          * @since 3.1.0
          * @param string $display_name Display name.
+         * @return void
          */
         public function set_display_name($display_name)
         {
@@ -24173,6 +24881,7 @@ namespace {
          *
          * @since 3.0.0
          * @param mixed $role User role.
+         * @return void
          */
         public function set_role($role)
         {
@@ -24182,6 +24891,7 @@ namespace {
          *
          * @since  3.0.0
          * @param  string|integer|null $date UTC timestamp, or ISO 8601 DateTime. If the DateTime string has no timezone or offset, WordPress site timezone will be assumed. Null if their is no date.
+         * @return void
          */
         public function set_date_created($date = \null)
         {
@@ -24191,6 +24901,7 @@ namespace {
          *
          * @since  3.0.0
          * @param  string|integer|null $date UTC timestamp, or ISO 8601 DateTime. If the DateTime string has no timezone or offset, WordPress site timezone will be assumed. Null if their is no date.
+         * @return void
          */
         public function set_date_modified($date = \null)
         {
@@ -24199,6 +24910,7 @@ namespace {
          * Set customer address to match shop base address.
          *
          * @since 3.0.0
+         * @return void
          */
         public function set_billing_address_to_base()
         {
@@ -24207,6 +24919,7 @@ namespace {
          * Set customer shipping address to base address.
          *
          * @since 3.0.0
+         * @return void
          */
         public function set_shipping_address_to_base()
         {
@@ -24218,6 +24931,7 @@ namespace {
          * @param string $state    State.
          * @param string $postcode Postcode.
          * @param string $city     City.
+         * @return void
          */
         public function set_billing_location($country, $state = '', $postcode = '', $city = '')
         {
@@ -24229,6 +24943,7 @@ namespace {
          * @param string $state    State.
          * @param string $postcode Postcode.
          * @param string $city     City.
+         * @return void
          */
         public function set_shipping_location($country, $state = '', $postcode = '', $city = '')
         {
@@ -24240,6 +24955,7 @@ namespace {
          * @param string $prop         Name of prop to set.
          * @param string $address_type Type of address; 'billing' or 'shipping'.
          * @param mixed  $value        Value of the prop.
+         * @return void
          */
         protected function set_address_prop($prop, $address_type, $value)
         {
@@ -24248,6 +24964,7 @@ namespace {
          * Set billing_first_name.
          *
          * @param string $value Billing first name.
+         * @return void
          */
         public function set_billing_first_name($value)
         {
@@ -24256,6 +24973,7 @@ namespace {
          * Set billing_last_name.
          *
          * @param string $value Billing last name.
+         * @return void
          */
         public function set_billing_last_name($value)
         {
@@ -24264,6 +24982,7 @@ namespace {
          * Set billing_company.
          *
          * @param string $value Billing company.
+         * @return void
          */
         public function set_billing_company($value)
         {
@@ -24272,6 +24991,7 @@ namespace {
          * Set billing_address_1.
          *
          * @param string $value Billing address line 1.
+         * @return void
          */
         public function set_billing_address($value)
         {
@@ -24280,6 +25000,7 @@ namespace {
          * Set billing_address_1.
          *
          * @param string $value Billing address line 1.
+         * @return void
          */
         public function set_billing_address_1($value)
         {
@@ -24288,6 +25009,7 @@ namespace {
          * Set billing_address_2.
          *
          * @param string $value Billing address line 2.
+         * @return void
          */
         public function set_billing_address_2($value)
         {
@@ -24296,6 +25018,7 @@ namespace {
          * Set billing_city.
          *
          * @param string $value Billing city.
+         * @return void
          */
         public function set_billing_city($value)
         {
@@ -24304,6 +25027,7 @@ namespace {
          * Set billing_state.
          *
          * @param string $value Billing state.
+         * @return void
          */
         public function set_billing_state($value)
         {
@@ -24312,6 +25036,7 @@ namespace {
          * Set billing_postcode.
          *
          * @param string $value Billing postcode.
+         * @return void
          */
         public function set_billing_postcode($value)
         {
@@ -24320,6 +25045,7 @@ namespace {
          * Set billing_country.
          *
          * @param string $value Billing country.
+         * @return void
          */
         public function set_billing_country($value)
         {
@@ -24328,6 +25054,7 @@ namespace {
          * Set billing_email.
          *
          * @param string $value Billing email.
+         * @return void
          */
         public function set_billing_email($value)
         {
@@ -24336,6 +25063,7 @@ namespace {
          * Set billing_phone.
          *
          * @param string $value Billing phone.
+         * @return void
          */
         public function set_billing_phone($value)
         {
@@ -24344,6 +25072,7 @@ namespace {
          * Set shipping_first_name.
          *
          * @param string $value Shipping first name.
+         * @return void
          */
         public function set_shipping_first_name($value)
         {
@@ -24352,6 +25081,7 @@ namespace {
          * Set shipping_last_name.
          *
          * @param string $value Shipping last name.
+         * @return void
          */
         public function set_shipping_last_name($value)
         {
@@ -24360,6 +25090,7 @@ namespace {
          * Set shipping_company.
          *
          * @param string $value Shipping company.
+         * @return void
          */
         public function set_shipping_company($value)
         {
@@ -24368,6 +25099,7 @@ namespace {
          * Set shipping_address_1.
          *
          * @param string $value Shipping address line 1.
+         * @return void
          */
         public function set_shipping_address($value)
         {
@@ -24376,6 +25108,7 @@ namespace {
          * Set shipping_address_1.
          *
          * @param string $value Shipping address line 1.
+         * @return void
          */
         public function set_shipping_address_1($value)
         {
@@ -24384,6 +25117,7 @@ namespace {
          * Set shipping_address_2.
          *
          * @param string $value Shipping address line 2.
+         * @return void
          */
         public function set_shipping_address_2($value)
         {
@@ -24392,6 +25126,7 @@ namespace {
          * Set shipping_city.
          *
          * @param string $value Shipping city.
+         * @return void
          */
         public function set_shipping_city($value)
         {
@@ -24400,6 +25135,7 @@ namespace {
          * Set shipping_state.
          *
          * @param string $value Shipping state.
+         * @return void
          */
         public function set_shipping_state($value)
         {
@@ -24408,6 +25144,7 @@ namespace {
          * Set shipping_postcode.
          *
          * @param string $value Shipping postcode.
+         * @return void
          */
         public function set_shipping_postcode($value)
         {
@@ -24416,6 +25153,7 @@ namespace {
          * Set shipping_country.
          *
          * @param string $value Shipping country.
+         * @return void
          */
         public function set_shipping_country($value)
         {
@@ -24425,6 +25163,7 @@ namespace {
          *
          * @since 5.6.0
          * @param string $value Shipping phone.
+         * @return void
          */
         public function set_shipping_phone($value)
         {
@@ -24434,6 +25173,7 @@ namespace {
          *
          * @since 3.0.0
          * @param bool $is_paying_customer If is a paying customer.
+         * @return void
          */
         public function set_is_paying_customer($is_paying_customer)
         {
@@ -25528,6 +26268,7 @@ namespace {
          * Cloning is forbidden.
          *
          * @since 2.1
+         * @return void
          */
         public function __clone()
         {
@@ -25536,12 +26277,15 @@ namespace {
          * Unserializing instances of this class is forbidden.
          *
          * @since 2.1
+         * @return void
          */
         public function __wakeup()
         {
         }
         /**
          * Hook in all transactional emails.
+         *
+         * @return void
          */
         public static function init_transactional_emails()
         {
@@ -25551,6 +26295,7 @@ namespace {
          * otherwise falls back to send now.
          *
          * @param mixed ...$args Optional arguments.
+         * @return void
          */
         public static function queue_transactional_email(...$args)
         {
@@ -25562,6 +26307,7 @@ namespace {
          *
          * @param string $filter Filter name.
          * @param array  $args Email args (default: []).
+         * @return void
          */
         public static function send_queued_transactional_email($filter = '', $args = array())
         {
@@ -25572,6 +26318,7 @@ namespace {
          * @internal
          *
          * @param array $args Email args (default: []).
+         * @return void
          */
         public static function send_transactional_email($args = array())
         {
@@ -25584,6 +26331,8 @@ namespace {
         }
         /**
          * Init email classes.
+         *
+         * @return void
          */
         public function init()
         {
@@ -25616,12 +26365,15 @@ namespace {
          * Get the email header.
          *
          * @param mixed $email_heading Heading for the email.
+         * @return void
          */
         public function email_header($email_heading)
         {
         }
         /**
          * Get the email footer.
+         *
+         * @return void
          */
         public function email_footer()
         {
@@ -25676,6 +26428,7 @@ namespace {
          * Prepare and send the customer invoice email on demand.
          *
          * @param int|WC_Order $order Order instance or ID.
+         * @return void
          */
         public function customer_invoice($order)
         {
@@ -25686,6 +26439,7 @@ namespace {
          * @param int   $customer_id        Customer ID.
          * @param array $new_customer_data  New customer data.
          * @param bool  $password_generated If password is generated.
+         * @return void
          */
         public function customer_new_account($customer_id, $new_customer_data = array(), $password_generated = \false)
         {
@@ -25697,6 +26451,7 @@ namespace {
          * @param bool     $sent_to_admin If should sent to admin.
          * @param bool     $plain_text    If is plain text email.
          * @param string   $email         Email address.
+         * @return void
          */
         public function order_details($order, $sent_to_admin = \false, $plain_text = \false, $email = '')
         {
@@ -25709,6 +26464,7 @@ namespace {
          * @param bool     $sent_to_admin If should sent to admin.
          * @param bool     $plain_text    If is plain text email.
          * @param string   $email         Email address.
+         * @return void
          */
         public function order_downloads($order, $sent_to_admin = \false, $plain_text = \false, $email = '')
         {
@@ -25719,6 +26475,7 @@ namespace {
          * @param WC_Order $order         Order instance.
          * @param bool     $sent_to_admin If should sent to admin.
          * @param bool     $plain_text    If is plain text email.
+         * @return void
          */
         public function order_meta($order, $sent_to_admin = \false, $plain_text = \false)
         {
@@ -25731,6 +26488,7 @@ namespace {
          * @param bool        $sent_to_admin If should sent to admin.
          * @param bool        $plain_text    If is plain text email.
          * @param string      $email         Email address.
+         * @return void
          */
         public function fulfillment_details($order, $fulfillment, $sent_to_admin = \false, $plain_text = \false, $email = '')
         {
@@ -25742,6 +26500,7 @@ namespace {
          * @param Fulfillment $fulfillment   Fulfillment instance.
          * @param bool        $sent_to_admin If should sent to admin.
          * @param bool        $plain_text    If is plain text email.
+         * @return void
          */
         public function fulfillment_meta($order, $fulfillment, $sent_to_admin = \false, $plain_text = \false)
         {
@@ -25763,6 +26522,7 @@ namespace {
          * @param WC_Order $order         Order instance.
          * @param bool     $sent_to_admin If should sent to admin.
          * @param bool     $plain_text    If is plain text email.
+         * @return void
          */
         public function customer_details($order, $sent_to_admin = \false, $plain_text = \false)
         {
@@ -25773,6 +26533,7 @@ namespace {
          * @param WC_Order $order         Order instance.
          * @param bool     $sent_to_admin If should sent to admin.
          * @param bool     $plain_text    If is plain text email.
+         * @return void
          */
         public function email_addresses($order, $sent_to_admin = \false, $plain_text = \false)
         {
@@ -25783,6 +26544,7 @@ namespace {
          * @param WC_Order $order         Order instance.
          * @param bool     $sent_to_admin If email is sent to admin.
          * @param bool     $plain_text    If this is a plain text email.
+         * @return void
          */
         public function additional_checkout_fields($order, $sent_to_admin = \false, $plain_text = \false)
         {
@@ -25794,6 +26556,7 @@ namespace {
          * @param WC_Order $order         Order instance.
          * @param bool     $sent_to_admin If email is sent to admin.
          * @param bool     $plain_text    If this is a plain text email.
+         * @return void
          */
         public function additional_address_fields($address_type, $order, $sent_to_admin = \false, $plain_text = \false)
         {
@@ -25824,12 +26587,16 @@ namespace {
         }
         /**
          * Add email sender filters.
+         *
+         * @return void
          */
         private function add_email_sender_filters()
         {
         }
         /**
          * Remove email sender filters.
+         *
+         * @return void
          */
         private function remove_email_sender_filters()
         {
@@ -25838,6 +26605,7 @@ namespace {
          * Low stock notification email.
          *
          * @param WC_Product $product Product instance.
+         * @return void
          */
         public function low_stock($product)
         {
@@ -25846,6 +26614,7 @@ namespace {
          * No stock notification email.
          *
          * @param WC_Product $product Product instance.
+         * @return void
          */
         public function no_stock($product)
         {
@@ -25854,6 +26623,7 @@ namespace {
          * Backorder notification email.
          *
          * @param array $args Arguments.
+         * @return void
          */
         public function backorder($args)
         {
@@ -25868,6 +26638,7 @@ namespace {
          * @param WC_Order $order         Order instance.
          * @param bool     $sent_to_admin If should sent to admin.
          * @param bool     $plain_text    If is plain text email.
+         * @return void
          */
         public function order_schema_markup($order, $sent_to_admin = \false, $plain_text = \false)
         {
@@ -26243,6 +27014,14 @@ namespace {
          * @return array|bool
          */
         private static function get_script_data($handle)
+        {
+        }
+        /**
+         * Get a list of payment gateway IDs that have custom place order buttons.
+         *
+         * @return array List of gateway IDs with custom place order buttons.
+         */
+        private static function get_gateways_with_custom_place_order_button()
         {
         }
         /**
@@ -26858,7 +27637,7 @@ namespace {
          *
          * @var array
          */
-        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_admin_update_0201_order_status_index', 'wc_admin_update_0230_rename_gross_total', 'wc_admin_update_0251_remove_unsnooze_action', 'wc_update_400_db_version'), '4.4.0' => array('wc_update_440_insert_attribute_terms_for_variable_products', 'wc_admin_update_110_remove_facebook_note', 'wc_admin_update_130_remove_dismiss_action_from_tracking_opt_in_note', 'wc_update_440_db_version'), '4.5.0' => array('wc_update_450_sanitize_coupons_code', 'wc_update_450_db_version'), '5.0.0' => array('wc_update_500_fix_product_review_count', 'wc_admin_update_160_remove_facebook_note', 'wc_admin_update_170_homescreen_layout', 'wc_update_500_db_version'), '5.6.0' => array('wc_update_560_create_refund_returns_page', 'wc_update_560_db_version'), '6.0.0' => array('wc_update_600_migrate_rate_limit_options', 'wc_admin_update_270_delete_report_downloads', 'wc_admin_update_271_update_task_list_options', 'wc_admin_update_280_order_status', 'wc_admin_update_290_update_apperance_task_option', 'wc_admin_update_290_delete_default_homepage_layout_option', 'wc_update_600_db_version'), '6.3.0' => array('wc_update_630_create_product_attributes_lookup_table', 'wc_admin_update_300_update_is_read_from_last_read', 'wc_update_630_db_version'), '6.4.0' => array('wc_update_640_add_primary_key_to_product_attributes_lookup_table', 'wc_admin_update_340_remove_is_primary_from_note_action', 'wc_update_640_db_version'), '6.5.0' => array('wc_update_650_approved_download_directories'), '6.5.1' => array('wc_update_651_approved_download_directories'), '6.7.0' => array('wc_update_670_purge_comments_count_cache', 'wc_update_670_delete_deprecated_remote_inbox_notifications_option'), '7.0.0' => array('wc_update_700_remove_download_log_fk', 'wc_update_700_remove_recommended_marketing_plugins_transient'), '7.2.1' => array('wc_update_721_adjust_new_zealand_states', 'wc_update_721_adjust_ukraine_states'), '7.2.2' => array('wc_update_722_adjust_new_zealand_states', 'wc_update_722_adjust_ukraine_states'), '7.5.0' => array('wc_update_750_add_columns_to_order_stats_table', 'wc_update_750_disable_new_product_management_experience'), '7.7.0' => array('wc_update_770_remove_multichannel_marketing_feature_options'), '7.9.0' => array('wc_update_790_blockified_product_grid_block'), '8.1.0' => array('wc_update_810_migrate_transactional_metadata_for_hpos'), '8.3.0' => array('wc_update_830_rename_checkout_template', 'wc_update_830_rename_cart_template'), '8.6.0' => array('wc_update_860_remove_recommended_marketing_plugins_transient'), '8.7.0' => array('wc_update_870_prevent_listing_of_transient_files_directory'), '8.9.0' => array('wc_update_890_update_connect_to_woocommerce_note', 'wc_update_890_update_paypal_standard_load_eligibility'), '8.9.1' => array('wc_update_891_create_plugin_autoinstall_history_option'), '9.1.0' => array('wc_update_910_add_launch_your_store_tour_option', 'wc_update_910_remove_obsolete_user_meta'), '9.2.0' => array('wc_update_920_add_wc_hooked_blocks_version_option'), '9.3.0' => array('wc_update_930_add_woocommerce_coming_soon_option', 'wc_update_930_migrate_user_meta_for_launch_your_store_tour'), '9.4.0' => array('wc_update_940_add_phone_to_order_address_fts_index', 'wc_update_940_remove_help_panel_highlight_shown'), '9.5.0' => array('wc_update_950_tracking_option_autoload'), '9.6.1' => array('wc_update_961_migrate_default_email_base_color'), '9.8.0' => array('wc_update_980_remove_order_attribution_install_banner_dismissed_option'), '9.8.5' => array('wc_update_985_enable_new_payments_settings_page_feature'), '9.9.0' => array('wc_update_990_remove_wc_count_comments_transient', 'wc_update_990_remove_email_notes'), '10.0.0' => array('wc_update_1000_multisite_visibility_setting', 'wc_update_1000_remove_patterns_toolkit_transient'), '10.2.0' => array('wc_update_1020_add_old_refunded_order_items_to_product_lookup_table'), '10.3.0' => array('wc_update_1030_add_comments_date_type_index'), '10.4.0' => array('wc_update_1040_add_idx_date_paid_status_parent', 'wc_update_1040_cleanup_legacy_ptk_patterns_fetching'), '10.5.0' => array('wc_update_1050_migrate_brand_permalink_setting', 'wc_update_1050_enable_autoload_options', 'wc_update_1050_add_idx_user_email', 'wc_update_1050_remove_deprecated_marketplace_option'));
+        private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_admin_update_0201_order_status_index', 'wc_admin_update_0230_rename_gross_total', 'wc_admin_update_0251_remove_unsnooze_action', 'wc_update_400_db_version'), '4.4.0' => array('wc_update_440_insert_attribute_terms_for_variable_products', 'wc_admin_update_110_remove_facebook_note', 'wc_admin_update_130_remove_dismiss_action_from_tracking_opt_in_note', 'wc_update_440_db_version'), '4.5.0' => array('wc_update_450_sanitize_coupons_code', 'wc_update_450_db_version'), '5.0.0' => array('wc_update_500_fix_product_review_count', 'wc_admin_update_160_remove_facebook_note', 'wc_admin_update_170_homescreen_layout', 'wc_update_500_db_version'), '5.6.0' => array('wc_update_560_create_refund_returns_page', 'wc_update_560_db_version'), '6.0.0' => array('wc_update_600_migrate_rate_limit_options', 'wc_admin_update_270_delete_report_downloads', 'wc_admin_update_271_update_task_list_options', 'wc_admin_update_280_order_status', 'wc_admin_update_290_update_apperance_task_option', 'wc_admin_update_290_delete_default_homepage_layout_option', 'wc_update_600_db_version'), '6.3.0' => array('wc_update_630_create_product_attributes_lookup_table', 'wc_admin_update_300_update_is_read_from_last_read', 'wc_update_630_db_version'), '6.4.0' => array('wc_update_640_add_primary_key_to_product_attributes_lookup_table', 'wc_admin_update_340_remove_is_primary_from_note_action', 'wc_update_640_db_version'), '6.5.0' => array('wc_update_650_approved_download_directories'), '6.5.1' => array('wc_update_651_approved_download_directories'), '6.7.0' => array('wc_update_670_purge_comments_count_cache', 'wc_update_670_delete_deprecated_remote_inbox_notifications_option'), '7.0.0' => array('wc_update_700_remove_download_log_fk', 'wc_update_700_remove_recommended_marketing_plugins_transient'), '7.2.1' => array('wc_update_721_adjust_new_zealand_states', 'wc_update_721_adjust_ukraine_states'), '7.2.2' => array('wc_update_722_adjust_new_zealand_states', 'wc_update_722_adjust_ukraine_states'), '7.5.0' => array('wc_update_750_add_columns_to_order_stats_table', 'wc_update_750_disable_new_product_management_experience'), '7.7.0' => array('wc_update_770_remove_multichannel_marketing_feature_options'), '7.9.0' => array('wc_update_790_blockified_product_grid_block'), '8.1.0' => array('wc_update_810_migrate_transactional_metadata_for_hpos'), '8.3.0' => array('wc_update_830_rename_checkout_template', 'wc_update_830_rename_cart_template'), '8.6.0' => array('wc_update_860_remove_recommended_marketing_plugins_transient'), '8.7.0' => array('wc_update_870_prevent_listing_of_transient_files_directory'), '8.9.0' => array('wc_update_890_update_connect_to_woocommerce_note', 'wc_update_890_update_paypal_standard_load_eligibility'), '8.9.1' => array('wc_update_891_create_plugin_autoinstall_history_option'), '9.1.0' => array('wc_update_910_add_launch_your_store_tour_option', 'wc_update_910_remove_obsolete_user_meta'), '9.2.0' => array('wc_update_920_add_wc_hooked_blocks_version_option'), '9.3.0' => array('wc_update_930_add_woocommerce_coming_soon_option', 'wc_update_930_migrate_user_meta_for_launch_your_store_tour'), '9.4.0' => array('wc_update_940_add_phone_to_order_address_fts_index', 'wc_update_940_remove_help_panel_highlight_shown'), '9.5.0' => array('wc_update_950_tracking_option_autoload'), '9.6.1' => array('wc_update_961_migrate_default_email_base_color'), '9.8.0' => array('wc_update_980_remove_order_attribution_install_banner_dismissed_option'), '9.8.5' => array('wc_update_985_enable_new_payments_settings_page_feature'), '9.9.0' => array('wc_update_990_remove_wc_count_comments_transient', 'wc_update_990_remove_email_notes'), '10.0.0' => array('wc_update_1000_multisite_visibility_setting', 'wc_update_1000_remove_patterns_toolkit_transient'), '10.2.0' => array('wc_update_1020_add_old_refunded_order_items_to_product_lookup_table'), '10.3.0' => array('wc_update_1030_add_comments_date_type_index'), '10.4.0' => array('wc_update_1040_add_idx_date_paid_status_parent', 'wc_update_1040_cleanup_legacy_ptk_patterns_fetching'), '10.5.0' => array('wc_update_1050_migrate_brand_permalink_setting', 'wc_update_1050_enable_autoload_options', 'wc_update_1050_add_idx_user_email', 'wc_update_1050_remove_deprecated_marketplace_option'), '10.6.0' => array('wc_update_1060_add_woo_idx_comment_approved_type_index'));
         /**
          * Option name used to track new installations of WooCommerce.
          *
@@ -26879,6 +27658,8 @@ namespace {
         const STORE_ID_OPTION = 'woocommerce_store_id';
         /**
          * Hook in tabs.
+         *
+         * @return void
          */
         public static function init()
         {
@@ -26889,6 +27670,8 @@ namespace {
          * @since 8.0.0
          *
          * @internal For exclusive usage of WooCommerce core, backwards compatibility not guaranteed.
+         *
+         * @return void
          */
         public static function newly_installed()
         {
@@ -26897,6 +27680,8 @@ namespace {
          * Check WooCommerce version and run the updater is required.
          *
          * This check is done on all requests and runs if the versions do not match.
+         *
+         * @return void
          */
         public static function check_version()
         {
@@ -26905,6 +27690,8 @@ namespace {
          * Performan manual database update when triggered by WooCommerce System Tools.
          *
          * @since 3.6.5
+         *
+         * @return void
          */
         public static function manual_database_update()
         {
@@ -26914,6 +27701,8 @@ namespace {
          *
          * @since 4.0.0
          * @deprecated 10.3.0
+         *
+         * @return void
          */
         public static function wc_admin_db_update_notice()
         {
@@ -26922,6 +27711,8 @@ namespace {
          * Adds the db update notice.
          *
          * @since 10.3.0
+         *
+         * @return void
          */
         private static function add_update_db_notice()
         {
@@ -26930,12 +27721,16 @@ namespace {
          * Removes the db update notice.
          *
          * @since 10.3.0
+         *
+         * @return void
          */
         public static function remove_update_db_notice()
         {
         }
         /**
          * Run manual database update.
+         *
+         * @return void
          */
         public static function run_manual_database_update()
         {
@@ -26946,6 +27741,8 @@ namespace {
          * @param string $update_callback Callback name.
          *
          * @since 3.6.0
+         *
+         * @return void
          */
         public static function run_update_callback($update_callback)
         {
@@ -26955,6 +27752,8 @@ namespace {
          *
          * @since 3.6.0
          * @param string $callback Callback name.
+         *
+         * @return void
          */
         protected static function run_update_callback_start($callback)
         {
@@ -26965,6 +27764,8 @@ namespace {
          * @since 3.6.0
          * @param string $callback Callback name.
          * @param bool   $result Return value from callback. Non-false need to run again.
+         *
+         * @return void
          */
         protected static function run_update_callback_end($callback, $result)
         {
@@ -26973,28 +27774,40 @@ namespace {
          * Install actions when a update button is clicked within the admin area.
          *
          * This function is hooked into admin_init to affect admin only.
+         *
+         * @return void
          */
         public static function install_actions()
         {
         }
         /**
          * Install WC.
+         *
+         * @return void
          */
         public static function install()
         {
         }
         /**
          * Core function that performs the WooCommerce install.
+         *
+         * @return void
          */
         private static function install_core()
         {
         }
         /**
-         * Returns true if we're installing.
+         * Attempts to acquire an installation lock.
          *
-         * @return bool
+         * @return bool True if a lock was acquired, otherwise false.
          */
-        private static function is_installing()
+        private static function create_lock(): bool
+        {
+        }
+        /**
+         * Releases the installation lock.
+         */
+        private static function release_lock(): void
         {
         }
         /**
@@ -27012,6 +27825,8 @@ namespace {
          * Reset any notices added to admin.
          *
          * @since 3.2.0
+         *
+         * @return void
          */
         private static function remove_admin_notices()
         {
@@ -27020,6 +27835,8 @@ namespace {
          * Setup WC environment - post types, taxonomies, endpoints.
          *
          * @since 3.2.0
+         *
+         * @return void
          */
         private static function setup_environment()
         {
@@ -27059,6 +27876,8 @@ namespace {
          * See if we need to set redirect transients for activation or not.
          *
          * @since 4.6.0
+         *
+         * @return void
          */
         private static function maybe_set_activation_transients()
         {
@@ -27067,6 +27886,8 @@ namespace {
          * See if we need to show or run database updates during install.
          *
          * @since 3.2.0
+         *
+         * @return void
          */
         private static function maybe_update_db_version()
         {
@@ -27075,12 +27896,16 @@ namespace {
          * Set the Store ID if not already present.
          *
          * @since 8.4.0
+         *
+         * @return void
          */
         public static function maybe_set_store_id()
         {
         }
         /**
          * Update WC version to current.
+         *
+         * @return void
          */
         private static function update_wc_version()
         {
@@ -27096,6 +27921,8 @@ namespace {
         }
         /**
          * Push all needed DB updates to the queue for processing.
+         *
+         * @return void
          */
         private static function update()
         {
@@ -27104,6 +27931,8 @@ namespace {
          * Update DB version to current.
          *
          * @param string|null $version New WooCommerce DB version or null.
+         *
+         * @return void
          */
         public static function update_db_version($version = \null)
         {
@@ -27120,18 +27949,24 @@ namespace {
         }
         /**
          * Removes old cron jobs now that we moved to Action Scheduler.
+         *
+         * @return void
          */
         private static function clear_cron_jobs()
         {
         }
         /**
          * Create pages on installation.
+         *
+         * @return void
          */
         public static function maybe_create_pages()
         {
         }
         /**
          * Create pages that the plugin relies on, storing page IDs in variables.
+         *
+         * @return void
          */
         public static function create_pages()
         {
@@ -27140,6 +27975,8 @@ namespace {
          * Default options.
          *
          * Sets up the default options used on the settings page.
+         *
+         * @return void
          */
         private static function create_options()
         {
@@ -27148,6 +27985,8 @@ namespace {
          * Enable HPOS by default for new shops.
          *
          * @since 8.2.0
+         *
+         * @return void
          */
         public static function maybe_enable_hpos()
         {
@@ -27158,6 +27997,8 @@ namespace {
          * Ensure that the options are set for all shops for performance even if core profiler is disabled on the host.
          *
          * @since 9.3.0
+         *
+         * @return void
          */
         public static function add_coming_soon_option()
         {
@@ -27166,6 +28007,8 @@ namespace {
          * Enable email improvements by default for new shops.
          *
          * @since 9.8.0
+         *
+         * @return void
          */
         public static function enable_email_improvements_for_newly_installed()
         {
@@ -27174,6 +28017,8 @@ namespace {
          * Enable customer stock notifications signups by default for new shops.
          *
          * @since 0.0.0
+         *
+         * @return void
          */
         public static function enable_customer_stock_notifications_signups()
         {
@@ -27195,6 +28040,8 @@ namespace {
          * Enable email improvements by default for existing shops if conditions are met.
          *
          * @since 9.9.0
+         *
+         * @return void
          */
         public static function enable_email_improvements_for_existing_merchants()
         {
@@ -27219,18 +28066,24 @@ namespace {
         }
         /**
          * Delete obsolete notes.
+         *
+         * @return void
          */
         public static function delete_obsolete_notes()
         {
         }
         /**
          * Migrate option values to their new keys/names.
+         *
+         * @return void
          */
         public static function migrate_options()
         {
         }
         /**
          * Add the default terms for WC taxonomies - product types and order statuses. Modify this at your own risk.
+         *
+         * @return void
          */
         public static function create_terms()
         {
@@ -27247,6 +28100,8 @@ namespace {
          * In this case we check if the plugin was autoinstalled in such a way, and if so we activate it if the conditions are fulfilled.
          *
          * @internal For exclusive usage of WooCommerce core, backwards compatibility not guaranteed.
+         *
+         * @return void
          */
         public static function maybe_install_legacy_api_plugin()
         {
@@ -27255,6 +28110,8 @@ namespace {
          * If in a previous version of WooCommerce the Legacy REST API plugin was installed manually but the core Legacy REST API was kept disabled,
          * now the Legacy API is still disabled and can't be manually enabled from settings UI (the plugin, which is now in control, won't allow that),
          * which is weird and confusing. So we detect this case and explicitly enable it.
+         *
+         * @return void
          */
         private static function maybe_activate_legacy_api_enabled_option()
         {
@@ -27329,6 +28186,8 @@ namespace {
         }
         /**
          * Create roles and capabilities.
+         *
+         * @return void
          */
         public static function create_roles()
         {
@@ -27343,12 +28202,16 @@ namespace {
         }
         /**
          * Remove WooCommerce roles.
+         *
+         * @return void
          */
         public static function remove_roles()
         {
         }
         /**
          * Create files/directories.
+         *
+         * @return void
          */
         private static function create_files()
         {
@@ -27357,6 +28220,8 @@ namespace {
          * Create a placeholder image in the media library.
          *
          * @since 3.5.0
+         *
+         * @return void
          */
         private static function create_placeholder_image()
         {
@@ -27387,6 +28252,8 @@ namespace {
          *
          * @param array  $plugins Associative array of plugin files to paths.
          * @param string $key Plugin relative path. Example: woocommerce/woocommerce.php.
+         *
+         * @return array
          */
         private static function associate_plugin_file($plugins, $key)
         {
@@ -27400,6 +28267,8 @@ namespace {
          *
          * @throws Exception If unable to proceed with plugin installation.
          * @since  2.6.0
+         *
+         * @return void
          */
         public static function background_installer($plugin_to_install_id, $plugin_to_install)
         {
@@ -27409,6 +28278,8 @@ namespace {
          *
          * @param string $option Option name.
          * @param string $value  Option value.
+         *
+         * @return void
          */
         public static function remove_mailchimps_redirect($option, $value)
         {
@@ -27420,6 +28291,8 @@ namespace {
          *
          * @throws Exception If unable to proceed with theme installation.
          * @since  3.1.0
+         *
+         * @return void
          */
         public static function theme_background_installer($theme_slug)
         {
@@ -27428,6 +28301,8 @@ namespace {
          * Sets whether PayPal Standard will be loaded on install.
          *
          * @since 5.5.0
+         *
+         * @return void
          */
         private static function set_paypal_standard_load_eligibility()
         {
@@ -30062,6 +30937,7 @@ namespace {
          * @param Exception $e Exception object.
          * @param string    $message Message regarding exception thrown.
          * @since 3.7.0
+         * @return void
          */
         protected function handle_exception($e, $message = 'Error')
         {
@@ -30090,6 +30966,7 @@ namespace {
          * `payment_complete` method.
          *
          * @since 3.0.0
+         * @return void
          */
         public function maybe_set_date_paid()
         {
@@ -30100,6 +30977,7 @@ namespace {
          * Sets the date completed variable when transitioning to completed status.
          *
          * @since 3.0.0
+         * @return void
          */
         protected function maybe_set_date_completed()
         {
@@ -30118,6 +30996,8 @@ namespace {
         }
         /**
          * Handle the status transition.
+         *
+         * @return void
          */
         protected function status_transition()
         {
@@ -30149,6 +31029,8 @@ namespace {
         }
         /**
          * Expands the shipping and billing information in the changes array.
+         *
+         * @return array
          */
         public function get_changes()
         {
@@ -30618,6 +31500,7 @@ namespace {
          * @param string $prop Name of prop to set.
          * @param string $address_type Type of address; 'billing' or 'shipping'.
          * @param mixed  $value Value of the prop.
+         * @return void
          */
         protected function set_address_prop($prop, $address_type, $value)
         {
@@ -30669,6 +31552,7 @@ namespace {
          *
          * @param string $value Max length 22 chars.
          * @throws WC_Data_Exception Throws exception when invalid data is found.
+         * @return void
          */
         public function set_order_key($value)
         {
@@ -30678,6 +31562,7 @@ namespace {
          *
          * @param int $value Customer ID.
          * @throws WC_Data_Exception Throws exception when invalid data is found.
+         * @return void
          */
         public function set_customer_id($value)
         {
@@ -30687,6 +31572,7 @@ namespace {
          *
          * @param string $value Billing first name.
          * @throws WC_Data_Exception Throws exception when invalid data is found.
+         * @return void
          */
         public function set_billing_first_name($value)
         {
@@ -30696,6 +31582,7 @@ namespace {
          *
          * @param string $value Billing last name.
          * @throws WC_Data_Exception Throws exception when invalid data is found.
+         * @return void
          */
         public function set_billing_last_name($value)
         {
@@ -30705,6 +31592,7 @@ namespace {
          *
          * @param string $value Billing company.
          * @throws WC_Data_Exception Throws exception when invalid data is found.
+         * @return void
          */
         public function set_billing_company($value)
         {
@@ -30714,6 +31602,7 @@ namespace {
          *
          * @param string $value Billing address line 1.
          * @throws WC_Data_Exception Throws exception when invalid data is found.
+         * @return void
          */
         public function set_billing_address_1($value)
         {
@@ -30723,6 +31612,7 @@ namespace {
          *
          * @param string $value Billing address line 2.
          * @throws WC_Data_Exception Throws exception when invalid data is found.
+         * @return void
          */
         public function set_billing_address_2($value)
         {
@@ -30732,6 +31622,7 @@ namespace {
          *
          * @param string $value Billing city.
          * @throws WC_Data_Exception Throws exception when invalid data is found.
+         * @return void
          */
         public function set_billing_city($value)
         {
@@ -30741,6 +31632,7 @@ namespace {
          *
          * @param string $value Billing state.
          * @throws WC_Data_Exception Throws exception when invalid data is found.
+         * @return void
          */
         public function set_billing_state($value)
         {
@@ -30750,6 +31642,7 @@ namespace {
          *
          * @param string $value Billing postcode.
          * @throws WC_Data_Exception Throws exception when invalid data is found.
+         * @return void
          */
         public function set_billing_postcode($value)
         {
@@ -30759,12 +31652,15 @@ namespace {
          *
          * @param string $value Billing country.
          * @throws WC_Data_Exception Throws exception when invalid data is found.
+         * @return void
          */
         public function set_billing_country($value)
         {
         }
         /**
          * Maybe set empty billing email to that of the user who owns the order.
+         *
+         * @return void
          */
         protected function maybe_set_user_billing_email()
         {
@@ -30774,6 +31670,7 @@ namespace {
          *
          * @param string $value Billing email.
          * @throws WC_Data_Exception Throws exception when invalid data is found.
+         * @return void
          */
         public function set_billing_email($value)
         {
@@ -30783,6 +31680,7 @@ namespace {
          *
          * @param string $value Billing phone.
          * @throws WC_Data_Exception Throws exception when invalid data is found.
+         * @return void
          */
         public function set_billing_phone($value)
         {
@@ -30792,6 +31690,7 @@ namespace {
          *
          * @param string $value Shipping first name.
          * @throws WC_Data_Exception Throws exception when invalid data is found.
+         * @return void
          */
         public function set_shipping_first_name($value)
         {
@@ -30801,6 +31700,7 @@ namespace {
          *
          * @param string $value Shipping last name.
          * @throws WC_Data_Exception Throws exception when invalid data is found.
+         * @return void
          */
         public function set_shipping_last_name($value)
         {
@@ -30810,6 +31710,7 @@ namespace {
          *
          * @param string $value Shipping company.
          * @throws WC_Data_Exception Throws exception when invalid data is found.
+         * @return void
          */
         public function set_shipping_company($value)
         {
@@ -30819,6 +31720,7 @@ namespace {
          *
          * @param string $value Shipping address line 1.
          * @throws WC_Data_Exception Throws exception when invalid data is found.
+         * @return void
          */
         public function set_shipping_address_1($value)
         {
@@ -30828,6 +31730,7 @@ namespace {
          *
          * @param string $value Shipping address line 2.
          * @throws WC_Data_Exception Throws exception when invalid data is found.
+         * @return void
          */
         public function set_shipping_address_2($value)
         {
@@ -30837,6 +31740,7 @@ namespace {
          *
          * @param string $value Shipping city.
          * @throws WC_Data_Exception Throws exception when invalid data is found.
+         * @return void
          */
         public function set_shipping_city($value)
         {
@@ -30846,6 +31750,7 @@ namespace {
          *
          * @param string $value Shipping state.
          * @throws WC_Data_Exception Throws exception when invalid data is found.
+         * @return void
          */
         public function set_shipping_state($value)
         {
@@ -30855,6 +31760,7 @@ namespace {
          *
          * @param string $value Shipping postcode.
          * @throws WC_Data_Exception Throws exception when invalid data is found.
+         * @return void
          */
         public function set_shipping_postcode($value)
         {
@@ -30864,6 +31770,7 @@ namespace {
          *
          * @param string $value Shipping country.
          * @throws WC_Data_Exception Throws exception when invalid data is found.
+         * @return void
          */
         public function set_shipping_country($value)
         {
@@ -30874,6 +31781,7 @@ namespace {
          * @since 5.6.0
          * @param string $value Shipping phone.
          * @throws WC_Data_Exception Throws exception when invalid data is found.
+         * @return void
          */
         public function set_shipping_phone($value)
         {
@@ -30883,6 +31791,7 @@ namespace {
          *
          * @param string $payment_method Supports WC_Payment_Gateway for bw compatibility with < 3.0.
          * @throws WC_Data_Exception Throws exception when invalid data is found.
+         * @return void
          */
         public function set_payment_method($payment_method = '')
         {
@@ -30892,6 +31801,7 @@ namespace {
          *
          * @param string $value Payment method title.
          * @throws WC_Data_Exception Throws exception when invalid data is found.
+         * @return void
          */
         public function set_payment_method_title($value)
         {
@@ -30901,6 +31811,7 @@ namespace {
          *
          * @param string $value Transaction id.
          * @throws WC_Data_Exception Throws exception when invalid data is found.
+         * @return void
          */
         public function set_transaction_id($value)
         {
@@ -30910,6 +31821,7 @@ namespace {
          *
          * @param string $value Customer ip address.
          * @throws WC_Data_Exception Throws exception when invalid data is found.
+         * @return void
          */
         public function set_customer_ip_address($value)
         {
@@ -30919,6 +31831,7 @@ namespace {
          *
          * @param string $value Customer user agent.
          * @throws WC_Data_Exception Throws exception when invalid data is found.
+         * @return void
          */
         public function set_customer_user_agent($value)
         {
@@ -30928,6 +31841,7 @@ namespace {
          *
          * @param string $value Created via.
          * @throws WC_Data_Exception Throws exception when invalid data is found.
+         * @return void
          */
         public function set_created_via($value)
         {
@@ -30937,6 +31851,7 @@ namespace {
          *
          * @param string $value Customer note.
          * @throws WC_Data_Exception Throws exception when invalid data is found.
+         * @return void
          */
         public function set_customer_note($value)
         {
@@ -30946,6 +31861,7 @@ namespace {
          *
          * @param  string|integer|null $date UTC timestamp, or ISO 8601 DateTime. If the DateTime string has no timezone or offset, WordPress site timezone will be assumed. Null if their is no date.
          * @throws WC_Data_Exception Throws exception when invalid data is found.
+         * @return void
          */
         public function set_date_completed($date = \null)
         {
@@ -30955,6 +31871,7 @@ namespace {
          *
          * @param  string|integer|null $date UTC timestamp, or ISO 8601 DateTime. If the DateTime string has no timezone or offset, WordPress site timezone will be assumed. Null if their is no date.
          * @throws WC_Data_Exception Throws exception when invalid data is found.
+         * @return void
          */
         public function set_date_paid($date = \null)
         {
@@ -30964,6 +31881,7 @@ namespace {
          *
          * @param string $value Cart hash.
          * @throws WC_Data_Exception Throws exception when invalid data is found.
+         * @return void
          */
         public function set_cart_hash($value)
         {
@@ -31355,6 +32273,7 @@ namespace {
          *
          * @param array  $total_rows  Total rows.
          * @param string $tax_display Tax to display.
+         * @return void
          */
         protected function add_order_item_totals_payment_method_row(&$total_rows, $tax_display)
         {
@@ -31364,6 +32283,7 @@ namespace {
          *
          * @param array  $total_rows  Total rows.
          * @param string $tax_display Tax to display.
+         * @return void
          */
         protected function add_order_item_totals_refund_rows(&$total_rows, $tax_display)
         {
@@ -31736,6 +32656,8 @@ namespace {
         private static $editing_term = \null;
         /**
          * Hook in methods.
+         *
+         * @return void
          */
         public static function init()
         {
@@ -31753,6 +32675,8 @@ namespace {
         }
         /**
          * Sync products queued to sync.
+         *
+         * @return void
          */
         public static function do_deferred_product_sync()
         {
@@ -31761,6 +32685,8 @@ namespace {
          * Sync a product.
          *
          * @param int $product_id Product ID.
+         *
+         * @return void
          */
         public static function deferred_product_sync($product_id)
         {
@@ -31771,12 +32697,16 @@ namespace {
          * @param string  $new_status New status.
          * @param string  $old_status Old status.
          * @param WP_Post $post       Post data.
+         *
+         * @return void
          */
         public static function transition_post_status($new_status, $old_status, $post)
         {
         }
         /**
          * Delete product view transients when needed e.g. when post status changes, or visibility/stock status is modified.
+         *
+         * @return void
          */
         public static function delete_product_query_transients()
         {
@@ -31789,6 +32719,8 @@ namespace {
          * @param WC_Product $product Product data.
          * @param string     $from    Origin type.
          * @param string     $to      New type.
+         *
+         * @return void
          */
         public static function product_type_changed($product, $from, $to)
         {
@@ -31799,6 +32731,8 @@ namespace {
          * @param  int    $term_id  Term ID.
          * @param  int    $tt_id    Term taxonomy ID.
          * @param  string $taxonomy Taxonomy slug.
+         *
+         * @return void
          */
         public static function edit_term($term_id, $tt_id, $taxonomy)
         {
@@ -31809,6 +32743,8 @@ namespace {
          * @param  int    $term_id  Term ID.
          * @param  int    $tt_id    Term taxonomy ID.
          * @param  string $taxonomy Taxonomy slug.
+         *
+         * @return void
          */
         public static function edited_term($term_id, $tt_id, $taxonomy)
         {
@@ -31867,6 +32803,8 @@ namespace {
          * @since 9.8.0
          *
          * @param mixed $id ID of post being deleted.
+         *
+         * @return void
          */
         public static function delete_post_data($id)
         {
@@ -31875,6 +32813,8 @@ namespace {
          * Removes variations etc. belonging to a deleted post, and clears transients, if the user has permission.
          *
          * @param mixed $id ID of post being deleted.
+         *
+         * @return void
          */
         public static function delete_post($id)
         {
@@ -31883,6 +32823,8 @@ namespace {
          * Trash post.
          *
          * @param mixed $id Post ID.
+         *
+         * @return void
          */
         public static function trash_post($id)
         {
@@ -31891,6 +32833,8 @@ namespace {
          * Untrash post.
          *
          * @param mixed $id Post ID.
+         *
+         * @return void
          */
         public static function untrash_post($id)
         {
@@ -31899,6 +32843,8 @@ namespace {
          * Clear global unique id if it's not unique.
          *
          * @param mixed $id Post ID.
+         *
+         * @return void
          */
         private static function clear_global_unique_id_if_necessary($id)
         {
@@ -31917,6 +32863,8 @@ namespace {
          *
          * @since 3.2.0
          * @param int $order_id Order ID.
+         *
+         * @return void
          */
         public static function before_delete_order($order_id)
         {
@@ -31925,6 +32873,8 @@ namespace {
          * Remove item meta on permanent deletion.
          *
          * @param int $postid Post ID.
+         *
+         * @return void
          */
         public static function delete_order_items($postid)
         {
@@ -31933,6 +32883,8 @@ namespace {
          * Remove downloadable permissions on permanent order deletion.
          *
          * @param int $postid Post ID.
+         *
+         * @return void
          */
         public static function delete_order_downloadable_permissions($postid)
         {
@@ -31944,6 +32896,8 @@ namespace {
          * @param  int    $object_id  Object ID.
          * @param  string $meta_key   Meta key.
          * @param  mixed  $meta_value Meta value.
+         *
+         * @return void
          */
         public static function flush_object_meta_cache($meta_id, $object_id, $meta_key, $meta_value)
         {
@@ -31957,6 +32911,8 @@ namespace {
          * @param array  $tt_ids    Term ids array.
          * @param string $taxonomy  Taxonomy name.
          * @param bool   $append    Are we appending or setting terms.
+         *
+         * @return void
          */
         public static function force_default_term($object_id, $terms, $tt_ids, $taxonomy, $append)
         {
@@ -31972,6 +32928,8 @@ namespace {
          * @param array  $old_tt_ids  The old array of term taxonomy IDs.
          *
          * @since 10.4.0
+         *
+         * @return void
          */
         public static function recount_terms_for_product_visibility_change($object_id, $terms, $tt_ids, $taxonomy, $append, $old_tt_ids)
         {
@@ -31995,6 +32953,8 @@ namespace {
          * @param  string $meta_key   Meta key.
          * @param  mixed  $meta_value Meta value.
          * @deprecated    3.3
+         *
+         * @return void
          */
         public static function sync_product_stock_status($meta_id, $object_id, $meta_key, $meta_value)
         {
@@ -32006,6 +32966,8 @@ namespace {
          * @param int   $product_id   Product ID.
          * @param int   $variation_id Variation ID. Optional product variation identifier.
          * @param array $downloads    Newly set files.
+         *
+         * @return void
          */
         public static function process_product_file_download_paths($product_id, $variation_id, $downloads)
         {
@@ -32020,6 +32982,8 @@ namespace {
          * @param string $taxonomy   Taxonomy slug.
          * @param mixed  $append     Whether to append new terms to the old terms.
          * @param array  $old_tt_ids Old array of term taxonomy IDs.
+         *
+         * @return void
          */
         public static function set_object_terms($object_id, $terms, $tt_ids, $taxonomy, $append, $old_tt_ids)
         {
@@ -32029,6 +32993,8 @@ namespace {
          *
          * @since 10.2.0
          * @param array $variation_ids Array of variation IDs.
+         *
+         * @return void
          */
         private static function regenerate_variation_summaries($variation_ids)
         {
@@ -32038,6 +33004,8 @@ namespace {
          *
          * @since 10.2.0
          * @param int $variation_id Variation ID.
+         *
+         * @return void
          */
         public static function regenerate_variation_attribute_summary($variation_id)
         {
@@ -32058,6 +33026,8 @@ namespace {
          * @param int    $attribute_id Attribute ID.
          * @param string $attribute    Attribute name.
          * @param string $old_slug     Old attribute slug.
+         *
+         * @return void
          */
         public static function handle_global_attribute_updated($attribute_id, $attribute, $old_slug)
         {
@@ -32067,6 +33037,8 @@ namespace {
          *
          * @since 10.2.0
          * @param string $taxonomy Attribute taxonomy.
+         *
+         * @return void
          */
         public static function regenerate_attribute_variation_summaries($taxonomy)
         {
@@ -32076,6 +33048,8 @@ namespace {
          *
          * @since 10.2.0
          * @param WC_Product $product The variable product whose attributes were updated.
+         *
+         * @return void
          */
         public static function on_product_attributes_updated($product)
         {
@@ -32085,6 +33059,8 @@ namespace {
          *
          * @since 10.2.0
          * @param int $product_id Variable product ID.
+         *
+         * @return void
          */
         public static function regenerate_product_variation_summaries($product_id)
         {
@@ -32095,6 +33071,8 @@ namespace {
          * @param int    $term_id  Term ID.
          * @param int    $tt_id    Term taxonomy ID.
          * @param string $taxonomy Taxonomy slug.
+         *
+         * @return void
          */
         public static function handle_attribute_term_updated($term_id, $tt_id, $taxonomy)
         {
@@ -32106,6 +33084,8 @@ namespace {
          * @param int     $tt_id    Term taxonomy ID.
          * @param string  $taxonomy Taxonomy slug.
          * @param WP_Term $deleted_term Copy of the already-deleted term.
+         *
+         * @return void
          */
         public static function handle_attribute_term_deleted($term_id, $tt_id, $taxonomy, $deleted_term)
         {
@@ -32135,6 +33115,8 @@ namespace {
          * @since 10.2.0
          * @param string $taxonomy Taxonomy slug.
          * @param string $term_slug Term slug.
+         *
+         * @return void
          */
         public static function regenerate_term_variation_summaries($taxonomy, $term_slug)
         {
@@ -32540,6 +33522,13 @@ namespace {
          */
         protected $data = array('id' => 0, 'name' => '', 'options' => array(), 'position' => 0, 'visible' => \false, 'variation' => \false);
         /**
+         * Extra data array.
+         *
+         * @since 10.6.0
+         * @var array
+         */
+        protected $extra_data = array();
+        /**
          * Return if this attribute is a taxonomy.
          *
          * @return boolean
@@ -32593,6 +33582,16 @@ namespace {
         |--------------------------------------------------------------------------
         */
         /**
+         * Set extra data by key.
+         *
+         * @since 10.6.0
+         * @param string $key   Extra data key.
+         * @param mixed  $value Extra data value.
+         */
+        public function set_extra_data(string $key, $value): void
+        {
+        }
+        /**
          * Set ID (this is the attribute ID).
          *
          * @param int $value Attribute ID.
@@ -32645,6 +33644,25 @@ namespace {
         | Getters
         |--------------------------------------------------------------------------
         */
+        /**
+         * Get all extra data.
+         *
+         * @since 10.6.0
+         * @return array
+         */
+        public function get_all_extra_data()
+        {
+        }
+        /**
+         * Get extra data by key.
+         *
+         * @since 10.6.0
+         * @param string $key Extra data key.
+         * @return mixed
+         */
+        public function get_extra_data(string $key)
+        {
+        }
         /**
          * Get the ID.
          *
@@ -32751,6 +33769,13 @@ namespace {
          */
         protected $data = array('id' => '', 'name' => '', 'file' => '', 'enabled' => \true);
         /**
+         * Extra data array.
+         *
+         * @since 10.6.0
+         * @var array
+         */
+        protected $extra_data = array();
+        /**
          * Returns all data for this object.
          *
          * @return array
@@ -32852,6 +33877,16 @@ namespace {
         |--------------------------------------------------------------------------
         */
         /**
+         * Set extra data by key.
+         *
+         * @since 10.6.0
+         * @param string $key   Extra data key.
+         * @param mixed  $value Extra data value.
+         */
+        public function set_extra_data(string $key, $value): void
+        {
+        }
+        /**
          * Set ID.
          *
          * @param string $value Download ID.
@@ -32897,6 +33932,25 @@ namespace {
         | Getters
         |--------------------------------------------------------------------------
         */
+        /**
+         * Get all extra data.
+         *
+         * @since 10.6.0
+         * @return array
+         */
+        public function get_all_extra_data()
+        {
+        }
+        /**
+         * Get extra data by key.
+         *
+         * @since 10.6.0
+         * @param string $key Extra data key.
+         * @return mixed
+         */
+        public function get_extra_data(string $key)
+        {
+        }
         /**
          * Get id.
          *
@@ -33141,9 +34195,9 @@ namespace {
         /**
          * Get a product.
          *
-         * @param mixed $product_id WC_Product|WP_Post|int|bool $product Product instance, post instance, numeric or false to use global $post.
+         * @param mixed $product_id Product instance, post instance, numeric or false to use global $post.
          * @param array $deprecated Previously used to pass arguments to the factory, e.g. to force a type.
-         * @return WC_Product|bool Product object or false if the product cannot be loaded.
+         * @return WC_Product|bool  Product object or false if the product cannot be loaded.
          */
         public function get_product($product_id = \false, $deprecated = array())
         {
@@ -33262,7 +34316,7 @@ namespace {
          * Return the children of this product.
          *
          * @param  string $context What the value is for. Valid values are view and edit.
-         * @return array
+         * @return int[]
          */
         public function get_children($context = 'view')
         {
@@ -33271,7 +34325,7 @@ namespace {
          * Return the product's children - visible only.
          *
          * @since 9.8.0
-         * @return array Child products
+         * @return WC_Product[] Child products
          */
         public function get_visible_children()
         {
@@ -33544,7 +34598,7 @@ namespace {
          * This is lazy loaded as it's not used often and does require several queries.
          *
          * @param bool|string $visible_only Visible only.
-         * @return array Children ids
+         * @return int[] Children ids
          */
         public function get_children($visible_only = '')
         {
@@ -33555,7 +34609,7 @@ namespace {
          * This is lazy loaded as it's not used often and does require several queries.
          *
          * @since 3.0.0
-         * @return array Children ids
+         * @return int[] Children ids
          */
         public function get_visible_children()
         {
@@ -38701,7 +39755,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '10.5.3';
+        public $version = '10.6.0';
         /**
          * WooCommerce Schema version.
          *
@@ -38802,6 +39856,8 @@ namespace {
          * Cloning is forbidden.
          *
          * @since 2.1
+         *
+         * @return void
          */
         public function __clone()
         {
@@ -38810,6 +39866,8 @@ namespace {
          * Unserializing instances of this class is forbidden.
          *
          * @since 2.1
+         *
+         * @return void
          */
         public function __wakeup()
         {
@@ -38829,6 +39887,8 @@ namespace {
          * @param string $key Property name.
          * @param mixed  $value Property value.
          * @throws Exception Attempt to access a property that's private or protected.
+         *
+         * @return void
          */
         public function __set(string $key, $value)
         {
@@ -38865,6 +39925,8 @@ namespace {
          * the load order. See #21524 for details.
          *
          * @since 3.6.0
+         *
+         * @return void
          */
         public function on_plugins_loaded()
         {
@@ -38881,6 +39943,8 @@ namespace {
          * Hook into actions and filters.
          *
          * @since 2.3
+         *
+         * @return void
          */
         private function init_hooks()
         {
@@ -38892,6 +39956,8 @@ namespace {
          *
          * This will no longer be used. The more flexible add_woocommerce_remote_variant
          * below will be used instead.
+         *
+         * @return void
          */
         public function add_woocommerce_inbox_variant()
         {
@@ -38899,6 +39965,8 @@ namespace {
         /**
          * Add woocommerce_remote_variant_assignment used to determine cohort
          * or group assignment for Remote Spec Engines.
+         *
+         * @return void
          */
         public function add_woocommerce_remote_variant()
         {
@@ -38907,18 +39975,27 @@ namespace {
          * Ensures fatal errors are logged so they can be picked up in the status report.
          *
          * @since 3.2.0
+         *
+         * @return void
          */
         public function log_errors()
         {
         }
         /**
          * Define WC Constants.
+         *
+         * IMPORTANT: When adding new constants here, also add them to
+         * php-stubs/wc-constants.php for PHPStan static analysis.
+         *
+         * @return void
          */
         private function define_constants()
         {
         }
         /**
          * Register custom tables within $wpdb object.
+         *
+         * @return void
          */
         private function define_tables()
         {
@@ -38928,6 +40005,8 @@ namespace {
          *
          * @param string      $name  Constant name.
          * @param string|bool $value Constant value.
+         *
+         * @return void
          */
         private function define($name, $value)
         {
@@ -38954,6 +40033,8 @@ namespace {
         }
         /**
          * Load REST API.
+         *
+         * @return void
          */
         public function load_rest_api()
         {
@@ -38969,6 +40050,8 @@ namespace {
         }
         /**
          * Include required core files used in admin and on the frontend.
+         *
+         * @return void
          */
         public function includes()
         {
@@ -38977,24 +40060,32 @@ namespace {
          * Include classes for theme support.
          *
          * @since 3.3.0
+         *
+         * @return void
          */
         private function theme_support_includes()
         {
         }
         /**
          * Include required frontend files.
+         *
+         * @return void
          */
         public function frontend_includes()
         {
         }
         /**
          * Function used to Init WooCommerce Template Functions - This makes them pluggable by plugins and themes.
+         *
+         * @return void
          */
         public function include_template_functions()
         {
         }
         /**
          * Init WooCommerce when WordPress Initialises.
+         *
+         * @return void
          */
         public function init()
         {
@@ -39007,18 +40098,24 @@ namespace {
          * Locales found in:
          *      - WP_LANG_DIR/woocommerce/woocommerce-LOCALE.mo
          *      - WP_LANG_DIR/plugins/woocommerce-LOCALE.mo
+         *
+         * @return void
          */
         public function load_plugin_textdomain()
         {
         }
         /**
          * Ensure theme and server variable compatibility and setup image sizes.
+         *
+         * @return void
          */
         public function setup_environment()
         {
         }
         /**
          * Ensure post thumbnail support is turned on.
+         *
+         * @return void
          */
         private function add_thumbnail_support()
         {
@@ -39036,6 +40133,8 @@ namespace {
          * woocommerce_single - Used on single product pages for the main image.
          *
          * @since 2.3
+         *
+         * @return void
          */
         public function add_image_sizes()
         {
@@ -39086,6 +40185,8 @@ namespace {
          * Load & enqueue active webhooks.
          *
          * @since 2.2
+         *
+         * @return void
          */
         private function load_webhooks()
         {
@@ -39128,6 +40229,8 @@ namespace {
         }
         /**
          * Set tablenames inside WPDB object.
+         *
+         * @return void
          */
         public function wpdb_table_fix()
         {
@@ -39137,6 +40240,8 @@ namespace {
          *
          * @since 3.6.0
          * @param string $filename The filename of the activated plugin.
+         *
+         * @return void
          */
         public function activated_plugin($filename)
         {
@@ -39146,6 +40251,8 @@ namespace {
          *
          * @since 3.6.0
          * @param string $filename The filename of the deactivated plugin.
+         *
+         * @return void
          */
         public function deactivated_plugin($filename)
         {
@@ -39285,6 +40392,8 @@ namespace {
          * @since 9.0.0
          *
          * @internal For exclusive usage of WooCommerce core, backwards compatibility not guaranteed.
+         *
+         * @return void
          */
         public function register_wp_admin_settings()
         {
@@ -39388,6 +40497,8 @@ namespace {
         }
         /**
          * Register recurring actions.
+         *
+         * @return void
          */
         public function register_recurring_actions()
         {
@@ -39420,6 +40531,8 @@ namespace {
          *
          * @internal
          * @see https://github.com/woocommerce/woocommerce/issues/58364
+         *
+         * @return void
          */
         public function init_customizer()
         {
@@ -43251,6 +44364,7 @@ namespace {
          *
          * @param WC_Product $product Product object.
          * @throws Exception If SKU is already under processing.
+         * @return void
          */
         public function create(&$product)
         {
@@ -43260,6 +44374,7 @@ namespace {
          *
          * @param WC_Product $product Product object.
          * @throws Exception If invalid product.
+         * @return void
          */
         public function read(&$product)
         {
@@ -43268,6 +44383,7 @@ namespace {
          * Method to update a product in the database.
          *
          * @param WC_Product $product Product object.
+         * @return void
          */
         public function update(&$product)
         {
@@ -43291,6 +44407,7 @@ namespace {
          *
          * @param WC_Product $product Product object.
          * @since 3.0.0
+         * @return void
          */
         protected function read_product_data(&$product)
         {
@@ -43299,6 +44416,7 @@ namespace {
          * Load the Cost of Goods Sold related data for a given product.
          *
          * @param WC_Product $product The product to apply the loaded data to.
+         * @return void
          */
         protected function load_cogs_data($product)
         {
@@ -43308,6 +44426,7 @@ namespace {
          *
          * @param WC_Product $product Product object.
          * @param int|float  $new_stock New stock level if already read.
+         * @return void
          */
         public function read_stock_quantity(&$product, $new_stock = \null)
         {
@@ -43317,6 +44436,7 @@ namespace {
          *
          * @param WC_Product $product Product object.
          * @since 3.0.0
+         * @return void
          */
         protected function read_extra_data(&$product)
         {
@@ -43327,6 +44447,7 @@ namespace {
          *
          * @param WC_Product $product Product object.
          * @since 3.0.0
+         * @return void
          */
         protected function read_visibility(&$product)
         {
@@ -43335,6 +44456,7 @@ namespace {
          * Read attributes from post meta.
          *
          * @param WC_Product $product Product object.
+         * @return void
          */
         protected function read_attributes(&$product)
         {
@@ -43344,6 +44466,7 @@ namespace {
          *
          * @param WC_Product $product Product object.
          * @since 3.0.0
+         * @return void
          */
         protected function read_downloads(&$product)
         {
@@ -43354,6 +44477,7 @@ namespace {
          * @param WC_Product $product Product object.
          * @param bool       $force Force update. Used during create.
          * @since 3.0.0
+         * @return void
          */
         protected function update_post_meta(&$product, $force = \false)
         {
@@ -43363,6 +44487,7 @@ namespace {
          *
          * @since 3.0.0
          * @param WC_Product $product Product Object.
+         * @return void
          */
         protected function handle_updated_props(&$product)
         {
@@ -43373,6 +44498,7 @@ namespace {
          * @param WC_Product $product Product object.
          * @param bool       $force Force update. Used during create.
          * @since 3.0.0
+         * @return void
          */
         protected function update_terms(&$product, $force = \false)
         {
@@ -43384,6 +44510,7 @@ namespace {
          *
          * @param WC_Product $product Product object.
          * @param bool       $force Force update. Used during create.
+         * @return void
          */
         protected function update_visibility(&$product, $force = \false)
         {
@@ -43394,6 +44521,7 @@ namespace {
          * @param WC_Product $product Product object.
          * @param bool       $force Force update. Used during create.
          * @since 3.0.0
+         * @return void
          */
         protected function update_attributes(&$product, $force = \false)
         {
@@ -43414,6 +44542,7 @@ namespace {
          *
          * @param WC_Product $product Product object.
          * @since 3.0.0
+         * @return void
          */
         protected function update_version_and_type(&$product)
         {
@@ -43423,6 +44552,7 @@ namespace {
          *
          * @param WC_Product $product Product object.
          * @since 3.0.0
+         * @return void
          */
         protected function clear_caches(&$product)
         {
@@ -43542,6 +44672,7 @@ namespace {
          * Make sure all variations have a sort order set so they can be reordered correctly.
          *
          * @param int $parent_id Product ID.
+         * @return void
          */
         public function sort_all_product_variations($parent_id)
         {
@@ -43582,6 +44713,7 @@ namespace {
          *
          * @param int            $product_id_with_stock Product ID.
          * @param int|float|null $stock_quantity        Stock quantity.
+         * @return void
          */
         protected function set_product_stock($product_id_with_stock, $stock_quantity)
         {
@@ -43611,6 +44743,7 @@ namespace {
          * @param  int      $product_id Product ID.
          * @param  int|null $quantity Quantity.
          * @param  string   $operation set, increase and decrease.
+         * @return void
          */
         public function update_product_sales($product_id, $quantity = \null, $operation = 'set')
         {
@@ -43621,6 +44754,7 @@ namespace {
          * @since 3.0.0
          * @todo Deprecate unused function?
          * @param WC_Product $product Product object.
+         * @return void
          */
         public function update_average_rating($product)
         {
@@ -43631,6 +44765,7 @@ namespace {
          * @since 3.0.0
          * @todo Deprecate unused function?
          * @param WC_Product $product Product object.
+         * @return void
          */
         public function update_review_count($product)
         {
@@ -43641,6 +44776,7 @@ namespace {
          * @since 3.0.0
          * @todo Deprecate unused function?
          * @param WC_Product $product Product object.
+         * @return void
          */
         public function update_rating_counts($product)
         {
@@ -44732,7 +45868,7 @@ namespace {
         /**
          * Email method ID.
          *
-         * @var String
+         * @var string
          */
         public $id;
         /**
@@ -46487,6 +47623,200 @@ namespace {
         }
     }
     /**
+     * Customer Refunded Order Email.
+     *
+     * Order refunded emails are sent to the customer when the order is marked refunded.
+     *
+     * @class    WC_Email_Customer_Refunded_Order
+     * @version  3.5.0
+     * @package  WooCommerce\Classes\Emails
+     * @extends  WC_Email
+     */
+    class WC_Email_Customer_Refunded_Order extends \WC_Email
+    {
+        /**
+         * Refund order.
+         *
+         * @var WC_Order|bool
+         */
+        public $refund;
+        /**
+         * Is the order partial refunded?
+         *
+         * @var bool
+         */
+        public $partial_refund;
+        /**
+         * Constructor.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Get email subject.
+         *
+         * @param bool $partial Whether it is a partial refund or a full refund.
+         * @since  3.1.0
+         * @return string
+         */
+        public function get_default_subject($partial = \false)
+        {
+        }
+        /**
+         * Get email heading.
+         *
+         * @param bool $partial Whether it is a partial refund or a full refund.
+         * @since  3.1.0
+         * @return string
+         */
+        public function get_default_heading($partial = \false)
+        {
+        }
+        /**
+         * Get email subject.
+         *
+         * @return string
+         */
+        public function get_subject()
+        {
+        }
+        /**
+         * Get email heading.
+         *
+         * @return string
+         */
+        public function get_heading()
+        {
+        }
+        /**
+         * Set email strings.
+         *
+         * @param bool $partial_refund Whether it is a partial refund or a full refund.
+         * @deprecated 3.1.0 Unused.
+         */
+        public function set_email_strings($partial_refund = \false)
+        {
+        }
+        /**
+         * Full refund notification.
+         *
+         * @param int $order_id Order ID.
+         * @param int $refund_id Refund ID.
+         */
+        public function trigger_full($order_id, $refund_id = \null)
+        {
+        }
+        /**
+         * Partial refund notification.
+         *
+         * @param int $order_id Order ID.
+         * @param int $refund_id Refund ID.
+         */
+        public function trigger_partial($order_id, $refund_id = \null)
+        {
+        }
+        /**
+         * Trigger.
+         *
+         * @param int  $order_id Order ID.
+         * @param bool $partial_refund Whether it is a partial refund or a full refund.
+         * @param int  $refund_id Refund ID.
+         */
+        public function trigger($order_id, $partial_refund = \false, $refund_id = \null)
+        {
+        }
+        /**
+         * Get content html.
+         *
+         * @return string
+         */
+        public function get_content_html()
+        {
+        }
+        /**
+         * Get content plain.
+         *
+         * @return string
+         */
+        public function get_content_plain()
+        {
+        }
+        /**
+         * Get block editor email template content.
+         *
+         * @return string
+         */
+        public function get_block_editor_email_template_content()
+        {
+        }
+        /**
+         * Default content to show below main email content.
+         *
+         * @since 3.7.0
+         * @return string
+         */
+        public function get_default_additional_content()
+        {
+        }
+        /**
+         * Initialise settings form fields.
+         */
+        public function init_form_fields()
+        {
+        }
+    }
+    /**
+     * Customer Partially Refunded Order Email.
+     *
+     * Partial refund emails are sent to customers when their order is partially refunded.
+     *
+     * This email is a variant of the WC_Email_Customer_Refunded_Order email used only for the block email editor.
+     *
+     * The WC_Email_Customer_Refunded_Order email is used for both full and partial refunds.
+     *
+     * We created this custom class to maintain backwards compatibility with other integrations that use the WC_Email_Customer_Refunded_Order email.
+     *
+     * The next version of WooCommerce will move more of the functionality from the parent class to this custom class.
+     *
+     * @class    WC_Email_Customer_Partially_Refunded_Order
+     * @version  10.6.0
+     * @package  WooCommerce\Classes\Emails
+     */
+    class WC_Email_Customer_Partially_Refunded_Order extends \WC_Email_Customer_Refunded_Order
+    {
+        /**
+         * Constructor.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Get block editor email template content.
+         *
+         * @return string
+         */
+        public function get_block_editor_email_template_content()
+        {
+        }
+        /**
+         * Get email subject.
+         *
+         * @return string
+         */
+        public function get_subject()
+        {
+        }
+        /**
+         * Return the name of the option in the WP DB.
+         *
+         * @since 2.6.0
+         * @return string
+         */
+        public function get_option_key()
+        {
+        }
+    }
+    /**
      * Customer Completed Order Email.
      *
      * Order complete emails are sent to the customer when the order is marked complete and usual indicates that the order has been shipped.
@@ -47033,149 +48363,6 @@ namespace {
          * @return string
          */
         public function get_default_additional_content()
-        {
-        }
-    }
-    /**
-     * Customer Refunded Order Email.
-     *
-     * Order refunded emails are sent to the customer when the order is marked refunded.
-     *
-     * @class    WC_Email_Customer_Refunded_Order
-     * @version  3.5.0
-     * @package  WooCommerce\Classes\Emails
-     * @extends  WC_Email
-     */
-    class WC_Email_Customer_Refunded_Order extends \WC_Email
-    {
-        /**
-         * Refund order.
-         *
-         * @var WC_Order|bool
-         */
-        public $refund;
-        /**
-         * Is the order partial refunded?
-         *
-         * @var bool
-         */
-        public $partial_refund;
-        /**
-         * Constructor.
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Get email subject.
-         *
-         * @param bool $partial Whether it is a partial refund or a full refund.
-         * @since  3.1.0
-         * @return string
-         */
-        public function get_default_subject($partial = \false)
-        {
-        }
-        /**
-         * Get email heading.
-         *
-         * @param bool $partial Whether it is a partial refund or a full refund.
-         * @since  3.1.0
-         * @return string
-         */
-        public function get_default_heading($partial = \false)
-        {
-        }
-        /**
-         * Get email subject.
-         *
-         * @return string
-         */
-        public function get_subject()
-        {
-        }
-        /**
-         * Get email heading.
-         *
-         * @return string
-         */
-        public function get_heading()
-        {
-        }
-        /**
-         * Set email strings.
-         *
-         * @param bool $partial_refund Whether it is a partial refund or a full refund.
-         * @deprecated 3.1.0 Unused.
-         */
-        public function set_email_strings($partial_refund = \false)
-        {
-        }
-        /**
-         * Full refund notification.
-         *
-         * @param int $order_id Order ID.
-         * @param int $refund_id Refund ID.
-         */
-        public function trigger_full($order_id, $refund_id = \null)
-        {
-        }
-        /**
-         * Partial refund notification.
-         *
-         * @param int $order_id Order ID.
-         * @param int $refund_id Refund ID.
-         */
-        public function trigger_partial($order_id, $refund_id = \null)
-        {
-        }
-        /**
-         * Trigger.
-         *
-         * @param int  $order_id Order ID.
-         * @param bool $partial_refund Whether it is a partial refund or a full refund.
-         * @param int  $refund_id Refund ID.
-         */
-        public function trigger($order_id, $partial_refund = \false, $refund_id = \null)
-        {
-        }
-        /**
-         * Get content html.
-         *
-         * @return string
-         */
-        public function get_content_html()
-        {
-        }
-        /**
-         * Get content plain.
-         *
-         * @return string
-         */
-        public function get_content_plain()
-        {
-        }
-        /**
-         * Get block editor email template content.
-         *
-         * @return string
-         */
-        public function get_block_editor_email_template_content()
-        {
-        }
-        /**
-         * Default content to show below main email content.
-         *
-         * @since 3.7.0
-         * @return string
-         */
-        public function get_default_additional_content()
-        {
-        }
-        /**
-         * Initialise settings form fields.
-         */
-        public function init_form_fields()
         {
         }
     }
@@ -48891,10 +50078,19 @@ namespace {
         {
         }
         /**
+         * Get PayPal icon image.
+         *
+         * @return string The PayPal icon image.
+         */
+        protected function get_paypal_icon_image()
+        {
+        }
+        /**
          * Get PayPal images for a country.
          *
          * @param string $country Country code.
          * @return array of image URLs
+         * @deprecated 10.6.0 Use get_paypal_icon_image() instead.
          */
         protected function get_icon_image($country)
         {
@@ -51027,7 +52223,7 @@ namespace {
          * @param string $hook The hook to trigger.
          * @param array  $args Arguments to pass when the hook triggers.
          * @param string $group The group to assign this job to.
-         * @return string The action ID
+         * @return int The action ID
          */
         public function add($hook, $args = array(), $group = '');
         /**
@@ -51037,7 +52233,7 @@ namespace {
          * @param string $hook The hook to trigger.
          * @param array  $args Arguments to pass when the hook triggers.
          * @param string $group The group to assign this job to.
-         * @return string The action ID
+         * @return int The action ID
          */
         public function schedule_single($timestamp, $hook, $args = array(), $group = '');
         /**
@@ -51048,7 +52244,7 @@ namespace {
          * @param string $hook The hook to trigger.
          * @param array  $args Arguments to pass when the hook triggers.
          * @param string $group The group to assign this job to.
-         * @return string The action ID
+         * @return int The action ID
          */
         public function schedule_recurring($timestamp, $interval_in_seconds, $hook, $args = array(), $group = '');
         /**
@@ -51069,7 +52265,7 @@ namespace {
          * @param string $hook The hook to trigger.
          * @param array  $args Arguments to pass when the hook triggers.
          * @param string $group The group to assign this job to.
-         * @return string The action ID
+         * @return int The action ID
          */
         public function schedule_cron($timestamp, $cron_schedule, $hook, $args = array(), $group = '');
         /**
@@ -52003,7 +53199,7 @@ namespace {
          * @param string $hook The hook to trigger.
          * @param array  $args Arguments to pass when the hook triggers.
          * @param string $group The group to assign this job to.
-         * @return string The action ID.
+         * @return int The action ID.
          */
         public function add($hook, $args = array(), $group = '')
         {
@@ -52015,7 +53211,7 @@ namespace {
          * @param string $hook The hook to trigger.
          * @param array  $args Arguments to pass when the hook triggers.
          * @param string $group The group to assign this job to.
-         * @return string The action ID.
+         * @return int The action ID.
          */
         public function schedule_single($timestamp, $hook, $args = array(), $group = '')
         {
@@ -52028,7 +53224,7 @@ namespace {
          * @param string $hook The hook to trigger.
          * @param array  $args Arguments to pass when the hook triggers.
          * @param string $group The group to assign this job to.
-         * @return string The action ID.
+         * @return int The action ID.
          */
         public function schedule_recurring($timestamp, $interval_in_seconds, $hook, $args = array(), $group = '')
         {
@@ -52051,7 +53247,7 @@ namespace {
          * @param string $hook The hook to trigger.
          * @param array  $args Arguments to pass when the hook triggers.
          * @param string $group The group to assign this job to.
-         * @return string The action ID
+         * @return int The action ID
          */
         public function schedule_cron($timestamp, $cron_schedule, $hook, $args = array(), $group = '')
         {
@@ -55188,6 +56384,731 @@ namespace {
         {
         }
     }
+}
+namespace Automattic\WooCommerce\Internal\Traits {
+    /**
+     * This trait provides caching capabilities for REST API endpoints using the WordPress cache.
+     *
+     * - The output of all the REST API endpoints whose callback declaration is wrapped
+     *   in a call to 'with_cache' will be cached using wp_cache_* functions.
+     * - Response headers are cached together with the response data, excluding certain fixed
+     *   headers (like Set-Cookie) and optionally others specified via configuration
+     *   (per-controller or per-endpoint).
+     * - For the purposes of caching, a request is uniquely identified by its route,
+     *   HTTP method, query string, and user ID.
+     * - The VersionStringGenerator class is used to track versions of entities included
+     *   in the responses (an "entity" is any object that is uniquely identified by type and id
+     *   and contributes with information to be included in the response),
+     *   so that when those entities change, the relevant cached responses become invalid.
+     *   Modification of entity versions must be done externally by the code that modifies
+     *   those entities (via calls to VersionStringGenerator::generate_version).
+     * - Various parameters (cached outputs TTL, entity type for a given response, hooks that affect
+     *   the response) can be configured globally for the controller (via overriding protected methods)
+     *   or per-endpoint (via arguments passed to with_cache).
+     * - Caching can be disabled for a given request by adding a '_skip_cache=true|1'
+     *   to the query string.
+     * - A X-WC-Cache HTTP header is added to responses to indicate cache status:
+     *   HIT, MISS, or SKIP.
+     *
+     * Additionally to caching, this trait also handles the sending of appropriate
+     * Cache-Control and ETag headers to instruct clients and proxies on how to cache responses.
+     * The ETag is generated based on the cached response data and cache key, and a request
+     * containing an If-None-Match header with a matching ETag will receive a 304 Not Modified response.
+     *
+     * Usage: Wrap endpoint callbacks with the `with_cache()` method when registering routes.
+     *
+     * Example:
+     *
+     * class WC_REST_Products_Controller extends WC_REST_Products_V2_Controller {
+     *     use RestApiCache;
+     *
+     *     public function __construct() {
+     *         parent::__construct();
+     *         $this->initialize_rest_api_cache();  // REQUIRED
+     *     }
+     *
+     *     protected function get_default_response_entity_type(): ?string {
+     *         return 'product';  // REQUIRED (or specify entity_type in each with_cache call)
+     *     }
+     *
+     *     public function register_routes() {
+     *         register_rest_route(
+     *             $this->namespace,
+     *             '/' . $this->rest_base . '/(?P<id>[\d]+)',
+     *             array(
+     *                 'methods'  => WP_REST_Server::READABLE,
+     *                 'callback' => $this->with_cache(
+     *                     array( $this, 'get_item' ),
+     *                     array(
+     *                         // String, optional if get_default_response_entity_type() is overridden.
+     *                         'entity_type'    => 'product',
+     *                         // Optional int, defaults to the controller's get_ttl_for_cached_response().
+     *                         'cache_ttl'      => HOUR_IN_SECONDS,
+     *                         // Optional array, defaults to the controller's get_hooks_relevant_to_caching().
+     *                         'relevant_hooks'  => array( 'filter_name_1', 'filter_name_2' ),
+     *                         // Optional array, defaults to the controller's get_files_relevant_to_response_caching().
+     *                         // Paths can be absolute or relative to the first directory from
+     *                         // get_allowed_directories_for_file_based_response_caching() (WC_ABSPATH by default).
+     *                         'relevant_files'  => array( 'data/config.json', '/absolute/path/to/file.php' ),
+     *                         // Optional array, defaults to the controller's get_version_strings_relevant_to_caching().
+     *                         // Version string IDs to track; cache is invalidated when any version string changes.
+     *                         'relevant_version_strings' => array( 'list_products' ),
+     *                         // Optional bool, defaults to the controller's response_cache_vary_by_user().
+     *                         'vary_by_user'    => true,
+     *                         // Optional array, defaults to the controller's get_response_headers_to_include_in_caching().
+     *                         'include_headers' => array( 'X-Custom-Header' ),
+     *                         // Optional array, defaults to the controller's get_response_headers_to_exclude_from_caching().
+     *                         'exclude_headers' => array( 'X-Private-Header' ),
+     *                         // Optional, this will be passed to all the caching-related methods.
+     *                         'endpoint_id'     => 'get_product'
+     *                     )
+     *                 ),
+     *             )
+     *         );
+     *     }
+     * }
+     *
+     * Override these methods in your controller as needed:
+     * - get_default_response_entity_type(): Default entity type for endpoints without explicit config.
+     * - response_cache_vary_by_user(): Whether cache should be user-specific.
+     * - get_hooks_relevant_to_caching(): Hook names to track for cache invalidation.
+     * - get_files_relevant_to_response_caching(): File paths to track for cache invalidation.
+     * - get_version_strings_relevant_to_caching(): Version string IDs to track for cache invalidation.
+     * - get_allowed_directories_for_file_based_response_caching(): Directories allowed for file tracking.
+     * - get_file_check_interval_for_response_caching(): How long to cache file modification checks (default 10 minutes).
+     * - get_ttl_for_cached_response(): TTL for cached outputs in seconds.
+     * - get_response_headers_to_include_in_caching(): Headers to include in cache (false = use exclusion mode).
+     * - get_response_headers_to_exclude_from_caching(): Headers to exclude from cache (when in exclusion mode).
+     *
+     * Cache invalidation happens when:
+     * - Entity versions change (tracked via VersionStringGenerator).
+     * - Hook callbacks change
+     *   (if the `get_hooks_relevant_to_caching()` call result or the 'relevant_hooks' array isn't empty).
+     * - Tracked files change or are deleted
+     *   (if the `get_files_relevant_to_response_caching()` call result or the 'relevant_files' array isn't empty).
+     * - Relevant version strings change or are deleted
+     *   (if the `get_version_strings_relevant_to_caching()` call result or the 'relevant_version_strings' array isn't empty).
+     * - Cached response TTL expires.
+     *
+     * NOTE: This caching mechanism uses the WordPress cache (wp_cache_* functions).
+     * By default caching is only enabled when an external object cache is enabled
+     * (checked via call to VersionStringGenerator::can_use()), so the cache is persistent
+     * across requests and not just for the current request.
+     *
+     * @since 10.5.0
+     */
+    trait RestApiCache
+    {
+        /**
+         * Cache group name for REST API responses.
+         *
+         * @var string
+         */
+        private static string $cache_group = 'woocommerce_rest_api_cache';
+        /**
+         * Response headers that are always excluded from caching.
+         *
+         * @var array
+         */
+        private static array $always_excluded_headers = array('X-WC-Cache', 'Set-Cookie', 'Date', 'Expires', 'Last-Modified', 'Age', 'ETag', 'Cache-Control', 'Pragma');
+        /**
+         * Cache group for warning suppression (separate from main cache to avoid interference).
+         *
+         * @var string
+         */
+        private static string $warning_cache_group = 'woocommerce_rest_api_cache_warnings';
+        /**
+         * TTL for suppressing duplicate file tracking warnings (1 hour).
+         *
+         * @var int
+         */
+        private static int $file_warning_suppression_ttl = HOUR_IN_SECONDS;
+        /**
+         * The instance of VersionStringGenerator to use, or null if caching is disabled.
+         *
+         * @var VersionStringGenerator|null
+         */
+        private ?\Automattic\WooCommerce\Internal\Caches\VersionStringGenerator $version_string_generator = null;
+        /**
+         * Whether we are currently handling a cached endpoint.
+         *
+         * @var bool
+         */
+        private $is_handling_cached_endpoint = false;
+        /**
+         * Whether the REST API caching feature is enabled.
+         *
+         * @var bool
+         */
+        private bool $rest_api_caching_feature_enabled = false;
+        /**
+         * Initialize the trait.
+         * This MUST be called from the controller's constructor.
+         *
+         * @since 10.5.0
+         */
+        protected function initialize_rest_api_cache(): void
+        {
+        }
+        /**
+         * Wrap an endpoint callback declaration with caching logic.
+         * Usage: `'callback' => $this->with_cache( array( $this, 'endpoint_callback_method' ) )`
+         *        `'callback' => $this->with_cache( array( $this, 'endpoint_callback_method' ), [ 'entity_type' => 'product' ] )`
+         *
+         * @since 10.5.0
+         *
+         * @param callable $callback The original endpoint callback.
+         * @param array    $config   Caching configuration:
+         *                           - entity_type: string (falls back to get_default_response_entity_type()).
+         *                           - vary_by_user: bool (defaults to response_cache_vary_by_user()).
+         *                           - endpoint_id: string|null (optional friendly identifier for the endpoint).
+         *                           - cache_ttl: int (defaults to get_ttl_for_cached_response()).
+         *                           - relevant_hooks: array (defaults to get_hooks_relevant_to_caching()).
+         *                           - relevant_files: array (defaults to get_files_relevant_to_response_caching()).
+         *                           - relevant_version_strings: array (defaults to get_version_strings_relevant_to_caching()).
+         *                           - include_headers: array|false (defaults to get_response_headers_to_include_in_caching()).
+         *                           - exclude_headers: array (defaults to get_response_headers_to_exclude_from_caching()).
+         * @return callable Wrapped callback.
+         */
+        protected function with_cache(callable $callback, array $config = array()): callable
+        {
+        }
+        /**
+         * Handle a request with caching logic.
+         *
+         * Strategy:
+         * - If backend caching is enabled: Try to use cached response if available, otherwise execute
+         *   the callback and cache the response.
+         * - If only cache headers are enabled: Execute the callback, generate ETag, and return 304
+         *   if the client's ETag matches.
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request  The request object.
+         * @param callable                              $callback The original endpoint callback.
+         * @param array                                 $config   Caching configuration specified for the endpoint.
+         *
+         * @return WP_REST_Response|\WP_Error The response.
+         */
+        private function handle_cacheable_request(\WP_REST_Request $request, callable $callback, array $config)
+        {
+        }
+        /**
+         * Check if caching should be used for a particular incoming request.
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request The request object.
+         *
+         * @return bool True if caching should be used, false otherwise.
+         */
+        private function should_use_cache_for_request(\WP_REST_Request $request): bool
+        {
+        }
+        /**
+         * Build the output cache entry configuration from the request and per-endpoint config.
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request The request object.
+         * @param array                                 $config  Raw configuration array passed to with_cache.
+         *
+         * @return array Normalized cache config with keys: endpoint_id, entity_type, vary_by_user, cache_ttl, relevant_hooks, relevant_files, include_headers, exclude_headers, cache_key.
+         *
+         * @throws \InvalidArgumentException If entity_type is not provided and no default is available, or if include_headers is not false or an array.
+         */
+        private function build_cache_config(\WP_REST_Request $request, array $config): array
+        {
+        }
+        /**
+         * Cache the response if it's successful and optionally add cache headers.
+         *
+         * Only caches responses with 2xx status codes. Always adds the X-WC-Cache header
+         * with value MISS if the response was cached, or SKIP if it was not cached.
+         *
+         * Supports both WP_REST_Response objects and raw data (which will be wrapped in a response object).
+         * Error objects are returned as-is without caching.
+         *
+         * @param WP_REST_Request<array<string, mixed>>   $request            The request object.
+         * @param WP_REST_Response|\WP_Error|array|object $response           The response to potentially cache.
+         * @param array                                   $cached_config      Caching configuration from build_cache_config().
+         * @param bool                                    $add_cache_headers  Whether to add cache control headers.
+         *
+         * @return WP_REST_Response|\WP_Error The response with appropriate cache headers.
+         */
+        private function maybe_cache_response(\WP_REST_Request $request, $response, array $cached_config, bool $add_cache_headers)
+        {
+        }
+        /**
+         * Add cache control headers to a response.
+         *
+         * This method generates an ETag from the response data and returns a 304 Not Modified
+         * if the client's If-None-Match header matches. It can be used both with and without
+         * backend caching.
+         *
+         * @param WP_REST_Request<array<string, mixed>>   $request       The request object.
+         * @param WP_REST_Response|\WP_Error|array|object $response      The response to add headers to.
+         * @param array                                   $cached_config Caching configuration from build_cache_config().
+         *
+         * @return WP_REST_Response|\WP_Error The response with cache headers.
+         */
+        private function maybe_add_cache_headers(\WP_REST_Request $request, $response, array $cached_config)
+        {
+        }
+        /**
+         * Create a 304 Not Modified response if allowed by filters.
+         *
+         * @param string                                $etag                The ETag value.
+         * @param string                                $cache_control_value The Cache-Control header value.
+         * @param WP_REST_Request<array<string, mixed>> $request             The request object.
+         * @param string|null                           $endpoint_id         The endpoint identifier.
+         *
+         * @return WP_REST_Response|null 304 response if allowed, null otherwise.
+         */
+        private function create_not_modified_response(string $etag, string $cache_control_value, \WP_REST_Request $request, ?string $endpoint_id): ?\WP_REST_Response
+        {
+        }
+        /**
+         * Get the default type for entities included in responses.
+         *
+         * This can be customized per-endpoint via the config array
+         * passed to with_cache() ('entity_type' key).
+         *
+         * @since 10.5.0
+         *
+         * @return string|null Entity type (e.g., 'product', 'order'), or null if no controller-wide default.
+         */
+        protected function get_default_response_entity_type(): ?string
+        {
+        }
+        /**
+         * Get data for ETag generation.
+         *
+         * Override in classes to exclude fields that change on each request
+         * (e.g., random recommendations, timestamps).
+         *
+         * @since 10.5.0
+         *
+         * @param array                                 $data        Response data.
+         * @param WP_REST_Request<array<string, mixed>> $request     The request object.
+         * @param string|null                           $endpoint_id Optional friendly identifier for the endpoint.
+         *
+         * @return array Cleaned data for ETag generation.
+         */
+        protected function get_data_for_etag(array $data, \WP_REST_Request $request, ?string $endpoint_id = null): array
+        {
+        }
+        /**
+         * Whether the response cache should vary by user.
+         *
+         * When true, each user gets their own cached version of the response.
+         * When false, the same cached response is shared across all users.
+         *
+         * This can be customized per-endpoint via the config array
+         * passed to with_cache() ('vary_by_user' key).
+         *
+         * @since 10.5.0
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request     The request object.
+         * @param string|null                           $endpoint_id Optional friendly identifier for the endpoint.
+         *
+         * @return bool True to make cache user-specific, false otherwise.
+         */
+        protected function response_cache_vary_by_user(\WP_REST_Request $request, ?string $endpoint_id = null): bool
+        {
+        }
+        /**
+         * Get the cache TTL (time to live) for cached responses.
+         *
+         * This can be customized per-endpoint via the config array
+         * passed to with_cache() ('cache_ttl' key).
+         *
+         * @since 10.5.0
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request     The request object.
+         * @param string|null                           $endpoint_id Optional friendly identifier for the endpoint.
+         *
+         * @return int Cache TTL in seconds.
+         */
+        protected function get_ttl_for_cached_response(\WP_REST_Request $request, ?string $endpoint_id = null): int
+        {
+        }
+        /**
+         * Get the names of hooks (filters and actions) that can customize the response.
+         *
+         * All the existing instances of add_action/add_filter for these hooks
+         * will be included in the information that gets cached together with the response,
+         * and if any of these has changed when the cached response is retrieved,
+         * the cache entry will be invalidated.
+         *
+         * This can be customized per-endpoint via the config array
+         * passed to with_cache() ('relevant_hooks' key).
+         *
+         * @since 10.5.0
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request     Request object.
+         * @param string|null                           $endpoint_id Optional friendly identifier for the endpoint.
+         *
+         * @return array Array of hook names to track.
+         */
+        protected function get_hooks_relevant_to_caching(\WP_REST_Request $request, ?string $endpoint_id = null): array
+        {
+        }
+        /**
+         * Get the paths of files whose modification affects the response.
+         *
+         * All the returned files will be tracked for changes: whenever a response is cached,
+         * each file's modification time is recorded, and if any file has changed or disappeared
+         * when the cached response is retrieved, the cache entry will be invalidated.
+         *
+         * Paths can be absolute or relative. Relative paths are resolved relative to the first
+         * directory returned by get_allowed_directories_for_file_based_response_caching().
+         *
+         * This can be customized per-endpoint via the config array
+         * passed to with_cache() ('relevant_files' key).
+         *
+         * @since 10.6.0
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request     Request object.
+         * @param string|null                           $endpoint_id Optional friendly identifier for the endpoint.
+         *
+         * @return array Array of file paths to track.
+         */
+        protected function get_files_relevant_to_response_caching(\WP_REST_Request $request, ?string $endpoint_id = null): array
+        {
+        }
+        /**
+         * Get the identifiers of version strings that affect the response.
+         *
+         * All returned version strings will be tracked for changes: whenever a response is cached,
+         * each version string's current value is recorded, and if any has changed or disappeared
+         * when the cached response is retrieved, the cache entry will be invalidated.
+         *
+         * This is useful for collection endpoints where entities outside the current page
+         * could affect the response (e.g., a deleted entity shifts pagination).
+         *
+         * This can be customized per-endpoint via the config array
+         * passed to with_cache() ('relevant_version_strings' key).
+         *
+         * @since 10.6.0
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request     Request object.
+         * @param string|null                           $endpoint_id Optional friendly identifier for the endpoint.
+         *
+         * @return array Array of version string identifiers to track.
+         */
+        protected function get_version_strings_relevant_to_caching(\WP_REST_Request $request, ?string $endpoint_id = null): array
+        {
+        }
+        /**
+         * Get directories allowed for file-based response caching.
+         *
+         * Returns an array of directory paths that are allowed to contain files tracked
+         * for cache invalidation. The first directory in the array is also used as the
+         * base path for resolving relative file paths.
+         *
+         * @since 10.6.0
+         *
+         * @return array Array of absolute directory paths.
+         */
+        protected function get_allowed_directories_for_file_based_response_caching(): array
+        {
+        }
+        /**
+         * Get the interval for caching file modification checks.
+         *
+         * To avoid checking file modification times on every request, file checks are cached
+         * for this interval. During this period, files are assumed to be unchanged.
+         *
+         * Override this method to customize the interval. Return 0 to disable caching
+         * and check files on every request.
+         *
+         * @since 10.6.0
+         *
+         * @return int Interval in seconds. Default is 10 minutes (600 seconds).
+         */
+        protected function get_file_check_interval_for_response_caching(): int
+        {
+        }
+        /**
+         * Get the names of response headers to include in caching.
+         *
+         * When this returns an array, ONLY the headers whose names are returned
+         * will be included in the cache (subject to always-excluded headers).
+         * When this returns false, all headers will be included except those returned
+         * by get_response_headers_to_exclude_from_caching().
+         *
+         * This can be customized per-endpoint via the config array
+         * passed to with_cache() ('include_headers' key).
+         *
+         * @since 10.5.0
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request     Request object.
+         * @param string|null                           $endpoint_id Optional friendly identifier for the endpoint.
+         *
+         * @return array|false Array of header names to include (case-insensitive), or false to use exclusion logic.
+         */
+        protected function get_response_headers_to_include_in_caching(\WP_REST_Request $request, ?string $endpoint_id = null)
+        {
+        }
+        /**
+         * Get the names of response headers to exclude from caching.
+         *
+         * These headers will not be stored in the cache, in addition to the
+         * always-excluded headers (X-WC-Cache, Set-Cookie, Date, Expires, Last-Modified,
+         * Age, ETag, Cache-Control, Pragma).
+         *
+         * This is only used when get_response_headers_to_include_in_caching() returns false.
+         *
+         * This can be customized per-endpoint via the config array
+         * passed to with_cache() ('exclude_headers' key).
+         *
+         * @since 10.5.0
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request     Request object.
+         * @param string|null                           $endpoint_id Optional friendly identifier for the endpoint.
+         *
+         * @return array Array of header names to exclude (case-insensitive).
+         */
+        protected function get_response_headers_to_exclude_from_caching(\WP_REST_Request $request, ?string $endpoint_id = null): array
+        {
+        }
+        /**
+         * Extract entity IDs from response data.
+         *
+         * This implementation assumes the response is either:
+         * - An array with an 'id' field (single item)
+         * - An array of arrays each having an 'id' field (collection)
+         *
+         * Controllers can override this method to customize entity ID extraction.
+         *
+         * @since 10.5.0
+         *
+         * @param array                                 $response_data Response data.
+         * @param WP_REST_Request<array<string, mixed>> $request       The request object.
+         * @param string|null                           $endpoint_id   Optional friendly identifier for the endpoint.
+         *
+         * @return array Array of entity IDs.
+         */
+        protected function extract_entity_ids_from_response(array $response_data, \WP_REST_Request $request, ?string $endpoint_id = null): array
+        {
+        }
+        /**
+         * Filter response headers to get only those that should be cached.
+         *
+         * The filtering process follows these steps:
+         * 1. If $include_headers is an array, only those headers are included (case-insensitive).
+         *    If $include_headers is false, all headers are included except those in $exclude_headers.
+         * 2. Always-excluded headers (X-WC-Cache, Set-Cookie, Date, etc.) are removed.
+         * 3. The woocommerce_rest_api_cached_headers filter is applied, receiving both the candidate
+         *    headers list and all available headers. This allows filters to both add and remove
+         *    headers from the caching list.
+         * 4. Always-excluded headers are enforced again post-filter to prevent filters from
+         *    re-introducing dangerous headers like Set-Cookie.
+         * 5. Only headers from the response that are in the filtered list are returned.
+         *
+         * @param array                                 $nominal_headers Response headers.
+         * @param array|false                           $include_headers Header names to include (false to use exclusion logic).
+         * @param array                                 $exclude_headers Header names to exclude (case-insensitive).
+         * @param WP_REST_Request<array<string, mixed>> $request The request object.
+         * @param WP_REST_Response                      $response        The response object.
+         * @param string|null                           $endpoint_id     Optional friendly identifier for the endpoint.
+         *
+         * @return array Filtered headers array.
+         */
+        private function get_headers_to_cache(array $nominal_headers, $include_headers, array $exclude_headers, \WP_REST_Request $request, \WP_REST_Response $response, ?string $endpoint_id): array
+        {
+        }
+        /**
+         * Get cache key information that uniquely identifies a request.
+         *
+         * @since 10.5.0
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request      The request object.
+         * @param bool                                  $vary_by_user Whether to include user ID in cache key.
+         * @param string|null                           $endpoint_id  Optional friendly identifier for the endpoint.
+         *
+         * @return array Array of cache key information parts.
+         */
+        protected function get_key_info_for_cached_response(\WP_REST_Request $request, bool $vary_by_user = false, ?string $endpoint_id = null): array
+        {
+        }
+        /**
+         * Generate a cache key for a given request.
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request      The request object.
+         * @param string                                $entity_type  The entity type.
+         * @param bool                                  $vary_by_user Whether to include user ID in cache key.
+         * @param string|null                           $endpoint_id  Optional friendly identifier for the endpoint.
+         *
+         * @return string Cache key.
+         */
+        private function get_key_for_cached_response(\WP_REST_Request $request, string $entity_type, bool $vary_by_user = false, ?string $endpoint_id = null): string
+        {
+        }
+        /**
+         * Generate a hash based on the actual usages of the hooks that affect the response.
+         *
+         * @param array $hook_names Array of hook names to track.
+         *
+         * @return string Hooks hash.
+         */
+        private function generate_hooks_hash(array $hook_names): string
+        {
+        }
+        /**
+         * Generate a hash based on the current values of the relevant version strings.
+         *
+         * @since 10.6.0
+         *
+         * @param array $version_string_ids Array of version string identifiers to track.
+         *
+         * @return string Version strings hash, or empty string if no version strings could be tracked.
+         */
+        private function generate_version_strings_hash(array $version_string_ids): string
+        {
+        }
+        /**
+         * Get the filtered list of allowed directories for file-based response caching.
+         *
+         * This method retrieves the allowed directories from the protected method
+         * and applies the woocommerce_rest_api_cache_allowed_file_directories filter.
+         *
+         * @since 10.6.0
+         *
+         * @return array Array of absolute directory paths.
+         */
+        private function get_filtered_allowed_directories_for_response_caching(): array
+        {
+        }
+        /**
+         * Generate a hash for the given file paths based on their modification times.
+         *
+         * This method resolves relative paths (relative to the first allowed directory),
+         * gets file modification times, and generates a hash for cache invalidation.
+         * Files that cannot be accessed (permissions, non-existent) are logged as warnings
+         * and excluded from tracking.
+         *
+         * To avoid filesystem calls on every request, file check results are cached
+         * for the interval returned by get_file_check_interval_for_response_caching().
+         *
+         * @since 10.6.0
+         *
+         * @param array $file_paths Array of file paths (absolute or relative to the first allowed directory).
+         *
+         * @return string Hash string, or empty string if no files could be tracked.
+         */
+        private function generate_files_hash(array $file_paths): string
+        {
+        }
+        /**
+         * Generate a cache key for file check results.
+         *
+         * @param array $file_paths          Array of file paths to track.
+         * @param array $allowed_directories Array of allowed directory paths.
+         *
+         * @return string Cache key.
+         */
+        private function get_file_check_cache_key(array $file_paths, array $allowed_directories): string
+        {
+        }
+        /**
+         * Check files and return their tracking data.
+         *
+         * @param array $file_paths          Array of file paths to check.
+         * @param array $allowed_directories Array of allowed directory paths.
+         *
+         * @return array Array of file data, each with 'path' and 'time' keys.
+         */
+        private function check_files(array $file_paths, array $allowed_directories): array
+        {
+        }
+        /**
+         * Resolve a file path to an absolute path.
+         *
+         * Relative paths are resolved relative to the first directory in the allowed directories list.
+         * All paths are converted to physical paths (symlinks resolved) for consistent comparison.
+         * Paths that resolve outside the allowed directories are rejected for security.
+         *
+         * @param string $file_path           The file path to resolve (absolute or relative).
+         * @param array  $allowed_directories Array of allowed directory paths.
+         *
+         * @return string|null The resolved absolute path, or null if the path is invalid or outside allowed directories.
+         */
+        private function resolve_file_path(string $file_path, array $allowed_directories): ?string
+        {
+        }
+        /**
+         * Log a warning about a file that couldn't be tracked.
+         *
+         * Each unique file path + reason combination is logged only once per the
+         * suppression TTL period to avoid flooding the log with repeated warnings.
+         * With a persistent object cache (Redis, Memcached), this works across requests.
+         * Without one, it prevents duplicates within the same request.
+         *
+         * @since 10.6.0
+         *
+         * @param string $file_path The file path that couldn't be tracked.
+         * @param string $reason    The reason the file couldn't be tracked.
+         */
+        private function log_file_tracking_warning(string $file_path, string $reason): void
+        {
+        }
+        /**
+         * Get file tracking entry for a resolved path.
+         *
+         * @since 10.6.0
+         *
+         * @param string $resolved_path The resolved absolute file path.
+         *
+         * @return array{path: string, time: int}|null File entry with path and time, or null if file can't be accessed.
+         */
+        private function get_file_tracking_entry(string $resolved_path): ?array
+        {
+        }
+        /**
+         * Get a cached response, but only if it's valid (otherwise the cached response will be invalidated).
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request              The request object.
+         * @param array                                 $cached_config        Built caching configuration from build_cache_config().
+         * @param bool                                  $cache_headers_enabled Whether to add cache control headers.
+         *
+         * @return WP_REST_Response|null Cached response, or null if not available or has been invalidated.
+         */
+        private function get_cached_response(\WP_REST_Request $request, array $cached_config, bool $cache_headers_enabled): ?\WP_REST_Response
+        {
+        }
+        /**
+         * Store a response in cache.
+         *
+         * @param array $args {
+         *     Arguments for storing the cached response.
+         *
+         *     @type string $cache_key                The cache key.
+         *     @type mixed  $data                     The response data to cache.
+         *     @type int    $status_code              The HTTP status code of the response.
+         *     @type string $entity_type              The entity type.
+         *     @type array  $entity_ids               Array of entity IDs in the response.
+         *     @type int    $cache_ttl                Cache TTL in seconds.
+         *     @type array  $relevant_hooks           Hook names to track for invalidation.
+         *     @type array  $relevant_files           File paths to track for invalidation.
+         *     @type array  $relevant_version_strings Version string IDs to track for invalidation.
+         *     @type array  $headers                  Response headers to cache.
+         *     @type string $etag                     ETag for the response.
+         * }
+         */
+        private function store_cached_response(array $args): void
+        {
+        }
+        /**
+         * Handle rest_send_nocache_headers filter to prevent WordPress from overriding our cache headers.
+         *
+         * @internal
+         *
+         * @param bool $send_no_cache_headers Whether to send no-cache headers.
+         *
+         * @return bool False if we're handling caching for this request, original value otherwise.
+         */
+        public function handle_rest_send_nocache_headers(bool $send_no_cache_headers): bool
+        {
+        }
+    }
+}
+namespace {
     /**
      * REST API Taxes controller class.
      *
@@ -55196,6 +57117,7 @@ namespace {
      */
     class WC_REST_Taxes_V1_Controller extends \WC_REST_Controller
     {
+        use \Automattic\WooCommerce\Internal\Traits\RestApiCache;
         /**
          * Endpoint namespace.
          *
@@ -55208,6 +57130,12 @@ namespace {
          * @var string
          */
         protected $rest_base = 'taxes';
+        /**
+         * Constructor.
+         */
+        public function __construct()
+        {
+        }
         /**
          * Register the routes for taxes.
          */
@@ -55372,6 +57300,34 @@ namespace {
          * @return array
          */
         public function get_collection_params()
+        {
+        }
+        /**
+         * Get the default entity type for response caching.
+         *
+         * @return string|null The entity type.
+         */
+        protected function get_default_response_entity_type(): ?string
+        {
+        }
+        /**
+         * Whether the response cache should vary by user.
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request     The request object.
+         * @param string|null                           $endpoint_id Optional endpoint identifier.
+         * @return bool False since tax data doesn't vary by user.
+         */
+        protected function response_cache_vary_by_user(\WP_REST_Request $request, ?string $endpoint_id = \null): bool
+        {
+        }
+        /**
+         * Get the hooks relevant to response caching.
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request     The request object.
+         * @param string|null                           $endpoint_id Optional endpoint identifier.
+         * @return array Array of hook names to track for cache invalidation.
+         */
+        protected function get_hooks_relevant_to_caching(\WP_REST_Request $request, ?string $endpoint_id = \null): array
         {
         }
     }
@@ -56979,488 +58935,6 @@ namespace {
          */
         protected $namespace = 'wc/v2';
     }
-}
-namespace Automattic\WooCommerce\Internal\Traits {
-    /**
-     * This trait provides caching capabilities for REST API endpoints using the WordPress cache.
-     *
-     * - The output of all the REST API endpoints whose callback declaration is wrapped
-     *   in a call to 'with_cache' will be cached using wp_cache_* functions.
-     * - Response headers are cached together with the response data, excluding certain fixed
-     *   headers (like Set-Cookie) and optionally others specified via configuration
-     *   (per-controller or per-endpoint).
-     * - For the purposes of caching, a request is uniquely identified by its route,
-     *   HTTP method, query string, and user ID.
-     * - The VersionStringGenerator class is used to track versions of entities included
-     *   in the responses (an "entity" is any object that is uniquely identified by type and id
-     *   and contributes with information to be included in the response),
-     *   so that when those entities change, the relevant cached responses become invalid.
-     *   Modification of entity versions must be done externally by the code that modifies
-     *   those entities (via calls to VersionStringGenerator::generate_version).
-     * - Various parameters (cached outputs TTL, entity type for a given response, hooks that affect
-     *   the response) can be configured globally for the controller (via overriding protected methods)
-     *   or per-endpoint (via arguments passed to with_cache).
-     * - Caching can be disabled for a given request by adding a '_skip_cache=true|1'
-     *   to the query string.
-     * - A X-WC-Cache HTTP header is added to responses to indicate cache status:
-     *   HIT, MISS, or SKIP.
-     *
-     * Additionally to caching, this trait also handles the sending of appropriate
-     * Cache-Control and ETag headers to instruct clients and proxies on how to cache responses.
-     * The ETag is generated based on the cached response data and cache key, and a request
-     * containing an If-None-Match header with a matching ETag will receive a 304 Not Modified response.
-     *
-     * Usage: Wrap endpoint callbacks with the `with_cache()` method when registering routes.
-     *
-     * Example:
-     *
-     * class WC_REST_Products_Controller extends WC_REST_Products_V2_Controller {
-     *     use RestApiCache;
-     *
-     *     public function __construct() {
-     *         parent::__construct();
-     *         $this->initialize_rest_api_cache();  // REQUIRED
-     *     }
-     *
-     *     protected function get_default_response_entity_type(): ?string {
-     *         return 'product';  // REQUIRED (or specify entity_type in each with_cache call)
-     *     }
-     *
-     *     public function register_routes() {
-     *         register_rest_route(
-     *             $this->namespace,
-     *             '/' . $this->rest_base . '/(?P<id>[\d]+)',
-     *             array(
-     *                 'methods'  => WP_REST_Server::READABLE,
-     *                 'callback' => $this->with_cache(
-     *                     array( $this, 'get_item' ),
-     *                     array(
-     *                         // String, optional if get_default_response_entity_type() is overridden.
-     *                         'entity_type'    => 'product',
-     *                         // Optional int, defaults to the controller's get_ttl_for_cached_response().
-     *                         'cache_ttl'      => HOUR_IN_SECONDS,
-     *                         // Optional array, defaults to the controller's get_hooks_relevant_to_caching().
-     *                         'relevant_hooks'  => array( 'filter_name_1', 'filter_name_2' ),
-     *                         // Optional bool, defaults to the controller's response_cache_vary_by_user().
-     *                         'vary_by_user'    => true,
-     *                         // Optional array, defaults to the controller's get_response_headers_to_include_in_caching().
-     *                         'include_headers' => array( 'X-Custom-Header' ),
-     *                         // Optional array, defaults to the controller's get_response_headers_to_exclude_from_caching().
-     *                         'exclude_headers' => array( 'X-Private-Header' ),
-     *                         // Optional, this will be passed to all the caching-related methods.
-     *                         'endpoint_id'     => 'get_product'
-     *                     )
-     *                 ),
-     *             )
-     *         );
-     *     }
-     * }
-     *
-     * Override these methods in your controller as needed:
-     * - get_default_response_entity_type(): Default entity type for endpoints without explicit config.
-     * - response_cache_vary_by_user(): Whether cache should be user-specific.
-     * - get_hooks_relevant_to_caching(): Hook names to track for cache invalidation.
-     * - get_ttl_for_cached_response(): TTL for cached outputs in seconds.
-     * - get_response_headers_to_include_in_caching(): Headers to include in cache (false = use exclusion mode).
-     * - get_response_headers_to_exclude_from_caching(): Headers to exclude from cache (when in exclusion mode).
-     *
-     * Cache invalidation happens when:
-     * - Entity versions change (tracked via VersionStringGenerator).
-     * - Hook callbacks change
-     *   (if the `get_hooks_relevant_to_caching()` call result or the 'relevant_hooks' array isn't empty).
-     * - Cached response TTL expires.
-     *
-     * NOTE: This caching mechanism uses the WordPress cache (wp_cache_* functions).
-     * By default caching is only enabled when an external object cache is enabled
-     * (checked via call to VersionStringGenerator::can_use()), so the cache is persistent
-     * across requests and not just for the current request.
-     *
-     * @since 10.5.0
-     */
-    trait RestApiCache
-    {
-        /**
-         * Cache group name for REST API responses.
-         *
-         * @var string
-         */
-        private static string $cache_group = 'woocommerce_rest_api_cache';
-        /**
-         * Response headers that are always excluded from caching.
-         *
-         * @var array
-         */
-        private static array $always_excluded_headers = array('X-WC-Cache', 'Set-Cookie', 'Date', 'Expires', 'Last-Modified', 'Age', 'ETag', 'Cache-Control', 'Pragma');
-        /**
-         * The instance of VersionStringGenerator to use, or null if caching is disabled.
-         *
-         * @var VersionStringGenerator|null
-         */
-        private ?\Automattic\WooCommerce\Internal\Caches\VersionStringGenerator $version_string_generator = null;
-        /**
-         * Whether we are currently handling a cached endpoint.
-         *
-         * @var bool
-         */
-        private $is_handling_cached_endpoint = false;
-        /**
-         * Whether the REST API caching feature is enabled.
-         *
-         * @var bool
-         */
-        private bool $rest_api_caching_feature_enabled = false;
-        /**
-         * Initialize the trait.
-         * This MUST be called from the controller's constructor.
-         */
-        protected function initialize_rest_api_cache(): void
-        {
-        }
-        /**
-         * Wrap an endpoint callback declaration with caching logic.
-         * Usage: `'callback' => $this->with_cache( array( $this, 'endpoint_callback_method' ) )`
-         *        `'callback' => $this->with_cache( array( $this, 'endpoint_callback_method' ), [ 'entity_type' => 'product' ] )`
-         *
-         * @param callable $callback The original endpoint callback.
-         * @param array    $config   Caching configuration:
-         *                           - entity_type: string (falls back to get_default_response_entity_type()).
-         *                           - vary_by_user: bool (defaults to response_cache_vary_by_user()).
-         *                           - endpoint_id: string|null (optional friendly identifier for the endpoint).
-         *                           - cache_ttl: int (defaults to get_ttl_for_cached_response()).
-         *                           - relevant_hooks: array (defaults to get_hooks_relevant_to_caching()).
-         *                           - include_headers: array|false (defaults to get_response_headers_to_include_in_caching()).
-         *                           - exclude_headers: array (defaults to get_response_headers_to_exclude_from_caching()).
-         * @return callable Wrapped callback.
-         */
-        protected function with_cache(callable $callback, array $config = array()): callable
-        {
-        }
-        /**
-         * Handle a request with caching logic.
-         *
-         * Strategy:
-         * - If backend caching is enabled: Try to use cached response if available, otherwise execute
-         *   the callback and cache the response.
-         * - If only cache headers are enabled: Execute the callback, generate ETag, and return 304
-         *   if the client's ETag matches.
-         *
-         * @param WP_REST_Request<array<string, mixed>> $request  The request object.
-         * @param callable                              $callback The original endpoint callback.
-         * @param array                                 $config   Caching configuration specified for the endpoint.
-         *
-         * @return WP_REST_Response|\WP_Error The response.
-         */
-        private function handle_cacheable_request(\WP_REST_Request $request, callable $callback, array $config)
-        {
-        }
-        /**
-         * Check if caching should be used for a particular incoming request.
-         *
-         * @param WP_REST_Request<array<string, mixed>> $request The request object.
-         *
-         * @return bool True if caching should be used, false otherwise.
-         */
-        private function should_use_cache_for_request(\WP_REST_Request $request): bool
-        {
-        }
-        /**
-         * Build the output cache entry configuration from the request and per-endpoint config.
-         *
-         * @param WP_REST_Request<array<string, mixed>> $request The request object.
-         * @param array                                 $config  Raw configuration array passed to with_cache.
-         *
-         * @return array|null Normalized cache config with keys: endpoint_id, entity_type, vary_by_user, cache_ttl, relevant_hooks, include_headers, exclude_headers, cache_key. Returns null if entity type is not available.
-         *
-         * @throws \InvalidArgumentException If include_headers is not false or an array.
-         */
-        private function build_cache_config(\WP_REST_Request $request, array $config): ?array
-        {
-        }
-        /**
-         * Cache the response if it's successful and optionally add cache headers.
-         *
-         * Only caches responses with 2xx status codes. Always adds the X-WC-Cache header
-         * with value MISS if the response was cached, or SKIP if it was not cached.
-         *
-         * Supports both WP_REST_Response objects and raw data (which will be wrapped in a response object).
-         * Error objects are returned as-is without caching.
-         *
-         * @param WP_REST_Request<array<string, mixed>>   $request            The request object.
-         * @param WP_REST_Response|\WP_Error|array|object $response           The response to potentially cache.
-         * @param array                                   $cached_config      Caching configuration from build_cache_config().
-         * @param bool                                    $add_cache_headers  Whether to add cache control headers.
-         *
-         * @return WP_REST_Response|\WP_Error The response with appropriate cache headers.
-         */
-        private function maybe_cache_response(\WP_REST_Request $request, $response, array $cached_config, bool $add_cache_headers)
-        {
-        }
-        /**
-         * Add cache control headers to a response.
-         *
-         * This method generates an ETag from the response data and returns a 304 Not Modified
-         * if the client's If-None-Match header matches. It can be used both with and without
-         * backend caching.
-         *
-         * @param WP_REST_Request<array<string, mixed>>   $request       The request object.
-         * @param WP_REST_Response|\WP_Error|array|object $response      The response to add headers to.
-         * @param array                                   $cached_config Caching configuration from build_cache_config().
-         *
-         * @return WP_REST_Response|\WP_Error The response with cache headers.
-         */
-        private function maybe_add_cache_headers(\WP_REST_Request $request, $response, array $cached_config)
-        {
-        }
-        /**
-         * Create a 304 Not Modified response if allowed by filters.
-         *
-         * @param string                                $etag                The ETag value.
-         * @param string                                $cache_control_value The Cache-Control header value.
-         * @param WP_REST_Request<array<string, mixed>> $request             The request object.
-         * @param string|null                           $endpoint_id         The endpoint identifier.
-         *
-         * @return WP_REST_Response|null 304 response if allowed, null otherwise.
-         */
-        private function create_not_modified_response(string $etag, string $cache_control_value, \WP_REST_Request $request, ?string $endpoint_id): ?\WP_REST_Response
-        {
-        }
-        /**
-         * Get the default type for entities included in responses.
-         *
-         * This can be customized per-endpoint via the config array
-         * passed to with_cache() ('entity_type' key).
-         *
-         * @return string|null Entity type (e.g., 'product', 'order'), or null if no controller-wide default.
-         */
-        protected function get_default_response_entity_type(): ?string
-        {
-        }
-        /**
-         * Get data for ETag generation.
-         *
-         * Override in classes to exclude fields that change on each request
-         * (e.g., random recommendations, timestamps).
-         *
-         * @param array                                 $data        Response data.
-         * @param WP_REST_Request<array<string, mixed>> $request     The request object.
-         * @param string|null                           $endpoint_id Optional friendly identifier for the endpoint.
-         *
-         * @return array Cleaned data for ETag generation.
-         */
-        protected function get_data_for_etag(array $data, \WP_REST_Request $request, ?string $endpoint_id = null): array
-        {
-        }
-        /**
-         * Whether the response cache should vary by user.
-         *
-         * When true, each user gets their own cached version of the response.
-         * When false, the same cached response is shared across all users.
-         *
-         * This can be customized per-endpoint via the config array
-         * passed to with_cache() ('vary_by_user' key).
-         *
-         * @param WP_REST_Request<array<string, mixed>> $request     The request object.
-         * @param string|null                           $endpoint_id Optional friendly identifier for the endpoint.
-         *
-         * @return bool True to make cache user-specific, false otherwise.
-         */
-        protected function response_cache_vary_by_user(\WP_REST_Request $request, ?string $endpoint_id = null): bool
-        {
-        }
-        /**
-         * Get the cache TTL (time to live) for cached responses.
-         *
-         * This can be customized per-endpoint via the config array
-         * passed to with_cache() ('cache_ttl' key).
-         *
-         * @param WP_REST_Request<array<string, mixed>> $request     The request object.
-         * @param string|null                           $endpoint_id Optional friendly identifier for the endpoint.
-         *
-         * @return int Cache TTL in seconds.
-         */
-        protected function get_ttl_for_cached_response(\WP_REST_Request $request, ?string $endpoint_id = null): int
-        {
-        }
-        /**
-         * Get the names of hooks (filters and actions) that can customize the response.
-         *
-         * All the existing instances of add_action/add_filter for these hooks
-         * will be included in the information that gets cached together with the response,
-         * and if any of these has changed when the cached response is retrieved,
-         * the cache entry will be invalidated.
-         *
-         * This can be customized per-endpoint via the config array
-         * passed to with_cache() ('relevant_hooks' key).
-         *
-         * @param WP_REST_Request<array<string, mixed>> $request     Request object.
-         * @param string|null                           $endpoint_id Optional friendly identifier for the endpoint.
-         *
-         * @return array Array of hook names to track.
-         */
-        protected function get_hooks_relevant_to_caching(\WP_REST_Request $request, ?string $endpoint_id = null): array
-        {
-        }
-        /**
-         * Get the names of response headers to include in caching.
-         *
-         * When this returns an array, ONLY the headers whose names are returned
-         * will be included in the cache (subject to always-excluded headers).
-         * When this returns false, all headers will be included except those returned
-         * by get_response_headers_to_exclude_from_caching().
-         *
-         * This can be customized per-endpoint via the config array
-         * passed to with_cache() ('include_headers' key).
-         *
-         * @param WP_REST_Request<array<string, mixed>> $request     Request object.
-         * @param string|null                           $endpoint_id Optional friendly identifier for the endpoint.
-         *
-         * @return array|false Array of header names to include (case-insensitive), or false to use exclusion logic.
-         */
-        protected function get_response_headers_to_include_in_caching(\WP_REST_Request $request, ?string $endpoint_id = null)
-        {
-        }
-        /**
-         * Get the names of response headers to exclude from caching.
-         *
-         * These headers will not be stored in the cache, in addition to the
-         * always-excluded headers (X-WC-Cache, Set-Cookie, Date, Expires, Last-Modified,
-         * Age, ETag, Cache-Control, Pragma).
-         *
-         * This is only used when get_response_headers_to_include_in_caching() returns false.
-         *
-         * This can be customized per-endpoint via the config array
-         * passed to with_cache() ('exclude_headers' key).
-         *
-         * @param WP_REST_Request<array<string, mixed>> $request     Request object.
-         * @param string|null                           $endpoint_id Optional friendly identifier for the endpoint.
-         *
-         * @return array Array of header names to exclude (case-insensitive).
-         */
-        protected function get_response_headers_to_exclude_from_caching(\WP_REST_Request $request, ?string $endpoint_id = null): array
-        {
-        }
-        /**
-         * Extract entity IDs from response data.
-         *
-         * This implementation assumes the response is either:
-         * - An array with an 'id' field (single item)
-         * - An array of arrays each having an 'id' field (collection)
-         *
-         * Controllers can override this method to customize entity ID extraction.
-         *
-         * @param array                                 $response_data Response data.
-         * @param WP_REST_Request<array<string, mixed>> $request       The request object.
-         * @param string|null                           $endpoint_id   Optional friendly identifier for the endpoint.
-         *
-         * @return array Array of entity IDs.
-         */
-        protected function extract_entity_ids_from_response(array $response_data, \WP_REST_Request $request, ?string $endpoint_id = null): array
-        {
-        }
-        /**
-         * Filter response headers to get only those that should be cached.
-         *
-         * The filtering process follows these steps:
-         * 1. If $include_headers is an array, only those headers are included (case-insensitive).
-         *    If $include_headers is false, all headers are included except those in $exclude_headers.
-         * 2. Always-excluded headers (X-WC-Cache, Set-Cookie, Date, etc.) are removed.
-         * 3. The woocommerce_rest_api_cached_headers filter is applied, receiving both the candidate
-         *    headers list and all available headers. This allows filters to both add and remove
-         *    headers from the caching list.
-         * 4. Always-excluded headers are enforced again post-filter to prevent filters from
-         *    re-introducing dangerous headers like Set-Cookie.
-         * 5. Only headers from the response that are in the filtered list are returned.
-         *
-         * @param array                                 $nominal_headers Response headers.
-         * @param array|false                           $include_headers Header names to include (false to use exclusion logic).
-         * @param array                                 $exclude_headers Header names to exclude (case-insensitive).
-         * @param WP_REST_Request<array<string, mixed>> $request The request object.
-         * @param WP_REST_Response                      $response        The response object.
-         * @param string|null                           $endpoint_id     Optional friendly identifier for the endpoint.
-         *
-         * @return array Filtered headers array.
-         */
-        private function get_headers_to_cache(array $nominal_headers, $include_headers, array $exclude_headers, \WP_REST_Request $request, \WP_REST_Response $response, ?string $endpoint_id): array
-        {
-        }
-        /**
-         * Get cache key information that uniquely identifies a request.
-         *
-         * @param WP_REST_Request<array<string, mixed>> $request      The request object.
-         * @param bool                                  $vary_by_user Whether to include user ID in cache key.
-         * @param string|null                           $endpoint_id  Optional friendly identifier for the endpoint.
-         *
-         * @return array Array of cache key information parts.
-         */
-        protected function get_key_info_for_cached_response(\WP_REST_Request $request, bool $vary_by_user = false, ?string $endpoint_id = null): array
-        {
-        }
-        /**
-         * Generate a cache key for a given request.
-         *
-         * @param WP_REST_Request<array<string, mixed>> $request      The request object.
-         * @param string                                $entity_type  The entity type.
-         * @param bool                                  $vary_by_user Whether to include user ID in cache key.
-         * @param string|null                           $endpoint_id  Optional friendly identifier for the endpoint.
-         *
-         * @return string Cache key.
-         */
-        private function get_key_for_cached_response(\WP_REST_Request $request, string $entity_type, bool $vary_by_user = false, ?string $endpoint_id = null): string
-        {
-        }
-        /**
-         * Generate a hash based on the actual usages of the hooks that affect the response.
-         *
-         * @param array $hook_names Array of hook names to track.
-         *
-         * @return string Hooks hash.
-         */
-        private function generate_hooks_hash(array $hook_names): string
-        {
-        }
-        /**
-         * Get a cached response, but only if it's valid (otherwise the cached response will be invalidated).
-         *
-         * @param WP_REST_Request<array<string, mixed>> $request              The request object.
-         * @param array                                 $cached_config        Built caching configuration from build_cache_config().
-         * @param bool                                  $cache_headers_enabled Whether to add cache control headers.
-         *
-         * @return WP_REST_Response|null Cached response, or null if not available or has been invalidated.
-         */
-        private function get_cached_response(\WP_REST_Request $request, array $cached_config, bool $cache_headers_enabled): ?\WP_REST_Response
-        {
-        }
-        /**
-         * Store a response in cache.
-         *
-         * @param string $cache_key      The cache key.
-         * @param mixed  $data           The response data to cache.
-         * @param int    $status_code    The HTTP status code of the response.
-         * @param string $entity_type    The entity type.
-         * @param array  $entity_ids     Array of entity IDs in the response.
-         * @param int    $cache_ttl      Cache TTL in seconds.
-         * @param array  $relevant_hooks Hook names to track for invalidation.
-         * @param array  $headers        Response headers to cache.
-         * @param string $etag           ETag for the response.
-         */
-        private function store_cached_response(string $cache_key, $data, int $status_code, string $entity_type, array $entity_ids, int $cache_ttl, array $relevant_hooks, array $headers = array(), string $etag = ''): void
-        {
-        }
-        /**
-         * Handle rest_send_nocache_headers filter to prevent WordPress from overriding our cache headers.
-         *
-         * @internal
-         *
-         * @param bool $send_no_cache_headers Whether to send no-cache headers.
-         *
-         * @return bool False if we're handling caching for this request, original value otherwise.
-         */
-        public function handle_rest_send_nocache_headers(bool $send_no_cache_headers): bool
-        {
-        }
-    }
-}
-namespace {
     /**
      * REST API Products controller class.
      *
@@ -57506,6 +58980,16 @@ namespace {
          * @return string|null The entity type.
          */
         protected function get_default_response_entity_type(): ?string
+        {
+        }
+        /**
+         * Get the hooks relevant to response caching.
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request     The request object.
+         * @param string|null                           $endpoint_id Optional endpoint identifier.
+         * @return array Array of hook names to track for cache invalidation.
+         */
+        protected function get_hooks_relevant_to_caching(\WP_REST_Request $request, ?string $endpoint_id = \null): array
         {
         }
         /**
@@ -57889,6 +59373,30 @@ namespace {
         {
         }
         /**
+         * Get the hooks relevant to response caching.
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request     The request object.
+         * @param string|null                           $endpoint_id Optional endpoint identifier.
+         * @return array Array of hook names to track for cache invalidation.
+         */
+        protected function get_hooks_relevant_to_caching(\WP_REST_Request $request, ?string $endpoint_id = \null): array
+        {
+        }
+        /**
+         * Get the version strings relevant to response caching.
+         *
+         * For the variations collection endpoint (get_variations), this returns the
+         * list_product_variations_{product_id} version string which is invalidated when
+         * variations for that product are created, deleted, or change status.
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request     The request object.
+         * @param string|null                           $endpoint_id Optional endpoint identifier.
+         * @return array Array of version string IDs to track for cache invalidation.
+         */
+        protected function get_version_strings_relevant_to_caching(\WP_REST_Request $request, ?string $endpoint_id = \null): array
+        {
+        }
+        /**
          * Register the routes for products.
          */
         public function register_routes()
@@ -58122,6 +59630,15 @@ namespace {
          * @return array|WP_Error
          */
         public function get_group_settings($group_id)
+        {
+        }
+        /**
+         * Primes options cache to reduce the number of SQLs towards options table.
+         *
+         * @param mixed[] $settings The settings to prefetch options for.
+         * @return void
+         */
+        protected function prime_options_cache_for_settings(array $settings): void
         {
         }
         /**
@@ -59480,6 +60997,7 @@ namespace {
      */
     class WC_REST_Data_Continents_Controller extends \WC_REST_Data_Controller
     {
+        use \Automattic\WooCommerce\Internal\Traits\RestApiCache;
         /**
          * Endpoint namespace.
          *
@@ -59492,6 +61010,12 @@ namespace {
          * @var string
          */
         protected $rest_base = 'data/continents';
+        /**
+         * Constructor.
+         */
+        public function __construct()
+        {
+        }
         /**
          * Register routes.
          *
@@ -59560,6 +61084,57 @@ namespace {
         public function get_item_schema()
         {
         }
+        /**
+         * Get the default entity type for response caching.
+         *
+         * @return string|null The entity type.
+         */
+        protected function get_default_response_entity_type(): ?string
+        {
+        }
+        /**
+         * Get the files relevant to response caching.
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request     The request object.
+         * @param string|null                           $endpoint_id Optional endpoint identifier.
+         * @return array Array of file paths to track for cache invalidation.
+         */
+        protected function get_files_relevant_to_response_caching(\WP_REST_Request $request, ?string $endpoint_id = \null): array
+        {
+        }
+        /**
+         * Get the hooks relevant to response caching.
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request     The request object.
+         * @param string|null                           $endpoint_id Optional endpoint identifier.
+         * @return array Array of hook names to track for cache invalidation.
+         */
+        protected function get_hooks_relevant_to_caching(\WP_REST_Request $request, ?string $endpoint_id = \null): array
+        {
+        }
+        /**
+         * Whether the response cache should vary by user.
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request     The request object.
+         * @param string|null                           $endpoint_id Optional endpoint identifier.
+         * @return bool False since continent data doesn't vary by user.
+         */
+        protected function response_cache_vary_by_user(\WP_REST_Request $request, ?string $endpoint_id = \null): bool
+        {
+        }
+        /**
+         * Extract entity IDs from response data.
+         *
+         * Continents don't have entity IDs, cache invalidation is file-based.
+         *
+         * @param array                                 $response_data Response data.
+         * @param WP_REST_Request<array<string, mixed>> $request       The request object.
+         * @param string|null                           $endpoint_id   Optional endpoint identifier.
+         * @return array Empty array since continents don't have entity IDs.
+         */
+        protected function extract_entity_ids_from_response(array $response_data, \WP_REST_Request $request, ?string $endpoint_id = \null): array
+        {
+        }
     }
     /**
      * REST API Data countries controller class.
@@ -59569,6 +61144,7 @@ namespace {
      */
     class WC_REST_Data_Countries_Controller extends \WC_REST_Data_Controller
     {
+        use \Automattic\WooCommerce\Internal\Traits\RestApiCache;
         /**
          * Endpoint namespace.
          *
@@ -59581,6 +61157,12 @@ namespace {
          * @var string
          */
         protected $rest_base = 'data/countries';
+        /**
+         * Constructor.
+         */
+        public function __construct()
+        {
+        }
         /**
          * Register routes.
          *
@@ -59648,6 +61230,57 @@ namespace {
         public function get_item_schema()
         {
         }
+        /**
+         * Get the default entity type for response caching.
+         *
+         * @return string|null The entity type.
+         */
+        protected function get_default_response_entity_type(): ?string
+        {
+        }
+        /**
+         * Get the files relevant to response caching.
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request     The request object.
+         * @param string|null                           $endpoint_id Optional endpoint identifier.
+         * @return array Array of file paths to track for cache invalidation.
+         */
+        protected function get_files_relevant_to_response_caching(\WP_REST_Request $request, ?string $endpoint_id = \null): array
+        {
+        }
+        /**
+         * Get the hooks relevant to response caching.
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request     The request object.
+         * @param string|null                           $endpoint_id Optional endpoint identifier.
+         * @return array Array of hook names to track for cache invalidation.
+         */
+        protected function get_hooks_relevant_to_caching(\WP_REST_Request $request, ?string $endpoint_id = \null): array
+        {
+        }
+        /**
+         * Whether the response cache should vary by user.
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request     The request object.
+         * @param string|null                           $endpoint_id Optional endpoint identifier.
+         * @return bool False since country data doesn't vary by user.
+         */
+        protected function response_cache_vary_by_user(\WP_REST_Request $request, ?string $endpoint_id = \null): bool
+        {
+        }
+        /**
+         * Extract entity IDs from response data.
+         *
+         * Countries don't have entity IDs, cache invalidation is file-based.
+         *
+         * @param array                                 $response_data Response data.
+         * @param WP_REST_Request<array<string, mixed>> $request       The request object.
+         * @param string|null                           $endpoint_id   Optional endpoint identifier.
+         * @return array Empty array since countries don't have entity IDs.
+         */
+        protected function extract_entity_ids_from_response(array $response_data, \WP_REST_Request $request, ?string $endpoint_id = \null): array
+        {
+        }
     }
     /**
      * REST API Data Currencies controller class.
@@ -59656,6 +61289,7 @@ namespace {
      */
     class WC_REST_Data_Currencies_Controller extends \WC_REST_Data_Controller
     {
+        use \Automattic\WooCommerce\Internal\Traits\RestApiCache;
         /**
          * Endpoint namespace.
          *
@@ -59668,6 +61302,12 @@ namespace {
          * @var string
          */
         protected $rest_base = 'data/currencies';
+        /**
+         * Constructor.
+         */
+        public function __construct()
+        {
+        }
         /**
          * Register routes.
          */
@@ -59736,6 +61376,57 @@ namespace {
          * @return array
          */
         public function get_item_schema()
+        {
+        }
+        /**
+         * Get the default entity type for response caching.
+         *
+         * @return string|null The entity type.
+         */
+        protected function get_default_response_entity_type(): ?string
+        {
+        }
+        /**
+         * Get the files relevant to response caching.
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request     The request object.
+         * @param string|null                           $endpoint_id Optional endpoint identifier.
+         * @return array Array of file paths to track for cache invalidation.
+         */
+        protected function get_files_relevant_to_response_caching(\WP_REST_Request $request, ?string $endpoint_id = \null): array
+        {
+        }
+        /**
+         * Get the hooks relevant to response caching.
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request     The request object.
+         * @param string|null                           $endpoint_id Optional endpoint identifier.
+         * @return array Array of hook names to track for cache invalidation.
+         */
+        protected function get_hooks_relevant_to_caching(\WP_REST_Request $request, ?string $endpoint_id = \null): array
+        {
+        }
+        /**
+         * Whether the response cache should vary by user.
+         *
+         * @param WP_REST_Request<array<string, mixed>> $request     The request object.
+         * @param string|null                           $endpoint_id Optional endpoint identifier.
+         * @return bool False since currency data doesn't vary by user.
+         */
+        protected function response_cache_vary_by_user(\WP_REST_Request $request, ?string $endpoint_id = \null): bool
+        {
+        }
+        /**
+         * Extract entity IDs from response data.
+         *
+         * Currencies don't have entity IDs, cache invalidation is file-based.
+         *
+         * @param array                                 $response_data Response data.
+         * @param WP_REST_Request<array<string, mixed>> $request       The request object.
+         * @param string|null                           $endpoint_id   Optional endpoint identifier.
+         * @return array Empty array since currencies don't have entity IDs.
+         */
+        protected function extract_entity_ids_from_response(array $response_data, \WP_REST_Request $request, ?string $endpoint_id = \null): array
         {
         }
     }
@@ -63935,6 +65626,18 @@ namespace {
         {
         }
         /**
+         * When the tracking is getting disabled, unschedules all deferred tracks.
+         *
+         * @internal
+         * @since 10.6.0
+         *
+         * @param string $new_option_value The new, unserialized option value.
+         * @return string
+         */
+        public static function maybe_unschedule_deferred_tracks($new_option_value)
+        {
+        }
+        /**
          * Sets a cookie for tracking purposes, but only if tracking is enabled/allowed.
          *
          * @internal
@@ -64850,7 +66553,14 @@ namespace {
         /**
          * Tracks source.
          */
-        const TRACKS_SOURCE = 'product-legacy-editor';
+        public const TRACKS_SOURCE = 'product-legacy-editor';
+        /**
+         * Deferred Tracks callback.
+         *
+         * @internal
+         * @since 10.6.0
+         */
+        public const TRACK_PRODUCT_PUBLISHED_CALLBACK = 'track_product_published';
         /**
          * Init tracking.
          */
@@ -64926,6 +66636,20 @@ namespace {
          *                                  to the update for updated posts.
          */
         public function track_product_published($post_id, $post, $update, $post_before)
+        {
+        }
+        /**
+         * Tracks the event, allowing deferred/asynchronous event recording.
+         *
+         * @internal
+         * @since 10.6.0
+         *
+         * @param string $event_name       The name of the event.
+         * @param array  $event_properties Custom properties to send with the event.
+         * @param bool   $defer            Whether to defer the event publishing.
+         * @return void
+         */
+        public function track_product_published_maybe_defer(string $event_name, array $event_properties, bool $defer = \false): void
         {
         }
         /**
@@ -69702,6 +71426,8 @@ namespace Automattic\WooCommerce\Admin\API {
         }
         /**
          * Track opened emails.
+         *
+         * @deprecated 10.6.0 This method is no longer functional as the email tracking feature was removed in WooCommerce 9.9.
          *
          * @param WP_REST_Request $request Request object.
          */
@@ -76694,7 +78420,7 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Products {
         {
         }
         /**
-         * Create or update an entry in the wc_admin_order_product_lookup table for an order.
+         * Create or update an entry in the wc_order_product_lookup table for an order.
          *
          * @since 3.5.0
          * @param int $order_id Order ID.
@@ -82361,6 +84087,12 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
     {
         const HAS_PRODUCT_TRANSIENT = 'woocommerce_product_task_has_product_transient';
         /**
+         * Whether a deferred revert check has already been scheduled for this request.
+         *
+         * @var bool
+         */
+        private static $revert_scheduled = false;
+        /**
          * Constructor
          *
          * @param TaskList $task_list Parent task list.
@@ -82455,6 +84187,44 @@ namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks {
          * @param WC_Product $product Product object.
          */
         public function maybe_set_has_product_transient($product_id, $product)
+        {
+        }
+        /**
+         * Handle product trashing via the trashed_post hook.
+         *
+         * @param int $post_id Post ID.
+         * @return void
+         */
+        public function on_product_trashed($post_id)
+        {
+        }
+        /**
+         * Handle permanent product deletion via the deleted_post_product hook.
+         *
+         * @return void
+         */
+        public function on_product_deleted()
+        {
+        }
+        /**
+         * Schedule a deferred check to revert task completion if no products remain.
+         *
+         * Uses the shutdown hook so that bulk operations (e.g. trashing many products
+         * at once) only trigger a single has_products() query instead of one per product.
+         *
+         * @return void
+         */
+        private function revert_task_completion(): void
+        {
+        }
+        /**
+         * Re-check whether valid products still exist and revert task completion if none remain.
+         *
+         * Runs once at the end of the request via the shutdown hook.
+         *
+         * @return void
+         */
+        public function maybe_revert_on_shutdown(): void
         {
         }
         /**
@@ -90109,6 +91879,18 @@ namespace Automattic\WooCommerce\Admin {
         {
         }
         /**
+         * Clear the stock count cache for a post if it's a product or product variation.
+         *
+         * Handles trashed_post, untrashed_post, and delete_post hooks.
+         *
+         * @internal
+         *
+         * @param int $post_id The post ID.
+         */
+        public static function maybe_clear_stock_count_cache_for_post($post_id): void
+        {
+        }
+        /**
          * Clear the count cache when products are added or updated, or when
          * the no/low stock options are changed.
          *
@@ -92319,8 +94101,9 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes\AddToCartWithOptions {
          * @param array $attributes  Any attributes that currently are available from the block.
          *                           Note, this will be empty in the editor context when the block is
          *                           not in the post content on editor load.
+         * @return void
          */
-        protected function enqueue_data(array $attributes = array())
+        protected function enqueue_data(array $attributes = array()): void
         {
         }
         /**
@@ -92348,15 +94131,6 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes\AddToCartWithOptions {
          * @return bool True if the HTML content has form elements, false otherwise.
          */
         public function has_form_elements($html_content)
-        {
-        }
-        /**
-         * Check if a child product is purchasable.
-         *
-         * @param \WC_Product $product The product to check.
-         * @return bool True if the product is purchasable, false otherwise.
-         */
-        private function is_child_product_purchasable(\WC_Product $product)
         {
         }
         /**
@@ -95695,11 +97469,10 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         /**
          * Render markup for a single product detail item.
          *
-         * @param string $tag_name   The HTML tag to use for the item.
-         * @param bool   $is_item_data Whether the item is of item_data type.
+         * @param bool $is_item_data Whether the item is of item_data type.
          * @return string Rendered product detail item output based on item type.
          */
-        private function render_product_details_item_markup($tag_name, $is_item_data = false)
+        private function render_product_details_item_markup($is_item_data = false)
         {
         }
     }
@@ -97683,6 +99456,16 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes\ProductCollection {
         {
         }
         /**
+         * Return a query that filters products by taxonomy terms.
+         *
+         * @since 10.6.0
+         *
+         * @return array
+         */
+        private function get_filter_by_taxonomy_query()
+        {
+        }
+        /**
          * Merge two array recursively but replace the non-array values instead of
          * merging them. The merging strategy:
          *
@@ -98928,6 +100711,13 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
+         * Register a REST field to expose the menu_order meta for sortable taxonomies.
+         * This allows the editor to display terms in menu order.
+         */
+        private function register_taxonomy_menu_order_rest_field(): void
+        {
+        }
+        /**
          * Extra data passed through from server to client for block.
          *
          * @param array $attributes  Any attributes that currently are available from the block.
@@ -99026,7 +100816,7 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
         {
         }
         /**
-         * Sort terms by the specified criteria (name or count).
+         * Sort terms by the specified criteria (name, count, or menu_order).
          *
          * @param array  $terms           Array of term objects to sort.
          * @param string $orderby         Sort field (name, count, menu_order).
@@ -100848,9 +102638,9 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes {
          * The logic is copied from the core function woocommerce_related_products. https://github.com/woocommerce/woocommerce/blob/ca49caabcba84ce9f60a03c6d3534ec14b350b80/plugins/woocommerce/includes/wc-template-functions.php/#L2039-L2074
          *
          * @param number $product_per_page Products per page.
-         * @return array Products ids.
+         * @return int[] Products ids.
          */
-        private function get_related_products_ids($product_per_page = 5)
+        private function get_related_products_ids($product_per_page = 5): array
         {
         }
     }
@@ -101052,11 +102842,12 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes\Reviews {
          *
          * @since 6.3.0 Changed render_block_context priority to `1`.
          *
-         * @param WP_Comment[] $comments        The array of comments.
-         * @param WP_Block     $block           Block instance.
+         * @param WP_Comment[] $comments      The array of comments.
+         * @param WP_Block     $block         Block instance.
+         *
          * @return string
          */
-        protected function block_product_review_template_render_comments($comments, $block)
+        protected function block_product_review_template_render_comments(array $comments, \WP_Block $block): string
         {
         }
         /**
@@ -101727,6 +103518,9 @@ namespace Automattic\WooCommerce\Blocks {
         }
         /**
          * Delete product transients when a product is deleted.
+         *
+         * @deprecated since 10.6.0
+         * @return void
          */
         public function delete_product_transients()
         {
@@ -101779,6 +103573,21 @@ namespace Automattic\WooCommerce\Blocks {
          * @internal
          */
         public function set_product_breadcrumbs_preferred_taxonomy($settings, $post_type, $post_id = 0)
+        {
+        }
+        /**
+         * Apply WooCommerce breadcrumb filters to Core breadcrumbs block items.
+         *
+         * This bridges the Core breadcrumbs block with WooCommerce's legacy breadcrumb filters,
+         * ensuring backward compatibility for sites that have customized breadcrumbs using
+         * the `woocommerce_get_breadcrumb` filter.
+         *
+         * @param array $items Array of breadcrumb items from Core.
+         * @return array Modified breadcrumb items.
+         *
+         * @internal
+         */
+        public function apply_woocommerce_breadcrumb_filters($items)
         {
         }
     }
@@ -105015,6 +106824,93 @@ namespace Automattic\WooCommerce\Blocks\Registry {
         }
     }
 }
+namespace Automattic\WooCommerce\Blocks\SharedStores {
+    /**
+     * Manages the registration of interactivity state that provides product data
+     * to interactive blocks. This is shared store data that is not tied to one
+     * specific block.
+     *
+     * This is an experimental API and may change in future versions.
+     */
+    class ProductsStore
+    {
+        /**
+         * The consent statement for using this experimental API.
+         *
+         * @var string
+         */
+        private static string $consent_statement = 'I acknowledge that using experimental APIs means my theme or plugin will inevitably break in the next version of WooCommerce';
+        /**
+         * The namespace for the store.
+         *
+         * @var string
+         */
+        private static string $store_namespace = 'woocommerce/products';
+        /**
+         * Products that have been loaded into state.
+         *
+         * @var array
+         */
+        private static array $products = array();
+        /**
+         * Product variations that have been loaded into state.
+         *
+         * @var array
+         */
+        private static array $product_variations = array();
+        /**
+         * Check that the consent statement was passed.
+         *
+         * @param string $consent_statement The consent statement string.
+         * @return true
+         * @throws InvalidArgumentException If the statement does not match.
+         */
+        private static function check_consent(string $consent_statement): bool
+        {
+        }
+        /**
+         * Register the interactivity state if products have been loaded.
+         *
+         * @return void
+         */
+        private static function register_state(): void
+        {
+        }
+        /**
+         * Load a product into state.
+         *
+         * @param string $consent_statement The consent statement string.
+         * @param int    $product_id        The product ID.
+         * @return array The product data.
+         * @throws InvalidArgumentException If consent statement doesn't match.
+         */
+        public static function load_product(string $consent_statement, int $product_id): array
+        {
+        }
+        /**
+         * Load all purchasable child products of a parent product into state.
+         *
+         * @param string $consent_statement The consent statement string.
+         * @param int    $parent_id         The parent product ID.
+         * @return array The purchasable child products keyed by ID.
+         * @throws InvalidArgumentException If consent statement doesn't match.
+         */
+        public static function load_purchasable_child_products(string $consent_statement, int $parent_id): array
+        {
+        }
+        /**
+         * Load all variations of a variable product into state.
+         *
+         * @param string $consent_statement The consent statement string.
+         * @param int    $parent_id         The parent product ID.
+         * @return array The variations keyed by ID.
+         * @throws InvalidArgumentException If consent statement doesn't match.
+         */
+        public static function load_variations(string $consent_statement, int $parent_id): array
+        {
+        }
+    }
+}
 namespace Automattic\WooCommerce\Blocks\Shipping {
     /**
      * Local Pickup Shipping Method.
@@ -107198,14 +109094,6 @@ namespace Automattic\WooCommerce\Blocks\Utils {
         {
         }
         /**
-         * Get core data to include in settings.
-         *
-         * @return array
-         */
-        private static function get_core_data(): array
-        {
-        }
-        /**
          * Get currency data to include in settings.
          *
          * @return array
@@ -107229,6 +109117,19 @@ namespace Automattic\WooCommerce\Blocks\Utils {
          * @throws InvalidArgumentException If consent statement doesn't match.
          */
         public static function load_placeholder_image(string $consent_statement): void
+        {
+        }
+        /**
+         * Get cart errors formatted as notices for the store-notices interactivity store.
+         *
+         * Returns errors from the hydrated cart state in the format expected by
+         * the store-notices store context.
+         *
+         * @param string $consent_statement The consent statement string.
+         * @return array Array of notices with id, notice, type, and dismissible keys.
+         * @throws InvalidArgumentException If consent statement doesn't match.
+         */
+        public static function get_cart_error_notices(string $consent_statement): array
         {
         }
     }
@@ -111136,6 +113037,13 @@ namespace Automattic\WooCommerce\Gateways\PayPal {
             'RUB',
         );
         /**
+         * Countries supported by PayPal.
+         * https://developer.paypal.com/reference/country-codes/
+         *
+         * @var array<string, string>
+         */
+        const SUPPORTED_COUNTRIES = array('AL' => 'Albania', 'DZ' => 'Algeria', 'AD' => 'Andorra', 'AO' => 'Angola', 'AI' => 'Anguilla', 'AG' => 'Antigua & Barbuda', 'AR' => 'Argentina', 'AM' => 'Armenia', 'AW' => 'Aruba', 'AU' => 'Australia', 'AT' => 'Austria', 'AZ' => 'Azerbaijan', 'BS' => 'Bahamas', 'BH' => 'Bahrain', 'BB' => 'Barbados', 'BY' => 'Belarus', 'BE' => 'Belgium', 'BZ' => 'Belize', 'BJ' => 'Benin', 'BM' => 'Bermuda', 'BT' => 'Bhutan', 'BO' => 'Bolivia', 'BA' => 'Bosnia & Herzegovina', 'BW' => 'Botswana', 'BR' => 'Brazil', 'VG' => 'British Virgin Islands', 'BN' => 'Brunei', 'BG' => 'Bulgaria', 'BF' => 'Burkina Faso', 'BI' => 'Burundi', 'KH' => 'Cambodia', 'CM' => 'Cameroon', 'CA' => 'Canada', 'CV' => 'Cape Verde', 'KY' => 'Cayman Islands', 'TD' => 'Chad', 'CL' => 'Chile', 'CN' => 'China', 'CO' => 'Colombia', 'KM' => 'Comoros', 'CG' => 'Congo - Brazzaville', 'CD' => 'Congo - Kinshasa', 'CK' => 'Cook Islands', 'CR' => 'Costa Rica', 'CI' => 'Côte d\'Ivoire', 'HR' => 'Croatia', 'CY' => 'Cyprus', 'CZ' => 'Czech Republic', 'DK' => 'Denmark', 'DJ' => 'Djibouti', 'DM' => 'Dominica', 'DO' => 'Dominican Republic', 'EC' => 'Ecuador', 'EG' => 'Egypt', 'SV' => 'El Salvador', 'ER' => 'Eritrea', 'EE' => 'Estonia', 'ET' => 'Ethiopia', 'FK' => 'Falkland Islands', 'FO' => 'Faroe Islands', 'FJ' => 'Fiji', 'FI' => 'Finland', 'FR' => 'France', 'GF' => 'French Guiana', 'PF' => 'French Polynesia', 'GA' => 'Gabon', 'GM' => 'Gambia', 'GE' => 'Georgia', 'DE' => 'Germany', 'GI' => 'Gibraltar', 'GR' => 'Greece', 'GL' => 'Greenland', 'GD' => 'Grenada', 'GP' => 'Guadeloupe', 'GT' => 'Guatemala', 'GN' => 'Guinea', 'GW' => 'Guinea-Bissau', 'GY' => 'Guyana', 'HN' => 'Honduras', 'HK' => 'Hong Kong SAR China', 'HU' => 'Hungary', 'IS' => 'Iceland', 'IN' => 'India', 'ID' => 'Indonesia', 'IE' => 'Ireland', 'IL' => 'Israel', 'IT' => 'Italy', 'JM' => 'Jamaica', 'JP' => 'Japan', 'JO' => 'Jordan', 'KZ' => 'Kazakhstan', 'KE' => 'Kenya', 'KI' => 'Kiribati', 'KW' => 'Kuwait', 'KG' => 'Kyrgyzstan', 'LA' => 'Laos', 'LV' => 'Latvia', 'LS' => 'Lesotho', 'LI' => 'Liechtenstein', 'LT' => 'Lithuania', 'LU' => 'Luxembourg', 'MK' => 'Macedonia', 'MG' => 'Madagascar', 'MW' => 'Malawi', 'MY' => 'Malaysia', 'MV' => 'Maldives', 'ML' => 'Mali', 'MT' => 'Malta', 'MH' => 'Marshall Islands', 'MQ' => 'Martinique', 'MR' => 'Mauritania', 'MU' => 'Mauritius', 'YT' => 'Mayotte', 'MX' => 'Mexico', 'FM' => 'Micronesia', 'MD' => 'Moldova', 'MC' => 'Monaco', 'MN' => 'Mongolia', 'ME' => 'Montenegro', 'MS' => 'Montserrat', 'MA' => 'Morocco', 'MZ' => 'Mozambique', 'NA' => 'Namibia', 'NR' => 'Nauru', 'NP' => 'Nepal', 'NL' => 'Netherlands', 'NC' => 'New Caledonia', 'NZ' => 'New Zealand', 'NI' => 'Nicaragua', 'NE' => 'Niger', 'NG' => 'Nigeria', 'NU' => 'Niue', 'NF' => 'Norfolk Island', 'NO' => 'Norway', 'OM' => 'Oman', 'PW' => 'Palau', 'PA' => 'Panama', 'PG' => 'Papua New Guinea', 'PY' => 'Paraguay', 'PE' => 'Peru', 'PH' => 'Philippines', 'PN' => 'Pitcairn Islands', 'PL' => 'Poland', 'PT' => 'Portugal', 'QA' => 'Qatar', 'RE' => 'Réunion', 'RO' => 'Romania', 'RU' => 'Russia', 'RW' => 'Rwanda', 'WS' => 'Samoa', 'SM' => 'San Marino', 'ST' => 'São Tomé & Príncipe', 'SA' => 'Saudi Arabia', 'SN' => 'Senegal', 'RS' => 'Serbia', 'SC' => 'Seychelles', 'SL' => 'Sierra Leone', 'SG' => 'Singapore', 'SK' => 'Slovakia', 'SI' => 'Slovenia', 'SB' => 'Solomon Islands', 'SO' => 'Somalia', 'ZA' => 'South Africa', 'KR' => 'South Korea', 'ES' => 'Spain', 'LK' => 'Sri Lanka', 'SH' => 'St. Helena', 'KN' => 'St. Kitts & Nevis', 'LC' => 'St. Lucia', 'PM' => 'St. Pierre & Miquelon', 'VC' => 'St. Vincent & Grenadines', 'SR' => 'Suriname', 'SJ' => 'Svalbard & Jan Mayen', 'SZ' => 'Swaziland', 'SE' => 'Sweden', 'CH' => 'Switzerland', 'TW' => 'Taiwan', 'TJ' => 'Tajikistan', 'TZ' => 'Tanzania', 'TH' => 'Thailand', 'TG' => 'Togo', 'TO' => 'Tonga', 'TT' => 'Trinidad & Tobago', 'TN' => 'Tunisia', 'TM' => 'Turkmenistan', 'TC' => 'Turks & Caicos Islands', 'TV' => 'Tuvalu', 'UG' => 'Uganda', 'UA' => 'Ukraine', 'AE' => 'United Arab Emirates', 'GB' => 'United Kingdom', 'US' => 'United States', 'UY' => 'Uruguay', 'VU' => 'Vanuatu', 'VA' => 'Vatican City', 'VE' => 'Venezuela', 'VN' => 'Vietnam', 'WF' => 'Wallis & Futuna', 'YE' => 'Yemen', 'ZM' => 'Zambia', 'ZW' => 'Zimbabwe');
+        /**
          * PayPal authorization already captured issue code.
          *
          * @var string
@@ -111153,6 +113061,12 @@ namespace Automattic\WooCommerce\Gateways\PayPal {
          * @var string
          */
         const PAYPAL_ISSUE_PAYEE_ACCOUNT_RESTRICTED = 'PAYEE_ACCOUNT_RESTRICTED';
+        /**
+         * PayPal duplicate invoice ID issue code.
+         *
+         * @var string
+         */
+        const PAYPAL_ISSUE_DUPLICATE_INVOICE_ID = 'DUPLICATE_INVOICE_ID';
         /**
          * Meta key for storing PayPal payment status in order meta.
          *
@@ -111228,6 +113142,15 @@ namespace Automattic\WooCommerce\Gateways\PayPal {
      */
     class Helper
     {
+        /**
+         * Check if a country code is supported by PayPal.
+         *
+         * @param string $country_code Country code.
+         * @return bool True if the country is supported by PayPal, false otherwise.
+         */
+        public static function is_country_supported_by_paypal(string $country_code): bool
+        {
+        }
         /**
          * Check if the PayPal gateway is enabled.
          *
@@ -111527,10 +113450,11 @@ namespace Automattic\WooCommerce\Gateways\PayPal {
          * @param WC_Order|null $order Order object.
          * @param string|null   $action_url The URL to authorize or capture the payment.
          * @param string        $action The action to perform. Either 'authorize' or 'capture'.
+         * @param bool          $is_retry Whether the payment is being retried.
          * @return void
          * @throws Exception If the PayPal payment authorization or capture fails.
          */
-        public function authorize_or_capture_payment(?\WC_Order $order, ?string $action_url, string $action = \Automattic\WooCommerce\Gateways\PayPal\Constants::PAYMENT_ACTION_CAPTURE): void
+        public function authorize_or_capture_payment(?\WC_Order $order, ?string $action_url, string $action = \Automattic\WooCommerce\Gateways\PayPal\Constants::PAYMENT_ACTION_CAPTURE, bool $is_retry = false): void
         {
         }
         /**
@@ -111541,6 +113465,31 @@ namespace Automattic\WooCommerce\Gateways\PayPal {
          * @throws Exception If the PayPal payment capture fails.
          */
         public function capture_authorized_payment(?\WC_Order $order): void
+        {
+        }
+        /**
+         * Handle duplicate invoice ID.
+         * This is a workaround to handle the duplicate invoice ID error that occurs when the invoice ID is not unique.
+         * We generate a new invoice ID and patch the invoice ID in the PayPal order.
+         * Then we retry capturing the payment.
+         *
+         * @param WC_Order $order Order object.
+         * @param string   $paypal_order_id The PayPal order ID.
+         * @param string   $action_url The action URL.
+         * @param string   $action The action.
+         * @return void
+         * @throws Exception If the PayPal patch invoice_id request fails.
+         */
+        private function handle_duplicate_invoice_id(\WC_Order $order, string $paypal_order_id, string $action_url, string $action): void
+        {
+        }
+        /**
+         * Generate a unique invoice ID for the order.
+         *
+         * @param WC_Order $order Order object.
+         * @return string
+         */
+        private function generate_paypal_invoice_id_with_unique_suffix(\WC_Order $order): string
         {
         }
         /**
@@ -113316,6 +115265,16 @@ namespace Automattic\WooCommerce\StoreApi {
         {
         }
         /**
+         * Use the Store API session handler when a valid Cart-Token is present.
+         *
+         * @since 10.6.0
+         * @param string $handler Session handler class name.
+         * @return string
+         */
+        public function maybe_use_store_api_session_handler($handler): string
+        {
+        }
+        /**
          * Expose Store API headers in CORS responses.
          * We're explicitly exposing the Cart-Token, not the nonce. Only one of them is needed.
          *
@@ -113343,6 +115302,15 @@ namespace Automattic\WooCommerce\StoreApi {
          * @return bool
          */
         public function send_cors_headers($served, $result, $request, $server)
+        {
+        }
+        /**
+         * Checks if the request has a store API route as a GET `rest_route` parameter.
+         *
+         * @since 10.6.0
+         * @return bool
+         */
+        protected function has_store_api_route_as_get_parameter(): bool
         {
         }
         /**
@@ -113981,6 +115949,15 @@ namespace Automattic\WooCommerce\StoreApi\Payments {
          * @param string $name Property name.
          */
         public function __get($name)
+        {
+        }
+        /**
+         * Get payment status.
+         *
+         * @since 10.5.0
+         * @return string Current payment status.
+         */
+        public function get_status(): string
         {
         }
         /**
@@ -114661,19 +116638,18 @@ namespace Automattic\WooCommerce\StoreApi\Routes\V1\Agentic {
         /**
          * Check if the request is authorized.
          *
-         * Delegates to the AgenticCheckoutUtils helper.
+         * Validates that the request is signed with Jetpack blog token.
          *
-         * @param \WP_REST_Request $request Request object.
          * @return bool|\WP_Error True if authorized, WP_Error otherwise.
          */
-        public function is_authorized(\WP_REST_Request $request)
+        public function is_authorized()
         {
         }
         /**
          * Check if a nonce is required for the route.
          *
          * @param \WP_REST_Request $request Request object.
-         * @return bool False, Bearer token auth used instead.
+         * @return bool False, Jetpack blog token auth used instead.
          */
         protected function requires_nonce(\WP_REST_Request $request)
         {
@@ -114867,7 +116843,7 @@ namespace Automattic\WooCommerce\StoreApi\Routes\V1\Agentic {
         /**
          * Check if the request is authorized.
          *
-         * Checks feature enablement and cart token validity.
+         * Validates Jetpack blog token and cart token validity.
          *
          * @param \WP_REST_Request $request Request object.
          * @return bool|\WP_Error True if authorized, WP_Error otherwise.
@@ -114888,7 +116864,7 @@ namespace Automattic\WooCommerce\StoreApi\Routes\V1\Agentic {
          * Check if a nonce is required for the route.
          *
          * @param \WP_REST_Request $request Request object.
-         * @return bool False, Bearer token auth used instead.
+         * @return bool False, Jetpack blog token auth used instead.
          */
         protected function requires_nonce(\WP_REST_Request $request)
         {
@@ -114994,7 +116970,7 @@ namespace Automattic\WooCommerce\StoreApi\Routes\V1\Agentic {
         /**
          * Check if the request is authorized.
          *
-         * Checks feature enablement and cart token validity.
+         * Validates Jetpack blog token and cart token validity.
          *
          * @param \WP_REST_Request $request Request object.
          * @return bool|\WP_Error True if authorized, WP_Error otherwise.
@@ -119256,6 +121232,12 @@ namespace Automattic\WooCommerce\StoreApi\Schemas\V1 {
          */
         protected $title = 'order_item';
         /**
+         * Cache for parent product attributes.
+         *
+         * @var array|null
+         */
+        private $cached_parent_attributes = null;
+        /**
          * The schema item identifier.
          *
          * @var string
@@ -119277,6 +121259,32 @@ namespace Automattic\WooCommerce\StoreApi\Schemas\V1 {
          * @return array
          */
         public function get_totals($order_item)
+        {
+        }
+        /**
+         * Get variation data from order item metadata.
+         *
+         * Gets the customer's actual attribute choices from the order metadata.
+         * This fixes variations set to "Any" returning empty values.
+         *
+         * @param \WC_Order_Item_Product $order_item Order item instance.
+         * @param \WC_Product            $product Product instance.
+         * @return array Formatted variation data.
+         */
+        protected function get_variation_data_from_order_item($order_item, $product)
+        {
+        }
+        /**
+         * Get parent product attributes.
+         *
+         * Cached to avoid multiple DB lookups when processing multiple meta items.
+         *
+         * @param \WC_Product $product Product instance.
+         * @return array Array of WC_Product_Attribute objects.
+         *
+         * @since 10.5.0
+         */
+        protected function get_parent_product_attributes($product)
         {
         }
     }
@@ -119885,14 +121893,13 @@ namespace Automattic\WooCommerce\StoreApi\Utilities {
         {
         }
         /**
-         * Check if the Agentic Checkout feature is enabled and request is authorized.
+         * Validate that the request is signed with Jetpack blog token.
          *
-         * Validates bearer token against registered agents in the agent registry.
+         * @since 10.6.0
          *
-         * @param \WP_REST_Request $request Request object.
-         * @return bool|\WP_Error True if authorized, WP_Error otherwise.
+         * @return true|\WP_Error True if valid, WP_Error otherwise.
          */
-        public static function is_authorized($request = null)
+        public static function validate_jetpack_request()
         {
         }
         /**
@@ -124071,6 +126078,7 @@ namespace {
      * @since 3.0.0
      * @param string $name  Constant name.
      * @param mixed  $value Value.
+     * @return void
      */
     function wc_maybe_define_constant($name, $value)
     {
@@ -124132,6 +126140,7 @@ namespace {
      *
      * @param mixed  $slug Template slug.
      * @param string $name Template name (default: '').
+     * @return void
      */
     function wc_get_template_part($slug, $name = '')
     {
@@ -124143,6 +126152,7 @@ namespace {
      * @param array  $args          Arguments. (default: array).
      * @param string $template_path Template path. (default: '').
      * @param string $default_path  Default path. (default: '').
+     * @return void
      */
     function wc_get_template($template_name, $args = array(), $template_path = '', $default_path = '')
     {
@@ -124185,6 +126195,7 @@ namespace {
      * @since 4.3.0
      * @param string $cache_key Object cache key.
      * @param string $template Located template.
+     * @return void
      */
     function wc_set_template_cache($cache_key, $template)
     {
@@ -124193,6 +126204,7 @@ namespace {
      * Clear the template cache.
      *
      * @since 4.3.0
+     * @return void
      */
     function wc_clear_template_cache()
     {
@@ -124201,6 +126213,7 @@ namespace {
      * Clear the system status theme info cache.
      *
      * @since 9.4.0
+     * @return void
      */
     function wc_clear_system_status_theme_info_cache()
     {
@@ -124288,6 +126301,7 @@ namespace {
      * Queue some JavaScript code to be output in the footer.
      *
      * @param string $code Code.
+     * @return void
      *
      * @deprecated 10.4.0 Use wp_add_inline_script() instead.
      */
@@ -124296,6 +126310,8 @@ namespace {
     }
     /**
      * Output any queued javascript code in the footer.
+     *
+     * @return void
      */
     function wc_print_js()
     {
@@ -124308,6 +126324,7 @@ namespace {
      * @param  integer $expire Expiry of the cookie.
      * @param  bool    $secure Whether the cookie should be served only over https.
      * @param  bool    $httponly Whether the cookie is only accessible over HTTP, not scripting languages like JavaScript. @since 3.6.0.
+     * @return void
      */
     function wc_setcookie($name, $value, $expire = 0, $secure = \false, $httponly = \false)
     {
@@ -124323,6 +126340,8 @@ namespace {
     }
     /**
      * Flushes rewrite rules when the shop page (or it's children) gets saved.
+     *
+     * @return void
      */
     function flush_rewrite_rules_on_shop_page_save()
     {
@@ -124443,6 +126462,7 @@ namespace {
      * @since 2.5.0
      * @param string $type Types: start (default), commit, rollback.
      * @param bool   $force use of transactions.
+     * @return void
      */
     function wc_transaction_query($type = 'start', $force = \false)
     {
@@ -124473,6 +126493,7 @@ namespace {
      *
      * @since 1.5.7
      * @param string|object $shipping_method class name (string) or a class object.
+     * @return void
      */
     function woocommerce_register_shipping_method($shipping_method)
     {
@@ -124503,6 +126524,7 @@ namespace {
      *
      * @param string $label Title of the page to return to.
      * @param string $url   URL of the page to return to.
+     * @return void
      */
     function wc_back_link($label, $url)
     {
@@ -124513,6 +126535,7 @@ namespace {
      * @param string $title Title of the current page.
      * @param string $label Label of the page to return to.
      * @param string $url   URL of the page to return to.
+     * @return void
      */
     function wc_back_header($title, $label, $url)
     {
@@ -124574,6 +126597,7 @@ namespace {
      *
      * @since 2.6.0
      * @param int $limit Time limit.
+     * @return void
      */
     function wc_set_time_limit($limit = 0)
     {
@@ -124582,6 +126606,7 @@ namespace {
      * Wrapper for nocache_headers which also disables page caching.
      *
      * @since 3.2.4
+     * @return void
      */
     function wc_nocache_headers()
     {
@@ -124733,6 +126758,7 @@ namespace {
      * Trigger logging cleanup using the logging class.
      *
      * @since 3.4.0
+     * @return void
      */
     function wc_cleanup_logs()
     {
@@ -124785,6 +126811,7 @@ namespace {
      * Switch WooCommerce to site language.
      *
      * @since 3.1.0
+     * @return void
      */
     function wc_switch_to_site_locale()
     {
@@ -124793,6 +126820,7 @@ namespace {
      * Switch WooCommerce language to original.
      *
      * @since 3.1.0
+     * @return void
      */
     function wc_restore_locale()
     {
@@ -124911,6 +126939,7 @@ namespace {
      * Cleans up session data - cron callback.
      *
      * @since 3.3.0
+     * @return void
      */
     function wc_cleanup_session_data()
     {
@@ -125102,6 +127131,7 @@ namespace {
      * @param string $version     The version of WooCommerce that deprecated the hook.
      * @param string $replacement The hook that should have been used.
      * @param string $message     A message regarding the change.
+     * @return void
      */
     function wc_do_deprecated_action($tag, $args, $version, $replacement = \null, $message = \null)
     {
@@ -125113,6 +127143,7 @@ namespace {
      * @param string $function Function used.
      * @param string $version Version the message was added in.
      * @param string $replacement Replacement for the called function.
+     * @return void
      */
     function wc_deprecated_function($function, $version, $replacement = \null)
     {
@@ -125125,6 +127156,7 @@ namespace {
      * @param string $version     The version of WordPress that deprecated the hook.
      * @param string $replacement The hook that should have been used.
      * @param string $message     A message regarding the change.
+     * @return void
      */
     function wc_deprecated_hook($hook, $version, $replacement = \null, $message = \null)
     {
@@ -125136,6 +127168,7 @@ namespace {
      * @param Exception $exception_object The exception object.
      * @param string    $function The function which threw exception.
      * @param array     $args The args passed to the function.
+     * @return void
      */
     function wc_caught_exception($exception_object, $function = '', $args = array())
     {
@@ -125147,6 +127180,7 @@ namespace {
      * @param string $function Function used.
      * @param string $message Message to log.
      * @param string $version Version the message was added in.
+     * @return void
      */
     function wc_doing_it_wrong($function, $message, $version)
     {
@@ -125158,48 +127192,56 @@ namespace {
      * @param  string $argument
      * @param  string $version
      * @param  string $replacement
+     * @return void
      */
     function wc_deprecated_argument($argument, $version, $message = \null)
     {
     }
     /**
      * @deprecated 2.1
+     * @return void
      */
     function woocommerce_show_messages()
     {
     }
     /**
      * @deprecated 2.1
+     * @return void
      */
     function woocommerce_weekend_area_js()
     {
     }
     /**
      * @deprecated 2.1
+     * @return void
      */
     function woocommerce_tooltip_js()
     {
     }
     /**
      * @deprecated 2.1
+     * @return void
      */
     function woocommerce_datepicker_js()
     {
     }
     /**
      * @deprecated 2.1
+     * @return void
      */
     function woocommerce_admin_scripts()
     {
     }
     /**
      * @deprecated 2.1
+     * @return int
      */
     function woocommerce_create_page($slug, $option = '', $page_title = '', $page_content = '', $post_parent = 0)
     {
     }
     /**
      * @deprecated 2.1
+     * @return bool
      */
     function woocommerce_readfile_chunked($file, $retbytes = \true)
     {
@@ -125230,498 +127272,581 @@ namespace {
      * Handle IPN requests for the legacy paypal gateway by calling gateways manually if needed.
      *
      * @access public
+     * @return void
      */
     function woocommerce_legacy_paypal_ipn()
     {
     }
     /**
      * @deprecated 3.0
+     * @return WC_Product|null|false
      */
     function get_product($the_product = \false, $args = array())
     {
     }
     /**
      * @deprecated 3.0
+     * @return bool
      */
     function woocommerce_protected_product_add_to_cart($passed, $product_id)
     {
     }
     /**
      * @deprecated 3.0
+     * @return void
      */
     function woocommerce_empty_cart()
     {
     }
     /**
      * @deprecated 3.0
+     * @return void
      */
     function woocommerce_load_persistent_cart($user_login, $user = 0)
     {
     }
     /**
      * @deprecated 3.0
+     * @return void
      */
     function woocommerce_add_to_cart_message($product_id)
     {
     }
     /**
      * @deprecated 3.0
+     * @return void
      */
     function woocommerce_clear_cart_after_payment()
     {
     }
     /**
      * @deprecated 3.0
+     * @return void
      */
     function woocommerce_cart_totals_subtotal_html()
     {
     }
     /**
      * @deprecated 3.0
+     * @return void
      */
     function woocommerce_cart_totals_shipping_html()
     {
     }
     /**
      * @deprecated 3.0
+     * @return void
      */
     function woocommerce_cart_totals_coupon_html($coupon)
     {
     }
     /**
      * @deprecated 3.0
+     * @return void
      */
     function woocommerce_cart_totals_order_total_html()
     {
     }
     /**
      * @deprecated 3.0
+     * @return void
      */
     function woocommerce_cart_totals_fee_html($fee)
     {
     }
     /**
      * @deprecated 3.0
+     * @return string
      */
     function woocommerce_cart_totals_shipping_method_label($method)
     {
     }
     /**
      * @deprecated 3.0
+     * @return void
      */
     function woocommerce_get_template_part($slug, $name = '')
     {
     }
     /**
      * @deprecated 3.0
+     * @return void
      */
     function woocommerce_get_template($template_name, $args = array(), $template_path = '', $default_path = '')
     {
     }
     /**
      * @deprecated 3.0
+     * @return string
      */
     function woocommerce_locate_template($template_name, $template_path = '', $default_path = '')
     {
     }
     /**
      * @deprecated 3.0
+     * @return void
      */
     function woocommerce_mail($to, $subject, $message, $headers = "Content-Type: text/html\r\n", $attachments = "")
     {
     }
     /**
      * @deprecated 3.0
+     * @return bool
      */
     function woocommerce_disable_admin_bar($show_admin_bar)
     {
     }
     /**
      * @deprecated 3.0
+     * @return int|WP_Error
      */
     function woocommerce_create_new_customer($email, $username = '', $password = '')
     {
     }
     /**
      * @deprecated 3.0
+     * @return void
      */
     function woocommerce_set_customer_auth_cookie($customer_id)
     {
     }
     /**
      * @deprecated 3.0
+     * @return int
      */
     function woocommerce_update_new_customer_past_orders($customer_id)
     {
     }
     /**
      * @deprecated 3.0
+     * @return void
      */
     function woocommerce_paying_customer($order_id)
     {
     }
     /**
      * @deprecated 3.0
+     * @return bool
      */
     function woocommerce_customer_bought_product($customer_email, $user_id, $product_id)
     {
     }
     /**
      * @deprecated 3.0
+     * @return array
      */
     function woocommerce_customer_has_capability($allcaps, $caps, $args)
     {
     }
     /**
      * @deprecated 3.0
+     * @return string
      */
     function woocommerce_sanitize_taxonomy_name($taxonomy)
     {
     }
     /**
      * @deprecated 3.0
+     * @return string
      */
     function woocommerce_get_filename_from_url($file_url)
     {
     }
     /**
      * @deprecated 3.0
+     * @return float
      */
     function woocommerce_get_dimension($dim, $to_unit)
     {
     }
     /**
      * @deprecated 3.0
+     * @return float
      */
     function woocommerce_get_weight($weight, $to_unit)
     {
     }
     /**
      * @deprecated 3.0
+     * @return string
      */
     function woocommerce_trim_zeros($price)
     {
     }
     /**
      * @deprecated 3.0
+     * @return float
      */
     function woocommerce_round_tax_total($tax)
     {
     }
     /**
      * @deprecated 3.0
+     * @return string
      */
     function woocommerce_format_decimal($number, $dp = \false, $trim_zeros = \false)
     {
     }
     /**
      * @deprecated 3.0
+     * @return string|array
      */
     function woocommerce_clean($var)
     {
     }
     /**
      * @deprecated 3.0
+     * @return array
      */
     function woocommerce_array_overlay($a1, $a2)
     {
     }
     /**
      * @deprecated 3.0
+     * @return string
      */
     function woocommerce_price($price, $args = array())
     {
     }
     /**
      * @deprecated 3.0
+     * @return int
      */
     function woocommerce_let_to_num($size)
     {
     }
     /**
      * @deprecated 3.0
+     * @return string
      */
     function woocommerce_date_format()
     {
     }
     /**
      * @deprecated 3.0
+     * @return string
      */
     function woocommerce_time_format()
     {
     }
     /**
      * @deprecated 3.0
+     * @return string
      */
     function woocommerce_timezone_string()
     {
     }
     /**
      * @deprecated 3.0
+     * @return array
      */
     function woocommerce_rgb_from_hex($color)
     {
     }
     /**
      * @deprecated 3.0
+     * @return string
      */
     function woocommerce_hex_darker($color, $factor = 30)
     {
     }
     /**
      * @deprecated 3.0
+     * @return string
      */
     function woocommerce_hex_lighter($color, $factor = 30)
     {
     }
     /**
      * @deprecated 3.0
+     * @return string
      */
     function woocommerce_light_or_dark($color, $dark = '#000000', $light = '#FFFFFF')
     {
     }
     /**
      * @deprecated 3.0
+     * @return string|null
      */
     function woocommerce_format_hex($hex)
     {
     }
     /**
      * @deprecated 3.0
+     * @return int
      */
     function woocommerce_get_order_id_by_order_key($order_key)
     {
     }
     /**
      * @deprecated 3.0
+     * @return int|bool
      */
     function woocommerce_downloadable_file_permission($download_id, $product_id, $order)
     {
     }
     /**
      * @deprecated 3.0
+     * @return void
      */
     function woocommerce_downloadable_product_permissions($order_id)
     {
     }
     /**
      * @deprecated 3.0
+     * @return int|bool
      */
     function woocommerce_add_order_item($order_id, $item)
     {
     }
     /**
      * @deprecated 3.0
+     * @return bool
      */
     function woocommerce_delete_order_item($item_id)
     {
     }
     /**
      * @deprecated 3.0
+     * @return bool
      */
     function woocommerce_update_order_item_meta($item_id, $meta_key, $meta_value, $prev_value = '')
     {
     }
     /**
      * @deprecated 3.0
+     * @return int
      */
     function woocommerce_add_order_item_meta($item_id, $meta_key, $meta_value, $unique = \false)
     {
     }
     /**
      * @deprecated 3.0
+     * @return bool
      */
     function woocommerce_delete_order_item_meta($item_id, $meta_key, $meta_value = '', $delete_all = \false)
     {
     }
     /**
      * @deprecated 3.0
+     * @return mixed
      */
     function woocommerce_get_order_item_meta($item_id, $key, $single = \true)
     {
     }
     /**
      * @deprecated 3.0
+     * @return void
      */
     function woocommerce_cancel_unpaid_orders()
     {
     }
     /**
      * @deprecated 3.0
+     * @return int
      */
     function woocommerce_processing_order_count()
     {
     }
     /**
      * @deprecated 3.0
+     * @return int
      */
     function woocommerce_get_page_id($page)
     {
     }
     /**
      * @deprecated 3.0
+     * @return string
      */
     function woocommerce_get_endpoint_url($endpoint, $value = '', $permalink = '')
     {
     }
     /**
      * @deprecated 3.0
+     * @return string
      */
     function woocommerce_lostpassword_url($url)
     {
     }
     /**
      * @deprecated 3.0
+     * @return string
      */
     function woocommerce_customer_edit_account_url()
     {
     }
     /**
      * @deprecated 3.0
+     * @return array
      */
     function woocommerce_nav_menu_items($items, $args)
     {
     }
     /**
      * @deprecated 3.0
+     * @return array
      */
     function woocommerce_nav_menu_item_classes($menu_items, $args)
     {
     }
     /**
      * @deprecated 3.0
+     * @return string
      */
     function woocommerce_list_pages($pages)
     {
     }
     /**
      * @deprecated 3.0
+     * @return int
      */
     function woocommerce_product_dropdown_categories($args = array(), $deprecated_hierarchical = 1, $deprecated_show_uncategorized = 1, $deprecated_orderby = '')
     {
     }
     /**
      * @deprecated 3.0
+     * @return mixed
      */
     function woocommerce_walk_category_dropdown_tree($a1 = '', $a2 = '', $a3 = '')
     {
     }
     /**
      * @deprecated 3.0
+     * @return void
      */
     function woocommerce_taxonomy_metadata_wpdbfix()
     {
     }
     /**
      * @deprecated 3.0
+     * @return void
      */
     function wc_taxonomy_metadata_wpdbfix()
     {
     }
     /**
      * @deprecated 3.0
+     * @return int
      */
     function woocommerce_order_terms($the_term, $next_id, $taxonomy, $index = 0, $terms = \null)
     {
     }
     /**
      * @deprecated 3.0
+     * @return int
      */
     function woocommerce_set_term_order($term_id, $index, $taxonomy, $recursive = \false)
     {
     }
     /**
      * @deprecated 3.0
+     * @return array
      */
     function woocommerce_terms_clauses($clauses, $taxonomies, $args)
     {
     }
     /**
      * @deprecated 3.0
+     * @return void
      */
     function _woocommerce_term_recount($terms, $taxonomy, $callback, $terms_are_term_taxonomy_ids)
     {
     }
     /**
      * @deprecated 3.0
+     * @return void
      */
     function woocommerce_recount_after_stock_change($product_id)
     {
     }
     /**
      * @deprecated 3.0
+     * @return array
      */
     function woocommerce_change_term_counts($terms, $taxonomies, $args)
     {
     }
     /**
      * @deprecated 3.0
+     * @return array
      */
     function woocommerce_get_product_ids_on_sale()
     {
     }
     /**
      * @deprecated 3.0
+     * @return array
      */
     function woocommerce_get_featured_product_ids()
     {
     }
     /**
      * @deprecated 3.0
+     * @return array
      */
     function woocommerce_get_product_terms($object_id, $taxonomy, $fields = 'all')
     {
     }
     /**
      * @deprecated 3.0
+     * @return string
      */
     function woocommerce_product_post_type_link($permalink, $post)
     {
     }
     /**
      * @deprecated 3.0
+     * @return string
      */
     function woocommerce_placeholder_img_src()
     {
     }
     /**
      * @deprecated 3.0
+     * @return string
      */
     function woocommerce_placeholder_img($size = 'woocommerce_thumbnail')
     {
     }
     /**
      * @deprecated 3.0
+     * @return string
      */
     function woocommerce_get_formatted_variation($variation = '', $flat = \false)
     {
     }
     /**
      * @deprecated 3.0
+     * @return void
      */
     function woocommerce_scheduled_sales()
     {
     }
     /**
      * @deprecated 3.0
+     * @return array
      */
     function woocommerce_get_attachment_image_attributes($attr)
     {
     }
     /**
      * @deprecated 3.0
+     * @return array
      */
     function woocommerce_prepare_attachment_for_js($response)
     {
     }
     /**
      * @deprecated 3.0
+     * @return void
      */
     function woocommerce_track_product_view()
     {
     }
     /**
      * @deprecated 2.3 has no replacement
+     * @return void
      */
     function woocommerce_compile_less_styles()
     {
@@ -125755,6 +127880,7 @@ namespace {
      * @param float $sale_price
      * @param string $date_from
      * @param string $date_to
+     * @return void
      */
     function _wc_save_product_price($product_id, $regular_price, $sale_price = '', $date_from = '', $date_to = '')
     {
@@ -125799,6 +127925,7 @@ namespace {
      * @param  int    $new_term_id      New term ID.
      * @param  string $term_taxonomy_id Term taxonomy ID.
      * @param  string $taxonomy         Taxonomy.
+     * @return void
      */
     function wc_taxonomy_metadata_update_content_for_split_terms($old_term_id, $new_term_id, $term_taxonomy_id, $taxonomy)
     {
@@ -125906,6 +128033,7 @@ namespace {
      * @param string  $user_login User login.
      * @param WP_User $user       User data.
      * @deprecated 2.3
+     * @return void
      */
     function wc_load_persistent_cart($user_login, $user)
     {
@@ -125932,6 +128060,7 @@ namespace {
      * Products RSS Feed.
      *
      * @deprecated 2.6
+     * @return void
      */
     function wc_products_rss_feed()
     {
@@ -125940,6 +128069,7 @@ namespace {
      * Reset the loop's index and columns when we're done outputting a product loop.
      *
      * @deprecated 3.3
+     * @return void
      */
     function woocommerce_reset_loop()
     {
@@ -125948,6 +128078,7 @@ namespace {
      * Output the reviews tab content.
      *
      * @deprecated 2.4.0 Unused.
+     * @return void
      */
     function woocommerce_product_reviews_tab()
     {
@@ -126787,6 +128918,45 @@ namespace {
     {
     }
     /**
+     * Load a product into the interactivity API state.
+     *
+     * This is an experimental API and may change in future versions.
+     *
+     * @param string $consent_statement The consent statement acknowledging this is an experimental API.
+     * @param int    $product_id        The product ID to load.
+     * @return array The product data.
+     * @throws InvalidArgumentException If consent statement doesn't match.
+     */
+    function wc_interactivity_api_load_product(string $consent_statement, int $product_id): array
+    {
+    }
+    /**
+     * Load all purchasable child products of a parent product into the interactivity API state.
+     *
+     * This is an experimental API and may change in future versions.
+     *
+     * @param string $consent_statement The consent statement acknowledging this is an experimental API.
+     * @param int    $parent_id         The parent product ID.
+     * @return array The purchasable child products keyed by ID.
+     * @throws InvalidArgumentException If consent statement doesn't match.
+     */
+    function wc_interactivity_api_load_purchasable_child_products(string $consent_statement, int $parent_id): array
+    {
+    }
+    /**
+     * Load all variations of a variable product into the interactivity API state.
+     *
+     * This is an experimental API and may change in future versions.
+     *
+     * @param string $consent_statement The consent statement acknowledging this is an experimental API.
+     * @param int    $parent_id         The parent product ID.
+     * @return array The variations keyed by ID.
+     * @throws InvalidArgumentException If consent statement doesn't match.
+     */
+    function wc_interactivity_api_load_variations(string $consent_statement, int $parent_id): array
+    {
+    }
+    /**
      * Get the count of notices added, either for all notices (default) or for one.
      * particular notice type specified by $notice_type.
      *
@@ -126905,7 +129075,7 @@ namespace {
      * This function should be used for order retrieval so that when we move to
      * custom tables, functions still work.
      *
-     * Args and usage: https://github.com/woocommerce/woocommerce/wiki/wc_get_orders-and-WC_Order_Query
+     * Args and usage: https://developer.woocommerce.com/docs/extensions/core-concepts/wc-get-orders/
      *
      * @since  2.6.0
      * @param  array $args Array of args (above).
@@ -127511,7 +129681,7 @@ namespace {
      * This function should be used for product retrieval so that we have a data agnostic
      * way to get a list of products.
      *
-     * Args and usage: https://github.com/woocommerce/woocommerce/wiki/wc_get_products-and-WC_Product_Query
+     * Args and usage: https://developer.woocommerce.com/docs/extensions/core-concepts/wc-get-products/
      *
      * @since  3.0.0
      * @param  array $args Array of args (above).
@@ -128475,6 +130645,8 @@ namespace {
     }
     /**
      * Handle redirects before content is output - hooked into template_redirect so is_page works.
+     *
+     * @return void
      */
     function wc_template_redirect()
     {
@@ -128485,6 +130657,7 @@ namespace {
      * Can be disabled with: remove_action( 'template_redirect', 'wc_send_frame_options_header' );
      *
      * @since  2.3.10
+     * @return void
      */
     function wc_send_frame_options_header()
     {
@@ -128494,6 +130667,7 @@ namespace {
      * Prevent indexing pages like order-received.
      *
      * @since 2.5.3
+     * @return void
      */
     function wc_prevent_endpoint_indexing()
     {
@@ -128502,6 +130676,7 @@ namespace {
      * Remove adjacent_posts_rel_link_wp_head - pointless for products.
      *
      * @since 3.0.0
+     * @return void
      */
     function wc_prevent_adjacent_posts_rel_link_wp_head()
     {
@@ -128510,6 +130685,7 @@ namespace {
      * Show the gallery if JS is disabled.
      *
      * @since 3.0.6
+     * @return void
      */
     function wc_gallery_noscript()
     {
@@ -128528,6 +130704,7 @@ namespace {
      *
      * @since 3.3.0
      * @param array $args Args to pass into the global.
+     * @return void
      */
     function wc_setup_loop($args = array())
     {
@@ -128536,6 +130713,7 @@ namespace {
      * Resets the woocommerce_loop global.
      *
      * @since 3.3.0
+     * @return void
      */
     function wc_reset_loop()
     {
@@ -128557,6 +130735,7 @@ namespace {
      * @since 3.3.0
      * @param string $prop Prop to set.
      * @param string $value Value to set.
+     * @return void
      */
     function wc_set_loop_prop($prop, $value = '')
     {
@@ -128567,6 +130746,7 @@ namespace {
      * @since 4.4.0
      * @param int  $product_id Product it to cache visibility for.
      * @param bool $value The product visibility value to cache.
+     * @return void
      */
     function wc_set_loop_product_visibility($product_id, $value)
     {
@@ -128616,6 +130796,7 @@ namespace {
      * NO JS handling.
      *
      * @since 3.4.0
+     * @return void
      */
     function wc_no_js()
     {
@@ -128626,6 +130807,7 @@ namespace {
      * @since 2.4.0
      * @param string|array $class One or more classes to add to the class list.
      * @param object       $category object Optional.
+     * @return void
      */
     function wc_product_cat_class($class = '', $category = \null)
     {
@@ -128652,6 +130834,7 @@ namespace {
      * Reset the product grid settings when a new theme is activated.
      *
      * @since 3.3.0
+     * @return void
      */
     function wc_reset_product_grid_settings()
     {
@@ -128723,6 +130906,7 @@ namespace {
      * @since 3.4.0
      * @param string|array           $class      One or more classes to add to the class list.
      * @param int|WP_Post|WC_Product $product_id Product ID or product object.
+     * @return void
      */
     function wc_product_class($class = '', $product_id = \null)
     {
@@ -128790,6 +130974,7 @@ namespace {
      * Output t&c checkbox text.
      *
      * @since 3.4.0
+     * @return void
      */
     function wc_terms_and_conditions_checkbox_text()
     {
@@ -128798,6 +130983,7 @@ namespace {
      * Output t&c page's content (if set). The page can be set from checkout settings.
      *
      * @since 3.4.0
+     * @return void
      */
     function wc_terms_and_conditions_page_content()
     {
@@ -128806,6 +130992,7 @@ namespace {
      * Render privacy policy text on the checkout.
      *
      * @since 3.4.0
+     * @return void
      */
     function wc_checkout_privacy_policy_text()
     {
@@ -128814,6 +131001,7 @@ namespace {
      * Render privacy policy text on the register forms.
      *
      * @since 3.4.0
+     * @return void
      */
     function wc_registration_privacy_policy_text()
     {
@@ -128825,6 +131013,7 @@ namespace {
      *
      * @since 3.4.0
      * @param string $type Type of policy to load. Valid values include registration and checkout.
+     * @return void
      */
     function wc_privacy_policy_text($type = 'checkout')
     {
@@ -128845,30 +131034,40 @@ namespace {
      * This function is only used in the optional 'woocommerce.php' template.
      * which people can add to their themes to add basic woocommerce support.
      * without hooks or modifying core templates.
+     *
+     * @return void
      */
     function woocommerce_content()
     {
     }
     /**
      * Output the start of the page wrapper.
+     *
+     * @return void
      */
     function woocommerce_output_content_wrapper()
     {
     }
     /**
      * Output the end of the page wrapper.
+     *
+     * @return void
      */
     function woocommerce_output_content_wrapper_end()
     {
     }
     /**
      * Get the shop sidebar template.
+     *
+     * @return void
      */
     function woocommerce_get_sidebar()
     {
     }
     /**
      * Adds a demo store banner to the site if enabled.
+     *
+     * @return void
      */
     function woocommerce_demo_store()
     {
@@ -128902,6 +131101,8 @@ namespace {
     }
     /**
      * Show the product title in the product loop. By default this is an H2.
+     *
+     * @return void
      */
     function woocommerce_template_loop_product_title()
     {
@@ -128910,18 +131111,23 @@ namespace {
      * Show the subcategory title in the product loop.
      *
      * @param object $category Category object.
+     * @return void
      */
     function woocommerce_template_loop_category_title($category)
     {
     }
     /**
      * Insert the opening anchor tag for products in the loop.
+     *
+     * @return void
      */
     function woocommerce_template_loop_product_link_open()
     {
     }
     /**
      * Insert the closing anchor tag for products in the loop.
+     *
+     * @return void
      */
     function woocommerce_template_loop_product_link_close()
     {
@@ -128930,30 +131136,39 @@ namespace {
      * Insert the opening anchor tag for categories in the loop.
      *
      * @param int|object|string $category Category ID, Object or String.
+     * @return void
      */
     function woocommerce_template_loop_category_link_open($category)
     {
     }
     /**
      * Insert the closing anchor tag for categories in the loop.
+     *
+     * @return void
      */
     function woocommerce_template_loop_category_link_close()
     {
     }
     /**
      * Output the products header on taxonomy archives.
+     *
+     * @return void
      */
     function woocommerce_product_taxonomy_archive_header()
     {
     }
     /**
      * Show an archive description on taxonomy archives.
+     *
+     * @return void
      */
     function woocommerce_taxonomy_archive_description()
     {
     }
     /**
      * Show a shop page description on product archives.
+     *
+     * @return void
      */
     function woocommerce_product_archive_description()
     {
@@ -128962,30 +131177,39 @@ namespace {
      * Get the add to cart template for the loop.
      *
      * @param array $args Arguments.
+     * @return void
      */
     function woocommerce_template_loop_add_to_cart($args = array())
     {
     }
     /**
      * Get the product thumbnail for the loop.
+     *
+     * @return void
      */
     function woocommerce_template_loop_product_thumbnail()
     {
     }
     /**
      * Get the product price for the loop.
+     *
+     * @return void
      */
     function woocommerce_template_loop_price()
     {
     }
     /**
      * Display the average rating in the loop.
+     *
+     * @return void
      */
     function woocommerce_template_loop_rating()
     {
     }
     /**
      * Get the sale flash for the loop.
+     *
+     * @return void
      */
     function woocommerce_show_product_loop_sale_flash()
     {
@@ -129003,6 +131227,8 @@ namespace {
     }
     /**
      * Output the result count text (Showing x - x of x results).
+     *
+     * @return void
      */
     function woocommerce_result_count()
     {
@@ -129011,24 +131237,31 @@ namespace {
      * Output the product sorting options.
      *
      * @param array|null $attributes Block attributes.
+     * @return void
      */
     function woocommerce_catalog_ordering($attributes = \null)
     {
     }
     /**
      * Output the pagination.
+     *
+     * @return void
      */
     function woocommerce_pagination()
     {
     }
     /**
      * Output the product image before the single product summary.
+     *
+     * @return void
      */
     function woocommerce_show_product_images()
     {
     }
     /**
      * Output the product thumbnails.
+     *
+     * @return void
      */
     function woocommerce_show_product_thumbnails()
     {
@@ -129061,78 +131294,104 @@ namespace {
     }
     /**
      * Output the product tabs.
+     *
+     * @return void
      */
     function woocommerce_output_product_data_tabs()
     {
     }
     /**
      * Output the product title.
+     *
+     * @return void
      */
     function woocommerce_template_single_title()
     {
     }
     /**
      * Output the product rating.
+     *
+     * @return void
      */
     function woocommerce_template_single_rating()
     {
     }
     /**
      * Output the product price.
+     *
+     * @return void
      */
     function woocommerce_template_single_price()
     {
     }
     /**
      * Output the product short description (excerpt).
+     *
+     * @return void
      */
     function woocommerce_template_single_excerpt()
     {
     }
     /**
      * Output the product meta.
+     *
+     * @return void
      */
     function woocommerce_template_single_meta()
     {
     }
     /**
      * Output the product sharing.
+     *
+     * @return void
      */
     function woocommerce_template_single_sharing()
     {
     }
     /**
      * Output the product sale flash.
+     *
+     * @return void
      */
     function woocommerce_show_product_sale_flash()
     {
     }
     /**
      * Trigger the single product add to cart action.
+     *
+     * @return void
      */
     function woocommerce_template_single_add_to_cart()
     {
     }
     /**
      * Output the simple product add to cart area.
+     *
+     * @return void
      */
     function woocommerce_simple_add_to_cart()
     {
     }
     /**
      * Output the grouped product add to cart area.
+     *
+     * @return void
      */
     function woocommerce_grouped_add_to_cart()
     {
     }
     /**
      * Output the variable product add to cart area.
+     *
+     * @return void
      */
     function woocommerce_variable_add_to_cart()
     {
     }
     /**
      * Output the external product add to cart area.
+     *
+     * @return void
      */
     function woocommerce_external_add_to_cart()
     {
@@ -129151,12 +131410,16 @@ namespace {
     }
     /**
      * Output the description tab content.
+     *
+     * @return void
      */
     function woocommerce_product_description_tab()
     {
     }
     /**
      * Output the attributes tab content.
+     *
+     * @return void
      */
     function woocommerce_product_additional_information_tab()
     {
@@ -129185,6 +131448,7 @@ namespace {
      * @param WP_Comment $comment Comment object.
      * @param array      $args Arguments.
      * @param int        $depth Depth.
+     * @return void
      */
     function woocommerce_comments($comment, $args, $depth)
     {
@@ -129216,12 +131480,16 @@ namespace {
     }
     /**
      * Display the review content.
+     *
+     * @return void
      */
     function woocommerce_review_display_comment_text()
     {
     }
     /**
      * Output the related products.
+     *
+     * @return void
      */
     function woocommerce_output_related_products()
     {
@@ -129230,6 +131498,7 @@ namespace {
      * Output the related products.
      *
      * @param array $args Provided arguments.
+     * @return void
      */
     function woocommerce_related_products($args = array())
     {
@@ -129241,6 +131510,7 @@ namespace {
      * @param int    $columns (default: 4).
      * @param string $orderby Supported values - rand, title, ID, date, modified, menu_order, price.
      * @param string $order Sort direction.
+     * @return void
      */
     function woocommerce_upsell_display($limit = -1, $columns = 4, $orderby = 'rand', $order = 'desc')
     {
@@ -129249,12 +131519,15 @@ namespace {
      * Output the cart shipping calculator.
      *
      * @param string $button_text Text for the shipping calculation toggle.
+     * @return void
      */
     function woocommerce_shipping_calculator($button_text = '')
     {
     }
     /**
      * Output the cart totals.
+     *
+     * @return void
      */
     function woocommerce_cart_totals()
     {
@@ -129266,24 +131539,31 @@ namespace {
      * @param  int    $columns (default: 2).
      * @param  string $orderby (default: 'rand').
      * @param  string $order (default: 'desc').
+     * @return void
      */
     function woocommerce_cross_sell_display($limit = 2, $columns = 2, $orderby = 'rand', $order = 'desc')
     {
     }
     /**
      * Output the proceed to checkout button.
+     *
+     * @return void
      */
     function woocommerce_button_proceed_to_checkout()
     {
     }
     /**
      * Output the view cart button.
+     *
+     * @return void
      */
     function woocommerce_widget_shopping_cart_button_view_cart()
     {
     }
     /**
      * Output the proceed to checkout button.
+     *
+     * @return void
      */
     function woocommerce_widget_shopping_cart_proceed_to_checkout()
     {
@@ -129292,6 +131572,7 @@ namespace {
      * Output to view cart subtotal.
      *
      * @since 3.7.0
+     * @return void
      */
     function woocommerce_widget_shopping_cart_subtotal()
     {
@@ -129300,6 +131581,7 @@ namespace {
      * Output the Mini-cart - used by cart widget.
      *
      * @param array $args Arguments.
+     * @return void
      */
     function woocommerce_mini_cart($args = array())
     {
@@ -129308,12 +131590,15 @@ namespace {
      * Output the WooCommerce Login Form.
      *
      * @param array $args Arguments.
+     * @return void
      */
     function woocommerce_login_form($args = array())
     {
     }
     /**
      * Output the WooCommerce Checkout Login Form.
+     *
+     * @return void
      */
     function woocommerce_checkout_login_form()
     {
@@ -129322,6 +131607,7 @@ namespace {
      * Output the WooCommerce Breadcrumb.
      *
      * @param array $args Arguments.
+     * @return void
      */
     function woocommerce_breadcrumb($args = array())
     {
@@ -129330,18 +131616,23 @@ namespace {
      * Output the Order review table for the checkout.
      *
      * @param bool $deprecated Deprecated param.
+     * @return void
      */
     function woocommerce_order_review($deprecated = \false)
     {
     }
     /**
      * Output the Payment Methods on the checkout.
+     *
+     * @return void
      */
     function woocommerce_checkout_payment()
     {
     }
     /**
      * Output the Coupon form for the checkout.
+     *
+     * @return void
      */
     function woocommerce_checkout_coupon_form()
     {
@@ -129399,6 +131690,7 @@ namespace {
      * Show subcategory thumbnails.
      *
      * @param mixed $category Category.
+     * @return void
      */
     function woocommerce_subcategory_thumbnail($category)
     {
@@ -129407,6 +131699,7 @@ namespace {
      * Displays order details in a table.
      *
      * @param mixed $order_id Order ID.
+     * @return void
      */
     function woocommerce_order_details_table($order_id)
     {
@@ -129416,6 +131709,7 @@ namespace {
      *
      * @since 3.2.0
      * @param array $downloads Downloads.
+     * @return void
      */
     function woocommerce_order_downloads_table($downloads)
     {
@@ -129424,6 +131718,7 @@ namespace {
      * Display an 'order again' button on the view order page.
      *
      * @param object $order Order.
+     * @return void
      */
     function woocommerce_order_again_button($order)
     {
@@ -129456,24 +131751,32 @@ namespace {
     }
     /**
      * Output the Auth header.
+     *
+     * @return void
      */
     function woocommerce_output_auth_header()
     {
     }
     /**
      * Output the Auth footer.
+     *
+     * @return void
      */
     function woocommerce_output_auth_footer()
     {
     }
     /**
      * Output placeholders for the single variation.
+     *
+     * @return void
      */
     function woocommerce_single_variation()
     {
     }
     /**
      * Output the add to cart button for variations.
+     *
+     * @return void
      */
     function woocommerce_single_variation_add_to_cart_button()
     {
@@ -129483,18 +131786,23 @@ namespace {
      *
      * @param array $args Arguments.
      * @since 2.4.0
+     * @return void
      */
     function wc_dropdown_variation_attribute_options($args = array())
     {
     }
     /**
      * My Account content output.
+     *
+     * @return void
      */
     function woocommerce_account_content()
     {
     }
     /**
      * My Account navigation template.
+     *
+     * @return void
      */
     function woocommerce_account_navigation()
     {
@@ -129503,6 +131811,7 @@ namespace {
      * My Account > Orders template.
      *
      * @param int $current_page Current page number.
+     * @return void
      */
     function woocommerce_account_orders($current_page)
     {
@@ -129511,12 +131820,15 @@ namespace {
      * My Account > View order template.
      *
      * @param int $order_id Order ID.
+     * @return void
      */
     function woocommerce_account_view_order($order_id)
     {
     }
     /**
      * My Account > Downloads template.
+     *
+     * @return void
      */
     function woocommerce_account_downloads()
     {
@@ -129525,30 +131837,39 @@ namespace {
      * My Account > Edit address template.
      *
      * @param string $type Type of address; 'billing' or 'shipping'.
+     * @return void
      */
     function woocommerce_account_edit_address($type)
     {
     }
     /**
      * My Account > Downloads template.
+     *
+     * @return void
      */
     function woocommerce_account_payment_methods()
     {
     }
     /**
      * My Account > Add payment method template.
+     *
+     * @return void
      */
     function woocommerce_account_add_payment_method()
     {
     }
     /**
      * My Account > Edit account template.
+     *
+     * @return void
      */
     function woocommerce_account_edit_account()
     {
     }
     /**
      * Handles the loop when no products were found/no product exist.
+     *
+     * @return void
      */
     function wc_no_products_found()
     {
@@ -129602,6 +131923,8 @@ namespace {
     }
     /**
      * Get the shop sidebar template.
+     *
+     * @return void
      */
     function woocommerce_photoswipe()
     {
@@ -129611,6 +131934,7 @@ namespace {
      *
      * @since  3.0.0
      * @param  WC_Product $product Product Object.
+     * @return void
      */
     function wc_display_product_attributes($product)
     {
@@ -129679,6 +132003,7 @@ namespace {
      * Show notice if cart is empty.
      *
      * @since 3.1.0
+     * @return void
      */
     function wc_empty_cart_message()
     {
@@ -129688,6 +132013,7 @@ namespace {
      *
      * @todo Deprecated this function after dropping support for WP 5.6.
      * @since 3.2.0
+     * @return void
      */
     function wc_page_noindex()
     {
@@ -129747,6 +132073,7 @@ namespace {
      * Outputs all queued notices on WC pages.
      *
      * @since 3.5.0
+     * @return void
      */
     function woocommerce_output_all_notices()
     {
@@ -129755,6 +132082,7 @@ namespace {
      * Display pay buttons HTML.
      *
      * @since 3.9.0
+     * @return void
      */
     function wc_get_pay_buttons()
     {
