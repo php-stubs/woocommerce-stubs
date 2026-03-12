@@ -21455,9 +21455,10 @@ namespace {
          *
          * @param array $package Shipping package data.
          * @param int   $index Package number.
+         * @param int   $total_packages Total number of packages.
          * @return string
          */
-        private function get_shipping_package_name($package, $index)
+        private function get_shipping_package_name($package, $index, $total_packages)
         {
         }
         /**
@@ -39755,7 +39756,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '10.6.0';
+        public $version = '10.6.1';
         /**
          * WooCommerce Schema version.
          *
