@@ -39756,7 +39756,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '10.6.1';
+        public $version = '10.6.2';
         /**
          * WooCommerce Schema version.
          *
@@ -94594,9 +94594,9 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes\AddToCartWithOptions {
         /**
          * Render the block.
          *
-         * @param array    $attributes Block attributes.
-         * @param string   $content Block content.
-         * @param WP_Block $block Block instance.
+         * @param array     $attributes Block attributes.
+         * @param string    $content Block content.
+         * @param \WP_Block $block Block instance.
          * @return string Rendered block output.
          */
         protected function render($attributes, $content, $block): string
@@ -94625,9 +94625,9 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes\AddToCartWithOptions {
         /**
          * Render the attribute options as pills.
          *
-         * @param array    $attributes Block attributes.
-         * @param string   $content Block content.
-         * @param WP_Block $block Block instance.
+         * @param array     $attributes Block attributes.
+         * @param string    $content Block content.
+         * @param \WP_Block $block Block instance.
          * @return string The pills.
          */
         protected function render_pills($attributes, $content, $block)
@@ -94636,9 +94636,9 @@ namespace Automattic\WooCommerce\Blocks\BlockTypes\AddToCartWithOptions {
         /**
          * Render the attribute options as a dropdown.
          *
-         * @param array    $attributes Block attributes.
-         * @param string   $content Block content.
-         * @param WP_Block $block Block instance.
+         * @param array     $attributes Block attributes.
+         * @param string    $content Block content.
+         * @param \WP_Block $block Block instance.
          * @return string The dropdown.
          */
         protected function render_dropdown($attributes, $content, $block)
