@@ -76,6 +76,21 @@ return \StubsGenerator\Finder::create()
             ->depth('< 1')
             ->path('RestApiCache.php')
     )
+    // FulfillmentException extends this internal class
+    ->append(
+        \StubsGenerator\Finder::create()
+            ->in(['source/woocommerce/src/Internal/Admin/Settings/Exceptions'])
+            ->files()
+            ->depth('< 1')
+            ->path('ApiException.php')
+    )
+    ->append(
+        \StubsGenerator\Finder::create()
+            ->in(['source/woocommerce/src/Internal/'])
+            ->files()
+            ->depth('< 1')
+            ->path('RestApiControllerBase.php')
+    )
 /*
     ->append(
         \StubsGenerator\Finder::create()
