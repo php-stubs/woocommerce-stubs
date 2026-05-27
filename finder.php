@@ -12,6 +12,7 @@ return \StubsGenerator\Finder::create()
     ->append(
         \StubsGenerator\Finder::create()
             ->in(['source/woocommerce/src'])
+            ->notPath('Api')
             ->notPath('Internal')
             // Uses woocommerce/blueprint
             ->notPath('Admin/Features/Blueprint')
