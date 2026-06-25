@@ -33,6 +33,21 @@ return \StubsGenerator\Finder::create()
             ->files()
             ->depth('< 1')
     )
+    // LegacySettingsPageAdapter uses this internal trait
+    ->append(
+        \StubsGenerator\Finder::create()
+            ->in(['source/woocommerce/src/Internal/Admin/Settings'])
+            ->files()
+            ->depth('< 1')
+            ->path('LegacySettingsPageAdapter.php')
+    )
+    ->append(
+        \StubsGenerator\Finder::create()
+            ->in(['source/woocommerce/src/Internal/Admin/Settings'])
+            ->files()
+            ->depth('< 1')
+            ->path('SettingsUISchema.php')
+    )
     ->append(
         \StubsGenerator\Finder::create()
             ->in(['source/woocommerce/src/Internal'])
