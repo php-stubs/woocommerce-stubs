@@ -4438,7 +4438,7 @@ namespace {
         /**
          * ActionScheduler_HybridStore constructor.
          *
-         * @param Config|null $config Migration config object.
+         * @param \Action_Scheduler\Migration\Config|null $config Migration config object.
          */
         public function __construct(?\Action_Scheduler\Migration\Config $config = \null)
         {
@@ -5785,20 +5785,20 @@ namespace Action_Scheduler\Migration {
         /**
          * Source logger instance.
          *
-         * @var ActionScheduler_Logger
+         * @var \ActionScheduler_Logger
          */
         private $source;
         /**
          * Destination logger instance.
          *
-         * @var ActionScheduler_Logger
+         * @var \ActionScheduler_Logger
          */
         private $destination;
         /**
          * ActionMigrator constructor.
          *
-         * @param ActionScheduler_Logger $source_logger Source logger object.
-         * @param ActionScheduler_Logger $destination_logger Destination logger object.
+         * @param \ActionScheduler_Logger $source_logger Source logger object.
+         * @param \ActionScheduler_Logger $destination_logger Destination logger object.
          */
         public function __construct(\ActionScheduler_Logger $source_logger, \ActionScheduler_Logger $destination_logger)
         {
