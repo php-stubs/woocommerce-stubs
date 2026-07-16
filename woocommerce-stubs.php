@@ -25265,15 +25265,6 @@ namespace {
         public function set_is_paying_customer($is_paying_customer)
         {
         }
-        /**
-         * Overrides the save method to guard against saves with no data changed.
-         *
-         * @since 10.9.0
-         * @return int
-         */
-        public function save()
-        {
-        }
     }
     /**
      * Data exception class.
@@ -39936,7 +39927,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '10.9.2';
+        public $version = '10.9.4';
         /**
          * WooCommerce Schema version.
          *
