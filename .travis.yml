@@ -36,4 +36,4 @@ script:
   - "php -l woocommerce-packages-stubs.php"
   - "git diff --exit-code"
   - |
-    php -r 'require "vendor/php-stubs/wordpress-stubs/wordpress-stubs.php"; require "woocommerce-stubs.php"; require "woocommerce-packages-stubs.php";'
+    php -r 'require "vendor/php-stubs/wordpress-stubs/wordpress-stubs.php"; require "woocommerce-stubs.php"; require "woocommerce-packages-stubs.php"; foreach (["Automattic\\WooCommerce\\Blocks\\Payments\\Api", "Automattic\\WooCommerce\\StoreApi\\Exceptions\\RouteException", "Automattic\\WooCommerce\\StoreApi\\Routes\\V1\\AbstractCartRoute"] as $class) { if (!class_exists($class, false)) { throw new RuntimeException(sprintf("Expected class %s was not generated.", $class)); } }'

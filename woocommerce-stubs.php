@@ -100654,6 +100654,203 @@ namespace Automattic\WooCommerce\Blocks {
 }
 namespace Automattic\WooCommerce\Blocks\Assets {
     /**
+     * The Api class provides an interface to various asset registration helpers.
+     *
+     * Contains asset api methods
+     *
+     * @since 2.5.0
+     */
+    class Api
+    {
+        /**
+         * Stores the prefixed WC version. Used because the WC Blocks version has not been updated since the monorepo merge.
+         *
+         * @var string
+         */
+        public $wc_version;
+        /**
+         * Stores inline scripts already enqueued.
+         *
+         * @var array
+         */
+        private $inline_scripts = [];
+        /**
+         * Determines if caching is enabled for script data.
+         *
+         * @var boolean
+         */
+        private $disable_cache = false;
+        /**
+         * Stores loaded script data for the current request
+         *
+         * @var array|null
+         */
+        private $script_data = null;
+        /**
+         * Tracks whether script_data was modified during the current request.
+         *
+         * @var boolean
+         */
+        private $script_data_modified = false;
+        /**
+         * Stores the hash for the script data, made up of the site url, plugin version and package path.
+         *
+         * @var string
+         */
+        private $script_data_hash;
+        /**
+         * Stores the transient key used to cache the script data. This will change if the site is accessed via HTTPS or HTTP.
+         *
+         * @var string
+         */
+        private $script_data_transient_key = 'woocommerce_blocks_asset_api_script_data';
+        /**
+         * Reference to the Package instance
+         *
+         * @var \Automattic\WooCommerce\Blocks\Domain\Package
+         */
+        private $package;
+        /**
+         * Constructor for class
+         *
+         * @param \Automattic\WooCommerce\Blocks\Domain\Package $package An instance of Package.
+         */
+        public function __construct(\Automattic\WooCommerce\Blocks\Domain\Package $package)
+        {
+        }
+        /**
+         * Get the file modified time as a cache buster if we're in dev mode.
+         *
+         * @param string $file Local path to the file (relative to the plugin
+         *                     directory).
+         * @return string The cache buster value to use for the given file.
+         */
+        protected function get_file_version($file)
+        {
+        }
+        /**
+         * Retrieve the url to an asset for this plugin.
+         *
+         * @param string $relative_path An optional relative path appended to the
+         *                              returned url.
+         *
+         * @return string
+         */
+        protected function get_asset_url($relative_path = '')
+        {
+        }
+        /**
+         * Get the path to a block's metadata
+         *
+         * @param string $block_name The block to get metadata for.
+         * @param string $path Optional. The path to the metadata file inside the 'assets/client/blocks' folder.
+         *
+         * @return string|boolean False if metadata file is not found for the block.
+         */
+        public function get_block_metadata_path($block_name, $path = '')
+        {
+        }
+        /**
+         * Generates a hash containing the site url, plugin version and package path.
+         *
+         * Moving the plugin, changing the version, or changing the site url will result in a new hash and the cache will be invalidated.
+         *
+         * @return string The generated hash.
+         */
+        private function get_script_data_hash()
+        {
+        }
+        /**
+         * Initialize and load cached script data from the transient cache.
+         *
+         * @return array
+         */
+        private function get_cached_script_data()
+        {
+        }
+        /**
+         * Store all cached script data in the transient cache.
+         */
+        public function update_script_data_cache()
+        {
+        }
+        /**
+         * Use package path to find an asset data file and return the data.
+         *
+         * @param string $filename The filename of the asset.
+         * @return array The asset data.
+         */
+        public function get_asset_data($filename)
+        {
+        }
+        /**
+         * Get src, version and dependencies given a script relative src.
+         *
+         * @param string $relative_src Relative src to the script.
+         * @param array  $dependencies Optional. An array of registered script handles this script depends on. Default empty array.
+         *
+         * @return array src, version and dependencies of the script.
+         */
+        public function get_script_data($relative_src, $dependencies = [])
+        {
+        }
+        /**
+         * Registers a script according to `wp_register_script`, adding the correct prefix, and additionally loading translations.
+         *
+         * When creating script assets, the following rules should be followed:
+         *   1. All asset handles should have a `wc-` prefix.
+         *   2. If the asset handle is for a Block (in editor context) use the `-block` suffix.
+         *   3. If the asset handle is for a Block (in frontend context) use the `-block-frontend` suffix.
+         *   4. If the asset is for any other script being consumed or enqueued by the blocks plugin, use the `wc-blocks-` prefix.
+         *
+         * @since 2.5.0
+         * @throws \Exception If the registered script has a dependency on itself.
+         *
+         * @param string $handle        Unique name of the script.
+         * @param string $relative_src  Relative url for the script to the path from plugin root.
+         * @param array  $dependencies  Optional. An array of registered script handles this script depends on. Default empty array.
+         * @param bool   $has_i18n      Optional. Whether to add a script translation call to this file. Default: true.
+         */
+        public function register_script($handle, $relative_src, $dependencies = [], $has_i18n = true)
+        {
+        }
+        /**
+         * Registers a style according to `wp_register_style`.
+         *
+         * @since 2.5.0
+         * @since 2.6.0 Change src to be relative source.
+         *
+         * @param string  $handle       Name of the stylesheet. Should be unique.
+         * @param string  $relative_src Relative source of the stylesheet to the plugin path.
+         * @param array   $deps         Optional. An array of registered stylesheet handles this stylesheet depends on. Default empty array.
+         * @param string  $media        Optional. The media for which this stylesheet has been defined. Default 'all'. Accepts media types like
+         *                              'all', 'print' and 'screen', or media queries like '(orientation: portrait)' and '(max-width: 640px)'.
+         * @param boolean $rtl   Optional. Whether or not to register RTL styles.
+         */
+        public function register_style($handle, $relative_src, $deps = [], $media = 'all', $rtl = false)
+        {
+        }
+        /**
+         * Returns the appropriate asset path for current builds.
+         *
+         * @param   string $filename  Filename for asset path (without extension).
+         * @param   string $type      File type (.css or .js).
+         * @return  string             The generated path.
+         */
+        public function get_block_asset_build_path($filename, $type = 'js')
+        {
+        }
+        /**
+         * Adds an inline script, once.
+         *
+         * @param string $handle Script handle.
+         * @param string $script Script contents.
+         */
+        public function add_inline_script($handle, $script)
+        {
+        }
+    }
+    /**
      * Class instance for registering data used on the current view session by
      * assets.
      *
@@ -114917,6 +115114,83 @@ namespace Automattic\WooCommerce\Blocks\Patterns {
     }
 }
 namespace Automattic\WooCommerce\Blocks\Payments {
+    /**
+     *  The Api class provides an interface to payment method registration.
+     *
+     * @since 2.6.0
+     */
+    class Api
+    {
+        /**
+         * Reference to the PaymentMethodRegistry instance.
+         *
+         * @var PaymentMethodRegistry
+         */
+        private $payment_method_registry;
+        /**
+         * Reference to the AssetDataRegistry instance.
+         *
+         * @var \Automattic\WooCommerce\Blocks\Assets\AssetDataRegistry
+         */
+        private $asset_registry;
+        /**
+         * Constructor
+         *
+         * @param PaymentMethodRegistry $payment_method_registry An instance of Payment Method Registry.
+         * @param \Automattic\WooCommerce\Blocks\Assets\AssetDataRegistry     $asset_registry  Used for registering data to pass along to the request.
+         */
+        public function __construct(\Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry $payment_method_registry, \Automattic\WooCommerce\Blocks\Assets\AssetDataRegistry $asset_registry)
+        {
+        }
+        /**
+         * Initialize class features.
+         */
+        public function init()
+        {
+        }
+        /**
+         * Add payment method script handles as script dependencies.
+         *
+         * @param array  $dependencies Array of script dependencies.
+         * @param string $handle Script handle.
+         * @return array
+         */
+        public function add_payment_method_script_dependencies($dependencies, $handle)
+        {
+        }
+        /**
+         * Returns true if the payment gateway is enabled.
+         *
+         * @param object $gateway Payment gateway.
+         * @return boolean
+         */
+        private function is_payment_gateway_enabled($gateway)
+        {
+        }
+        /**
+         * Add payment method data to Asset Registry.
+         */
+        public function add_payment_method_script_data()
+        {
+        }
+        /**
+         * Register payment method integrations bundled with blocks.
+         *
+         * @param PaymentMethodRegistry $payment_method_registry Payment method registry instance.
+         */
+        public function register_payment_method_integrations(\Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry $payment_method_registry)
+        {
+        }
+        /**
+         * Verify all dependencies of registered payment methods have been registered.
+         * If not, remove that payment method script from the list of dependencies
+         * of Cart and Checkout block scripts so it doesn't break the blocks and show
+         * an error in the admin.
+         */
+        public function verify_payment_methods_dependencies()
+        {
+        }
+    }
     interface PaymentMethodTypeInterface extends \Automattic\WooCommerce\Blocks\Integrations\IntegrationInterface
     {
         /**
@@ -124372,6 +124646,8955 @@ namespace Automattic\WooCommerce\Proxies {
         }
     }
 }
+namespace Automattic\WooCommerce\StoreApi {
+    /**
+     * Authentication class.
+     */
+    class Authentication
+    {
+        /**
+         * Hook into WP lifecycle events. This is hooked by the StoreAPI class on `rest_api_init`.
+         */
+        public function init()
+        {
+        }
+        /**
+         * Add allowed cors headers for store API headers.
+         *
+         * @param array $allowed_headers Allowed headers.
+         * @return array
+         */
+        public function allowed_cors_headers($allowed_headers)
+        {
+        }
+        /**
+         * Use the Store API session handler when a valid Cart-Token is present.
+         *
+         * @since 10.6.0
+         * @param string $handler Session handler class name.
+         * @return string
+         */
+        public function maybe_use_store_api_session_handler($handler): string
+        {
+        }
+        /**
+         * Expose Store API headers in CORS responses.
+         * We're explicitly exposing the Cart-Token, not the nonce. Only one of them is needed.
+         *
+         * @param array $exposed_headers Exposed headers.
+         * @return array
+         */
+        public function exposed_cors_headers($exposed_headers)
+        {
+        }
+        /**
+         * Add CORS headers to a response object.
+         *
+         * These checks prevent access to the Store API from non-allowed origins. By default, the WordPress REST API allows
+         * access from any origin. Because some Store API routes return PII, we need to add our own CORS headers.
+         *
+         * Allowed origins can be changed using the WordPress `allowed_http_origins` or `allowed_http_origin` filters if
+         * access needs to be granted to other domains.
+         *
+         * Users of valid Cart Tokens are also allowed access from any origin.
+         *
+         * @param bool              $served Whether the request has already been served.
+         * @param \WP_REST_Response $result The response object.
+         * @param \WP_REST_Request  $request The request object.
+         * @param \WP_REST_Server   $server The REST server instance.
+         * @return bool
+         */
+        public function send_cors_headers($served, $result, $request, $server)
+        {
+        }
+        /**
+         * Checks if the request has a store API route as a GET `rest_route` parameter.
+         *
+         * @since 10.6.0
+         * @return bool
+         */
+        protected function has_store_api_route_as_get_parameter(): bool
+        {
+        }
+        /**
+         * Is the request a preflight request? Checks the request method
+         *
+         * @return boolean
+         */
+        protected function is_preflight()
+        {
+        }
+        /**
+         * Gets the cart token from the request header.
+         *
+         * @param \WP_REST_Request $request The REST request instance.
+         * @return string
+         */
+        protected function get_cart_token(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * The Store API does not require authentication.
+         *
+         * @param \WP_Error|mixed $result Error from another authentication handler, null if we should handle it, or another value if not.
+         * @return \WP_Error|null|bool
+         */
+        public function check_authentication($result)
+        {
+        }
+        /**
+         * When the login cookies are set, they are not available until the next page reload. For the Store API, specifically
+         * for returning updated nonces, we need this to be available immediately.
+         *
+         * @param string $logged_in_cookie The value for the logged in cookie.
+         */
+        public function set_logged_in_cookie($logged_in_cookie)
+        {
+        }
+        /**
+         * Opt in to rate limiting for the checkout endpoint.
+         *
+         * @param \WP_Error|mixed $result Error from another authentication handler, null if we should handle it, or another value if not.
+         * @return \WP_Error|null|bool
+         */
+        public function opt_in_checkout_endpoint($result)
+        {
+        }
+        /**
+         * Applies Rate Limiting to the request, and passes through any errors from other authentication methods used before this one.
+         *
+         * @param \WP_Error|mixed $result Error from another authentication handler, null if we should handle it, or another value if not.
+         * @return \WP_Error|null|bool
+         */
+        protected function apply_rate_limiting($result)
+        {
+        }
+        /**
+         * Generates the request grouping identifier for the rate limiting.
+         *
+         * @param bool $proxy_support Rate Limiting proxy support.
+         *
+         * @return string
+         */
+        protected static function get_rate_limiting_id(bool $proxy_support): string
+        {
+        }
+        /**
+         * Check if is request to the Store API.
+         *
+         * @return bool
+         */
+        protected function is_request_to_store_api()
+        {
+        }
+        /**
+         * Returns true only for POST requests that are NOT overridden to another method
+         * via the X-HTTP-Method-Override header (used by wp.apiFetch for PUT/DELETE).
+         *
+         * @see https://github.com/wordpress/gutenberg/blob/trunk/packages/api-fetch/src/middlewares/http-v1.ts#L21-L43
+         *
+         * @return bool
+         */
+        private function is_only_post_request()
+        {
+        }
+        /**
+         * Get current user IP Address.
+         *
+         * X_REAL_IP and CLIENT_IP are custom implementations designed to facilitate obtaining a user's ip through proxies, load balancers etc.
+         *
+         * _FORWARDED_FOR (XFF) request header is a de-facto standard header for identifying the originating IP address of a client connecting to a web server through a proxy server.
+         * Note for X_FORWARDED_FOR, Proxy servers can send through this header like this: X-Forwarded-For: client1, proxy1, proxy2.
+         * Make sure we always only send through the first IP in the list which should always be the client IP.
+         * Documentation at https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For
+         *
+         * Forwarded request header contains information that may be added by reverse proxy servers (load balancers, CDNs, and so on).
+         * Documentation at https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Forwarded
+         * Full RFC at https://datatracker.ietf.org/doc/html/rfc7239
+         *
+         * @param boolean $proxy_support Enables/disables proxy support.
+         *
+         * @return string
+         */
+        protected static function get_ip_address(bool $proxy_support = false)
+        {
+        }
+        /**
+         * Uses filter_var() to validate and return ipv4 and ipv6 addresses
+         * Will return 0.0.0.0 if the ip is not valid. This is done to group and still rate limit invalid ips.
+         *
+         * @param string $ip ipv4 or ipv6 ip string.
+         *
+         * @return string
+         */
+        protected static function validate_ip($ip)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\StoreApi\Exceptions {
+    /**
+     * InvalidCartException class.
+     *
+     * @internal This exception is thrown if the cart is in an erroneous state.
+     */
+    class InvalidCartException extends \Exception
+    {
+        /**
+         * Sanitized error code.
+         *
+         * @var string
+         */
+        public $error_code;
+        /**
+         * Additional error data.
+         *
+         * @var array
+         */
+        public $additional_data = [];
+        /**
+         * All errors to display to the user.
+         *
+         * @var \WP_Error
+         */
+        public $error;
+        /**
+         * Setup exception.
+         *
+         * @param string   $error_code      Machine-readable error code, e.g `woocommerce_invalid_product_id`.
+         * @param \WP_Error $error           The WP_Error object containing all errors relating to stock availability.
+         * @param array    $additional_data Extra data (key value pairs) to expose in the error response.
+         */
+        public function __construct($error_code, \WP_Error $error, $additional_data = [])
+        {
+        }
+        /**
+         * Returns the error code.
+         *
+         * @return string
+         */
+        public function getErrorCode()
+        {
+        }
+        /**
+         * Returns the list of messages.
+         *
+         * @return \WP_Error
+         */
+        public function getError()
+        {
+        }
+        /**
+         * Returns additional error data.
+         *
+         * @return array
+         */
+        public function getAdditionalData()
+        {
+        }
+    }
+    /**
+     * InvalidStockLevelsInCartException class.
+     *
+     * This exception is thrown if any items are out of stock after each product on a draft order has been stock checked.
+     */
+    class InvalidStockLevelsInCartException extends \Exception
+    {
+        /**
+         * Sanitized error code.
+         *
+         * @var string
+         */
+        public $error_code;
+        /**
+         * Additional error data.
+         *
+         * @var array
+         */
+        public $additional_data = [];
+        /**
+         * All errors to display to the user.
+         *
+         * @var \WP_Error
+         */
+        public $error;
+        /**
+         * Setup exception.
+         *
+         * @param string   $error_code      Machine-readable error code, e.g `woocommerce_invalid_product_id`.
+         * @param \WP_Error $error           The WP_Error object containing all errors relating to stock availability.
+         * @param array    $additional_data Extra data (key value pairs) to expose in the error response.
+         */
+        public function __construct($error_code, $error, $additional_data = [])
+        {
+        }
+        /**
+         * Returns the error code.
+         *
+         * @return string
+         */
+        public function getErrorCode()
+        {
+        }
+        /**
+         * Returns the list of messages.
+         *
+         * @return \WP_Error
+         */
+        public function getError()
+        {
+        }
+        /**
+         * Returns additional error data.
+         *
+         * @return array
+         */
+        public function getAdditionalData()
+        {
+        }
+    }
+    /**
+     * StockAvailabilityException class.
+     *
+     * This exception is thrown when more than one of a product that can only be purchased individually is in a cart.
+     */
+    class StockAvailabilityException extends \Exception
+    {
+        /**
+         * Sanitized error code.
+         *
+         * @var string
+         */
+        public $error_code;
+        /**
+         * The name of the product that can only be purchased individually.
+         *
+         * @var string
+         */
+        public $product_name;
+        /**
+         * Additional error data.
+         *
+         * @var array
+         */
+        public $additional_data = [];
+        /**
+         * Setup exception.
+         *
+         * @param string $error_code       Machine-readable error code, e.g `woocommerce_invalid_product_id`.
+         * @param string $product_name     The name of the product that can only be purchased individually.
+         * @param array  $additional_data  Extra data (key value pairs) to expose in the error response.
+         */
+        public function __construct($error_code, $product_name, $additional_data = [])
+        {
+        }
+        /**
+         * Returns the error code.
+         *
+         * @return string
+         */
+        public function getErrorCode()
+        {
+        }
+        /**
+         * Returns additional error data.
+         *
+         * @return array
+         */
+        public function getAdditionalData()
+        {
+        }
+        /**
+         * Returns the product name.
+         *
+         * @return string
+         */
+        public function getProductName()
+        {
+        }
+    }
+    /**
+     * NotPurchasableException class.
+     *
+     * This exception is thrown when an item in the cart is not able to be purchased.
+     */
+    class NotPurchasableException extends \Automattic\WooCommerce\StoreApi\Exceptions\StockAvailabilityException
+    {
+    }
+    /**
+     * OutOfStockException class.
+     *
+     * This exception is thrown when an item in a draft order is out of stock completely.
+     */
+    class OutOfStockException extends \Automattic\WooCommerce\StoreApi\Exceptions\StockAvailabilityException
+    {
+    }
+    /**
+     * PartialOutOfStockException class.
+     *
+     * This exception is thrown when an item in a draft order has a quantity greater than what is available in stock.
+     */
+    class PartialOutOfStockException extends \Automattic\WooCommerce\StoreApi\Exceptions\StockAvailabilityException
+    {
+    }
+    /**
+     * RouteException class.
+     */
+    class RouteException extends \Exception
+    {
+        /**
+         * Sanitized error code.
+         *
+         * @var string
+         */
+        public $error_code;
+        /**
+         * Additional error data.
+         *
+         * @var array
+         */
+        public $additional_data = [];
+        /**
+         * Setup exception.
+         *
+         * @param string $error_code       Machine-readable error code, e.g `woocommerce_invalid_product_id`.
+         * @param string $message          User-friendly translated error message, e.g. 'Product ID is invalid'.
+         * @param int    $http_status_code Proper HTTP status code to respond with, e.g. 400.
+         * @param array  $additional_data  Extra data (key value pairs) to expose in the error response.
+         */
+        public function __construct($error_code, $message, $http_status_code = 400, $additional_data = [])
+        {
+        }
+        /**
+         * Returns the error code.
+         *
+         * @return string
+         */
+        public function getErrorCode()
+        {
+        }
+        /**
+         * Returns additional error data.
+         *
+         * @return array
+         */
+        public function getAdditionalData()
+        {
+        }
+    }
+    /**
+     * TooManyInCartException class.
+     *
+     * This exception is thrown when more than one of a product that can only be purchased individually is in a cart.
+     */
+    class TooManyInCartException extends \Automattic\WooCommerce\StoreApi\Exceptions\StockAvailabilityException
+    {
+    }
+}
+namespace Automattic\WooCommerce\StoreApi {
+    /**
+     * Formatters class.
+     *
+     * Allows formatter classes to be registered. Formatters are exposed to extensions via the ExtendSchema class.
+     */
+    class Formatters
+    {
+        /**
+         * Holds an array of formatter class instances.
+         *
+         * @var array
+         */
+        private $formatters = [];
+        /**
+         * Get a new instance of a formatter class.
+         *
+         * @throws \Exception An Exception is thrown if a non-existing formatter is used and the user is admin.
+         *
+         * @param string $name Name of the formatter.
+         * @return FormatterInterface Formatter class instance.
+         */
+        public function __get($name)
+        {
+        }
+        /**
+         * Register a formatter class for usage.
+         *
+         * @param string $name Name of the formatter.
+         * @param string $class A formatter class name.
+         */
+        public function register($name, $class)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\StoreApi\Formatters {
+    /**
+     * FormatterInterface.
+     */
+    interface FormatterInterface
+    {
+        /**
+         * Format a given value and return the result.
+         *
+         * @param mixed $value Value to format.
+         * @param array $options Options that influence the formatting.
+         * @return mixed
+         */
+        public function format($value, array $options = []);
+    }
+    /**
+     * Currency Formatter.
+     *
+     * Formats an array of monetary values by inserting currency data.
+     */
+    class CurrencyFormatter implements \Automattic\WooCommerce\StoreApi\Formatters\FormatterInterface
+    {
+        /**
+         * Format a given value and return the result.
+         *
+         * @param array $value Value to format.
+         * @param array $options Options that influence the formatting.
+         * @return array
+         */
+        public function format($value, array $options = [])
+        {
+        }
+    }
+    /**
+     * Default Formatter.
+     */
+    class DefaultFormatter implements \Automattic\WooCommerce\StoreApi\Formatters\FormatterInterface
+    {
+        /**
+         * Format a given value and return the result.
+         *
+         * @param mixed $value Value to format.
+         * @param array $options Options that influence the formatting.
+         * @return mixed
+         */
+        public function format($value, array $options = [])
+        {
+        }
+    }
+    /**
+     * Html Formatter.
+     *
+     * Formats HTML in API responses.
+     *
+     * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
+     */
+    class HtmlFormatter implements \Automattic\WooCommerce\StoreApi\Formatters\FormatterInterface
+    {
+        /**
+         * Format a given value and return the result.
+         *
+         * The wptexturize, convert_chars, and trim functions are also used in the `the_title` filter.
+         * The function wp_kses_post removes disallowed HTML tags.
+         *
+         * @param string|array $value Value to format.
+         * @param array        $options Options that influence the formatting.
+         * @return string
+         */
+        public function format($value, array $options = [])
+        {
+        }
+    }
+    /**
+     * Money Formatter.
+     *
+     * Formats monetary values using store settings.
+     */
+    class MoneyFormatter implements \Automattic\WooCommerce\StoreApi\Formatters\FormatterInterface
+    {
+        /**
+         * Format a given price value and return the result as a string without decimals.
+         *
+         * @param int|float|string $value Value to format. Int is allowed, as it may also represent a valid price.
+         * @param array            $options Options that influence the formatting.
+         * @return string
+         */
+        public function format($value, array $options = [])
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\StoreApi {
+    /**
+     * Legacy class.
+     */
+    class Legacy
+    {
+        /**
+         * Hook into WP lifecycle events.
+         */
+        public function init()
+        {
+        }
+        /**
+         * Attempt to process a payment for the checkout API if no payment methods support the
+         * woocommerce_rest_checkout_process_payment_with_context action.
+         *
+         * @param \Automattic\WooCommerce\StoreApi\Payments\PaymentContext $context Holds context for the payment.
+         * @param \Automattic\WooCommerce\StoreApi\Payments\PaymentResult  $result  Result of the payment.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException If the gateway returns an explicit error message.
+         */
+        public function process_legacy_payment(\Automattic\WooCommerce\StoreApi\Payments\PaymentContext $context, \Automattic\WooCommerce\StoreApi\Payments\PaymentResult &$result)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\StoreApi\Payments {
+    /**
+     * PaymentContext class.
+     */
+    class PaymentContext
+    {
+        /**
+         * Payment method ID.
+         *
+         * @var string
+         */
+        protected $payment_method = '';
+        /**
+         * Order object for the order being paid.
+         *
+         * @var \WC_Order
+         */
+        protected $order;
+        /**
+         * Holds data to send to the payment gateway to support payment.
+         *
+         * @var array Key value pairs.
+         */
+        protected $payment_data = [];
+        /**
+         * Magic getter for protected properties.
+         *
+         * @param string $name Property name.
+         */
+        public function __get($name)
+        {
+        }
+        /**
+         * Set the chosen payment method ID context.
+         *
+         * @param string $payment_method Payment method ID.
+         */
+        public function set_payment_method($payment_method)
+        {
+        }
+        /**
+         * Retrieve the payment method instance for the current set payment method.
+         *
+         * @return \WC_Payment_Gateway|null An instance of the payment gateway if it exists.
+         */
+        public function get_payment_method_instance()
+        {
+        }
+        /**
+         * Set the order context.
+         *
+         * @param \WC_Order $order Order object.
+         */
+        public function set_order(\WC_Order $order)
+        {
+        }
+        /**
+         * Set payment data context.
+         *
+         * @param array $payment_data Array of key value pairs of data.
+         */
+        public function set_payment_data($payment_data = [])
+        {
+        }
+    }
+    /**
+     * PaymentResult class.
+     */
+    class PaymentResult
+    {
+        /**
+         * List of valid payment statuses.
+         *
+         * @var array
+         */
+        protected $valid_statuses = ['success', 'failure', 'pending', 'error'];
+        /**
+         * Current payment status.
+         *
+         * @var string
+         */
+        protected $status = '';
+        /**
+         * Array of details about the payment.
+         *
+         * @var string
+         */
+        protected $payment_details = [];
+        /**
+         * Redirect URL for checkout.
+         *
+         * @var string
+         */
+        protected $redirect_url = '';
+        /**
+         * Constructor.
+         *
+         * @param string $status Sets the payment status for the result.
+         */
+        public function __construct($status = '')
+        {
+        }
+        /**
+         * Magic getter for protected properties.
+         *
+         * @param string $name Property name.
+         */
+        public function __get($name)
+        {
+        }
+        /**
+         * Get payment status.
+         *
+         * @since 10.5.0
+         * @return string Current payment status.
+         */
+        public function get_status(): string
+        {
+        }
+        /**
+         * Set payment status.
+         *
+         * @throws \Exception When an invalid status is provided.
+         *
+         * @param string $payment_status Status to set.
+         */
+        public function set_status($payment_status)
+        {
+        }
+        /**
+         * Set payment details.
+         *
+         * @param array $payment_details Array of key value pairs of data.
+         */
+        public function set_payment_details($payment_details = [])
+        {
+        }
+        /**
+         * Set redirect URL.
+         *
+         * @param array $redirect_url URL to redirect the customer to after checkout.
+         */
+        public function set_redirect_url($redirect_url = [])
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\StoreApi\Routes {
+    /**
+     * RouteInterface.
+     */
+    interface RouteInterface
+    {
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path();
+        /**
+         * Get arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args();
+    }
+}
+namespace Automattic\WooCommerce\StoreApi\Routes\V1\AI {
+    /**
+     * Middleware class.
+     *
+     * @internal
+     * @deprecated This class can't be removed due https://github.com/woocommerce/woocommerce/issues/52311.
+     */
+    class Middleware
+    {
+    }
+    /**
+     * Products class.
+     *
+     * @internal
+     * @deprecated This class can't be removed due https://github.com/woocommerce/woocommerce/issues/52311.
+     */
+    class Products
+    {
+    }
+}
+namespace Automattic\WooCommerce\StoreApi\Routes\V1 {
+    /**
+     * AbstractRoute class.
+     */
+    abstract class AbstractRoute implements \Automattic\WooCommerce\StoreApi\Routes\RouteInterface
+    {
+        /**
+         * Schema class instance.
+         *
+         * @var \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
+         */
+        protected $schema;
+        /**
+         * Route namespace.
+         *
+         * @var string
+         */
+        protected $namespace = 'wc/store/v1';
+        /**
+         * Schema Controller instance.
+         *
+         * @var \Automattic\WooCommerce\StoreApi\SchemaController
+         */
+        protected $schema_controller;
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = '';
+        /**
+         * The routes schema version.
+         *
+         * @var integer
+         */
+        const SCHEMA_VERSION = 1;
+        /**
+         * Constructor.
+         *
+         * @param \Automattic\WooCommerce\StoreApi\SchemaController $schema_controller Schema Controller instance.
+         * @param \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema   $schema Schema class for this route.
+         */
+        public function __construct(\Automattic\WooCommerce\StoreApi\SchemaController $schema_controller, \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema $schema)
+        {
+        }
+        /**
+         * Get the namespace for this route.
+         *
+         * @return string
+         */
+        public function get_namespace()
+        {
+        }
+        /**
+         * Set the namespace for this route.
+         *
+         * @param string $namespace Given namespace.
+         */
+        public function set_namespace($namespace)
+        {
+        }
+        /**
+         * Get item schema properties.
+         *
+         * @return array
+         */
+        public function get_item_schema()
+        {
+        }
+        /**
+         * Get the route response based on the type of request.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        public function get_response(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Get the route response based on the type of request.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_response_by_request_method(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Converts an error to a response object. Based on \WP_REST_Server.
+         *
+         * @param \WP_Error $error WP_Error instance.
+         * @return \WP_REST_Response List of associative arrays with code and message keys.
+         */
+        protected function error_to_response($error)
+        {
+        }
+        /**
+         * Get route response for GET requests.
+         *
+         * When implemented, should return a \WP_REST_Response.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_response(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Get route response for POST requests.
+         *
+         * When implemented, should return a \WP_REST_Response.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_post_response(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Get route response for PUT requests.
+         *
+         * When implemented, should return a \WP_REST_Response.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_update_response(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Get route response for DELETE requests.
+         *
+         * When implemented, should return a \WP_REST_Response.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_delete_response(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Get route response when something went wrong.
+         *
+         * @param string $error_code String based error code.
+         * @param string $error_message User facing error message.
+         * @param int    $http_status_code HTTP status. Defaults to 500.
+         * @param array  $additional_data  Extra data (key value pairs) to expose in the error response.
+         * @return \WP_Error WP Error object.
+         */
+        protected function get_route_error_response($error_code, $error_message, $http_status_code = 500, $additional_data = [])
+        {
+        }
+        /**
+         * Get route response when something went wrong and the supplied error is a WP_Error. This currently only happens
+         * when an item in the cart is out of stock, partially out of stock, can only be bought individually, or when the
+         * item is not purchasable.
+         *
+         * @param \WP_Error $error_object The WP_Error object containing the error.
+         * @param int      $http_status_code HTTP status. Defaults to 500.
+         * @param array    $additional_data  Extra data (key value pairs) to expose in the error response.
+         * @return \WP_Error WP Error object.
+         */
+        protected function get_route_error_response_from_object($error_object, $http_status_code = 500, $additional_data = [])
+        {
+        }
+        /**
+         * Prepare a single item for response.
+         *
+         * @param mixed            $item Item to format to schema.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response $response Response data.
+         */
+        public function prepare_item_for_response($item, \WP_REST_Request $request)
+        {
+        }
+        /**
+         * Retrieves the context param.
+         *
+         * Ensures consistent descriptions between endpoints, and populates enum from schema.
+         *
+         * @param array $args Optional. Additional arguments for context parameter. Default empty array.
+         * @return array Context parameter details.
+         */
+        protected function get_context_param($args = array())
+        {
+        }
+        /**
+         * Prepares a response for insertion into a collection.
+         *
+         * @param \WP_REST_Response $response Response object.
+         * @return array|mixed Response data, ready for insertion into collection data.
+         */
+        protected function prepare_response_for_collection(\WP_REST_Response $response)
+        {
+        }
+        /**
+         * Prepare links for the request.
+         *
+         * @param mixed            $item Item to prepare.
+         * @param \WP_REST_Request $request Request object.
+         * @return array
+         */
+        protected function prepare_links($item, $request)
+        {
+        }
+        /**
+         * Retrieves the query params for the collections.
+         *
+         * @return array Query parameters for the collection.
+         */
+        public function get_collection_params()
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\StoreApi\Utilities {
+    /**
+     * DraftOrderTrait
+     *
+     * Shared functionality for getting and setting draft order IDs from session.
+     */
+    trait DraftOrderTrait
+    {
+        /**
+         * Gets draft order data from the customer session.
+         *
+         * @return integer
+         */
+        protected function get_draft_order_id()
+        {
+        }
+        /**
+         * Updates draft order data in the customer session.
+         *
+         * @param integer $order_id Draft order ID.
+         */
+        protected function set_draft_order_id($order_id)
+        {
+        }
+        /**
+         * Uses the draft order ID to return an order object, if valid.
+         *
+         * @return \WC_Order|null;
+         */
+        protected function get_draft_order()
+        {
+        }
+        /**
+         * Whether the passed argument is a draft order or an order that is
+         * pending/failed and the cart hasn't changed.
+         *
+         * @param \WC_Order $order_object Order object to check.
+         * @return boolean Whether the order is valid as a draft order.
+         */
+        protected function is_valid_draft_order($order_object)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\StoreApi\Routes\V1 {
+    /**
+     * Abstract Cart Route
+     */
+    abstract class AbstractCartRoute extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
+    {
+        use \Automattic\WooCommerce\StoreApi\Utilities\DraftOrderTrait;
+        /**
+         * The route's schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'cart';
+        /**
+         * Schema class instance.
+         *
+         * @var \Automattic\WooCommerce\StoreApi\Schemas\V1\CartSchema
+         */
+        protected $schema;
+        /**
+         * Schema class for the cart.
+         *
+         * @var \Automattic\WooCommerce\StoreApi\Schemas\V1\CartSchema
+         */
+        protected $cart_schema;
+        /**
+         * Schema class for the cart item.
+         *
+         * @var \Automattic\WooCommerce\StoreApi\Schemas\V1\CartItemSchema
+         */
+        protected $cart_item_schema;
+        /**
+         * Cart controller class instance.
+         *
+         * @var \Automattic\WooCommerce\StoreApi\Utilities\CartController
+         */
+        protected $cart_controller;
+        /**
+         * Order controller class instance.
+         *
+         * @var \Automattic\WooCommerce\StoreApi\Utilities\OrderController
+         */
+        protected $order_controller;
+        /**
+         * Additional fields controller class instance.
+         *
+         * @var \Automattic\WooCommerce\Blocks\Domain\Services\CheckoutFields
+         */
+        protected $additional_fields_controller;
+        /**
+         * True when this route has been requested with a valid cart token.
+         *
+         * @var bool|null
+         */
+        protected $has_cart_token = null;
+        /**
+         * Constructor.
+         *
+         * @param \Automattic\WooCommerce\StoreApi\SchemaController $schema_controller Schema Controller instance.
+         * @param \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema   $schema Schema class for this route.
+         */
+        public function __construct(\Automattic\WooCommerce\StoreApi\SchemaController $schema_controller, \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema $schema)
+        {
+        }
+        /**
+         * Are we updating data or getting data?
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @return boolean
+         */
+        protected function is_update_request(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Get the route response based on the type of request.
+         *
+         * @param \WP_REST_Request $request Request object.
+         *
+         * @return \WP_REST_Response
+         */
+        public function get_response(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Add nonce headers to a response object.
+         *
+         * @param \WP_REST_Response $response The response object.
+         *
+         * @return \WP_REST_Response
+         */
+        protected function add_response_headers(\WP_REST_Response $response)
+        {
+        }
+        /**
+         * Load the cart session before handling responses.
+         *
+         * @param \WP_REST_Request $request Request object.
+         */
+        protected function load_cart_session(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Generates a cart token for the response headers.
+         *
+         * Current namespace is used as the token Issuer.
+         * *
+         *
+         * @return string
+         */
+        protected function get_cart_token()
+        {
+        }
+        /**
+         * Checks if the request has a valid cart token.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @return bool
+         */
+        protected function has_cart_token(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Checks if a nonce is required for the route.
+         *
+         * @param \WP_REST_Request $request Request.
+         *
+         * @return bool
+         */
+        protected function requires_nonce(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Triggered after an update to cart data. Re-calculates totals and updates draft orders (if they already exist) to
+         * keep all data in sync.
+         *
+         * @param \WP_REST_Request $request Request object.
+         */
+        protected function cart_updated(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * For non-GET endpoints, require and validate a nonce to prevent CSRF attacks.
+         *
+         * Nonces will mismatch if the logged in session cookie is different! If using a client to test, set this cookie
+         * to match the logged in cookie in your browser.
+         *
+         * @param \WP_REST_Request $request Request object.
+         *
+         * @return \WP_Error|boolean
+         */
+        protected function check_nonce(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Get route response when something went wrong.
+         *
+         * @param string $error_code String based error code.
+         * @param string $error_message User facing error message.
+         * @param int    $http_status_code HTTP status. Defaults to 500.
+         * @param array  $additional_data Extra data (key value pairs) to expose in the error response.
+         *
+         * @return \WP_Error WP Error object.
+         */
+        protected function get_route_error_response($error_code, $error_message, $http_status_code = 500, $additional_data = [])
+        {
+        }
+    }
+    /**
+     * AbstractTermsRoute class.
+     */
+    abstract class AbstractTermsRoute extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
+    {
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'term';
+        /**
+         * Get the query params for collections of attributes.
+         *
+         * @return array
+         */
+        public function get_collection_params()
+        {
+        }
+        /**
+         * Get terms matching passed in args.
+         *
+         * @param string           $taxonomy Taxonomy to get terms from.
+         * @param \WP_REST_Request $request Request object.
+         *
+         * @return \WP_REST_Response
+         */
+        protected function get_terms_response($taxonomy, $request)
+        {
+        }
+        /**
+         * Get count of terms for current query.
+         *
+         * @param string $taxonomy Taxonomy to get terms from.
+         * @param array  $args Array of args to pass to wp_count_terms.
+         * @return int
+         */
+        protected function get_term_count($taxonomy, $args)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\StoreApi\Routes\V1\Agentic {
+    /**
+     * AgenticCheckoutSession class.
+     *
+     * Wrapper for all things, associated with an agentic checkout session.
+     * This class manages the cart and error handling for agentic checkout processes.
+     */
+    final class AgenticCheckoutSession
+    {
+        /**
+         * The WooCommerce cart instance.
+         *
+         * @var \WC_Cart
+         */
+        private $cart;
+        /**
+         * Error messages handler for the checkout session.
+         *
+         * @var \Automattic\WooCommerce\StoreApi\Routes\V1\Agentic\Messages\Messages
+         */
+        private $messages;
+        /**
+         * The checkout session ID.
+         *
+         * @var string
+         */
+        private $id;
+        /**
+         * Constructor.
+         *
+         * @param \WC_Cart $cart The WooCommerce cart instance.
+         */
+        public function __construct(\WC_Cart $cart)
+        {
+        }
+        /**
+         * Gets the cart instance.
+         *
+         * @return \WC_Cart The WooCommerce cart instance.
+         */
+        public function get_cart(): \WC_Cart
+        {
+        }
+        /**
+         * Gets the messages collection.
+         *
+         * @return \Automattic\WooCommerce\StoreApi\Routes\V1\Agentic\Messages\Messages The messages handler instance.
+         */
+        public function get_messages(): \Automattic\WooCommerce\StoreApi\Routes\V1\Agentic\Messages\Messages
+        {
+        }
+        /**
+         * Gets the checkout session ID.
+         *
+         * @return string The checkout session ID.
+         */
+        public function get_id(): string
+        {
+        }
+        /**
+         * Get the checkout session ID. If it does not exist, generate a cart token for it and save to the current session.
+         *
+         * @return string Checkout Session ID stored in the current session.
+         */
+        private function get_or_set_checkout_session_id(): string
+        {
+        }
+    }
+    /**
+     * CheckoutSessions class.
+     *
+     * Handles the Agentic Checkout API checkout sessions endpoint.
+     * This endpoint allows AI agents to create and manage checkout sessions.
+     */
+    class CheckoutSessions extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractCartRoute
+    {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'agentic-checkout-sessions';
+        /**
+         * The route's schema type.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = \Automattic\WooCommerce\StoreApi\Schemas\V1\Agentic\CheckoutSessionSchema::IDENTIFIER;
+        /**
+         * Cart controller for managing cart operations.
+         *
+         * @var \Automattic\WooCommerce\StoreApi\Utilities\CartController
+         */
+        protected $cart_controller;
+        /**
+         * Constructor.
+         *
+         * @param \Automattic\WooCommerce\StoreApi\SchemaController $schema_controller Schema Controller instance.
+         * @param \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema   $schema Schema class instance.
+         */
+        public function __construct($schema_controller, $schema)
+        {
+        }
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path regex for this REST route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Get the parameters for creating a checkout session.
+         *
+         * @return array Parameters array.
+         */
+        protected function get_create_params()
+        {
+        }
+        /**
+         * Check if the request is authorized.
+         *
+         * Validates that the request is signed with Jetpack blog token.
+         *
+         * @return bool|\WP_Error True if authorized, WP_Error otherwise.
+         */
+        public function is_authorized()
+        {
+        }
+        /**
+         * Check if a nonce is required for the route.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @return bool False, Jetpack blog token auth used instead.
+         */
+        protected function requires_nonce(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Handle the request and return a valid response for this endpoint.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_post_response(\WP_REST_Request $request)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\StoreApi\Utilities {
+    /**
+     * CheckoutTrait
+     *
+     * Shared functionality for checkout route.
+     */
+    trait CheckoutTrait
+    {
+        /**
+         * Prepare a single item for response. Handles setting the status based on the payment result.
+         *
+         * @param mixed            $item Item to format to schema.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response $response Response data.
+         */
+        public function prepare_item_for_response($item, \WP_REST_Request $request)
+        {
+        }
+        /**
+         * Returns the order being processed, throwing if it hasn't been materialised yet.
+         *
+         * Use the returned `WC_Order` (rather than `$this->order`) for type-safe access in
+         * the rest of the calling method.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException If `$this->order` is null.
+         * @return \WC_Order
+         */
+        private function get_order_or_throw(): \WC_Order
+        {
+        }
+        /**
+         * For orders which do not require payment, just update status.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException If the order is missing.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @param \Automattic\WooCommerce\StoreApi\Payments\PaymentResult    $payment_result Payment result object.
+         */
+        private function process_without_payment(\WP_REST_Request $request, \Automattic\WooCommerce\StoreApi\Payments\PaymentResult $payment_result)
+        {
+        }
+        /**
+         * Fires an action hook instructing active payment gateways to process the payment for an order and provide a result.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException If the order is missing, or on payment error.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @param \Automattic\WooCommerce\StoreApi\Payments\PaymentResult    $payment_result Payment result object.
+         */
+        private function process_payment(\WP_REST_Request $request, \Automattic\WooCommerce\StoreApi\Payments\PaymentResult $payment_result)
+        {
+        }
+        /**
+         * Gets the chosen payment method ID from the request.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         * @param \WP_REST_Request $request Request object.
+         * @return string
+         */
+        private function get_request_payment_method_id(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Gets and formats payment request data.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @return array
+         */
+        private function get_request_payment_data(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Update the current order using the posted values from the request.
+         *
+         * Called only with a real, persisted order — either the place-order POST flow or
+         * the rare failed-payment PATCH retry flow where `get_draft_order()` resolved to
+         * an existing `pending`/`failed` order from the customer's session. Fresh-session
+         * PATCHes never call this method; they go through the no-order draft path.
+         *
+         * @param \WP_REST_Request $request Full details about the request.
+         * @param bool             $persist Whether to persist the changes right away (defaults to true).
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException If the order is missing, or if the order requires a payment method on POST and none was supplied.
+         */
+        private function update_order_from_request(\WP_REST_Request $request, bool $persist = true)
+        {
+        }
+        /**
+         * Gets the chosen payment method title from the request.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         * @param \WP_REST_Request $request Request object.
+         * @return string
+         */
+        private function get_request_payment_method_title(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Persist additional fields for the order after validating them.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException If the order is missing.
+         *
+         * @param \WP_REST_Request $request Full details about the request.
+         */
+        private function persist_additional_fields_for_order(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Persist additional fields for the customer session.
+         *
+         * Counterpart to `persist_additional_fields_for_order` for routes that operate
+         * without a persisted order (e.g. the deferred-draft PATCH path).
+         *
+         * @phpstan-param \WP_REST_Request<array<string, mixed>> $request
+         *
+         * @param \WP_REST_Request $request Full details about the request.
+         */
+        private function persist_additional_fields_for_customer(\WP_REST_Request $request): void
+        {
+        }
+        /**
+         * Resolve the additional checkout fields from the request and persist each one
+         * via the supplied callback. Fields hidden by conditional logic that were still
+         * posted are cleared (passed with an empty value).
+         *
+         * @phpstan-param \WP_REST_Request<array<string, mixed>> $request
+         *
+         * @param \WP_REST_Request $request Full details about the request.
+         * @param callable         $persist Callback invoked as `$persist( string $key, mixed $value )` for each field.
+         */
+        private function resolve_and_persist_additional_fields(\WP_REST_Request $request, callable $persist): void
+        {
+        }
+        /**
+         * Returns a document object from a REST request.
+         *
+         * @param \WP_REST_Request $request The REST request.
+         * @return \Automattic\WooCommerce\Blocks\Domain\Services\CheckoutFieldsSchema\DocumentObject The document object or null if experimental blocks are not enabled.
+         */
+        public function get_document_object_from_rest_request(\WP_REST_Request $request)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\StoreApi\Routes\V1\Agentic {
+    /**
+     * CheckoutSessionsComplete class.
+     *
+     * Handles the Agentic Checkout API checkout sessions complete endpoint.
+     * This endpoint allows AI agents to complete checkout sessions with payment.
+     */
+    class CheckoutSessionsComplete extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractCartRoute
+    {
+        use \Automattic\WooCommerce\StoreApi\Utilities\CheckoutTrait;
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'agentic-checkout-sessions-complete';
+        /**
+         * The route's schema type.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = \Automattic\WooCommerce\StoreApi\Schemas\V1\Agentic\CheckoutSessionSchema::IDENTIFIER;
+        /**
+         * Order controller for managing orders.
+         *
+         * @var \Automattic\WooCommerce\StoreApi\Utilities\OrderController
+         */
+        protected $order_controller;
+        /**
+         * Cart controller for managing cart operations.
+         *
+         * @var \Automattic\WooCommerce\StoreApi\Utilities\CartController
+         */
+        protected $cart_controller;
+        /**
+         * The order object for the current request.
+         *
+         * @var \WC_Order|null
+         */
+        protected $order;
+        /**
+         * Constructor.
+         *
+         * @param \Automattic\WooCommerce\StoreApi\SchemaController $schema_controller Schema Controller instance.
+         * @param \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema   $schema Schema class instance.
+         */
+        public function __construct($schema_controller, $schema)
+        {
+        }
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path regex for this REST route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Get the parameters for completing a checkout session.
+         *
+         * @return array Parameters array.
+         */
+        protected function get_complete_params()
+        {
+        }
+        /**
+         * Check if the request is authorized.
+         *
+         * Validates Jetpack blog token and cart token validity.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @return bool|\WP_Error True if authorized, WP_Error otherwise.
+         */
+        public function is_authorized(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Use the checkout_session_id as Cart-Token, and set the respective values to HTTP header and request.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @return bool|null
+         */
+        protected function has_cart_token(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Check if a nonce is required for the route.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @return bool False, Jetpack blog token auth used instead.
+         */
+        protected function requires_nonce(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Handle the request and return a valid response for this endpoint.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response|\WP_Error
+         */
+        protected function get_route_post_response(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Gets and formats payment request data for CheckoutTrait.
+         *
+         * Transforms agentic payment_data format to Store API format.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @return array
+         */
+        private function get_request_payment_data(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Gets the chosen payment method (gateway) ID for CheckoutTrait.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @return string
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException If no payment gateway is available.
+         */
+        private function get_request_payment_method_id(\WP_REST_Request $request)
+        {
+        }
+    }
+    /**
+     * CheckoutSessionsUpdate class.
+     *
+     * Handles the Agentic Checkout API checkout sessions update endpoint.
+     * This endpoint allows AI agents to update existing checkout sessions.
+     */
+    class CheckoutSessionsUpdate extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractCartRoute
+    {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'agentic-checkout-sessions-update';
+        /**
+         * The route's schema type.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = \Automattic\WooCommerce\StoreApi\Schemas\V1\Agentic\CheckoutSessionSchema::IDENTIFIER;
+        /**
+         * Cart controller for managing cart operations.
+         *
+         * @var \Automattic\WooCommerce\StoreApi\Utilities\CartController
+         */
+        protected $cart_controller;
+        /**
+         * Constructor.
+         *
+         * @param \Automattic\WooCommerce\StoreApi\SchemaController $schema_controller Schema Controller instance.
+         * @param \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema   $schema Schema class instance.
+         */
+        public function __construct($schema_controller, $schema)
+        {
+        }
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path regex for this REST route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Get the parameters for updating a checkout session.
+         *
+         * @return array Parameters array.
+         */
+        protected function get_update_params()
+        {
+        }
+        /**
+         * Check if the request is authorized.
+         *
+         * Validates Jetpack blog token and cart token validity.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @return bool|\WP_Error True if authorized, WP_Error otherwise.
+         */
+        public function is_authorized(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Use the checkout_session_id as Cart-Token, and set the respective values to HTTP header and request.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @return bool|null
+         */
+        protected function has_cart_token(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Handle the request and return a valid response for this endpoint.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response|\WP_Error
+         */
+        protected function get_route_post_response(\WP_REST_Request $request)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\StoreApi\Routes\V1\Agentic\Enums {
+    /**
+     * Order meta keys used in Agentic Checkout.
+     */
+    class OrderMetaKey
+    {
+        /**
+         * Agentic checkout session ID for this order.
+         */
+        const AGENTIC_CHECKOUT_SESSION_ID = '_agentic_checkout_session_id';
+        /**
+         * Meta key for canceled checkout order.
+         */
+        const AGENTIC_CHECKOUT_CANCELED = '_agentic_checkout_canceled';
+    }
+    /**
+     * Session keys used in Agentic Checkout.
+     */
+    class SessionKey
+    {
+        /**
+         * Chosen shipping methods. This is not specific to Agentic Checkout.
+         */
+        const CHOSEN_SHIPPING_METHODS = 'chosen_shipping_methods';
+        /**
+         * Agentic session ID stored in WC session.
+         */
+        const AGENTIC_CHECKOUT_SESSION_ID = 'agentic_checkout_session_id';
+        /**
+         * Completed order ID.
+         */
+        const AGENTIC_CHECKOUT_COMPLETED_ORDER_ID = 'agentic_checkout_completed_order_id';
+        /**
+         * Whether payment is in progress.
+         */
+        const AGENTIC_CHECKOUT_PAYMENT_IN_PROGRESS = 'agentic_checkout_payment_in_progress';
+        /**
+         * Provider ID that authenticated the request.
+         */
+        const AGENTIC_CHECKOUT_PROVIDER_ID = 'agentic_checkout_provider_id';
+    }
+}
+namespace Automattic\WooCommerce\StoreApi\Routes\V1\Agentic {
+    /**
+     * Error class.
+     *
+     * Represents an error object as defined in the Agentic Commerce Protocol.
+     * This class handles API-level errors with type, code, message, and optional param.
+     */
+    class Error
+    {
+        /**
+         * The error type.
+         *
+         * @var string
+         */
+        private $type;
+        /**
+         * Implementation-defined error code.
+         *
+         * @var string
+         */
+        private $code;
+        /**
+         * Human-readable error message.
+         *
+         * @var string
+         */
+        private $message;
+        /**
+         * RFC 9535 JSONPath to the problematic parameter (optional).
+         *
+         * @var string|null
+         */
+        private $param;
+        /**
+         * Constructor.
+         *
+         * @param string      $type    Error type from ErrorType enum.
+         * @param string      $code    Implementation-defined error code.
+         * @param string      $message Human-readable error message.
+         * @param string|null $param   RFC 9535 JSONPath (optional).
+         */
+        private function __construct($type, $code, $message, $param = null)
+        {
+        }
+        /**
+         * Create an invalid request error.
+         *
+         * @param string      $code    Implementation-defined error code.
+         * @param string      $message Human-readable error message.
+         * @param string|null $param   RFC 9535 JSONPath (optional).
+         * @return Error
+         */
+        public static function invalid_request($code, $message, $param = null)
+        {
+        }
+        /**
+         * Create a request not idempotent error.
+         *
+         * @param string      $code    Implementation-defined error code.
+         * @param string      $message Human-readable error message.
+         * @param string|null $param   RFC 9535 JSONPath (optional).
+         * @return Error
+         */
+        public static function request_not_idempotent($code, $message, $param = null)
+        {
+        }
+        /**
+         * Create a processing error.
+         *
+         * @param string      $code    Implementation-defined error code.
+         * @param string      $message Human-readable error message.
+         * @param string|null $param   RFC 9535 JSONPath (optional).
+         * @return Error
+         */
+        public static function processing_error($code, $message, $param = null)
+        {
+        }
+        /**
+         * Create a service unavailable error.
+         *
+         * @param string      $code    Implementation-defined error code.
+         * @param string      $message Human-readable error message.
+         * @param string|null $param   RFC 9535 JSONPath (optional).
+         * @return Error
+         */
+        public static function service_unavailable($code, $message, $param = null)
+        {
+        }
+        /**
+         * Convert the error to a WP_REST_Response.
+         *
+         * @return \WP_REST_Response WordPress REST API response object
+         */
+        public function to_rest_response()
+        {
+        }
+        /**
+         * Determine HTTP status code based on error type.
+         *
+         * @return int HTTP status code
+         */
+        private function get_http_status_code()
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\StoreApi\Routes\V1\Agentic\Messages {
+    /**
+     * Base class for error and info messages.
+     */
+    abstract class Message
+    {
+        /**
+         * Content type for the error message.
+         *
+         * Defaults to plain, but could also be markdown.
+         *
+         * @var string
+         */
+        protected $content_type = \Automattic\WooCommerce\Internal\Agentic\Enums\Specs\MessageContentType::PLAIN;
+        /**
+         * Error content/message.
+         *
+         * @var string
+         */
+        protected $content;
+        /**
+         * RFC 9535 JSONPath to the problematic parameter (optional).
+         *
+         * @var string|null
+         */
+        protected $param;
+        /**
+         * Check if the message is an error.
+         *
+         * @return bool True if the message is an error, false otherwise.
+         */
+        abstract public function is_error(): bool;
+        /**
+         * Convert the message to an array.
+         *
+         * @return array A message for the `messages` array of the response.
+         */
+        abstract public function to_array(): array;
+        /**
+         * Use markdown content type for the content of the error.
+         */
+        public function use_markdown()
+        {
+        }
+    }
+    /**
+     * MessageError class.
+     *
+     * Represents a message error object as defined in the Agentic Commerce Protocol.
+     * This class handles message-level errors with type, code, content_type, content, and optional param.
+     */
+    class MessageError extends \Automattic\WooCommerce\StoreApi\Routes\V1\Agentic\Messages\Message
+    {
+        /**
+         * The error type (always 'error' for message errors).
+         *
+         * @var string
+         */
+        private $type = \Automattic\WooCommerce\Internal\Agentic\Enums\Specs\MessageType::ERROR;
+        /**
+         * Error code from ErrorCode enum.
+         *
+         * @var string
+         */
+        private $code;
+        /**
+         * Constructor.
+         *
+         * @param string      $code    Error code from ErrorCode enum.
+         * @param string      $content Error content/message.
+         * @param string|null $param   RFC 9535 JSONPath (optional).
+         */
+        public function __construct(string $code, string $content, ?string $param = null)
+        {
+        }
+        /**
+         * Create a missing field error.
+         *
+         * @param string      $content Error content/message.
+         * @param string|null $param   RFC 9535 JSONPath (optional).
+         * @return MessageError
+         */
+        public static function missing($content, $param = null)
+        {
+        }
+        /**
+         * Create an invalid field error.
+         *
+         * @param string      $content Error content/message.
+         * @param string|null $param   RFC 9535 JSONPath (optional).
+         * @return MessageError
+         */
+        public static function invalid($content, $param = null)
+        {
+        }
+        /**
+         * Create an out of stock error.
+         *
+         * @param string      $content Error content/message.
+         * @param string|null $param   RFC 9535 JSONPath (optional).
+         * @return MessageError
+         */
+        public static function out_of_stock($content, $param = null)
+        {
+        }
+        /**
+         * Create a payment declined error.
+         *
+         * @param string      $content Error content/message.
+         * @param string|null $param   RFC 9535 JSONPath (optional).
+         * @return MessageError
+         */
+        public static function payment_declined($content, $param = null)
+        {
+        }
+        /**
+         * Create a requires sign in error.
+         *
+         * @param string      $content Error content/message.
+         * @param string|null $param   RFC 9535 JSONPath (optional).
+         * @return MessageError
+         */
+        public static function requires_sign_in($content, $param = null)
+        {
+        }
+        /**
+         * Create a requires 3DS error.
+         *
+         * @param string      $content Error content/message.
+         * @param string|null $param   RFC 9535 JSONPath (optional).
+         * @return MessageError
+         */
+        public static function requires_3ds($content, $param = null)
+        {
+        }
+        /**
+         * Check if the message is an error.
+         *
+         * @return bool True if the message is an error, false otherwise.
+         */
+        public function is_error(): bool
+        {
+        }
+        /**
+         * Convert the error to an array.
+         *
+         * @return array A message for the `messages` array of the response.
+         */
+        public function to_array(): array
+        {
+        }
+    }
+    /**
+     * MessageInfo class.
+     *
+     * Represents an info message object as defined in the Agentic Commerce Protocol.
+     */
+    class MessageInfo extends \Automattic\WooCommerce\StoreApi\Routes\V1\Agentic\Messages\Message
+    {
+        /**
+         * The error type (always 'error' for message errors).
+         *
+         * @var string
+         */
+        private $type = \Automattic\WooCommerce\Internal\Agentic\Enums\Specs\MessageType::INFO;
+        /**
+         * Constructor.
+         *
+         * @param string      $content Error content/message.
+         * @param string|null $param   RFC 9535 JSONPath (optional).
+         */
+        public function __construct($content, $param = null)
+        {
+        }
+        /**
+         * Check if the message is an error.
+         *
+         * @return bool True if the message is an error, false otherwise.
+         */
+        public function is_error(): bool
+        {
+        }
+        /**
+         * Convert the error to an array.
+         *
+         * @return array A message for the `messages` array of the response.
+         */
+        public function to_array(): array
+        {
+        }
+    }
+    /**
+     * Class Messages
+     *
+     * Manages error & info messages for the agentic checkout process.
+     */
+    class Messages
+    {
+        /**
+         * Array of messages.
+         *
+         * @var Message[]
+         */
+        private $messages = array();
+        /**
+         * Add a message.
+         *
+         * @param Message $message The message to add.
+         * @return void
+         */
+        public function add(\Automattic\WooCommerce\StoreApi\Routes\V1\Agentic\Messages\Message $message): void
+        {
+        }
+        /**
+         * Check if there are any error messages.
+         *
+         * @return bool True if there are error messages, false otherwise.
+         */
+        public function has_errors(): bool
+        {
+        }
+        /**
+         * Get all error messages, formatted as per the ACP spec.
+         *
+         * @return array that is ready for the response.
+         */
+        public function get_formatted_messages(): array
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\StoreApi\Routes\V1 {
+    /**
+     * Batch Route class.
+     */
+    class Batch extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute implements \Automattic\WooCommerce\StoreApi\Routes\RouteInterface
+    {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'batch';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'batch';
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path of this rest route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Get arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Get the route response.
+         *
+         * @see WP_REST_Server::serve_batch_request_v1
+         * https://developer.wordpress.org/reference/classes/wp_rest_server/serve_batch_request_v1/
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        public function get_response(\WP_REST_Request $request)
+        {
+        }
+    }
+    /**
+     * Cart class.
+     */
+    class Cart extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractCartRoute
+    {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'cart';
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path of this rest route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Handle the request and return a valid response for this endpoint.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_response(\WP_REST_Request $request)
+        {
+        }
+    }
+    /**
+     * CartAddItem class.
+     */
+    class CartAddItem extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractCartRoute
+    {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'cart-add-item';
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path of this rest route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Handle the request and return a valid response for this endpoint.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_post_response(\WP_REST_Request $request)
+        {
+        }
+    }
+    /**
+     * CartApplyCoupon class.
+     */
+    class CartApplyCoupon extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractCartRoute
+    {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'cart-apply-coupon';
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path of this rest route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Handle the request and return a valid response for this endpoint.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_post_response(\WP_REST_Request $request)
+        {
+        }
+    }
+    /**
+     * CartCoupons class.
+     */
+    class CartCoupons extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractCartRoute
+    {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'cart-coupons';
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'cart-coupon';
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path of this rest route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Get a collection of cart coupons.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_response(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Add a coupon to the cart and return the result.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_post_response(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Deletes all coupons in the cart.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_delete_response(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Prepare links for the request.
+         *
+         * @param string           $coupon_code Coupon code.
+         * @param \WP_REST_Request $request Request object.
+         * @return array
+         */
+        protected function prepare_links($coupon_code, $request)
+        {
+        }
+    }
+    /**
+     * CartCouponsByCode class.
+     */
+    class CartCouponsByCode extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractCartRoute
+    {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'cart-coupons-by-code';
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'cart-coupon';
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path of this rest route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Get a single cart coupon.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_response(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Delete a single cart coupon.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_delete_response(\WP_REST_Request $request)
+        {
+        }
+    }
+    /**
+     * CartExtensions class.
+     */
+    class CartExtensions extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractCartRoute
+    {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'cart-extensions';
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'cart-extensions';
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path of this rest route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Handle the request and return a valid response for this endpoint.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_post_response(\WP_REST_Request $request)
+        {
+        }
+    }
+    /**
+     * CartItems class.
+     */
+    class CartItems extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractCartRoute
+    {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'cart-items';
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'cart-item';
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path of this rest route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Get a collection of cart items.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_response(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Creates one item from the collection.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_post_response(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Deletes all items in the cart.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_delete_response(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Prepare links for the request.
+         *
+         * @param array            $cart_item Object to prepare.
+         * @param \WP_REST_Request $request Request object.
+         * @return array
+         */
+        protected function prepare_links($cart_item, $request)
+        {
+        }
+    }
+    /**
+     * CartItemsByKey class.
+     */
+    class CartItemsByKey extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractCartRoute
+    {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'cart-items-by-key';
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'cart-item';
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path of this rest route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Get a single cart items.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_response(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Update a single cart item.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_update_response(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Delete a single cart item.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_delete_response(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Prepare links for the request.
+         *
+         * @param array            $cart_item Object to prepare.
+         * @param \WP_REST_Request $request Request object.
+         * @return array
+         */
+        protected function prepare_links($cart_item, $request)
+        {
+        }
+    }
+    /**
+     * CartRemoveCoupon class.
+     */
+    class CartRemoveCoupon extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractCartRoute
+    {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'cart-remove-coupon';
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path of this rest route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Handle the request and return a valid response for this endpoint.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_post_response(\WP_REST_Request $request)
+        {
+        }
+    }
+    /**
+     * CartRemoveItem class.
+     */
+    class CartRemoveItem extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractCartRoute
+    {
+        use \Automattic\WooCommerce\StoreApi\Utilities\DraftOrderTrait;
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'cart-remove-item';
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path of this rest route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Handle the request and return a valid response for this endpoint.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_post_response(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * If there is a draft order, releases stock.
+         *
+         * @return void
+         */
+        protected function maybe_release_stock()
+        {
+        }
+    }
+    /**
+     * CartSelectShippingRate class.
+     */
+    class CartSelectShippingRate extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractCartRoute
+    {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'cart-select-shipping-rate';
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path of this rest route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Handle the request and return a valid response for this endpoint.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_post_response(\WP_REST_Request $request)
+        {
+        }
+    }
+    /**
+     * CartUpdateCustomer class.
+     *
+     * Updates the customer billing and shipping addresses, recalculates the cart totals, and returns an updated cart.
+     */
+    class CartUpdateCustomer extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractCartRoute
+    {
+        use \Automattic\WooCommerce\StoreApi\Utilities\DraftOrderTrait;
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'cart-update-customer';
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path of this rest route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Validate address params now they are populated.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @param array            $billing Billing address.
+         * @param array            $shipping Shipping address.
+         * @return \WP_Error|true
+         */
+        protected function validate_address_params($request, $billing, $shipping)
+        {
+        }
+        /**
+         * Handle the request and return a valid response for this endpoint.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_post_response(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Get full customer billing address.
+         *
+         * @param \WC_Customer $customer Customer object.
+         * @return array
+         */
+        protected function get_customer_billing_address(\WC_Customer $customer)
+        {
+        }
+        /**
+         * Get full customer shipping address.
+         *
+         * @param \WC_Customer $customer Customer object.
+         * @return array
+         */
+        protected function get_customer_shipping_address(\WC_Customer $customer)
+        {
+        }
+    }
+    /**
+     * CartUpdateItem class.
+     */
+    class CartUpdateItem extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractCartRoute
+    {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'cart-update-item';
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path of this rest route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Handle the request and return a valid response for this endpoint.
+         * .
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_post_response(\WP_REST_Request $request)
+        {
+        }
+    }
+    /**
+     * Checkout class.
+     */
+    class Checkout extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractCartRoute
+    {
+        use \Automattic\WooCommerce\StoreApi\Utilities\DraftOrderTrait;
+        use \Automattic\WooCommerce\StoreApi\Utilities\CheckoutTrait;
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'checkout';
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'checkout';
+        /**
+         * Holds the current order being processed. Null until `create_or_update_draft_order()`
+         * materialises it (either by reusing the session's pending/failed order or by creating
+         * a new one from the cart).
+         *
+         * @var \WC_Order|null
+         */
+        private $order = null;
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path of this rest route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Checks if a nonce is required for the route.
+         *
+         * @param \WP_REST_Request $request Request.
+         * @return bool
+         */
+        protected function requires_nonce(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Get the route response based on the type of request.
+         *
+         * @param \WP_REST_Request $request Request object.
+         *
+         * @return \WP_REST_Response
+         */
+        public function get_response(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Return a checkout response for GET requests.
+         *
+         * If a `pending`/`failed` order from a previous payment attempt is in the customer
+         * session, reuse it (the failed-payment retry path). Otherwise build a no-order
+         * response directly from cart + customer + request.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_response(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Validation callback for the checkout route.
+         *
+         * This runs after individual field validation_callbacks have been called.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @return true|\WP_Error
+         */
+        public function validate_callback($request)
+        {
+        }
+        /**
+         * Get route response for PUT/PATCH requests.
+         *
+         * Branches on whether a pending/failed order already exists in the customer's
+         * session:
+         *
+         * - Order in session (failed-payment retry): update the existing order via
+         *   `create_or_update_draft_order()` + `update_order_from_request()`. Same
+         *   shape as the POST flow.
+         * - No order in session (fresh checkout form interaction): persist request
+         *   state to the customer session via `update_session_from_request()` and
+         *   return a no-order response built from cart + customer + request.
+         *
+         * Draft order creation is deferred to POST (place-order time) to avoid
+         * orphaned `wc-checkout-draft` rows from form interactions that never
+         * complete. POSTs do not flow through this method — see
+         * `get_route_post_response()`.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         * @return \WP_REST_Response|\WP_Error
+         */
+        protected function get_route_update_response(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Persist the PATCH request's payment method and additional fields to the customer
+         * session. Counterpart to `update_order_from_request` for the no-order PATCH path.
+         *
+         * @phpstan-param \WP_REST_Request<array<string, mixed>> $request
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException If the supplied payment method id is unknown or disabled.
+         */
+        private function update_session_from_request(\WP_REST_Request $request): void
+        {
+        }
+        /**
+         * Build a checkout response for a session with no order in flight.
+         *
+         * @phpstan-param \WP_REST_Request<array<string, mixed>> $request
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        private function build_draft_route_response(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Process an order.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         * @param \WP_REST_Request<array<string, mixed>> $request Request object.
+         * @return \WP_REST_Response|\WP_Error
+         */
+        protected function get_route_post_response(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Process an order based on optimistic save approach to minimize the number of order saves.
+         *
+         * 1. Obtain Draft Order
+         * 2. Process Request
+         * 3. Process Customer
+         * 4. Validate Order
+         * 5. Process Payment
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         * @param \WP_REST_Request<array<string, mixed>> $request Request object.
+         * @return \WP_REST_Response|\WP_Error
+         */
+        private function process_order(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Get route response when something went wrong.
+         *
+         * @param string $error_code String based error code.
+         * @param string $error_message User facing error message.
+         * @param int    $http_status_code HTTP status. Defaults to 500.
+         * @param array  $additional_data  Extra data (key value pairs) to expose in the error response.
+         * @return \WP_Error WP Error object.
+         */
+        protected function get_route_error_response($error_code, $error_message, $http_status_code = 500, $additional_data = [])
+        {
+        }
+        /**
+         * Get route response when something went wrong.
+         *
+         * @param \WP_Error $error_object User facing error message.
+         * @param int       $http_status_code HTTP status. Defaults to 500.
+         * @param array     $additional_data  Extra data (key value pairs) to expose in the error response.
+         * @return \WP_Error WP Error object.
+         */
+        protected function get_route_error_response_from_object($error_object, $http_status_code = 500, $additional_data = [])
+        {
+        }
+        /**
+         * Adds additional data to the \WP_Error object.
+         *
+         * @param \WP_Error $error The error object to add the cart to.
+         * @param array     $data The data to add to the error object.
+         * @param int       $http_status_code The HTTP status code this error should return.
+         * @param bool      $include_cart Whether the cart should be included in the error data.
+         * @returns \WP_Error The \WP_Error with the cart added.
+         */
+        private function add_data_to_error_object($error, $data, $http_status_code, bool $include_cart = false)
+        {
+        }
+        /**
+         * Create or update a draft order based on the cart.
+         *
+         * @phpstan-assert \WC_Order $this->order
+         *
+         * @param \WP_REST_Request $request Full details about the request.
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         */
+        private function create_or_update_draft_order(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Updates a customer address field.
+         *
+         * @param \WC_Customer $customer The customer to update.
+         * @param string       $key The key of the field to update.
+         * @param mixed        $value The value to update the field to.
+         * @param string       $address_type The type of address to update (billing|shipping).
+         */
+        private function update_customer_address_field($customer, $key, $value, $address_type)
+        {
+        }
+        /**
+         * Updates the current customer session using data from the request (e.g. address data).
+         *
+         * Address session data is synced to the order itself later on by OrderController::update_order_from_cart()
+         *
+         * @param \WP_REST_Request $request Full details about the request.
+         */
+        private function update_customer_from_request(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Gets the chosen payment method from the request.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WC_Payment_Gateway|null
+         */
+        private function get_request_payment_method(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Order processing relating to customer account.
+         *
+         * Creates a customer account as needed (based on request & store settings) and  updates the order with the new customer ID.
+         * Updates the order with user details (e.g. address).
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException API error object with error details.
+         * @param \WP_REST_Request $request Request object.
+         */
+        private function process_customer(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Check request options and store (shop) config to determine if a user account should be created as part of order
+         * processing.
+         *
+         * @param \WP_REST_Request $request The current request object being handled.
+         * @return boolean True if a new user account should be created.
+         */
+        private function should_create_customer_account(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * This validates if the order can be placed regarding settings in WooCommerce > Settings > Accounts & Privacy
+         * If registration during checkout is disabled, guest checkout is disabled and the user is not logged in, prevent checkout.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException If user cannot place order.
+         */
+        private function validate_user_can_place_order()
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\StoreApi\Utilities {
+    /**
+     * OrderAuthorizationTrait
+     *
+     * Shared functionality for getting order authorization.
+     */
+    trait OrderAuthorizationTrait
+    {
+        /**
+         * Check if authorized to get the order.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException If the order is not found or the order key is invalid.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @return boolean|\WP_Error
+         */
+        public function is_authorized(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Validate a given billing email against an existing order.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException Exception if invalid data is detected.
+         * @param integer $order_id Order ID.
+         * @param string  $billing_email Billing email.
+         */
+        public function validate_billing_email_matches_order($order_id, $billing_email)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\StoreApi\Routes\V1 {
+    /**
+     * CheckoutOrder class.
+     */
+    class CheckoutOrder extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractCartRoute
+    {
+        use \Automattic\WooCommerce\StoreApi\Utilities\OrderAuthorizationTrait;
+        use \Automattic\WooCommerce\StoreApi\Utilities\CheckoutTrait;
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'checkout-order';
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'checkout-order';
+        /**
+         * Holds the current order being processed.
+         *
+         * @var \WC_Order
+         */
+        private $order = null;
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path of this rest route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Process an order.
+         *
+         * 1. Process Request
+         * 2. Process Customer
+         * 3. Validate Order
+         * 4. Process Payment
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\InvalidStockLevelsInCartException On error.
+         *
+         * @param \WP_REST_Request $request Request object.
+         *
+         * @return \WP_REST_Response
+         */
+        protected function get_route_post_response(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Since this endpoint only operates on existing orders, we don't need to do updates based on
+         * the cart data.
+         *
+         * @param \WP_REST_Request $request Request object.
+         */
+        protected function cart_updated(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Updates the current customer session using data from the request (e.g. address data).
+         *
+         * Address session data is synced to the order itself later on by OrderController::update_order_from_cart()
+         *
+         * @param \WP_REST_Request $request Full details about the request.
+         */
+        private function update_billing_address(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Gets the chosen payment method from the request.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WC_Payment_Gateway|null
+         */
+        private function get_request_payment_method(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Updates the order with user details (e.g. address).
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException API error object with error details.
+         * @param \WP_REST_Request $request Request object.
+         */
+        private function process_customer(\WP_REST_Request $request)
+        {
+        }
+    }
+    /**
+     * Order class.
+     */
+    class Order extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
+    {
+        use \Automattic\WooCommerce\StoreApi\Utilities\OrderAuthorizationTrait;
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'order';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'order';
+        /**
+         * Order controller class instance.
+         *
+         * @var \Automattic\WooCommerce\StoreApi\Utilities\OrderController
+         */
+        protected $order_controller;
+        /**
+         * Constructor.
+         *
+         * @param \Automattic\WooCommerce\StoreApi\SchemaController $schema_controller Schema Controller instance.
+         * @param \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema   $schema Schema class for this route.
+         */
+        public function __construct(\Automattic\WooCommerce\StoreApi\SchemaController $schema_controller, \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema $schema)
+        {
+        }
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path of this rest route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Handle the request and return a valid response for this endpoint.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_response(\WP_REST_Request $request)
+        {
+        }
+    }
+    /**
+     * Patterns class.
+     */
+    class Patterns extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
+    {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'patterns';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'patterns';
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path of this rest route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Fetch a single pattern from the PTK to ensure the API is available.
+         *
+         * @param \WP_REST_Request $request Request object.
+         *
+         * @return \WP_Error|\WP_HTTP_Response|\WP_REST_Response
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException If the patterns cannot be fetched.
+         */
+        protected function get_route_response(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Fetch the patterns from the PTK and update the transient.
+         *
+         * @param \WP_REST_Request $request Request object.
+         *
+         * @return \WP_REST_Response
+         * @throws \Exception If the patterns cannot be fetched.
+         */
+        protected function get_route_post_response(\WP_REST_Request $request)
+        {
+        }
+    }
+    /**
+     * ProductAttributeTerms class.
+     */
+    class ProductAttributeTerms extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractTermsRoute
+    {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'product-attribute-terms';
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = \Automattic\WooCommerce\StoreApi\Schemas\V1\ProductAttributeTermSchema::IDENTIFIER;
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path of this rest route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Get the query params for collections of attributes.
+         *
+         * @return array
+         */
+        public function get_collection_params()
+        {
+        }
+        /**
+         * Prepare a single item for response.
+         *
+         * @param mixed            $item Item to format to schema.
+         * @param \WP_REST_Request $request Request object.
+         *
+         * @phpstan-param \WP_REST_Request<array<string, mixed>> $request
+         *
+         * @return \WP_REST_Response $response Response data.
+         */
+        public function prepare_item_for_response($item, \WP_REST_Request $request)
+        {
+        }
+        /**
+         * Get a collection of attribute terms.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_response(\WP_REST_Request $request)
+        {
+        }
+    }
+    /**
+     * ProductAttributes class.
+     */
+    class ProductAttributes extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
+    {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'product-attributes';
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'product-attribute';
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path of this rest route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Get a collection of attributes.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_response(\WP_REST_Request $request)
+        {
+        }
+    }
+    /**
+     * ProductAttributesById class.
+     */
+    class ProductAttributesById extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
+    {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'product-attributes-by-id';
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'product-attribute';
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path of this rest route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Get a single item.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_response(\WP_REST_Request $request)
+        {
+        }
+    }
+    /**
+     * ProductBrands class.
+     */
+    class ProductBrands extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractTermsRoute
+    {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'product-brands';
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'product-brand';
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path of this rest route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Get a collection of terms.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_response(\WP_REST_Request $request)
+        {
+        }
+    }
+    /**
+     * ProductBrandsById class.
+     */
+    class ProductBrandsById extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
+    {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'product-brands-by-id';
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'product-brand';
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path of this rest route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Get a single item.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_response(\WP_REST_Request $request)
+        {
+        }
+    }
+    /**
+     * ProductCategories class.
+     */
+    class ProductCategories extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractTermsRoute
+    {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'product-categories';
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'product-category';
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path of this rest route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Get a collection of terms.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_response(\WP_REST_Request $request)
+        {
+        }
+    }
+    /**
+     * ProductCategoriesById class.
+     */
+    class ProductCategoriesById extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
+    {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'product-categories-by-id';
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'product-category';
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path of this rest route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Get a single item.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_response(\WP_REST_Request $request)
+        {
+        }
+    }
+    /**
+     * ProductCollectionData route.
+     * Get aggregate data from a collection of products.
+     *
+     * Supports the same parameters as /products, but returns a different response.
+     */
+    class ProductCollectionData extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
+    {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'product-collection-data';
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'product-collection-data';
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path of this rest route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Get a collection of posts and add the post title filter option to \WP_Query.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_response(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Get the query params for collections of products.
+         *
+         * @return array
+         */
+        public function get_collection_params()
+        {
+        }
+    }
+    /**
+     * ProductReviews class.
+     */
+    class ProductReviews extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
+    {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'product-reviews';
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'product-review';
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path of this rest route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Get a collection of reviews.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_response(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Prepends internal property prefix to query parameters to match our response fields.
+         *
+         * @param string $query_param Query parameter.
+         * @return string
+         */
+        protected function normalize_query_param($query_param)
+        {
+        }
+        /**
+         * Get the query params for collections of products.
+         *
+         * @return array
+         */
+        public function get_collection_params()
+        {
+        }
+    }
+    /**
+     * ProductTags class.
+     */
+    class ProductTags extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractTermsRoute
+    {
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'product-tags';
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path of this rest route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Get a collection of terms.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_response(\WP_REST_Request $request)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\StoreApi\Utilities {
+    /**
+     * ProductLinksTrait
+     *
+     * Shared functionality for preparing product links including embeddable links for upsells, cross-sells, and related products.
+     */
+    trait ProductLinksTrait
+    {
+        /**
+         * Prepare links for the request.
+         *
+         * @param \WC_Product      $item Product object.
+         * @param \WP_REST_Request $request Request object.
+         * @return array
+         *
+         * @since 10.6.0
+         */
+        protected function prepare_links($item, $request): array
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\StoreApi\Routes\V1 {
+    /**
+     * Products class.
+     */
+    class Products extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
+    {
+        use \Automattic\WooCommerce\StoreApi\Utilities\ProductLinksTrait;
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'products';
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'product';
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path of this rest route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Get a collection of posts and add the post title filter option to \WP_Query.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_response(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Get the query params for collections of products.
+         *
+         * @return array
+         */
+        public function get_collection_params()
+        {
+        }
+    }
+    /**
+     * ProductsById class.
+     */
+    class ProductsById extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
+    {
+        use \Automattic\WooCommerce\StoreApi\Utilities\ProductLinksTrait;
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'products-by-id';
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'product';
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path of this rest route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Get a single item.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_response(\WP_REST_Request $request)
+        {
+        }
+    }
+    /**
+     * ProductsBySlug class.
+     */
+    class ProductsBySlug extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
+    {
+        use \Automattic\WooCommerce\StoreApi\Utilities\ProductLinksTrait;
+        /**
+         * The route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'products-by-slug';
+        /**
+         * The routes schema.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'product';
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path of this rest route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array An array of endpoints.
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Get a single item.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On error.
+         * @param \WP_REST_Request $request Request object.
+         * @return \WP_REST_Response
+         */
+        protected function get_route_response(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Get a product  by slug.
+         *
+         * @param string $slug The slug of the product.
+         */
+        public function get_product_by_slug($slug)
+        {
+        }
+        /**
+         * Get a product variation by slug.
+         *
+         * @param string $slug The slug of the product variation.
+         */
+        private function get_product_variation_by_slug($slug)
+        {
+        }
+    }
+    /**
+     * Stopgap CSRF guard for the write-capable shopper-lists routes.
+     *
+     * Enforces a `wc_store_api` Nonce header on writes and refreshes the
+     * client nonce via response headers on every reply. Same shape as the
+     * cart's existing flow, scoped to the nonce concern.
+     *
+     * To be replaced by a reusable Store API-wide nonce trait once that
+     * lands on trunk.
+     *
+     * @internal
+     */
+    trait ShopperListsNonceCheck
+    {
+        /**
+         * Nonce action used to sign and verify Store API write requests.
+         *
+         * @var string
+         */
+        private static $store_api_nonce_action = 'wc_store_api';
+        /**
+         * Override of {@see AbstractRoute::get_response} that enforces the
+         * `wc_store_api` Nonce header on writes and refreshes it on every reply.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @phpstan-param \WP_REST_Request<array<string, mixed>> $request
+         * @return \WP_REST_Response
+         */
+        public function get_response(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Whether the request mutates state. Mirrors `AbstractCartRoute::is_update_request`.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @phpstan-param \WP_REST_Request<array<string, mixed>> $request
+         * @return bool
+         */
+        private function is_write_request(\WP_REST_Request $request): bool
+        {
+        }
+        /**
+         * Verify the `Nonce` request header against the `wc_store_api` action.
+         *
+         * @param \WP_REST_Request $request Request object.
+         * @phpstan-param \WP_REST_Request<array<string, mixed>> $request
+         * @return true|\WP_Error True on success, WP_Error on missing/invalid nonce.
+         */
+        private function check_store_api_nonce(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Attach a fresh `wc_store_api` nonce to the response.
+         *
+         * @param \WP_REST_Response $response Response object.
+         * @return \WP_REST_Response
+         */
+        private function add_nonce_response_headers(\WP_REST_Response $response): \WP_REST_Response
+        {
+        }
+    }
+    /**
+     * GET / POST on /shopper-lists/{slug}/items.
+     *
+     * GET returns the items in a list.
+     * POST saves an item to the list either from an existing cart line or from direct item payload fields.
+     */
+    class ShopperListItems extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
+    {
+        // Stopgap CSRF guard, replaced once the upstream trait lands on trunk.
+        use \Automattic\WooCommerce\StoreApi\Routes\V1\ShopperListsNonceCheck;
+        /**
+         * Route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'shopper-list-items';
+        /**
+         * Schema identifier this route uses.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'shopper-list-item';
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path regex for this REST route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Return the items in the requested list.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException When the list doesn't exist.
+         *
+         * @param \WP_REST_Request $request Request object.
+         *
+         * @phpstan-param \WP_REST_Request<array<string, mixed>> $request
+         *
+         * @return \WP_REST_Response
+         */
+        protected function get_route_response(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Add an item to the requested list from cart_item_key or direct product payload fields.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException On validation failure.
+         *
+         * @param \WP_REST_Request $request Request object.
+         *
+         * @phpstan-param \WP_REST_Request<array<string, mixed>> $request
+         *
+         * @return \WP_REST_Response
+         */
+        protected function get_route_post_response(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Resolve the POST input into a uniform payload (product lookup id, variation, quantity).
+         *
+         * Accepts either an existing cart_item_key, or direct product_id/variation_id/variation.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException When neither a cart_item_key nor a product_id is supplied, or the cart_item_key is unknown.
+         *
+         * @param \WP_REST_Request $request Request object.
+         *
+         * @phpstan-param \WP_REST_Request<array<string, mixed>> $request
+         *
+         * @return array{0:int,1:array,2:int} `[ lookup_id, variation, quantity ]`.
+         */
+        private function resolve_item_payload(\WP_REST_Request $request): array
+        {
+        }
+        /**
+         * Prime post caches before the per-item product lookup loop in the schema.
+         *
+         * @param \Automattic\WooCommerce\Internal\ShopperLists\ShopperListItem[] $items Items.
+         */
+        private function prime_product_caches_for_items(array $items): void
+        {
+        }
+    }
+    /**
+     * DELETE /shopper-lists/{slug}/items/{key}.
+     */
+    class ShopperListItemsByKey extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
+    {
+        // Stopgap CSRF guard, replaced once the upstream trait lands on trunk.
+        use \Automattic\WooCommerce\StoreApi\Routes\V1\ShopperListsNonceCheck;
+        /**
+         * Route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'shopper-list-items-by-key';
+        /**
+         * Schema identifier this route uses.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'shopper-list-item';
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path regex for this REST route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Delete a single item from a list.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException When the list or item doesn't exist.
+         *
+         * @param \WP_REST_Request $request Request object.
+         *
+         * @phpstan-param \WP_REST_Request<array<string, mixed>> $request
+         *
+         * @return \WP_REST_Response
+         */
+        protected function get_route_delete_response(\WP_REST_Request $request)
+        {
+        }
+    }
+    /**
+     * GET /shopper-lists — collection of the current user's shopper lists.
+     */
+    class ShopperLists extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
+    {
+        /**
+         * Route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'shopper-lists';
+        /**
+         * Schema identifier this route uses.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'shopper-list';
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path regex for this REST route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Return the lists for the current user.
+         *
+         * @param \WP_REST_Request $request Request object.
+         *
+         * @phpstan-param \WP_REST_Request<array<string, mixed>> $request
+         *
+         * @return \WP_REST_Response
+         */
+        protected function get_route_response(\WP_REST_Request $request)
+        {
+        }
+    }
+    /**
+     * GET /shopper-lists/{slug} — metadata for a single list.
+     */
+    class ShopperListsBySlug extends \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
+    {
+        /**
+         * Route identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'shopper-lists-by-slug';
+        /**
+         * Schema identifier this route uses.
+         *
+         * @var string
+         */
+        const SCHEMA_TYPE = 'shopper-list';
+        /**
+         * Get the path of this REST route.
+         *
+         * @return string
+         */
+        public function get_path()
+        {
+        }
+        /**
+         * Get the path regex for this REST route.
+         *
+         * @return string
+         */
+        public static function get_path_regex()
+        {
+        }
+        /**
+         * Get method arguments for this REST route.
+         *
+         * @return array
+         */
+        public function get_args()
+        {
+        }
+        /**
+         * Return the list metadata for the requested slug.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException When the list doesn't exist.
+         *
+         * @param \WP_REST_Request $request Request object.
+         *
+         * @phpstan-param \WP_REST_Request<array<string, mixed>> $request
+         *
+         * @return \WP_REST_Response
+         */
+        protected function get_route_response(\WP_REST_Request $request)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\StoreApi {
+    /**
+     * RoutesController class.
+     */
+    class RoutesController
+    {
+        /**
+         * Stores schema_controller.
+         *
+         * @var SchemaController
+         */
+        protected $schema_controller;
+        /**
+         * Stores routes.
+         *
+         * @var array
+         */
+        protected $routes = [];
+        /**
+         * Namespace for the API.
+         *
+         * @var string
+         */
+        private static $api_namespace = 'wc/store';
+        /**
+         * Constructor.
+         *
+         * @param SchemaController $schema_controller Schema controller class passed to each route.
+         */
+        public function __construct(\Automattic\WooCommerce\StoreApi\SchemaController $schema_controller)
+        {
+        }
+        /**
+         * Register all Store API routes. This includes routes under specific version namespaces.
+         */
+        public function register_all_routes()
+        {
+        }
+        /**
+         * Get a route class instance.
+         *
+         * Each route class is instantized with the SchemaController instance, and its main Schema Type.
+         *
+         * @throws \Exception If the schema does not exist.
+         * @param string $name Name of schema.
+         * @param string $version API Version being requested.
+         * @return \Automattic\WooCommerce\StoreApi\Routes\V1\AbstractRoute
+         */
+        public function get($name, $version = 'v1')
+        {
+        }
+        /**
+         * Get a route path without instantiating the corresponding RoutesController object.
+         *
+         * @throws \Exception If the schema does not exist.
+         *
+         * @param string $version API Version being requested.
+         * @param string $controller Whether to return controller name. If false, returns empty array. Note:
+         * When $controller param is true, the output should not be used directly in front-end code, to prevent class names from leaking. It's not a security issue necessarily, but it's not a good practice.
+         * When $controller param is false, it currently returns and empty array. But it can be modified in future to return include more details about the route info that can be used in frontend.
+         *
+         * @return string[] List of route paths.
+         */
+        public function get_all_routes($version = 'v1', $controller = false)
+        {
+        }
+        /**
+         * Register defined list of routes with WordPress.
+         *
+         * @param string $version API Version being registered..
+         * @param string $namespace Overrides the default route namespace.
+         */
+        protected function register_routes($version = 'v1', $namespace = 'wc/store/v1')
+        {
+        }
+    }
+    /**
+     * SchemaController class.
+     */
+    class SchemaController
+    {
+        /**
+         * Stores schema class instances.
+         *
+         * @var Schemas\V1\AbstractSchema[]
+         */
+        protected $schemas = [];
+        /**
+         * Stores Rest Extending instance
+         *
+         * @var \Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema
+         */
+        private $extend;
+        /**
+         * Constructor.
+         *
+         * @param \Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema $extend Rest Extending instance.
+         */
+        public function __construct(\Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema $extend)
+        {
+        }
+        /**
+         * Get a schema class instance.
+         *
+         * @throws \Exception If the schema does not exist.
+         *
+         * @param string $name Name of schema.
+         * @param int    $version API Version being requested.
+         * @return Schemas\V1\AbstractSchema A new instance of the requested schema.
+         */
+        public function get($name, $version = 1)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\StoreApi\Schemas {
+    /**
+     * Provides utility functions to extend Store API schemas.
+     *
+     * Note there are also helpers that map to these methods.
+     *
+     * @see woocommerce_store_api_register_endpoint_data()
+     * @see woocommerce_store_api_register_update_callback()
+     * @see woocommerce_store_api_register_payment_requirements()
+     * @see woocommerce_store_api_get_formatter()
+     */
+    final class ExtendSchema
+    {
+        /**
+         * List of Store API schema that is allowed to be extended by extensions.
+         *
+         * @var string[]
+         */
+        private $endpoints = [\Automattic\WooCommerce\StoreApi\Schemas\V1\CartItemSchema::IDENTIFIER, \Automattic\WooCommerce\StoreApi\Schemas\V1\CartSchema::IDENTIFIER, \Automattic\WooCommerce\StoreApi\Schemas\V1\CheckoutSchema::IDENTIFIER, \Automattic\WooCommerce\StoreApi\Schemas\V1\ProductSchema::IDENTIFIER];
+        /**
+         * Holds the formatters class instance.
+         *
+         * @var \Automattic\WooCommerce\StoreApi\Formatters
+         */
+        private $formatters;
+        /**
+         * Data to be extended
+         *
+         * @var array
+         */
+        private $extend_data = [];
+        /**
+         * Data to be extended
+         *
+         * @var array
+         */
+        private $callback_methods = [];
+        /**
+         * Array of payment requirements
+         *
+         * @var array
+         */
+        private $payment_requirements = [];
+        /**
+         * Constructor
+         *
+         * @param \Automattic\WooCommerce\StoreApi\Formatters $formatters An instance of the formatters class.
+         */
+        public function __construct(\Automattic\WooCommerce\StoreApi\Formatters $formatters)
+        {
+        }
+        /**
+         * Register endpoint data under a specified namespace
+         *
+         * @param array $args {
+         *     An array of elements that make up a post to update or insert.
+         *
+         *     @type string   $endpoint Required. The endpoint to extend.
+         *     @type string   $namespace Required. Plugin namespace.
+         *     @type callable $schema_callback Callback executed to add schema data.
+         *     @type callable $data_callback Callback executed to add endpoint data.
+         *     @type string   $schema_type The type of data, object or array.
+         * }
+         *
+         * @throws \Exception On failure to register.
+         */
+        public function register_endpoint_data($args)
+        {
+        }
+        /**
+         * Add callback functions that can be executed by the cart/extensions endpoint.
+         *
+         * @param array $args {
+         *     An array of elements that make up the callback configuration.
+         *
+         *     @type string   $namespace Required. Plugin namespace.
+         *     @type callable $callback Required. The function/callable to execute.
+         * }
+         *
+         * @throws \Exception On failure to register.
+         */
+        public function register_update_callback($args)
+        {
+        }
+        /**
+         * Registers and validates payment requirements callbacks.
+         *
+         * @param array $args {
+         *     Array of registration data.
+         *
+         *     @type callable $data_callback Required. Callback executed to add payment requirements data.
+         * }
+         *
+         * @throws \Exception On failure to register.
+         */
+        public function register_payment_requirements($args)
+        {
+        }
+        /**
+         * Returns a formatter instance.
+         *
+         * @param string $name Formatter name.
+         * @return FormatterInterface
+         */
+        public function get_formatter($name)
+        {
+        }
+        /**
+         * Get callback for a specific endpoint and namespace.
+         *
+         * @param string $namespace The namespace to get callbacks for.
+         *
+         * @return callable The callback registered by the extension.
+         * @throws \Exception When callback is not callable or parameters are incorrect.
+         */
+        public function get_update_callback($namespace)
+        {
+        }
+        /**
+         * Returns the registered endpoint data
+         *
+         * @param string $endpoint    A valid identifier.
+         * @param array  $passed_args Passed arguments from the Schema class.
+         * @return object Returns an casted object with registered endpoint data.
+         * @throws \Exception If a registered callback throws an error, or silently logs it.
+         */
+        public function get_endpoint_data($endpoint, array $passed_args = [])
+        {
+        }
+        /**
+         * Returns the registered endpoint schema
+         *
+         * @param string $endpoint    A valid identifier.
+         * @param array  $passed_args Passed arguments from the Schema class.
+         * @return object Returns an array with registered schema data.
+         * @throws \Exception If a registered callback throws an error, or silently logs it.
+         */
+        public function get_endpoint_schema($endpoint, array $passed_args = [])
+        {
+        }
+        /**
+         * Returns the additional payment requirements for the cart which are required to make payments. Values listed here
+         * are compared against each Payment Gateways "supports" flag.
+         *
+         * @param array $requirements list of requirements that should be added to the collected requirements.
+         * @return array Returns a list of payment requirements.
+         * @throws \Exception If a registered callback throws an error, or silently logs it.
+         */
+        public function get_payment_requirements(array $requirements = ['products'])
+        {
+        }
+        /**
+         * Throws error and/or silently logs it.
+         *
+         * @param string|\Throwable $exception_or_error Error message or \Exception.
+         * @throws \Exception An error to throw if we have debug enabled and user is admin.
+         */
+        private function throw_exception($exception_or_error)
+        {
+        }
+        /**
+         * Format schema for an extension.
+         *
+         * @param string $namespace Error message or \Exception.
+         * @param array  $schema An error to throw if we have debug enabled and user is admin.
+         * @param string $schema_type How should data be shaped.
+         * @return array Formatted schema.
+         */
+        private function format_extensions_properties($namespace, $schema, $schema_type)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\StoreApi\Schemas\V1\AI {
+    /**
+     * ProductsSchema class.
+     *
+     * @internal
+     */
+    class ProductsSchema
+    {
+    }
+}
+namespace Automattic\WooCommerce\StoreApi\Schemas\V1 {
+    /**
+     * AbstractSchema class.
+     *
+     * For REST Route Schemas
+     */
+    abstract class AbstractSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'Schema';
+        /**
+         * Rest extend instance.
+         *
+         * @var \Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema
+         */
+        protected $extend;
+        /**
+         * Schema Controller instance.
+         *
+         * @var \Automattic\WooCommerce\StoreApi\SchemaController
+         */
+        protected $controller;
+        /**
+         * Extending key that gets added to endpoint.
+         *
+         * @var string
+         */
+        const EXTENDING_KEY = 'extensions';
+        /**
+         * Constructor.
+         *
+         * @param \Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema     $extend Rest Extending instance.
+         * @param \Automattic\WooCommerce\StoreApi\SchemaController $controller Schema Controller instance.
+         */
+        public function __construct(\Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema $extend, \Automattic\WooCommerce\StoreApi\SchemaController $controller)
+        {
+        }
+        /**
+         * Returns the full item schema.
+         *
+         * @return array
+         */
+        public function get_item_schema()
+        {
+        }
+        /**
+         * Returns the full item response.
+         *
+         * @param mixed $item Item to get response for.
+         * @return array|stdClass
+         */
+        public function get_item_response($item)
+        {
+        }
+        /**
+         * Return schema properties.
+         *
+         * @return array
+         */
+        abstract public function get_properties();
+        /**
+         * Recursive removal of arg_options.
+         *
+         * @param array $properties Schema properties.
+         */
+        protected function remove_arg_options($properties)
+        {
+        }
+        /**
+         * Returns the public schema.
+         *
+         * @return array
+         */
+        public function get_public_item_schema()
+        {
+        }
+        /**
+         * Returns extended data for a specific endpoint.
+         *
+         * @param string $endpoint The endpoint identifier.
+         * @param array  ...$passed_args An array of arguments to be passed to callbacks.
+         * @return object the data that will get added.
+         */
+        protected function get_extended_data($endpoint, ...$passed_args)
+        {
+        }
+        /**
+         * Gets an array of schema defaults recursively.
+         *
+         * @param array $properties Schema property data.
+         * @return array Array of defaults, pulled from arg_options
+         */
+        protected function get_recursive_schema_property_defaults($properties)
+        {
+        }
+        /**
+         * Gets a function that validates recursively.
+         *
+         * @param array $properties Schema property data.
+         * @return function Anonymous validation callback.
+         */
+        protected function get_recursive_validate_callback($properties)
+        {
+        }
+        /**
+         * Gets a function that sanitizes recursively.
+         *
+         * @param array $properties Schema property data.
+         * @return function Anonymous validation callback.
+         */
+        protected function get_recursive_sanitize_callback($properties)
+        {
+        }
+        /**
+         * Returns extended schema for a specific endpoint.
+         *
+         * @param string $endpoint The endpoint identifier.
+         * @param array  ...$passed_args An array of arguments to be passed to callbacks.
+         * @return array the data that will get added.
+         */
+        protected function get_extended_schema($endpoint, ...$passed_args)
+        {
+        }
+        /**
+         * Apply a schema get_item_response callback to an array of items and return the result.
+         *
+         * @param AbstractSchema $schema Schema class instance.
+         * @param array          $items Array of items.
+         * @return array Array of values from the callback function.
+         */
+        protected function get_item_responses_from_schema(\Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema $schema, $items)
+        {
+        }
+        /**
+         * Retrieves an array of endpoint arguments from the item schema for the controller.
+         *
+         * @uses rest_get_endpoint_args_for_schema()
+         * @param string $method Optional. HTTP method of the request.
+         * @return array Endpoint arguments.
+         */
+        public function get_endpoint_args_for_item_schema($method = \WP_REST_Server::CREATABLE)
+        {
+        }
+        /**
+         * Force all schema properties to be readonly.
+         *
+         * @param array $properties Schema.
+         * @return array Updated schema.
+         */
+        protected function force_schema_readonly($properties)
+        {
+        }
+        /**
+         * Returns consistent currency schema used across endpoints for prices.
+         *
+         * @return array
+         */
+        protected function get_store_currency_properties()
+        {
+        }
+        /**
+         * Adds currency data to an array of monetary values.
+         *
+         * @param array $values Monetary amounts.
+         * @return array Monetary amounts with currency data appended.
+         */
+        protected function prepare_currency_response($values)
+        {
+        }
+        /**
+         * Convert monetary values from WooCommerce to string based integers, using
+         * the smallest unit of a currency.
+         *
+         * @param string|float $amount Monetary amount with decimals.
+         * @param int          $decimals Number of decimals the amount is formatted with.
+         * @param int          $rounding_mode Defaults to the PHP_ROUND_HALF_UP constant.
+         * @return string      The new amount.
+         */
+        protected function prepare_money_response($amount, $decimals = 2, $rounding_mode = PHP_ROUND_HALF_UP)
+        {
+        }
+        /**
+         * Prepares HTML based content, such as post titles and content, for the API response.
+         *
+         * @param string|array $response Data to format.
+         * @return string|array Formatted data.
+         */
+        protected function prepare_html_response($response)
+        {
+        }
+    }
+    /**
+     * AddressSchema class.
+     *
+     * Provides a generic address schema for composition in other schemas.
+     */
+    abstract class AbstractAddressSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
+    {
+        /**
+         * Additional fields controller.
+         *
+         * @var \Automattic\WooCommerce\Blocks\Domain\Services\CheckoutFields
+         */
+        protected $additional_fields_controller;
+        /**
+         * Constructor.
+         *
+         * @param \Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema     $extend ExtendSchema instance.
+         * @param \Automattic\WooCommerce\StoreApi\SchemaController $controller Schema Controller instance.
+         */
+        public function __construct(\Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema $extend, \Automattic\WooCommerce\StoreApi\SchemaController $controller)
+        {
+        }
+        /**
+         * Term properties.
+         *
+         * @internal Note that required properties don't require values, just that they are included in the request.
+         * @return array
+         */
+        public function get_properties()
+        {
+        }
+        /**
+         * Sanitize and format the given address object.
+         *
+         * @param array            $address Value being sanitized.
+         * @param \WP_REST_Request $request The Request.
+         * @param string           $param The param being sanitized.
+         * @return array
+         */
+        public function sanitize_callback($address, $request, $param)
+        {
+        }
+        /**
+         * Validate the given address object.
+         *
+         * @see rest_validate_value_from_schema
+         *
+         * @param array            $address Value being sanitized.
+         * @param \WP_REST_Request $request The Request.
+         * @param string           $param The param being sanitized.
+         * @return true|\WP_Error
+         */
+        public function validate_callback($address, $request, $param)
+        {
+        }
+        /**
+         * Get additional address fields schema.
+         *
+         * @return array
+         */
+        protected function get_additional_address_fields_schema()
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\StoreApi\Schemas\V1\Agentic {
+    /**
+     * Handles the schema for Agentic Checkout API checkout sessions.
+     * This schema formats WooCommerce cart/order data according to the
+     * Agentic Commerce Protocol specification.
+     *
+     * @internal The specification for agentic requests is subject to abrupt changes; backwards compatibility cannot be guaranteed.
+     */
+    class CheckoutSessionSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
+    {
+        use \Automattic\WooCommerce\StoreApi\Utilities\DraftOrderTrait;
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'agentic_checkout_session';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'agentic-checkout-session';
+        /**
+         * Checkout session schema properties.
+         *
+         * @return array
+         */
+        public function get_properties()
+        {
+        }
+        /**
+         * Convert a WooCommerce cart to the Agentic Checkout session format.
+         *
+         * @param \Automattic\WooCommerce\StoreApi\Routes\V1\Agentic\AgenticCheckoutSession $checkout_session Checkout session object.
+         * @return array Formatted checkout session data.
+         */
+        public function get_item_response($checkout_session)
+        {
+        }
+        /**
+         * Format buyer information.
+         *
+         * @return array|null Buyer data or null.
+         */
+        protected function format_buyer()
+        {
+        }
+        /**
+         * Format buyer information from order.
+         *
+         * @param \WC_Order $order Order object.
+         * @return array|null Buyer data or null.
+         */
+        protected function format_buyer_from_order($order)
+        {
+        }
+        /**
+         * Format payment provider information.
+         *
+         * @return array|null Payment provider data or null.
+         */
+        protected function format_payment_provider()
+        {
+        }
+        /**
+         * Convert amount from decimal to cents.
+         *
+         * @param string|float $amount Amount in decimal.
+         * @return int Amount in cents.
+         */
+        protected function amount_to_cents($amount)
+        {
+        }
+        /**
+         * Format line items from cart.
+         *
+         * @param array $cart_items Cart items array.
+         * @return array Formatted line items.
+         */
+        protected function format_line_items_from_cart($cart_items)
+        {
+        }
+        /**
+         * Format line items from order.
+         *
+         * @param \WC_Order $order Order object.
+         * @return array Formatted line items.
+         */
+        protected function format_line_items_from_order($order)
+        {
+        }
+        /**
+         * Format fulfillment address.
+         *
+         * @return array|null Address data or null.
+         */
+        protected function format_fulfillment_address()
+        {
+        }
+        /**
+         * Format fulfillment address from order.
+         *
+         * @param \WC_Order $order Order object.
+         * @return array|null Address data or null.
+         */
+        protected function format_fulfillment_address_from_order($order)
+        {
+        }
+        /**
+         * Build address array from components.
+         *
+         * @param string $first_name First name.
+         * @param string $last_name Last name.
+         * @param string $address_1 Address line 1.
+         * @param string $address_2 Address line 2.
+         * @param string $city City.
+         * @param string $state State.
+         * @param string $country Country.
+         * @param string $postcode Postcode.
+         * @return array Address array.
+         */
+        protected function build_address_array($first_name, $last_name, $address_1, $address_2, $city, $state, $country, $postcode)
+        {
+        }
+        /**
+         * Format fulfillment options (shipping methods).
+         *
+         * @return array Fulfillment options.
+         */
+        protected function format_fulfillment_options()
+        {
+        }
+        /**
+         * Format fulfillment options from order.
+         *
+         * @param \WC_Order $order Order object.
+         * @return array Fulfillment options.
+         */
+        protected function format_fulfillment_options_from_order($order)
+        {
+        }
+        /**
+         * Get selected fulfillment option ID.
+         *
+         * @return string|null Selected option ID or null.
+         */
+        protected function get_selected_fulfillment_option_id()
+        {
+        }
+        /**
+         * Get selected fulfillment option ID from order.
+         *
+         * @param \WC_Order $order Order object.
+         * @return string|null Selected option ID or null.
+         */
+        protected function get_selected_fulfillment_option_id_from_order($order)
+        {
+        }
+        /**
+         * Format totals array.
+         *
+         * @param \WC_Cart $cart Cart object.
+         * @return array Totals array.
+         */
+        protected function format_totals($cart)
+        {
+        }
+        /**
+         * Format totals array from order.
+         *
+         * @param \WC_Order $order Order object.
+         * @return array Totals array.
+         */
+        protected function format_totals_from_order($order)
+        {
+        }
+        /**
+         * Get links for the session.
+         *
+         * @return array Links array.
+         */
+        protected function get_links()
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\StoreApi\Schemas\V1 {
+    /**
+     * BatchSchema class.
+     */
+    class BatchSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'batch';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'batch';
+        /**
+         * Batch schema properties.
+         *
+         * @return array
+         */
+        public function get_properties()
+        {
+        }
+    }
+    /**
+     * BillingAddressSchema class.
+     *
+     * Provides a generic billing address schema for composition in other schemas.
+     */
+    class BillingAddressSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractAddressSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'billing_address';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'billing-address';
+        /**
+         * Term properties.
+         *
+         * @return array
+         */
+        public function get_properties()
+        {
+        }
+        /**
+         * Sanitize and format the given address object.
+         *
+         * @param array            $address Value being sanitized.
+         * @param \WP_REST_Request $request The Request.
+         * @param string           $param The param being sanitized.
+         * @return array
+         */
+        public function sanitize_callback($address, $request, $param)
+        {
+        }
+        /**
+         * Validate the given address object.
+         *
+         * @param array            $address Value being validated.
+         * @param \WP_REST_Request $request The Request.
+         * @param string           $param The param being validated.
+         * @return true|\WP_Error
+         */
+        public function validate_callback($address, $request, $param)
+        {
+        }
+        /**
+         * Convert a term object into an object suitable for the response.
+         *
+         * @param \WC_Order|\WC_Customer $address An object with billing address.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException When the invalid object types are provided.
+         * @return array
+         */
+        public function get_item_response($address)
+        {
+        }
+    }
+    /**
+     * CartCouponSchema class.
+     */
+    class CartCouponSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'cart_coupon';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'cart-coupon';
+        /**
+         * Cart schema properties.
+         *
+         * @return array
+         */
+        public function get_properties()
+        {
+        }
+        /**
+         * Check given coupon exists.
+         *
+         * @param string $coupon_code Coupon code.
+         * @return bool
+         */
+        public function coupon_exists($coupon_code)
+        {
+        }
+        /**
+         * Generate a response from passed coupon code.
+         *
+         * @param string $coupon_code Coupon code from the cart.
+         * @return array
+         */
+        public function get_item_response($coupon_code)
+        {
+        }
+    }
+    /**
+     * Class CartExtensionsSchema
+     */
+    class CartExtensionsSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'cart-extensions';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'cart-extensions';
+        /**
+         * Cart schema instance.
+         *
+         * @var CartSchema
+         */
+        public $cart_schema;
+        /**
+         * Constructor.
+         *
+         * @param \Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema     $extend Rest Extending instance.
+         * @param \Automattic\WooCommerce\StoreApi\SchemaController $controller Schema Controller instance.
+         */
+        public function __construct(\Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema $extend, \Automattic\WooCommerce\StoreApi\SchemaController $controller)
+        {
+        }
+        /**
+         * Cart extensions schema properties.
+         *
+         * @return array
+         */
+        public function get_properties()
+        {
+        }
+        /**
+         * Handle the request and return a valid response for this endpoint.
+         *
+         * @param \WP_REST_Request $request Request containing data for the extension callback.
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException When callback is not callable or parameters are incorrect.
+         *
+         * @return array
+         */
+        public function get_item_response($request = null)
+        {
+        }
+    }
+    /**
+     * CartFeeSchema class.
+     */
+    class CartFeeSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'cart_fee';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'cart-fee';
+        /**
+         * Cart schema properties.
+         *
+         * @return array
+         */
+        public function get_properties()
+        {
+        }
+        /**
+         * Convert a WooCommerce cart fee to an object suitable for the response.
+         *
+         * @param array $fee Cart fee data.
+         * @return array
+         */
+        public function get_item_response($fee)
+        {
+        }
+    }
+    /**
+     * ProductSchema class.
+     */
+    class ProductSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'product';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'product';
+        /**
+         * Image attachment schema instance.
+         *
+         * @var ImageAttachmentSchema
+         */
+        protected $image_attachment_schema;
+        /**
+         * Constructor.
+         *
+         * @param \Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema     $extend Rest Extending instance.
+         * @param \Automattic\WooCommerce\StoreApi\SchemaController $controller Schema Controller instance.
+         */
+        public function __construct(\Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema $extend, \Automattic\WooCommerce\StoreApi\SchemaController $controller)
+        {
+        }
+        /**
+         * Product schema properties.
+         *
+         * @return array
+         */
+        public function get_properties()
+        {
+        }
+        /**
+         * Convert a WooCommerce product into an object suitable for the response.
+         *
+         * @param \WC_Product $product Product instance.
+         * @return array
+         */
+        public function get_item_response($product)
+        {
+        }
+        /**
+         * Get list of product images.
+         *
+         * @param \WC_Product $product Product instance.
+         * @return array
+         */
+        protected function get_images(\WC_Product $product)
+        {
+        }
+        /**
+         * Gets remaining stock amount for a product.
+         *
+         * @param \WC_Product $product Product instance.
+         * @return int|float|null
+         */
+        protected function get_remaining_stock(\WC_Product $product)
+        {
+        }
+        /**
+         * If a product has low stock, return the remaining stock amount for display.
+         *
+         * @param \WC_Product $product Product instance.
+         * @return int|float|null
+         */
+        protected function get_low_stock_remaining(\WC_Product $product)
+        {
+        }
+        /**
+         * Returns true if the given attribute is valid.
+         *
+         * @param mixed $attribute Object or variable to check.
+         * @return boolean
+         */
+        protected function filter_valid_attribute($attribute)
+        {
+        }
+        /**
+         * Returns true if the given attribute is valid and used for variations.
+         *
+         * @param mixed $attribute Object or variable to check.
+         * @return boolean
+         */
+        protected function filter_variation_attribute($attribute)
+        {
+        }
+        /**
+         * Get variation IDs and attributes from the DB.
+         *
+         * @param \WC_Product $product Product instance.
+         * @returns array
+         */
+        protected function get_variations(\WC_Product $product)
+        {
+        }
+        /**
+         * Get grouped product IDs.
+         *
+         * @param \WC_Product $product Product instance.
+         * @return array
+         */
+        protected function get_grouped_products(\WC_Product $product)
+        {
+        }
+        /**
+         * Get list of product attributes and attribute terms.
+         *
+         * @param \WC_Product $product Product instance.
+         * @return array
+         */
+        protected function get_attributes(\WC_Product $product)
+        {
+        }
+        /**
+         * Prepare an attribute term for the response.
+         *
+         * @param \WP_Term $term Term object.
+         * @return object
+         */
+        protected function prepare_product_attribute_taxonomy_value(\WP_Term $term)
+        {
+        }
+        /**
+         * Prepare an attribute term for the response.
+         *
+         * @param string $name Attribute term name.
+         * @param int    $id Attribute term ID.
+         * @param string $slug Attribute term slug.
+         * @return object
+         */
+        protected function prepare_product_attribute_value($name, $id = 0, $slug = '')
+        {
+        }
+        /**
+         * Get an array of pricing data.
+         *
+         * @param \WC_Product $product Product instance.
+         * @param string      $tax_display_mode If returned prices are incl or excl of tax.
+         * @return array
+         */
+        protected function prepare_product_price_response(\WC_Product $product, $tax_display_mode = '')
+        {
+        }
+        /**
+         * WooCommerce can return prices including or excluding tax; choose the correct method based on tax display mode.
+         *
+         * @param string $tax_display_mode Provided tax display mode.
+         * @return string Valid tax display mode.
+         */
+        protected function get_tax_display_mode($tax_display_mode = '')
+        {
+        }
+        /**
+         * WooCommerce can return prices including or excluding tax; choose the correct method based on tax display mode.
+         *
+         * @param string $tax_display_mode If returned prices are incl or excl of tax.
+         * @return string Function name.
+         */
+        protected function get_price_function_from_tax_display_mode($tax_display_mode)
+        {
+        }
+        /**
+         * Get price range from certain product types.
+         *
+         * @param \WC_Product $product Product instance.
+         * @param string      $tax_display_mode If returned prices are incl or excl of tax.
+         * @return object|null
+         */
+        protected function get_price_range(\WC_Product $product, $tax_display_mode = '')
+        {
+        }
+        /**
+         * Returns a list of terms assigned to the product.
+         *
+         * @param \WC_Product $product Product object.
+         * @param string      $taxonomy Taxonomy name.
+         * @return array Array of terms (id, name, slug).
+         */
+        protected function get_term_list(\WC_Product $product, $taxonomy = '')
+        {
+        }
+    }
+    /**
+     * ItemSchema class.
+     */
+    abstract class ItemSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\ProductSchema
+    {
+        /**
+         * Item schema properties.
+         *
+         * @return array
+         */
+        public function get_properties()
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\StoreApi\Utilities {
+    /**
+     * ProductItemTrait
+     *
+     * Shared functionality for formatting product item data.
+     */
+    trait ProductItemTrait
+    {
+        /**
+         * Get an array of pricing data.
+         *
+         * @param \WC_Product $product Product instance.
+         * @param string      $tax_display_mode If returned prices are incl or excl of tax.
+         * @return array
+         */
+        protected function prepare_product_price_response(\WC_Product $product, $tax_display_mode = '')
+        {
+        }
+        /**
+         * Format variation data, for example convert slugs such as attribute_pa_size to Size.
+         *
+         * @param array       $variation_data Array of data from the cart.
+         * @param \WC_Product $product Product data.
+         * @return array
+         */
+        protected function format_variation_data($variation_data, $product)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\StoreApi\Schemas\V1 {
+    /**
+     * CartItemSchema class.
+     */
+    class CartItemSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\ItemSchema
+    {
+        use \Automattic\WooCommerce\StoreApi\Utilities\ProductItemTrait;
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'cart_item';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'cart-item';
+        /**
+         * Convert a WooCommerce cart item to an object suitable for the response.
+         *
+         * @param array $cart_item Cart item array.
+         * @return array
+         */
+        public function get_item_response($cart_item)
+        {
+        }
+        /**
+         * Get list of product images for the cart item.
+         *
+         * @param \WC_Product $product       Product instance.
+         * @param array       $cart_item     Cart item array.
+         * @param string      $cart_item_key Cart item key.
+         * @return array
+         */
+        protected function get_cart_images(\WC_Product $product, array $cart_item, string $cart_item_key)
+        {
+        }
+        /**
+         * Format cart item data removing any HTML tag.
+         *
+         * @param array $cart_item Cart item array.
+         * @return array
+         */
+        protected function get_item_data($cart_item)
+        {
+        }
+        /**
+         * Remove HTML tags from cart item data and set the `hidden` property to `__experimental_woocommerce_blocks_hidden`.
+         *
+         * @param array $item_data_element Individual element of a cart item data.
+         * @return array
+         */
+        protected function format_item_data_element($item_data_element)
+        {
+        }
+    }
+    /**
+     * CartSchema class.
+     */
+    class CartSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'cart';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'cart';
+        /**
+         * Item schema instance.
+         *
+         * @var CartItemSchema
+         */
+        public $item_schema;
+        /**
+         * Coupon schema instance.
+         *
+         * @var CartCouponSchema
+         */
+        public $coupon_schema;
+        /**
+         * Product item schema instance representing cross-sell items.
+         *
+         * @var ProductSchema
+         */
+        public $cross_sells_item_schema;
+        /**
+         * Fee schema instance.
+         *
+         * @var CartFeeSchema
+         */
+        public $fee_schema;
+        /**
+         * Shipping rates schema instance.
+         *
+         * @var CartShippingRateSchema
+         */
+        public $shipping_rate_schema;
+        /**
+         * Shipping address schema instance.
+         *
+         * @var ShippingAddressSchema
+         */
+        public $shipping_address_schema;
+        /**
+         * Billing address schema instance.
+         *
+         * @var BillingAddressSchema
+         */
+        public $billing_address_schema;
+        /**
+         * Error schema instance.
+         *
+         * @var ErrorSchema
+         */
+        public $error_schema;
+        /**
+         * Constructor.
+         *
+         * @param \Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema     $extend Rest Extending instance.
+         * @param \Automattic\WooCommerce\StoreApi\SchemaController $controller Schema Controller instance.
+         */
+        public function __construct(\Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema $extend, \Automattic\WooCommerce\StoreApi\SchemaController $controller)
+        {
+        }
+        /**
+         * Cart schema properties.
+         *
+         * @return array
+         */
+        public function get_properties()
+        {
+        }
+        /**
+         * Convert a woo cart into an object suitable for the response.
+         *
+         * @param \WC_Cart $cart Cart class instance.
+         * @return array
+         */
+        public function get_item_response($cart)
+        {
+        }
+        /**
+         * Get total data.
+         *
+         * @param \WC_Cart $cart Cart class instance.
+         * @return array
+         */
+        protected function get_totals($cart)
+        {
+        }
+        /**
+         * Get tax lines from the cart and format to match schema.
+         *
+         * @param \WC_Cart $cart Cart class instance.
+         * @return array
+         */
+        protected function get_tax_lines($cart)
+        {
+        }
+        /**
+         * Get cart validation errors.
+         *
+         * @param \WC_Cart $cart Cart class instance.
+         * @return array
+         */
+        protected function get_cart_errors($cart)
+        {
+        }
+    }
+    /**
+     * CartShippingRateSchema class.
+     */
+    class CartShippingRateSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'cart-shipping-rate';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'cart-shipping-rate';
+        /**
+         * Cart schema properties.
+         *
+         * @return array
+         */
+        public function get_properties()
+        {
+        }
+        /**
+         * Schema for a single rate.
+         *
+         * @return array
+         */
+        protected function get_rate_properties()
+        {
+        }
+        /**
+         * Convert a shipping rate from WooCommerce into a valid response.
+         *
+         * @param array $package Shipping package complete with rates from WooCommerce.
+         * @return array
+         */
+        public function get_item_response($package)
+        {
+        }
+        /**
+         * Gets and formats the destination address of a package.
+         *
+         * @param array $package Shipping package complete with rates from WooCommerce.
+         * @return object
+         */
+        protected function prepare_package_destination_response($package)
+        {
+        }
+        /**
+         * Gets items from a package and creates an array of strings containing product names and quantities.
+         *
+         * @param array $package Shipping package complete with rates from WooCommerce.
+         * @return array
+         */
+        protected function prepare_package_items_response($package)
+        {
+        }
+        /**
+         * Prepare an array of rates from a package for the response.
+         *
+         * @param array $package Shipping package complete with rates from WooCommerce.
+         * @return array
+         */
+        protected function prepare_package_shipping_rates_response($package)
+        {
+        }
+        /**
+         * Response for a single rate.
+         *
+         * @param WC_Shipping_Rate $rate Rate object.
+         * @param string           $selected_rate Selected rate.
+         * @return array
+         */
+        protected function get_rate_response($rate, $selected_rate = '')
+        {
+        }
+        /**
+         * Gets a prop of the rate object, if callable.
+         *
+         * @param WC_Shipping_Rate $rate Rate object.
+         * @param string           $prop Prop name.
+         * @return string
+         */
+        protected function get_rate_prop($rate, $prop)
+        {
+        }
+        /**
+         * Converts rate meta data into a suitable response object.
+         *
+         * @param WC_Shipping_Rate $rate Rate object.
+         * @return array
+         */
+        protected function get_rate_meta_data($rate)
+        {
+        }
+    }
+    /**
+     * CheckoutSchema class.
+     */
+    class CheckoutSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'checkout';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'checkout';
+        /**
+         * Billing address schema instance.
+         *
+         * @var BillingAddressSchema
+         */
+        protected $billing_address_schema;
+        /**
+         * Shipping address schema instance.
+         *
+         * @var ShippingAddressSchema
+         */
+        protected $shipping_address_schema;
+        /**
+         * Image Attachment schema instance.
+         *
+         * @var ImageAttachmentSchema
+         */
+        protected $image_attachment_schema;
+        /**
+         * Cart schema instance.
+         *
+         * @var \Automattic\WooCommerce\StoreApi\Schemas\V1\CartSchema
+         */
+        protected $cart_schema;
+        /**
+         * Additional fields controller.
+         *
+         * @var \Automattic\WooCommerce\Blocks\Domain\Services\CheckoutFields
+         */
+        protected $additional_fields_controller;
+        /**
+         * Constructor.
+         *
+         * @param \Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema     $extend Rest Extending instance.
+         * @param \Automattic\WooCommerce\StoreApi\SchemaController $controller Schema Controller instance.
+         */
+        public function __construct(\Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema $extend, \Automattic\WooCommerce\StoreApi\SchemaController $controller)
+        {
+        }
+        /**
+         * Checkout schema properties.
+         *
+         * @return array
+         */
+        public function get_properties()
+        {
+        }
+        /**
+         * Return the response for checkout.
+         *
+         * @param object $item Results from checkout action.
+         * @return array
+         */
+        public function get_item_response($item)
+        {
+        }
+        /**
+         * Get the checkout response based on the current order and any payments.
+         *
+         * @param \WC_Order          $order          Order object.
+         * @param \Automattic\WooCommerce\StoreApi\Payments\PaymentResult|null $payment_result Payment result object.
+         * @param \WC_Cart|null      $cart           Cart object.
+         * @return array
+         */
+        protected function get_checkout_response(\WC_Order $order, ?\Automattic\WooCommerce\StoreApi\Payments\PaymentResult $payment_result = null, ?\WC_Cart $cart = null)
+        {
+        }
+        /**
+         * Build a checkout response for a session with no persisted order.
+         *
+         * Session-owned values (payment method, customer note) are read internally
+         * so the caller doesn't need to forward them.
+         *
+         * @param \WC_Cart     $cart     Cart object.
+         * @param \WC_Customer $customer Customer object (typically `wc()->customer`).
+         * @return array
+         */
+        public function get_draft_response(\WC_Cart $cart, \WC_Customer $customer)
+        {
+        }
+        /**
+         * This prepares the payment details for the response so it's following the
+         * schema where it's an array of objects.
+         *
+         * @param array $payment_details An array of payment details from the processed payment.
+         *
+         * @return array An array of objects where each object has the key and value
+         *               as distinct properties.
+         */
+        protected function prepare_payment_details_for_response(array $payment_details)
+        {
+        }
+        /**
+         * Get the additional fields response.
+         *
+         * For an order the response falls back to customer-mirrored values; for a
+         * customer it reads the customer meta directly.
+         *
+         * @param \WC_Order|\WC_Customer $wc_object Order or customer to read fields from.
+         * @return array
+         */
+        protected function get_additional_fields_response(\WC_Data $wc_object)
+        {
+        }
+        /**
+         * Get the schema for additional fields.
+         *
+         * @return array
+         */
+        protected function get_additional_fields_schema()
+        {
+        }
+        /**
+         * Generate the schema for additional fields.
+         *
+         * @param array[] ...$args One or more arrays of additional fields.
+         * @return array
+         */
+        protected function generate_additional_fields_schema(...$args)
+        {
+        }
+        /**
+         * Check if any additional field is required, so that the parent item is required as well.
+         *
+         * @param array $additional_fields_schema Additional fields schema.
+         * @return bool
+         */
+        protected function schema_has_required_property($additional_fields_schema)
+        {
+        }
+        /**
+         * Sanitize and format additional fields object.
+         *
+         * @param array $fields Values being sanitized.
+         * @return array
+         */
+        public function sanitize_additional_fields($fields)
+        {
+        }
+        /**
+         * Validate additional fields object. This does not validate required fields nor customer validation rules because
+         * this may be a partial request. That will happen later when the full request is processed during POST. This only
+         * validates against the schema.
+         *
+         * @see rest_validate_value_from_schema
+         *
+         * @param array            $fields Value being sanitized.
+         * @param \WP_REST_Request $request The Request.
+         * @return true|\WP_Error
+         */
+        public function validate_additional_fields($fields, $request)
+        {
+        }
+    }
+    /**
+     * CheckoutOrderSchema class.
+     */
+    class CheckoutOrderSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\CheckoutSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'checkout-order';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'checkout-order';
+        /**
+         * Checkout schema properties.
+         *
+         * @return array
+         */
+        public function get_properties()
+        {
+        }
+    }
+    /**
+     * ErrorSchema class.
+     */
+    class ErrorSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'error';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'error';
+        /**
+         * Product schema properties.
+         *
+         * @return array
+         */
+        public function get_properties()
+        {
+        }
+        /**
+         * Convert a WP_Error into an object suitable for the response.
+         *
+         * @param \WP_Error $error Error object.
+         * @return array
+         */
+        public function get_item_response($error)
+        {
+        }
+    }
+    /**
+     * ImageAttachmentSchema class.
+     */
+    class ImageAttachmentSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'image';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'image';
+        /**
+         * Product schema properties.
+         *
+         * @return array
+         */
+        public function get_properties()
+        {
+        }
+        /**
+         * Convert a WooCommerce product into an object suitable for the response.
+         *
+         * @param int $attachment_id Image attachment ID.
+         * @return object|null
+         */
+        public function get_item_response($attachment_id)
+        {
+        }
+    }
+    /**
+     * OrderCouponSchema class.
+     */
+    class OrderCouponSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'order_coupon';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'order-coupon';
+        /**
+         * Cart schema properties.
+         *
+         * @return array
+         */
+        public function get_properties()
+        {
+        }
+        /**
+         * Convert an order coupon to an object suitable for the response.
+         *
+         * @param \WC_Order_Item_Coupon $coupon Order coupon object.
+         * @return array
+         */
+        public function get_item_response($coupon)
+        {
+        }
+    }
+    /**
+     * OrderFeeSchema class.
+     */
+    class OrderFeeSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'order_fee';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'order-fee';
+        /**
+         * Cart schema properties.
+         *
+         * @return array
+         */
+        public function get_properties()
+        {
+        }
+        /**
+         * Convert a WooCommerce cart fee to an object suitable for the response.
+         *
+         * @param \WC_Order_Item_Fee $fee Order fee object.
+         * @return array
+         */
+        public function get_item_response($fee)
+        {
+        }
+    }
+    /**
+     * OrderItemSchema class.
+     */
+    class OrderItemSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\ItemSchema
+    {
+        use \Automattic\WooCommerce\StoreApi\Utilities\ProductItemTrait;
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'order_item';
+        /**
+         * Cache for parent product attributes.
+         *
+         * @var array|null
+         */
+        private $cached_parent_attributes = null;
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'order-item';
+        /**
+         * Get order items data.
+         *
+         * @param \WC_Order_Item_Product $order_item Order item instance.
+         * @return array
+         */
+        public function get_item_response($order_item)
+        {
+        }
+        /**
+         * Get totals data.
+         *
+         * @param \WC_Order_Item_Product $order_item Order item instance.
+         * @return array
+         */
+        public function get_totals($order_item)
+        {
+        }
+        /**
+         * Get variation data from order item metadata.
+         *
+         * Gets the customer's actual attribute choices from the order metadata.
+         * This fixes variations set to "Any" returning empty values.
+         *
+         * @param \WC_Order_Item_Product $order_item Order item instance.
+         * @param \WC_Product            $product Product instance.
+         * @return array Formatted variation data.
+         */
+        protected function get_variation_data_from_order_item($order_item, $product)
+        {
+        }
+        /**
+         * Get parent product attributes.
+         *
+         * Cached to avoid multiple DB lookups when processing multiple meta items.
+         *
+         * @param \WC_Product $product Product instance.
+         * @return array Array of WC_Product_Attribute objects.
+         *
+         * @since 10.5.0
+         */
+        protected function get_parent_product_attributes($product)
+        {
+        }
+    }
+    /**
+     * OrderSchema class.
+     */
+    class OrderSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'order';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'order';
+        /**
+         * Item schema instance.
+         *
+         * @var OrderItemSchema
+         */
+        public $item_schema;
+        /**
+         * Order controller class instance.
+         *
+         * @var \Automattic\WooCommerce\StoreApi\Utilities\OrderController
+         */
+        protected $order_controller;
+        /**
+         * Coupon schema instance.
+         *
+         * @var OrderCouponSchema
+         */
+        public $coupon_schema;
+        /**
+         * Product item schema instance representing cross-sell items.
+         *
+         * @var ProductSchema
+         */
+        public $cross_sells_item_schema;
+        /**
+         * Fee schema instance.
+         *
+         * @var OrderFeeSchema
+         */
+        public $fee_schema;
+        /**
+         * Shipping rates schema instance.
+         *
+         * @var CartShippingRateSchema
+         */
+        public $shipping_rate_schema;
+        /**
+         * Shipping address schema instance.
+         *
+         * @var ShippingAddressSchema
+         */
+        public $shipping_address_schema;
+        /**
+         * Billing address schema instance.
+         *
+         * @var BillingAddressSchema
+         */
+        public $billing_address_schema;
+        /**
+         * Error schema instance.
+         *
+         * @var ErrorSchema
+         */
+        public $error_schema;
+        /**
+         * Constructor.
+         *
+         * @param \Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema     $extend Rest Extending instance.
+         * @param \Automattic\WooCommerce\StoreApi\SchemaController $controller Schema Controller instance.
+         */
+        public function __construct(\Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema $extend, \Automattic\WooCommerce\StoreApi\SchemaController $controller)
+        {
+        }
+        /**
+         * Order schema properties.
+         *
+         * @return array
+         */
+        public function get_properties()
+        {
+        }
+        /**
+         * Get an order for response.
+         *
+         * @param \WC_Order $order Order instance.
+         * @return array
+         */
+        public function get_item_response($order)
+        {
+        }
+        /**
+         * Get total data.
+         *
+         * @param \WC_Order $order Order instance.
+         * @return array
+         */
+        protected function get_totals($order)
+        {
+        }
+    }
+    /**
+     * OrderSchema class.
+     */
+    class PatternsSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'patterns';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'patterns';
+        /**
+         * Patterns schema properties.
+         *
+         * @return array
+         */
+        public function get_properties()
+        {
+        }
+        /**
+         * Get the Patterns response.
+         *
+         * @param array $item Item to get response for.
+         *
+         * @return array
+         */
+        public function get_item_response($item)
+        {
+        }
+    }
+    /**
+     * ProductAttributeSchema class.
+     */
+    class ProductAttributeSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'product_attribute';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'product-attribute';
+        /**
+         * Term properties.
+         *
+         * @return array
+         */
+        public function get_properties()
+        {
+        }
+        /**
+         * Convert an attribute object into an object suitable for the response.
+         *
+         * @param object $attribute Attribute object.
+         * @return array
+         */
+        public function get_item_response($attribute)
+        {
+        }
+    }
+    /**
+     * TermSchema class.
+     */
+    class TermSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'term';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'term';
+        /**
+         * Term properties.
+         *
+         * @return array
+         */
+        public function get_properties()
+        {
+        }
+        /**
+         * Convert a term object into an object suitable for the response.
+         *
+         * @param \WP_Term $term Term object.
+         * @return array
+         */
+        public function get_item_response($term)
+        {
+        }
+    }
+    /**
+     * ProductAttributeTermSchema class.
+     */
+    class ProductAttributeTermSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\TermSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'product-attribute-term';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'product-attribute-term';
+        /**
+         * Visual data property name.
+         *
+         * @var string
+         */
+        const VISUAL_PROPERTY_NAME = '__experimentalVisual';
+        /**
+         * Term properties.
+         *
+         * @return array
+         */
+        public function get_properties()
+        {
+        }
+        /**
+         * Get the visual data property schema.
+         *
+         * @return array
+         */
+        private function get_visual_property_schema(): array
+        {
+        }
+    }
+    /**
+     * ProductBrandSchema class.
+     */
+    class ProductBrandSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\TermSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'product-brand';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'product-brand';
+        /**
+         * Image attachment schema instance.
+         *
+         * @var ImageAttachmentSchema
+         */
+        protected $image_attachment_schema;
+        /**
+         * Constructor.
+         *
+         * @param \Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema     $extend Rest Extending instance.
+         * @param \Automattic\WooCommerce\StoreApi\SchemaController $controller Schema Controller instance.
+         */
+        public function __construct(\Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema $extend, \Automattic\WooCommerce\StoreApi\SchemaController $controller)
+        {
+        }
+        /**
+         * Term properties.
+         *
+         * @return array
+         */
+        public function get_properties()
+        {
+        }
+        /**
+         * Convert a term object into an object suitable for the response.
+         *
+         * @param \WP_Term $term Term object.
+         * @return array
+         */
+        public function get_item_response($term)
+        {
+        }
+        /**
+         * Get total number of reviews for products of a brand.
+         *
+         * @param \WP_Term $term Term object.
+         * @return int
+         */
+        protected function get_brand_review_count($term)
+        {
+        }
+    }
+    /**
+     * ProductCategorySchema class.
+     */
+    class ProductCategorySchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\TermSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'product-category';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'product-category';
+        /**
+         * Image attachment schema instance.
+         *
+         * @var ImageAttachmentSchema
+         */
+        protected $image_attachment_schema;
+        /**
+         * Constructor.
+         *
+         * @param \Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema     $extend Rest Extending instance.
+         * @param \Automattic\WooCommerce\StoreApi\SchemaController $controller Schema Controller instance.
+         */
+        public function __construct(\Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema $extend, \Automattic\WooCommerce\StoreApi\SchemaController $controller)
+        {
+        }
+        /**
+         * Term properties.
+         *
+         * @return array
+         */
+        public function get_properties()
+        {
+        }
+        /**
+         * Convert a term object into an object suitable for the response.
+         *
+         * @param \WP_Term $term Term object.
+         * @return array
+         */
+        public function get_item_response($term)
+        {
+        }
+        /**
+         * Get total number of reviews for products in a category.
+         *
+         * @param \WP_Term $term Term object.
+         * @return int
+         */
+        protected function get_category_review_count($term)
+        {
+        }
+    }
+    /**
+     * ProductCollectionDataSchema class.
+     */
+    class ProductCollectionDataSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'product-collection-data';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'product-collection-data';
+        /**
+         * Product collection data schema properties.
+         *
+         * @return array
+         */
+        public function get_properties()
+        {
+        }
+        /**
+         * Format data.
+         *
+         * @param array $data Collection data to format and return.
+         * @return array
+         */
+        public function get_item_response($data)
+        {
+        }
+    }
+    /**
+     * ProductReviewSchema class.
+     */
+    class ProductReviewSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'product_review';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'product-review';
+        /**
+         * Image attachment schema instance.
+         *
+         * @var ImageAttachmentSchema
+         */
+        protected $image_attachment_schema;
+        /**
+         * Constructor.
+         *
+         * @param \Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema     $extend Rest Extending instance.
+         * @param \Automattic\WooCommerce\StoreApi\SchemaController $controller Schema Controller instance.
+         */
+        public function __construct(\Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema $extend, \Automattic\WooCommerce\StoreApi\SchemaController $controller)
+        {
+        }
+        /**
+         * Product review schema properties.
+         *
+         * @return array
+         */
+        public function get_properties()
+        {
+        }
+        /**
+         * Convert a WooCommerce product into an object suitable for the response.
+         *
+         * @param \WP_Comment $review Product review object.
+         * @return array
+         */
+        public function get_item_response($review)
+        {
+        }
+    }
+    /**
+     * ShippingAddressSchema class.
+     *
+     * Provides a generic shipping address schema for composition in other schemas.
+     */
+    class ShippingAddressSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractAddressSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'shipping_address';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'shipping-address';
+        /**
+         * Convert a term object into an object suitable for the response.
+         *
+         * @param \WC_Order|\WC_Customer $address An object with shipping address.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException When the invalid object types are provided.
+         * @return array
+         */
+        public function get_item_response($address)
+        {
+        }
+    }
+    /**
+     * ShopperListItemSchema class.
+     *
+     * Serializes a {@see ShopperListItem}. Renders live product fields when the
+     * item reports `is_live`, and falls back to at-save snapshot data otherwise.
+     */
+    class ShopperListItemSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
+    {
+        // We only call format_variation_data(); see phpstan.neon for the related suppressions.
+        use \Automattic\WooCommerce\StoreApi\Utilities\ProductItemTrait;
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'shopper_list_item';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'shopper-list-item';
+        /**
+         * Image attachment schema instance.
+         *
+         * @var ImageAttachmentSchema
+         */
+        protected $image_attachment_schema;
+        /**
+         * Constructor.
+         *
+         * @throws \RuntimeException When the ImageAttachmentSchema is not registered.
+         *
+         * @param \Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema     $extend Rest Extending instance.
+         * @param \Automattic\WooCommerce\StoreApi\SchemaController $controller Schema Controller instance.
+         */
+        public function __construct(\Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema $extend, \Automattic\WooCommerce\StoreApi\SchemaController $controller)
+        {
+        }
+        /**
+         * Item schema properties.
+         *
+         * @return array
+         */
+        public function get_properties()
+        {
+        }
+        /**
+         * Serialize the saved item.
+         *
+         * @param \Automattic\WooCommerce\Internal\ShopperLists\ShopperListItem $item Saved item.
+         * @return array
+         */
+        public function get_item_response($item)
+        {
+        }
+        /**
+         * Get the displayable name for the live product.
+         *
+         * @param \WC_Product $product Live product instance.
+         * @return string
+         */
+        private function get_name(\WC_Product $product): string
+        {
+        }
+        /**
+         * Get the main image for a shopper list item.
+         *
+         * Returns the product's main image only — shopper list rows are compact and
+         * the gallery isn't needed at the row level.
+         *
+         * @param \WC_Product $product Live product instance.
+         * @return array
+         */
+        private function get_images(\WC_Product $product): array
+        {
+        }
+        /**
+         * Get the thumbnail image HTML for a shopper list item, falling back to the
+         * WooCommerce placeholder when the product has no image or has been deleted.
+         *
+         * Pre-formatting on the server lets renderers (PHP SSR + JS hydration)
+         * consume one canonical string instead of each side composing the markup
+         * from the structured `images` array. Mirrors the pattern WC uses in
+         * `ProductSchema::price_html` / `ProductImage::render`.
+         *
+         * @param \WC_Product|null $product Live product instance, or null for tombstones.
+         * @return string
+         */
+        private function get_image_html(?\WC_Product $product): string
+        {
+        }
+        /**
+         * Compute live prices for the saved item.
+         *
+         * We don't extend ProductSchema because saved items aren't products. The shape
+         * here is a thin subset of cart-item prices.
+         *
+         * @param \WC_Product $product Live product instance.
+         * @return array
+         */
+        private function get_prices(\WC_Product $product): array
+        {
+        }
+    }
+    /**
+     * ShopperListSchema class.
+     *
+     * Represents a single shopper list, including its saved items.
+     */
+    class ShopperListSchema extends \Automattic\WooCommerce\StoreApi\Schemas\V1\AbstractSchema
+    {
+        /**
+         * The schema item name.
+         *
+         * @var string
+         */
+        protected $title = 'shopper_list';
+        /**
+         * The schema item identifier.
+         *
+         * @var string
+         */
+        const IDENTIFIER = 'shopper-list';
+        /**
+         * Item schema instance.
+         *
+         * @var ShopperListItemSchema
+         */
+        protected $item_schema;
+        /**
+         * Constructor.
+         *
+         * @throws \RuntimeException When the ShopperListItemSchema is not registered.
+         *
+         * @param \Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema     $extend Rest Extending instance.
+         * @param \Automattic\WooCommerce\StoreApi\SchemaController $controller Schema Controller instance.
+         */
+        public function __construct(\Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema $extend, \Automattic\WooCommerce\StoreApi\SchemaController $controller)
+        {
+        }
+        /**
+         * Schema properties.
+         *
+         * @return array
+         */
+        public function get_properties()
+        {
+        }
+        /**
+         * Serialize the shopper list.
+         *
+         * @param \Automattic\WooCommerce\Internal\ShopperLists\ShopperList $shopper_list The list.
+         * @return array
+         */
+        public function get_item_response($shopper_list)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\StoreApi {
+    /**
+     * SessionHandler class
+     *
+     * Token-based session handler for the Store API. Unlike WC_Session_Handler which
+     * uses browser cookies, this handler uses an HTTP_CART_TOKEN header (JWT-like) to
+     * identify sessions. It shares the same database table but has no cookie, cron,
+     * or cache layer.
+     *
+     * @since 10.7.0
+     */
+    final class SessionHandler extends \WC_Session
+    {
+        /**
+         * Token from HTTP headers.
+         *
+         * @var string
+         */
+        protected $token = '';
+        /**
+         * Table name for session data.
+         *
+         * @var string Custom session table name
+         */
+        protected $table = '';
+        /**
+         * Expiration timestamp.
+         *
+         * @var int
+         */
+        protected $session_expiration = 0;
+        /**
+         * Constructor for the session class.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Init hooks and session data.
+         */
+        public function init()
+        {
+        }
+        /**
+         * Process the token header to load the correct session.
+         */
+        protected function init_session_from_token()
+        {
+        }
+        /**
+         * Return true if the current user has an active session.
+         *
+         * @return bool
+         */
+        public function has_session()
+        {
+        }
+        /**
+         * Generate a unique customer ID for guests, or return user ID if logged in.
+         *
+         * @return string
+         */
+        public function generate_customer_id()
+        {
+        }
+        /**
+         * Get session unique ID for requests if session is initialized or user ID if logged in.
+         *
+         * @return string
+         */
+        public function get_customer_unique_id()
+        {
+        }
+        /**
+         * Get session data fresh from storage.
+         *
+         * This re-reads session data from the database rather than returning
+         * in-memory data, ensuring the latest persisted state is returned.
+         *
+         * @return array
+         */
+        public function get_session_data()
+        {
+        }
+        /**
+         * Returns the session.
+         *
+         * @param string $customer_id Customer ID.
+         * @param mixed  $default_value Default session value.
+         *
+         * @return mixed Returns either the session data or the default value. Returns false if WP setup is in progress.
+         */
+        public function get_session($customer_id, $default_value = false)
+        {
+        }
+        /**
+         * Destroy all session data.
+         *
+         * @return void
+         */
+        public function destroy_session()
+        {
+        }
+        /**
+         * Forget all session data without destroying persisted storage.
+         *
+         * @return void
+         */
+        public function forget_session()
+        {
+        }
+        /**
+         * Delete the session from the database.
+         *
+         * @param string $customer_id Customer session ID.
+         * @return void
+         */
+        public function delete_session($customer_id)
+        {
+        }
+        /**
+         * Save data and delete user session.
+         *
+         * @return void
+         */
+        public function save_data()
+        {
+        }
+    }
+    /**
+     * StoreApi Main Class.
+     */
+    final class StoreApi
+    {
+        /**
+         * Init and hook in Store API functionality.
+         */
+        public function init()
+        {
+        }
+        /**
+         * Loads the DI container for Store API.
+         *
+         * @internal This uses the Blocks DI container. If Store API were to move to core, this container could be replaced
+         * with a different compatible container.
+         *
+         * @param boolean $reset Used to reset the container to a fresh instance. Note: this means all dependencies will be reconstructed.
+         * @return mixed
+         */
+        public static function container($reset = false)
+        {
+        }
+    }
+}
+namespace Automattic\WooCommerce\StoreApi\Utilities {
+    /**
+     * AgenticCheckoutUtils class.
+     *
+     * Utility class for shared Agentic Checkout API functionality.
+     */
+    class AgenticCheckoutUtils
+    {
+        /**
+         * Get the shared parameters schema for checkout session requests.
+         *
+         * @return array Parameters array.
+         */
+        public static function get_shared_params()
+        {
+        }
+        /**
+         * Add items to cart from request.
+         *
+         * @param array          $items Items array from request.
+         * @param CartController $cart_controller Cart controller instance.
+         * @param \Automattic\WooCommerce\StoreApi\Routes\V1\Agentic\Messages\Messages       $messages Error messages instance.
+         * @return \Automattic\WooCommerce\StoreApi\Routes\V1\Agentic\Errors\Error|null Returns error response on failure, null on success.
+         */
+        public static function add_items_to_cart($items, $cart_controller, $messages)
+        {
+        }
+        /**
+         * Set buyer data on customer.
+         *
+         * @param array        $buyer Buyer data.
+         * @param \WC_Customer $customer Customer instance.
+         */
+        public static function set_buyer_data($buyer, $customer)
+        {
+        }
+        /**
+         * Set fulfillment address on customer.
+         *
+         * @param array        $address Address data.
+         * @param \WC_Customer $customer Customer instance.
+         */
+        public static function set_fulfillment_address($address, $customer)
+        {
+        }
+        /**
+         * Clear fulfillment address from customer.
+         *
+         * @param \WC_Customer $customer Customer instance.
+         */
+        public static function clear_fulfillment_address($customer)
+        {
+        }
+        /**
+         * Set billing address on customer.
+         *
+         * @param array        $address Address data.
+         * @param \WC_Customer $customer Customer instance.
+         */
+        public static function set_billing_address($address, $customer)
+        {
+        }
+        /**
+         * Add Agentic Commerce Protocol headers to response.
+         *
+         * @param \WP_REST_Response $response Response object.
+         * @param \WP_REST_Request  $request Request object.
+         * @return \WP_REST_Response Response with headers.
+         */
+        public static function add_protocol_headers(\WP_REST_Response $response, \WP_REST_Request $request)
+        {
+        }
+        /**
+         * Validate that the request is signed with Jetpack blog token.
+         *
+         * @since 10.6.0
+         *
+         * @return true|\WP_Error True if valid, WP_Error otherwise.
+         */
+        public static function validate_jetpack_request()
+        {
+        }
+        /**
+         * Validates a session.
+         *
+         * @param \Automattic\WooCommerce\StoreApi\Routes\V1\Agentic\AgenticCheckoutSession $checkout_session Checkout session object.
+         * @return void
+         */
+        public static function validate(\Automattic\WooCommerce\StoreApi\Routes\V1\Agentic\AgenticCheckoutSession $checkout_session): void
+        {
+        }
+        /**
+         * Calculate the status of the checkout session.
+         *
+         * @param \Automattic\WooCommerce\StoreApi\Routes\V1\Agentic\AgenticCheckoutSession $checkout_session Checkout session object.
+         *
+         * @return string Status value.
+         */
+        public static function calculate_status(\Automattic\WooCommerce\StoreApi\Routes\V1\Agentic\AgenticCheckoutSession $checkout_session): string
+        {
+        }
+        /**
+         * Get the agentic commerce payment gateway from available gateways.
+         *
+         * Finds the first gateway that supports agentic commerce and has the required methods.
+         *
+         * @param array $available_gateways Array of available payment gateways.
+         * @return \WC_Payment_Gateway|null The agentic commerce gateway or null if not found.
+         */
+        public static function get_agentic_commerce_gateway($available_gateways)
+        {
+        }
+        /**
+         * Whether the current request is within Agentic Commerce session.
+         *
+         * @return bool
+         */
+        public static function is_agentic_commerce_session(): bool
+        {
+        }
+    }
+    /**
+     * ArrayUtils class used for custom functions to operate on arrays
+     */
+    class ArrayUtils
+    {
+        /**
+         * Join a string with a natural language conjunction at the end.
+         *
+         * @param array $array  The array to join together with the natural language conjunction.
+         * @param bool  $enclose_items_with_quotes Whether each item in the array should be enclosed within quotation marks.
+         *
+         * @return string a string containing a list of items and a natural language conjuction.
+         */
+        public static function natural_language_join($array, $enclose_items_with_quotes = false)
+        {
+        }
+        /**
+         * Check if a string contains any of the items in an array.
+         *
+         * @param string $needle The string to check.
+         * @param array  $haystack  The array of items to check for.
+         *
+         * @return bool true if the string contains any of the items in the array, false otherwise.
+         */
+        public static function string_contains_array($needle, $haystack)
+        {
+        }
+    }
+    /**
+     * Woo Cart Controller class.
+     *
+     * Helper class to bridge the gap between the cart API and Woo core.
+     */
+    class CartController
+    {
+        use \Automattic\WooCommerce\StoreApi\Utilities\DraftOrderTrait;
+        /**
+         * Makes the cart and sessions available to a route by loading them from core.
+         */
+        public function load_cart()
+        {
+        }
+        /**
+         * Normalizes the cart by fixing any quantity violations.
+         */
+        public function normalize_cart()
+        {
+        }
+        /**
+         * Gets the latest cart instance, and ensures totals have been calculated before returning.
+         *
+         * @return \WC_Cart
+         */
+        public function get_cart_for_response()
+        {
+        }
+        /**
+         * Recalculates the cart totals and returns the updated cart instance.
+         *
+         * @since 9.2.0 Calculate shipping was removed here because it's called already by calculate_totals.
+         *
+         * @return \WC_Cart
+         */
+        public function calculate_totals()
+        {
+        }
+        /**
+         * Based on the core cart class but returns errors rather than rendering notices directly.
+         *
+         * @todo Overriding the core add_to_cart method was necessary because core outputs notices when an item is added to
+         * the cart. For us this would cause notices to build up and output on the store, out of context. Core would need
+         * refactoring to split notices out from other cart actions.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException Exception if invalid data is detected.
+         *
+         * @param array $request Add to cart request params.
+         * @return string
+         */
+        public function add_to_cart($request)
+        {
+        }
+        /**
+         * Based on core `set_quantity` method, but validates if an item is sold individually first and enforces any limits in
+         * place.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException Exception if invalid data is detected.
+         *
+         * @param string    $item_id Cart item id.
+         * @param int|float $quantity Cart quantity.
+         */
+        public function set_cart_item_quantity($item_id, $quantity = 1)
+        {
+        }
+        /**
+         * Validate all items in the cart and check for errors.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException Exception if invalid data is detected.
+         *
+         * @param \WC_Product $product Product object associated with the cart item.
+         * @param array       $request Add to cart request params.
+         */
+        public function validate_add_to_cart(\WC_Product $product, $request)
+        {
+        }
+        /**
+         * Generates the error message for out of stock products and adds product names to it.
+         *
+         * @param string $singular The message to use when only one product is in the list.
+         * @param string $plural The message to use when more than one product is in the list.
+         * @param array  $items The list of cart items whose names should be inserted into the message.
+         * @returns string The translated and correctly pluralised message.
+         */
+        private function add_product_names_to_message($singular, $plural, $items)
+        {
+        }
+        /**
+         * Takes a string describing the type of stock extension, whether there is a single product or multiple products
+         * causing this exception and returns an appropriate error message.
+         *
+         * @param string $exception_type     The type of exception encountered.
+         * @param string $singular_or_plural Whether to get the error message for a single product or multiple.
+         *
+         * @return string
+         */
+        private function get_error_message_for_stock_exception_type($exception_type, $singular_or_plural)
+        {
+        }
+        /**
+         * Validate cart and check for errors.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\InvalidCartException Exception if invalid data is detected in the cart.
+         */
+        public function validate_cart()
+        {
+        }
+        /**
+         * When placing an order, validate that the cart is not empty.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\InvalidCartException Exception if the cart is empty.
+         */
+        public function validate_cart_not_empty()
+        {
+        }
+        /**
+         * Validate all items in the cart and check for errors.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\InvalidCartException Exception if invalid data is detected due to insufficient stock levels.
+         */
+        public function validate_cart_items()
+        {
+        }
+        /**
+         * This method will take arrays of exceptions relating to stock, and will convert them to a WP_Error object.
+         *
+         * @param \Automattic\WooCommerce\StoreApi\Exceptions\TooManyInCartException[]     $too_many_in_cart_products     Array of TooManyInCartExceptions.
+         * @param \Automattic\WooCommerce\StoreApi\Exceptions\NotPurchasableException[]    $not_purchasable_products      Array of NotPurchasableExceptions.
+         * @param \Automattic\WooCommerce\StoreApi\Exceptions\PartialOutOfStockException[] $partial_out_of_stock_products Array of PartialOutOfStockExceptions.
+         * @param \Automattic\WooCommerce\StoreApi\Exceptions\OutOfStockException[]        $out_of_stock_products         Array of OutOfStockExceptions.
+         *
+         * @return \WP_Error  The WP_Error object returned. Will have errors if any exceptions were in the args. It will be empty if they do not.
+         */
+        private function stock_exceptions_to_wp_errors($too_many_in_cart_products, $not_purchasable_products, $partial_out_of_stock_products, $out_of_stock_products)
+        {
+        }
+        /**
+         * Validates an existing cart item and returns any errors.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\TooManyInCartException Exception if more than one product that can only be purchased individually is in
+         * the cart.
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\PartialOutOfStockException Exception if an item has a quantity greater than what is available in stock.
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\OutOfStockException Exception thrown when an item is entirely out of stock.
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\NotPurchasableException Exception thrown when an item is not purchasable.
+         * @param array $cart_item Cart item array.
+         */
+        public function validate_cart_item($cart_item)
+        {
+        }
+        /**
+         * Validate all coupons in the cart and check for errors.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\InvalidCartException Exception if invalid data is detected.
+         */
+        public function validate_cart_coupons()
+        {
+        }
+        /**
+         * Validate the cart and get a list of errors.
+         *
+         * @return \WP_Error A WP_Error instance containing the cart's errors.
+         */
+        public function get_cart_errors()
+        {
+        }
+        /**
+         * Get main instance of cart class.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException When cart cannot be loaded.
+         * @return \WC_Cart
+         */
+        public function get_cart_instance()
+        {
+        }
+        /**
+         * Return a cart item from the woo core cart class.
+         *
+         * @param string $item_id Cart item id.
+         * @return array
+         */
+        public function get_cart_item($item_id)
+        {
+        }
+        /**
+         * Returns all cart items.
+         *
+         * @param callable $callback Optional callback to apply to the array filter.
+         * @return array
+         */
+        public function get_cart_items($callback = null)
+        {
+        }
+        /**
+         * Get hashes for items in the current cart. Useful for tracking changes.
+         *
+         * @return array
+         */
+        public function get_cart_hashes()
+        {
+        }
+        /**
+         * Empty cart contents.
+         */
+        public function empty_cart()
+        {
+        }
+        /**
+         * See if cart has applied coupon by code.
+         *
+         * @param string $coupon_code Cart coupon code.
+         * @return bool
+         */
+        public function has_coupon($coupon_code)
+        {
+        }
+        /**
+         * Returns all applied coupons.
+         *
+         * @param callable $callback Optional callback to apply to the array filter.
+         * @return array
+         */
+        public function get_cart_coupons($callback = null)
+        {
+        }
+        /**
+         * Get shipping packages from the cart with calculated shipping rates.
+         *
+         * @todo this can be refactored once https://github.com/woocommerce/woocommerce/pull/26101 lands.
+         *
+         * @param bool $calculate_rates Should rates for the packages also be returned.
+         * @return array
+         */
+        public function get_shipping_packages($calculate_rates = true)
+        {
+        }
+        /**
+         * Selects a shipping rate.
+         *
+         * @param int|string $package_id ID of the package to choose a rate for.
+         * @param string     $rate_id ID of the rate being chosen.
+         */
+        public function select_shipping_rate($package_id, $rate_id)
+        {
+        }
+        /**
+         * Based on the core cart class but returns errors rather than rendering notices directly.
+         *
+         * @todo Overriding the core apply_coupon method was necessary because core outputs notices when a coupon gets
+         * applied. For us this would cause notices to build up and output on the store, out of context. Core would need
+         * refactoring to split notices out from other cart actions.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException Exception if invalid data is detected.
+         *
+         * @param string $coupon_code Coupon code.
+         */
+        public function apply_coupon($coupon_code)
+        {
+        }
+        /**
+         * Validates an existing cart coupon and returns any errors.
+         *
+         * @param \WC_Coupon $coupon Coupon object applied to the cart.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException Exception if invalid data is detected.
+         */
+        protected function validate_cart_coupon(\WC_Coupon $coupon)
+        {
+        }
+        /**
+         * Gets the qty of a product across line items.
+         *
+         * @param \WC_Product $product Product object.
+         * @return int
+         */
+        protected function get_product_quantity_in_cart($product)
+        {
+        }
+        /**
+         * Gets remaining stock for a product.
+         *
+         * @param \WC_Product $product Product object.
+         * @return int
+         */
+        protected function get_remaining_stock_for_product($product)
+        {
+        }
+        /**
+         * Get a product object to be added to the cart.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException Exception if invalid data is detected.
+         *
+         * @param array $request Add to cart request params.
+         * @return \WC_Product|Error Returns a product object if purchasable.
+         */
+        protected function get_product_for_cart($request)
+        {
+        }
+        /**
+         * For a given product, get the product ID.
+         *
+         * @param \WC_Product $product Product object associated with the cart item.
+         * @return int
+         */
+        protected function get_product_id(\WC_Product $product)
+        {
+        }
+        /**
+         * For a given product, get the variation ID.
+         *
+         * @param \WC_Product $product Product object associated with the cart item.
+         * @return int
+         */
+        protected function get_variation_id(\WC_Product $product)
+        {
+        }
+        /**
+         * Get product name, hiding it for draft and private products.
+         *
+         * @param \WC_Product $product Product instance.
+         * @return string
+         */
+        protected function get_product_name(\WC_Product $product)
+        {
+        }
+        /**
+         * Default exception thrown when an item cannot be added to the cart.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException Exception with code woocommerce_rest_product_not_purchasable.
+         *
+         * @param \WC_Product $product Product object associated with the cart item.
+         */
+        protected function throw_default_product_exception(\WC_Product $product)
+        {
+        }
+        /**
+         * Filter data for add to cart requests.
+         *
+         * @param array $request Add to cart request params.
+         * @return array Updated request array.
+         */
+        protected function filter_request_data($request)
+        {
+        }
+        /**
+         * If variations are set, validate and format the values ready to add to the cart.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException Exception if invalid data is detected.
+         *
+         * @param array $request Add to cart request params.
+         * @return array Updated request array.
+         */
+        protected function parse_variation_data($request)
+        {
+        }
+        /**
+         * Try to match request data to a variation ID and return the ID.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException Exception if variation cannot be found.
+         *
+         * @param array       $request Add to cart request params.
+         * @param \WC_Product $product Product being added to the cart.
+         * @return int Matching variation ID.
+         */
+        protected function get_variation_id_from_variation_data($request, $product)
+        {
+        }
+        /**
+         * Format and sanitize variation data posted to the API.
+         *
+         * Labels are converted to names (e.g. Size to pa_size), and values are cleaned.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException Exception if variation cannot be found.
+         *
+         * @param array $variation_data Key value pairs of attributes and values.
+         * @param array $variable_product_attributes Product attributes we're expecting.
+         * @return array
+         */
+        protected function sanitize_variation_data($variation_data, $variable_product_attributes)
+        {
+        }
+        /**
+         * Get product attributes from the variable product (which may be the parent if the product object is a variation).
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException Exception if product is invalid.
+         *
+         * @param \WC_Product $product Product being added to the cart.
+         * @return array
+         */
+        protected function get_variable_product_attributes($product)
+        {
+        }
+    }
+    /**
+     * Cart token utility functions.
+     */
+    class CartTokenUtils
+    {
+        /**
+         * Generate a cart token.
+         *
+         * @param string $customer_id The customer ID.
+         * @return string
+         */
+        public static function get_cart_token(string $customer_id): string
+        {
+        }
+        /**
+         * Validate the cart token.
+         *
+         * @param string $cart_token The cart token.
+         * @return bool
+         */
+        public static function validate_cart_token(string $cart_token): bool
+        {
+        }
+        /**
+         * Get the cart token payload.
+         *
+         * @param string $cart_token The cart token.
+         * @return array
+         */
+        public static function get_cart_token_payload(string $cart_token): array
+        {
+        }
+        /**
+         * Get the cart token secret.
+         *
+         * @return string
+         */
+        private static function get_cart_token_secret(): string
+        {
+        }
+        /**
+         * Gets the expiration of the cart token. Defaults to 48h.
+         *
+         * @return int
+         */
+        private static function get_cart_token_expiration(): int
+        {
+        }
+    }
+    /**
+     * JsonWebToken class.
+     *
+     * Simple Json Web Token generator & verifier static utility class, currently supporting only HS256 signatures.
+     */
+    final class JsonWebToken
+    {
+        /**
+         * JWT header type.
+         *
+         * @var string
+         */
+        private static $type = 'JWT';
+        /**
+         * JWT algorithm to generate signature.
+         *
+         * @var string
+         */
+        private static $algorithm = 'HS256';
+        /**
+         * Generates a token from provided data and secret.
+         *
+         * @param array  $payload Payload data.
+         * @param string $secret The secret used to generate the signature.
+         *
+         * @return string
+         */
+        public static function create(array $payload, string $secret)
+        {
+        }
+        /**
+         * Validates a provided token against the provided secret.
+         * Checks for format, valid header for our class, expiration claim validity and signature.
+         * https://datatracker.ietf.org/doc/html/rfc7519#section-7.2
+         *
+         * @param string $token Full token string.
+         * @param string $secret The secret used to generate the signature.
+         *
+         * @return bool
+         */
+        public static function validate(string $token, string $secret)
+        {
+        }
+        /**
+         * Shallow validate a token, it does not check the signature or expiration, but it checks the structure and expiry.
+         *
+         * @param string $token Full token string.
+         *
+         * @return bool
+         */
+        public static function shallow_validate(string $token)
+        {
+        }
+        /**
+         * Returns the decoded/encoded header, payload and signature from a token string.
+         *
+         * @param string $token Full token string.
+         *
+         * @return object
+         */
+        public static function get_parts(string $token)
+        {
+        }
+        /**
+         * Generates the json formatted header for our HS256 JWT token.
+         *
+         * @return string|bool
+         */
+        private static function generate_header()
+        {
+        }
+        /**
+         * Generates a sha256 signature for the provided string using the provided secret.
+         *
+         * @param string $string Header + Payload token substring.
+         * @param string $secret The secret used to generate the signature.
+         *
+         * @return false|string
+         */
+        private static function generate_signature(string $string, string $secret)
+        {
+        }
+        /**
+         * Generates the payload in json formatted string.
+         *
+         * @param array $payload Payload data.
+         *
+         * @return string|bool
+         */
+        private static function generate_payload(array $payload)
+        {
+        }
+        /**
+         * Encodes a string to url safe base64.
+         *
+         * @param string $string The string to be encoded.
+         *
+         * @return string
+         */
+        private static function to_base_64_url(string $string)
+        {
+        }
+        /**
+         * Decodes a string encoded using url safe base64, supporting auto padding.
+         *
+         * @param string $string the string to be decoded.
+         *
+         * @return string
+         */
+        private static function from_base_64_url(string $string)
+        {
+        }
+    }
+    /**
+     * Util class for local pickup related functionality, this contains methods that need to be accessed from places besides
+     * the ShippingController, i.e. the OrderController.
+     */
+    class LocalPickupUtils
+    {
+        /**
+         * Gets the local pickup location settings.
+         *
+         * @param string $context The context for the settings. Defaults to 'view'.
+         */
+        public static function get_local_pickup_settings($context = 'view')
+        {
+        }
+        /**
+         * Checks if WC Blocks local pickup is enabled.
+         *
+         * @return bool True if local pickup is enabled.
+         */
+        public static function is_local_pickup_enabled()
+        {
+        }
+        /**
+         * Gets a list of payment method ids that support the 'local-pickup' feature.
+         *
+         * @return string[] List of payment method ids that support the 'local-pickup' feature.
+         */
+        public static function get_local_pickup_method_ids()
+        {
+        }
+        /**
+         * Checks if a method is a local pickup method.
+         *
+         * @param string $method_id The method id to check.
+         * @return bool True if the method is a local pickup method.
+         */
+        public static function is_local_pickup_method($method_id)
+        {
+        }
+        /**
+         * Gets local pickup locations for block editor preview, including placeholder
+         * locations for custom shipping methods that support local pickup.
+         *
+         * This method combines the built-in pickup_location locations with placeholder
+         * entries for any other shipping methods that declare 'local-pickup' support.
+         * This allows custom shipping methods to appear in the block editor preview.
+         *
+         * @return array Array of pickup locations with the following structure:
+         *               - 'name' (string) The location name.
+         *               - 'enabled' (bool) Whether the location is enabled.
+         *               - 'address' (array) Address array with keys: address_1, city, state, postcode, country.
+         *               - 'details' (string) Additional details about the location.
+         *               - 'method_id' (string) The shipping method ID this location belongs to.
+         *
+         * @since 10.5.0
+         */
+        public static function get_local_pickup_method_locations()
+        {
+        }
+    }
+    /**
+     * NoticeHandler class.
+     * Helper class to handle notices.
+     */
+    class NoticeHandler
+    {
+        /**
+         * Convert queued error notices into an exception.
+         *
+         * For example, Payment methods may add error notices during validate_fields call to prevent checkout.
+         * Since we're not rendering notices at all, we need to convert them to exceptions.
+         *
+         * This method will find the first error message and thrown an exception instead. Discards notices once complete.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException If an error notice is detected, Exception is thrown.
+         *
+         * @param string $error_code Error code for the thrown exceptions.
+         */
+        public static function convert_notices_to_exceptions($error_code = 'unknown_server_error')
+        {
+        }
+        /**
+         * Collects queued error notices into a \WP_Error.
+         *
+         * For example, cart validation processes may add error notices to prevent checkout.
+         * Since we're not rendering notices at all, we need to catch them and group them in a single WP_Error instance.
+         *
+         * This method will discard notices once complete.
+         *
+         * @param string $error_code Error code for the thrown exceptions.
+         *
+         * @return \WP_Error The WP_Error object containing all error notices.
+         */
+        public static function convert_notices_to_wp_errors($error_code = 'unknown_server_error')
+        {
+        }
+    }
+    /**
+     * OrderController class.
+     * Helper class which creates and syncs orders with the cart.
+     */
+    class OrderController
+    {
+        /**
+         * Checkout fields controller.
+         *
+         * @var \Automattic\WooCommerce\Blocks\Domain\Services\CheckoutFields
+         */
+        private \Automattic\WooCommerce\Blocks\Domain\Services\CheckoutFields $additional_fields_controller;
+        /**
+         * Constructor.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Create order and set props based on global settings.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException Exception if invalid data is detected.
+         *
+         * @return \WC_Order A new order object.
+         */
+        public function create_order_from_cart()
+        {
+        }
+        /**
+         * Update an order using data from the current cart.
+         *
+         * @param \WC_Order $order The order object to update.
+         * @param boolean   $update_totals Whether to update totals or not.
+         */
+        public function update_order_from_cart(\WC_Order $order, $update_totals = true)
+        {
+        }
+        /**
+         * Copies order data to customer object (not the session), so values persist for future checkouts.
+         *
+         * @param \WC_Order $order Order object.
+         */
+        public function sync_customer_data_with_order(\WC_Order $order)
+        {
+        }
+        /**
+         * Final validation ran before payment is taken.
+         *
+         * By this point we have an order populated with customer data and items.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException Exception if invalid data is detected.
+         * @param \WC_Order $order Order object.
+         */
+        public function validate_order_before_payment(\WC_Order $order)
+        {
+        }
+        /**
+         * Final validation for existing orders, ran before payment is taken.
+         *
+         * By this point we have an order populated with customer data and items.
+         *
+         * Since the cart is not involved, we don't validate shipping methods and assume the order already
+         * contains the correct shipping items.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException Exception if invalid data is detected.
+         * @param \WC_Order $order Order object.
+         */
+        public function validate_existing_order_before_payment(\WC_Order $order)
+        {
+        }
+        /**
+         * Perform custom order validation via WooCommerce hooks.
+         *
+         * Allows plugins to perform custom validation before payment.
+         *
+         * @param \WC_Order $order Order object.
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException Exception if validation fails.
+         */
+        protected function perform_custom_order_validation(\WC_Order $order)
+        {
+        }
+        /**
+         * Convert a coupon code to a coupon object.
+         *
+         * @param string $coupon_code Coupon code.
+         * @return \WC_Coupon Coupon object.
+         */
+        protected function get_coupon($coupon_code)
+        {
+        }
+        /**
+         * Validate coupons applied to the order and remove those that are not valid.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException Exception if invalid data is detected.
+         * @param \WC_Order $order Order object.
+         * @param bool      $use_order_data Whether to use order data or cart data.
+         */
+        protected function validate_coupons(\WC_Order $order, bool $use_order_data = false)
+        {
+        }
+        /**
+         * Validates the customer email. This is a required field.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException Exception if invalid data is detected.
+         * @param \WC_Order $order Order object.
+         */
+        protected function validate_email(\WC_Order $order)
+        {
+        }
+        /**
+         * Validates customer address data based on the locale to ensure required fields are set.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException Exception if invalid data is detected.
+         * @param \WC_Order $order Order object.
+         * @param bool      $needs_shipping Whether the order needs shipping.
+         */
+        protected function validate_addresses(\WC_Order $order, bool $needs_shipping)
+        {
+        }
+        /**
+         * Check all required address fields are set and return errors if not.
+         *
+         * @param string $country Country code.
+         * @param array  $allowed_countries List of valid country codes.
+         * @return boolean True if valid.
+         */
+        protected function validate_allowed_country($country, array $allowed_countries)
+        {
+        }
+        /**
+         * Check all required address fields are set and return errors if not.
+         *
+         * @param \WC_Order $order Order object.
+         * @param string    $address_type billing or shipping address, used in error messages.
+         * @param \WP_Error $errors Error object.
+         */
+        protected function validate_address_fields(\WC_Order $order, $address_type, \WP_Error $errors)
+        {
+        }
+        /**
+         * Check email restrictions of a coupon against the order.
+         *
+         * @throws \Exception Exception if invalid data is detected.
+         * @param \WC_Coupon $coupon Coupon object applied to the cart.
+         * @param \WC_Order  $order Order object.
+         */
+        protected function validate_coupon_email_restriction(\WC_Coupon $coupon, \WC_Order $order)
+        {
+        }
+        /**
+         * Check usage restrictions of a coupon against the order.
+         *
+         * @throws \Exception Exception if invalid data is detected.
+         * @param \WC_Coupon $coupon Coupon object applied to the cart.
+         * @param \WC_Order  $order Order object.
+         */
+        protected function validate_coupon_usage_limit(\WC_Coupon $coupon, \WC_Order $order)
+        {
+        }
+        /**
+         * Get user email from user id.
+         *
+         * @param integer $user_id User ID.
+         * @return string Email or empty string.
+         */
+        private function get_email_from_user_id($user_id)
+        {
+        }
+        /**
+         * Get the usage count for a coupon based on a list of aliases (ids, emails).
+         *
+         * @param \WC_Coupon $coupon Coupon object applied to the cart.
+         * @param array      $aliases List of aliases to check.
+         *
+         * @return integer
+         */
+        private function get_usage_per_aliases($coupon, $aliases)
+        {
+        }
+        /**
+         * Check there is a shipping method if it requires shipping.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException Exception if invalid data is detected.
+         * @param boolean $needs_shipping Current order needs shipping.
+         * @param array   $chosen_shipping_methods Array of shipping methods.
+         */
+        public function validate_selected_shipping_methods($needs_shipping, $chosen_shipping_methods = array())
+        {
+        }
+        /**
+         * Validate a given order key against an existing order.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException Exception if invalid data is detected.
+         * @param integer $order_id Order ID.
+         * @param string  $order_key Order key.
+         */
+        public function validate_order_key($order_id, $order_key)
+        {
+        }
+        /**
+         * Get errors for order stock on failed orders.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException Exception if invalid data is detected.
+         * @param integer $order_id Order ID.
+         */
+        public function get_failed_order_stock_error($order_id)
+        {
+        }
+        /**
+         * Changes default order status to draft for orders created via this API.
+         *
+         * @return string
+         */
+        public function default_order_status()
+        {
+        }
+        /**
+         * Create order line items.
+         *
+         * @param \WC_Order $order The order object to update.
+         */
+        protected function update_line_items_from_cart(\WC_Order $order)
+        {
+        }
+        /**
+         * Update address data from cart and/or customer session data.
+         *
+         * @param \WC_Order $order The order object to update.
+         */
+        protected function update_addresses_from_cart(\WC_Order $order)
+        {
+        }
+    }
+    /**
+     * Pagination class.
+     */
+    class Pagination
+    {
+        /**
+         * Add pagination headers to a response object.
+         *
+         * @param \WP_REST_Response $response Reference to the response object.
+         * @param \WP_REST_Request  $request The request object.
+         * @param int               $total_items Total items found.
+         * @param int               $total_pages Total pages found.
+         * @return \WP_REST_Response
+         */
+        public function add_headers($response, $request, $total_items, $total_pages)
+        {
+        }
+        /**
+         * Get current page.
+         *
+         * @param \WP_REST_Request $request The request object.
+         * @return int Get the page from the request object.
+         */
+        protected function get_current_page($request)
+        {
+        }
+        /**
+         * Get base for links from the request object.
+         *
+         * @param \WP_REST_Request $request The request object.
+         * @return string
+         */
+        protected function get_link_base($request)
+        {
+        }
+        /**
+         * Add a page link.
+         *
+         * @param \WP_REST_Response $response Reference to the response object.
+         * @param string            $name Page link name. e.g. prev.
+         * @param int               $page Page number.
+         * @param string            $link_base Base URL.
+         */
+        protected function add_page_link(&$response, $name, $page, $link_base)
+        {
+        }
+    }
+    /**
+     * PaymentUtils
+     *
+     * Utility class for payment methods.
+     */
+    class PaymentUtils
+    {
+        /**
+         * Callback for woocommerce_payment_methods_list_item filter to add token id
+         * to the generated list.
+         *
+         * @param array     $list_item The current list item for the saved payment method.
+         * @param \WC_Token $token     The token for the current list item.
+         *
+         * @return array The list item with the token id added.
+         */
+        public static function include_token_id_with_payment_methods($list_item, $token)
+        {
+        }
+        /**
+         * Get enabled payment gateways.
+         *
+         * @return array
+         */
+        public static function get_enabled_payment_gateways()
+        {
+        }
+        /**
+         * Returns enabled saved payment methods for a customer and the default method if there are multiple.
+         *
+         * @return array
+         */
+        public static function get_saved_payment_methods()
+        {
+        }
+        /**
+         * Returns the default payment method for a customer.
+         *
+         * @return string
+         */
+        public static function get_default_payment_method()
+        {
+        }
+    }
+    /**
+     * Product Query class.
+     *
+     * Helper class to handle product queries for the API.
+     */
+    class ProductQuery implements \Automattic\WooCommerce\Internal\ProductFilters\Interfaces\QueryClausesGenerator
+    {
+        /**
+         * Prepare query args to pass to WP_Query for a REST API request.
+         *
+         * @param \WP_REST_Request $request Request data.
+         * @return array
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException If the related product ID is invalid or the product is not visible.
+         */
+        public function prepare_objects_query($request)
+        {
+        }
+        /**
+         * Convert the tax_query to a meta_query which is needed to support filtering by attributes for variations.
+         *
+         * @param array $tax_query The tax_query to convert.
+         * @return array
+         */
+        public function convert_tax_query_to_meta_query($tax_query)
+        {
+        }
+        /**
+         * Get results of query.
+         *
+         * @param \WP_REST_Request $request Request data.
+         * @return array
+         */
+        public function get_results($request)
+        {
+        }
+        /**
+         * Get objects.
+         *
+         * @param \WP_REST_Request $request Request data.
+         * @return array
+         */
+        public function get_objects($request)
+        {
+        }
+        /**
+         * Get last modified date for all products as an HTTP-date (RFC 7232).
+         *
+         * The result is cached in the 'wc_products' object cache group and invalidated via the
+         * clean_post_cache hook in WC_Post_Data::invalidate_products_last_modified().
+         *
+         * Note: This intentionally does NOT use WordPress core's wp_cache_get_last_changed() /
+         * wp_cache_set_last_changed() pattern. Those functions are designed for opaque cache-key
+         * salting where auto-seeding with the current time on a cache miss is acceptable (a wrong
+         * salt simply causes a cache miss and re-query). Here, the value is exposed to clients via
+         * the Last-Modified HTTP header for collection cache invalidation. Auto-seeding with "now"
+         * on a cache miss would force all clients to unnecessarily invalidate their local caches.
+         * Instead, on a cache miss we fall back to the database to get the real last modification
+         * time and cache that.
+         *
+         * @return string|null HTTP-date formatted string, or null if no products exist.
+         */
+        public function get_last_modified()
+        {
+        }
+        /**
+         * Add in conditional search filters for products.
+         *
+         * @param array     $args Query args.
+         * @param \WP_Query $wp_query WP_Query object.
+         * @return array
+         */
+        public function add_query_clauses(array $args, \WP_Query $wp_query): array
+        {
+        }
+        /**
+         * Add in conditional price filters.
+         *
+         * @param array     $args Query args.
+         * @param \WC_Query $wp_query WC_Query object.
+         * @return array
+         */
+        protected function add_price_filter_clauses($args, $wp_query)
+        {
+        }
+        /**
+         * Get query for price filters when dealing with displayed taxes.
+         *
+         * @param float  $price_filter Price filter to apply.
+         * @param string $column Price being filtered (min or max).
+         * @param string $operator Comparison operator for column.
+         * @return string Constructed query.
+         */
+        protected function get_price_filter_query_for_displayed_taxes($price_filter, $column = 'min_price', $operator = '>=')
+        {
+        }
+        /**
+         * If price filters need adjustment to work with displayed taxes, this returns true.
+         *
+         * This logic is used when prices are stored in the database differently to how they are being displayed, with regards
+         * to taxes.
+         *
+         * @return boolean
+         */
+        protected function adjust_price_filters_for_displayed_taxes()
+        {
+        }
+        /**
+         * Converts price filter from subunits to decimal.
+         *
+         * @param string|int $price_filter Raw price filter in subunit format.
+         * @return float Price filter in decimal format.
+         */
+        protected function prepare_price_filter($price_filter)
+        {
+        }
+        /**
+         * Adjusts a price filter based on a tax class and whether or not the amount includes or excludes taxes.
+         *
+         * This calculation logic is based on `wc_get_price_excluding_tax` and `wc_get_price_including_tax` in core.
+         *
+         * @param float  $price_filter Price filter amount as entered.
+         * @param string $tax_class Tax class for adjustment.
+         * @return float
+         */
+        protected function adjust_price_filter_for_tax_class($price_filter, $tax_class)
+        {
+        }
+        /**
+         * Join wc_product_meta_lookup to posts if not already joined.
+         *
+         * @param string $sql SQL join.
+         * @return string
+         */
+        protected function append_product_sorting_table_join($sql)
+        {
+        }
+    }
+    /**
+     * Product Query filters class.
+     */
+    class ProductQueryFilters
+    {
+        /**
+         * Get filtered min price for current products.
+         *
+         * @param \WP_REST_Request $request The request object.
+         * @return object
+         */
+        public function get_filtered_price($request)
+        {
+        }
+        /**
+         * Get stock status counts for the current products.
+         *
+         * @param \WP_REST_Request $request The request object.
+         * @return array status=>count pairs.
+         */
+        public function get_stock_status_counts($request)
+        {
+        }
+        /**
+         * Generate calculate query by stock status.
+         *
+         * @param string $status status to calculate.
+         * @param string $product_query_sql product query for current filter state.
+         * @param array  $stock_status_options available stock status options.
+         *
+         * @return false|string
+         */
+        private function generate_stock_status_count_query($status, $product_query_sql, $stock_status_options)
+        {
+        }
+        /**
+         * Get attribute counts for the current products.
+         *
+         * @param \WP_REST_Request $request The request object.
+         * @param array            $attributes Attributes to count, either names or ids.
+         * @return array termId=>count pairs.
+         */
+        public function get_attribute_counts($request, $attributes = [])
+        {
+        }
+        /**
+         * Get rating counts for the current products.
+         *
+         * @param \WP_REST_Request $request The request object.
+         * @return array rating=>count pairs.
+         */
+        public function get_rating_counts($request)
+        {
+        }
+        /**
+         * Get taxonomy counts for the current products.
+         *
+         * @param \WP_REST_Request $request The request object.
+         * @param array            $taxonomies Taxonomies to count.
+         * @return array termId=>count pairs.
+         */
+        public function get_taxonomy_counts($request, $taxonomies = [])
+        {
+        }
+    }
+    /**
+     * QuantityLimits class.
+     *
+     * Returns limits for products and cart items when using the StoreAPI and supporting classes.
+     */
+    final class QuantityLimits
+    {
+        use \Automattic\WooCommerce\StoreApi\Utilities\DraftOrderTrait;
+        /**
+         * Get quantity limits (min, max, step/multiple) for a product or cart item.
+         *
+         * @param array $cart_item A cart item array.
+         * @return array
+         */
+        public function get_cart_item_quantity_limits($cart_item)
+        {
+        }
+        /**
+         * Get limits for product add to cart forms.
+         *
+         * @param \WC_Product $product Product instance.
+         * @param array|null  $cart_item Optional cart item associated with the product.
+         * @return array
+         */
+        public function get_add_to_cart_limits(\WC_Product $product, $cart_item = null)
+        {
+        }
+        /**
+         * Fix a quantity violation by adjusting it to the nearest valid quantity.
+         *
+         * @param int|float $quantity Quantity.
+         * @param array     $cart_item Cart item.
+         * @return int|float
+         */
+        public function normalize_cart_item_quantity($quantity, array $cart_item)
+        {
+        }
+        /**
+         * Return a number using the closest multiple of another number. Used to enforce step/multiple values.
+         *
+         * @param int|float $number Number to round.
+         * @param int|float $multiple_of The multiple.
+         * @param string    $rounding_function ceil, floor, or round.
+         * @return int|float
+         */
+        public function limit_to_multiple($number, $multiple_of, string $rounding_function = 'round')
+        {
+        }
+        /**
+         * Checks if a number is a multiple of another number.
+         *
+         * @param int|float $number The number to check.
+         * @param int|float $multiple_of The multiple.
+         * @return bool
+         */
+        protected function is_multiple_of($number, $multiple_of)
+        {
+        }
+        /**
+         * Check that a given quantity is valid according to any limits in place.
+         *
+         * @param int|float $quantity Quantity to validate.
+         * @param array     $cart_item Cart item.
+         * @return \WP_Error|true
+         */
+        public function validate_cart_item_quantity($quantity, $cart_item)
+        {
+        }
+        /**
+         * Get the limit for the total number of a product allowed in the cart.
+         *
+         * This is based on product properties, including remaining stock, and defaults to a maximum of 9999 of any product
+         * in the cart at once.
+         *
+         * @param int|float   $purchase_limit The purchase limit from the product. Usually maps to `get_max_purchase_quantity`.
+         * @param \WC_Product $product Product instance.
+         * @param array|null  $cart_item Optional cart item associated with the product.
+         * @return int|float
+         */
+        protected function adjust_product_quantity_limit($purchase_limit, \WC_Product $product, $cart_item = null)
+        {
+        }
+        /**
+         * Returns the remaining stock for a product if it has stock.
+         *
+         * This also factors in draft orders.
+         *
+         * @param \WC_Product $product Product instance.
+         * @return int|float|null
+         */
+        protected function get_remaining_stock(\WC_Product $product)
+        {
+        }
+        /**
+         * Get a numeric value while running it through a filter hook.
+         *
+         * @param int|float   $value Value to filter.
+         * @param string      $value_type Type of value. Used for filter suffix.
+         * @param \WC_Product $product Product instance.
+         * @param array|null  $cart_item Optional cart item associated with the product.
+         * @return int|float
+         */
+        protected function filter_numeric_value($value, string $value_type, \WC_Product $product, $cart_item = null)
+        {
+        }
+        /**
+         * Get a boolean value while running it through a filter hook.
+         *
+         * @param bool        $value Value to filter.
+         * @param string      $value_type Type of value. Used for filter suffix.
+         * @param \WC_Product $product Product instance.
+         * @param array|null  $cart_item Optional cart item associated with the product.
+         * @return bool
+         */
+        protected function filter_boolean_value($value, string $value_type, \WC_Product $product, $cart_item = null)
+        {
+        }
+    }
+    /**
+     * RateLimits class.
+     */
+    class RateLimits extends \WC_Rate_Limiter
+    {
+        /**
+         * Cache group.
+         */
+        const CACHE_GROUP = 'store_api_rate_limit';
+        /**
+         * Rate limiting enabled default value.
+         *
+         * @var boolean
+         */
+        const ENABLED = false;
+        /**
+         * Proxy support enabled default value.
+         *
+         * @var boolean
+         */
+        const PROXY_SUPPORT = false;
+        /**
+         * Default amount of max requests allowed for the defined timeframe.
+         *
+         * @var int
+         */
+        const LIMIT = 25;
+        /**
+         * Default time in seconds before rate limits are reset.
+         *
+         * @var int
+         */
+        const SECONDS = 10;
+        /**
+         * Gets a cache prefix.
+         *
+         * @param string $action_id Identifier of the action.
+         * @return string
+         */
+        protected static function get_cache_key($action_id): string
+        {
+        }
+        /**
+         * Get current rate limit row from DB and normalize types. This query is not cached, and returns
+         * a new rate limit row if none exists.
+         *
+         * @param string $action_id Identifier of the action.
+         *
+         * @return object Object containing reset and remaining.
+         */
+        protected static function get_rate_limit_row(string $action_id): object
+        {
+        }
+        /**
+         * Returns current rate limit values using cache where possible.
+         *
+         * @param string $action_id Identifier of the action.
+         *
+         * @return object
+         */
+        public static function get_rate_limit(string $action_id): object
+        {
+        }
+        /**
+         * If exceeded, seconds until reset.
+         *
+         * @param string $action_id Identifier of the action.
+         *
+         * @return bool|int
+         */
+        public static function is_exceeded_retry_after(string $action_id)
+        {
+        }
+        /**
+         * Sets the rate limit delay in seconds for action with identifier $id.
+         *
+         * @param string $action_id Identifier of the action.
+         *
+         * @return object Current rate limits.
+         */
+        public static function update_rate_limit(string $action_id): object
+        {
+        }
+        /**
+         * Retrieve a cached store api rate limit.
+         *
+         * @param string $action_id Identifier of the action.
+         * @return false|object
+         */
+        protected static function get_cached($action_id)
+        {
+        }
+        /**
+         * Cache a rate limit.
+         *
+         * @param string $action_id Identifier of the action.
+         * @param object $current_limit Current limit object with expiry and retries remaining.
+         * @return bool
+         */
+        protected static function set_cache($action_id, $current_limit): bool
+        {
+        }
+        /**
+         * Return options for Rate Limits, to be returned by the "woocommerce_store_api_rate_limit_options" filter.
+         *
+         * @return object Default options.
+         */
+        public static function get_options(): object
+        {
+        }
+        /**
+         * Gets a single option through provided name.
+         *
+         * @param string $option Option name.
+         *
+         * @return mixed
+         */
+        public static function get_option($option)
+        {
+        }
+    }
+    /**
+     * SanitizationUtils class.
+     * Helper class which sanitizes customer info.
+     */
+    class SanitizationUtils
+    {
+        /**
+         * Runs wp_kses on an array. This function runs wp_kses on strings in the array and recurses into arrays.
+         *
+         * @param  array $array The array to run wp_kses on.
+         * @return mixed       The array, all string keys will have been run through wp_kses.
+         */
+        public function wp_kses_array(array $array)
+        {
+        }
+    }
+    /**
+     * ValidationUtils class.
+     * Helper class which validates and update customer info.
+     */
+    class ValidationUtils
+    {
+        /**
+         * Get list of states for a country.
+         *
+         * @param string $country Country code.
+         * @return array Array of state names indexed by state keys.
+         */
+        public function get_states_for_country($country)
+        {
+        }
+        /**
+         * Validate provided state against a countries list of defined states.
+         *
+         * If there are no defined states for a country, any given state is valid.
+         *
+         * @param string $state State name or code (sanitized).
+         * @param string $country Country code.
+         * @return boolean Valid or not valid.
+         */
+        public function validate_state($state, $country)
+        {
+        }
+        /**
+         * Format a state based on the country. If country has defined states, will return a valid upper case state code.
+         *
+         * @param string $state State name or code (sanitized).
+         * @param string $country Country code.
+         * @return string
+         */
+        public function format_state($state, $country)
+        {
+        }
+    }
+}
 namespace Automattic\WooCommerce\Utilities {
     /**
      * A class of utilities for dealing with arrays.
@@ -125332,6 +134555,62 @@ namespace Automattic\WooCommerce\Utilities {
          * @return string[] Always an empty array.
          */
         public function get_plugins_excluded_from_compatibility_ui()
+        {
+        }
+    }
+    /**
+     * Utility methods related to the REST API.
+     */
+    class RestApiUtil
+    {
+        /**
+         * Get data from a WooCommerce API endpoint.
+         * This method used to be part of the WooCommerce Legacy REST API.
+         *
+         * @since 9.0.0
+         *
+         * @param string $endpoint Endpoint.
+         * @param array  $params Params to pass with request.
+         * @return array|\WP_Error
+         */
+        public function get_endpoint_data($endpoint, $params = array())
+        {
+        }
+        /**
+         * Conditionally loads a REST API namespace based on the current route to improve performance.
+         *
+         * This function implements lazy loading for WooCommerce REST API namespaces to prevent loading
+         * all controllers on every request. It checks if the current REST route matches the namespace
+         * in order for that namespace to be loaded. If the namespace does not match the current rest
+         * route, a callback will be registered to possibly load the namespace again on `rest_pre_dispatch`;
+         * this is done to allow the namespace to be loaded on the fly during `rest_do_request()` calls.
+         *
+         * @param string   $route_namespace The namespace to check.
+         * @param callable $callback        The callback to execute if the namespace should be loaded.
+         *
+         * @return void
+         *
+         * @internal Do not call this function directly. Backward compatibility is not guaranteed.
+         */
+        public function lazy_load_namespace(string $route_namespace, callable $callback)
+        {
+        }
+        /**
+         * This is the internal function that implements the logic of self::lazy_load_namespace(). Its interface
+         * and behavior is not guaranteed.  It solely exists so that $callback_filter_id does not need to be part of the
+         * public interface to `self::lazy_load_namespace()`. Do not call it directly.
+         *
+         * @param string   $route_namespace    The namespace to check.
+         * @param callable $callback           The callback to execute if the namespace should be loaded.
+         * @param string   $rest_route         (Optional) The REST route to check against.
+         * @param string   $callback_filter_id (Internal) Used to prevent recursive filter registration.
+         *
+         * @return void
+         *
+         * @see      self::lazy_load_namespace()
+         * @internal Do not call this function directly. Backward compatibility is not guaranteed.
+         */
+        public function attach_lazy_loaded_namespace(string $route_namespace, callable $callback, string $rest_route = '', string $callback_filter_id = '')
         {
         }
     }
@@ -133914,6 +143193,50 @@ namespace {
      * @internal
      */
     function __internal_woocommerce_blocks_deregister_checkout_field($field_id)
+    {
+    }
+    /**
+     * Register endpoint data under a specified namespace.
+     *
+     * @see Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema::register_endpoint_data()
+     *
+     * @param array $args Args to pass to register_endpoint_data.
+     * @returns boolean|\WP_Error True on success, WP_Error on fail.
+     */
+    function woocommerce_store_api_register_endpoint_data($args)
+    {
+    }
+    /**
+     * Add callback functions that can be executed by the cart/extensions endpoint.
+     *
+     * @see Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema::register_update_callback()
+     *
+     * @param array $args Args to pass to register_update_callback.
+     * @returns boolean|\WP_Error True on success, WP_Error on fail.
+     */
+    function woocommerce_store_api_register_update_callback($args)
+    {
+    }
+    /**
+     * Registers and validates payment requirements callbacks.
+     *
+     * @see Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema::register_payment_requirements()
+     *
+     * @param array $args Args to pass to register_payment_requirements.
+     * @returns boolean|\WP_Error True on success, WP_Error on fail.
+     */
+    function woocommerce_store_api_register_payment_requirements($args)
+    {
+    }
+    /**
+     * Returns a formatter instance.
+     *
+     * @see Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema::get_formatter()
+     *
+     * @param string $name Formatter name.
+     * @return Automattic\WooCommerce\StoreApi\Formatters\FormatterInterface
+     */
+    function woocommerce_store_api_get_formatter($name)
     {
     }
     /**
