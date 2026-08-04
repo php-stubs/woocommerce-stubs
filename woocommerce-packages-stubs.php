@@ -1794,6 +1794,18 @@ namespace {
     class ActionScheduler_QueueCleaner
     {
         /**
+         * The cleaner action hook is scheduled to run daily to initiate cleanup.
+         *
+         * @var string
+         */
+        private const RUN_SCHEDULED_CLEANER_HOOK = 'action_scheduler_run_actions_cleanup_hook';
+        /**
+         * Hook used to keep deleting old actions in batches, with at most one continuation pending at a time.
+         *
+         * @var string
+         */
+        private const CONTINUE_SCHEDULED_CLEANER_HOOK = 'action_scheduler_continue_actions_cleanup_hook';
+        /**
          * The batch size.
          *
          * @var int
@@ -1827,34 +1839,69 @@ namespace {
         {
         }
         /**
-         * Default queue cleaner process used by queue runner.
+         * Registers action hooks to perform action deletions as a separate task.
          *
+         * @since 4.0.0
+         * @internal
+         *
+         * @return void
+         */
+        public function register_cleaner_hooks()
+        {
+        }
+        /**
+         * Register the recurring action deletion task.
+         *
+         * @since 4.0.0
+         * @internal
+         *
+         * @return void
+         */
+        public function register_recurring_actions()
+        {
+        }
+        /**
+         * Performs action deletions by aggregating configurations and coordinating clean_actions as needed.
+         *
+         * @since 4.0.0 by default, failed actions are removed after three months.
          * @return array
          */
         public function delete_old_actions()
         {
         }
         /**
-         * Delete selected actions limited by status and date.
+         * Delete selected actions based on status and date. The function's behavior depends on the context:
+         * - For scheduled cleanup actions, the function operates within execution budget constraints optimized for high-traffic stores.
+         * - Otherwise, it strictly follows the provided parameters without the scheduled cleanup optimizations.
          *
          * @param string[] $statuses_to_purge List of action statuses to purge. Defaults to canceled, complete.
-         * @param DateTime $cutoff_date Date limit for selecting actions. Defaults to 31 days ago.
-         * @param int|null $batch_size Maximum number of actions per status to delete. Defaults to 20.
-         * @param string   $context Calling process context. Defaults to `old`.
+         * @param DateTime $cutoff_date       Date limit for selecting actions. Defaults to 31 days ago.
+         * @param int|null $batch_size        Maximum number of actions per status to delete. Defaults to 20.
+         * @param string   $context           Calling process context. Defaults to `old`.
+         *
          * @return array Actions deleted.
          */
         public function clean_actions(array $statuses_to_purge, \DateTime $cutoff_date, $batch_size = \null, $context = 'old')
         {
         }
         /**
+         * Whether a continuation of the cleanup is already queued.
+         *
+         * @return bool
+         */
+        private function has_pending_continuation()
+        {
+        }
+        /**
          * Delete actions.
          *
          * @param int[]  $actions_to_delete List of action IDs to delete.
-         * @param int    $lifespan Minimum scheduled age in seconds of the actions being deleted.
-         * @param string $context Context of the delete request.
-         * @return array Deleted action IDs.
+         * @param int    $lifespan          Minimum scheduled age in seconds of the actions being deleted.
+         * @param string $context           Context of the delete request.
+         *
+         * @return int[] Deleted action IDs.
          */
-        private function delete_actions(array $actions_to_delete, $lifespan = \null, $context = 'old')
+        private function delete_actions(array $actions_to_delete, $lifespan, $context = 'old')
         {
         }
         /**
@@ -1966,6 +2013,24 @@ namespace {
         {
         }
         /**
+         * Fetches the action instance. On failure returns null instead of ActionScheduler_NullAction.
+         *
+         * @param int $action_id Action ID.
+         * @return ActionScheduler_Action|null
+         */
+        private function fetch_complete_action(int $action_id)
+        {
+        }
+        /**
+         * Cancels the corrupted actions and performs the necessary cleanup to address identified side effects.
+         *
+         * @param int $action_id Action ID.
+         * @return void
+         */
+        private function cancel_corrupted_action(int $action_id)
+        {
+        }
+        /**
          * Marks actions as either having failed execution or failed validation, as appropriate.
          *
          * @param int       $action_id    Action ID.
@@ -2000,6 +2065,8 @@ namespace {
         }
         /**
          * Run the queue cleaner.
+         *
+         * @deprecated since 4.0.0, action deletion is now handled automatically via a dedicated scheduled task.
          */
         protected function run_cleanup()
         {
@@ -2107,6 +2174,12 @@ namespace {
          * @var ActionScheduler_QueueRunner
          */
         private static $runner = \null;
+        /**
+         * Whether the cleaner instance is a non-default one.
+         *
+         * @var bool
+         */
+        private $is_custom_cleaner;
         /**
          * Number of processed actions.
          *
@@ -3931,9 +4004,23 @@ namespace {
         /**
          * Delete the action logs for an action.
          *
+         * @since 3.9.3 the logs will be deleted in batches of 100.
          * @param int $action_id Action ID.
          */
         public function clear_deleted_action_logs($action_id)
+        {
+        }
+        /**
+         * Delete the action logs batch for an action.
+         *
+         * @param int  $action_id      Action id.
+         * @param int  $cutoff_log_id  Cutoff log ID. Retain logs generated after the cleanup begins. A value of -1 indicates the start of the cleanup.
+         * @param int  $batch          The batch index is used solely for troubleshooting. Reviewing action arguments provides a clear understanding of progressive deletion.
+         * @param int  $batch_size     Batch size.
+         *
+         * @return void
+         */
+        public function clear_deleted_action_logs_single_batch($action_id, $cutoff_log_id, $batch, $batch_size)
         {
         }
         /**
