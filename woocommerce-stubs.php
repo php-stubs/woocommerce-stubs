@@ -37013,9 +37013,7 @@ namespace {
         {
         }
         /**
-         * Hash a value using wp_fast_hash (from WP 6.8 onwards).
-         *
-         * This method can be removed when the minimum version supported is 6.8.
+         * Hash a value for the session cookie integrity tag.
          *
          * @param string $message Value to hash.
          * @return string Hashed value.
@@ -37024,9 +37022,10 @@ namespace {
         {
         }
         /**
-         * Verify a hash using wp_verify_fast_hash (from WP 6.8 onwards).
+         * Verify a hash produced by self::hash().
          *
-         * This method can be removed when the minimum version supported is 6.8.
+         * Hashes produced by the previous `wp_fast_hash()` implementation are still accepted so that guest sessions
+         * created before this change are not invalidated. That fallback can be removed in 11.1.0 forward after those cookies have expired.
          *
          * @param string $message Message to verify.
          * @param string $hash Hash to verify.
@@ -40318,7 +40317,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '11.0.0';
+        public $version = '11.0.1';
         /**
          * WooCommerce Schema version.
          *
@@ -74413,6 +74412,17 @@ namespace Automattic\WooCommerce\Admin\API {
         {
         }
         /**
+         * Check if a given request has access to install themes.
+         *
+         * @param \WP_REST_Request<array<string, mixed>> $request Full details about the request.
+         * @return \WP_Error|bool
+         *
+         * @since 11.0.1
+         */
+        public function install_item_permissions_check($request)
+        {
+        }
+        /**
          * Check if a given request has access to manage themes.
          *
          * @param  WP_REST_Request $request Full details about the request.
@@ -75961,6 +75971,16 @@ namespace Automattic\WooCommerce\Admin\API\Reports {
          * @var string
          */
         protected $date_column_name = 'date_created';
+        /**
+         * Allow-list a date column name before it is interpolated into SQL.
+         *
+         * @param string $column   Requested date column name.
+         * @param string $fallback Column to use when the requested one is not allowed.
+         * @return string
+         */
+        protected function sanitize_date_column_name($column, $fallback = 'date_created')
+        {
+        }
         /**
          * Mapping columns to data type to return correct response types.
          *
@@ -79086,6 +79106,22 @@ namespace Automattic\WooCommerce\Admin\API\Reports\Export {
          * @return array
          */
         protected function get_export_collection_params()
+        {
+        }
+        /**
+         * Validate report_args against the target report's own collection schema.
+         *
+         * The export route accepts report_args as a free-form object, so its keys
+         * (e.g. orderby) must be validated against the schema of the report being
+         * exported the same way the non-export report route validates them.
+         *
+         * @since 11.0.1
+         * @param  mixed                                  $value   The report_args value.
+         * @param  \WP_REST_Request<array<string, mixed>> $request The request.
+         * @param  string                                 $param   The parameter name.
+         * @return true|\WP_Error
+         */
+        public function validate_report_args($value, $request, $param)
         {
         }
         /**
@@ -99330,6 +99366,25 @@ namespace Automattic\WooCommerce\Admin {
          * @return bool|WC_REST_Reports_Controller Report controller instance or boolean false on error.
          */
         protected function map_report_controller()
+        {
+        }
+        /**
+         * Get the report type to report controller class map.
+         *
+         * @since 11.0.1
+         * @return array Report type to report controller class map.
+         */
+        private static function get_report_controller_map()
+        {
+        }
+        /**
+         * Get a REST controller instance for a given report type, or false if unknown.
+         *
+         * @since 11.0.1
+         * @param string $report_type Report type. E.g. 'orders'.
+         * @return \WC_REST_Reports_Controller|false
+         */
+        public static function get_report_controller($report_type)
         {
         }
         /**
@@ -124593,7 +124648,7 @@ namespace Automattic\WooCommerce\StoreApi {
         /**
          * Gets the cart token from the request header.
          *
-         * @param \WP_REST_Request $request The REST request instance.
+         * @param \WP_REST_Request $request Deprecated since 11.1.0. Unused; kept for subclasses.
          * @return string
          */
         protected function get_cart_token(\WP_REST_Request $request)
@@ -125675,7 +125730,9 @@ namespace Automattic\WooCommerce\StoreApi\Routes\V1 {
         /**
          * Checks if the request has a valid cart token.
          *
-         * @param \WP_REST_Request $request Request object.
+         * Reads the outer HTTP header, not `$request` one, to avoid conflicting cart tokens on a batch request.
+         *
+         * @param \WP_REST_Request $request Request object. Unused here; kept for subclasses.
          * @return bool
          */
         protected function has_cart_token(\WP_REST_Request $request)
@@ -131744,6 +131801,8 @@ namespace Automattic\WooCommerce\StoreApi {
         }
         /**
          * Process the token header to load the correct session.
+         *
+         * Verifies the signature here rather than trusting the caller that selected this handler.
          */
         protected function init_session_from_token()
         {
@@ -132409,6 +132468,15 @@ namespace Automattic\WooCommerce\StoreApi\Utilities {
         {
         }
         /**
+         * Get the cart token sent with the current HTTP request.
+         *
+         * @since 11.1.0
+         * @return string
+         */
+        public static function get_request_cart_token(): string
+        {
+        }
+        /**
          * Validate the cart token.
          *
          * @param string $cart_token The cart token.
@@ -132420,6 +132488,9 @@ namespace Automattic\WooCommerce\StoreApi\Utilities {
         /**
          * Get the cart token payload.
          *
+         * Returns an empty payload unless the signature validates.
+         *
+         * @since 11.1.0 Returns an empty payload for tokens that fail signature validation.
          * @param string $cart_token The cart token.
          * @return array
          */
@@ -132437,9 +132508,10 @@ namespace Automattic\WooCommerce\StoreApi\Utilities {
         /**
          * Gets the expiration of the cart token. Defaults to 48h.
          *
+         * @since 11.1.0 Made public.
          * @return int
          */
-        private static function get_cart_token_expiration(): int
+        public static function get_cart_token_expiration(): int
         {
         }
     }
@@ -132821,6 +132893,18 @@ namespace Automattic\WooCommerce\StoreApi\Utilities {
          * @param \WC_Order  $order Order object.
          */
         protected function validate_coupon_usage_limit(\WC_Coupon $coupon, \WC_Order $order)
+        {
+        }
+        /**
+         * Check the coupon's global usage limit against the order.
+         *
+         * Skipped once the order has recorded its own usage, so it is not counted against itself.
+         *
+         * @throws \Exception Exception if the global usage limit has been reached.
+         * @param \WC_Coupon $coupon Coupon object applied to the order.
+         * @param \WC_Order  $order Order object.
+         */
+        protected function validate_coupon_global_usage_limit(\WC_Coupon $coupon, \WC_Order $order): void
         {
         }
         /**
