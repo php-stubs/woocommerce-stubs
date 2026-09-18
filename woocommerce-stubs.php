@@ -37067,10 +37067,9 @@ namespace {
         /**
          * The REST route the request URI points to, normalized the way WordPress matches it.
          *
-         * Returns the route without the REST prefix or surrounding slashes, e.g. 'wc/v3/products', or
-         * an empty string when the URI is not a REST request. This reads the URI and nothing else, so the
-         * route it returns is always the one the URI names. That is what is_resolved_route_in_scope()
-         * compares the route WordPress ends up resolving against.
+         * Returns the route without the REST prefix or surrounding slashes, e.g. 'wc/v3/products'. The
+         * path is read unconditionally; a route named in the query string is only trusted once
+         * wp_is_rest_endpoint() confirms genuine REST dispatch, and returns an empty string until then.
          *
          * @since 11.1.0
          *
@@ -37480,9 +37479,6 @@ namespace {
         }
         /**
          * Verify a hash produced by self::hash().
-         *
-         * Hashes produced by the previous `wp_fast_hash()` implementation are still accepted so that guest sessions
-         * created before this change are not invalidated. That fallback can be removed in 11.1.0 forward after those cookies have expired.
          *
          * @param string $message Message to verify.
          * @param string $hash Hash to verify.
@@ -40878,7 +40874,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '11.1.0';
+        public $version = '11.1.1';
         /**
          * WooCommerce Schema version.
          *
@@ -73791,15 +73787,17 @@ namespace Automattic\WooCommerce\Admin\API {
         {
         }
         /**
-         * Check whether the current user can generate a QR login token.
+         * Check whether the current user can access the QR login browser endpoints.
          *
-         * Requires the `manage_woocommerce` capability, which covers administrators and
-         * shop managers out of the box. The check is deliberately explicit (not routed
-         * through `wc_rest_check_manager_permissions()`) so it cannot be loosened by the
+         * These endpoints back an interactive wp-admin flow, so they require a real
+         * logged-in browser session — a valid `logged_in` cookie for the current user
+         * plus a matching `wp_rest` nonce — as well as the `manage_woocommerce`
+         * capability. The capability check is deliberately explicit (not routed through
+         * `wc_rest_check_manager_permissions()`) so it cannot be loosened by the
          * `woocommerce_rest_check_permissions` filter that other Admin API endpoints share.
          *
-         * @param \WP_REST_Request<array<string, mixed>> $request The REST request (unused).
-         * @return \WP_Error|bool True if the user has the required capability, WP_Error otherwise.
+         * @param \WP_REST_Request<array<string, mixed>> $request The REST request.
+         * @return \WP_Error|bool True if the user is allowed, WP_Error otherwise.
          */
         public function get_items_permissions_check($request)
         {
