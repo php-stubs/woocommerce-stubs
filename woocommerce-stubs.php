@@ -40874,7 +40874,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '11.1.1';
+        public $version = '11.1.2';
         /**
          * WooCommerce Schema version.
          *
@@ -143248,7 +143248,7 @@ namespace {
      *
      * @param WC_Product $product   Product being rendered.
      * @param mixed      $image_ids Image IDs to substitute. Will be normalized.
-     * @return string
+     * @return string Rendered gallery HTML, or an empty string for a re-entrant render of the same product.
      */
     function wc_render_product_image_template_for_image_ids(\WC_Product $product, $image_ids): string
     {
