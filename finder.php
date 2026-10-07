@@ -93,6 +93,14 @@ return \StubsGenerator\Finder::create()
             ->depth('< 1')
             ->path('ApiException.php')
     )
+    // Internal trait in use
+    ->append(
+        \StubsGenerator\Finder::create()
+            ->in(['source/woocommerce/src/Internal/RestApi'])
+            ->files()
+            ->depth('< 1')
+            ->path('ProductRequestPreparationTrait.php')
+    )
     ->append(
         \StubsGenerator\Finder::create()
             ->in(['source/woocommerce/src/Internal/'])

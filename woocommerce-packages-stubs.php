@@ -1002,11 +1002,11 @@ namespace {
         /**
          * The status name => count combinations for this table's items. Used to display status filters.
          *
-         * @var array
+         * @var array<string,int>
          */
         protected $status_counts = array();
         /**
-         * Notices to display when loading the table. Array of arrays of form array( 'class' => {updated|error}, 'message' => 'This is the notice text display.' ).
+         * Notices to display when loading the table. Array of arrays of form array( 'type' => {updated|error}, 'message' => 'This is the notice text display.' ).
          *
          * @var array
          */
@@ -1385,6 +1385,12 @@ namespace {
          */
         protected static $did_notification = \false;
         /**
+         * Statuses for which the Claim ID column is shown.
+         *
+         * @var string[]
+         */
+        private static $statuses_with_claim_id = array('in-progress', 'failed');
+        /**
          * Array of seconds for common time periods, like week or month, alongside an internationalised string representation, i.e. "Day" or "Days"
          *
          * @var array
@@ -1464,6 +1470,15 @@ namespace {
          * @return string
          */
         protected function get_log_entry_html(\ActionScheduler_LogEntry $log_entry, \DateTimezone $timezone)
+        {
+        }
+        /**
+         * Render the hook name and action ID.
+         *
+         * @param array $row Action data.
+         * @return string
+         */
+        public function column_hook($row)
         {
         }
         /**
@@ -1556,12 +1571,6 @@ namespace {
          * {@inheritDoc}
          */
         public function prepare_items()
-        {
-        }
-        /**
-         * Prints the available statuses so the user can click to filter.
-         */
-        protected function display_filter_by_status()
         {
         }
         /**
@@ -1765,13 +1774,14 @@ namespace {
         {
         }
         /**
-         * Supplies the existing lock value, or an empty string if not set.
+         * Supplies the existing lock value, or null if not set.
          *
          * @param string $lock_type A string to identify different lock types.
+         * @param int    $now       The timestamp to use.
          *
-         * @return string
+         * @return string|null
          */
-        private function get_existing_lock($lock_type)
+        private function get_existing_lock($lock_type, int $now)
         {
         }
         /**
@@ -1781,10 +1791,11 @@ namespace {
          * Example: (string) "649de012e6b262.09774912|1688068114"
          *
          * @param string $lock_type A string to identify different lock types.
+         * @param int    $now       The timestamp to use.
          *
          * @return string
          */
-        private function new_lock_value($lock_type)
+        private function new_lock_value($lock_type, int $now): string
         {
         }
     }
@@ -2335,6 +2346,227 @@ namespace {
          * @return void
          */
         public function run_recurring_scheduler_hook(): void
+        {
+        }
+    }
+    /**
+     * Used to safely deserialize schedule information when retrieving a stored scheduled action.
+     *
+     * This helps to guard against deserialization attacks, while maintaining backwards compatibility
+     * with older versions of Action Scheduler.
+     *
+     * @internal This implementation is subject to change without notice or back-compat measures.
+     * @see      https://github.com/woocommerce/action-scheduler/issues/1318
+     * @since    4.1.0
+     */
+    class ActionScheduler_ScheduleDeserializer
+    {
+        /**
+         * Maximum object-graph depth we will walk while vetting a blob.
+         *
+         * Real schedules nest only a handful of levels deep (a cron schedule's CronExpression graph is
+         * the deepest at ~6). Anything beyond this bound is treated as untrustworthy rather than walked.
+         *
+         * @var int
+         */
+        private const MAX_GRAPH_DEPTH = 100;
+        /**
+         * Action Scheduler's own concrete schedule classes. Along with any class that implements
+         * ActionScheduler_Schedule, these are always trusted.
+         *
+         * @var string[]
+         */
+        private const KNOWN_SCHEDULE_CLASSES = array(\ActionScheduler_SimpleSchedule::class, \ActionScheduler_IntervalSchedule::class, \ActionScheduler_CronSchedule::class, \ActionScheduler_CanceledSchedule::class, \ActionScheduler_NullSchedule::class);
+        /**
+         * The default supporting classes Action Scheduler is willing to instantiate when nested in a schedule.
+         *
+         * @var string[]
+         */
+        private const DEFAULT_NESTED_CLASSES = array(
+            // The bundled CronExpression family, which ActionScheduler_CronSchedule nests.
+            \CronExpression::class,
+            \CronExpression_FieldFactory::class,
+            \CronExpression_AbstractField::class,
+            \CronExpression_MinutesField::class,
+            \CronExpression_HoursField::class,
+            \CronExpression_DayOfMonthField::class,
+            \CronExpression_MonthField::class,
+            \CronExpression_DayOfWeekField::class,
+            \CronExpression_YearField::class,
+            // Additional trusted classes, likely to be used in schedule representations.
+            \ActionScheduler_DateTime::class,
+            \DateTime::class,
+            \DateTimeImmutable::class,
+            \DateTimeZone::class,
+            \DateInterval::class,
+        );
+        /**
+         * The raw serialized schedule blob being deserialized.
+         *
+         * @var string
+         */
+        protected $source_data;
+        /**
+         * The class name of the outermost object in the blob.
+         *
+         * @var string
+         */
+        protected $outer_class;
+        /**
+         * List of classes that are known to be acceptable outer classes.
+         *
+         * @var string[]
+         */
+        private $allowed_scheduler_classes;
+        /**
+         * Any nested objects must be instances of one of these classes.
+         *
+         * @var string[]
+         */
+        private $allowed_nested_classes;
+        /**
+         * Object IDs already visited during the walk, keyed by spl_object_id, to short-circuit cycles
+         * and shared references.
+         *
+         * @var array<int,bool>
+         */
+        private $seen = array();
+        /**
+         * Unexpected/disallowed class names discovered nested in the blob.
+         *
+         * @var string[]
+         */
+        private $potential_offenders;
+        /**
+         * Safely deserialize a stored schedule blob without instantiating unexpected classes.
+         *
+         * @param mixed $blob The raw serialized schedule blob as stored in the database.
+         *
+         * @return ActionScheduler_Schedule|false
+         */
+        public static function unserialize($blob)
+        {
+        }
+        /**
+         * Build our ActionScheduler_ScheduleDeserializer instance.
+         *
+         * @param array $allowed_scheduler_classes Scheduler classes we accept.
+         * @param array $allowed_nested_classes    Nested classes we accept.
+         */
+        public function __construct(array $allowed_scheduler_classes, array $allowed_nested_classes)
+        {
+        }
+        /**
+         * Deserialize a blob of serialized data.
+         *
+         * @param mixed $serialized_blob Data to unserialize. Expected to be a string.
+         *
+         * @return ActionScheduler_Schedule|false
+         */
+        public function __invoke($serialized_blob)
+        {
+        }
+        /**
+         * Perform the two-pass deserialization for this instance's already-validated blob.
+         *
+         * @return ActionScheduler_Schedule|false
+         */
+        private function deserialize()
+        {
+        }
+        /**
+         * Walk the parsed graph once, recording unexpected (placeholder) classes and guarding traversal.
+         *
+         * Objects whose class was outside the safe set are __PHP_Incomplete_Class placeholders; their
+         * original names are collected into $this->potential_offenders (the root is excluded — it is tracked
+         * separately as $this->outer_class). Real objects are trusted and only recursed into so a placeholder
+         * nested inside one is still found. A tampered blob can decode (via `r:`/`R:` references) into a
+         * self-referential or extremely deep graph, so visited objects are tracked to short-circuit cycles
+         * and shared references, and recursion depth is capped.
+         *
+         * @param mixed $value   The value to walk (object, array, or scalar).
+         * @param bool  $is_root Whether $value is the outermost object (excluded from $this->potential_offenders).
+         * @param int   $depth   Current recursion depth.
+         *
+         * @return bool True if the value was fully walked; false if it was too deep to vet safely.
+         */
+        private function scan_object_graph($value, bool $is_root, int $depth): bool
+        {
+        }
+        /**
+         * Handle a blob that references a class outside the vetted set.
+         *
+         * Always surfaces the event for observability. Under enforcement (the default) the blob is
+         * rejected by returning false, which callers already handle like a corrupt schedule.
+         *
+         * Shadow mode ("report only") relaxes this, but only for a $shadow_eligible rejection — one where
+         * the outermost object is a valid schedule and merely a *nested* class was unexpected. That is the
+         * sole case where a mis-tuned allow-list could disrupt an otherwise-legitimate action, so it is the
+         * only case shadow mode lets through. Structural rejections ($shadow_eligible false) — a top-level
+         * non-schedule (the issue #1318 PoC) or an unwalkable object graph — have no legitimate form and are
+         * always rejected, even in shadow mode, so report-only can never be downgraded into reviving the
+         * vulnerability.
+         *
+         * @param string $offending_class The class that triggered the rejection.
+         * @param bool   $shadow_eligible Whether shadow mode may let this particular rejection through.
+         * @return ActionScheduler_Schedule|false False when rejected. A shadow-mode passthrough is only
+         *                                        reached for a nested rejection, i.e. after the top-level
+         *                                        schedule gate passed, so any object returned is a schedule.
+         */
+        protected function reject($offending_class, $shadow_eligible)
+        {
+        }
+        /**
+         * Decide whether the outermost class in a schedule blob may be instantiated.
+         *
+         * Allowed if the class is loaded and implements ActionScheduler_Schedule. A class that is not
+         * loaded cannot be validated (and, prior to this change, already produced a broken action), so
+         * rejecting it here does not regress any case that previously worked.
+         *
+         * @param string $class_name Class name discovered in the blob.
+         * @return bool
+         */
+        private function is_schedule_implementation(string $class_name): bool
+        {
+        }
+        /**
+         * Decide whether a nested class (a property of the schedule) may be instantiated.
+         *
+         * The only classes Action Scheduler itself ever nests inside a schedule are the bundled
+         * CronExpression family. Composite schedules that nest another schedule are also fine. The
+         * default list is filterable so extenders can vet their own supporting classes.
+         *
+         * @param string   $class_name     Class name discovered nested in the blob.
+         * @param string[] $allowed_nested The resolved nested allow-list to check against.
+         *
+         * @return bool
+         */
+        private function is_allowed_nested_class(string $class_name, array $allowed_nested): bool
+        {
+        }
+        /**
+         * Get the class name of an object parsed with a restricted allowed_classes set.
+         *
+         * Objects whose class was disallowed become __PHP_Incomplete_Class, which hides the original
+         * name behind get_class(); it lives in the __PHP_Incomplete_Class_Name pseudo-property instead.
+         * stdClass is never converted by PHP, so its real name is returned directly.
+         *
+         * @param object $maybe_incomplete Object parsed with a restricted allowed_classes set.
+         * @return string The original class name, or '' if it cannot be determined.
+         */
+        private function class_name_of(object $maybe_incomplete): string
+        {
+        }
+        /**
+         * Whether an unexpected class causes the blob to be rejected (true) or merely reported while the
+         * legacy, unrestricted deserialization proceeds (false, "shadow mode").
+         *
+         * Enforcement is on by default. Site owners can opt into shadow mode for a release to gather
+         * data before enforcing, without changing any stored data.
+         *
+         * @return bool
+         */
+        public static function is_enforced(): bool
         {
         }
     }
@@ -3664,6 +3896,12 @@ namespace {
         {
         }
         /**
+         * Flush all store caches.
+         */
+        public function flush_caches()
+        {
+        }
+        /**
          * Get instance.
          *
          * @return ActionScheduler_Store
@@ -4042,6 +4280,14 @@ namespace {
     class ActionScheduler_DBStore extends \ActionScheduler_Store
     {
         /**
+         * WordPress object cache group for resolved group IDs.
+         */
+        const GROUP_IDS_CACHE_GROUP = 'action_scheduler_groups';
+        /**
+         * Cache key used for the default (empty-slug) group, since wp_cache_* rejects empty string keys.
+         */
+        const GROUP_IDS_DEFAULT_CACHE_KEY = 'group:default';
+        /**
          * Used to share information about the before_date property of claims internally.
          *
          * This is used in preference to passing the same information as a method param
@@ -4074,6 +4320,21 @@ namespace {
          * @codeCoverageIgnore
          */
         public function init()
+        {
+        }
+        /**
+         * Flush all store caches.
+         */
+        public function flush_caches()
+        {
+        }
+        /**
+         * Translate a group slug into a valid (non-empty) object cache key.
+         *
+         * @param string $slug Group slug.
+         * @return string
+         */
+        private function get_group_cache_key(string $slug): string
         {
         }
         /**
@@ -4170,7 +4431,7 @@ namespace {
          * @param string|array $slugs                The string name of a group, or names for several groups.
          * @param bool         $create_if_not_exists Whether to create the group if it does not already exist. Default, true - create the group.
          *
-         * @return array The group IDs, if they exist or were successfully created. May be empty.
+         * @return int[] The group IDs, if they exist or were successfully created. May be empty.
          */
         protected function get_group_ids($slugs, $create_if_not_exists = \true)
         {
@@ -4536,6 +4797,12 @@ namespace {
          * @codeCoverageIgnore
          */
         public function init()
+        {
+        }
+        /**
+         * Flush all store caches.
+         */
+        public function flush_caches()
         {
         }
         /**
@@ -5048,6 +5315,21 @@ namespace {
          * @return WP_Post
          */
         protected function make_action_from_post($post)
+        {
+        }
+        /**
+         * Read a scheduled action's schedule from post meta without instantiating unexpected classes.
+         *
+         * Using get_post_meta() would run the stored blob through maybe_unserialize(), instantiating
+         * whatever classes it names before we can vet them. Instead we read the raw serialized value and
+         * hand it to ActionScheduler_ScheduleDeserializer, which only instantiates a valid schedule (and its
+         * vetted supporting classes). @see https://github.com/woocommerce/action-scheduler/issues/1318
+         *
+         * @param int $post_id Post ID of the scheduled action.
+         * @return mixed The schedule object, false if unusable, or the raw meta value when it is not a
+         *               serialized object (left for validate_schedule() to reject, as before).
+         */
+        protected function get_schedule_from_post_meta($post_id)
         {
         }
         /**
