@@ -129283,6 +129283,348 @@ namespace Automattic\WooCommerce\Internal\ProductFilters\Interfaces {
         public function add_query_clauses(array $args, \WP_Query $wp_query): array;
     }
 }
+namespace Automattic\WooCommerce\Internal\ShopperLists {
+    /**
+     * A user's saved list of products.
+     */
+    class ShopperList
+    {
+        /**
+         * Prefix for per-list usermeta key for list details.
+         */
+        const META_KEY_PREFIX = '_wc_shopper_list_';
+        /**
+         * User ID.
+         *
+         * @var int
+         */
+        private $user_id;
+        /**
+         * List slug.
+         *
+         * @var string
+         */
+        private $slug;
+        /**
+         * Datetime the list was created.
+         *
+         * @var string
+         */
+        private $date_created_gmt;
+        /**
+         * Items in the list.
+         *
+         * @var array<string, ShopperListItem>
+         */
+        private $items;
+        /**
+         * Private constructor. Use the static factories to obtain concrete instances.
+         *
+         * @param int                            $user_id          Owning user ID.
+         * @param string                         $slug             List slug.
+         * @param string                         $date_created_gmt MySQL DATETIME, GMT.
+         * @param array<string, ShopperListItem> $items            Items keyed by storage key.
+         */
+        private function __construct(int $user_id, string $slug, string $date_created_gmt, array $items)
+        {
+        }
+        /**
+         * Load a list by slug. Returns false for a disabled, unknown, or unloadable list.
+         *
+         * @param string   $slug    List identifier.
+         * @param int|null $user_id Defaults to the current user.
+         * @return self|false
+         */
+        public static function get_by_slug(string $slug, ?int $user_id = null)
+        {
+        }
+        /**
+         * Load a list by slug without the feature-flag gate, for internal callers
+         * (e.g. privacy export/erase). Do not use for user-facing reads.
+         *
+         * @param string   $slug    List identifier.
+         * @param int|null $user_id Defaults to the current user.
+         * @return self|false
+         */
+        public static function get_by_slug_raw(string $slug, ?int $user_id = null)
+        {
+        }
+        /**
+         * Get all of the user's lists.
+         *
+         * @param int|null $user_id Defaults to the current user.
+         * @return array<string, self>
+         */
+        public static function get_all_for_user(?int $user_id = null): array
+        {
+        }
+        /**
+         * The list slug (e.g. 'saved-for-later').
+         */
+        public function get_slug(): string
+        {
+        }
+        /**
+         * Creation time as a MySQL DATETIME in GMT.
+         */
+        public function get_date_created_gmt(): string
+        {
+        }
+        /**
+         * Add an item, or merge quantities if it already exists.
+         *
+         * @param ShopperListItem $item Item to add.
+         */
+        public function add_item(\Automattic\WooCommerce\Internal\ShopperLists\ShopperListItem $item): void
+        {
+        }
+        /**
+         * Remove an item by key. Returns false if the key wasn't present.
+         *
+         * @param string $key Storage key of the item to remove.
+         */
+        public function remove_item(string $key): bool
+        {
+        }
+        /**
+         * Get all items currently in the list.
+         *
+         * @return array<string, ShopperListItem>
+         */
+        public function get_items(): array
+        {
+        }
+        /**
+         * Find an item by key.
+         *
+         * @param string $key Storage key.
+         */
+        public function find_item(string $key): ?\Automattic\WooCommerce\Internal\ShopperLists\ShopperListItem
+        {
+        }
+        /**
+         * Persist the current state to user meta.
+         */
+        public function save(): void
+        {
+        }
+        /**
+         * Storage / response shape.
+         */
+        public function to_array(): array
+        {
+        }
+        /**
+         * Build a ShopperList from a stored array.
+         *
+         * @param array $data    Stored list record.
+         * @param int   $user_id Owning user ID.
+         */
+        private static function from_array(array $data, int $user_id): self
+        {
+        }
+    }
+    /**
+     * A single saved item within a shopper list.
+     */
+    class ShopperListItem
+    {
+        /**
+         * Storage key (md5 of identity tuple).
+         *
+         * @var string
+         */
+        private $key;
+        /**
+         * Product ID at the time the item was saved.
+         *
+         * @var int
+         */
+        private $product_id;
+        /**
+         * Variation ID at the time the item was saved (0 for non-variable products).
+         *
+         * @var int
+         */
+        private $variation_id;
+        /**
+         * Variation attributes captured at save time.
+         *
+         * @var array
+         */
+        private $variation;
+        /**
+         * Saved quantity (always 1 in the current contract).
+         *
+         * @var int
+         */
+        private $quantity;
+        /**
+         * MySQL DATETIME the item was saved, in GMT.
+         *
+         * @var string
+         */
+        private $date_added_gmt;
+        /**
+         * Snapshot of the product title at save time.
+         *
+         * @var string
+         */
+        private $product_title_at_save;
+        /**
+         * Resolved product, cached on the instance.
+         *
+         * @var \WC_Product|null
+         */
+        private $product = null;
+        /**
+         * Private constructor. Use the static factories to obtain concrete instances.
+         *
+         * @param string $key                   Storage key (md5 of identity tuple).
+         * @param int    $product_id            Product ID.
+         * @param int    $variation_id          Variation ID, or 0.
+         * @param array  $variation             Variation attributes.
+         * @param int    $quantity              Saved quantity.
+         * @param string $date_added_gmt        MySQL DATETIME, GMT.
+         * @param string $product_title_at_save Title snapshot.
+         */
+        private function __construct(string $key, int $product_id, int $variation_id, array $variation, int $quantity, string $date_added_gmt, string $product_title_at_save)
+        {
+        }
+        /**
+         * Construct from a stored item array (from user_meta).
+         *
+         * @throws \Exception When the stored payload is missing required fields.
+         *
+         * @param array $data Stored item record.
+         */
+        public static function from_array(array $data): self
+        {
+        }
+        /**
+         * Construct from a product (or variation) ID and optional payload fields.
+         *
+         * @throws \InvalidArgumentException When the provided variation attributes do not match the variation product.
+         *
+         * @param int   $product_or_variation_id Product or variation ID.
+         * @param array $variation               Variation attributes keyed by attribute name.
+         * @param int   $quantity                Saved quantity. Coerced to a minimum of 1.
+         * @return self|null Null if the underlying product can't be resolved or isn't published.
+         */
+        public static function from_product(int $product_or_variation_id, array $variation = array(), int $quantity = 1): ?self
+        {
+        }
+        /**
+         * Resolve and validate the variation attribute array against the variation product.
+         *
+         * Mirrors {@see CartController::parse_variation_data()}: specific values come from
+         * the variation (server-authoritative); "any" slots must be supplied by the caller
+         * with a value that exists on the parent product.
+         *
+         * @throws \InvalidArgumentException When the supplied variation attributes are
+         *                                   missing required values or don't match the
+         *                                   variation product.
+         *
+         * @param \WC_Product $variation_product     Variation product.
+         * @param array       $requested_attributes  Variation attributes supplied by the caller, keyed by `attribute_<slug>`.
+         * @return array
+         */
+        private static function resolve_variation_attributes(\WC_Product $variation_product, array $requested_attributes): array
+        {
+        }
+        /**
+         * Storage key — also used as the response identifier.
+         */
+        public function get_key(): string
+        {
+        }
+        /**
+         * Product ID at save time.
+         */
+        public function get_product_id(): int
+        {
+        }
+        /**
+         * Variation ID at save time, or 0 for non-variable products.
+         */
+        public function get_variation_id(): int
+        {
+        }
+        /**
+         * Saved quantity.
+         */
+        public function get_quantity(): int
+        {
+        }
+        /**
+         * Variation attributes captured at save time.
+         */
+        public function get_variation_attributes(): array
+        {
+        }
+        /**
+         * Save time as a MySQL DATETIME in GMT.
+         */
+        public function get_date_added_gmt(): string
+        {
+        }
+        /**
+         * Snapshot of the product title at save time.
+         */
+        public function get_product_title_at_save(): string
+        {
+        }
+        /**
+         * Resolve the live product (or variation) backing this saved item.
+         */
+        public function get_product(): ?\WC_Product
+        {
+        }
+        /**
+         * Whether the row serves live product data. True when the product (and its
+         * parent, for variations) is `publish`; password-gated products still
+         * qualify since their page renders behind a prompt.
+         */
+        public function is_live(): bool
+        {
+        }
+        /**
+         * Whether a resolved product (and its parent, for variations) is `publish`.
+         *
+         * @param \WC_Product $product Resolved product or variation.
+         */
+        private static function product_is_live(\WC_Product $product): bool
+        {
+        }
+        /**
+         * Whether the product can be added to the cart. Mirrors the catalog gate
+         * (`is_purchasable()` && `is_in_stock()`), but additionally requires the
+         * row to be live and rejects password-gated products (self or parent) —
+         * cart-add can't prompt for a password.
+         */
+        public function is_purchasable(): bool
+        {
+        }
+        /**
+         * Storage shape used to persist into user_meta.
+         */
+        public function to_array(): array
+        {
+        }
+        /**
+         * Compute a deterministic item key. Mirrors WC_Cart::generate_cart_id() so the same
+         * product+variation always hashes to the same key, regardless of the input key order
+         * for variation attributes.
+         *
+         * @param int   $product_id   Product ID.
+         * @param int   $variation_id Variation ID, or 0.
+         * @param array $variation    Variation attributes.
+         */
+        private static function generate_key(int $product_id, int $variation_id, array $variation): string
+        {
+        }
+    }
+}
 namespace Automattic\WooCommerce\Internal\Traits {
     /**
      * DON'T USE THIS TRAIT. It's DEPRECATED and will be REMOVED in a future version of WooCommerce.
