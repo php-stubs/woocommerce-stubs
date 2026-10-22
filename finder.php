@@ -108,6 +108,21 @@ return \StubsGenerator\Finder::create()
             ->depth('< 1')
             ->path('RestApiControllerBase.php')
     )
+    // Shopper lists
+    ->append(
+        \StubsGenerator\Finder::create()
+            ->in(['source/woocommerce/src/Internal/ShopperLists/'])
+            ->files()
+            ->depth('< 1')
+            ->path('ShopperListItem.php')
+    )
+    ->append(
+        \StubsGenerator\Finder::create()
+            ->in(['source/woocommerce/src/Internal/ShopperLists/'])
+            ->files()
+            ->depth('< 1')
+            ->path('ShopperList.php')
+    )
 /*
     ->append(
         \StubsGenerator\Finder::create()
