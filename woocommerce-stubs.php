@@ -1796,6 +1796,12 @@ namespace {
         use \WC_Item_Totals;
         use \Automattic\WooCommerce\Internal\CostOfGoodsSold\CogsAwareTrait;
         /**
+         * The exception that stopped the last save(), or null when the last save() wrote the order.
+         *
+         * @var Exception|null
+         */
+        private $last_save_error = \null;
+        /**
          * Order Data array. This is the core order data exposed in APIs since 3.0.0.
          *
          * Notes: cart_tax = cart_tax is the new name for the legacy 'order_tax'
@@ -1964,6 +1970,16 @@ namespace {
          * @return int order ID
          */
         public function save()
+        {
+        }
+        /**
+         * Get the exception that stopped the last save(). save() logs that exception and does not throw it.
+         *
+         * @internal
+         * @since 11.2.2
+         * @return Exception|null The exception, or null when the last save() wrote the order.
+         */
+        public function get_last_save_error(): ?\Exception
         {
         }
         /**
@@ -29467,7 +29483,7 @@ namespace {
         private static $db_updates = array('2.0.0' => array('wc_update_200_file_paths', 'wc_update_200_permalinks', 'wc_update_200_subcat_display', 'wc_update_200_taxrates', 'wc_update_200_line_items', 'wc_update_200_images', 'wc_update_200_db_version'), '2.0.9' => array('wc_update_209_brazillian_state', 'wc_update_209_db_version'), '2.1.0' => array('wc_update_210_remove_pages', 'wc_update_210_file_paths', 'wc_update_210_db_version'), '2.2.0' => array('wc_update_220_shipping', 'wc_update_220_order_status', 'wc_update_220_variations', 'wc_update_220_attributes', 'wc_update_220_db_version'), '2.3.0' => array('wc_update_230_options', 'wc_update_230_db_version'), '2.4.0' => array('wc_update_240_options', 'wc_update_240_shipping_methods', 'wc_update_240_api_keys', 'wc_update_240_refunds', 'wc_update_240_db_version'), '2.4.1' => array('wc_update_241_variations', 'wc_update_241_db_version'), '2.5.0' => array('wc_update_250_currency', 'wc_update_250_db_version'), '2.6.0' => array('wc_update_260_options', 'wc_update_260_termmeta', 'wc_update_260_zones', 'wc_update_260_zone_methods', 'wc_update_260_refunds', 'wc_update_260_db_version'), '3.0.0' => array('wc_update_300_grouped_products', 'wc_update_300_settings', 'wc_update_300_product_visibility', 'wc_update_300_db_version'), '3.1.0' => array('wc_update_310_downloadable_products', 'wc_update_310_old_comments', 'wc_update_310_db_version'), '3.1.2' => array('wc_update_312_shop_manager_capabilities', 'wc_update_312_db_version'), '3.2.0' => array('wc_update_320_mexican_states', 'wc_update_320_db_version'), '3.3.0' => array('wc_update_330_image_options', 'wc_update_330_webhooks', 'wc_update_330_product_stock_status', 'wc_update_330_set_default_product_cat', 'wc_update_330_clear_transients', 'wc_update_330_set_paypal_sandbox_credentials', 'wc_update_330_db_version'), '3.4.0' => array('wc_update_340_states', 'wc_update_340_state', 'wc_update_340_last_active', 'wc_update_340_db_version'), '3.4.3' => array('wc_update_343_cleanup_foreign_keys', 'wc_update_343_db_version'), '3.4.4' => array('wc_update_344_recreate_roles', 'wc_update_344_db_version'), '3.5.0' => array('wc_update_350_reviews_comment_type', 'wc_update_350_db_version'), '3.5.2' => array('wc_update_352_drop_download_log_fk'), '3.5.4' => array('wc_update_354_modify_shop_manager_caps', 'wc_update_354_db_version'), '3.6.0' => array('wc_update_360_product_lookup_tables', 'wc_update_360_term_meta', 'wc_update_360_downloadable_product_permissions_index', 'wc_update_360_db_version'), '3.7.0' => array('wc_update_370_tax_rate_classes', 'wc_update_370_mro_std_currency', 'wc_update_370_db_version'), '3.9.0' => array('wc_update_390_move_maxmind_database', 'wc_update_390_change_geolocation_database_update_cron', 'wc_update_390_db_version'), '4.0.0' => array('wc_update_product_lookup_tables', 'wc_update_400_increase_size_of_column', 'wc_update_400_reset_action_scheduler_migration_status', 'wc_admin_update_0201_order_status_index', 'wc_admin_update_0230_rename_gross_total', 'wc_admin_update_0251_remove_unsnooze_action', 'wc_update_400_db_version'), '4.4.0' => array('wc_update_440_insert_attribute_terms_for_variable_products', 'wc_admin_update_110_remove_facebook_note', 'wc_admin_update_130_remove_dismiss_action_from_tracking_opt_in_note', 'wc_update_440_db_version'), '4.5.0' => array('wc_update_450_sanitize_coupons_code', 'wc_update_450_db_version'), '5.0.0' => array('wc_update_500_fix_product_review_count', 'wc_admin_update_160_remove_facebook_note', 'wc_admin_update_170_homescreen_layout', 'wc_update_500_db_version'), '5.6.0' => array('wc_update_560_create_refund_returns_page', 'wc_update_560_db_version'), '6.0.0' => array('wc_update_600_migrate_rate_limit_options', 'wc_admin_update_270_delete_report_downloads', 'wc_admin_update_271_update_task_list_options', 'wc_admin_update_280_order_status', 'wc_admin_update_290_update_apperance_task_option', 'wc_admin_update_290_delete_default_homepage_layout_option', 'wc_update_600_db_version'), '6.3.0' => array('wc_update_630_create_product_attributes_lookup_table', 'wc_admin_update_300_update_is_read_from_last_read', 'wc_update_630_db_version'), '6.4.0' => array('wc_update_640_add_primary_key_to_product_attributes_lookup_table', 'wc_admin_update_340_remove_is_primary_from_note_action', 'wc_update_640_db_version'), '6.5.0' => array('wc_update_650_approved_download_directories'), '6.5.1' => array('wc_update_651_approved_download_directories'), '6.7.0' => array('wc_update_670_purge_comments_count_cache', 'wc_update_670_delete_deprecated_remote_inbox_notifications_option'), '7.0.0' => array('wc_update_700_remove_download_log_fk', 'wc_update_700_remove_recommended_marketing_plugins_transient'), '7.2.1' => array('wc_update_721_adjust_new_zealand_states', 'wc_update_721_adjust_ukraine_states'), '7.2.2' => array('wc_update_722_adjust_new_zealand_states', 'wc_update_722_adjust_ukraine_states'), '7.5.0' => array('wc_update_750_add_columns_to_order_stats_table', 'wc_update_750_disable_new_product_management_experience'), '7.7.0' => array('wc_update_770_remove_multichannel_marketing_feature_options'), '7.9.0' => array('wc_update_790_blockified_product_grid_block'), '8.1.0' => array('wc_update_810_migrate_transactional_metadata_for_hpos'), '8.3.0' => array('wc_update_830_rename_checkout_template', 'wc_update_830_rename_cart_template'), '8.6.0' => array('wc_update_860_remove_recommended_marketing_plugins_transient'), '8.7.0' => array('wc_update_870_prevent_listing_of_transient_files_directory'), '8.9.0' => array('wc_update_890_update_connect_to_woocommerce_note', 'wc_update_890_update_paypal_standard_load_eligibility'), '8.9.1' => array('wc_update_891_create_plugin_autoinstall_history_option'), '9.1.0' => array('wc_update_910_add_launch_your_store_tour_option', 'wc_update_910_remove_obsolete_user_meta'), '9.2.0' => array('wc_update_920_add_wc_hooked_blocks_version_option'), '9.3.0' => array('wc_update_930_add_woocommerce_coming_soon_option', 'wc_update_930_migrate_user_meta_for_launch_your_store_tour'), '9.4.0' => array('wc_update_940_add_phone_to_order_address_fts_index', 'wc_update_940_remove_help_panel_highlight_shown'), '9.5.0' => array('wc_update_950_tracking_option_autoload'), '9.6.1' => array('wc_update_961_migrate_default_email_base_color'), '9.8.0' => array('wc_update_980_remove_order_attribution_install_banner_dismissed_option'), '9.8.5' => array('wc_update_985_enable_new_payments_settings_page_feature'), '9.9.0' => array('wc_update_990_remove_wc_count_comments_transient', 'wc_update_990_remove_email_notes'), '10.0.0' => array('wc_update_1000_multisite_visibility_setting', 'wc_update_1000_remove_patterns_toolkit_transient'), '10.2.0' => array('wc_update_1020_add_old_refunded_order_items_to_product_lookup_table'), '10.3.0' => array('wc_update_1030_add_comments_date_type_index'), '10.4.0' => array('wc_update_1040_add_idx_date_paid_status_parent', 'wc_update_1040_cleanup_legacy_ptk_patterns_fetching'), '10.5.0' => array('wc_update_1050_migrate_brand_permalink_setting', 'wc_update_1050_enable_autoload_options', 'wc_update_1050_add_idx_user_email', 'wc_update_1050_remove_deprecated_marketplace_option'), '10.6.0' => array('wc_update_1060_add_woo_idx_comment_approved_type_index'), '10.7.0' => array('wc_update_1070_disable_hpos_sync_on_read'), '10.8.0' => array('wc_update_1080_migrate_analytics_import_option', 'wc_update_1080_backfill_email_template_sync_meta'), '10.8.0-2' => array('wc_update_10802_restore_orders_meta_key_value_index'), '10.9.0' => array('wc_update_1090_remove_task_list_reminder_bar_hidden_option'), '10.9.2' => array('wc_update_10902_remove_deprecated_push_notifications_option'), '11.0.0' => array('wc_update_1100_enable_point_of_sale_feature'), '11.1.0' => array('wc_update_1110_delete_dashboard_outofstock_count_transient', 'wc_update_1110_cleanup_block_email_posts', 'wc_update_1110_flush_product_count_cache'), '11.1.0-1' => array('wc_update_11101_remove_deprecated_variation_gallery_option'), '11.2.0' => array('wc_update_1120_remove_abandoned_cart_recovery', 'wc_update_1120_migrate_stock_notifications_alpha_constant', 'wc_update_1120_delete_surface_cart_checkout_note', 'wc_update_1120_cleanup_inherited_variation_images', 'wc_update_11201_migrate_tax_lookup_order_items', 'wc_update_11201_invalidate_analytics_reports_cache', 'wc_update_11202_reset_refund_returning_customer_markers', 'wc_update_11203_normalize_stock_notification_emails'), '11.2.0-1' => array(
             // Run again to cancel all pattern fetch jobs now that scheduling is disabled.
             'wc_update_1040_cleanup_legacy_ptk_patterns_fetching',
-        ));
+        ), '11.2.2' => array('wc_update_1122_remove_objects_from_default_attributes'));
         /**
          * Option name used to track new installations of WooCommerce.
          *
@@ -32875,7 +32891,7 @@ namespace {
          * @param string $new_status    Status to change the order to. No internal wc- prefix is required.
          * @param string $note          Optional note to add.
          * @param bool   $manual        Is this a manual order status change?.
-         * @return bool
+         * @return bool Whether the order was saved with the new status.
          */
         public function update_status($new_status, $note = '', $manual = \false)
         {
@@ -34666,6 +34682,18 @@ namespace {
          * @return void
          */
         public static function edited_term($term_id, $tt_id, $taxonomy)
+        {
+        }
+        /**
+         * Update post metadata in one query, preserving concurrent edits.
+         *
+         * Each CASE branch assigns a replacement only when the row still holds its original value, compared under the column's collation; ELSE keeps newer values.
+         * Writes bypass metadata hooks. The caller must invalidate the affected post meta caches.
+         *
+         * @param array<int, array{old_value: string, new_value: string}> $updates Original and replacement stored values, keyed by metadata ID.
+         * @return bool Whether the query succeeded.
+         */
+        private static function update_post_meta_batch(array $updates): bool
         {
         }
         /**
@@ -38282,7 +38310,11 @@ namespace {
          * Authenticate the user if authentication wasn't performed during the
          * determine_current_user action.
          *
-         * Necessary in cases where wp_get_current_user() is called before WooCommerce is loaded.
+         * This is the usual place a WooCommerce REST API key gets authenticated: it happens here
+         * because wp_get_current_user() usually resolves before REST dispatch is confirmed.
+         *
+         * Runs at priority 8, just ahead of the default priority other plugins tend to use on this
+         * filter, so our own call to get_current_user_id() below is what resolves the real user first.
          *
          * @see https://github.com/woocommerce/woocommerce/issues/26847
          *
@@ -38304,9 +38336,9 @@ namespace {
         /**
          * Reject a request when a WooCommerce API key authenticated a route outside our namespaces.
          *
-         * Scope is first judged from REQUEST_URI, during 'determine_current_user', before WordPress has
-         * parsed the request, so at that point the route the request will be dispatched to is not settled
-         * yet. This runs later on rest_authentication_errors, after authentication_fallback() and
+         * Scope is first judged from REQUEST_URI, during 'determine_current_user', where a URI that names
+         * one of our routes is enough, and that is not necessarily the route WordPress dispatches the
+         * request to. This runs later on rest_authentication_errors, after authentication_fallback() and
          * check_authentication_error(), so $this->user reflects the final authentication decision and
          * WordPress has resolved the route. It acts only on a key we authenticated ourselves; a failed or
          * absent key keeps the result the earlier callbacks produced.
@@ -42132,7 +42164,7 @@ namespace {
          *
          * @var string
          */
-        public $version = '11.2.1';
+        public $version = '11.2.2';
         /**
          * WooCommerce Schema version.
          *
@@ -65540,18 +65572,40 @@ namespace {
          * Rebuild the session cart.
          *
          * @param WC_Order $order The order object.
-         * @return void
+         * @throws Exception If the cart cannot be rebuilt.
          */
-        private function rebuild_cart_from_order($order)
+        private function rebuild_cart_from_order($order): void
         {
         }
         /**
-         * Recompute the fees for the order.
+         * Get the variation attributes stored in an order item's meta, in the format expected by
+         * WC_Cart::add_to_cart(). This mirrors the attribute handling in {@see WC_Cart_Session::populate_cart_from_order()}.
          *
-         * @param WC_Order $order The order object.
+         * @param WC_Order_Item_Product $item       The order item.
+         * @param int                   $product_id The ID of the parent variable product.
+         * @return array Attribute values keyed by 'attribute_{name}'.
+         */
+        private function get_variation_attributes_from_order_item(\WC_Order_Item_Product $item, int $product_id): array
+        {
+        }
+        /**
+         * Helper method to support recursively ensuring metadata string values are decoded.
+         *
+         * @param array  $meta_value_array The metadata value array.
+         * @param string $blog_charset     The blog charset.
+         * @return array The decoded metadata value array.
+         */
+        private function decode_meta_values(array $meta_value_array, string $blog_charset): array
+        {
+        }
+        /**
+         * Update the shipping method for the order, and then recompute the order totals.
+         *
+         * @param WC_Order $order              The order object.
+         * @param string   $shipping_option_id The shipping option id.
          * @return void
          */
-        private function recompute_fees($order)
+        private function update_shipping_method_and_totals_for_order($order, $shipping_option_id): void
         {
         }
         /**
@@ -65567,11 +65621,12 @@ namespace {
         /**
          * Get the shipping options for the order.
          *
-         * @param WC_Order $order The order object.
-         * @param array    $selected_shipping_option The selected shipping option.
+         * @param WC_Order    $order                      The order object.
+         * @param array       $selected_shipping_option   The selected shipping option.
+         * @param string|null $updated_shipping_option_id The updated shipping option id after the updates.
          * @return array The shipping options.
          */
-        private function get_updated_shipping_options($order, $selected_shipping_option)
+        private function get_updated_shipping_options($order, $selected_shipping_option, ?string &$updated_shipping_option_id)
         {
         }
         /**
@@ -76293,6 +76348,19 @@ namespace Automattic\WooCommerce\Admin\API {
         {
         }
         /**
+         * Permission check for the Jetpack authorization URL endpoint.
+         *
+         * Requires an interactive admin session on top of the `install_plugins` capability.
+         *
+         * @since 11.2.2
+         *
+         * @param \WP_REST_Request<array<string, mixed>> $request WP_REST_Request object.
+         * @return \WP_Error|boolean
+         */
+        public function check_jetpack_authorization_url_permissions($request)
+        {
+        }
+        /**
          * Check whether the current user has permission to install and activate plugins
          *
          * @return \WP_Error|boolean
@@ -77200,6 +77268,19 @@ namespace Automattic\WooCommerce\Admin\API {
          * @return \WP_Error|boolean
          */
         public function update_item_permissions_check($request)
+        {
+        }
+        /**
+         * Permission check for the connect-jetpack endpoint.
+         *
+         * Requires an interactive admin session on top of the `install_plugins` capability.
+         *
+         * @since 11.2.2
+         *
+         * @param  \WP_REST_Request<array<string, mixed>> $request Full details about the request.
+         * @return \WP_Error|boolean
+         */
+        public function connect_jetpack_permissions_check($request)
         {
         }
         /**
@@ -130701,6 +130782,17 @@ namespace Automattic\WooCommerce\StoreApi\Utilities {
         {
         }
         /**
+         * Removes the order from the session when it is the draft order and its last save failed.
+         *
+         * A failed save can leave the order partly written, and resuming it would reuse that state.
+         *
+         * @since 11.2.2
+         * @param \WC_Order $order Order object.
+         */
+        protected function forget_draft_order_if_not_saved(\WC_Order $order): void
+        {
+        }
+        /**
          * Uses the draft order ID to return an order object, if valid.
          *
          * @return \WC_Order|null;
@@ -131798,9 +131890,18 @@ namespace Automattic\WooCommerce\StoreApi\Utilities {
         {
         }
         /**
+         * Stops the request when the order could not be saved, removing a draft order from the session so a later
+         * request does not resume it.
+         *
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException When the order is missing or its last save failed.
+         */
+        private function validate_order_was_saved(): void
+        {
+        }
+        /**
          * For orders which do not require payment, just update status.
          *
-         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException If the order is missing.
+         * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException If the order is missing or could not be saved.
          *
          * @param \WP_REST_Request $request Request object.
          * @param \Automattic\WooCommerce\StoreApi\Payments\PaymentResult    $payment_result Payment result object.
@@ -131969,6 +132070,13 @@ namespace Automattic\WooCommerce\StoreApi\Routes\V1 {
          * @return array An array of endpoints.
          */
         public function get_args()
+        {
+        }
+        /**
+         * Clear the order held from a previous request. One route instance can serve several requests
+         * in the same PHP process, so each request must resolve its own order.
+         */
+        private function reset_request_state(): void
         {
         }
         /**
@@ -136396,6 +136504,8 @@ namespace Automattic\WooCommerce\StoreApi\Utilities {
         /**
          * Selects a shipping rate.
          *
+         * The rate must be listed for the package. Other choices are ignored.
+         *
          * @param int|string $package_id ID of the package to choose a rate for.
          * @param string     $rate_id ID of the rate being chosen.
          */
@@ -138709,12 +138819,48 @@ namespace Automattic\WooCommerce\Utilities {
     class ShippingUtil
     {
         /**
+         * The package keys of the cart from the last build, with the cart state they belong to.
+         *
+         * @var array{state: string, keys: array<int|string, true>|null}|null
+         */
+        private static $cart_package_keys = null;
+        /**
          * Get the selected shipping rates from the packages.
          *
          * @param array $packages The packages to get the selected shipping rates from.
          * @return \WC_Shipping_Rate[] The selected shipping rates.
          */
         public static function get_selected_shipping_rates_from_packages($packages)
+        {
+        }
+        /**
+         * Check that a rate was listed for a package key the last time shipping was calculated.
+         *
+         * A rate id in the `chosen_shipping_methods` session value is used only when the `previous_shipping_methods`
+         * session value lists it for the same key.
+         *
+         * @since 11.2.2
+         *
+         * @param int|string $package_key Package key, as used in `chosen_shipping_methods`.
+         * @param mixed      $rate_id     Rate id to check. Only strings can match.
+         * @return bool
+         */
+        public static function is_shipping_rate_listed($package_key, $rate_id): bool
+        {
+        }
+        /**
+         * Keep only the chosen methods whose rates were listed for the current cart packages.
+         *
+         * Each rate must be listed for its key. Key must be a shipping package of
+         * the cart at the time of request. The session can keep keys from earlier requests and keys
+         * that other code adds for carts other than this one.
+         *
+         * @since 11.2.2
+         *
+         * @param mixed $chosen_methods Chosen methods keyed by package key, usually the `chosen_shipping_methods` session value.
+         * @return array The listed entries with their keys kept. Empty when the input is not an array.
+         */
+        public static function filter_chosen_shipping_methods($chosen_methods): array
         {
         }
     }
@@ -140003,6 +140149,8 @@ namespace {
     }
     /**
      * Gets chosen shipping method IDs from chosen_shipping_methods session, without instance IDs.
+     *
+     * Only choices whose rate was listed for the cart are returned, see ShippingUtil::filter_chosen_shipping_methods().
      *
      * @since  2.6.2
      * @return string[]
