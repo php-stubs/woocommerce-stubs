@@ -108,6 +108,14 @@ return \StubsGenerator\Finder::create()
             ->depth('< 1')
             ->path('RestApiControllerBase.php')
     )
+    // ActionableAbility extends this internal class
+    ->append(
+        \StubsGenerator\Finder::create()
+            ->in(['source/woocommerce/src/Internal/Abilities'])
+            ->files()
+            ->depth('< 1')
+            ->path('Ability.php')
+    )
 /*
     ->append(
         \StubsGenerator\Finder::create()
